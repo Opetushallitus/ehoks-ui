@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App renders correctly 1`] = `
+<div
+  className="css-1frs77m"
+>
+  <div
+    role="group"
+    style={
+      Object {
+        "outline": "none",
+      }
+    }
+    tabIndex="-1"
+  >
+    <div>
+      <h1>
+        Polkuni osaamiseen
+      </h1>
+      <a
+        className="css-1i82ydo"
+        href="/learnings"
+        onClick={[Function]}
+      >
+        Työpaikalla
+      </a>
+      <a
+        className="css-1i82ydo"
+        href="/goals"
+        onClick={[Function]}
+      >
+        Omat tavoitteeni
+      </a>
+      <a
+        className="css-1i82ydo"
+        href="/studies"
+        onClick={[Function]}
+      >
+        Tietoa opinnoista
+      </a>
+      <a
+        className="css-1i82ydo"
+        href="/profile"
+        onClick={[Function]}
+      >
+        Omat tietoni
+      </a>
+    </div>
+  </div>
+</div>
+`;

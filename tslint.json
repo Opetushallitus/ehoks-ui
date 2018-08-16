@@ -1,0 +1,14 @@
+{
+  "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
+  "rulesDirectory": ["tslint-plugin-prettier"],
+  "rules": {
+    "prettier": true,
+    "interface-name": [false],
+    "member-access": [false],
+    "one-variable-per-declaration": [false],
+    "no-implicit-dependencies": [true, "dev"],
+    "no-console": false,
+    "no-unused-expression": [true, "allow-tagged-template"]
+  },
+  "jsRules": {}
+}
