@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --hot --inline --history-api-fallback",
     "lint": "tslint src/*.tsx src/**/*.tsx",
-    "test": "jest"
+    "test": "jest",
+    "build": "webpack --config webpack.config.js --mode production"
   },
   "private": true,
   "author": "Lari Hoppula",

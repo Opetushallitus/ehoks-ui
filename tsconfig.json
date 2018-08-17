@@ -15,6 +15,9 @@
     "jsx": "react",
     "lib": ["es5", "es6", "dom"]
   },
+  "awesomeTypescriptLoaderOptions": {
+    "silent": true
+  },
   "include": ["./**/*"],
   "exclude": ["node_modules", "components/__tests__"]
 }
