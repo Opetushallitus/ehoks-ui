@@ -5,7 +5,10 @@ module.exports = {
   mode: "development",
   entry: ["./src/index.tsx"],
   output: {
-    filename: "bundle.js",
+    // `filename` provides a template for naming your bundles (remember to use `[name]`)
+    filename: "[name].bundle.js",
+    // `chunkFilename` provides a template for naming code-split bundles (optional)
+    chunkFilename: "[name].bundle.js",
     publicPath: "/dist/",
     path: path.resolve(__dirname, "dist")
   },
