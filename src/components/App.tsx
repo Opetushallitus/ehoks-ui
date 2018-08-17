@@ -2,11 +2,30 @@ import { Router } from "@reach/router"
 import { injectGlobal } from "emotion"
 import * as React from "react"
 import styled from "react-emotion"
-import { Goals } from "./Goals"
+import Loadable from "react-loadable"
 import { Home } from "./Home"
-import { LearningPeriods } from "./LearningPeriods"
-import { Profile } from "./Profile"
-import { StudyInformation } from "./StudyInformation"
+
+const LoadingComponent = () => <div>Loading...</div>
+
+const LearningPeriods = Loadable({
+  loader: async () => (await import("./LearningPeriods")).LearningPeriods,
+  loading: LoadingComponent
+})
+
+const Goals = Loadable({
+  loader: async () => (await import("./Goals")).Goals,
+  loading: LoadingComponent
+})
+
+const StudyInformation = Loadable({
+  loader: async () => (await import("./StudyInformation")).StudyInformation,
+  loading: LoadingComponent
+})
+
+const Profile = Loadable({
+  loader: async () => (await import("./Profile")).Profile,
+  loading: LoadingComponent
+})
 
 injectGlobal`
   * {

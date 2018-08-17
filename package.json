@@ -34,6 +34,7 @@
     "@types/reach__router": "^1.0.0",
     "@types/react": "^16.4.10",
     "@types/react-dom": "^16.0.7",
+    "@types/react-loadable": "^5.4.1",
     "@types/react-test-renderer": "^16.0.2",
     "emotion": "^9.2.6",
     "mobx": "^5.0.3",
@@ -41,7 +42,8 @@
     "mobx-state-tree": "^3.2.1",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "react-emotion": "^9.2.6"
+    "react-emotion": "^9.2.6",
+    "react-loadable": "^5.5.0"
   },
   "jest": {
     "transform": {
