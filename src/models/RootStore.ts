@@ -1,5 +1,4 @@
 import { flow, getEnv, types } from "mobx-state-tree"
-import { mockFetch } from "../utils"
 import { LearningPeriod } from "./LearningPeriod"
 
 const RootStoreModel = {
@@ -22,7 +21,7 @@ export const RootStore = types
       //   "https://api.github.com/repos/facebook/react/stargazers"
       // )
       // TODO: use real fetch & API endpoint
-      const response = yield mockFetch("learningPeriods.json")
+      const response = yield self.fetch("learningPeriods.json")
       self.learningPeriods = response
       self.isLoading = false
     })

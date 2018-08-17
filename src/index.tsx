@@ -4,13 +4,10 @@ import * as ReactDOM from "react-dom"
 import { Provider } from "mobx-react"
 import { App } from "./components/App"
 import { RootStore } from "./models/RootStore"
-
-// fetch that returns the JSON directly
-const fetch = (url: string) =>
-  window.fetch(url).then(response => response.json())
+import { mockFetch } from "./utils"
 
 // pass fetch to root store using DI, so we can easily mock it in tests
-const store = RootStore.create({}, { fetch })
+const store = RootStore.create({}, { fetch: mockFetch })
 
 // initial render to app container
 const appContainer = document.getElementById("app")
