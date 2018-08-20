@@ -3,6 +3,7 @@ import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import * as React from "react"
 import styled from "react-emotion"
+import { FormattedMessage } from "react-intl"
 import { RootStore } from "../models/RootStore"
 
 const StyledLink = styled(Link)`
@@ -21,6 +22,7 @@ export class Home extends React.Component<HomeProps & RouteComponentProps> {
     return (
       <div>
         <h1>Polkuni osaamiseen</h1>
+        <FormattedMessage id="language" />
         <StyledLink to="/learnings">Työpaikalla</StyledLink>
         <StyledLink to="/goals">Omat tavoitteeni</StyledLink>
         <StyledLink to="/studies">Tietoa opinnoista</StyledLink>

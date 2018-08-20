@@ -8,7 +8,8 @@
     "one-variable-per-declaration": [false],
     "no-implicit-dependencies": [true, "dev"],
     "no-console": false,
-    "no-unused-expression": [true, "allow-tagged-template"]
+    "no-unused-expression": [true, "allow-tagged-template"],
+    "no-submodule-imports": false
   },
   "jsRules": {}
 }
