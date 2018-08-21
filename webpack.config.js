@@ -18,7 +18,8 @@ module.exports = {
 
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: [".ts", ".tsx", ".js"]
+    extensions: [".ts", ".tsx", ".js"],
+    modules: [path.resolve(__dirname, "src"), "node_modules"]
   },
 
   plugins: [],
