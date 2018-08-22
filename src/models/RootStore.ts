@@ -1,9 +1,18 @@
+import camelCase from "lodash.camelcase"
+// import kebabCase from "lodash.kebabcase"
+import mapObj from "map-obj"
 import { flow, getEnv, types } from "mobx-state-tree"
+import { StudentStore } from "models/StudentStore"
 import { LearningPeriod } from "./LearningPeriod"
 
 const RootStoreModel = {
+  activeLocale: types.optional(
+    types.union(types.literal("fi"), types.literal("sv")),
+    "fi"
+  ),
   isLoading: false,
-  learningPeriods: types.optional(types.array(LearningPeriod), [])
+  learningPeriods: types.optional(types.array(LearningPeriod), []),
+  student: types.optional(StudentStore, { info: {} })
 }
 
 export const RootStore = types
@@ -14,17 +23,30 @@ export const RootStore = types
       return getEnv(self).fetch
     }
   }))
-  .actions(self => {
-    const fetchLearningPeriods = flow(function*() {
-      self.isLoading = true
-      // const response = yield self.fetch(
-      //   "https://api.github.com/repos/facebook/react/stargazers"
-      // )
-      // TODO: use real fetch & API endpoint
-      const response = yield self.fetch("learningPeriods.json")
-      self.learningPeriods = response
-      self.isLoading = false
+  .views(self => {
+    const fetchSingle = flow(function*(url: string) {
+      const response = yield self.fetch(url)
+      const model = response.data && response.data[0] ? response.data[0] : {}
+      // camelCase kebab-cased object keys recursively so we can use dot syntax for accessing values
+      return mapObj(
+        model,
+        (key: string, value: any) => [camelCase(key), value],
+        {
+          deep: true
+        }
+      )
     })
 
-    return { fetchLearningPeriods }
+    const fetchCollection = flow(function*(url: string) {
+      const response = yield self.fetch(url)
+      console.log("fetchCollection", response)
+      const model = response.data ? response.data : []
+      return model
+    })
+
+    return { fetchSingle, fetchCollection }
+  })
+  .actions(_ => {
+    // TODO
+    return {}
   })

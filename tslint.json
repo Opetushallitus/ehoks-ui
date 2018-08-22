@@ -6,7 +6,10 @@
     "interface-name": [false],
     "member-access": [false],
     "one-variable-per-declaration": [false],
-    "no-implicit-dependencies": [true, ["dev", "components"]],
+    "no-implicit-dependencies": [
+      true,
+      ["react-test-renderer", "components", "models"]
+    ],
     "no-console": false,
     "no-unused-expression": [true, "allow-tagged-template"],
     "no-submodule-imports": false

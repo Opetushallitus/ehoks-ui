@@ -7,23 +7,23 @@ import fi from "react-intl/locale-data/fi"
 import sv from "react-intl/locale-data/sv"
 import { App } from "./components/App"
 import { RootStore } from "./models/RootStore"
-import * as translations from "./translations"
-import { mockFetch } from "./utils"
+import { translations } from "./translations"
+import { fetch } from "./utils"
 
 // load finnish & sweidsh locale data (currency units, separators etc.)
 addLocaleData([...fi, ...sv])
 
-// active locale is hardcoded to finnish for now
-const activeLocale = "fi"
-
 // pass fetch to root store using DI, so we can easily mock it in tests
-const store = RootStore.create({}, { fetch: mockFetch })
+const store = RootStore.create({}, { fetch })
 
 // initial render to app container
 const appContainer = document.getElementById("app")
 ReactDOM.render(
   <Provider store={store}>
-    <IntlProvider locale={activeLocale} messages={translations[activeLocale]}>
+    <IntlProvider
+      locale={store.activeLocale}
+      messages={translations[store.activeLocale]}
+    >
       <App />
     </IntlProvider>
   </Provider>,

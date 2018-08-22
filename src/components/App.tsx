@@ -3,27 +3,29 @@ import { injectGlobal } from "emotion"
 import * as React from "react"
 import styled from "react-emotion"
 import Loadable from "react-loadable"
-import { Home } from "./Home"
+import { Home } from "../routes/Home"
 
 const LoadingComponent = () => <div>Loading...</div>
 
 const LearningPeriods = Loadable({
-  loader: async () => (await import("./LearningPeriods")).LearningPeriods,
+  loader: async () =>
+    (await import("../routes/LearningPeriods")).LearningPeriods,
   loading: LoadingComponent
 })
 
 const Goals = Loadable({
-  loader: async () => (await import("./Goals")).Goals,
+  loader: async () => (await import("../routes/Goals")).Goals,
   loading: LoadingComponent
 })
 
 const StudyInformation = Loadable({
-  loader: async () => (await import("./StudyInformation")).StudyInformation,
+  loader: async () =>
+    (await import("../routes/StudyInformation")).StudyInformation,
   loading: LoadingComponent
 })
 
 const Profile = Loadable({
-  loader: async () => (await import("./Profile")).Profile,
+  loader: async () => (await import("../routes/Profile")).Profile,
   loading: LoadingComponent
 })
 
@@ -35,6 +37,7 @@ injectGlobal`
   html, body {
     margin: 0;
     padding: 0;
+    background: #2b2b50;
   }
 `
 

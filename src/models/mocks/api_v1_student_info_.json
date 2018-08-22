@@ -1,0 +1,13 @@
+{
+  "meta": {},
+  "data": [
+    {
+      "basic-information": {
+        "fi": "Perustietoa eHOKS-palvelusta"
+      },
+      "hoks-process": {
+        "fi": "Perustietoa HOKS-prosessista"
+      }
+    }
+  ]
+}
