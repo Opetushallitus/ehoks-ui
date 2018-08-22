@@ -5,7 +5,7 @@ import { translations } from "./translations"
 
 // mocked fetch using local json files
 export const mockFetch = (url: string) => {
-  const [_, path] = url.split("http://localhost:3000/")
+  const [, path] = url.split("http://localhost:3000/")
   return Promise.resolve(
     require("./models/mocks/" + path.replace(/\//g, "_") + ".json")
   )
