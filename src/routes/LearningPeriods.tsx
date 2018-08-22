@@ -1,6 +1,7 @@
 import { Link, RouteComponentProps } from "@reach/router"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
+import { LearningPeriod } from "models/LearningPeriod"
 import * as React from "react"
 import { RootStore } from "../models/RootStore"
 
@@ -14,7 +15,7 @@ export class LearningPeriods extends React.Component<
   LearningPeriodsProps & RouteComponentProps
 > {
   componentDidMount() {
-    this.props.store.fetchLearningPeriods()
+    // this.props.store.fetchLearningPeriods()
   }
 
   render() {
@@ -25,9 +26,11 @@ export class LearningPeriods extends React.Component<
         <h1>Työpaikalla</h1>
 
         <ul>
-          {learningPeriods.map(learningPeriod => {
-            return <li key={learningPeriod.id}>{learningPeriod.title}</li>
-          })}
+          {learningPeriods.map(
+            (learningPeriod: Instance<typeof LearningPeriod>) => {
+              return <li key={learningPeriod.id}>{learningPeriod.title}</li>
+            }
+          )}
         </ul>
         <Link to="/">Etusivulle</Link>
       </div>

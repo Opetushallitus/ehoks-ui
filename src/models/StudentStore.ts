@@ -9,7 +9,8 @@ const StudentStoreModel = {
 export const StudentStore = types
   .model("StudentStore", StudentStoreModel)
   .actions(self => {
-    // TODO: proper root typing, for now cast to any, getRoot<typeof RootStore> creates circular reference
+    // TODO: proper RootStore typing, for now cast to any,
+    // getRoot<typeof RootStore> creates circular reference when used with flow generator function
     const root: any = getRoot(self)
 
     const fetchInfo = flow(function*() {

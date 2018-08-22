@@ -1,20 +1,15 @@
-import { Link, RouteComponentProps } from "@reach/router"
+import { RouteComponentProps } from "@reach/router"
 import { ListContainer } from "components/ListContainer"
+import { ListHeading } from "components/ListHeading"
+import { ListItem } from "components/ListItem"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
+import { RootStore } from "models/RootStore"
 import * as React from "react"
-import styled from "react-emotion"
-import { FormattedMessage } from "react-intl"
-import { RootStore } from "../models/RootStore"
 
-const StyledLink = styled(Link)`
-  display: block;
-`
-
-const ListHeading = styled("h1")`
-  margin: 0;
-  font-size: 22px;
-`
+import { LinkPanel } from "components/LinkPanel"
+import { LinkPanelContainer } from "components/LinkPanelContainer"
+import { GoGitBranch, GoLightBulb, GoPerson, GoTools } from "react-icons/go"
 
 export interface HomeProps {
   store?: Instance<typeof RootStore>
@@ -28,18 +23,57 @@ export class Home extends React.Component<HomeProps & RouteComponentProps> {
     return (
       <div>
         <h1>Polkuni osaamiseen</h1>
-        <FormattedMessage id="language" />
-        <StyledLink to="/learnings">Työpaikalla</StyledLink>
-        <StyledLink to="/goals">Omat tavoitteeni</StyledLink>
-        <StyledLink to="/studies">Tietoa opinnoista</StyledLink>
-        <StyledLink to="/profile">Omat tietoni</StyledLink>
-        <ListContainer
-          background="#fff"
-          title={<ListHeading>Viestit</ListHeading>}
-        >
-          <ul>
-            <li>Test</li>
-          </ul>
+
+        <LinkPanelContainer>
+          <LinkPanel
+            to="/learnings"
+            backgroundColor="#A3A3FF"
+            icon={<GoTools size="64" />}
+          >
+            Työpaikalla
+          </LinkPanel>
+          <LinkPanel
+            to="/goals"
+            backgroundColor="#FAC743"
+            icon={<GoGitBranch size="64" />}
+          >
+            Omat tavoitteeni
+          </LinkPanel>
+          <LinkPanel
+            to="/studies"
+            backgroundColor="#8CD5E4"
+            icon={<GoLightBulb size="64" />}
+          >
+            Tietoa opinnoista
+          </LinkPanel>
+          <LinkPanel
+            to="/profile"
+            backgroundColor="#B4E740"
+            icon={<GoPerson size="64" />}
+          >
+            Omat tietoni
+          </LinkPanel>
+        </LinkPanelContainer>
+        <ListContainer>
+          <ListHeading>Viestit</ListHeading>
+          <ListItem
+            avatar="https://ui-avatars.com/api/?name=Auli+Ollikainen&size=50"
+            title="Auli Ollikainen"
+            subtitle="Opinto-ohjaaja"
+            date="13:45"
+          />
+          <ListItem
+            avatar="https://ui-avatars.com/api/?name=Pekka+Pekkola&size=50"
+            title="Pekka Pekkola"
+            subtitle="Opinto-ohjaaja"
+            date="ma 26.2."
+          />
+          <ListItem
+            avatar="https://ui-avatars.com/api/?name=Kirsi+Korhonen&size=50"
+            title="Kirsi Korhonen"
+            subtitle="Ammattiopettaja"
+            date="ma 26.2."
+          />
         </ListContainer>
       </div>
     )
