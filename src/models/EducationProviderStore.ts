@@ -1,6 +1,6 @@
 import { flow, getRoot, Instance, types } from "mobx-state-tree"
 import { EducationProviderInfo } from "models/EducationProviderInfo"
-import { RootActions } from "models/RootStore"
+import { RootStore } from "models/RootStore"
 
 const EducationProviderModel = {
   info: types.optional(EducationProviderInfo, {}),
@@ -10,9 +10,9 @@ const EducationProviderModel = {
 export const EducationProviderStore = types
   .model("EducationProviderStore", EducationProviderModel)
   .actions(self => {
-    const root = getRoot<RootActions>(self)
+    const root = getRoot<Instance<typeof RootStore>>(self)
 
-    const fetchInfo = flow(function*() {
+    const fetchInfo = flow(function*(): any {
       self.isLoading = true
       const response: Instance<
         typeof EducationProviderInfo
