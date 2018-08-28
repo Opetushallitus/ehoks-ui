@@ -2,7 +2,9 @@ import camelCase from "lodash.camelcase"
 // import kebabCase from "lodash.kebabcase"
 import mapObj from "map-obj"
 import { flow, getEnv, types } from "mobx-state-tree"
+import { EducationProviderStore } from "models/EducationProviderStore"
 import { StudentStore } from "models/StudentStore"
+import { WorkplaceProviderStore } from "models/WorkPlaceProviderStore"
 import { LearningPeriod } from "./LearningPeriod"
 
 const RootStoreModel = {
@@ -10,9 +12,11 @@ const RootStoreModel = {
     types.union(types.literal("fi"), types.literal("sv")),
     "fi"
   ),
+  education: types.optional(EducationProviderStore, { info: {} }),
   isLoading: false,
   learningPeriods: types.optional(types.array(LearningPeriod), []),
-  student: types.optional(StudentStore, { info: {} })
+  student: types.optional(StudentStore, { info: {} }),
+  work: types.optional(WorkplaceProviderStore, { info: {} })
 }
 
 export const RootStore = types
