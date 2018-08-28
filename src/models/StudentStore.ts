@@ -1,4 +1,5 @@
-import { flow, getRoot, types } from "mobx-state-tree"
+import { flow, getRoot, Instance, types } from "mobx-state-tree"
+import { RootActions } from "models/RootStore"
 import { StudentInfo } from "models/StudentInfo"
 
 const StudentStoreModel = {
@@ -9,13 +10,11 @@ const StudentStoreModel = {
 export const StudentStore = types
   .model("StudentStore", StudentStoreModel)
   .actions(self => {
-    // TODO: proper RootStore typing, for now cast to any,
-    // getRoot<typeof RootStore> creates circular reference when used with flow generator function
-    const root: any = getRoot(self)
+    const root = getRoot<RootActions>(self)
 
     const fetchInfo = flow(function*() {
       self.isLoading = true
-      const response = yield root.fetchSingle(
+      const response: Instance<typeof StudentInfo> = yield root.fetchSingle(
         "http://localhost:3000/api/v1/student/info/"
       )
       self.info = response

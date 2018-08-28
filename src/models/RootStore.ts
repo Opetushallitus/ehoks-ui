@@ -1,7 +1,7 @@
 import camelCase from "lodash.camelcase"
 // import kebabCase from "lodash.kebabcase"
 import mapObj from "map-obj"
-import { flow, getEnv, types } from "mobx-state-tree"
+import { flow, getEnv, IStateTreeNode, types } from "mobx-state-tree"
 import { EducationProviderStore } from "models/EducationProviderStore"
 import { StudentStore } from "models/StudentStore"
 import { WorkplaceProviderStore } from "models/WorkPlaceProviderStore"
@@ -27,7 +27,7 @@ export const RootStore = types
       return getEnv(self).fetch
     }
   }))
-  .views(self => {
+  .actions(self => {
     const fetchSingle = flow(function*(url: string) {
       const response = yield self.fetch(url)
       const model = response.data && response.data[0] ? response.data[0] : {}
@@ -50,7 +50,8 @@ export const RootStore = types
 
     return { fetchSingle, fetchCollection }
   })
-  .actions(_ => {
-    // TODO
-    return {}
-  })
+
+export interface RootActions extends IStateTreeNode {
+  fetchSingle<T>(url: string): Promise<T>
+  fetchCollection<T>(url: string): Promise<T>
+}

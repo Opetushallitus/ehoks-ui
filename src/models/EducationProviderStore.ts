@@ -1,5 +1,6 @@
-import { flow, getRoot, types } from "mobx-state-tree"
+import { flow, getRoot, Instance, types } from "mobx-state-tree"
 import { EducationProviderInfo } from "models/EducationProviderInfo"
+import { RootActions } from "models/RootStore"
 
 const EducationProviderModel = {
   info: types.optional(EducationProviderInfo, {}),
@@ -9,15 +10,13 @@ const EducationProviderModel = {
 export const EducationProviderStore = types
   .model("EducationProviderStore", EducationProviderModel)
   .actions(self => {
-    // TODO: proper RootStore typing, for now cast to any,
-    // getRoot<typeof RootStore> creates circular reference when used with flow generator function
-    const root: any = getRoot(self)
+    const root = getRoot<RootActions>(self)
 
     const fetchInfo = flow(function*() {
       self.isLoading = true
-      const response = yield root.fetchSingle(
-        "http://localhost:3000/api/v1/education/info/"
-      )
+      const response: Instance<
+        typeof EducationProviderInfo
+      > = yield root.fetchSingle("http://localhost:3000/api/v1/education/info/")
       self.info = response
       self.isLoading = false
     })
