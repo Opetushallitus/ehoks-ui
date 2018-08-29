@@ -1,6 +1,8 @@
 import { RouteComponentProps } from "@reach/router"
 import { Header } from "components/Header"
 import { LinkItem } from "components/LinkItem"
+import { ListContainer } from "components/ListContainer"
+import { SubHeader } from "components/SubHeader"
 import { css } from "emotion"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
@@ -16,6 +18,10 @@ const linkItemStyles = css`
   margin-bottom: 6px;
 `
 
+const listContainerStyles = css`
+  background-color: #9b96ff;
+`
+
 @inject("store")
 @observer
 export class Goals extends React.Component<GoalsProps & RouteComponentProps> {
@@ -25,21 +31,30 @@ export class Goals extends React.Component<GoalsProps & RouteComponentProps> {
       <div>
         <Header>Omat tavoitteeni</Header>
 
-        <LinkItem
-          className={linkItemStyles}
-          title="Osaamisen tiedot ja urasuunnitelma"
-          subTitle="Viimeisin palaute 3.5.2018"
-          icon={<GoGraph size="24" color="#000" />}
-          to="/404"
-        />
+        <ListContainer className={listContainerStyles}>
+          <SubHeader
+            avatar="https://ui-avatars.com/api/?name=Kirsi+Korhonen&size=50"
+            title="Kirsi Korhonen"
+            subTitle="Ammattiopisto Studentia"
+            additionalText="14.4.-25.5.2018"
+          />
 
-        <LinkItem
-          className={linkItemStyles}
-          title="Tehtävät työpaikalla"
-          subTitle="Viimeisin palaute 18.4.2018"
-          icon={<GoOrganization size="24" color="#000" />}
-          to="/404"
-        />
+          <LinkItem
+            className={linkItemStyles}
+            title="Osaamisen tiedot ja urasuunnitelma"
+            subTitle="Viimeisin palaute 3.5.2018"
+            icon={<GoGraph size="24" color="#000" />}
+            to="/404"
+          />
+
+          <LinkItem
+            className={linkItemStyles}
+            title="Tehtävät työpaikalla"
+            subTitle="Viimeisin palaute 18.4.2018"
+            icon={<GoOrganization size="24" color="#000" />}
+            to="/404"
+          />
+        </ListContainer>
       </div>
     )
   }
