@@ -1,4 +1,4 @@
-import { Link, RouteComponentProps } from "@reach/router"
+import { RouteComponentProps } from "@reach/router"
 import { Header } from "components/Header"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
