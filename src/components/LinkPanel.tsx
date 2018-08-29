@@ -1,5 +1,5 @@
 import { Link, LinkProps } from "@reach/router"
-import * as React from "react"
+import React from "react"
 import styled, { css } from "react-emotion"
 
 const LinkPanelContainer = styled("div")`
