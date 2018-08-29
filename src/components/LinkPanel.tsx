@@ -3,19 +3,23 @@ import * as React from "react"
 import styled, { css } from "react-emotion"
 
 const LinkPanelContainer = styled("div")`
+  background-color: ${(props: LinkPanelProps) =>
+    props.backgroundColor || "#fff"};
+  border-radius: 4px;
+  margin: 0 0 10px 10px;
+`
+
+const Content = styled("div")`
   flex-direction: column;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 200px;
-  width: 100%;
-  background-color: ${(props: LinkPanelProps) =>
-    props.backgroundColor || "#fff"};
 `
 
 const Icon = styled("div")``
 const Text = styled("div")`
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
 `
 
@@ -37,8 +41,10 @@ export class LinkPanel extends React.Component<LinkPanelProps & LinkProps<{}>> {
     return (
       <Link className={linkStyles} to={to}>
         <LinkPanelContainer backgroundColor={backgroundColor}>
-          <Icon>{icon}</Icon>
-          <Text>{children}</Text>
+          <Content>
+            <Icon>{icon}</Icon>
+            <Text>{children}</Text>
+          </Content>
         </LinkPanelContainer>
       </Link>
     )

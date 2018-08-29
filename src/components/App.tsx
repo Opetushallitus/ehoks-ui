@@ -1,6 +1,6 @@
 import { Router } from "@reach/router"
 import { injectGlobal } from "emotion"
-import * as React from "react"
+import React from "react"
 import styled from "react-emotion"
 import Loadable from "react-loadable"
 import { Home } from "../routes/Home"
@@ -30,8 +30,12 @@ const Profile = Loadable({
 })
 
 injectGlobal`
-  * {
+  html {
     box-sizing: border-box;
+  }
+
+  *, *:before, *:after {
+    box-sizing: inherit;
   }
 
   html, body {
@@ -42,7 +46,7 @@ injectGlobal`
 `
 
 const Container = styled("div")`
-  margin: 20px;
+  margin: 0 20px 20px 20px;
 `
 
 export class App extends React.Component {

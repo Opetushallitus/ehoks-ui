@@ -1,4 +1,5 @@
 import { Link, RouteComponentProps } from "@reach/router"
+import { Header } from "components/Header"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import * as React from "react"
@@ -15,9 +16,7 @@ export class Goals extends React.Component<GoalsProps & RouteComponentProps> {
     // const { store } = this.props
     return (
       <div>
-        <h1>Omat tavoitteeni</h1>
-
-        <Link to="/">Etusivulle</Link>
+        <Header>Omat tavoitteeni</Header>
       </div>
     )
   }
