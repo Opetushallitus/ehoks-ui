@@ -1,8 +1,9 @@
 import { Link, RouteComponentProps } from "@reach/router"
+import { Header } from "components/Header"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import { LearningPeriod } from "models/LearningPeriod"
-import * as React from "react"
+import React from "react"
 import { RootStore } from "../models/RootStore"
 
 export interface LearningPeriodsProps {
@@ -23,7 +24,7 @@ export class LearningPeriods extends React.Component<
     const { learningPeriods } = store
     return (
       <div>
-        <h1>Työpaikalla</h1>
+        <Header>Työpaikalla</Header>
 
         <ul>
           {learningPeriods.map(
@@ -32,7 +33,6 @@ export class LearningPeriods extends React.Component<
             }
           )}
         </ul>
-        <Link to="/">Etusivulle</Link>
       </div>
     )
   }

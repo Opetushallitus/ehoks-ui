@@ -1,7 +1,8 @@
 import { Link, RouteComponentProps } from "@reach/router"
+import { Header } from "components/Header"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
-import * as React from "react"
+import React from "react"
 import { RootStore } from "../models/RootStore"
 
 export interface StudyInformationProps {
@@ -17,9 +18,7 @@ export class StudyInformation extends React.Component<
     // const { store } = this.props
     return (
       <div>
-        <h1>Tietoa opinnoista</h1>
-
-        <Link to="/">Etusivulle</Link>
+        <Header>Tietoa opinnoista</Header>
       </div>
     )
   }

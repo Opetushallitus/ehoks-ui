@@ -1,11 +1,12 @@
 import { RouteComponentProps } from "@reach/router"
+import { Header } from "components/Header"
 import { ListContainer } from "components/ListContainer"
 import { ListHeading } from "components/ListHeading"
 import { ListItem } from "components/ListItem"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import { RootStore } from "models/RootStore"
-import * as React from "react"
+import React from "react"
 
 import { LinkPanel } from "components/LinkPanel"
 import { LinkPanelContainer } from "components/LinkPanelContainer"
@@ -22,7 +23,7 @@ export class Home extends React.Component<HomeProps & RouteComponentProps> {
     // const { store } = this.props
     return (
       <div>
-        <h1>Polkuni osaamiseen</h1>
+        <Header>Polkuni osaamiseen</Header>
 
         <LinkPanelContainer>
           <LinkPanel
