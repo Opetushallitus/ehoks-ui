@@ -1,4 +1,5 @@
 import { RouteComponentProps } from "@reach/router"
+import { Button } from "components/Button"
 import { Header } from "components/Header"
 import { LinkItem } from "components/LinkItem"
 import { ListContainer } from "components/ListContainer"
@@ -25,6 +26,10 @@ const listContainerStyles = css`
 @inject("store")
 @observer
 export class Goals extends React.Component<GoalsProps & RouteComponentProps> {
+  sendMessage = () => {
+    // TODO
+  }
+
   render() {
     // const { store } = this.props
     return (
@@ -54,6 +59,10 @@ export class Goals extends React.Component<GoalsProps & RouteComponentProps> {
             icon={<GoOrganization size="24" color="#000" />}
             to="/404"
           />
+
+          <Button onClick={this.sendMessage}>
+            Lähetä viesti opiskelijalle
+          </Button>
         </ListContainer>
       </div>
     )
