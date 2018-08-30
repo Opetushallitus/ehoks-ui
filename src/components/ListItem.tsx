@@ -10,10 +10,6 @@ export interface ListItemProps {
   date?: string
 }
 
-export interface AvatarImageProps {
-  src?: string
-}
-
 const ListItemContainer = styled("div")`
   display: flex;
   align-items: center;

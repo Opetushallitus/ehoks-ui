@@ -1,5 +1,9 @@
 import styled from "react-emotion"
 
+export interface AvatarImageProps {
+  src?: string
+}
+
 export const AvatarImage = styled("div")`
   width: 64px;
   height: 64px;
