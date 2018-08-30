@@ -3,6 +3,7 @@ import { AdditionalText } from "components/AdditionalText"
 import { AvatarImage } from "components/AvatarImage"
 import { Button } from "components/Button"
 import { Header } from "components/Header"
+import { HorizontalLine } from "components/HorizontalLine"
 import { LinkItem } from "components/LinkItem"
 import { ListContainer } from "components/ListContainer"
 import { SubHeader } from "components/SubHeader"
@@ -57,6 +58,8 @@ export class Goals extends React.Component<GoalsProps & RouteComponentProps> {
             subTitle="Ammattiopisto Studentia"
             additionalContent={<AdditionalText>14.4.-25.5.2018</AdditionalText>}
           />
+
+          <HorizontalLine />
 
           <SubHeader
             icon={<GoLightBulb size="32" className={listHeadingIconStyles} />}
