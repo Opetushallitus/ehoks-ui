@@ -1,4 +1,6 @@
 import { RouteComponentProps } from "@reach/router"
+import { AdditionalText } from "components/AdditionalText"
+import { AvatarImage } from "components/AvatarImage"
 import { Button } from "components/Button"
 import { Header } from "components/Header"
 import { LinkItem } from "components/LinkItem"
@@ -8,7 +10,7 @@ import { css } from "emotion"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
-import { GoGraph, GoOrganization } from "react-icons/go"
+import { GoGraph, GoLightBulb, GoOrganization, GoX } from "react-icons/go"
 import { RootStore } from "../models/RootStore"
 
 export interface GoalsProps {
@@ -23,11 +25,21 @@ const listContainerStyles = css`
   background-color: #9b96ff;
 `
 
+const listHeadingIconStyles = css`
+  margin: 0 10px 0 0;
+`
+
 @inject("store")
 @observer
 export class Goals extends React.Component<GoalsProps & RouteComponentProps> {
   sendMessage = () => {
     // TODO
+    console.log("Send message")
+  }
+
+  closeView = () => {
+    // TODO
+    console.log("Close view")
   }
 
   render() {
@@ -38,10 +50,21 @@ export class Goals extends React.Component<GoalsProps & RouteComponentProps> {
 
         <ListContainer className={listContainerStyles}>
           <SubHeader
-            avatar="https://ui-avatars.com/api/?name=Kirsi+Korhonen&size=50"
+            icon={
+              <AvatarImage src="https://ui-avatars.com/api/?name=Kirsi+Korhonen&size=50" />
+            }
             title="Kirsi Korhonen"
             subTitle="Ammattiopisto Studentia"
-            additionalText="14.4.-25.5.2018"
+            additionalContent={<AdditionalText>14.4.-25.5.2018</AdditionalText>}
+          />
+
+          <SubHeader
+            icon={<GoLightBulb size="32" className={listHeadingIconStyles} />}
+            title="Tehtävät työpaikalla"
+            subTitle="Kuljettajana toimiminen"
+            additionalContent={
+              <GoX size="24" color="#fff" onClick={this.closeView} />
+            }
           />
 
           <LinkItem

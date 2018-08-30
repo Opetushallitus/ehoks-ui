@@ -1,4 +1,3 @@
-import { AvatarImage } from "components/AvatarImage"
 import { TitleContainer } from "components/TitleContainer"
 import React from "react"
 import styled from "react-emotion"
@@ -22,30 +21,24 @@ const SubTitle = styled("div")`
   color: #fff;
 `
 
-const AdditionalText = styled("div")`
-  font-size: 18px;
-  font-weight: bold;
-  margin-left: 16px;
-`
-
 export interface SubHeaderProps {
-  avatar?: string
+  icon?: React.ReactNode
   title?: React.ReactNode
   subTitle?: React.ReactNode
-  additionalText?: React.ReactNode
+  additionalContent?: React.ReactNode
 }
 
 export class SubHeader extends React.Component<SubHeaderProps> {
   render() {
-    const { avatar, title, subTitle, additionalText } = this.props
+    const { icon, title, subTitle, additionalContent } = this.props
     return (
       <SubHeaderContainer>
-        <AvatarImage src={avatar} />
+        {icon}
         <TitleContainer>
           <Title>{title}</Title>
           <SubTitle>{subTitle}</SubTitle>
         </TitleContainer>
-        <AdditionalText>{additionalText}</AdditionalText>
+        {additionalContent}
       </SubHeaderContainer>
     )
   }
