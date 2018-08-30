@@ -250,9 +250,16 @@ exports[`App renders correctly 1`] = `
         className="css-1lwwmej"
       >
         <h1
-          className="css-1k01i6"
+          className="css-1qiyj5c"
         >
-          Viestit
+          <div
+            className="css-1qkfsjs"
+          >
+            Viestit
+          </div>
+          <div
+            className="css-1fn9qdc"
+          />
         </h1>
         <div
           className="css-1sg2lsz"
