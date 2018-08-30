@@ -4,7 +4,7 @@ import mapObj from "map-obj"
 import { flow, getEnv, types } from "mobx-state-tree"
 import { EducationProviderStore } from "models/EducationProviderStore"
 import { StudentStore } from "models/StudentStore"
-import { WorkplaceProviderStore } from "models/WorkPlaceProviderStore"
+import { WorkplaceProviderStore } from "models/WorkplaceProviderStore"
 import { LearningPeriod } from "./LearningPeriod"
 
 const RootStoreModel = {
