@@ -5,10 +5,10 @@ import renderer from "react-test-renderer"
 import { translations } from "./translations"
 
 // mocked fetch using local json files
-export const mockFetch = (url: string) => {
+export const mockFetch = (version = 0) => (url: string) => {
   const [, path] = url.split("http://localhost:3000/")
   return Promise.resolve(
-    require("./models/mocks/" + path.replace(/\//g, "_") + ".json")
+    require("./models/mocks/" + path.replace(/\//g, "_") + version + ".json")
   )
 }
 
