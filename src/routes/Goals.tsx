@@ -2,7 +2,6 @@ import { RouteComponentProps } from "@reach/router"
 import { AdditionalText } from "components/AdditionalText"
 import { AvatarImage } from "components/AvatarImage"
 import { Button } from "components/Button"
-import { Header } from "components/Header"
 import { HorizontalLine } from "components/HorizontalLine"
 import { LinkItem } from "components/LinkItem"
 import { ListContainer } from "components/ListContainer"
@@ -47,8 +46,6 @@ export class Goals extends React.Component<GoalsProps & RouteComponentProps> {
     // const { store } = this.props
     return (
       <div>
-        <Header>Omat tavoitteeni</Header>
-
         <ListContainer className={listContainerStyles}>
           <SubHeader
             icon={

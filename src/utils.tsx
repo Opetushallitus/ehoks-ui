@@ -1,3 +1,4 @@
+import { InjectedStores } from "models/RootStore"
 import React from "react"
 import { IntlProvider } from "react-intl"
 import renderer from "react-test-renderer"
@@ -12,8 +13,10 @@ export const mockFetch = (url: string) => {
 }
 
 // fetch that returns the JSON directly
-export const fetch = (url: string) =>
-  window.fetch(url).then(response => response.json())
+export const fetch = (url: string | Request, init: RequestInit) =>
+  window
+    .fetch(url, { credentials: "include", ...init })
+    .then(response => response.json())
 
 function defaultCreateNodeMock(): null {
   return null
@@ -32,3 +35,7 @@ export const createComponentWithIntl = (
     options
   )
 }
+
+export const injectSession = (stores: InjectedStores) => ({
+  session: stores.store.session
+})

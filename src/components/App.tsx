@@ -1,8 +1,13 @@
 import { Router } from "@reach/router"
+import { Header } from "components/Header"
 import { injectGlobal } from "emotion"
+import { inject, observer } from "mobx-react"
+import { Instance } from "mobx-state-tree"
+import { SessionStore } from "models/SessionStore"
 import React from "react"
 import styled from "react-emotion"
 import Loadable from "react-loadable"
+import { injectSession } from "utils"
 import { Home } from "../routes/Home"
 
 const LoadingComponent = () => <div>Loading...</div>
@@ -49,10 +54,22 @@ const Container = styled("div")`
   margin: 0 20px 20px 20px;
 `
 
-export class App extends React.Component {
+export interface AppProps {
+  session?: Instance<typeof SessionStore>
+}
+
+@inject(injectSession)
+@observer
+export class App extends React.Component<AppProps> {
+  componentDidMount() {
+    // load user session info from backend
+    this.props.session.checkSession()
+  }
+
   render() {
     return (
       <Container>
+        <Header>Polkuni osaamiseen</Header>
         <Router>
           <Home path="/" />
           <LearningPeriods path="learnings" />

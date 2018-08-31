@@ -1,11 +1,23 @@
 import camelCase from "lodash.camelcase"
 // import kebabCase from "lodash.kebabcase"
 import mapObj from "map-obj"
-import { flow, getEnv, types } from "mobx-state-tree"
+import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { EducationProviderStore } from "models/EducationProviderStore"
+import { SessionStore } from "models/SessionStore"
 import { StudentStore } from "models/StudentStore"
 import { WorkplaceProviderStore } from "models/WorkplaceProviderStore"
 import { LearningPeriod } from "./LearningPeriod"
+
+export interface ApiResponse<T> {
+  meta: {
+    [name: string]: any
+  }
+  data: T
+}
+
+export interface InjectedStores {
+  store: Instance<typeof RootStore>
+}
 
 const RootStoreModel = {
   activeLocale: types.optional(
@@ -15,6 +27,7 @@ const RootStoreModel = {
   education: types.optional(EducationProviderStore, { info: {} }),
   isLoading: false,
   learningPeriods: types.optional(types.array(LearningPeriod), []),
+  session: types.optional(SessionStore, {}),
   student: types.optional(StudentStore, { info: {} }),
   work: types.optional(WorkplaceProviderStore, { info: {} })
 }
@@ -30,7 +43,10 @@ export const RootStore = types
   .actions(self => {
     const fetchSingle = flow(function*(url: string) {
       const response = yield self.fetch(url)
-      const model = response.data && response.data[0] ? response.data[0] : {}
+      const model = {
+        data: response.data && response.data[0] ? response.data[0] : null,
+        meta: response.meta
+      }
       // camelCase kebab-cased object keys recursively so we can use dot syntax for accessing values
       return mapObj(
         model,
@@ -43,10 +59,15 @@ export const RootStore = types
 
     const fetchCollection = flow(function*(url: string) {
       const response = yield self.fetch(url)
-      console.log("fetchCollection", response)
       const model = response.data ? response.data : []
       return model
     })
 
-    return { fetchSingle, fetchCollection }
+    const deleteResource = flow(function*(url: string) {
+      const response = yield self.fetch(url, { method: "DELETE" })
+      const model = response.data ? response.data : []
+      return model
+    })
+
+    return { fetchSingle, fetchCollection, deleteResource }
   })

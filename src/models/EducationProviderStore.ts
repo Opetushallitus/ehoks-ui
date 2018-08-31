@@ -1,6 +1,7 @@
+import { apiUrl } from "config"
 import { flow, getRoot, Instance, types } from "mobx-state-tree"
 import { EducationProviderInfo } from "models/EducationProviderInfo"
-import { RootStore } from "models/RootStore"
+import { ApiResponse, RootStore } from "models/RootStore"
 
 const EducationProviderModel = {
   info: types.optional(EducationProviderInfo, {}),
@@ -14,10 +15,10 @@ export const EducationProviderStore = types
 
     const fetchInfo = flow(function*(): any {
       self.isLoading = true
-      const response: Instance<
-        typeof EducationProviderInfo
-      > = yield root.fetchSingle("http://localhost:3000/api/v1/education/info/")
-      self.info = response
+      const response: ApiResponse<
+        Instance<typeof EducationProviderInfo>
+      > = yield root.fetchSingle(apiUrl("education/info/"))
+      self.info = response.data
       self.isLoading = false
     })
 
