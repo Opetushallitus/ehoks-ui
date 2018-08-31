@@ -4,7 +4,7 @@ import { RootStore } from "../RootStore"
 
 describe("Student info", () => {
   test("Fetching works", () => {
-    const store = RootStore.create({}, { fetch: mockFetch })
+    const store = RootStore.create({}, { fetch: mockFetch() })
 
     expect(store.student.isLoading).toBe(false)
     expect(store.student.info).toEqual({

@@ -6,7 +6,7 @@ import { App } from "../App"
 
 it("App renders correctly", () => {
   // pass fetch to root store using DI, so we can easily mock it in tests
-  const store = RootStore.create({}, { fetch: mockFetch })
+  const store = RootStore.create({}, { fetch: mockFetch() })
   const tree = createComponentWithIntl(
     <Provider store={store}>
       <App />

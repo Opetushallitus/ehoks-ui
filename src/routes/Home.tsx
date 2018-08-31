@@ -1,5 +1,4 @@
 import { RouteComponentProps } from "@reach/router"
-import { Header } from "components/Header"
 import { ListContainer } from "components/ListContainer"
 import { ListHeading } from "components/ListHeading"
 import { ListItem } from "components/ListItem"
@@ -23,8 +22,6 @@ export class Home extends React.Component<HomeProps & RouteComponentProps> {
     // const { store } = this.props
     return (
       <div>
-        <Header>Polkuni osaamiseen</Header>
-
         <LinkPanelContainer>
           <LinkPanel
             to="/learnings"

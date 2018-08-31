@@ -1,5 +1,6 @@
+import { apiUrl } from "config"
 import { flow, getRoot, Instance, types } from "mobx-state-tree"
-import { RootStore } from "models/RootStore"
+import { ApiResponse, RootStore } from "models/RootStore"
 import { WorkplaceProviderInfo } from "models/WorkplaceProviderInfo"
 
 const WorkplaceProviderModel = {
@@ -14,10 +15,10 @@ export const WorkplaceProviderStore = types
 
     const fetchInfo = flow(function*(): any {
       self.isLoading = true
-      const response: Instance<
-        typeof WorkplaceProviderInfo
-      > = yield root.fetchSingle("http://localhost:3000/api/v1/work/info/")
-      self.info = response
+      const response: ApiResponse<
+        Instance<typeof WorkplaceProviderInfo>
+      > = yield root.fetchSingle(apiUrl("work/info/"))
+      self.info = response.data
       self.isLoading = false
     })
 

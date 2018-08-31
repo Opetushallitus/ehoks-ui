@@ -1,5 +1,4 @@
 import { RouteComponentProps } from "@reach/router"
-import { Header } from "components/Header"
 import { ListContainer } from "components/ListContainer"
 import { ListHeading } from "components/ListHeading"
 import { css } from "emotion"
@@ -36,8 +35,6 @@ export class StudyInformation extends React.Component<
     // const { store } = this.props
     return (
       <div>
-        <Header>Tietoa opinnoista</Header>
-
         <ListContainer className={listContainerStyles}>
           <ListHeading
             className={listHeadingStyles}

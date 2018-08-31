@@ -1,5 +1,4 @@
 import { RouteComponentProps } from "@reach/router"
-import { Header } from "components/Header"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
@@ -16,10 +15,6 @@ export class Profile extends React.Component<
 > {
   render() {
     // const { store } = this.props
-    return (
-      <div>
-        <Header>Omat tietoni</Header>
-      </div>
-    )
+    return <div />
   }
 }
