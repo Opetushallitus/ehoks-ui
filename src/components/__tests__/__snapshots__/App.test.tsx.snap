@@ -5,6 +5,58 @@ exports[`App renders correctly 1`] = `
   className="css-78em4j"
 >
   <div
+    className="css-e8o6m3"
+  >
+    <a
+      aria-current="page"
+      href="/"
+      onClick={[Function]}
+    >
+      <svg
+        attr={
+          Object {
+            "viewBox": "0 0 12 16",
+          }
+        }
+        color="#fff"
+        fill="currentColor"
+        height="48"
+        size="48"
+        stroke="currentColor"
+        strokeWidth="0"
+        style={
+          Object {
+            "color": "#fff",
+          }
+        }
+        viewBox="0 0 12 16"
+        width="48"
+      >
+        <path
+          d="M11.41 9H.59C0 9 0 8.59 0 8c0-.59 0-1 .59-1H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1h.01zm0-4H.59C0 5 0 4.59 0 4c0-.59 0-1 .59-1H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1h.01zM.59 11H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1H.59C0 13 0 12.59 0 12c0-.59 0-1 .59-1z"
+          fillRule="evenodd"
+        />
+      </svg>
+    </a>
+    <div
+      className="css-1qga99y"
+    >
+      Polkuni osaamiseen
+    </div>
+    <div
+      className="css-zm2lsd"
+    >
+      <a
+        aria-current="page"
+        className="css-1yi2a9k"
+        href="/"
+        onClick={[Function]}
+      >
+        Kirjaudu
+      </a>
+    </div>
+  </div>
+  <div
     role="group"
     style={
       Object {
@@ -14,46 +66,6 @@ exports[`App renders correctly 1`] = `
     tabIndex="-1"
   >
     <div>
-      <div
-        className="css-e8o6m3"
-      >
-        <a
-          aria-current="page"
-          href="/"
-          onClick={[Function]}
-        >
-          <svg
-            attr={
-              Object {
-                "viewBox": "0 0 12 16",
-              }
-            }
-            color="#fff"
-            fill="currentColor"
-            height="48"
-            size="48"
-            stroke="currentColor"
-            strokeWidth="0"
-            style={
-              Object {
-                "color": "#fff",
-              }
-            }
-            viewBox="0 0 12 16"
-            width="48"
-          >
-            <path
-              d="M11.41 9H.59C0 9 0 8.59 0 8c0-.59 0-1 .59-1H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1h.01zm0-4H.59C0 5 0 4.59 0 4c0-.59 0-1 .59-1H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1h.01zM.59 11H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1H.59C0 13 0 12.59 0 12c0-.59 0-1 .59-1z"
-              fillRule="evenodd"
-            />
-          </svg>
-        </a>
-        <div
-          className="css-2snzy"
-        >
-          Polkuni osaamiseen
-        </div>
-      </div>
       <div
         className="css-1r8gget"
       >
