@@ -3,7 +3,7 @@ import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import { LearningPeriod } from "models/LearningPeriod"
 import React from "react"
-import { RootStore } from "../models/RootStore"
+import { RootStore } from "stores/RootStore"
 
 export interface LearningPeriodsProps {
   store?: Instance<typeof RootStore>

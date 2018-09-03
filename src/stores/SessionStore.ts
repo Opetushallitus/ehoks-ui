@@ -1,7 +1,7 @@
 import { apiUrl } from "config"
 import { flow, getRoot, Instance, types } from "mobx-state-tree"
-import { RootStore } from "models/RootStore"
 import { SessionUser } from "models/SessionUser"
+import { RootStore } from "stores/RootStore"
 
 const SessionStoreModel = {
   isLoading: false,

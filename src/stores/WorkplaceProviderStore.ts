@@ -1,7 +1,7 @@
 import { apiUrl } from "config"
 import { flow, getRoot, Instance, types } from "mobx-state-tree"
-import { ApiResponse, RootStore } from "models/RootStore"
 import { WorkplaceProviderInfo } from "models/WorkplaceProviderInfo"
+import { ApiResponse, RootStore } from "stores/RootStore"
 
 const WorkplaceProviderModel = {
   info: types.optional(WorkplaceProviderInfo, {}),

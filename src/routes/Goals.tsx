@@ -11,7 +11,7 @@ import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
 import { GoGraph, GoLightBulb, GoOrganization, GoX } from "react-icons/go"
-import { RootStore } from "../models/RootStore"
+import { RootStore } from "stores/RootStore"
 
 export interface GoalsProps {
   store?: Instance<typeof RootStore>

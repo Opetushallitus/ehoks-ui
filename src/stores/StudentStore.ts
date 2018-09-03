@@ -1,7 +1,7 @@
 import { apiUrl } from "config"
 import { flow, getRoot, Instance, types } from "mobx-state-tree"
-import { ApiResponse, RootStore } from "models/RootStore"
 import { StudentInfo } from "models/StudentInfo"
+import { ApiResponse, RootStore } from "stores/RootStore"
 
 const StudentStoreModel = {
   info: types.optional(StudentInfo, {}),

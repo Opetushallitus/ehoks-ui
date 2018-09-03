@@ -2,7 +2,7 @@ import { RouteComponentProps } from "@reach/router"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
-import { RootStore } from "../models/RootStore"
+import { RootStore } from "stores/RootStore"
 
 export interface ProfileProps {
   store?: Instance<typeof RootStore>

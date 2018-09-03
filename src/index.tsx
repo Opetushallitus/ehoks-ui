@@ -6,7 +6,7 @@ import { addLocaleData, IntlProvider } from "react-intl"
 import fi from "react-intl/locale-data/fi"
 import sv from "react-intl/locale-data/sv"
 import { App } from "./components/App"
-import { RootStore } from "./models/RootStore"
+import { RootStore } from "./stores/RootStore"
 import { translations } from "./translations"
 import { fetch } from "./utils"
 

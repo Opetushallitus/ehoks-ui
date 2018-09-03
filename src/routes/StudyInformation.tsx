@@ -6,7 +6,7 @@ import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
 import { GoLightBulb } from "react-icons/go"
-import { RootStore } from "../models/RootStore"
+import { RootStore } from "stores/RootStore"
 
 export interface StudyInformationProps {
   store?: Instance<typeof RootStore>

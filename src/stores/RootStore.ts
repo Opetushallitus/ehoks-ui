@@ -2,11 +2,11 @@ import camelCase from "lodash.camelcase"
 // import kebabCase from "lodash.kebabcase"
 import mapObj from "map-obj"
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
-import { EducationProviderStore } from "models/EducationProviderStore"
-import { SessionStore } from "models/SessionStore"
-import { StudentStore } from "models/StudentStore"
-import { WorkplaceProviderStore } from "models/WorkplaceProviderStore"
-import { LearningPeriod } from "./LearningPeriod"
+import { LearningPeriod } from "models/LearningPeriod"
+import { EducationProviderStore } from "stores/EducationProviderStore"
+import { SessionStore } from "stores/SessionStore"
+import { StudentStore } from "stores/StudentStore"
+import { WorkplaceProviderStore } from "stores/WorkplaceProviderStore"
 
 export interface ApiResponse<T> {
   meta: {

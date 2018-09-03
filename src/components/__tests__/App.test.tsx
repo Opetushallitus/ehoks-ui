@@ -1,6 +1,6 @@
 import { Provider } from "mobx-react"
 import React from "react"
-import { RootStore } from "../../models/RootStore"
+import { RootStore } from "stores/RootStore"
 import { createComponentWithIntl, mockFetch } from "../../utils"
 import { App } from "../App"
 

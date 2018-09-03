@@ -1,10 +1,10 @@
 import { Link } from "@reach/router"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
-import { SessionStore } from "models/SessionStore"
 import React from "react"
 import styled from "react-emotion"
 import { GoThreeBars } from "react-icons/go"
+import { SessionStore } from "stores/SessionStore"
 import { injectSession } from "utils"
 
 const HeaderContainer = styled("div")`
