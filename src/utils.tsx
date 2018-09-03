@@ -1,3 +1,4 @@
+import { apiUrl } from "config"
 import { InjectedStores } from "models/RootStore"
 import React from "react"
 import { IntlProvider } from "react-intl"
@@ -6,7 +7,7 @@ import { translations } from "./translations"
 
 // mocked fetch using local json files
 export const mockFetch = (version = 0) => (url: string) => {
-  const [, path] = url.split("http://localhost:3000/")
+  const [, path] = url.split(apiUrl(""))
   return Promise.resolve(
     require("./models/mocks/" + path.replace(/\//g, "_") + version + ".json")
   )
