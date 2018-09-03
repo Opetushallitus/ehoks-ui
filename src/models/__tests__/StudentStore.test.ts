@@ -2,8 +2,8 @@ import { when } from "mobx"
 import { mockFetch } from "../../utils"
 import { RootStore } from "../RootStore"
 
-describe("Student info", () => {
-  test("Fetching works", () => {
+describe("StudentStore", () => {
+  test("fetchInfo", () => {
     const store = RootStore.create({}, { fetch: mockFetch() })
 
     expect(store.student.isLoading).toBe(false)

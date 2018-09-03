@@ -46,4 +46,34 @@ describe("SessionStore", () => {
       }
     )
   })
+
+  test("logout", () => {
+    const store = RootStore.create(
+      {
+        session: {
+          user: {
+            commonName: "Teuvo",
+            firstName: "Teuvo Taavetti",
+            surname: "Testaaja"
+          }
+        }
+      },
+      { fetch: mockFetch(2) }
+    )
+    expect(store.session.user).toEqual({
+      commonName: "Teuvo",
+      firstName: "Teuvo Taavetti",
+      surname: "Testaaja"
+    })
+
+    store.session.logout()
+    expect(store.session.isLoading).toBe(true)
+
+    when(
+      () => !store.session.isLoading,
+      () => {
+        expect(store.session.user).toEqual(null)
+      }
+    )
+  })
 })
