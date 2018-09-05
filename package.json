@@ -70,7 +70,8 @@
       "models(.*)$": "<rootDir>/src/models$1",
       "stores(.*)$": "<rootDir>/src/stores$1",
       "^config$": "<rootDir>/src/config",
-      "^utils$": "<rootDir>/src/utils"
+      "^utils$": "<rootDir>/src/utils",
+      "^testUtils$": "<rootDir>/src/testUtils"
     }
   }
 }

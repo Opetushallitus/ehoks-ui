@@ -14,7 +14,8 @@
         "models",
         "stores",
         "config",
-        "utils"
+        "utils",
+        "testUtils"
       ]
     ],
     "no-console": false,
