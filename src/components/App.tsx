@@ -46,12 +46,16 @@ injectGlobal`
   html, body {
     margin: 0;
     padding: 0;
-    background: #2b2b50;
+    background: #fff;
+  }
+
+  body  {
+    font-family: 'Source Sans Pro', sans-serif;
   }
 `
 
 const Container = styled("div")`
-  margin: 0 20px 20px 20px;
+  margin: 0;
 `
 
 export interface AppProps {
