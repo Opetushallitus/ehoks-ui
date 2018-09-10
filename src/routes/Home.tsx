@@ -29,6 +29,34 @@ const Hero = styled("div")`
   }
 `
 
+const Content = styled("div")`
+  display: flex;
+
+  @media screen and (max-width: ${breakpoints.Desktop}px) {
+    display: block;
+  }
+`
+
+const NewsContainer = styled("div")`
+  flex: 1;
+`
+
+const CurrentNews = styled("div")`
+  margin: 0 20px 0 30px;
+
+  h2 {
+    font-weight: 400;
+    font-size: 28px;
+    margin: 0;
+    border-bottom: 1px solid #979797;
+    padding-bottom: 8px;
+  }
+
+  @media screen and (max-width: ${breakpoints.Desktop}px) {
+    margin: 0 20px;
+  }
+`
+
 const Description = styled("div")`
   flex: 1;
   margin: 20px;
@@ -86,20 +114,27 @@ export class Home extends React.Component<HomeProps & RouteComponentProps> {
             </LoginButton>
           </LoginContainer>
         </Hero>
-        <LinkPanelContainer>
-          <LinkPanel
-            to="henkilokohtaistaminen"
-            title="Mitä opintojen henkilökohtaistaminen tarkoittaa?"
-            description="Opiskelu sovitetaan lähtötilanteeseesi..."
-            image={students}
-          />
-          <LinkPanel
-            to="ammattitutkinto"
-            title="Mitä ammattitutkinto sisältää?"
-            description="Jokaiselle tutkinnon osalle on ammattitaitovaatimukset..."
-            image={education}
-          />
-        </LinkPanelContainer>
+        <Content>
+          <LinkPanelContainer>
+            <LinkPanel
+              to="henkilokohtaistaminen"
+              title="Mitä opintojen henkilökohtaistaminen tarkoittaa?"
+              description="Opiskelu sovitetaan lähtötilanteeseesi..."
+              image={students}
+            />
+            <LinkPanel
+              to="ammattitutkinto"
+              title="Mitä ammattitutkinto sisältää?"
+              description="Jokaiselle tutkinnon osalle on ammattitaitovaatimukset..."
+              image={education}
+            />
+          </LinkPanelContainer>
+          <NewsContainer>
+            <CurrentNews>
+              <h2>Ajankohtaista</h2>
+            </CurrentNews>
+          </NewsContainer>
+        </Content>
       </Container>
     )
   }

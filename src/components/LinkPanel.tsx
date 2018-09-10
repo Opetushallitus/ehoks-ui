@@ -28,12 +28,12 @@ const Image = styled("div")`
 `
 
 const Title = styled("div")`
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 300;
   text-transform: uppercase;
 `
 const Description = styled("div")`
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 300;
 `
 

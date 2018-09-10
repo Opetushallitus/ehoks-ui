@@ -10,6 +10,7 @@ const Container = styled("div")`
   flex-direction: row;
   flex-wrap: wrap;
   margin: 0 20px 0 10px;
+  flex: 1;
 `
 
 export class LinkPanelContainer extends React.Component<
