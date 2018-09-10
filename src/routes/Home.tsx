@@ -1,11 +1,16 @@
 import { RouteComponentProps } from "@reach/router"
 import { HeroButton } from "components/Button"
+import { LinkPanel } from "components/LinkPanel"
+import { LinkPanelContainer } from "components/LinkPanelContainer"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
 import { SessionStore } from "stores/SessionStore"
 import { breakpoints, injectSession } from "utils"
+
+import education from "./Home/education.jpg"
+import students from "./Home/students.jpg"
 
 export interface HomeProps {
   session?: Instance<typeof SessionStore>
@@ -81,6 +86,20 @@ export class Home extends React.Component<HomeProps & RouteComponentProps> {
             </LoginButton>
           </LoginContainer>
         </Hero>
+        <LinkPanelContainer>
+          <LinkPanel
+            to="henkilokohtaistaminen"
+            title="Mitä opintojen henkilökohtaistaminen tarkoittaa?"
+            description="Opiskelu sovitetaan lähtötilanteeseesi..."
+            image={students}
+          />
+          <LinkPanel
+            to="ammattitutkinto"
+            title="Mitä ammattitutkinto sisältää?"
+            description="Jokaiselle tutkinnon osalle on ammattitaitovaatimukset..."
+            image={education}
+          />
+        </LinkPanelContainer>
       </Container>
     )
   }

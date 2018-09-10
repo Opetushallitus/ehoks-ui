@@ -7,8 +7,9 @@ export interface LinkPanelContainerProps {
 
 const Container = styled("div")`
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
-  margin: 0 0 0 -10px;
+  margin: 0 20px 0 10px;
 `
 
 export class LinkPanelContainer extends React.Component<

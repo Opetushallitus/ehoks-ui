@@ -88,6 +88,64 @@ exports[`App renders correctly 1`] = `
           </button>
         </div>
       </div>
+      <div
+        className="css-1eoo5s5"
+      >
+        <a
+          className="css-45hafh"
+          href="/henkilokohtaistaminen"
+          onClick={[Function]}
+        >
+          <div
+            className="css-11ch4l6"
+          >
+            <div
+              className="css-1hpt1xw"
+            >
+              <div
+                className="css-1oqliwv"
+              >
+                Mitä opintojen henkilökohtaistaminen tarkoittaa?
+              </div>
+              <div
+                className="css-1yde7tr"
+              >
+                Opiskelu sovitetaan lähtötilanteeseesi...
+              </div>
+            </div>
+            <div
+              className="css-1iyarow"
+            />
+          </div>
+        </a>
+        <a
+          className="css-45hafh"
+          href="/ammattitutkinto"
+          onClick={[Function]}
+        >
+          <div
+            className="css-11ch4l6"
+          >
+            <div
+              className="css-1hpt1xw"
+            >
+              <div
+                className="css-1oqliwv"
+              >
+                Mitä ammattitutkinto sisältää?
+              </div>
+              <div
+                className="css-1yde7tr"
+              >
+                Jokaiselle tutkinnon osalle on ammattitaitovaatimukset...
+              </div>
+            </div>
+            <div
+              className="css-1iyarow"
+            />
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </div>
