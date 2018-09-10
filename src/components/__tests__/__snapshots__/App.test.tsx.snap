@@ -89,62 +89,77 @@ exports[`App renders correctly 1`] = `
         </div>
       </div>
       <div
-        className="css-1eoo5s5"
+        className="css-1doyckw"
       >
-        <a
-          className="css-45hafh"
-          href="/henkilokohtaistaminen"
-          onClick={[Function]}
+        <div
+          className="css-bne7m7"
         >
-          <div
-            className="css-11ch4l6"
+          <a
+            className="css-45hafh"
+            href="/henkilokohtaistaminen"
+            onClick={[Function]}
           >
             <div
-              className="css-1hpt1xw"
+              className="css-11ch4l6"
             >
               <div
-                className="css-1oqliwv"
+                className="css-1hpt1xw"
               >
-                Mitä opintojen henkilökohtaistaminen tarkoittaa?
+                <div
+                  className="css-11d1k1t"
+                >
+                  Mitä opintojen henkilökohtaistaminen tarkoittaa?
+                </div>
+                <div
+                  className="css-1wyo0f4"
+                >
+                  Opiskelu sovitetaan lähtötilanteeseesi...
+                </div>
               </div>
               <div
-                className="css-1yde7tr"
-              >
-                Opiskelu sovitetaan lähtötilanteeseesi...
-              </div>
+                className="css-1iyarow"
+              />
             </div>
-            <div
-              className="css-1iyarow"
-            />
-          </div>
-        </a>
-        <a
-          className="css-45hafh"
-          href="/ammattitutkinto"
-          onClick={[Function]}
-        >
-          <div
-            className="css-11ch4l6"
+          </a>
+          <a
+            className="css-45hafh"
+            href="/ammattitutkinto"
+            onClick={[Function]}
           >
             <div
-              className="css-1hpt1xw"
+              className="css-11ch4l6"
             >
               <div
-                className="css-1oqliwv"
+                className="css-1hpt1xw"
               >
-                Mitä ammattitutkinto sisältää?
+                <div
+                  className="css-11d1k1t"
+                >
+                  Mitä ammattitutkinto sisältää?
+                </div>
+                <div
+                  className="css-1wyo0f4"
+                >
+                  Jokaiselle tutkinnon osalle on ammattitaitovaatimukset...
+                </div>
               </div>
               <div
-                className="css-1yde7tr"
-              >
-                Jokaiselle tutkinnon osalle on ammattitaitovaatimukset...
-              </div>
+                className="css-1iyarow"
+              />
             </div>
-            <div
-              className="css-1iyarow"
-            />
+          </a>
+        </div>
+        <div
+          className="css-yp9swi"
+        >
+          <div
+            className="css-19g5rjb"
+          >
+            <h2>
+              Ajankohtaista
+            </h2>
           </div>
-        </a>
+        </div>
       </div>
     </div>
   </div>
