@@ -7,53 +7,49 @@ exports[`App renders correctly 1`] = `
   <div
     className="css-jh12o8"
   >
-    <a
-      aria-current="page"
-      href="/"
-      onClick={[Function]}
-    >
-      <svg
-        attr={
-          Object {
-            "viewBox": "0 0 12 16",
-          }
-        }
-        color="#fff"
-        fill="currentColor"
-        height="48"
-        size="48"
-        stroke="currentColor"
-        strokeWidth="0"
-        style={
-          Object {
-            "color": "#fff",
-          }
-        }
-        viewBox="0 0 12 16"
-        width="48"
-      >
-        <path
-          d="M11.41 9H.59C0 9 0 8.59 0 8c0-.59 0-1 .59-1H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1h.01zm0-4H.59C0 5 0 4.59 0 4c0-.59 0-1 .59-1H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1h.01zM.59 11H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1H.59C0 13 0 12.59 0 12c0-.59 0-1 .59-1z"
-          fillRule="evenodd"
-        />
-      </svg>
-    </a>
     <div
-      className="css-1qga99y"
+      className="css-oi691e"
     >
-      Polkuni osaamiseen
+      <div
+        className="css-1jb87fu"
+      >
+        <a
+          className="css-vphjtl"
+          href="https://opintopolku.fi/"
+        >
+          Opintopolku.fi
+        </a>
+        <a
+          className="css-vphjtl"
+          href="https://opintopolku.fi/oma-opintopolku/"
+        >
+          Oma Opintopolku
+        </a>
+        <a
+          className="css-vphjtl"
+          href="https://eperusteet.opintopolku.fi/"
+        >
+          ePerusteet
+        </a>
+        <a
+          className="css-qtdcwy"
+          href="/"
+        >
+          eHOKS
+        </a>
+      </div>
     </div>
     <div
-      className="css-zm2lsd"
+      className="css-1pk09a"
     >
-      <a
-        aria-current="page"
-        className="css-1yi2a9k"
-        href="/"
-        onClick={[Function]}
+      <div
+        className="css-s2r9ht"
       >
-        Kirjaudu
-      </a>
+        eHOKS
+      </div>
+      <div
+        className="css-6iqd4x"
+      />
     </div>
   </div>
   <div
@@ -65,282 +61,31 @@ exports[`App renders correctly 1`] = `
     }
     tabIndex="-1"
   >
-    <div>
+    <div
+      className="css-or2l27"
+    >
       <div
-        className="css-1r8gget"
+        className="css-1doyckw"
       >
-        <a
-          className="css-1xdr7j6"
-          href="/learnings"
-          onClick={[Function]}
-        >
-          <div
-            className="css-pcbv7l"
-          >
-            <div
-              className="css-1ycnfy"
-            >
-              <div
-                className="css-0"
-              >
-                <svg
-                  attr={
-                    Object {
-                      "viewBox": "0 0 16 16",
-                    }
-                  }
-                  fill="currentColor"
-                  height="64"
-                  size="64"
-                  stroke="currentColor"
-                  strokeWidth="0"
-                  style={
-                    Object {
-                      "color": undefined,
-                    }
-                  }
-                  viewBox="0 0 16 16"
-                  width="64"
-                >
-                  <path
-                    d="M4.48 7.27c.26.26 1.28 1.33 1.28 1.33l.56-.58-.88-.91 1.69-1.8s-.76-.74-.43-.45c.32-1.19.03-2.51-.87-3.44C4.93.5 3.66.2 2.52.51l1.93 2-.51 1.96-1.89.52-1.93-2C-.19 4.17.1 5.48 1 6.4c.94.98 2.29 1.26 3.48.87zm6.44 1.94l-2.33 2.3 3.84 3.98c.31.33.73.49 1.14.49.41 0 .82-.16 1.14-.49.63-.65.63-1.7 0-2.35l-3.79-3.93zM16 2.53L13.55 0 6.33 7.46l.88.91-4.31 4.46-.99.53-1.39 2.27.35.37 2.2-1.44.51-1.02L7.9 9.08l.88.91L16 2.53z"
-                    fillRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <div
-                className="css-xm8hli"
-              >
-                Työpaikalla
-              </div>
-            </div>
-          </div>
-        </a>
-        <a
-          className="css-1xdr7j6"
-          href="/goals"
-          onClick={[Function]}
-        >
-          <div
-            className="css-1onahqo"
-          >
-            <div
-              className="css-1ycnfy"
-            >
-              <div
-                className="css-0"
-              >
-                <svg
-                  attr={
-                    Object {
-                      "viewBox": "0 0 10 16",
-                    }
-                  }
-                  fill="currentColor"
-                  height="64"
-                  size="64"
-                  stroke="currentColor"
-                  strokeWidth="0"
-                  style={
-                    Object {
-                      "color": undefined,
-                    }
-                  }
-                  viewBox="0 0 10 16"
-                  width="64"
-                >
-                  <path
-                    d="M10 5c0-1.11-.89-2-2-2a1.993 1.993 0 0 0-1 3.72v.3c-.02.52-.23.98-.63 1.38-.4.4-.86.61-1.38.63-.83.02-1.48.16-2 .45V4.72a1.993 1.993 0 0 0-1-3.72C.88 1 0 1.89 0 3a2 2 0 0 0 1 1.72v6.56c-.59.35-1 .99-1 1.72 0 1.11.89 2 2 2 1.11 0 2-.89 2-2 0-.53-.2-1-.53-1.36.09-.06.48-.41.59-.47.25-.11.56-.17.94-.17 1.05-.05 1.95-.45 2.75-1.25S8.95 7.77 9 6.73h-.02C9.59 6.37 10 5.73 10 5zM2 1.8c.66 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2C1.35 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2zm0 12.41c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm6-8c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z"
-                    fillRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <div
-                className="css-xm8hli"
-              >
-                Omat tavoitteeni
-              </div>
-            </div>
-          </div>
-        </a>
-        <a
-          className="css-1xdr7j6"
-          href="/studies"
-          onClick={[Function]}
-        >
-          <div
-            className="css-4w807k"
-          >
-            <div
-              className="css-1ycnfy"
-            >
-              <div
-                className="css-0"
-              >
-                <svg
-                  attr={
-                    Object {
-                      "viewBox": "0 0 12 16",
-                    }
-                  }
-                  fill="currentColor"
-                  height="64"
-                  size="64"
-                  stroke="currentColor"
-                  strokeWidth="0"
-                  style={
-                    Object {
-                      "color": undefined,
-                    }
-                  }
-                  viewBox="0 0 12 16"
-                  width="64"
-                >
-                  <path
-                    d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"
-                    fillRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <div
-                className="css-xm8hli"
-              >
-                Tietoa opinnoista
-              </div>
-            </div>
-          </div>
-        </a>
-        <a
-          className="css-1xdr7j6"
-          href="/profile"
-          onClick={[Function]}
-        >
-          <div
-            className="css-d4d3by"
-          >
-            <div
-              className="css-1ycnfy"
-            >
-              <div
-                className="css-0"
-              >
-                <svg
-                  attr={
-                    Object {
-                      "viewBox": "0 0 12 16",
-                    }
-                  }
-                  fill="currentColor"
-                  height="64"
-                  size="64"
-                  stroke="currentColor"
-                  strokeWidth="0"
-                  style={
-                    Object {
-                      "color": undefined,
-                    }
-                  }
-                  viewBox="0 0 12 16"
-                  width="64"
-                >
-                  <path
-                    d="M12 14.002a.998.998 0 0 1-.998.998H1.001A1 1 0 0 1 0 13.999V13c0-2.633 4-4 4-4s.229-.409 0-1c-.841-.62-.944-1.59-1-4 .173-2.413 1.867-3 3-3s2.827.586 3 3c-.056 2.41-.159 3.38-1 4-.229.59 0 1 0 1s4 1.367 4 4v1.002z"
-                    fillRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <div
-                className="css-xm8hli"
-              >
-                Omat tietoni
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div
-        className="css-1lwwmej"
-      >
-        <h1
-          className="css-1qiyj5c"
-        >
-          <div
-            className="css-1qkfsjs"
-          >
-            Viestit
-          </div>
-          <div
-            className="css-1fn9qdc"
-          />
-        </h1>
         <div
-          className="css-1sg2lsz"
+          className="css-1bvdaju"
         >
-          <div
-            className="css-13xm0nm"
-            src="https://ui-avatars.com/api/?name=Auli+Ollikainen&size=50"
-          />
-          <div
-            className="css-32huna"
-          >
-            <h1>
-              Auli Ollikainen
-            </h1>
-            <h2>
-              Opinto-ohjaaja
-            </h2>
-          </div>
-          <div
-            className="css-1359w2k"
-          >
-            13:45
-          </div>
+          <h1>
+            Opiskelun henkilökohtainen suunnittelu
+          </h1>
+          <p>
+            eHOKS palvelussa voit kirjautumalla siirtyä henkilökohtaiseen opintojen suunnitteluun. Ilman kirjautumista voit tutustua eri alojen ammattitaitovaatimuksiin ja osaamistavoitteisiin.
+          </p>
         </div>
         <div
-          className="css-1sg2lsz"
+          className="css-b6u9hl"
         >
-          <div
-            className="css-1i531zs"
-            src="https://ui-avatars.com/api/?name=Pekka+Pekkola&size=50"
-          />
-          <div
-            className="css-32huna"
+          <button
+            className="css-1jx7xsy"
+            onClick={[Function]}
           >
-            <h1>
-              Pekka Pekkola
-            </h1>
-            <h2>
-              Opinto-ohjaaja
-            </h2>
-          </div>
-          <div
-            className="css-1359w2k"
-          >
-            ma 26.2.
-          </div>
-        </div>
-        <div
-          className="css-1sg2lsz"
-        >
-          <div
-            className="css-11tj5nx"
-            src="https://ui-avatars.com/api/?name=Kirsi+Korhonen&size=50"
-          />
-          <div
-            className="css-32huna"
-          >
-            <h1>
-              Kirsi Korhonen
-            </h1>
-            <h2>
-              Ammattiopettaja
-            </h2>
-          </div>
-          <div
-            className="css-1359w2k"
-          >
-            ma 26.2.
-          </div>
+            Kirjaudu omaan suunnitelmaan
+          </button>
         </div>
       </div>
     </div>
