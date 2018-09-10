@@ -18,3 +18,7 @@ export const fetch = (url: string | Request, init: RequestInit) =>
 export const injectSession = (stores: InjectedStores) => ({
   session: stores.store.session
 })
+
+export enum breakpoints {
+  Desktop = 900
+}
