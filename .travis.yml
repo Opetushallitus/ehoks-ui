@@ -11,12 +11,23 @@ before_install:
   - npm i -g npm@6
 
 install:
+  - git clone https://github.com/Opetushallitus/ci-tools.git
+  - source ci-tools/common/setup-tools.sh
   - npm ci
 
 script:
   - npm run lint
   - npm test
   - npm run build
+  - export BASE_IMAGE=base-legacy:0.1
+  - ./ci-tools/common/pull-image.sh
+  - ./scripts/ci/build.sh ehoks-ui
+
+deploy:
+  provider: script
+  script: ./ci-tools/build/upload-image.sh ehoks-ui
+  on:
+    all_branches: true
 
 cache:
   directories:
