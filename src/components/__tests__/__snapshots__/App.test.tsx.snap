@@ -48,7 +48,7 @@ exports[`App renders correctly 1`] = `
         eHOKS
       </div>
       <div
-        className="css-6iqd4x"
+        className="css-1joa9di"
       />
     </div>
   </div>
@@ -81,7 +81,7 @@ exports[`App renders correctly 1`] = `
           className="css-b6u9hl"
         >
           <button
-            className="css-1jx7xsy"
+            className="css-1chq6cv"
             onClick={[Function]}
           >
             Kirjaudu omaan suunnitelmaan
@@ -158,6 +158,104 @@ exports[`App renders correctly 1`] = `
             <h2>
               Ajankohtaista
             </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="css-1h0xhvt"
+  >
+    <div
+      className="css-7ap1wq"
+    >
+      <div
+        className="css-16tkskh"
+      >
+        <img
+          className="css-1inivuc"
+          src=""
+        />
+        <ul
+          className="css-1fmvbse"
+        >
+          <li>
+            ePerusteet
+          </li>
+          <li>
+            Mikä on opintopolku
+          </li>
+          <li>
+            Tietoturvaseloste
+          </li>
+          <li>
+            Anna palautetta
+          </li>
+        </ul>
+      </div>
+      <div
+        className="css-rbwqx6"
+      >
+        <img
+          className="css-14qd04p"
+          src=""
+        />
+        <img
+          className="css-14qd04p"
+          src=""
+        />
+      </div>
+      <div
+        className="css-y2szpd"
+      >
+        <p>
+          Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja koulutuksistaan Opintopolku.fi-palvelussa. Tietojen oikeellisuuden voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.
+        </p>
+        <div
+          className="css-1ybikle"
+        >
+          <div
+            className="css-fth9yi"
+          >
+            <a>
+              Suomeksi
+            </a>
+            <a>
+              In English
+            </a>
+            <a>
+              På svenska
+            </a>
+          </div>
+          <div
+            className="css-1cmi7g3"
+          >
+            |
+          </div>
+          <div
+            className="css-0"
+          >
+            <a>
+              <img
+                alt="Twitter"
+                className="css-1ywoo4k"
+                src=""
+              />
+            </a>
+            <a>
+              <img
+                alt="Facebook"
+                className="css-1ywoo4k"
+                src=""
+              />
+            </a>
+            <a>
+              <img
+                alt="Instagram"
+                className="css-1ywoo4k"
+                src=""
+              />
+            </a>
           </div>
         </div>
       </div>

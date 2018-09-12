@@ -57,7 +57,7 @@ const Title = styled("div")`
 `
 
 const LogoutContainer = styled("div")`
-  margin: 0 10px;
+  margin: 0 20px 0 0;
   font-weight: 300;
 `
 
@@ -81,11 +81,6 @@ export class AppHeader extends React.Component<AppHeaderProps> {
     event.preventDefault()
     this.props.session.logout()
   }
-
-  // login = (event: React.MouseEvent) => {
-  //   event.preventDefault()
-  //   window.location.href = this.props.session.loginUrl
-  // }
 
   render() {
     const { session } = this.props
