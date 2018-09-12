@@ -1,4 +1,5 @@
 import { Router } from "@reach/router"
+import { AppFooter } from "components/AppFooter"
 import { AppHeader } from "components/AppHeader"
 import { injectGlobal } from "emotion"
 import { inject, observer } from "mobx-react"
@@ -81,6 +82,7 @@ export class App extends React.Component<AppProps> {
           <StudyInformation path="studies" />
           <Profile path="profile" />
         </Router>
+        <AppFooter />
       </Container>
     )
   }

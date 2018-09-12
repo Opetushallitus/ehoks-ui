@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --inline --history-api-fallback",
+    "start": "webpack-dev-server --hot --inline --history-api-fallback --compress",
     "lint": "tslint src/*.tsx src/**/*.tsx",
     "test": "jest",
     "build": "webpack --config webpack.config.js --mode production"
@@ -73,7 +73,7 @@
       "^config$": "<rootDir>/src/config",
       "^utils$": "<rootDir>/src/utils",
       "^testUtils$": "<rootDir>/src/testUtils",
-      "\\.(css|jpg|png)$": "<rootDir>/empty-module.js"
+      "\\.(css|jpg|png|svg)$": "<rootDir>/empty-module.js"
     }
   }
 }
