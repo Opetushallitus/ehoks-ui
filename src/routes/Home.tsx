@@ -1,79 +1,141 @@
 import { RouteComponentProps } from "@reach/router"
-import { ListContainer } from "components/ListContainer"
-import { ListHeading } from "components/ListHeading"
-import { ListItem } from "components/ListItem"
+import { HeroButton } from "components/Button"
+import { LinkPanel } from "components/LinkPanel"
+import { LinkPanelContainer } from "components/LinkPanelContainer"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
-import { RootStore } from "stores/RootStore"
+import styled from "react-emotion"
+import { SessionStore } from "stores/SessionStore"
+import { breakpoints, injectSession } from "utils"
 
-import { LinkPanel } from "components/LinkPanel"
-import { LinkPanelContainer } from "components/LinkPanelContainer"
-import { GoGitBranch, GoLightBulb, GoPerson, GoTools } from "react-icons/go"
+import education from "./Home/education.jpg"
+import students from "./Home/students.jpg"
 
 export interface HomeProps {
-  store?: Instance<typeof RootStore>
+  session?: Instance<typeof SessionStore>
 }
 
-@inject("store")
+const Container = styled("div")`
+  max-width: 1160px;
+  margin: 0 auto;
+`
+
+const Hero = styled("div")`
+  display: flex;
+
+  @media screen and (max-width: ${breakpoints.Desktop}px) {
+    display: block;
+  }
+`
+
+const Content = styled("div")`
+  display: flex;
+
+  @media screen and (max-width: ${breakpoints.Desktop}px) {
+    display: block;
+  }
+`
+
+const NewsContainer = styled("div")`
+  flex: 1;
+`
+
+const CurrentNews = styled("div")`
+  margin: 0 20px 0 30px;
+
+  h2 {
+    font-weight: 400;
+    font-size: 28px;
+    margin: 0;
+    border-bottom: 1px solid #979797;
+    padding-bottom: 8px;
+  }
+
+  @media screen and (max-width: ${breakpoints.Desktop}px) {
+    margin: 0 20px;
+  }
+`
+
+const Description = styled("div")`
+  flex: 1;
+  margin: 20px;
+
+  h1 {
+    font-weight: 400;
+  }
+
+  p {
+    font-size: 18px;
+  }
+`
+
+const LoginContainer = styled("div")`
+  flex: 1;
+  margin: 50px 20px 20px 20px;
+
+  @media screen and (max-width: ${breakpoints.Desktop}px) {
+    margin: 20px;
+  }
+`
+
+const LoginButton = styled(HeroButton)`
+  margin-left: 20px;
+
+  @media screen and (max-width: ${breakpoints.Desktop}px) {
+    margin-left: 0;
+  }
+`
+
+@inject(injectSession)
 @observer
 export class Home extends React.Component<HomeProps & RouteComponentProps> {
+  login = (event: React.MouseEvent) => {
+    event.preventDefault()
+    window.location.href = this.props.session.loginUrl
+  }
+
   render() {
     // const { store } = this.props
     return (
-      <div>
-        <LinkPanelContainer>
-          <LinkPanel
-            to="/learnings"
-            backgroundColor="#A3A3FF"
-            icon={<GoTools size="64" />}
-          >
-            Työpaikalla
-          </LinkPanel>
-          <LinkPanel
-            to="/goals"
-            backgroundColor="#FAC743"
-            icon={<GoGitBranch size="64" />}
-          >
-            Omat tavoitteeni
-          </LinkPanel>
-          <LinkPanel
-            to="/studies"
-            backgroundColor="#8CD5E4"
-            icon={<GoLightBulb size="64" />}
-          >
-            Tietoa opinnoista
-          </LinkPanel>
-          <LinkPanel
-            to="/profile"
-            backgroundColor="#B4E740"
-            icon={<GoPerson size="64" />}
-          >
-            Omat tietoni
-          </LinkPanel>
-        </LinkPanelContainer>
-        <ListContainer>
-          <ListHeading>Viestit</ListHeading>
-          <ListItem
-            avatar="https://ui-avatars.com/api/?name=Auli+Ollikainen&size=50"
-            title="Auli Ollikainen"
-            subtitle="Opinto-ohjaaja"
-            date="13:45"
-          />
-          <ListItem
-            avatar="https://ui-avatars.com/api/?name=Pekka+Pekkola&size=50"
-            title="Pekka Pekkola"
-            subtitle="Opinto-ohjaaja"
-            date="ma 26.2."
-          />
-          <ListItem
-            avatar="https://ui-avatars.com/api/?name=Kirsi+Korhonen&size=50"
-            title="Kirsi Korhonen"
-            subtitle="Ammattiopettaja"
-            date="ma 26.2."
-          />
-        </ListContainer>
-      </div>
+      <Container>
+        <Hero>
+          <Description>
+            <h1>Opiskelun henkilökohtainen suunnittelu</h1>
+            <p>
+              eHOKS palvelussa voit kirjautumalla siirtyä henkilökohtaiseen
+              opintojen suunnitteluun. Ilman kirjautumista voit tutustua eri
+              alojen ammattitaitovaatimuksiin ja osaamistavoitteisiin.
+            </p>
+          </Description>
+          <LoginContainer>
+            <LoginButton onClick={this.login}>
+              Kirjaudu omaan suunnitelmaan
+            </LoginButton>
+          </LoginContainer>
+        </Hero>
+        <Content>
+          <LinkPanelContainer>
+            <LinkPanel
+              to="henkilokohtaistaminen"
+              title="Mitä opintojen henkilökohtaistaminen tarkoittaa?"
+              description="Opiskelu sovitetaan lähtötilanteeseesi..."
+              image={students}
+            />
+            <LinkPanel
+              to="ammattitutkinto"
+              title="Mitä ammattitutkinto sisältää?"
+              description="Jokaiselle tutkinnon osalle on ammattitaitovaatimukset..."
+              image={education}
+            />
+          </LinkPanelContainer>
+          <NewsContainer>
+            <CurrentNews>
+              <h2>Ajankohtaista</h2>
+            </CurrentNews>
+          </NewsContainer>
+        </Content>
+      </Container>
     )
   }
 }

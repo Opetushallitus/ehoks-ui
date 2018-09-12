@@ -2,17 +2,20 @@ import React from "react"
 import styled from "react-emotion"
 
 const ButtonContainer = styled("button")`
-  padding: 10px;
-  background: #000;
+  background: #1976d2;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 600;
   color: #fff;
+  padding: 10px;
   border: 0;
+  border-radius: 2px;
   cursor: pointer;
 `
 
 export interface ButtonProps {
   children?: React.ReactNode
   className?: string
-  onClick: () => void
+  onClick: (event: React.MouseEvent) => void
 }
 
 export class Button extends React.Component<ButtonProps> {
@@ -25,3 +28,8 @@ export class Button extends React.Component<ButtonProps> {
     )
   }
 }
+
+export const HeroButton = styled(Button)`
+  padding: 15px 50px;
+  font-size: 16px;
+`

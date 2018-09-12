@@ -1,5 +1,6 @@
 import { Router } from "@reach/router"
-import { Header } from "components/Header"
+import { AppFooter } from "components/AppFooter"
+import { AppHeader } from "components/AppHeader"
 import { injectGlobal } from "emotion"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
@@ -73,7 +74,7 @@ export class App extends React.Component<AppProps> {
   render() {
     return (
       <Container>
-        <Header>Polkuni osaamiseen</Header>
+        <AppHeader />
         <Router>
           <Home path="/" />
           <LearningPeriods path="learnings" />
@@ -81,6 +82,7 @@ export class App extends React.Component<AppProps> {
           <StudyInformation path="studies" />
           <Profile path="profile" />
         </Router>
+        <AppFooter />
       </Container>
     )
   }
