@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "react-emotion"
 
-import { MdExpandLess, MdExpandMore } from "react-icons/md"
+import { MdExpandLess, MdExpandMore, MdHelp } from "react-icons/md"
 
 const AccordionContainer = styled("div")`
   padding: 20px 0 10px 0;
@@ -13,6 +13,7 @@ const Toggle = styled("div")`
   height: 30px;
   border: 1px solid #027fa9;
   cursor: pointer;
+  user-select: none;
 `
 
 const TitleRow = styled("div")`
@@ -21,7 +22,7 @@ const TitleRow = styled("div")`
 `
 
 const Title = styled("h2")`
-  margin: 0 0 0 20px;
+  margin: 0 20px 0 20px;
   font-size: 20px;
   font-weight: 400;
 `
@@ -34,6 +35,10 @@ const Content = styled("div")`
   padding: 10px;
 `
 
+const HelpIcon = styled(MdHelp)`
+  cursor: pointer;
+`
+
 export interface AccordionProps {
   open?: boolean
   onToggle?: () => void
@@ -44,7 +49,7 @@ export interface AccordionProps {
 
 export class Accordion extends React.Component<AccordionProps> {
   render() {
-    const { children, onToggle, open, title } = this.props
+    const { children, helpIcon = false, onToggle, open, title } = this.props
     return (
       <AccordionContainer>
         <TitleRow>
@@ -56,6 +61,7 @@ export class Accordion extends React.Component<AccordionProps> {
             )}
           </Toggle>
           <Title>{title}</Title>
+          {helpIcon ? <HelpIcon size="28" color="#027fa9" /> : null}
         </TitleRow>
         {open ? <Content>{children}</Content> : null}
       </AccordionContainer>

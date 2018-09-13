@@ -122,6 +122,7 @@ export class SignedIn extends React.Component<SignedInProps, SignedInState> {
             open={this.state.activeAccordions[0].personalGoal}
             title="Oma tavoitteeni"
             onToggle={this.setActiveAccordion(0, "personalGoal")}
+            helpIcon={true}
           >
             tavoite
           </Accordion>
