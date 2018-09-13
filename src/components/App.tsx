@@ -1,7 +1,7 @@
 import { Router } from "@reach/router"
+import "components/App/globalStyles"
 import { AppFooter } from "components/AppFooter"
 import { AppHeader } from "components/AppHeader"
-import { injectGlobal } from "emotion"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
@@ -34,26 +34,6 @@ const Profile = Loadable({
   loader: async () => (await import("../routes/Profile")).Profile,
   loading: LoadingComponent
 })
-
-injectGlobal`
-  html {
-    box-sizing: border-box;
-  }
-
-  *, *:before, *:after {
-    box-sizing: inherit;
-  }
-
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: #fff;
-  }
-
-  body  {
-    font-family: 'Source Sans Pro', sans-serif;
-  }
-`
 
 const Container = styled("div")`
   margin: 0;
