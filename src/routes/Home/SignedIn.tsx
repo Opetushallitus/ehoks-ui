@@ -1,3 +1,4 @@
+import { Accordion } from "components/Accordion"
 import { ProgressPie } from "components/ProgressPie"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
@@ -35,12 +36,23 @@ export interface SignedInProps {
 
 export interface SignedInState {
   activeStep: number
+  activeAccordions: {
+    [stepIndex: number]: {
+      [accordionName: string]: boolean
+    }
+  }
 }
 
 @inject(injectSession)
 @observer
 export class SignedIn extends React.Component<SignedInProps, SignedInState> {
   state = {
+    activeAccordions: {
+      0: {
+        personalData: false,
+        personalGoal: false
+      }
+    },
     activeStep: 0
   }
 
@@ -51,6 +63,19 @@ export class SignedIn extends React.Component<SignedInProps, SignedInState> {
 
   setActiveTab = (index: number) => () => {
     this.setState({ activeStep: index })
+  }
+
+  setActiveAccordion = (index: number, accordion: string) => () => {
+    this.setState(state => ({
+      ...state,
+      activeAccordions: {
+        ...state.activeAccordions,
+        [index]: {
+          ...state.activeAccordions[index],
+          [accordion]: !state.activeAccordions[index][accordion]
+        }
+      }
+    }))
   }
 
   render() {
@@ -92,6 +117,22 @@ export class SignedIn extends React.Component<SignedInProps, SignedInState> {
         </ProgressContainer>
         <SectionContainer>
           <Heading>Tavoitteeni ja perustietoni</Heading>
+
+          <Accordion
+            open={this.state.activeAccordions[0].personalGoal}
+            title="Oma tavoitteeni"
+            onToggle={this.setActiveAccordion(0, "personalGoal")}
+          >
+            tavoite
+          </Accordion>
+
+          <Accordion
+            open={this.state.activeAccordions[0].personalData}
+            title="Omat henkilötiedot"
+            onToggle={this.setActiveAccordion(0, "personalData")}
+          >
+            henkilötiedot
+          </Accordion>
         </SectionContainer>
       </React.Fragment>
     )
