@@ -1,4 +1,5 @@
 import { Accordion } from "components/Accordion"
+import { InfoTable } from "components/InfoTable"
 import { ProgressPie } from "components/ProgressPie"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
@@ -132,7 +133,42 @@ export class SignedIn extends React.Component<SignedInProps, SignedInState> {
             title="Omat henkilötiedot"
             onToggle={this.setActiveAccordion(0, "personalData")}
           >
-            henkilötiedot
+            <InfoTable>
+              <tbody>
+                <tr>
+                  <th>Etunimi Sukunimi</th>
+                  <th>Kutsumanimi</th>
+                  <th>Oppijanumero</th>
+                </tr>
+                <tr>
+                  <td data-label="Etunimi Sukunimi">Maija Meikäläinen</td>
+                  <td data-label="Kutsumanimi">Maija</td>
+                  <td data-label="Oppijanumero">1234344</td>
+                </tr>
+                <tr>
+                  <th>Osoite</th>
+                  <th>Postiosoite</th>
+                  <th>Kotikunta</th>
+                </tr>
+                <tr>
+                  <td data-label="Osoite">Mäntsälänviertotie 478 B</td>
+                  <td data-label="Postiosoite">123123 Mäntsälä</td>
+                  <td data-label="Kotikunta">Mäntsälä</td>
+                </tr>
+                <tr>
+                  <th>Sähköposti</th>
+                  <th />
+                  <th>Puhelinnumero</th>
+                </tr>
+                <tr>
+                  <td data-label="Sähköposti">
+                    maija.meikalainen@kotipostilokero.fi
+                  </td>
+                  <td />
+                  <td data-label="Puhelinnumero">+35850505050505</td>
+                </tr>
+              </tbody>
+            </InfoTable>
           </Accordion>
         </SectionContainer>
       </React.Fragment>

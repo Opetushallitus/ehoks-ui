@@ -20,5 +20,6 @@ export const injectSession = (stores: InjectedStores) => ({
 })
 
 export enum breakpoints {
+  Tablet = 720,
   Desktop = 900
 }
