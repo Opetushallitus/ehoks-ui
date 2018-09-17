@@ -41,21 +41,23 @@ export const RootStore = types
     }
   }))
   .actions(self => {
-    const fetchSingle = flow(function*(url: string) {
-      const response = yield self.fetch(url)
-      const model = {
-        data: response.data && response.data[0] ? response.data[0] : null,
-        meta: response.meta
-      }
-      // camelCase kebab-cased object keys recursively so we can use dot syntax for accessing values
-      return mapObj(
-        model,
-        (key: string, value: any) => [camelCase(key), value],
-        {
-          deep: true
+    const fetchSingle: (url: string, init?: RequestInit) => any = flow(
+      function*(url: string, init?: RequestInit) {
+        const response = yield self.fetch(url, init)
+        const model = {
+          data: response.data && response.data[0] ? response.data[0] : null,
+          meta: response.meta
         }
-      )
-    })
+        // camelCase kebab-cased object keys recursively so we can use dot syntax for accessing values
+        return mapObj(
+          model,
+          (key: string, value: any) => [camelCase(key), value],
+          {
+            deep: true
+          }
+        )
+      }
+    )
 
     const fetchCollection = flow(function*(url: string) {
       const response = yield self.fetch(url)

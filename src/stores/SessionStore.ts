@@ -19,6 +19,13 @@ export const SessionStore = types
       const response = yield root.fetchSingle(apiUrl("session/opintopolku/"))
       self.loginUrl = response.meta.opintopolkuLoginUrl
       self.user = response.data
+      // if logged in, call update-user-info API, which updates current session with 'oid'
+      // we don't need to deal with 'oid' in UI, this is just needed to obtain valid session cookie
+      if (self.user) {
+        yield root.fetchSingle(apiUrl("session/update-user-info"), {
+          method: "POST"
+        })
+      }
       self.isLoading = false
     })
 
