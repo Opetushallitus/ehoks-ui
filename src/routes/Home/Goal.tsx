@@ -2,13 +2,8 @@ import { RouteComponentProps } from "@reach/router"
 import { Accordion } from "components/Accordion"
 import { InfoTable } from "components/InfoTable"
 import React from "react"
-import styled from "react-emotion"
-import { Heading } from "routes/Home/SignedIn"
-
-const SectionContainer = styled("div")`
-  background: #f8f8f8;
-  padding: 20px;
-`
+import { Heading } from "routes/Home/Heading"
+import { SectionContainer } from "routes/Home/SectionContainer"
 
 export interface GoalProps {
   children?: React.ReactChildren

@@ -1,18 +1,16 @@
-import { Location, navigate, RouteComponentProps, Router } from "@reach/router"
+import { Location, navigate, Router } from "@reach/router"
 import { ProgressPie } from "components/ProgressPie"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
 import { Goal } from "routes/Home/Goal"
+import { Heading } from "routes/Home/Heading"
+import { PreviousCompetence } from "routes/Home/PreviousCompetence"
+import { RecognizingPriorLearning } from "routes/Home/RecognizingPriorLearning"
+import { StudyPlan } from "routes/Home/StudyPlan"
 import { SessionStore } from "stores/SessionStore"
 import { injectSession } from "utils"
-
-export const Heading = styled("h1")`
-  margin: 0;
-  font-size: 30px;
-  font-weight: 400;
-`
 
 const ProgressContainer = styled("div")`
   background: #ecf3fc;
@@ -28,10 +26,6 @@ const ProgressPies = styled("div")`
 
 export interface SignedInProps {
   session?: Instance<typeof SessionStore>
-}
-
-function Test(props: RouteComponentProps) {
-  return <div>{props.path}</div>
 }
 
 @inject(injectSession)
@@ -89,9 +83,9 @@ export class SignedIn extends React.Component<SignedInProps> {
 
               <Router>
                 <Goal path="/" />
-                <Test path="osaamiseni" />
-                <Test path="tunnustaminen" />
-                <Test path="opiskelusuunnitelmani" />
+                <PreviousCompetence path="osaamiseni" />
+                <RecognizingPriorLearning path="tunnustaminen" />
+                <StudyPlan path="opiskelusuunnitelmani" />
               </Router>
             </React.Fragment>
           )
