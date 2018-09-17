@@ -1,12 +1,17 @@
 import { RouteComponentProps } from "@reach/router"
 import { Accordion } from "components/Accordion"
 import { InfoTable } from "components/InfoTable"
+import { inject, observer } from "mobx-react"
+import { Instance } from "mobx-state-tree"
 import React from "react"
 import { Heading } from "routes/Home/Heading"
 import { SectionContainer } from "routes/Home/SectionContainer"
+import { SessionStore } from "stores/SessionStore"
+import { injectSession } from "utils"
 
 export interface GoalProps {
   children?: React.ReactChildren
+  session?: Instance<typeof SessionStore>
 }
 
 export interface GoalState {
@@ -15,6 +20,8 @@ export interface GoalState {
   }
 }
 
+@inject(injectSession)
+@observer
 export class Goal extends React.Component<
   GoalProps & RouteComponentProps,
   GoalState
@@ -27,6 +34,11 @@ export class Goal extends React.Component<
       personalDetails: false,
       personalGoal: false
     }
+  }
+
+  componentDidMount() {
+    // fetch extra user details for personal details view
+    this.props.session.getUserInfo()
   }
 
   toggleAccordion = (accordion: string) => () => {

@@ -29,6 +29,13 @@ export const SessionStore = types
       self.isLoading = false
     })
 
+    const getUserInfo = flow(function*(): any {
+      self.isLoading = true
+      const response = yield root.fetchSingle(apiUrl("session/user-info"))
+      self.user = response.data
+      self.isLoading = false
+    })
+
     const logout = flow(function*(): any {
       self.isLoading = true
       yield root.deleteResource(apiUrl("session/opintopolku/"))
@@ -36,7 +43,7 @@ export const SessionStore = types
       self.isLoading = false
     })
 
-    return { checkSession, logout }
+    return { checkSession, getUserInfo, logout }
   })
   .views(self => {
     return {
