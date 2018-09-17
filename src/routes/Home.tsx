@@ -1,5 +1,5 @@
-import { RouteComponentProps } from "@reach/router"
-
+import { navigate, RouteComponentProps } from "@reach/router"
+import { reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
@@ -9,18 +9,31 @@ import { SignedOut } from "routes/Home/SignedOut"
 import { SessionStore } from "stores/SessionStore"
 import { injectSession } from "utils"
 
-export interface HomeProps {
-  session?: Instance<typeof SessionStore>
-}
-
 const Container = styled("div")`
   max-width: 1160px;
   margin: 0 auto;
 `
 
+export interface HomeProps {
+  session?: Instance<typeof SessionStore>
+}
+
 @inject(injectSession)
 @observer
 export class Home extends React.Component<HomeProps & RouteComponentProps> {
+  componentDidMount() {
+    const { session } = this.props
+    reaction(
+      () => session.isLoggedIn,
+      isLoggedIn => {
+        // navigate to root when logging out
+        if (!isLoggedIn && this.props.location.pathname !== "/") {
+          navigate("/")
+        }
+      }
+    )
+  }
+
   render() {
     const { session } = this.props
     return (

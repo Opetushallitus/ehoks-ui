@@ -13,12 +13,6 @@ import { Home } from "../routes/Home"
 
 const LoadingComponent = () => <div>Loading...</div>
 
-const LearningPeriods = Loadable({
-  loader: async () =>
-    (await import("../routes/LearningPeriods")).LearningPeriods,
-  loading: LoadingComponent
-})
-
 const Goals = Loadable({
   loader: async () => (await import("../routes/Goals")).Goals,
   loading: LoadingComponent
@@ -27,11 +21,6 @@ const Goals = Loadable({
 const StudyInformation = Loadable({
   loader: async () =>
     (await import("../routes/StudyInformation")).StudyInformation,
-  loading: LoadingComponent
-})
-
-const Profile = Loadable({
-  loader: async () => (await import("../routes/Profile")).Profile,
   loading: LoadingComponent
 })
 
@@ -56,11 +45,9 @@ export class App extends React.Component<AppProps> {
       <Container>
         <AppHeader />
         <Router>
-          <Home path="/" />
-          <LearningPeriods path="learnings" />
+          <Home path="/*" />
           <Goals path="goals" />
           <StudyInformation path="studies" />
-          <Profile path="profile" />
         </Router>
         <AppFooter />
       </Container>

@@ -1,14 +1,14 @@
-import { Accordion } from "components/Accordion"
-import { InfoTable } from "components/InfoTable"
+import { Location, navigate, RouteComponentProps, Router } from "@reach/router"
 import { ProgressPie } from "components/ProgressPie"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
+import { Goal } from "routes/Home/Goal"
 import { SessionStore } from "stores/SessionStore"
 import { injectSession } from "utils"
 
-const Heading = styled("h1")`
+export const Heading = styled("h1")`
   margin: 0;
   font-size: 30px;
   font-weight: 400;
@@ -26,152 +26,77 @@ const ProgressPies = styled("div")`
   margin: 20px 0;
 `
 
-const SectionContainer = styled("div")`
-  background: #f8f8f8;
-  padding: 20px;
-`
-
 export interface SignedInProps {
   session?: Instance<typeof SessionStore>
 }
 
-export interface SignedInState {
-  activeStep: number
-  activeAccordions: {
-    [stepIndex: number]: {
-      [accordionName: string]: boolean
-    }
-  }
+function Test(props: RouteComponentProps) {
+  return <div>{props.path}</div>
 }
 
 @inject(injectSession)
 @observer
-export class SignedIn extends React.Component<SignedInProps, SignedInState> {
-  state = {
-    activeAccordions: {
-      0: {
-        personalData: false,
-        personalGoal: false
-      }
-    },
-    activeStep: 0
-  }
-
+export class SignedIn extends React.Component<SignedInProps> {
   login = (event: React.MouseEvent) => {
     event.preventDefault()
     window.location.href = this.props.session.loginUrl
   }
 
-  setActiveTab = (index: number) => () => {
-    this.setState({ activeStep: index })
-  }
-
-  setActiveAccordion = (index: number, accordion: string) => () => {
-    this.setState(state => ({
-      ...state,
-      activeAccordions: {
-        ...state.activeAccordions,
-        [index]: {
-          ...state.activeAccordions[index],
-          [accordion]: !state.activeAccordions[index][accordion]
-        }
-      }
-    }))
+  setActiveTab = (route: string) => () => {
+    navigate(route)
   }
 
   render() {
     return (
-      <React.Fragment>
-        <ProgressContainer>
-          <Heading>Omien opintojen suunnittelu</Heading>
+      <Location>
+        {({ location }) => {
+          return (
+            <React.Fragment>
+              <ProgressContainer>
+                <Heading>Omien opintojen suunnittelu</Heading>
 
-          <ProgressPies>
-            <ProgressPie
-              step={"1"}
-              percentage={100}
-              selected={this.state.activeStep === 0}
-              onClick={this.setActiveTab(0)}
-              title="Tavoitteeni ja perustietoni"
-            />
-            <ProgressPie
-              step={"2"}
-              percentage={75}
-              selected={this.state.activeStep === 1}
-              onClick={this.setActiveTab(1)}
-              title="Aiempi osaamiseni"
-            />
-            <ProgressPie
-              step={"3"}
-              percentage={50}
-              selected={this.state.activeStep === 2}
-              onClick={this.setActiveTab(2)}
-              title="Osaamisen tunnus&shy;taminen"
-            />
-            <ProgressPie
-              step={"4"}
-              percentage={25}
-              selected={this.state.activeStep === 3}
-              onClick={this.setActiveTab(3)}
-              title="Opiskelu&shy;suunni&shy;telmani"
-            />
-          </ProgressPies>
-        </ProgressContainer>
-        <SectionContainer>
-          <Heading>Tavoitteeni ja perustietoni</Heading>
+                <ProgressPies>
+                  <ProgressPie
+                    step={"1"}
+                    percentage={100}
+                    selected={location.pathname === "/"}
+                    onClick={this.setActiveTab("/")}
+                    title="Tavoitteeni ja perustietoni"
+                  />
+                  <ProgressPie
+                    step={"2"}
+                    percentage={75}
+                    selected={location.pathname === "/osaamiseni"}
+                    onClick={this.setActiveTab("/osaamiseni")}
+                    title="Aiempi osaamiseni"
+                  />
+                  <ProgressPie
+                    step={"3"}
+                    percentage={50}
+                    selected={location.pathname === "/tunnustaminen"}
+                    onClick={this.setActiveTab("/tunnustaminen")}
+                    title="Osaamisen tunnus&shy;taminen"
+                  />
+                  <ProgressPie
+                    step={"4"}
+                    percentage={25}
+                    selected={location.pathname === "/opiskelusuunnitelmani"}
+                    onClick={this.setActiveTab("/opiskelusuunnitelmani")}
+                    title="Opiskelu&shy;suunni&shy;telmani"
+                  />
+                </ProgressPies>
+              </ProgressContainer>
 
-          <Accordion
-            open={this.state.activeAccordions[0].personalGoal}
-            title="Oma tavoitteeni"
-            onToggle={this.setActiveAccordion(0, "personalGoal")}
-            helpIcon={true}
-          >
-            tavoite
-          </Accordion>
-
-          <Accordion
-            open={this.state.activeAccordions[0].personalData}
-            title="Omat henkilötiedot"
-            onToggle={this.setActiveAccordion(0, "personalData")}
-          >
-            <InfoTable>
-              <tbody>
-                <tr>
-                  <th>Etunimi Sukunimi</th>
-                  <th>Kutsumanimi</th>
-                  <th>Oppijanumero</th>
-                </tr>
-                <tr>
-                  <td data-label="Etunimi Sukunimi">Maija Meikäläinen</td>
-                  <td data-label="Kutsumanimi">Maija</td>
-                  <td data-label="Oppijanumero">1234344</td>
-                </tr>
-                <tr>
-                  <th>Osoite</th>
-                  <th>Postiosoite</th>
-                  <th>Kotikunta</th>
-                </tr>
-                <tr>
-                  <td data-label="Osoite">Mäntsälänviertotie 478 B</td>
-                  <td data-label="Postiosoite">123123 Mäntsälä</td>
-                  <td data-label="Kotikunta">Mäntsälä</td>
-                </tr>
-                <tr>
-                  <th>Sähköposti</th>
-                  <th />
-                  <th>Puhelinnumero</th>
-                </tr>
-                <tr>
-                  <td data-label="Sähköposti">
-                    maija.meikalainen@kotipostilokero.fi
-                  </td>
-                  <td />
-                  <td data-label="Puhelinnumero">+35850505050505</td>
-                </tr>
-              </tbody>
-            </InfoTable>
-          </Accordion>
-        </SectionContainer>
-      </React.Fragment>
+              <Router>
+                <Goal path="/" />
+                <Test path="osaamiseni" />
+                <Test path="tunnustaminen" />
+                <Test path="opiskelusuunnitelmani" />
+              </Router>
+            </React.Fragment>
+          )
+        }}
+      </Location>
     )
   }
 }
