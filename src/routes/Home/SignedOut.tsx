@@ -79,6 +79,7 @@ const LoginButton = styled(HeroButton)`
 
 export interface SignedOutProps {
   session?: Instance<typeof SessionStore>
+  path?: string
 }
 
 @inject(injectSession)

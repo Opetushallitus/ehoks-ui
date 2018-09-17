@@ -16,6 +16,7 @@ const Container = styled("div")`
 
 export interface HomeProps {
   session?: Instance<typeof SessionStore>
+  "*"?: string
 }
 
 @inject(injectSession)
@@ -36,8 +37,11 @@ export class Home extends React.Component<HomeProps & RouteComponentProps> {
 
   render() {
     const { session } = this.props
+    const path = this.props["*"]
     return (
-      <Container>{session.isLoggedIn ? <SignedIn /> : <SignedOut />}</Container>
+      <Container>
+        {session.isLoggedIn ? <SignedIn /> : <SignedOut path={path} />}
+      </Container>
     )
   }
 }
