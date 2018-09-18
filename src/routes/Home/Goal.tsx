@@ -36,11 +36,6 @@ export class Goal extends React.Component<
     }
   }
 
-  componentDidMount() {
-    // fetch extra user details for personal details view
-    this.props.session.getUserInfo()
-  }
-
   toggleAccordion = (accordion: string) => () => {
     this.setState(state => ({
       ...state,

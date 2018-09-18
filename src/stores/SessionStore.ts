@@ -25,6 +25,7 @@ export const SessionStore = types
         yield root.fetchSingle(apiUrl("session/update-user-info"), {
           method: "POST"
         })
+        yield getUserInfo()
       }
       self.isLoading = false
     })
