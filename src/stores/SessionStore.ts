@@ -4,6 +4,7 @@ import { SessionUser } from "models/SessionUser"
 import { RootStore } from "stores/RootStore"
 
 const SessionStoreModel = {
+  error: types.optional(types.string, ""),
   isLoading: false,
   loginUrl: types.optional(types.string, ""),
   user: types.optional(types.union(SessionUser, types.null), null)
@@ -32,8 +33,13 @@ export const SessionStore = types
 
     const getUserInfo = flow(function*(): any {
       self.isLoading = true
-      const response = yield root.fetchSingle(apiUrl("session/user-info"))
-      self.user = response.data
+      try {
+        const response = yield root.fetchSingle(apiUrl("session/user-info"))
+        self.user = response.data
+      } catch (error) {
+        // TODO: show error in UI
+        self.error = error.message
+      }
       self.isLoading = false
     })
 

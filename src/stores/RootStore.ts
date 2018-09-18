@@ -44,9 +44,13 @@ export const RootStore = types
     const fetchSingle: (url: string, init?: RequestInit) => any = flow(
       function*(url: string, init?: RequestInit) {
         const response = yield self.fetch(url, init)
+        if (!response.ok) {
+          throw new Error(response.statusText)
+        }
+        const json = yield response.json()
         const model = {
-          data: response.data && response.data[0] ? response.data[0] : null,
-          meta: response.meta
+          data: json.data && json.data[0] ? json.data[0] : null,
+          meta: json.meta
         }
         // camelCase kebab-cased object keys recursively so we can use dot syntax for accessing values
         return mapObj(
@@ -61,13 +65,15 @@ export const RootStore = types
 
     const fetchCollection = flow(function*(url: string) {
       const response = yield self.fetch(url)
-      const model = response.data ? response.data : []
+      const json = yield response.json()
+      const model = json.data ? json.data : []
       return model
     })
 
     const deleteResource = flow(function*(url: string) {
       const response = yield self.fetch(url, { method: "DELETE" })
-      const model = response.data ? response.data : []
+      const json = yield response.json()
+      const model = json.data ? json.data : []
       return model
     })
 

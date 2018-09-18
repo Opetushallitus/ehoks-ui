@@ -17,7 +17,7 @@ describe("RootStore", () => {
       },
       isLoading: false,
       learningPeriods: [],
-      session: { isLoading: false, loginUrl: "", user: null },
+      session: { isLoading: false, loginUrl: "", user: null, error: "" },
       student: {
         info: {
           basicInformation: { fi: "", sv: "" },

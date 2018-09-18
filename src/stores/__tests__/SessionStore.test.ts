@@ -23,7 +23,7 @@ describe("SessionStore", () => {
     )
   })
 
-  test("checkSession with login", () => {
+  test("checkSession with login", done => {
     const store = RootStore.create({}, { fetch: mockFetch(1) })
 
     expect(store.session.isLoading).toBe(false)
@@ -37,12 +37,25 @@ describe("SessionStore", () => {
       () => {
         expect(store.session.user).toEqual({
           commonName: "Teuvo",
+          contactValuesGroup: [
+            {
+              contact: [
+                {
+                  type: "YHTEYSTIETO_SAHKOPOSTI",
+                  value: "kayttaja@domain.local"
+                }
+              ],
+              id: 0
+            }
+          ],
           firstName: "Teuvo Taavetti",
+          oid: "1.1.111.111.11.111111111",
           surname: "Testaaja"
         })
         expect(store.session.loginUrl).toBe(
           "http://localhost:3000/auth-dev/opintopolku-login/"
         )
+        done()
       }
     )
   })
@@ -62,7 +75,9 @@ describe("SessionStore", () => {
     )
     expect(store.session.user).toEqual({
       commonName: "Teuvo",
+      contactValuesGroup: [],
       firstName: "Teuvo Taavetti",
+      oid: "",
       surname: "Testaaja"
     })
 
