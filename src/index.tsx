@@ -36,7 +36,12 @@ if (module.hot) {
     const NextApp = require("./components/App").App
     ReactDOM.render(
       <Provider store={store}>
-        <NextApp />
+        <IntlProvider
+          locale={store.activeLocale}
+          messages={translations[store.activeLocale]}
+        >
+          <NextApp />
+        </IntlProvider>
       </Provider>,
       appContainer
     )

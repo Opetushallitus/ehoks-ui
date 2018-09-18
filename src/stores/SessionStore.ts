@@ -4,6 +4,7 @@ import { SessionUser } from "models/SessionUser"
 import { RootStore } from "stores/RootStore"
 
 const SessionStoreModel = {
+  error: types.optional(types.string, ""),
   isLoading: false,
   loginUrl: types.optional(types.string, ""),
   user: types.optional(types.union(SessionUser, types.null), null)
@@ -19,6 +20,26 @@ export const SessionStore = types
       const response = yield root.fetchSingle(apiUrl("session/opintopolku/"))
       self.loginUrl = response.meta.opintopolkuLoginUrl
       self.user = response.data
+      // if logged in, call update-user-info API, which updates current session with 'oid'
+      // we don't need to deal with 'oid' in UI, this is just needed to obtain valid session cookie
+      if (self.user) {
+        yield root.fetchSingle(apiUrl("session/update-user-info"), {
+          method: "POST"
+        })
+        yield getUserInfo()
+      }
+      self.isLoading = false
+    })
+
+    const getUserInfo = flow(function*(): any {
+      self.isLoading = true
+      try {
+        const response = yield root.fetchSingle(apiUrl("session/user-info"))
+        self.user = response.data
+      } catch (error) {
+        // TODO: show error in UI
+        self.error = error.message
+      }
       self.isLoading = false
     })
 
@@ -29,7 +50,7 @@ export const SessionStore = types
       self.isLoading = false
     })
 
-    return { checkSession, logout }
+    return { checkSession, getUserInfo, logout }
   })
   .views(self => {
     return {

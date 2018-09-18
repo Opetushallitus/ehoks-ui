@@ -1,7 +1,7 @@
 import { Router } from "@reach/router"
+import "components/App/globalStyles"
 import { AppFooter } from "components/AppFooter"
 import { AppHeader } from "components/AppHeader"
-import { injectGlobal } from "emotion"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
@@ -13,12 +13,6 @@ import { Home } from "../routes/Home"
 
 const LoadingComponent = () => <div>Loading...</div>
 
-const LearningPeriods = Loadable({
-  loader: async () =>
-    (await import("../routes/LearningPeriods")).LearningPeriods,
-  loading: LoadingComponent
-})
-
 const Goals = Loadable({
   loader: async () => (await import("../routes/Goals")).Goals,
   loading: LoadingComponent
@@ -29,31 +23,6 @@ const StudyInformation = Loadable({
     (await import("../routes/StudyInformation")).StudyInformation,
   loading: LoadingComponent
 })
-
-const Profile = Loadable({
-  loader: async () => (await import("../routes/Profile")).Profile,
-  loading: LoadingComponent
-})
-
-injectGlobal`
-  html {
-    box-sizing: border-box;
-  }
-
-  *, *:before, *:after {
-    box-sizing: inherit;
-  }
-
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: #fff;
-  }
-
-  body  {
-    font-family: 'Source Sans Pro', sans-serif;
-  }
-`
 
 const Container = styled("div")`
   margin: 0;
@@ -76,11 +45,9 @@ export class App extends React.Component<AppProps> {
       <Container>
         <AppHeader />
         <Router>
-          <Home path="/" />
-          <LearningPeriods path="learnings" />
+          <Home path="/*" />
           <Goals path="goals" />
           <StudyInformation path="studies" />
-          <Profile path="profile" />
         </Router>
         <AppFooter />
       </Container>

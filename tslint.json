@@ -13,6 +13,7 @@
         "components",
         "models",
         "stores",
+        "routes",
         "config",
         "utils",
         "testUtils"
