@@ -7,7 +7,6 @@ describe("RootStore", () => {
     const store = RootStore.create({}, { fetch: mockFetch() })
 
     expect(store.toJSON()).toEqual({
-      activeLocale: "fi",
       education: {
         info: {
           basicInformation: { fi: "", sv: "" },
@@ -25,6 +24,7 @@ describe("RootStore", () => {
         },
         isLoading: false
       },
+      translations: { activeLocale: "fi", isLoading: false, translations: [] },
       work: {
         info: {
           basicInformation: { fi: "", sv: "" },

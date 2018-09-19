@@ -42,7 +42,7 @@ const HelpIcon = styled(MdHelp)`
 export interface AccordionProps {
   open?: boolean
   onToggle?: () => void
-  title?: string
+  title?: React.ReactNode
   helpIcon?: boolean
   helpContent?: React.ReactNode
 }
