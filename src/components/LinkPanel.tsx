@@ -1,4 +1,4 @@
-import { Link, LinkProps } from "@reach/router"
+import { Link } from "@reach/router"
 import React from "react"
 import styled, { css } from "react-emotion"
 import { breakpoints } from "utils"
@@ -51,11 +51,12 @@ const linkStyles = css`
 export interface LinkPanelProps {
   backgroundColor?: string
   image?: string
-  title?: string
-  description?: string
+  title?: React.ReactNode
+  description?: React.ReactNode
+  to?: string
 }
 
-export class LinkPanel extends React.Component<LinkPanelProps & LinkProps<{}>> {
+export class LinkPanel extends React.Component<LinkPanelProps> {
   render() {
     const { backgroundColor, to, title, description, image } = this.props
     return (

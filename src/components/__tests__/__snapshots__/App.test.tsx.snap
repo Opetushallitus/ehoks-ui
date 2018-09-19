@@ -17,25 +17,33 @@ exports[`App renders correctly 1`] = `
           className="css-vphjtl"
           href="https://opintopolku.fi/"
         >
-          Opintopolku.fi
+          <span>
+            Opintopolku.fi
+          </span>
         </a>
         <a
           className="css-vphjtl"
           href="https://opintopolku.fi/oma-opintopolku/"
         >
-          Oma Opintopolku
+          <span>
+            Oma Opintopolku
+          </span>
         </a>
         <a
           className="css-vphjtl"
           href="https://eperusteet.opintopolku.fi/"
         >
-          ePerusteet
+          <span>
+            ePerusteet
+          </span>
         </a>
         <a
           className="css-qtdcwy"
           href="/"
         >
-          eHOKS
+          <span>
+            eHOKS
+          </span>
         </a>
       </div>
     </div>
@@ -71,10 +79,16 @@ exports[`App renders correctly 1`] = `
           className="css-1bvdaju"
         >
           <h1>
-            Opiskelun henkilökohtainen suunnittelu
+            <span>
+              Opiskelun henkilökohtainen suunnittelu
+            </span>
           </h1>
           <p>
-            eHOKS palvelussa voit kirjautumalla siirtyä henkilökohtaiseen opintojen suunnitteluun. Ilman kirjautumista voit tutustua eri alojen ammattitaitovaatimuksiin ja osaamistavoitteisiin.
+            <span>
+              eHOKS palvelussa voit kirjautumalla siirtyä henkilökohtaiseen
+              opintojen suunnitteluun. Ilman kirjautumista voit tutustua eri
+              alojen ammattitaitovaatimuksiin ja osaamistavoitteisiin.
+            </span>
           </p>
         </div>
         <div
@@ -84,7 +98,9 @@ exports[`App renders correctly 1`] = `
             className="css-1chq6cv"
             onClick={[Function]}
           >
-            Kirjaudu omaan suunnitelmaan
+            <span>
+              Kirjaudu omaan suunnitelmaan
+            </span>
           </button>
         </div>
       </div>
@@ -108,12 +124,16 @@ exports[`App renders correctly 1`] = `
                 <div
                   className="css-11d1k1t"
                 >
-                  Mitä opintojen henkilökohtaistaminen tarkoittaa?
+                  <span>
+                    Mitä opintojen henkilökohtaistaminen tarkoittaa?
+                  </span>
                 </div>
                 <div
                   className="css-1wyo0f4"
                 >
-                  Opiskelu sovitetaan lähtötilanteeseesi...
+                  <span>
+                    Opiskelu sovitetaan lähtötilanteeseesi...
+                  </span>
                 </div>
               </div>
               <div
@@ -135,12 +155,16 @@ exports[`App renders correctly 1`] = `
                 <div
                   className="css-11d1k1t"
                 >
-                  Mitä ammattitutkinto sisältää?
+                  <span>
+                    Mitä ammattitutkinto sisältää?
+                  </span>
                 </div>
                 <div
                   className="css-1wyo0f4"
                 >
-                  Jokaiselle tutkinnon osalle on ammattitaitovaatimukset...
+                  <span>
+                    Jokaiselle tutkinnon osalle on ammattitaitovaatimukset...
+                  </span>
                 </div>
               </div>
               <div
@@ -156,7 +180,9 @@ exports[`App renders correctly 1`] = `
             className="css-19g5rjb"
           >
             <h2>
-              Ajankohtaista
+              <span>
+                Ajankohtaista
+              </span>
             </h2>
           </div>
         </div>
@@ -180,16 +206,24 @@ exports[`App renders correctly 1`] = `
           className="css-1fmvbse"
         >
           <li>
-            ePerusteet
+            <span>
+              ePerusteet
+            </span>
           </li>
           <li>
-            Mikä on opintopolku
+            <span>
+              Mikä on opintopolku
+            </span>
           </li>
           <li>
-            Tietoturvaseloste
+            <span>
+              Tietoturvaseloste
+            </span>
           </li>
           <li>
-            Anna palautetta
+            <span>
+              Anna palautetta
+            </span>
           </li>
         </ul>
       </div>
@@ -209,7 +243,11 @@ exports[`App renders correctly 1`] = `
         className="css-y2szpd"
       >
         <p>
-          Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja koulutuksistaan Opintopolku.fi-palvelussa. Tietojen oikeellisuuden voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.
+          <span>
+            Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja
+              koulutuksistaan Opintopolku.fi-palvelussa. Tietojen oikeellisuuden
+              voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.
+          </span>
         </p>
         <div
           className="css-1ybikle"
@@ -218,13 +256,19 @@ exports[`App renders correctly 1`] = `
             className="css-fth9yi"
           >
             <a>
-              Suomeksi
+              <span>
+                Suomeksi
+              </span>
             </a>
             <a>
-              In English
+              <span>
+                In English
+              </span>
             </a>
             <a>
-              På svenska
+              <span>
+                På svenska
+              </span>
             </a>
           </div>
           <div

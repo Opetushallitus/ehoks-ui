@@ -1,6 +1,7 @@
 import React from "react"
 import styled, { css } from "react-emotion"
 
+import { FormattedMessage } from "react-intl"
 import { breakpoints } from "utils"
 import facebookLogo from "./AppFooter/facebook.svg"
 import instagramLogo from "./AppFooter/instagram.svg"
@@ -127,10 +128,30 @@ export class AppFooter extends React.Component<{}> {
           <LinksContainer>
             <OpintopolkuLogo src={opintopolku} />
             <LinksList>
-              <li>ePerusteet</li>
-              <li>Mikä on opintopolku</li>
-              <li>Tietoturvaseloste</li>
-              <li>Anna palautetta</li>
+              <li>
+                <FormattedMessage
+                  id="footer.ePerusteetLink"
+                  defaultMessage="ePerusteet"
+                />
+              </li>
+              <li>
+                <FormattedMessage
+                  id="footer.opintoPolkuLink"
+                  defaultMessage="Mikä on opintopolku"
+                />
+              </li>
+              <li>
+                <FormattedMessage
+                  id="footer.registerDescriptionLink"
+                  defaultMessage="Tietoturvaseloste"
+                />
+              </li>
+              <li>
+                <FormattedMessage
+                  id="footer.feedbackLink"
+                  defaultMessage="Anna palautetta"
+                />
+              </li>
             </LinksList>
           </LinksContainer>
           <LogosContainer>
@@ -139,15 +160,33 @@ export class AppFooter extends React.Component<{}> {
           </LogosContainer>
           <Disclaimer>
             <p>
-              Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja
+              <FormattedMessage
+                id="footer.description"
+                defaultMessage="Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja
               koulutuksistaan Opintopolku.fi-palvelussa. Tietojen oikeellisuuden
-              voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.
+              voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta."
+              />
             </p>
             <DisclaimerLinks>
               <LanguageVersions>
-                <a>Suomeksi</a>
-                <a>In English</a>
-                <a>På svenska</a>
+                <a>
+                  <FormattedMessage
+                    id="footer.finnishLocale"
+                    defaultMessage="Suomeksi"
+                  />
+                </a>
+                <a>
+                  <FormattedMessage
+                    id="footer.englishLocale"
+                    defaultMessage="In English"
+                  />
+                </a>
+                <a>
+                  <FormattedMessage
+                    id="footer.swedishLocale"
+                    defaultMessage="På svenska"
+                  />
+                </a>
               </LanguageVersions>
               <Separator>|</Separator>
               <SocialMediaIcons>

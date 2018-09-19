@@ -3,6 +3,7 @@ import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
+import { FormattedMessage } from "react-intl"
 import { SessionStore } from "stores/SessionStore"
 import { injectSession } from "utils"
 
@@ -88,15 +89,26 @@ export class AppHeader extends React.Component<AppHeaderProps> {
       <HeaderContainer>
         <TopLinksContainer>
           <TopLinks>
-            <TopLink href="https://opintopolku.fi/">Opintopolku.fi</TopLink>
+            <TopLink href="https://opintopolku.fi/">
+              <FormattedMessage
+                id="header.opintopolkuLink"
+                defaultMessage="Opintopolku.fi"
+              />
+            </TopLink>
             <TopLink href="https://opintopolku.fi/oma-opintopolku/">
-              Oma Opintopolku
+              <FormattedMessage
+                id="header.omaOpintopolkuLink"
+                defaultMessage="Oma Opintopolku"
+              />
             </TopLink>
             <TopLink href="https://eperusteet.opintopolku.fi/">
-              ePerusteet
+              <FormattedMessage
+                id="header.ePerusteetLink"
+                defaultMessage="ePerusteet"
+              />
             </TopLink>
             <TopLink active={true} href="/">
-              eHOKS
+              <FormattedMessage id="header.ehoksLink" defaultMessage="eHOKS" />
             </TopLink>
           </TopLinks>
         </TopLinksContainer>
@@ -107,7 +119,10 @@ export class AppHeader extends React.Component<AppHeaderProps> {
               <React.Fragment>
                 <User>{session.user.commonName}</User>
                 <LogoutLink to="" onClick={this.logout}>
-                  Kirjaudu ulos
+                  <FormattedMessage
+                    id="header.logoutButton"
+                    defaultMessage="Kirjaudu ulos"
+                  />
                 </LogoutLink>
               </React.Fragment>
             )}

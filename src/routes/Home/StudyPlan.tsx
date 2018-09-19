@@ -1,6 +1,7 @@
 import { RouteComponentProps } from "@reach/router"
 import { Accordion } from "components/Accordion"
 import React from "react"
+import { FormattedMessage } from "react-intl"
 import { Heading } from "routes/Home/Heading"
 import { SectionContainer } from "routes/Home/SectionContainer"
 
@@ -39,11 +40,21 @@ export class StudyPlan extends React.Component<
   render() {
     return (
       <SectionContainer>
-        <Heading>Opiskelusuunnitelmani</Heading>
+        <Heading>
+          <FormattedMessage
+            id="studyPlan.title"
+            defaultMessage="Opiskelusuunnitelmani"
+          />
+        </Heading>
 
         <Accordion
           open={this.state.activeAccordions.selectedStudies}
-          title="Suoritettavat opinnot"
+          title={
+            <FormattedMessage
+              id="studyPlan.selectedStudies"
+              defaultMessage="Suoritettavat opinnot"
+            />
+          }
           onToggle={this.toggleAccordion("selectedStudies")}
           helpIcon={true}
         >
@@ -52,7 +63,12 @@ export class StudyPlan extends React.Component<
 
         <Accordion
           open={this.state.activeAccordions.qualificationModules}
-          title="Tutkinnon osat"
+          title={
+            <FormattedMessage
+              id="studyPlan.qualificationModules"
+              defaultMessage="Tutkinnon osat"
+            />
+          }
           onToggle={this.toggleAccordion("qualificationModules")}
           helpIcon={true}
         >
@@ -61,7 +77,12 @@ export class StudyPlan extends React.Component<
 
         <Accordion
           open={this.state.activeAccordions.studyPreparednessSupportingStudies}
-          title="Opiskeluvalmiuksia tukevat opinnot"
+          title={
+            <FormattedMessage
+              id="studyPlan.supportingStudies"
+              defaultMessage="Opiskeluvalmiuksia tukevat opinnot"
+            />
+          }
           onToggle={this.toggleAccordion("studyPreparednessSupportingStudies")}
           helpIcon={true}
         >

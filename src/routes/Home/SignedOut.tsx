@@ -8,6 +8,7 @@ import styled from "react-emotion"
 import { SessionStore } from "stores/SessionStore"
 import { breakpoints, injectSession } from "utils"
 
+import { FormattedMessage } from "react-intl"
 import education from "./education.jpg"
 import students from "./students.jpg"
 
@@ -95,16 +96,27 @@ export class SignedOut extends React.Component<SignedOutProps> {
       <React.Fragment>
         <Hero>
           <Description>
-            <h1>Opiskelun henkilökohtainen suunnittelu</h1>
+            <h1>
+              <FormattedMessage
+                id="signedOut.title"
+                defaultMessage="Opiskelun henkilökohtainen suunnittelu"
+              />
+            </h1>
             <p>
-              eHOKS palvelussa voit kirjautumalla siirtyä henkilökohtaiseen
+              <FormattedMessage
+                id="signedOut.description"
+                defaultMessage="eHOKS palvelussa voit kirjautumalla siirtyä henkilökohtaiseen
               opintojen suunnitteluun. Ilman kirjautumista voit tutustua eri
-              alojen ammattitaitovaatimuksiin ja osaamistavoitteisiin.
+              alojen ammattitaitovaatimuksiin ja osaamistavoitteisiin."
+              />
             </p>
           </Description>
           <LoginContainer>
             <LoginButton onClick={this.login}>
-              Kirjaudu omaan suunnitelmaan
+              <FormattedMessage
+                id="signedOut.loginButton"
+                defaultMessage="Kirjaudu omaan suunnitelmaan"
+              />
             </LoginButton>
           </LoginContainer>
         </Hero>
@@ -112,20 +124,45 @@ export class SignedOut extends React.Component<SignedOutProps> {
           <LinkPanelContainer>
             <LinkPanel
               to="henkilokohtaistaminen"
-              title="Mitä opintojen henkilökohtaistaminen tarkoittaa?"
-              description="Opiskelu sovitetaan lähtötilanteeseesi..."
+              title={
+                <FormattedMessage
+                  id="signedOut.individualisationTitle"
+                  defaultMessage="Mitä opintojen henkilökohtaistaminen tarkoittaa?"
+                />
+              }
+              description={
+                <FormattedMessage
+                  id="signedOut.individualisationDescription"
+                  defaultMessage="Opiskelu sovitetaan lähtötilanteeseesi..."
+                />
+              }
               image={students}
             />
             <LinkPanel
               to="ammattitutkinto"
-              title="Mitä ammattitutkinto sisältää?"
-              description="Jokaiselle tutkinnon osalle on ammattitaitovaatimukset..."
+              title={
+                <FormattedMessage
+                  id="signedOut.qualificationTitle"
+                  defaultMessage="Mitä ammattitutkinto sisältää?"
+                />
+              }
+              description={
+                <FormattedMessage
+                  id="signedOut.qualificationDescription"
+                  defaultMessage="Jokaiselle tutkinnon osalle on ammattitaitovaatimukset..."
+                />
+              }
               image={education}
             />
           </LinkPanelContainer>
           <NewsContainer>
             <CurrentNews>
-              <h2>Ajankohtaista</h2>
+              <h2>
+                <FormattedMessage
+                  id="signedOut.news"
+                  defaultMessage="Ajankohtaista"
+                />
+              </h2>
             </CurrentNews>
           </NewsContainer>
         </Content>

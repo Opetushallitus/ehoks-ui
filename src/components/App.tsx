@@ -6,9 +6,9 @@ import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
+import { IntlProvider } from "react-intl"
 import Loadable from "react-loadable"
-import { SessionStore } from "stores/SessionStore"
-import { injectSession } from "utils"
+import { RootStore } from "stores/RootStore"
 import { Home } from "../routes/Home"
 
 const LoadingComponent = () => <div>Loading...</div>
@@ -29,28 +29,34 @@ const Container = styled("div")`
 `
 
 export interface AppProps {
-  session?: Instance<typeof SessionStore>
+  store?: Instance<typeof RootStore>
 }
 
-@inject(injectSession)
+@inject("store")
 @observer
 export class App extends React.Component<AppProps> {
   componentDidMount() {
     // load user session info from backend
-    this.props.session.checkSession()
+    this.props.store.session.checkSession()
   }
 
   render() {
+    const { store } = this.props
     return (
-      <Container>
-        <AppHeader />
-        <Router>
-          <Home path="/*" />
-          <Goals path="goals" />
-          <StudyInformation path="studies" />
-        </Router>
-        <AppFooter />
-      </Container>
+      <IntlProvider
+        locale={store.translations.activeLocale}
+        messages={store.translations.messages[store.translations.activeLocale]}
+      >
+        <Container>
+          <AppHeader />
+          <Router>
+            <Home path="/*" />
+            <Goals path="goals" />
+            <StudyInformation path="studies" />
+          </Router>
+          <AppFooter />
+        </Container>
+      </IntlProvider>
     )
   }
 }
