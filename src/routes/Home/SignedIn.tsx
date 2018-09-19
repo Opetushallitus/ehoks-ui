@@ -4,6 +4,7 @@ import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
+import { FormattedMessage } from "react-intl"
 import { Goal } from "routes/Home/Goal"
 import { Heading } from "routes/Home/Heading"
 import { PreviousCompetence } from "routes/Home/PreviousCompetence"
@@ -47,7 +48,12 @@ export class SignedIn extends React.Component<SignedInProps> {
           return (
             <React.Fragment>
               <ProgressContainer>
-                <Heading>Omien opintojen suunnittelu</Heading>
+                <Heading>
+                  <FormattedMessage
+                    id="signedIn.title"
+                    defaultMessage="Omien opintojen suunnittelu"
+                  />
+                </Heading>
 
                 <ProgressPies>
                   <ProgressPie
@@ -55,28 +61,48 @@ export class SignedIn extends React.Component<SignedInProps> {
                     percentage={100}
                     selected={location.pathname === "/"}
                     onClick={this.setActiveTab("/")}
-                    title="Tavoitteeni ja perustietoni"
+                    title={
+                      <FormattedMessage
+                        id="signedIn.myGoalsAndBasicInfo"
+                        defaultMessage="Tavoitteeni ja perustietoni"
+                      />
+                    }
                   />
                   <ProgressPie
                     step={"2"}
                     percentage={75}
                     selected={location.pathname === "/osaamiseni"}
                     onClick={this.setActiveTab("/osaamiseni")}
-                    title="Aiempi osaamiseni"
+                    title={
+                      <FormattedMessage
+                        id="signedIn.myPreviousCompetence"
+                        defaultMessage="Aiempi osaamiseni"
+                      />
+                    }
                   />
                   <ProgressPie
                     step={"3"}
                     percentage={50}
                     selected={location.pathname === "/tunnustaminen"}
                     onClick={this.setActiveTab("/tunnustaminen")}
-                    title="Osaamisen tunnus&shy;taminen"
+                    title={
+                      <FormattedMessage
+                        id="signedIn.recognizingPriorLearning"
+                        defaultMessage="Osaamisen tunnus&shy;taminen"
+                      />
+                    }
                   />
                   <ProgressPie
                     step={"4"}
                     percentage={25}
                     selected={location.pathname === "/opiskelusuunnitelmani"}
                     onClick={this.setActiveTab("/opiskelusuunnitelmani")}
-                    title="Opiskelu&shy;suunni&shy;telmani"
+                    title={
+                      <FormattedMessage
+                        id="signedIn.myStudyPlan"
+                        defaultMessage="Opiskelu&shy;suunni&shy;telmani"
+                      />
+                    }
                   />
                 </ProgressPies>
               </ProgressContainer>

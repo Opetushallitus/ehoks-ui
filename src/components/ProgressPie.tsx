@@ -19,7 +19,7 @@ const ProgressPieContainer = styled("div")`
 export interface ProgressPieProps {
   percentage?: number
   step?: string
-  title?: string
+  title?: React.ReactNode
   selected?: boolean
   onClick?: () => void
 }

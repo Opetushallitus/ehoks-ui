@@ -1,6 +1,7 @@
 import { RouteComponentProps } from "@reach/router"
 import { Accordion } from "components/Accordion"
 import React from "react"
+import { FormattedMessage } from "react-intl"
 import { Heading } from "routes/Home/Heading"
 import { SectionContainer } from "routes/Home/SectionContainer"
 
@@ -37,11 +38,21 @@ export class RecognizingPriorLearning extends React.Component<
   render() {
     return (
       <SectionContainer>
-        <Heading>Osaamisen tunnustaminen</Heading>
+        <Heading>
+          <FormattedMessage
+            id="priorLearning.title"
+            defaultMessage="Osaamisen tunnustaminen"
+          />
+        </Heading>
 
         <Accordion
           open={this.state.activeAccordions.qualificationUnit}
-          title="Tutkinnon osan nimi"
+          title={
+            <FormattedMessage
+              id="priorLearning.qualificationUnit"
+              defaultMessage="Tutkinnon osan nimi"
+            />
+          }
           onToggle={this.toggleAccordion("qualificationUnit")}
           helpIcon={true}
         >

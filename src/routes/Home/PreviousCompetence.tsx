@@ -1,6 +1,7 @@
 import { RouteComponentProps } from "@reach/router"
 import { Accordion } from "components/Accordion"
 import React from "react"
+import { FormattedMessage } from "react-intl"
 import { Heading } from "routes/Home/Heading"
 import { SectionContainer } from "routes/Home/SectionContainer"
 
@@ -37,11 +38,21 @@ export class PreviousCompetence extends React.Component<
   render() {
     return (
       <SectionContainer>
-        <Heading>Mitä osaamista minulla jo on?</Heading>
+        <Heading>
+          <FormattedMessage
+            id="previousCompetence.title"
+            defaultMessage="Mitä osaamista minulla jo on?"
+          />
+        </Heading>
 
         <Accordion
           open={this.state.activeAccordions.previousCompetence}
-          title="Aiemmin hankittu osaamiseni"
+          title={
+            <FormattedMessage
+              id="previousCompetence.previousCompetence"
+              defaultMessage="Aiemmin hankittu osaamiseni"
+            />
+          }
           onToggle={this.toggleAccordion("previousCompetence")}
           helpIcon={true}
         >

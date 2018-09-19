@@ -4,6 +4,7 @@ import { InfoTable } from "components/InfoTable"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
+import { FormattedMessage } from "react-intl"
 import { Heading } from "routes/Home/Heading"
 import { SectionContainer } from "routes/Home/SectionContainer"
 import { SessionStore } from "stores/SessionStore"
@@ -49,11 +50,21 @@ export class Goal extends React.Component<
   render() {
     return (
       <SectionContainer>
-        <Heading>Tavoitteeni ja perustietoni</Heading>
+        <Heading>
+          <FormattedMessage
+            id="goal.title"
+            defaultMessage="Tavoitteeni ja perustietoni"
+          />
+        </Heading>
 
         <Accordion
           open={this.state.activeAccordions.personalGoal}
-          title="Oma tavoitteeni"
+          title={
+            <FormattedMessage
+              id="goal.personalGoal"
+              defaultMessage="Oma tavoitteeni"
+            />
+          }
           onToggle={this.toggleAccordion("personalGoal")}
           helpIcon={true}
         >
@@ -62,7 +73,12 @@ export class Goal extends React.Component<
 
         <Accordion
           open={this.state.activeAccordions.degreeOrEducation}
-          title="Tutkinto tai koulutus"
+          title={
+            <FormattedMessage
+              id="goal.degreeOrEducation"
+              defaultMessage="Tutkinto tai koulutus"
+            />
+          }
           onToggle={this.toggleAccordion("degreeOrEducation")}
         >
           tutkinto tai koulutus
@@ -70,7 +86,12 @@ export class Goal extends React.Component<
 
         <Accordion
           open={this.state.activeAccordions.personalDetails}
-          title="Omat henkilötiedot"
+          title={
+            <FormattedMessage
+              id="goal.personalDetails"
+              defaultMessage="Omat henkilötiedot"
+            />
+          }
           onToggle={this.toggleAccordion("personalDetails")}
         >
           <InfoTable>
@@ -113,7 +134,12 @@ export class Goal extends React.Component<
 
         <Accordion
           open={this.state.activeAccordions.custodianDetails}
-          title="Huoltajatiedot"
+          title={
+            <FormattedMessage
+              id="goal.custodianDetails"
+              defaultMessage="Huoltajatiedot"
+            />
+          }
           onToggle={this.toggleAccordion("custodianDetails")}
         >
           huoltajan tiedot
@@ -121,7 +147,12 @@ export class Goal extends React.Component<
 
         <Accordion
           open={this.state.activeAccordions.currentEducation}
-          title="Nykyinen koulutus"
+          title={
+            <FormattedMessage
+              id="goal.currentEducation"
+              defaultMessage="Nykyinen koulutus"
+            />
+          }
           onToggle={this.toggleAccordion("currentEducation")}
         >
           nykyinen koulutus
