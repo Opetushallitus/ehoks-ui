@@ -6,9 +6,11 @@ Frontend repository for [eHOKS project](https://confluence.csc.fi/display/OPHPAL
 
 `npm install` install all required npm dependencies
 
-`npm start` starts the development server in `localhost:8080`
+`npm start` starts the development server in [localhost:8080](http://localhost:8080/)
 
 `npm test` runs the Jest test suite
+
+`npm run styleguide` launches [react-styleguidist](https://react-styleguidist.js.org/) styleguide server in [localhost:6060](http://localhost:6060/)
 
 ## Technologies used
 
