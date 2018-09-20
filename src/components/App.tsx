@@ -44,6 +44,7 @@ export class App extends React.Component<AppProps> {
     const { store } = this.props
     return (
       <IntlProvider
+        defaultLocale="fi"
         locale={store.translations.activeLocale}
         messages={store.translations.messages[store.translations.activeLocale]}
       >
