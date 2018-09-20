@@ -70,7 +70,7 @@ export class SignedIn extends React.Component<SignedInProps> {
                   />
                   <ProgressPie
                     step={"2"}
-                    percentage={75}
+                    percentage={100}
                     selected={location.pathname === "/osaamiseni"}
                     onClick={this.setActiveTab("/osaamiseni")}
                     title={
@@ -82,7 +82,7 @@ export class SignedIn extends React.Component<SignedInProps> {
                   />
                   <ProgressPie
                     step={"3"}
-                    percentage={50}
+                    percentage={100}
                     selected={location.pathname === "/tunnustaminen"}
                     onClick={this.setActiveTab("/tunnustaminen")}
                     title={
@@ -94,7 +94,7 @@ export class SignedIn extends React.Component<SignedInProps> {
                   />
                   <ProgressPie
                     step={"4"}
-                    percentage={25}
+                    percentage={100}
                     selected={location.pathname === "/opiskelusuunnitelmani"}
                     onClick={this.setActiveTab("/opiskelusuunnitelmani")}
                     title={
