@@ -8,7 +8,7 @@ module.exports = {
     "**/src/components/AppHeader.tsx",
     "**/src/components/Header.tsx"
   ],
-  title: "eHoks styleguide",
+  title: "eHOKS styleguide",
   components: function() {
     return glob
       .sync(path.resolve(__dirname, "src/components/**/*.tsx"))
@@ -29,5 +29,56 @@ module.exports = {
       }
     }
   ).parse,
-  webpackConfig: require("./webpack.config")
+  webpackConfig: require("./webpack.config"),
+  template: {
+    head: {
+      links: [
+        {
+          rel: "stylesheet",
+          href:
+            "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700"
+        }
+      ]
+    }
+  },
+  usageMode: "expand",
+  exampleMode: "expand",
+  pagePerSection: true,
+  theme: {
+    fontFamily: {
+      base: '"Source Sans Pro", sans-serif'
+    }
+  },
+  styles: {
+    StyleGuide: {
+      "@global html": {
+        boxSizing: "border-box",
+        margin: 0,
+        padding: 0
+      },
+      "@global body": {
+        fontFamily: '"Source Sans Pro", sans-serif',
+        margin: 0,
+        padding: 0
+      },
+      "@global *, *:before, *:after": {
+        boxSizing: "inherit"
+      },
+      "@global": {
+        ".CircularProgressbar .CircularProgressbar-path": {
+          stroke: "#027FA9",
+          strokeLinecap: "square"
+        },
+        ".CircularProgressbar .CircularProgressbar-trail": {
+          stroke: "#d6d6d6"
+        },
+        ".CircularProgressbar .CircularProgressbar-text": {
+          fill: "#027FA9",
+          fontSize: "48px",
+          dominantBaseline: "middle",
+          textAnchor: "middle"
+        }
+      }
+    }
+  }
 }

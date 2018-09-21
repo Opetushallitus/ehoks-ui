@@ -17,13 +17,24 @@ const ProgressPieContainer = styled("div")`
 `
 
 export interface ProgressPieProps {
+  /**
+   * Progress bar indicator fill percentage
+   * @default 100
+   */
   percentage?: number
+  /** Text inside circle */
   step?: string
+  /** Text below circle */
   title?: React.ReactNode
+  /** Selected circle has solid background without progress indicator */
   selected?: boolean
+  /** Click handler function */
   onClick?: () => void
 }
 
+/**
+ * Clickable circular progress button with title
+ */
 export class ProgressPie extends React.Component<ProgressPieProps> {
   render() {
     const {

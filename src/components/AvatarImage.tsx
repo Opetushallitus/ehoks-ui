@@ -1,9 +1,14 @@
 import styled from "react-emotion"
 
 export interface AvatarImageProps {
-  src?: string
+  /** Image url to show */
+  src: string
 }
 
+/**
+ * Renders image as centered background
+ */
+/** @component */
 export const AvatarImage = styled("div")`
   width: 64px;
   height: 64px;

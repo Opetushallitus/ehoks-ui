@@ -1,4 +1,4 @@
-import { Link, LinkProps } from "@reach/router"
+import { Link } from "@reach/router"
 import { Icon } from "components/Icon"
 import { TitleContainer } from "components/TitleContainer"
 import React from "react"
@@ -26,13 +26,22 @@ const linkStyles = css`
   text-decoration: none;
 `
 
-export interface LinkItemProps extends LinkProps<{}> {
+export interface LinkItemProps {
+  /** Icon that gets rendered on the left side */
   icon?: React.ReactNode
+  /** Item's title */
   title?: string
+  /** Item's subtitle */
   subTitle?: string
+  /** Custom classname */
   className?: string
+  /** Link URI */
+  to?: string
 }
 
+/**
+ * List item with link target, title, subtitle and icon
+ */
 export class LinkItem extends React.Component<LinkItemProps> {
   render() {
     const { className, icon, title, subTitle, to } = this.props

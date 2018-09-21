@@ -40,13 +40,24 @@ const HelpIcon = styled(MdHelp)`
 `
 
 export interface AccordionProps {
+  /** Defines Accordion children visibility */
   open?: boolean
+  /** Action to execute whenever user clicks the toggle icon */
   onToggle?: () => void
+  /** Title of the accordion, always visible */
   title?: React.ReactNode
+  /**
+   * Defines help icon visibility
+   * @default false
+   */
   helpIcon?: boolean
+  /** Defines help popup content */
   helpContent?: React.ReactNode
 }
 
+/**
+ * Toggleable content panel with inline help popup
+ */
 export class Accordion extends React.Component<AccordionProps> {
   render() {
     const { children, helpIcon = false, onToggle, open, title } = this.props
