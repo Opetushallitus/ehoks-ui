@@ -17,7 +17,7 @@ WORKDIR /root/public
 
 COPY 404.html 50x.html index.html /root/public/
 COPY dist /root/public/dist
-COPY run.sh /root/
+COPY run.sh escape-html.py config.json.template /root/
 
 RUN chown -R nginx:nginx /root
 
