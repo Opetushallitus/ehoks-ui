@@ -49,13 +49,24 @@ const linkStyles = css`
 `
 
 export interface LinkPanelProps {
+  /**
+   * Background color for text container
+   * @default #00AC3D
+   */
   backgroundColor?: string
+  /** Image to show as background image */
   image?: string
+  /** Title inside text container */
   title?: React.ReactNode
+  /** Description text under title */
   description?: React.ReactNode
+  /** Link URI */
   to?: string
 }
 
+/**
+ *  Flexible container with title, description and image
+ */
 export class LinkPanel extends React.Component<LinkPanelProps> {
   render() {
     const { backgroundColor, to, title, description, image } = this.props

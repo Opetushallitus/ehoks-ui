@@ -1,6 +1,9 @@
 import styled from "react-emotion"
 import { breakpoints } from "utils"
 
+/**
+ * Responsive wrapper for three column tables
+ */
 export const InfoTable = styled("table")`
   table-layout: fixed;
 

@@ -14,10 +14,15 @@ const ButtonContainer = styled("button")`
 
 export interface ButtonProps {
   children?: React.ReactNode
+  /** Custom class name to append to button */
   className?: string
+  /** Event handler to execute when clicked */
   onClick: (event: React.MouseEvent) => void
 }
 
+/**
+ *  Extendable styled button
+ */
 export class Button extends React.Component<ButtonProps> {
   render() {
     const { children, className, onClick } = this.props

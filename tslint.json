@@ -8,8 +8,8 @@
     "one-variable-per-declaration": [false],
     "no-implicit-dependencies": [
       true,
+      "dev",
       [
-        "react-test-renderer",
         "components",
         "models",
         "stores",
