@@ -1,0 +1,21 @@
+{
+  "meta": {},
+  "data": [
+    {
+      "category": "ehoks",
+      "created-by": "1.2.246.562.24.31103582397",
+      "key": "testiavain",
+      "locale": "fi",
+      "value": "joo",
+      "modified-by": "1.2.246.562.24.31103582397"
+    },
+    {
+      "category": "ehoks",
+      "created-by": "1.2.246.562.24.43953048723",
+      "key": "toinentesti",
+      "locale": "fi",
+      "value": "Upeeta",
+      "modified-by": "1.2.246.562.24.43953048723"
+    }
+  ]
+}

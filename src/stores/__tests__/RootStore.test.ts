@@ -36,7 +36,7 @@ describe("RootStore", () => {
   })
 
   test("fetchSingle camelCases object keys", async () => {
-    // uses api_v1_session_opintopolku_1.json mock
+    // uses session_opintopolku_1.json mock
     const store = RootStore.create({}, { fetch: mockFetch(1) })
 
     const result: ApiResponse<any> = await store.fetchSingle(
@@ -51,6 +51,36 @@ describe("RootStore", () => {
       meta: {
         opintopolkuLoginUrl: "http://localhost:3000/auth-dev/opintopolku-login/"
       }
+    })
+  })
+
+  test("fetchCollection camelCases object keys", async () => {
+    // uses lokalisaatio0.json mock
+    const store = RootStore.create({}, { fetch: mockFetch() })
+
+    const result: ApiResponse<any> = await store.fetchCollection(
+      apiUrl("lokalisaatio")
+    )
+    expect(result).toEqual({
+      data: [
+        {
+          category: "ehoks",
+          createdBy: "1.2.246.562.24.31103582397",
+          key: "testiavain",
+          locale: "fi",
+          modifiedBy: "1.2.246.562.24.31103582397",
+          value: "joo"
+        },
+        {
+          category: "ehoks",
+          createdBy: "1.2.246.562.24.43953048723",
+          key: "toinentesti",
+          locale: "fi",
+          modifiedBy: "1.2.246.562.24.43953048723",
+          value: "Upeeta"
+        }
+      ],
+      meta: {}
     })
   })
 })

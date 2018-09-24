@@ -20,7 +20,7 @@ function mapTranslations(translations: any) {
   })
 }
 
-const Translation = types.model("Translation", {
+const Lokalisaatio = types.model("LokalisaatioModel", {
   key: types.string,
   locale: types.union(types.literal("fi"), types.literal("sv")),
   value: types.string
@@ -32,7 +32,7 @@ const TranslationStoreModel = {
     "fi"
   ),
   isLoading: false,
-  translations: types.optional(types.array(Translation), [])
+  translations: types.optional(types.array(Lokalisaatio), [])
 }
 
 export const TranslationStore = types
@@ -44,14 +44,14 @@ export const TranslationStore = types
       self.activeLocale = locale
     }
 
-    const fetchTranslations = flow(function*(): any {
+    const haeLokalisaatiot = flow(function*(): any {
       self.isLoading = true
-      const response = yield root.fetchCollection(apiUrl("localization"))
+      const response = yield root.fetchCollection(apiUrl("lokalisaatio"))
       self.translations = mapTranslations(response.data)
       self.isLoading = false
     })
 
-    return { fetchTranslations, setActiveLocale }
+    return { haeLokalisaatiot, setActiveLocale }
   })
   .views(self => {
     return {
