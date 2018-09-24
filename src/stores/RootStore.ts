@@ -9,6 +9,12 @@ import { StudentStore } from "stores/StudentStore"
 import { TranslationStore } from "stores/TranslationStore"
 import { WorkplaceProviderStore } from "stores/WorkplaceProviderStore"
 
+function camelCaseDeep(model: any) {
+  return mapObj(model, (key: string, value: any) => [camelCase(key), value], {
+    deep: true
+  })
+}
+
 export interface ApiResponse<T> {
   meta: {
     [name: string]: any
@@ -51,13 +57,7 @@ export const RootStore = types
           meta: json.meta
         }
         // camelCase kebab-cased object keys recursively so we can use dot syntax for accessing values
-        return mapObj(
-          model,
-          (key: string, value: any) => [camelCase(key), value],
-          {
-            deep: true
-          }
-        )
+        return camelCaseDeep(model)
       }
     )
 
@@ -69,7 +69,7 @@ export const RootStore = types
         }
         const json = yield response.json()
         const model = {
-          data: json.data ? json.data : [],
+          data: (json.data ? json.data : []).map(camelCaseDeep),
           meta: json.meta || {}
         }
         return model
