@@ -15,7 +15,7 @@ COPY nginx-server.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /root/public
 
-COPY 404.html 50x.html index.html /root/public/
+COPY 404.html 50x.html index.html buildversion.txt /root/public/
 COPY dist /root/public/dist
 COPY run.sh escape-html.py config.json.template /root/
 
