@@ -1,5 +1,7 @@
 FROM BASEIMAGE
 
+ARG name
+
 RUN apk update \
 # install nginx
         && apk add nginx \
