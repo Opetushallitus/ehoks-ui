@@ -23,6 +23,8 @@ RUN chown -R nginx:nginx /root
 
 EXPOSE 8080
 
+ENV NAME $name
+
 STOPSIGNAL SIGTERM
 
 CMD ["bash", "/root/run.sh"]
