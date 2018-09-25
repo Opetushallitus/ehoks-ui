@@ -15,7 +15,7 @@ vcsRevision=$(git rev-parse HEAD)
 buildTime=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 END
 
-sed -i '' "s|BASEIMAGE|${ECR_REPO}/${BASE_IMAGE}|g" "$DOCKER_BUILD_DIR/Dockerfile"
+sed -i "s|BASEIMAGE|${ECR_REPO}/${BASE_IMAGE}|g" "$DOCKER_BUILD_DIR/Dockerfile"
 
 find "$DOCKER_BUILD_DIR"
 docker build --build-arg name="$ARTIFACT_NAME" -t "$DOCKER_TARGET" "$DOCKER_BUILD_DIR"
