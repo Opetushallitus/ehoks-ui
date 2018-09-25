@@ -1,14 +1,14 @@
 FROM BASEIMAGE
 
 RUN apk update \
-        # install nginx
+# install nginx
         && apk add nginx \
-        # make stdout and stderr point to nginx logs
+# make stdout and stderr point to nginx logs
         && ln -sf /dev/stdout /var/log/nginx/access.log \
         && ln -sf /dev/stderr /var/log/nginx/error.log \
-        # make directory for nginx pid file
+# make directory for nginx pid file
         && mkdir -p /run/nginx \
-        # remove apk index files
+# remove apk index files
         && rm -rf /var/cache/apk/*
 
 COPY nginx-server.conf /etc/nginx/conf.d/default.conf
