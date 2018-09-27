@@ -1,4 +1,6 @@
-import { Link } from "@reach/router"
+import { Container } from "components/Container"
+import { HomeLink } from "components/HomeLink"
+import { HomeOrb } from "components/HomeOrb"
 import React from "react"
 import styled from "react-emotion"
 import { MdHome, MdSearch } from "react-icons/md"
@@ -6,13 +8,8 @@ import { FormattedMessage, intlShape } from "react-intl"
 import { SearchResult } from "routes/Ammattitutkinto/SearchResult"
 
 interface PageProps {
-  active: boolean
+  active?: boolean
 }
-
-const Container = styled("div")`
-  max-width: 1160px;
-  margin: 0 auto;
-`
 
 const SectionContainer = styled("div")`
   display: flex;
@@ -44,26 +41,6 @@ const SectionTitle = styled("h1")`
 
 const SearchResultsTitle = styled(SectionTitle)`
   color: #000;
-`
-
-const HomeLink = styled(Link)`
-  color: #1976d2;
-  text-decoration: none;
-  font-size: 24px;
-  display: flex;
-  align-items: center;
-  padding: 20px;
-`
-
-const HomeOrb = styled("div")`
-  background-color: #ed7103;
-  border-radius: 21px;
-  width: 42px;
-  height: 42px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 10px;
 `
 
 const SearchHeader = styled("div")`
@@ -110,6 +87,12 @@ export interface AmmattitutkintoProps {
 export class Ammattitutkinto extends React.Component<AmmattitutkintoProps> {
   static contextTypes = {
     intl: intlShape
+  }
+
+  componentDidMount() {
+    window.requestAnimationFrame(() => {
+      window.scrollTo(0, 0)
+    })
   }
 
   render() {
