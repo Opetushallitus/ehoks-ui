@@ -17,6 +17,7 @@ const Content = styled("div")`
   flex-direction: column;
   display: flex;
   padding: 10px;
+  min-height: 120px;
 `
 
 const Image = styled("div")`
