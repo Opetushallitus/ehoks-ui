@@ -2,7 +2,7 @@ const defaultConfig = () => ({
   backendUrl: "http://localhost:3000/ehoks-backend/api/v1"
 })
 
-const config = (function() {
+const config = (() => {
   const appEl = document.getElementById("app")
 
   if (appEl == null) {

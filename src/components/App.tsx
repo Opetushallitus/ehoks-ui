@@ -7,22 +7,10 @@ import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
 import { IntlProvider } from "react-intl"
-import Loadable from "react-loadable"
+import { Ammattitutkinto } from "routes/Ammattitutkinto"
+import { Henkilokohtaistaminen } from "routes/Henkilokohtaistaminen"
 import { RootStore } from "stores/RootStore"
 import { Home } from "../routes/Home"
-
-const LoadingComponent = () => <div>Loading...</div>
-
-const Goals = Loadable({
-  loader: async () => (await import("../routes/Goals")).Goals,
-  loading: LoadingComponent
-})
-
-const StudyInformation = Loadable({
-  loader: async () =>
-    (await import("../routes/StudyInformation")).StudyInformation,
-  loading: LoadingComponent
-})
 
 const Container = styled("div")`
   margin: 0;
@@ -52,8 +40,8 @@ export class App extends React.Component<AppProps> {
           <AppHeader />
           <Router>
             <Home path="/*" />
-            <Goals path="goals" />
-            <StudyInformation path="studies" />
+            <Henkilokohtaistaminen path="henkilokohtaistaminen" />
+            <Ammattitutkinto path="ammattitutkinto" />
           </Router>
           <AppFooter />
         </Container>

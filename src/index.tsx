@@ -14,7 +14,7 @@ addLocaleData([...fi, ...sv])
 
 // pass fetch to RootStore using MST's context, so we can easily mock it in tests
 const store = RootStore.create({}, { fetch })
-store.translations.haeLokalisaatiot()
+store.translations.haeLokalisoinnit()
 
 // initial render to app container
 const appContainer = document.getElementById("app")
