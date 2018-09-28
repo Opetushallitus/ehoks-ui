@@ -1,5 +1,6 @@
 import { apiUrl } from "config"
 import { InjectedStores } from "stores/RootStore"
+import "whatwg-fetch" // polyfill window.fetch for IE 11
 
 // mocked fetch using local json files
 export const mockFetch = (version = 0) => (url: string) => {

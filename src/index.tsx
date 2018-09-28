@@ -9,6 +9,9 @@ import { App } from "./components/App"
 import { RootStore } from "./stores/RootStore"
 import { fetch } from "./utils"
 
+// polyfill Promise for IE 11
+import "promise-polyfill/src/polyfill"
+
 // load finnish & swedish locale data (currency units, separators etc.)
 addLocaleData([...fi, ...sv])
 
