@@ -12,7 +12,6 @@ cp -r \
    scripts/ci/config.json.template \
    scripts/ci/escape-html.py \
    scripts/ci/nginx-server.conf \
-   scripts/ci/opintopolku.yml \
    scripts/ci/run \
    scripts/ci/run.sh \
    "$DOCKER_BUILD_DIR/"
