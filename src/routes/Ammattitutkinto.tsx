@@ -1,11 +1,17 @@
 import { Container } from "components/Container"
 import { HomeLink } from "components/HomeLink"
 import { HomeOrb } from "components/HomeOrb"
+import range from "lodash.range"
+import slice from "lodash.slice"
+import take from "lodash.take"
+import { inject, observer } from "mobx-react"
+import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
 import { MdHome, MdSearch } from "react-icons/md"
 import { FormattedMessage, intlShape } from "react-intl"
 import { SearchResult } from "routes/Ammattitutkinto/SearchResult"
+import { RootStore } from "stores/RootStore"
 
 interface PageProps {
   active?: boolean
@@ -66,7 +72,7 @@ const SearchResultsList = styled("div")`
   padding: 10px;
 `
 
-const Paging = styled("div")`
+const PagingContainer = styled("div")`
   margin: 10px;
 `
 
@@ -82,11 +88,20 @@ const Page = styled("div")`
 
 export interface AmmattitutkintoProps {
   path?: string
+  store?: Instance<typeof RootStore>
 }
 
+@inject("store")
+@observer
 export class Ammattitutkinto extends React.Component<AmmattitutkintoProps> {
   static contextTypes = {
     intl: intlShape
+  }
+  state = {
+    activePage: 0,
+    perPage: 5,
+    searchText: "",
+    searchTimeout: 0
   }
 
   componentDidMount() {
@@ -95,90 +110,30 @@ export class Ammattitutkinto extends React.Component<AmmattitutkintoProps> {
     })
   }
 
+  updateSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (this.state.searchTimeout) {
+      window.clearTimeout(this.state.searchTimeout)
+    }
+
+    this.setState({
+      activePage: 0,
+      searchText: event.target.value,
+      searchTimeout: setTimeout(() => {
+        this.props.store.oppilas.haeMockTutkinnot()
+      }, 300)
+    })
+  }
+
+  goToPage = (index: number) => () => {
+    this.setState({ activePage: index })
+  }
+
   render() {
     const { intl } = this.context
-    const results = [
-      {
-        competenceAreas: [
-          "Elintarviketeknologian osaamisala",
-          "Meijerialan osaamisala",
-          "Liha-alan osaamisala",
-          "Leipomoalan osaamisala"
-        ],
-        link: "https://eperusteet.opintopolku.fi/#/fi/kooste/1463484",
-        qualificationTitles: [
-          "Elintarvikkeiden valmistaja",
-          "Leipuri-kondiittori",
-          "Lihatuotteiden valmistaja",
-          "Meijeristi"
-        ],
-        title: "Elintarvikealan perustutkinnon perusteet"
-      },
-      {
-        competenceAreas: [
-          "Elintarviketeknologian osaamisala",
-          "Meijerialan osaamisala",
-          "Liha-alan osaamisala",
-          "Leipomoalan osaamisala"
-        ],
-        link: "https://eperusteet.opintopolku.fi/#/fi/kooste/1463484",
-        qualificationTitles: [
-          "Elintarvikkeiden valmistaja",
-          "Leipuri-kondiittori",
-          "Lihatuotteiden valmistaja",
-          "Meijeristi"
-        ],
-        title: "Elintarvikealan perustutkinnon perusteet"
-      },
-      {
-        competenceAreas: [
-          "Elintarviketeknologian osaamisala",
-          "Meijerialan osaamisala",
-          "Liha-alan osaamisala",
-          "Leipomoalan osaamisala"
-        ],
-        link: "https://eperusteet.opintopolku.fi/#/fi/kooste/1463484",
-        qualificationTitles: [
-          "Elintarvikkeiden valmistaja",
-          "Leipuri-kondiittori",
-          "Lihatuotteiden valmistaja",
-          "Meijeristi"
-        ],
-        title: "Elintarvikealan perustutkinnon perusteet"
-      },
-      {
-        competenceAreas: [
-          "Elintarviketeknologian osaamisala",
-          "Meijerialan osaamisala",
-          "Liha-alan osaamisala",
-          "Leipomoalan osaamisala"
-        ],
-        link: "https://eperusteet.opintopolku.fi/#/fi/kooste/1463484",
-        qualificationTitles: [
-          "Elintarvikkeiden valmistaja",
-          "Leipuri-kondiittori",
-          "Lihatuotteiden valmistaja",
-          "Meijeristi"
-        ],
-        title: "Elintarvikealan perustutkinnon perusteet"
-      },
-      {
-        competenceAreas: [
-          "Elintarviketeknologian osaamisala",
-          "Meijerialan osaamisala",
-          "Liha-alan osaamisala",
-          "Leipomoalan osaamisala"
-        ],
-        link: "https://eperusteet.opintopolku.fi/#/fi/kooste/1463484",
-        qualificationTitles: [
-          "Elintarvikkeiden valmistaja",
-          "Leipuri-kondiittori",
-          "Lihatuotteiden valmistaja",
-          "Meijeristi"
-        ],
-        title: "Elintarvikealan perustutkinnon perusteet"
-      }
-    ]
+    const { store } = this.props
+    const totalPages = Math.ceil(
+      store.oppilas.tutkinnot.length / this.state.perPage
+    )
     return (
       <Container>
         <HomeLink to="/">
@@ -228,6 +183,7 @@ export class Ammattitutkinto extends React.Component<AmmattitutkintoProps> {
                 defaultMessage="Hae tietoa ammatillisista tutkinnoista"
               />
             </SectionTitle>
+
             <SearchContainer>
               <SearchHeader>
                 <SearchIcon size="24" />
@@ -236,28 +192,51 @@ export class Ammattitutkinto extends React.Component<AmmattitutkintoProps> {
                     defaultMessage: "Hae tietoa ammateista",
                     id: "ammattitutkinto.placeholder"
                   })}
+                  onChange={this.updateSearchText}
                 />
               </SearchHeader>
-              <SearchResultsContainer>
-                <SearchResultsTitle>
-                  <FormattedMessage
-                    id="ammattitutkinto.searchResultsTitle"
-                    defaultMessage="Tutkinnot ({count})"
-                    values={{
-                      count: results.length
-                    }}
-                  />
-                </SearchResultsTitle>
-                <SearchResultsList>
-                  {results.map(result => {
-                    return <SearchResult key={result.title} result={result} />
-                  })}
-                </SearchResultsList>
-              </SearchResultsContainer>
-              <Paging>
-                <Page active={true}>1</Page>
-                <Page>2</Page>
-              </Paging>
+              {this.state.searchText.length > 0 && (
+                <React.Fragment>
+                  <SearchResultsContainer>
+                    <SearchResultsTitle>
+                      <FormattedMessage
+                        id="ammattitutkinto.searchResultsTitle"
+                        defaultMessage="Tutkinnot ({count})"
+                        values={{
+                          count: store.oppilas.tutkinnot.length
+                        }}
+                      />
+                    </SearchResultsTitle>
+                    <SearchResultsList>
+                      {take(
+                        slice(
+                          store.oppilas.tutkinnot,
+                          this.state.activePage * this.state.perPage
+                        ),
+                        this.state.perPage
+                      ).map((tutkinto, index) => {
+                        return <SearchResult key={index} result={tutkinto} />
+                      })}
+                    </SearchResultsList>
+                  </SearchResultsContainer>
+
+                  {store.oppilas.tutkinnot.length > 0 && (
+                    <PagingContainer>
+                      {range(totalPages).map(index => {
+                        return (
+                          <Page
+                            key={index}
+                            active={this.state.activePage === index}
+                            onClick={this.goToPage(index)}
+                          >
+                            {index + 1}
+                          </Page>
+                        )
+                      })}
+                    </PagingContainer>
+                  )}
+                </React.Fragment>
+              )}
             </SearchContainer>
           </Section>
         </SectionContainer>

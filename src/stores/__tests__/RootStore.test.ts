@@ -16,18 +16,15 @@ describe("RootStore", () => {
       },
       isLoading: false,
       learningPeriods: [],
+      oppilas: {
+        isLoading: false,
+        tutkinnot: []
+      },
       session: {
+        error: "",
         isLoading: false,
         loginUrl: "http://localhost:3000/auth-dev/opintopolku-login/",
-        user: null,
-        error: ""
-      },
-      student: {
-        info: {
-          basicInformation: { fi: "", sv: "" },
-          hoksProcess: { fi: "", sv: "" }
-        },
-        isLoading: false
+        user: null
       },
       translations: { activeLocale: "fi", isLoading: false, translations: [] },
       work: {

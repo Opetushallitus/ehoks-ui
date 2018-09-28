@@ -4,8 +4,8 @@ import mapObj from "map-obj"
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { LearningPeriod } from "models/LearningPeriod"
 import { EducationProviderStore } from "stores/EducationProviderStore"
+import { OppilasStore } from "stores/OppilasStore"
 import { SessionStore } from "stores/SessionStore"
-import { StudentStore } from "stores/StudentStore"
 import { TranslationStore } from "stores/TranslationStore"
 import { WorkplaceProviderStore } from "stores/WorkplaceProviderStore"
 
@@ -30,8 +30,8 @@ const RootStoreModel = {
   education: types.optional(EducationProviderStore, { info: {} }),
   isLoading: false,
   learningPeriods: types.optional(types.array(LearningPeriod), []),
+  oppilas: types.optional(OppilasStore, {}),
   session: types.optional(SessionStore, {}),
-  student: types.optional(StudentStore, { info: {} }),
   translations: types.optional(TranslationStore, {}),
   work: types.optional(WorkplaceProviderStore, { info: {} })
 }
