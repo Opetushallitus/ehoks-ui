@@ -11,8 +11,8 @@ module.exports = {
     filename: "[name].bundle.js",
     // `chunkFilename` provides a template for naming code-split bundles (optional)
     chunkFilename: "[name].bundle.js",
-    publicPath: "/dist/",
-    path: path.resolve(__dirname, "dist")
+    publicPath: "/ehoks/dist/",
+    path: path.resolve(__dirname, "public/ehoks/dist")
   },
 
   devtool: "inline-source-map",

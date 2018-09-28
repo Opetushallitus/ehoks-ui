@@ -15,14 +15,13 @@ RUN apk update \
 
 COPY nginx-server.conf /etc/nginx/conf.d/default.conf
 
-WORKDIR /root/public
+WORKDIR /root
 
-COPY 404.html 50x.html index.html buildversion.txt /root/public/
-COPY dist /root/public/dist
-COPY escape-html.py config.json.template /root/
+COPY public /root/public
+COPY config.json.template escape-html.py /root/
 
 RUN mkdir -p /tmp/scripts
-COPY run.sh /tmp/scripts/run
+COPY run run.sh /tmp/scripts/
 
 RUN chown -R nginx:nginx /root
 

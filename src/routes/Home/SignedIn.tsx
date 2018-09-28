@@ -54,8 +54,8 @@ export class SignedIn extends React.Component<SignedInProps> {
                   <ProgressPie
                     step={"1"}
                     percentage={100}
-                    selected={location.pathname === "/"}
-                    onClick={this.setActiveTab("/")}
+                    selected={location.pathname === "/ehoks/"}
+                    onClick={this.setActiveTab("/ehoks/")}
                     title={
                       <FormattedMessage
                         id="signedIn.myGoalsAndBasicInfo"
@@ -66,8 +66,8 @@ export class SignedIn extends React.Component<SignedInProps> {
                   <ProgressPie
                     step={"2"}
                     percentage={100}
-                    selected={location.pathname === "/osaamiseni"}
-                    onClick={this.setActiveTab("/osaamiseni")}
+                    selected={location.pathname === "/ehoks/osaamiseni"}
+                    onClick={this.setActiveTab("/ehoks/osaamiseni")}
                     title={
                       <FormattedMessage
                         id="signedIn.myPreviousCompetence"
@@ -78,8 +78,8 @@ export class SignedIn extends React.Component<SignedInProps> {
                   <ProgressPie
                     step={"3"}
                     percentage={100}
-                    selected={location.pathname === "/tunnustaminen"}
-                    onClick={this.setActiveTab("/tunnustaminen")}
+                    selected={location.pathname === "/ehoks/tunnustaminen"}
+                    onClick={this.setActiveTab("/ehoks/tunnustaminen")}
                     title={
                       <FormattedMessage
                         id="signedIn.recognizingPriorLearning"
@@ -90,8 +90,10 @@ export class SignedIn extends React.Component<SignedInProps> {
                   <ProgressPie
                     step={"4"}
                     percentage={100}
-                    selected={location.pathname === "/opiskelusuunnitelmani"}
-                    onClick={this.setActiveTab("/opiskelusuunnitelmani")}
+                    selected={
+                      location.pathname === "/ehoks/opiskelusuunnitelmani"
+                    }
+                    onClick={this.setActiveTab("/ehoks/opiskelusuunnitelmani")}
                     title={
                       <FormattedMessage
                         id="signedIn.myStudyPlan"
@@ -102,7 +104,7 @@ export class SignedIn extends React.Component<SignedInProps> {
                 </ProgressPies>
               </ProgressContainer>
 
-              <Router>
+              <Router basepath="/ehoks">
                 <Goal path="/" />
                 <PreviousCompetence path="osaamiseni" />
                 <RecognizingPriorLearning path="tunnustaminen" />

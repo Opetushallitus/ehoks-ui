@@ -6,9 +6,18 @@ export ARTIFACT_NAME=$1
 export BUILD_ID=ci-${TRAVIS_BUILD_NUMBER}
 export DOCKER_TARGET=${ECR_REPO}/${ARTIFACT_NAME}:${BUILD_ID}
 
-cp -r dist index.html scripts/ci/* "$DOCKER_BUILD_DIR/"
+cp -r \
+   public \
+   scripts/ci/Dockerfile \
+   scripts/ci/config.json.template \
+   scripts/ci/escape-html.py \
+   scripts/ci/nginx-server.conf \
+   scripts/ci/opintopolku.yml \
+   scripts/ci/run \
+   scripts/ci/run.sh \
+   "$DOCKER_BUILD_DIR/"
 
-cat > "$DOCKER_BUILD_DIR/buildversion.txt" <<END
+cat > "$DOCKER_BUILD_DIR/public/ehoks/buildversion.txt" <<END
 artifactId=$ARTIFACT_NAME
 buildNumber=$BUILD_ID
 vcsRevision=$(git rev-parse HEAD)

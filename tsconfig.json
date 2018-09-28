@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "outDir": "./public/ehoks/dist/",
     "sourceMap": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
