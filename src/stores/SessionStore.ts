@@ -6,7 +6,10 @@ import { RootStore } from "stores/RootStore"
 const SessionStoreModel = {
   error: types.optional(types.string, ""),
   isLoading: false,
-  loginUrl: types.optional(types.string, ""),
+  loginUrl: types.optional(
+    types.string,
+    "http://localhost:3000/auth-dev/opintopolku-login/" // TODO: get dynamically from environment API
+  ),
   user: types.optional(types.union(SessionUser, types.null), null)
 }
 
@@ -17,8 +20,7 @@ export const SessionStore = types
 
     const checkSession = flow(function*(): any {
       self.isLoading = true
-      const response = yield root.fetchSingle(apiUrl("session/opintopolku/"))
-      self.loginUrl = response.meta.opintopolkuLoginUrl
+      const response = yield root.fetchSingle(apiUrl("session"))
       self.user = response.data
       // if logged in, call update-user-info API, which updates current session with 'oid'
       // we don't need to deal with 'oid' in UI, this is just needed to obtain valid session cookie
@@ -45,7 +47,7 @@ export const SessionStore = types
 
     const logout = flow(function*(): any {
       self.isLoading = true
-      yield root.deleteResource(apiUrl("session/opintopolku/"))
+      yield root.deleteResource(apiUrl("session"))
       self.user = null
       self.isLoading = false
     })

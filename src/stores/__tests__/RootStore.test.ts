@@ -16,7 +16,12 @@ describe("RootStore", () => {
       },
       isLoading: false,
       learningPeriods: [],
-      session: { isLoading: false, loginUrl: "", user: null, error: "" },
+      session: {
+        isLoading: false,
+        loginUrl: "http://localhost:3000/auth-dev/opintopolku-login/",
+        user: null,
+        error: ""
+      },
       student: {
         info: {
           basicInformation: { fi: "", sv: "" },
@@ -39,9 +44,7 @@ describe("RootStore", () => {
     // uses session_opintopolku_1.json mock
     const store = RootStore.create({}, { fetch: mockFetch(1) })
 
-    const result: ApiResponse<any> = await store.fetchSingle(
-      apiUrl("session/opintopolku/")
-    )
+    const result: ApiResponse<any> = await store.fetchSingle(apiUrl("session"))
     expect(result).toEqual({
       data: {
         commonName: "Teuvo",

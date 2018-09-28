@@ -32,11 +32,6 @@ export interface SignedInProps {
 @inject(injectSession)
 @observer
 export class SignedIn extends React.Component<SignedInProps> {
-  login = (event: React.MouseEvent) => {
-    event.preventDefault()
-    window.location.href = this.props.session.loginUrl
-  }
-
   setActiveTab = (route: string) => () => {
     navigate(route)
   }
