@@ -19,7 +19,10 @@ WORKDIR /root/public
 
 COPY 404.html 50x.html index.html buildversion.txt /root/public/
 COPY dist /root/public/dist
-COPY run.sh escape-html.py config.json.template /root/
+COPY escape-html.py config.json.template /root/
+
+RUN mkdir -p /tmp/scripts
+COPY run.sh /tmp/scripts/run
 
 RUN chown -R nginx:nginx /root
 
@@ -29,4 +32,4 @@ ENV NAME $name
 
 STOPSIGNAL SIGTERM
 
-CMD ["bash", "/root/run.sh"]
+CMD ["sh", "/tmp/scripts/run"]
