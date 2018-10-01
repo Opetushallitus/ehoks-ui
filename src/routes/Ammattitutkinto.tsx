@@ -139,7 +139,7 @@ export class Ammattitutkinto extends React.Component<AmmattitutkintoProps> {
     )
     return (
       <Container>
-        <HomeLink to="/">
+        <HomeLink to="../">
           <HomeOrb>
             <MdHome size="24" color="#fff" />
           </HomeOrb>

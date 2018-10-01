@@ -32,6 +32,9 @@ export class Home extends React.Component<HomeProps & RouteComponentProps> {
         }
       }
     )
+    window.requestAnimationFrame(() => {
+      window.scrollTo(0, 0)
+    })
   }
 
   render() {

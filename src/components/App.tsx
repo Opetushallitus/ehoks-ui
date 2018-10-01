@@ -38,7 +38,7 @@ export class App extends React.Component<AppProps> {
       >
         <Container>
           <AppHeader />
-          <Router>
+          <Router basepath="/ehoks">
             <Home path="/*" />
             <Henkilokohtaistaminen path="henkilokohtaistaminen" />
             <Ammattitutkinto path="ammattitutkinto" />

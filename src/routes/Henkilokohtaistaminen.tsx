@@ -52,7 +52,7 @@ export class Henkilokohtaistaminen extends React.Component<
   render() {
     return (
       <Container>
-        <HomeLink to="/">
+        <HomeLink to="../">
           <HomeOrb>
             <MdHome size="24" color="#fff" />
           </HomeOrb>
