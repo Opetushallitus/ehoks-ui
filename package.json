@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --inline --history-api-fallback --compress --content-base public",
+    "start": "webpack-dev-server --hot --inline --history-api-fallback --compress --content-base public/ehoks",
     "styleguide": "styleguidist server",
     "lint": "tslint src/*.tsx src/**/*.tsx",
     "test": "jest",
