@@ -18,7 +18,7 @@ export const mockFetch = (version = 0) => (url: string) => {
   })
 }
 
-// fetch that returns the JSON directly
+// fetch that includes credentials
 export const fetch = (url: string | Request, init: RequestInit) =>
   window.fetch(url, { credentials: "include", ...init })
 

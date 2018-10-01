@@ -6,10 +6,6 @@ import { RootStore } from "stores/RootStore"
 const SessionStoreModel = {
   error: types.optional(types.string, ""),
   isLoading: false,
-  loginUrl: types.optional(
-    types.string,
-    "http://localhost:3000/auth-dev/opintopolku-login/" // TODO: get dynamically from environment API
-  ),
   user: types.optional(types.union(SessionUser, types.null), null)
 }
 

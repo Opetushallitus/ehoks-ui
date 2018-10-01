@@ -14,6 +14,13 @@ describe("RootStore", () => {
         },
         isLoading: false
       },
+      environment: {
+        eperusteetPerusteUrl: "",
+        error: "",
+        isLoading: false,
+        opintopolkuLoginUrl: "",
+        opintopolkuLogoutUrl: ""
+      },
       isLoading: false,
       learningPeriods: [],
       oppilas: {
@@ -23,7 +30,6 @@ describe("RootStore", () => {
       session: {
         error: "",
         isLoading: false,
-        loginUrl: "http://localhost:3000/auth-dev/opintopolku-login/",
         user: null
       },
       translations: { activeLocale: "fi", isLoading: false, translations: [] },
