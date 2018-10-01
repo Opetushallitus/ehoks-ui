@@ -112,16 +112,17 @@ export class Ammattitutkinto extends React.Component<AmmattitutkintoProps> {
   }
 
   updateSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const searchText = event.target.value
     if (this.state.searchTimeout) {
       window.clearTimeout(this.state.searchTimeout)
     }
-    this.props.store.oppilas.tyhjennaTutkinnot()
+    this.props.store.oppilas.tyhjennaPerusteet()
 
     this.setState({
       activePage: 0,
-      searchText: event.target.value,
+      searchText,
       searchTimeout: setTimeout(() => {
-        this.props.store.oppilas.haeMockTutkinnot()
+        this.props.store.oppilas.haePerusteet(searchText)
       }, 300)
     })
   }
@@ -134,9 +135,7 @@ export class Ammattitutkinto extends React.Component<AmmattitutkintoProps> {
     const { intl } = this.context
     const { store } = this.props
     const { oppilas } = store
-    const totalPages = Math.ceil(
-      store.oppilas.tutkinnot.length / this.state.perPage
-    )
+    const totalPages = Math.ceil(oppilas.perusteet.length / this.state.perPage)
     return (
       <Container>
         <HomeLink to="../">
@@ -200,7 +199,7 @@ export class Ammattitutkinto extends React.Component<AmmattitutkintoProps> {
                 {oppilas.isLoading && <LoadingSpinner />}
               </SearchHeader>
               {this.state.searchText.length > 0 &&
-                oppilas.tutkinnot.length > 0 && (
+                oppilas.perusteet.length > 0 && (
                   <React.Fragment>
                     <SearchResultsContainer>
                       <SearchResultsTitle>
@@ -208,24 +207,26 @@ export class Ammattitutkinto extends React.Component<AmmattitutkintoProps> {
                           id="ammattitutkinto.searchResultsTitle"
                           defaultMessage="Tutkinnot ({count})"
                           values={{
-                            count: oppilas.tutkinnot.length
+                            count: oppilas.perusteet.length
                           }}
                         />
                       </SearchResultsTitle>
                       <SearchResultsList>
                         {take(
                           slice(
-                            oppilas.tutkinnot,
+                            oppilas.perusteet,
                             this.state.activePage * this.state.perPage
                           ),
                           this.state.perPage
-                        ).map((tutkinto, index) => {
-                          return <SearchResult key={index} result={tutkinto} />
+                        ).map(peruste => {
+                          return (
+                            <SearchResult key={peruste.id} result={peruste} />
+                          )
                         })}
                       </SearchResultsList>
                     </SearchResultsContainer>
 
-                    {oppilas.tutkinnot.length > 0 && (
+                    {oppilas.perusteet.length > 0 && (
                       <PagingContainer>
                         {range(totalPages).map(index => {
                           return (

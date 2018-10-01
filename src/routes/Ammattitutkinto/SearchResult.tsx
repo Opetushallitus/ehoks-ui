@@ -1,3 +1,5 @@
+import { Instance } from "mobx-state-tree"
+import { Peruste } from "models/Peruste"
 import React from "react"
 import styled from "react-emotion"
 import { FormattedMessage } from "react-intl"
@@ -32,12 +34,7 @@ const Link = styled("a")`
 `
 
 interface SearchResultProps {
-  result: {
-    competenceAreas: string[]
-    link: string
-    qualificationTitles: string[]
-    title: string
-  }
+  result?: Instance<typeof Peruste>
 }
 
 export class SearchResult extends React.Component<SearchResultProps> {
