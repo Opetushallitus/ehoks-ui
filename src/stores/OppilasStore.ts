@@ -8,6 +8,13 @@ const OppilasStoreModel = {
   tutkinnot: types.optional(types.array(Tutkinto), [])
 }
 
+const sleep = (timeout: number) =>
+  new Promise(resolve =>
+    setTimeout(() => {
+      resolve()
+    }, timeout)
+  )
+
 export const OppilasStore = types
   .model("OppilasStore", OppilasStoreModel)
   .actions(self => {
@@ -22,8 +29,14 @@ export const OppilasStore = types
 
     const haeMockTutkinnot = flow(function*(): any {
       self.isLoading = true
+      yield sleep(1000)
       self.tutkinnot.replace(tutkinnotMock as Array<Instance<typeof Tutkinto>>)
       self.isLoading = false
     })
-    return { haeTutkinnot, haeMockTutkinnot }
+
+    const tyhjennaTutkinnot = () => {
+      self.tutkinnot.clear()
+    }
+
+    return { haeTutkinnot, haeMockTutkinnot, tyhjennaTutkinnot }
   })

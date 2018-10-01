@@ -1,6 +1,7 @@
 import { Container } from "components/Container"
 import { HomeLink } from "components/HomeLink"
 import { HomeOrb } from "components/HomeOrb"
+import { LoadingSpinner } from "components/LoadingSpinner"
 import range from "lodash.range"
 import slice from "lodash.slice"
 import take from "lodash.take"
@@ -114,6 +115,7 @@ export class Ammattitutkinto extends React.Component<AmmattitutkintoProps> {
     if (this.state.searchTimeout) {
       window.clearTimeout(this.state.searchTimeout)
     }
+    this.props.store.oppilas.tyhjennaTutkinnot()
 
     this.setState({
       activePage: 0,
@@ -131,6 +133,7 @@ export class Ammattitutkinto extends React.Component<AmmattitutkintoProps> {
   render() {
     const { intl } = this.context
     const { store } = this.props
+    const { oppilas } = store
     const totalPages = Math.ceil(
       store.oppilas.tutkinnot.length / this.state.perPage
     )
@@ -194,49 +197,51 @@ export class Ammattitutkinto extends React.Component<AmmattitutkintoProps> {
                   })}
                   onChange={this.updateSearchText}
                 />
+                {oppilas.isLoading && <LoadingSpinner />}
               </SearchHeader>
-              {this.state.searchText.length > 0 && (
-                <React.Fragment>
-                  <SearchResultsContainer>
-                    <SearchResultsTitle>
-                      <FormattedMessage
-                        id="ammattitutkinto.searchResultsTitle"
-                        defaultMessage="Tutkinnot ({count})"
-                        values={{
-                          count: store.oppilas.tutkinnot.length
-                        }}
-                      />
-                    </SearchResultsTitle>
-                    <SearchResultsList>
-                      {take(
-                        slice(
-                          store.oppilas.tutkinnot,
-                          this.state.activePage * this.state.perPage
-                        ),
-                        this.state.perPage
-                      ).map((tutkinto, index) => {
-                        return <SearchResult key={index} result={tutkinto} />
-                      })}
-                    </SearchResultsList>
-                  </SearchResultsContainer>
+              {this.state.searchText.length > 0 &&
+                oppilas.tutkinnot.length > 0 && (
+                  <React.Fragment>
+                    <SearchResultsContainer>
+                      <SearchResultsTitle>
+                        <FormattedMessage
+                          id="ammattitutkinto.searchResultsTitle"
+                          defaultMessage="Tutkinnot ({count})"
+                          values={{
+                            count: oppilas.tutkinnot.length
+                          }}
+                        />
+                      </SearchResultsTitle>
+                      <SearchResultsList>
+                        {take(
+                          slice(
+                            oppilas.tutkinnot,
+                            this.state.activePage * this.state.perPage
+                          ),
+                          this.state.perPage
+                        ).map((tutkinto, index) => {
+                          return <SearchResult key={index} result={tutkinto} />
+                        })}
+                      </SearchResultsList>
+                    </SearchResultsContainer>
 
-                  {store.oppilas.tutkinnot.length > 0 && (
-                    <PagingContainer>
-                      {range(totalPages).map(index => {
-                        return (
-                          <Page
-                            key={index}
-                            active={this.state.activePage === index}
-                            onClick={this.goToPage(index)}
-                          >
-                            {index + 1}
-                          </Page>
-                        )
-                      })}
-                    </PagingContainer>
-                  )}
-                </React.Fragment>
-              )}
+                    {oppilas.tutkinnot.length > 0 && (
+                      <PagingContainer>
+                        {range(totalPages).map(index => {
+                          return (
+                            <Page
+                              key={index}
+                              active={this.state.activePage === index}
+                              onClick={this.goToPage(index)}
+                            >
+                              {index + 1}
+                            </Page>
+                          )
+                        })}
+                      </PagingContainer>
+                    )}
+                  </React.Fragment>
+                )}
             </SearchContainer>
           </Section>
         </SectionContainer>
