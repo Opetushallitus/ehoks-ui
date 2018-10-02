@@ -4,8 +4,7 @@ import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
 import { GoThreeBars } from "react-icons/go"
-import { SessionStore } from "stores/SessionStore"
-import { injectSession } from "utils"
+import { RootStore } from "stores/RootStore"
 
 const HeaderContainer = styled("div")`
   display: flex;
@@ -37,24 +36,24 @@ const User = styled("div")`
 
 export interface HeaderProps {
   children?: React.ReactNode
-  session?: Instance<typeof SessionStore>
+  store?: Instance<typeof RootStore>
 }
 
-@inject(injectSession)
+@inject("store")
 @observer
 export class Header extends React.Component<HeaderProps> {
   logout = (event: React.MouseEvent) => {
     event.preventDefault()
-    this.props.session.logout()
+    this.props.store.session.logout()
   }
 
   login = (event: React.MouseEvent) => {
     event.preventDefault()
-    window.location.href = this.props.session.loginUrl
+    window.location.href = this.props.store.environment.opintopolkuLoginUrl
   }
 
   render() {
-    const { children, session } = this.props
+    const { children, store } = this.props
     return (
       <HeaderContainer>
         <Link to="/">
@@ -62,9 +61,9 @@ export class Header extends React.Component<HeaderProps> {
         </Link>
         <Text>{children}</Text>
         <LoginContainer>
-          {session.isLoggedIn ? (
+          {store.session.isLoggedIn ? (
             <React.Fragment>
-              <User>{session.user.commonName}</User>
+              <User>{store.session.user.commonName}</User>
               <StyledLink to="" onClick={this.logout}>
                 Kirjaudu ulos
               </StyledLink>

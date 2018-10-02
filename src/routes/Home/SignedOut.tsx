@@ -5,10 +5,9 @@ import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
-import { SessionStore } from "stores/SessionStore"
-import { breakpoints, injectSession } from "utils"
-
 import { FormattedMessage } from "react-intl"
+import { RootStore } from "stores/RootStore"
+import { breakpoints } from "utils"
 import education from "./education.jpg"
 import students from "./students.jpg"
 
@@ -79,16 +78,16 @@ const LoginButton = styled(HeroButton)`
 `
 
 export interface SignedOutProps {
-  session?: Instance<typeof SessionStore>
+  store?: Instance<typeof RootStore>
   path?: string
 }
 
-@inject(injectSession)
+@inject("store")
 @observer
 export class SignedOut extends React.Component<SignedOutProps> {
   login = (event: React.MouseEvent) => {
     event.preventDefault()
-    window.location.href = this.props.session.loginUrl
+    window.location.href = this.props.store.environment.opintopolkuLoginUrl
   }
 
   render() {

@@ -1,4 +1,4 @@
-import { navigate, RouteComponentProps } from "@reach/router"
+import { RouteComponentProps } from "@reach/router"
 import { reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
@@ -6,8 +6,7 @@ import React from "react"
 import styled from "react-emotion"
 import { SignedIn } from "routes/Home/SignedIn"
 import { SignedOut } from "routes/Home/SignedOut"
-import { SessionStore } from "stores/SessionStore"
-import { injectSession } from "utils"
+import { RootStore } from "stores/RootStore"
 
 const Container = styled("div")`
   max-width: 1160px;
@@ -15,32 +14,35 @@ const Container = styled("div")`
 `
 
 export interface HomeProps {
-  session?: Instance<typeof SessionStore>
+  store?: Instance<typeof RootStore>
   "*"?: string
 }
 
-@inject(injectSession)
+@inject("store")
 @observer
 export class Home extends React.Component<HomeProps & RouteComponentProps> {
   componentDidMount() {
-    const { session } = this.props
+    const { store } = this.props
     reaction(
-      () => session.isLoggedIn,
+      () => store.session.isLoggedIn,
       isLoggedIn => {
-        // navigate to root when logging out
-        if (!isLoggedIn && this.props.location.pathname !== "/") {
-          navigate("/")
+        // navigate to Opintopolku logout url after logging out
+        if (!isLoggedIn) {
+          window.location.href = this.props.store.environment.opintopolkuLogoutUrl
         }
       }
     )
+    window.requestAnimationFrame(() => {
+      window.scrollTo(0, 0)
+    })
   }
 
   render() {
-    const { session } = this.props
+    const { store } = this.props
     const path = this.props["*"]
     return (
       <Container>
-        {session.isLoggedIn ? <SignedIn /> : <SignedOut path={path} />}
+        {store.session.isLoggedIn ? <SignedIn /> : <SignedOut path={path} />}
       </Container>
     )
   }

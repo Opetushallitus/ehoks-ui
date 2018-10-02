@@ -16,9 +16,6 @@ describe("SessionStore", () => {
       () => !store.session.isLoading,
       () => {
         expect(store.session.user).toEqual(null)
-        expect(store.session.loginUrl).toBe(
-          "http://localhost:3000/auth-dev/opintopolku-login/"
-        )
       }
     )
   })
@@ -52,9 +49,6 @@ describe("SessionStore", () => {
           oid: "1.1.111.111.11.111111111",
           surname: "Testaaja"
         })
-        expect(store.session.loginUrl).toBe(
-          "http://localhost:3000/auth-dev/opintopolku-login/"
-        )
         done()
       }
     )

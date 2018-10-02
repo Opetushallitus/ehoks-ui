@@ -4,8 +4,9 @@ import mapObj from "map-obj"
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { LearningPeriod } from "models/LearningPeriod"
 import { EducationProviderStore } from "stores/EducationProviderStore"
+import { EnvironmentStore } from "stores/EnvironmentStore"
+import { OppilasStore } from "stores/OppilasStore"
 import { SessionStore } from "stores/SessionStore"
-import { StudentStore } from "stores/StudentStore"
 import { TranslationStore } from "stores/TranslationStore"
 import { WorkplaceProviderStore } from "stores/WorkplaceProviderStore"
 
@@ -28,10 +29,11 @@ export interface InjectedStores {
 
 const RootStoreModel = {
   education: types.optional(EducationProviderStore, { info: {} }),
+  environment: types.optional(EnvironmentStore, {}),
   isLoading: false,
   learningPeriods: types.optional(types.array(LearningPeriod), []),
+  oppilas: types.optional(OppilasStore, {}),
   session: types.optional(SessionStore, {}),
-  student: types.optional(StudentStore, { info: {} }),
   translations: types.optional(TranslationStore, {}),
   work: types.optional(WorkplaceProviderStore, { info: {} })
 }
@@ -45,6 +47,7 @@ export const RootStore = types
     }
   }))
   .actions(self => {
+    // extra typings needed because of https://github.com/mobxjs/mobx-state-tree/issues/507
     const fetchSingle: (url: string, init?: RequestInit) => any = flow(
       function*(url: string, init?: RequestInit) {
         const response = yield self.fetch(url, init)
@@ -53,14 +56,18 @@ export const RootStore = types
         }
         const json = yield response.json()
         const model = {
-          data: json.data && json.data[0] ? json.data[0] : null,
-          meta: json.meta
+          // supports:
+          // 1) array with one object in json.data
+          // 2) object in json.data
+          data: Array.isArray(json.data) ? json.data[0] : json.data,
+          meta: json.meta || {}
         }
         // camelCase kebab-cased object keys recursively so we can use dot syntax for accessing values
         return camelCaseDeep(model)
       }
     )
 
+    // extra typings needed because of https://github.com/mobxjs/mobx-state-tree/issues/507
     const fetchCollection: (url: string, init?: RequestInit) => any = flow(
       function*(url: string, init?: RequestInit) {
         const response = yield self.fetch(url, init)
@@ -76,12 +83,13 @@ export const RootStore = types
       }
     )
 
-    const deleteResource = flow(function*(url: string) {
-      const response = yield self.fetch(url, { method: "DELETE" })
-      const json = yield response.json()
-      const model = json.data ? json.data : []
-      return model
-    })
+    // extra typings needed because of https://github.com/mobxjs/mobx-state-tree/issues/507
+    const deleteResource: (url: string, init?: RequestInit) => any = flow(
+      function*(url: string, init?: RequestInit) {
+        const response = yield self.fetch(url, { ...init, method: "DELETE" })
+        return response.ok
+      }
+    )
 
     return { fetchSingle, fetchCollection, deleteResource }
   })

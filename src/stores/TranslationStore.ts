@@ -44,14 +44,14 @@ export const TranslationStore = types
       self.activeLocale = locale
     }
 
-    const haeLokalisaatiot = flow(function*(): any {
+    const haeLokalisoinnit = flow(function*(): any {
       self.isLoading = true
-      const response = yield root.fetchCollection(apiUrl("lokalisaatio"))
+      const response = yield root.fetchCollection(apiUrl("lokalisointi"))
       self.translations = mapTranslations(response.data)
       self.isLoading = false
     })
 
-    return { haeLokalisaatiot, setActiveLocale }
+    return { haeLokalisoinnit, setActiveLocale }
   })
   .views(self => {
     return {

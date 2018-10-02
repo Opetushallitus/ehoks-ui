@@ -9,12 +9,16 @@ import { App } from "./components/App"
 import { RootStore } from "./stores/RootStore"
 import { fetch } from "./utils"
 
+// polyfill Promise for IE 11
+import "promise-polyfill/src/polyfill"
+
 // load finnish & swedish locale data (currency units, separators etc.)
 addLocaleData([...fi, ...sv])
 
 // pass fetch to RootStore using MST's context, so we can easily mock it in tests
 const store = RootStore.create({}, { fetch })
-store.translations.haeLokalisaatiot()
+store.environment.getEnvironment()
+store.translations.haeLokalisoinnit()
 
 // initial render to app container
 const appContainer = document.getElementById("app")

@@ -14,20 +14,23 @@ describe("RootStore", () => {
         },
         isLoading: false
       },
+      environment: {
+        eperusteetPerusteUrl: "",
+        error: "",
+        isLoading: false,
+        opintopolkuLoginUrl: "",
+        opintopolkuLogoutUrl: ""
+      },
       isLoading: false,
       learningPeriods: [],
-      session: {
+      oppilas: {
         isLoading: false,
-        loginUrl: "http://localhost:3000/auth-dev/opintopolku-login/",
-        user: null,
-        error: ""
+        perusteet: []
       },
-      student: {
-        info: {
-          basicInformation: { fi: "", sv: "" },
-          hoksProcess: { fi: "", sv: "" }
-        },
-        isLoading: false
+      session: {
+        error: "",
+        isLoading: false,
+        user: null
       },
       translations: { activeLocale: "fi", isLoading: false, translations: [] },
       work: {
@@ -58,11 +61,11 @@ describe("RootStore", () => {
   })
 
   test("fetchCollection camelCases object keys", async () => {
-    // uses lokalisaatio0.json mock
+    // uses lokalisointi0.json mock
     const store = RootStore.create({}, { fetch: mockFetch() })
 
     const result: ApiResponse<any> = await store.fetchCollection(
-      apiUrl("lokalisaatio")
+      apiUrl("lokalisointi")
     )
     expect(result).toEqual({
       data: [
