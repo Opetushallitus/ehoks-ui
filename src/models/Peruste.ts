@@ -29,7 +29,7 @@ export const Peruste = types
       },
       get link(): string {
         const urlPrefix = getEnvironment(root).eperusteetPerusteUrl
-        return `${urlPrefix}/${self.id}`
+        return `${urlPrefix}/#/fi/esitys/${self.id}/naytto/tiedot`
       }
     }
   })
