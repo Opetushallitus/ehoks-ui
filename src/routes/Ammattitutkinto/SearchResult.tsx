@@ -27,7 +27,7 @@ const Title = styled("h2")`
 const Link = styled("a")`
   display: flex;
   justify-content: flex-end;
-  padding: 0 30px 10px 0;
+  padding: 10px 30px 10px 0;
   color: #1976d2;
   font-size: 17px;
   font-weight: 600;
