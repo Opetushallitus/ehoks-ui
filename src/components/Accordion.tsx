@@ -27,6 +27,7 @@ const Title = styled("h2")`
   margin: 0 20px 0 20px;
   font-size: 20px;
   font-weight: 400;
+  cursor: pointer;
 `
 
 const Content = styled("div")`
@@ -83,7 +84,7 @@ export class Accordion extends React.Component<AccordionProps> {
               <MdExpandMore size="28" color="#027fa9" />
             )}
           </Toggle>
-          <Title>{title}</Title>
+          <Title onClick={onToggle}>{title}</Title>
           {helpIcon ? <HelpIcon size="28" color="#027fa9" /> : null}
         </TitleRow>
         {open ? <Content>{children}</Content> : null}
