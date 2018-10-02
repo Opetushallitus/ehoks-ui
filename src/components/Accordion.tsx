@@ -2,6 +2,7 @@ import React from "react"
 import styled from "react-emotion"
 
 import { MdExpandLess, MdExpandMore, MdHelp } from "react-icons/md"
+import { breakpoints } from "utils"
 
 const AccordionContainer = styled("div")`
   padding: 20px 0 10px 0;
@@ -22,6 +23,7 @@ const TitleRow = styled("div")`
 `
 
 const Title = styled("h2")`
+  flex: 1;
   margin: 0 20px 0 20px;
   font-size: 20px;
   font-weight: 400;
@@ -37,6 +39,16 @@ const Content = styled("div")`
 
 const HelpIcon = styled(MdHelp)`
   cursor: pointer;
+  margin-right: 45%;
+  @media screen and (max-width: ${breakpoints.Large}px) {
+    margin-right: 300px;
+  }
+  @media screen and (max-width: ${breakpoints.Desktop}px) {
+    margin-right: 100px;
+  }
+  @media screen and (max-width: ${breakpoints.Tablet}px) {
+    margin-right: 50px;
+  }
 `
 
 export interface AccordionProps {
