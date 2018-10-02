@@ -43,24 +43,28 @@ export class SearchResult extends React.Component<SearchResultProps> {
     return (
       <Container>
         <Title>{result.title}</Title>
-        <div>
-          <strong>
-            <FormattedMessage
-              id="ammattitutkinto.qualificationTitles"
-              defaultMessage="Tutkintonimikkeet"
-            />
-          </strong>
-          : {result.qualificationTitles.join(", ")}
-        </div>
-        <div>
-          <strong>
-            <FormattedMessage
-              id="ammattitutkinto.competenceAreas"
-              defaultMessage="Osaamisalat"
-            />
-          </strong>
-          : {result.competenceAreas.join(", ")}
-        </div>
+        {result.qualificationTitles.length > 0 && (
+          <div>
+            <strong>
+              <FormattedMessage
+                id="ammattitutkinto.qualificationTitles"
+                defaultMessage="Tutkintonimikkeet"
+              />
+            </strong>
+            : {result.qualificationTitles.join(", ")}
+          </div>
+        )}
+        {result.competenceAreas.length > 0 && (
+          <div>
+            <strong>
+              <FormattedMessage
+                id="ammattitutkinto.competenceAreas"
+                defaultMessage="Osaamisalat"
+              />
+            </strong>
+            : {result.competenceAreas.join(", ")}
+          </div>
+        )}
         <Link href={result.link} target="_blank">
           <FormattedMessage
             id="ammattitutkinto.qualificationContent"
