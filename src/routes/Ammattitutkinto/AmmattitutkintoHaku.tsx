@@ -98,7 +98,9 @@ export class AmmattitutkintoHaku extends React.Component<
       activePage: 0,
       searchText,
       searchTimeout: setTimeout(() => {
-        this.props.store.oppilas.haePerusteet(searchText)
+        if (searchText.length > 0) {
+          this.props.store.oppilas.haePerusteet(searchText)
+        }
       }, 300)
     })
   }

@@ -10,7 +10,7 @@ export class AmmattitutkintoSisalto extends React.Component<{}> {
         <SectionTitle>
           <FormattedMessage
             id="ammattitutkinto.title"
-            defaultMessage="Mitä ammattitutkinto sisältää?"
+            defaultMessage="Mitä ammatillinen tutkinto sisältää?"
           />
         </SectionTitle>
         <p>
