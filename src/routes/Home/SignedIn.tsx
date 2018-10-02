@@ -7,9 +7,9 @@ import styled from "react-emotion"
 import { FormattedMessage } from "react-intl"
 import { Goal } from "routes/Home/Goal"
 import { Heading } from "routes/Home/Heading"
+import { Opintosuunnitelma } from "routes/Home/Opintosuunnitelma"
 import { PreviousCompetence } from "routes/Home/PreviousCompetence"
 import { RecognizingPriorLearning } from "routes/Home/RecognizingPriorLearning"
-import { StudyPlan } from "routes/Home/StudyPlan"
 import { SessionStore } from "stores/SessionStore"
 import { injectSession } from "utils"
 
@@ -97,7 +97,7 @@ export class SignedIn extends React.Component<SignedInProps> {
                     title={
                       <FormattedMessage
                         id="signedIn.myStudyPlan"
-                        defaultMessage="Opiskelu&shy;suunni&shy;telmani"
+                        defaultMessage="Opinto&shy;suunni&shy;telmani"
                       />
                     }
                   />
@@ -108,7 +108,7 @@ export class SignedIn extends React.Component<SignedInProps> {
                 <Goal path="/" />
                 <PreviousCompetence path="osaamiseni" />
                 <RecognizingPriorLearning path="tunnustaminen" />
-                <StudyPlan path="opiskelusuunnitelmani" />
+                <Opintosuunnitelma path="opiskelusuunnitelmani" />
               </Router>
             </React.Fragment>
           )

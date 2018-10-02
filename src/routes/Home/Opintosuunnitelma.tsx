@@ -5,25 +5,25 @@ import { FormattedMessage } from "react-intl"
 import { Heading } from "routes/Home/Heading"
 import { SectionContainer } from "routes/Home/SectionContainer"
 
-export interface StudyPlanProps {
+export interface OpintosuunnitelmaProps {
   children?: React.ReactChildren
 }
 
-export interface StudyPlanState {
+export interface OpintosuunnitelmaState {
   activeAccordions: {
     [accordionName: string]: boolean
   }
 }
 
-export class StudyPlan extends React.Component<
-  StudyPlanProps & RouteComponentProps,
-  StudyPlanState
+export class Opintosuunnitelma extends React.Component<
+  OpintosuunnitelmaProps & RouteComponentProps,
+  OpintosuunnitelmaState
 > {
   state = {
     activeAccordions: {
-      qualificationModules: false,
-      selectedStudies: false,
-      studyPreparednessSupportingStudies: false
+      suunnitelma: false,
+      tavoitteet: false,
+      tukevatOpinnot: false
     }
   }
 
@@ -42,48 +42,48 @@ export class StudyPlan extends React.Component<
       <SectionContainer>
         <Heading>
           <FormattedMessage
-            id="studyPlan.title"
+            id="opintosuunnitelma.title"
             defaultMessage="Opiskelusuunnitelmani"
           />
         </Heading>
 
         <Accordion
-          open={this.state.activeAccordions.selectedStudies}
+          open={this.state.activeAccordions.tavoitteet}
           title={
             <FormattedMessage
-              id="studyPlan.selectedStudies"
-              defaultMessage="Suoritettavat opinnot"
+              id="opintosuunnitelma.goalsAndProgress"
+              defaultMessage="Tavoitteeni ja opintojen eteneminen"
             />
           }
-          onToggle={this.toggleAccordion("selectedStudies")}
+          onToggle={this.toggleAccordion("tavoitteet")}
           helpIcon={true}
         >
           suoritettavat opinnot
         </Accordion>
 
         <Accordion
-          open={this.state.activeAccordions.qualificationModules}
+          open={this.state.activeAccordions.suunnitelma}
           title={
             <FormattedMessage
-              id="studyPlan.qualificationModules"
-              defaultMessage="Tutkinnon osat"
+              id="opintosuunnitelma.plan"
+              defaultMessage="Suunnitelma tutkinnonosittain"
             />
           }
-          onToggle={this.toggleAccordion("qualificationModules")}
+          onToggle={this.toggleAccordion("suunnitelma")}
           helpIcon={true}
         >
           tutkinnon osat
         </Accordion>
 
         <Accordion
-          open={this.state.activeAccordions.studyPreparednessSupportingStudies}
+          open={this.state.activeAccordions.tukevatOpinnot}
           title={
             <FormattedMessage
-              id="studyPlan.supportingStudies"
+              id="opintosuunnitelma.supportingStudies"
               defaultMessage="Opiskeluvalmiuksia tukevat opinnot"
             />
           }
-          onToggle={this.toggleAccordion("studyPreparednessSupportingStudies")}
+          onToggle={this.toggleAccordion("tukevatOpinnot")}
           helpIcon={true}
         >
           opiskeluvalmiuksia tukevat opinnot
