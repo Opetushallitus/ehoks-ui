@@ -96,7 +96,8 @@ export class Accordion extends React.Component<AccordionProps> {
           {helpIcon ? (
             <Popup
               trigger={<HelpToggle size="28" color="#027fa9" />}
-              position="right center"
+              position={["left center", "bottom center", "right center"]}
+              keepTooltipInside={true}
             >
               <div>{helpContent}</div>
             </Popup>
