@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "react-emotion"
-
 import { MdExpandLess, MdExpandMore, MdHelp } from "react-icons/md"
+import Popup from "reactjs-popup"
 import { breakpoints } from "utils"
 
 const AccordionContainer = styled("div")`
@@ -38,7 +38,7 @@ const Content = styled("div")`
   padding: 10px;
 `
 
-const HelpIcon = styled(MdHelp)`
+const HelpToggle = styled(MdHelp)`
   cursor: pointer;
   margin-right: 45%;
   @media screen and (max-width: ${breakpoints.Large}px) {
@@ -73,7 +73,15 @@ export interface AccordionProps {
  */
 export class Accordion extends React.Component<AccordionProps> {
   render() {
-    const { children, helpIcon = false, onToggle, open, title } = this.props
+    const {
+      children,
+      helpIcon = false,
+      helpContent,
+      onToggle,
+      open,
+      title
+    } = this.props
+
     return (
       <AccordionContainer>
         <TitleRow>
@@ -85,7 +93,14 @@ export class Accordion extends React.Component<AccordionProps> {
             )}
           </Toggle>
           <Title onClick={onToggle}>{title}</Title>
-          {helpIcon ? <HelpIcon size="28" color="#027fa9" /> : null}
+          {helpIcon ? (
+            <Popup
+              trigger={<HelpToggle size="28" color="#027fa9" />}
+              position="right center"
+            >
+              <div>{helpContent}</div>
+            </Popup>
+          ) : null}
         </TitleRow>
         {open ? <Content>{children}</Content> : null}
       </AccordionContainer>

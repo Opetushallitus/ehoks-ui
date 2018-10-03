@@ -57,6 +57,7 @@ export class Opintosuunnitelma extends React.Component<
           }
           onToggle={this.toggleAccordion("tavoitteet")}
           helpIcon={true}
+          helpContent={"Testi"}
         >
           suoritettavat opinnot
         </Accordion>
