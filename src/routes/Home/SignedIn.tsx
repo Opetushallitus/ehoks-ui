@@ -55,7 +55,7 @@ export class SignedIn extends React.Component<SignedInProps> {
                     step={"1"}
                     percentage={100}
                     selected={location.pathname === "/ehoks"}
-                    onClick={this.setActiveTab("/ehoks/")}
+                    onClick={this.setActiveTab("/ehoks")}
                     title={
                       <FormattedMessage
                         id="signedIn.myGoalsAndBasicInfo"

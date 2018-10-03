@@ -6,6 +6,7 @@ import { breakpoints } from "utils"
  */
 export const InfoTable = styled("table")`
   table-layout: fixed;
+  width: 100%;
 
   th {
     font-weight: 400;
@@ -14,7 +15,7 @@ export const InfoTable = styled("table")`
   }
 
   td {
-    padding-bottom: 10px;
+    padding: 0 10px 10px 0;
     word-break: break-word;
   }
 
