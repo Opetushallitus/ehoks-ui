@@ -32,7 +32,7 @@ export class Opintosuunnitelma extends React.Component<
   state = {
     activeAccordions: {
       suunnitelma: false,
-      tavoitteet: false,
+      tavoitteet: true,
       tukevatOpinnot: false
     }
   }
