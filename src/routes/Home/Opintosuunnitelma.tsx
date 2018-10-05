@@ -2,14 +2,157 @@ import { RouteComponentProps } from "@reach/router"
 import { Accordion } from "components/Accordion"
 import { InfoTable } from "components/InfoTable"
 import { StatBox, StatBoxes, StatNumber, StatTitle } from "components/StatBox"
+import { EmptyItem, StudyInfo } from "components/StudyInfo"
+import range from "lodash.range"
 import React from "react"
 import styled from "react-emotion"
 import { FormattedMessage, intlShape } from "react-intl"
 import { Heading } from "routes/Home/Heading"
 import { SectionContainer } from "routes/Home/SectionContainer"
 
+// TODO: map real API response after this in Model's views
+interface MockStudy {
+  id: number
+  approved?: Date
+  assessment?: string[]
+  competenceRequirements?: string[]
+  learningEnvironments?: string[]
+  link: string
+  period?: Date[]
+  title: string
+}
+const mockPlannedStudies: MockStudy[] = [
+  {
+    assessment: [],
+    competenceRequirements: [],
+    id: 0,
+    learningEnvironments: ["Opinpaikka", "Lähiopetus"],
+    link: "https://www.google.fi",
+    period: [new Date("2018.05.24"), new Date("2018.05.31")],
+    title: "Ikääntyvien osallisuuden edistäminen"
+  },
+  {
+    approved: new Date("2018.04.01"),
+    assessment: [],
+    competenceRequirements: [],
+    id: 1,
+    learningEnvironments: ["Tavastia", "Muualla suoritettu"],
+    link: "https://www.google.fi",
+    period: [],
+    title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
+  }
+]
+const mockCompletedStudies: MockStudy[] = [
+  {
+    assessment: [],
+    competenceRequirements: [],
+    id: 0,
+    learningEnvironments: [
+      "Palvelutalo Villilän niemi",
+      "Työpaikalla oppiminen"
+    ],
+    link: "https://www.google.fi",
+    period: [new Date("2018.03.01"), new Date("2018.05.31")],
+    title: "Kotihoidossa toimiminen"
+  },
+  {
+    assessment: [],
+    competenceRequirements: [],
+    id: 1,
+    learningEnvironments: ["Opinpaikka", "Lähiopetus"],
+    link: "https://www.google.fi",
+    period: [new Date("2018.05.24"), new Date("2018.05.31")],
+    title: "Ikääntyvien osallisuuden edistäminen"
+  },
+  {
+    approved: new Date("2018.04.01"),
+    assessment: [],
+    competenceRequirements: [],
+    id: 2,
+    learningEnvironments: ["Tavastia", "Muualla suoritettu"],
+    link: "https://www.google.fi",
+    period: [],
+    title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
+  },
+  {
+    assessment: [],
+    competenceRequirements: [],
+    id: 3,
+    learningEnvironments: ["Projektiryhmä", "Verkko-opiskelu ja lähiopetus"],
+    link: "https://www.google.fi",
+    period: [new Date("2018.09.01"), new Date("2018.09.15")],
+    title: "Yrityksessä toimiminen"
+  }
+]
+const mockUnscheduledStudies: MockStudy[] = [
+  {
+    assessment: [],
+    competenceRequirements: [],
+    id: 0,
+    learningEnvironments: [],
+    link: "https://www.google.fi",
+    period: [],
+    title: "Kotihoidossa toimiminen"
+  },
+  {
+    assessment: [],
+    competenceRequirements: [],
+    id: 1,
+    learningEnvironments: [],
+    link: "https://www.google.fi",
+    period: [],
+    title: "Ikääntyvien osallisuuden edistäminen"
+  },
+  {
+    assessment: [],
+    competenceRequirements: [],
+    id: 2,
+    learningEnvironments: [],
+    link: "https://www.google.fi",
+    period: [],
+    title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
+  },
+  {
+    assessment: [],
+    competenceRequirements: [],
+    id: 3,
+    learningEnvironments: [],
+    link: "https://www.google.fi",
+    period: [],
+    title: "Yrityksessä toimiminen"
+  },
+  {
+    assessment: [],
+    competenceRequirements: [],
+    id: 4,
+    learningEnvironments: [],
+    link: "https://www.google.fi",
+    period: [],
+    title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
+  },
+  {
+    assessment: [],
+    competenceRequirements: [],
+    id: 5,
+    learningEnvironments: [],
+    link: "https://www.google.fi",
+    period: [],
+    title: "Yrityksessä toimiminen"
+  }
+]
+
 const FlexFiller = styled("div")`
   flex: 1;
+`
+
+const Studies = styled("div")`
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+
+  @media screen and (max-width: 1060px) {
+    flex-direction: column;
+  }
 `
 
 export interface OpintosuunnitelmaProps {
@@ -18,7 +161,7 @@ export interface OpintosuunnitelmaProps {
 
 export interface OpintosuunnitelmaState {
   activeAccordions: {
-    [accordionName: string]: boolean
+    [accordionName: string]: boolean | { [subAccordionName: string]: boolean }
   }
 }
 
@@ -32,22 +175,51 @@ export class Opintosuunnitelma extends React.Component<
   state = {
     activeAccordions: {
       suunnitelma: false,
+      suunnitelmat: {
+        aikatauluttomat: false,
+        suunnitellut: true,
+        valmiit: false
+      },
       tavoitteet: true,
       tukevatOpinnot: false
     }
   }
-  toggleAccordion = (accordion: string) => () => {
+  toggleAccordion = (accordion: string, subAccordion?: string) => () => {
     this.setState(state => ({
       ...state,
       activeAccordions: {
         ...state.activeAccordions,
-        [accordion]: !state.activeAccordions[accordion]
+        [accordion]:
+          typeof state.activeAccordions[accordion] === "boolean"
+            ? !state.activeAccordions[accordion]
+            : {
+                ...(state.activeAccordions[accordion] as {
+                  [subAccordionName: string]: boolean
+                }),
+                [subAccordion]: !(state.activeAccordions[accordion] as {
+                  [subAccordionName: string]: boolean
+                })[subAccordion]
+              }
       }
     }))
   }
 
   render() {
     const { intl } = this.context
+    const { activeAccordions } = this.state
+
+    const extraColumnsPlannedStudies =
+      mockPlannedStudies.length % 4 === 0
+        ? 0
+        : 4 - (mockPlannedStudies.length % 4)
+    const extraColumnsCompletedStudies =
+      mockCompletedStudies.length % 4 === 0
+        ? 0
+        : 4 - (mockCompletedStudies.length % 4)
+    const extraColumnsUnscheduledStudies =
+      mockUnscheduledStudies.length % 4 === 0
+        ? 0
+        : 4 - (mockUnscheduledStudies.length % 4)
     return (
       <SectionContainer>
         <Heading>
@@ -58,7 +230,7 @@ export class Opintosuunnitelma extends React.Component<
         </Heading>
 
         <Accordion
-          open={this.state.activeAccordions.tavoitteet}
+          open={activeAccordions.tavoitteet}
           title={
             <FormattedMessage
               id="opintosuunnitelma.goalsAndProgress"
@@ -174,7 +346,7 @@ export class Opintosuunnitelma extends React.Component<
         </Accordion>
 
         <Accordion
-          open={this.state.activeAccordions.suunnitelma}
+          open={activeAccordions.suunnitelma}
           title={
             <FormattedMessage
               id="opintosuunnitelma.plan"
@@ -183,12 +355,144 @@ export class Opintosuunnitelma extends React.Component<
           }
           onToggle={this.toggleAccordion("suunnitelma")}
           helpIcon={true}
+          helpContent="Testiaputeksti"
+          childContainer={false}
         >
-          tutkinnon osat
+          <Accordion
+            open={activeAccordions.suunnitelmat.suunnitellut}
+            onToggle={this.toggleAccordion("suunnitelmat", "suunnitellut")}
+            title={
+              <FormattedMessage
+                id="opintosuunnitelma.plannedStudiesTitle"
+                defaultMessage="Suunnitellut opintoni ({amount})"
+                values={{ amount: mockPlannedStudies.length }}
+              />
+            }
+            inline={true}
+            childContainer={false}
+          >
+            <Studies>
+              {mockPlannedStudies.map(study => {
+                return (
+                  <StudyInfo
+                    key={study.id}
+                    accentColor="#EB6F02"
+                    title={study.title}
+                    approved={study.approved}
+                    learningEnvironments={study.learningEnvironments}
+                    period={study.period}
+                    competenceRequirements={study.competenceRequirements}
+                    assessment={study.assessment}
+                    href={study.link}
+                  />
+                )
+              })}
+              {range(extraColumnsPlannedStudies).map(n => {
+                return <EmptyItem key={n} />
+              })}
+              {!mockPlannedStudies.length && (
+                <div>
+                  <FormattedMessage
+                    id="opintosuunnitelma.noPlannedStudies"
+                    defaultMessage="Ei suunniteltuja opintoja"
+                  />
+                  .
+                </div>
+              )}
+            </Studies>
+          </Accordion>
+
+          <Accordion
+            open={activeAccordions.suunnitelmat.valmiit}
+            onToggle={this.toggleAccordion("suunnitelmat", "valmiit")}
+            title={
+              <FormattedMessage
+                id="opintosuunnitelma.completedStudiesTitle"
+                defaultMessage="Valmiit opintoni ({amount})"
+                values={{ amount: mockCompletedStudies.length }}
+              />
+            }
+            inline={true}
+            childContainer={false}
+          >
+            <Studies>
+              {mockCompletedStudies.map(study => {
+                return (
+                  <StudyInfo
+                    key={study.id}
+                    accentColor="#43A047"
+                    title={study.title}
+                    approved={study.approved}
+                    learningEnvironments={study.learningEnvironments}
+                    period={study.period}
+                    competenceRequirements={study.competenceRequirements}
+                    assessment={study.assessment}
+                    href={study.link}
+                  />
+                )
+              })}
+              {range(extraColumnsCompletedStudies).map(n => {
+                return <EmptyItem key={n} />
+              })}
+              {!mockCompletedStudies.length && (
+                <div>
+                  <FormattedMessage
+                    id="opintosuunnitelma.noCompletedStudies"
+                    defaultMessage="Ei valmiita opintoja"
+                  />
+                  .
+                </div>
+              )}
+            </Studies>
+          </Accordion>
+
+          <Accordion
+            open={activeAccordions.suunnitelmat.aikatauluttomat}
+            onToggle={this.toggleAccordion("suunnitelmat", "aikatauluttomat")}
+            title={
+              <FormattedMessage
+                id="opintosuunnitelma.unscheduledStudiesTitle"
+                defaultMessage="Aikatauluttomat opintoni ({amount})"
+                values={{ amount: mockUnscheduledStudies.length }}
+              />
+            }
+            inline={true}
+            childContainer={false}
+          >
+            <Studies>
+              {mockUnscheduledStudies.map(study => {
+                return (
+                  <StudyInfo
+                    key={study.id}
+                    accentColor="#E2A626"
+                    title={study.title}
+                    approved={study.approved}
+                    learningEnvironments={study.learningEnvironments}
+                    period={study.period}
+                    competenceRequirements={study.competenceRequirements}
+                    assessment={study.assessment}
+                    href={study.link}
+                  />
+                )
+              })}
+              {range(extraColumnsUnscheduledStudies).map(n => {
+                return <EmptyItem key={n} />
+              })}
+              {!mockUnscheduledStudies.length && (
+                <div>
+                  <FormattedMessage
+                    id="opintosuunnitelma.noUnscheduledStudies"
+                    defaultMessage="Ei aikatauluttomia opintoja"
+                  />
+                  .
+                </div>
+              )}
+            </Studies>
+          </Accordion>
         </Accordion>
 
         <Accordion
-          open={this.state.activeAccordions.tukevatOpinnot}
+          open={activeAccordions.tukevatOpinnot}
           title={
             <FormattedMessage
               id="opintosuunnitelma.supportingStudies"

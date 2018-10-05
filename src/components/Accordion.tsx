@@ -8,7 +8,14 @@ const AccordionContainer = styled("div")`
   padding: 20px 0 10px 0;
 `
 
-const Toggle = styled("div")`
+const AccordionInlineContainer = styled("div")`
+  margin-top: 10px;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #a8a8a8;
+`
+
+const AccordionToggle = styled("div")`
   border-radius: 15px;
   width: 30px;
   height: 30px;
@@ -17,17 +24,25 @@ const Toggle = styled("div")`
   user-select: none;
 `
 
+const AccordionInlineToggle = styled(AccordionToggle)`
+  border: 1px solid #000;
+`
+
 const TitleRow = styled("div")`
   display: flex;
   align-items: center;
 `
 
-const Title = styled("h2")`
+const AccordionTitle = styled("h2")`
   flex: 1;
   margin: 0 20px 0 20px;
   font-size: 20px;
   font-weight: 400;
   cursor: pointer;
+`
+
+const AccordionInlineTitle = styled(AccordionTitle)`
+  font-weight: 600;
 `
 
 const Content = styled("div")`
@@ -36,6 +51,10 @@ const Content = styled("div")`
   border: 1px solid #a8a8a8;
   background: #fff;
   padding: 10px;
+
+  @media screen and (max-width: ${breakpoints.Tablet}px) {
+    margin-left: 0px;
+  }
 `
 
 const HelpToggle = styled(MdHelp)`
@@ -66,6 +85,16 @@ export interface AccordionProps {
   helpIcon?: boolean
   /** Defines help popup content */
   helpContent?: React.ReactNode
+  /**
+   * Renders with alternative inline styles
+   * @default false
+   */
+  inline?: boolean
+  /**
+   * Render container for children
+   * @default true
+   */
+  childContainer?: boolean
 }
 
 /**
@@ -75,21 +104,32 @@ export class Accordion extends React.Component<AccordionProps> {
   render() {
     const {
       children,
+      childContainer = true,
       helpIcon = false,
       helpContent,
+      inline = false,
       onToggle,
       open,
       title
     } = this.props
 
+    const Container = inline ? AccordionInlineContainer : AccordionContainer
+    const Title = inline ? AccordionInlineTitle : AccordionTitle
+    const Toggle = inline ? AccordionInlineToggle : AccordionToggle
+    const childContent = childContainer ? (
+      <Content>{children}</Content>
+    ) : (
+      children
+    )
+
     return (
-      <AccordionContainer>
+      <Container>
         <TitleRow>
           <Toggle onClick={onToggle}>
             {open ? (
-              <MdExpandLess size="28" color="#027fa9" />
+              <MdExpandLess size="28" color={inline ? "#000" : "#027fa9"} />
             ) : (
-              <MdExpandMore size="28" color="#027fa9" />
+              <MdExpandMore size="28" color={inline ? "#000" : "#027fa9"} />
             )}
           </Toggle>
           <Title onClick={onToggle}>{title}</Title>
@@ -103,8 +143,8 @@ export class Accordion extends React.Component<AccordionProps> {
             </Popup>
           ) : null}
         </TitleRow>
-        {open ? <Content>{children}</Content> : null}
-      </AccordionContainer>
+        {open ? childContent : null}
+      </Container>
     )
   }
 }

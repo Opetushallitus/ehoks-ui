@@ -23,7 +23,7 @@ export const StatBox = styled("div")`
   border-top-color: ${(props: StatBoxProps) =>
     props.borderTop ? props.borderTop : "#979797"};
 
-  &:last-of-type() {
+  &:last-of-type {
     margin-right: 0;
   }
 

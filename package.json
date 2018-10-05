@@ -50,6 +50,7 @@
     "@types/react-intl": "^2.3.9",
     "@types/react-loadable": "^5.4.1",
     "@types/react-test-renderer": "^16.0.2",
+    "date-fns": "^2.0.0-alpha.20",
     "emotion": "^9.2.6",
     "lodash.camelcase": "^4.3.0",
     "lodash.kebabcase": "^4.1.1",
