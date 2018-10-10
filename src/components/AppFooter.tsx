@@ -30,7 +30,7 @@ const FooterContainer = styled("div")`
 `
 
 const Footer = styled("div")`
-  max-width: 1160px;
+  max-width: ${props => props.theme.maxWidth}px;
   margin: 0 auto;
   display: flex;
   align-items: flex-end;

@@ -9,7 +9,7 @@ import { SignedOut } from "routes/Home/SignedOut"
 import { RootStore } from "stores/RootStore"
 
 const Container = styled("div")`
-  max-width: 1160px;
+  max-width: ${props => props.theme.maxWidth}px;
   margin: 0 auto;
 `
 

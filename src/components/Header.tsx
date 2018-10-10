@@ -11,7 +11,7 @@ const HeaderContainer = styled("div")`
   height: 64px;
   width: 100%;
   color: #fff;
-  background-color: #149ecb;
+  background-color: ${props => props.theme.colors.headerBg};
   align-items: center;
 `
 

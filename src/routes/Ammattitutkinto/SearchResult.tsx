@@ -28,7 +28,7 @@ const Link = styled("a")`
   display: flex;
   justify-content: flex-end;
   padding: 10px 30px 10px 0;
-  color: #1976d2;
+  color: ${props => props.theme.colors.waterBlue};
   font-size: 17px;
   font-weight: 600;
 `

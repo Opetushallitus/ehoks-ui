@@ -10,6 +10,7 @@ interface ContainerProps {
 const Container = styled("div")`
   display: flex;
   flex: 1;
+  max-width: calc(25% - 15px);
   border-top-style: solid;
   border-top-width: 4px;
   border-top-color: ${(props: ContainerProps) =>
@@ -24,20 +25,19 @@ const Container = styled("div")`
 
   @media screen and (max-width: 1060px) {
     margin-left: 0;
+    max-width: unset;
   }
 
-  &:nth-child(5n) {
+  &:nth-child(5n + 1) {
     margin-left: 0;
   }
 `
 
 export const EmptyItem = styled("div")`
-  display: flex;
-  flex: 1;
-  margin-left: 20px;
-  @media screen and (max-width: 1060px) {
-    display: none;
-  }
+  flex-basis: 100%;
+  width: 0px;
+  height: 0px;
+  overflow: hidden;
 `
 
 const InnerContainer = styled("div")`

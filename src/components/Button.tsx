@@ -2,7 +2,7 @@ import React from "react"
 import styled from "react-emotion"
 
 const ButtonContainer = styled("button")`
-  background: #1976d2;
+  background: ${props => props.theme.colors.waterBlue};
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 600;
   color: #fff;

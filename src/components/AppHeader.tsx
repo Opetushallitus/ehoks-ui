@@ -9,12 +9,13 @@ import { injectSession } from "utils"
 
 interface TopLinkProps {
   active?: boolean
+  theme?: any
 }
 
 const HeaderContainer = styled("div")`
   width: 100%;
   color: #fff;
-  background-color: #149ecb;
+  background-color: ${props => props.theme.colors.headerBg};
   line-height: 16px;
   font-size: 18px;
   font-weight: 600;
@@ -28,7 +29,7 @@ const TopLinksContainer = styled("div")`
 
 const TopLinks = styled("div")`
   line-height: 20px;
-  max-width: 1160px;
+  max-width: ${props => props.theme.maxWidth}px;
   margin: 0 auto;
 `
 
@@ -39,11 +40,11 @@ const TopLink = styled("a")`
   color: #fff;
   line-height: 20px;
   background: ${(props: TopLinkProps) =>
-    props.active ? "#149ecb" : "transparent"};
+    props.active ? props.theme.colors.headerBg : "transparent"};
 `
 
 const TitleContainer = styled("div")`
-  max-width: 1160px;
+  max-width: ${props => props.theme.maxWidth}px;
   margin: 0 auto;
   display: flex;
   align-items: center;

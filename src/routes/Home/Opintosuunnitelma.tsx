@@ -3,7 +3,6 @@ import { Accordion } from "components/Accordion"
 import { InfoTable } from "components/InfoTable"
 import { StatBox, StatBoxes, StatNumber, StatTitle } from "components/StatBox"
 import { EmptyItem, StudyInfo } from "components/StudyInfo"
-import range from "lodash.range"
 import React from "react"
 import styled from "react-emotion"
 import { FormattedMessage, intlShape } from "react-intl"
@@ -208,18 +207,6 @@ export class Opintosuunnitelma extends React.Component<
     const { intl } = this.context
     const { activeAccordions } = this.state
 
-    const extraColumnsPlannedStudies =
-      mockPlannedStudies.length % 4 === 0
-        ? 0
-        : 4 - (mockPlannedStudies.length % 4)
-    const extraColumnsCompletedStudies =
-      mockCompletedStudies.length % 4 === 0
-        ? 0
-        : 4 - (mockCompletedStudies.length % 4)
-    const extraColumnsUnscheduledStudies =
-      mockUnscheduledStudies.length % 4 === 0
-        ? 0
-        : 4 - (mockUnscheduledStudies.length % 4)
     return (
       <SectionContainer>
         <Heading>
@@ -372,23 +359,23 @@ export class Opintosuunnitelma extends React.Component<
             childContainer={false}
           >
             <Studies>
-              {mockPlannedStudies.map(study => {
+              {mockPlannedStudies.map((study, i) => {
+                const renderExtraItem = (i + 1) % 4 === 0
                 return (
-                  <StudyInfo
-                    key={study.id}
-                    accentColor="#EB6F02"
-                    title={study.title}
-                    approved={study.approved}
-                    learningEnvironments={study.learningEnvironments}
-                    period={study.period}
-                    competenceRequirements={study.competenceRequirements}
-                    assessment={study.assessment}
-                    href={study.link}
-                  />
+                  <React.Fragment key={study.id}>
+                    <StudyInfo
+                      accentColor="#EB6F02"
+                      title={study.title}
+                      approved={study.approved}
+                      learningEnvironments={study.learningEnvironments}
+                      period={study.period}
+                      competenceRequirements={study.competenceRequirements}
+                      assessment={study.assessment}
+                      href={study.link}
+                    />
+                    {renderExtraItem && <EmptyItem />}
+                  </React.Fragment>
                 )
-              })}
-              {range(extraColumnsPlannedStudies).map(n => {
-                return <EmptyItem key={n} />
               })}
               {!mockPlannedStudies.length && (
                 <div>
@@ -416,23 +403,23 @@ export class Opintosuunnitelma extends React.Component<
             childContainer={false}
           >
             <Studies>
-              {mockCompletedStudies.map(study => {
+              {mockCompletedStudies.map((study, i) => {
+                const renderExtraItem = (i + 1) % 4 === 0
                 return (
-                  <StudyInfo
-                    key={study.id}
-                    accentColor="#43A047"
-                    title={study.title}
-                    approved={study.approved}
-                    learningEnvironments={study.learningEnvironments}
-                    period={study.period}
-                    competenceRequirements={study.competenceRequirements}
-                    assessment={study.assessment}
-                    href={study.link}
-                  />
+                  <React.Fragment key={study.id}>
+                    <StudyInfo
+                      accentColor="#43A047"
+                      title={study.title}
+                      approved={study.approved}
+                      learningEnvironments={study.learningEnvironments}
+                      period={study.period}
+                      competenceRequirements={study.competenceRequirements}
+                      assessment={study.assessment}
+                      href={study.link}
+                    />
+                    {renderExtraItem && <EmptyItem />}
+                  </React.Fragment>
                 )
-              })}
-              {range(extraColumnsCompletedStudies).map(n => {
-                return <EmptyItem key={n} />
               })}
               {!mockCompletedStudies.length && (
                 <div>
@@ -460,23 +447,23 @@ export class Opintosuunnitelma extends React.Component<
             childContainer={false}
           >
             <Studies>
-              {mockUnscheduledStudies.map(study => {
+              {mockUnscheduledStudies.map((study, i) => {
+                const renderExtraItem = (i + 1) % 4 === 0
                 return (
-                  <StudyInfo
-                    key={study.id}
-                    accentColor="#E2A626"
-                    title={study.title}
-                    approved={study.approved}
-                    learningEnvironments={study.learningEnvironments}
-                    period={study.period}
-                    competenceRequirements={study.competenceRequirements}
-                    assessment={study.assessment}
-                    href={study.link}
-                  />
+                  <React.Fragment key={study.id}>
+                    <StudyInfo
+                      accentColor="#E2A626"
+                      title={study.title}
+                      approved={study.approved}
+                      learningEnvironments={study.learningEnvironments}
+                      period={study.period}
+                      competenceRequirements={study.competenceRequirements}
+                      assessment={study.assessment}
+                      href={study.link}
+                    />
+                    {renderExtraItem && <EmptyItem />}
+                  </React.Fragment>
                 )
-              })}
-              {range(extraColumnsUnscheduledStudies).map(n => {
-                return <EmptyItem key={n} />
               })}
               {!mockUnscheduledStudies.length && (
                 <div>

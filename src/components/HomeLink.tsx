@@ -2,7 +2,7 @@ import { Link } from "@reach/router"
 import styled from "react-emotion"
 
 export const HomeLink = styled(Link)`
-  color: #1976d2;
+  color: ${props => props.theme.colors.waterBlue};
   text-decoration: none;
   font-size: 24px;
   display: flex;
