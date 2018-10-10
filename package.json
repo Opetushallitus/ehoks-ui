@@ -52,6 +52,7 @@
     "@types/react-test-renderer": "^16.0.2",
     "date-fns": "^2.0.0-alpha.20",
     "emotion": "^9.2.6",
+    "emotion-theming": "^9.2.9",
     "lodash.camelcase": "^4.3.0",
     "lodash.kebabcase": "^4.1.1",
     "lodash.range": "^3.2.0",

@@ -16,7 +16,8 @@
         "routes",
         "config",
         "utils",
-        "testUtils"
+        "testUtils",
+        "theme"
       ]
     ],
     "no-console": false,

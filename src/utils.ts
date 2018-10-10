@@ -41,6 +41,7 @@ export const getEnvironment = (
   return root.environment
 }
 
+// move these to theme
 export enum breakpoints {
   Tablet = 720,
   Desktop = 900,
