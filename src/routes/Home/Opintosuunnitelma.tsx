@@ -23,7 +23,18 @@ interface MockStudy {
 const mockPlannedStudies: MockStudy[] = [
   {
     assessment: [],
-    competenceRequirements: [],
+    competenceRequirements: [
+      "työskennellä sosiaali- ja terveysalan työn säädösten, toimintaperiaatteiden, arvojen ja eettisten periaatteiden mukaan",
+      "suunnitella, toteuttaa ja arvioida työtään",
+      "toimia vuorovaikutuksessa asiakkaan kanssa",
+      "käyttää alan työmenetelmiä, -välineitä ja materiaaleja asiakkaan osallisuuden edistämisessä",
+      "käyttää alan työmenetelmiä, -välineitä ja materiaaleja edistäessään asiakkaan inhimillistä elämää saattohoitovaiheessa",
+      "ohjata palveluiden käytössä ja valintojen tekemisessä",
+      "toimia työyhteisön jäsenenä",
+      "ylläpitää ja edistää turvallisuutta, työkykyään ja työhyvinvointiaan",
+      "arvioida ja kehittää toimintaansa",
+      "arvioida mahdollisuuksiaan toimia hyvinvointialan yrittäjänä."
+    ],
     id: 0,
     learningEnvironments: ["Opinpaikka", "Lähiopetus"],
     link: "https://www.google.fi",
