@@ -2,17 +2,16 @@ import { RouteComponentProps } from "@reach/router"
 import { Accordion } from "components/Accordion"
 import { InfoTable } from "components/InfoTable"
 import { inject, observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import { Heading } from "routes/Home/Heading"
 import { SectionContainer } from "routes/Home/SectionContainer"
-import { SessionStore } from "stores/SessionStore"
+import { ISessionStore } from "stores/SessionStore"
 import { injectSession } from "utils"
 
 export interface GoalProps {
   children?: React.ReactChildren
-  session?: Instance<typeof SessionStore>
+  session?: ISessionStore
 }
 
 export interface GoalState {

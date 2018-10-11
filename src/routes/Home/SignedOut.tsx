@@ -2,11 +2,10 @@ import { HeroButton } from "components/Button"
 import { LinkPanel } from "components/LinkPanel"
 import { LinkPanelContainer } from "components/LinkPanelContainer"
 import { inject, observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
 import { FormattedMessage } from "react-intl"
-import { RootStore } from "stores/RootStore"
+import { IRootStore } from "stores/RootStore"
 import education from "./education.jpg"
 import students from "./students.jpg"
 
@@ -77,7 +76,7 @@ const LoginButton = styled(HeroButton)`
 `
 
 export interface SignedOutProps {
-  store?: Instance<typeof RootStore>
+  store?: IRootStore
   path?: string
 }
 

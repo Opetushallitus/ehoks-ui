@@ -1,10 +1,9 @@
 import { Link } from "@reach/router"
 import { inject, observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
 import { GoThreeBars } from "react-icons/go"
-import { RootStore } from "stores/RootStore"
+import { IRootStore } from "stores/RootStore"
 
 const HeaderContainer = styled("div")`
   display: flex;
@@ -36,7 +35,7 @@ const User = styled("div")`
 
 export interface HeaderProps {
   children?: React.ReactNode
-  store?: Instance<typeof RootStore>
+  store?: IRootStore
 }
 
 @inject("store")

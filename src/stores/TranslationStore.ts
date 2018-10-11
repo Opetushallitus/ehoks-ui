@@ -1,6 +1,6 @@
 import { apiUrl } from "config"
 import { flow, getRoot, Instance, types } from "mobx-state-tree"
-import { RootStore } from "stores/RootStore"
+import { IRootStore } from "stores/RootStore"
 
 interface ApiTranslation {
   key: string
@@ -38,7 +38,7 @@ const TranslationStoreModel = {
 export const TranslationStore = types
   .model("TranslationStore", TranslationStoreModel)
   .actions(self => {
-    const root = getRoot<Instance<typeof RootStore>>(self)
+    const root = getRoot<IRootStore>(self)
 
     const setActiveLocale = (locale: "fi" | "sv") => {
       self.activeLocale = locale
@@ -68,3 +68,5 @@ export const TranslationStore = types
       }
     }
   })
+
+export interface ITranslationStore extends Instance<typeof TranslationStore> {}

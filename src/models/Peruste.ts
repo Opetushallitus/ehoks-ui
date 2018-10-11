@@ -1,6 +1,6 @@
 import { getRoot, Instance, types } from "mobx-state-tree"
 import { LanguageVersion } from "models/LanguageVersion"
-import { RootStore } from "stores/RootStore"
+import { IRootStore } from "stores/RootStore"
 import { getEnvironment, getTranslations } from "utils"
 
 export const PerusteNimi = types.model("PerusteNimi", {
@@ -15,7 +15,7 @@ export const Peruste = types
     tutkintonimikkeet: types.array(PerusteNimi)
   })
   .views(self => {
-    const root = getRoot<Instance<typeof RootStore>>(self)
+    const root = getRoot<IRootStore>(self)
     const activeLocale = () => getTranslations(root).activeLocale
     return {
       get title(): string {
@@ -33,3 +33,5 @@ export const Peruste = types
       }
     }
   })
+
+export interface IPeruste extends Instance<typeof Peruste> {}

@@ -1,10 +1,9 @@
 import { Link } from "@reach/router"
 import { inject, observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
 import { FormattedMessage } from "react-intl"
-import { SessionStore } from "stores/SessionStore"
+import { ISessionStore } from "stores/SessionStore"
 import { injectSession } from "utils"
 
 interface TopLinkProps {
@@ -73,7 +72,7 @@ const LogoutLink = styled(Link)`
 `
 
 export interface AppHeaderProps {
-  session?: Instance<typeof SessionStore>
+  session?: ISessionStore
 }
 
 @inject(injectSession)

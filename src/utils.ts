@@ -1,8 +1,7 @@
 import { apiUrl } from "config"
-import { Instance } from "mobx-state-tree"
-import { EnvironmentStore } from "stores/EnvironmentStore"
-import { InjectedStores, RootStore } from "stores/RootStore"
-import { TranslationStore } from "stores/TranslationStore"
+import { IEnvironmentStore } from "stores/EnvironmentStore"
+import { InjectedStores, IRootStore } from "stores/RootStore"
+import { ITranslationStore } from "stores/TranslationStore"
 import "whatwg-fetch" // polyfill window.fetch for IE 11
 
 // mocked fetch using local json files
@@ -29,14 +28,10 @@ export const injectSession = (stores: InjectedStores) => ({
   session: stores.store.session
 })
 
-export const getTranslations = (
-  root: Instance<typeof RootStore>
-): Instance<typeof TranslationStore> => {
+export const getTranslations = (root: IRootStore): ITranslationStore => {
   return root.translations
 }
 
-export const getEnvironment = (
-  root: Instance<typeof RootStore>
-): Instance<typeof EnvironmentStore> => {
+export const getEnvironment = (root: IRootStore): IEnvironmentStore => {
   return root.environment
 }

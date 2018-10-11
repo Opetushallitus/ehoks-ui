@@ -4,13 +4,12 @@ import { AppFooter } from "components/AppFooter"
 import { AppHeader } from "components/AppHeader"
 import { ThemeProvider } from "emotion-theming"
 import { inject, observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
 import { IntlProvider } from "react-intl"
 import { Ammattitutkinto } from "routes/Ammattitutkinto"
 import { Henkilokohtaistaminen } from "routes/Henkilokohtaistaminen"
-import { RootStore } from "stores/RootStore"
+import { IRootStore } from "stores/RootStore"
 import { theme } from "theme"
 import { Home } from "../routes/Home"
 
@@ -19,7 +18,7 @@ const Container = styled("div")`
 `
 
 export interface AppProps {
-  store?: Instance<typeof RootStore>
+  store?: IRootStore
 }
 
 @inject("store")

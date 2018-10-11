@@ -8,13 +8,12 @@ import { ListContainer } from "components/ListContainer"
 import { SubHeader } from "components/SubHeader"
 import { css } from "emotion"
 import { inject, observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
 import React from "react"
 import { GoGraph, GoLightBulb, GoOrganization, GoX } from "react-icons/go"
-import { RootStore } from "stores/RootStore"
+import { IRootStore } from "stores/RootStore"
 
 export interface GoalsProps {
-  store?: Instance<typeof RootStore>
+  store?: IRootStore
 }
 
 const linkItemStyles = css`

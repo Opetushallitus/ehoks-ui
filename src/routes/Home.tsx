@@ -1,12 +1,11 @@
 import { RouteComponentProps } from "@reach/router"
 import { reaction } from "mobx"
 import { inject, observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
 import { SignedIn } from "routes/Home/SignedIn"
 import { SignedOut } from "routes/Home/SignedOut"
-import { RootStore } from "stores/RootStore"
+import { IRootStore } from "stores/RootStore"
 
 const Container = styled("div")`
   max-width: ${props => props.theme.maxWidth}px;
@@ -14,7 +13,7 @@ const Container = styled("div")`
 `
 
 export interface HomeProps {
-  store?: Instance<typeof RootStore>
+  store?: IRootStore
   "*"?: string
 }
 

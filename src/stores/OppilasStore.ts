@@ -1,7 +1,7 @@
 import { apiUrl } from "config"
-import { flow, getRoot, Instance, types } from "mobx-state-tree"
+import { flow, getRoot, types } from "mobx-state-tree"
 import { Peruste } from "models/Peruste"
-import { RootStore } from "stores/RootStore"
+import { IRootStore } from "stores/RootStore"
 
 const OppilasStoreModel = {
   isLoading: false,
@@ -11,7 +11,7 @@ const OppilasStoreModel = {
 export const OppilasStore = types
   .model("OppilasStore", OppilasStoreModel)
   .actions(self => {
-    const root = getRoot<Instance<typeof RootStore>>(self)
+    const root = getRoot<IRootStore>(self)
     // tracks the most recent fetch by user
     let newestPromise = null
 

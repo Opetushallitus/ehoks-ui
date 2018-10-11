@@ -1,7 +1,7 @@
 import { apiUrl } from "config"
 import { flow, getRoot, Instance, types } from "mobx-state-tree"
 import { SessionUser } from "models/SessionUser"
-import { RootStore } from "stores/RootStore"
+import { IRootStore } from "stores/RootStore"
 
 const SessionStoreModel = {
   error: types.optional(types.string, ""),
@@ -12,7 +12,7 @@ const SessionStoreModel = {
 export const SessionStore = types
   .model("SessionStore", SessionStoreModel)
   .actions(self => {
-    const root = getRoot<Instance<typeof RootStore>>(self)
+    const root = getRoot<IRootStore>(self)
 
     const checkSession = flow(function*(): any {
       self.isLoading = true
@@ -57,3 +57,5 @@ export const SessionStore = types
       }
     }
   })
+
+export interface ISessionStore extends Instance<typeof SessionStore> {}

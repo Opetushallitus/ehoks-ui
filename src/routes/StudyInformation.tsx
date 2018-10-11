@@ -3,13 +3,12 @@ import { ListContainer } from "components/ListContainer"
 import { ListHeading } from "components/ListHeading"
 import { css } from "emotion"
 import { inject, observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
 import React from "react"
 import { GoLightBulb } from "react-icons/go"
-import { RootStore } from "stores/RootStore"
+import { IRootStore } from "stores/RootStore"
 
 export interface StudyInformationProps {
-  store?: Instance<typeof RootStore>
+  store?: IRootStore
 }
 
 const listContainerStyles = css`

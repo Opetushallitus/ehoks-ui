@@ -1,7 +1,6 @@
 import { Location, navigate, Router } from "@reach/router"
 import { ProgressPie } from "components/ProgressPie"
 import { inject, observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
 import { FormattedMessage } from "react-intl"
@@ -10,7 +9,7 @@ import { Heading } from "routes/Home/Heading"
 import { Opintosuunnitelma } from "routes/Home/Opintosuunnitelma"
 import { PreviousCompetence } from "routes/Home/PreviousCompetence"
 import { RecognizingPriorLearning } from "routes/Home/RecognizingPriorLearning"
-import { SessionStore } from "stores/SessionStore"
+import { ISessionStore } from "stores/SessionStore"
 import { injectSession } from "utils"
 
 const ProgressContainer = styled("div")`
@@ -26,7 +25,7 @@ const ProgressPies = styled("div")`
 `
 
 export interface SignedInProps {
-  session?: Instance<typeof SessionStore>
+  session?: ISessionStore
 }
 
 @inject(injectSession)
