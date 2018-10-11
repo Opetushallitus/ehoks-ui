@@ -9,12 +9,20 @@ import { IRootStore } from "stores/RootStore"
 import education from "./education.jpg"
 import students from "./students.jpg"
 
+const Container = styled("div")`
+  margin: 30px 50px 0 20px;
+`
+
 const Hero = styled("div")`
   display: flex;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     display: block;
   }
+`
+
+const Header = styled("h1")`
+  margin: 0;
 `
 
 const Content = styled("div")`
@@ -25,29 +33,8 @@ const Content = styled("div")`
   }
 `
 
-const NewsContainer = styled("div")`
-  flex: 1;
-`
-
-const CurrentNews = styled("div")`
-  margin: 0 20px 0 30px;
-
-  h2 {
-    font-weight: 400;
-    font-size: 28px;
-    margin: 0;
-    border-bottom: 1px solid #979797;
-    padding-bottom: 8px;
-  }
-
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
-    margin: 0 20px;
-  }
-`
-
 const Description = styled("div")`
   flex: 1;
-  margin: 20px;
 
   h1 {
     font-weight: 400;
@@ -60,17 +47,14 @@ const Description = styled("div")`
 
 const LoginContainer = styled("div")`
   flex: 1;
-  margin: 50px 20px 20px 20px;
-
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
-    margin: 20px;
-  }
+  margin: 20px 0 30px 0;
 `
 
 const LoginButton = styled(HeroButton)`
   margin-left: 20px;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+    width: 100%;
     margin-left: 0;
   }
 `
@@ -90,15 +74,15 @@ export class SignedOut extends React.Component<SignedOutProps> {
 
   render() {
     return (
-      <React.Fragment>
+      <Container>
         <Hero>
           <Description>
-            <h1>
+            <Header>
               <FormattedMessage
                 id="signedOut.title"
                 defaultMessage="Opiskelun henkilökohtainen suunnittelu"
               />
-            </h1>
+            </Header>
             <p>
               <FormattedMessage
                 id="signedOut.description"
@@ -140,7 +124,7 @@ export class SignedOut extends React.Component<SignedOutProps> {
               title={
                 <FormattedMessage
                   id="signedOut.qualificationTitle"
-                  defaultMessage="Mitä ammattitutkinto sisältää?"
+                  defaultMessage="Mitä ammatilliset tutkinnot sisältävät?"
                 />
               }
               description={
@@ -152,18 +136,8 @@ export class SignedOut extends React.Component<SignedOutProps> {
               image={education}
             />
           </LinkPanelContainer>
-          <NewsContainer>
-            <CurrentNews>
-              <h2>
-                <FormattedMessage
-                  id="signedOut.news"
-                  defaultMessage="Ajankohtaista"
-                />
-              </h2>
-            </CurrentNews>
-          </NewsContainer>
         </Content>
-      </React.Fragment>
+      </Container>
     )
   }
 }

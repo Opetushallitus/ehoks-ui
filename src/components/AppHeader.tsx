@@ -24,6 +24,10 @@ const TopLinksContainer = styled("div")`
   width: 100%;
   background-color: #06526b;
   font-size: 16px;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    display: none;
+  }
 `
 
 const TopLinks = styled("div")`

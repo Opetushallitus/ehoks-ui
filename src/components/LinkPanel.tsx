@@ -6,8 +6,8 @@ const LinkPanelContainer = styled("div")`
   background-color: ${(props: LinkPanelProps) =>
     props.backgroundColor || "#00AC3D"};
   border: 1px solid #979797;
-  margin: 0 0 10px 10px;
-  min-height: 300px;
+  margin: 0 0 20px 0;
+  min-height: 320px;
   display: flex;
   flex-direction: column;
 `
@@ -17,6 +17,7 @@ const Content = styled("div")`
   display: flex;
   padding: 10px;
   min-height: 120px;
+  justify-content: space-between;
 `
 
 const Image = styled("div")`
@@ -28,7 +29,7 @@ const Image = styled("div")`
 `
 
 const Title = styled("div")`
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 300;
   text-transform: uppercase;
 `
