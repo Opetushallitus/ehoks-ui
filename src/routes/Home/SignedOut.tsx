@@ -7,14 +7,13 @@ import React from "react"
 import styled from "react-emotion"
 import { FormattedMessage } from "react-intl"
 import { RootStore } from "stores/RootStore"
-import { breakpoints } from "utils"
 import education from "./education.jpg"
 import students from "./students.jpg"
 
 const Hero = styled("div")`
   display: flex;
 
-  @media screen and (max-width: ${breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     display: block;
   }
 `
@@ -22,7 +21,7 @@ const Hero = styled("div")`
 const Content = styled("div")`
   display: flex;
 
-  @media screen and (max-width: ${breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     display: block;
   }
 `
@@ -42,7 +41,7 @@ const CurrentNews = styled("div")`
     padding-bottom: 8px;
   }
 
-  @media screen and (max-width: ${breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     margin: 0 20px;
   }
 `
@@ -64,7 +63,7 @@ const LoginContainer = styled("div")`
   flex: 1;
   margin: 50px 20px 20px 20px;
 
-  @media screen and (max-width: ${breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     margin: 20px;
   }
 `
@@ -72,7 +71,7 @@ const LoginContainer = styled("div")`
 const LoginButton = styled(HeroButton)`
   margin-left: 20px;
 
-  @media screen and (max-width: ${breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     margin-left: 0;
   }
 `

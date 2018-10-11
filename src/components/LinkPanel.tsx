@@ -1,7 +1,6 @@
 import { Link } from "@reach/router"
 import React from "react"
-import styled, { css } from "react-emotion"
-import { breakpoints } from "utils"
+import styled from "react-emotion"
 
 const LinkPanelContainer = styled("div")`
   background-color: ${(props: LinkPanelProps) =>
@@ -38,13 +37,13 @@ const Description = styled("div")`
   font-weight: 300;
 `
 
-const linkStyles = css`
+const StyledLink = styled(Link)`
   display: block;
   text-decoration: none;
   color: #fff;
   flex: 1;
 
-  @media screen and (max-width: ${breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     flex: auto;
   }
 `
@@ -72,7 +71,7 @@ export class LinkPanel extends React.Component<LinkPanelProps> {
   render() {
     const { backgroundColor, to, title, description, image } = this.props
     return (
-      <Link className={linkStyles} to={to}>
+      <StyledLink to={to}>
         <LinkPanelContainer backgroundColor={backgroundColor}>
           <Content>
             <Title>{title}</Title>
@@ -80,7 +79,7 @@ export class LinkPanel extends React.Component<LinkPanelProps> {
           </Content>
           <Image image={image} />
         </LinkPanelContainer>
-      </Link>
+      </StyledLink>
     )
   }
 }

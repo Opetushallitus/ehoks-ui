@@ -40,11 +40,3 @@ export const getEnvironment = (
 ): Instance<typeof EnvironmentStore> => {
   return root.environment
 }
-
-// move these to theme
-export enum breakpoints {
-  Tablet = 720,
-  Desktop = 900,
-  Large = 1160,
-  Max = 1440
-}

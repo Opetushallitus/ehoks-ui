@@ -2,7 +2,6 @@ import React from "react"
 import styled from "react-emotion"
 import { MdExpandLess, MdExpandMore, MdHelp } from "react-icons/md"
 import Popup from "reactjs-popup"
-import { breakpoints } from "utils"
 
 const AccordionContainer = styled("div")`
   padding: 20px 0 10px 0;
@@ -52,7 +51,7 @@ const Content = styled("div")`
   background: #fff;
   padding: 10px;
 
-  @media screen and (max-width: ${breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     margin-left: 0px;
   }
 `
@@ -60,13 +59,13 @@ const Content = styled("div")`
 const HelpToggle = styled(MdHelp)`
   cursor: pointer;
   margin-right: 45%;
-  @media screen and (max-width: ${breakpoints.Large}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
     margin-right: 300px;
   }
-  @media screen and (max-width: ${breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     margin-right: 100px;
   }
-  @media screen and (max-width: ${breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     margin-right: 50px;
   }
 `

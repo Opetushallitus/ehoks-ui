@@ -3,7 +3,6 @@ import React from "react"
 import styled from "react-emotion"
 import { MdUnfoldLess, MdUnfoldMore } from "react-icons/md"
 import { FormattedMessage, intlShape } from "react-intl"
-import { breakpoints } from "utils"
 
 interface ContainerProps {
   accentColor?: string
@@ -88,11 +87,11 @@ const ToggleTitle = styled("div")`
   text-decoration: underline;
   color: #0076d9;
 
-  @media screen and (max-width: ${breakpoints.Max}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Max}px) {
     font-size: 16px;
   }
 
-  @media screen and (max-width: ${breakpoints.Large}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
     font-size: 14px;
   }
 `

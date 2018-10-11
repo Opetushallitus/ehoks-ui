@@ -2,7 +2,6 @@ import React from "react"
 import styled, { css } from "react-emotion"
 
 import { FormattedMessage } from "react-intl"
-import { breakpoints } from "utils"
 import facebookLogo from "./AppFooter/facebook.svg"
 import instagramLogo from "./AppFooter/instagram.svg"
 import okmLogo from "./AppFooter/okm_logo.png"
@@ -36,7 +35,7 @@ const Footer = styled("div")`
   align-items: flex-end;
   padding: 20px 20px 30px 20px;
 
-  @media screen and (max-width: ${breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     display: block;
   }
 `
@@ -65,7 +64,7 @@ const LogosContainer = styled(FooterColumn)`
   align-items: flex-end;
   flex: 1;
 
-  @media screen and (max-width: ${breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     justify-content: center;
     margin: 20px 0;
 
@@ -86,7 +85,7 @@ const Disclaimer = styled(FooterColumn)`
     margin-bottom: 30px;
   }
 
-  @media screen and (max-width: ${breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     p {
       text-align: left;
     }
@@ -102,7 +101,7 @@ const DisclaimerLinks = styled("div")`
   align-items: center;
   justify-content: flex-end;
 
-  @media screen and (max-width: ${breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     justify-content: flex-start;
   }
 `

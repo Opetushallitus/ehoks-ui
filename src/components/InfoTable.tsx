@@ -1,5 +1,4 @@
 import styled from "react-emotion"
-import { breakpoints } from "utils"
 
 /**
  * Responsive wrapper for three column tables
@@ -30,7 +29,7 @@ export const InfoTable = styled("table")`
     }
   }
 
-  @media screen and (max-width: ${breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     width: 100%;
 
     tr {
