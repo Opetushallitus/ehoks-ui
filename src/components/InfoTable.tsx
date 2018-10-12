@@ -42,12 +42,12 @@ export const InfoTable = styled("table")`
 
     td {
       display: block;
-      text-align: right;
+      padding-left: 40px;
 
       &:before {
         content: attr(data-label);
         color: #6e6e7e;
-        float: left;
+        display: block;
       }
     }
   }

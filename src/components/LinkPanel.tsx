@@ -55,6 +55,8 @@ export interface LinkPanelProps {
    * @default #00AC3D
    */
   backgroundColor?: string
+  /** Custom className, enables emotion composability */
+  className?: string
   /** Image to show as background image */
   image?: string
   /** Title inside text container */
@@ -70,10 +72,20 @@ export interface LinkPanelProps {
  */
 export class LinkPanel extends React.Component<LinkPanelProps> {
   render() {
-    const { backgroundColor, to, title, description, image } = this.props
+    const {
+      backgroundColor,
+      className,
+      to,
+      title,
+      description,
+      image
+    } = this.props
     return (
       <StyledLink to={to}>
-        <LinkPanelContainer backgroundColor={backgroundColor}>
+        <LinkPanelContainer
+          backgroundColor={backgroundColor}
+          className={className}
+        >
           <Content>
             <Title>{title}</Title>
             <Description>{description}</Description>

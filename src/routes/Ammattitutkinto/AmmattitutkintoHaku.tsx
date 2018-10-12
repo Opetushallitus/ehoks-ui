@@ -16,9 +16,20 @@ interface PageProps {
   active?: boolean
 }
 
+const Loading = styled(LoadingSpinner)`
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    position: absolute;
+    right: 20px;
+  }
+`
+
 const SearchContainer = styled("div")`
   border: 1px solid #979797;
   padding: 10px;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    border-width: 0;
+  }
 `
 
 const SearchResultsContainer = styled("div")`
@@ -37,6 +48,10 @@ const SearchHeader = styled("div")`
 
 const SearchIcon = styled(MdSearch)`
   margin: 0 20px 0 10px;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    position: absolute;
+  }
 `
 
 const SearchInput = styled("input")`
@@ -47,6 +62,12 @@ const SearchInput = styled("input")`
   height: 40px;
   padding: 0 10px;
   min-width: 330px;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    min-width: unset;
+    width: 100%;
+    padding-left: 40px;
+  }
 `
 
 const SearchResultsList = styled("div")`
@@ -132,7 +153,7 @@ export class AmmattitutkintoHaku extends React.Component<
               })}
               onChange={this.updateSearchText}
             />
-            {oppilas.isLoading && <LoadingSpinner />}
+            {oppilas.isLoading && <Loading />}
           </SearchHeader>
           {this.state.searchText.length > 0 &&
             oppilas.perusteet.length > 0 && (

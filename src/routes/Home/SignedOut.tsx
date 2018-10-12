@@ -10,15 +10,24 @@ import education from "./education.jpg"
 import students from "./students.jpg"
 
 const Container = styled("div")`
-  margin: 30px 50px 0 20px;
+  display: flex;
+  margin: 30px 90px 50px 40px;
+  flex-direction: row;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+    display: block;
+    margin: 30px 50px 0 20px;
+  }
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
+    flex-direction: column;
+  }
 `
 
 const Hero = styled("div")`
   display: flex;
-
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
-    display: block;
-  }
+  flex-direction: column;
+  flex: 1;
 `
 
 const Header = styled("h1")`
@@ -27,6 +36,7 @@ const Header = styled("h1")`
 
 const Content = styled("div")`
   display: flex;
+  flex: 1;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     display: block;
@@ -34,14 +44,13 @@ const Content = styled("div")`
 `
 
 const Description = styled("div")`
-  flex: 1;
-
   h1 {
     font-weight: 400;
   }
 
   p {
     font-size: 18px;
+    margin: 20px 20px 20px 0;
   }
 `
 
@@ -51,11 +60,19 @@ const LoginContainer = styled("div")`
 `
 
 const LoginButton = styled(HeroButton)`
-  margin-left: 20px;
-
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     width: 100%;
     margin-left: 0;
+  }
+`
+
+const StyledLinkPanel = styled(LinkPanel)`
+  min-height: 400px;
+  margin-right: 40px;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+    min-height: 320px;
+    margin-right: 0;
   }
 `
 
@@ -103,7 +120,7 @@ export class SignedOut extends React.Component<SignedOutProps> {
         </Hero>
         <Content>
           <LinkPanelContainer>
-            <LinkPanel
+            <StyledLinkPanel
               to="henkilokohtaistaminen"
               title={
                 <FormattedMessage
@@ -119,7 +136,7 @@ export class SignedOut extends React.Component<SignedOutProps> {
               }
               image={students}
             />
-            <LinkPanel
+            <StyledLinkPanel
               to="ammattitutkinto"
               title={
                 <FormattedMessage

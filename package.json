@@ -91,6 +91,7 @@
       "^config$": "<rootDir>/src/config",
       "^utils$": "<rootDir>/src/utils",
       "^testUtils$": "<rootDir>/src/testUtils",
+      "^theme$": "<rootDir>/src/theme",
       "\\.(css|jpg|png|svg)$": "<rootDir>/empty-module.js"
     }
   }

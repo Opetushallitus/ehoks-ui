@@ -10,6 +10,10 @@ import { AmmattitutkintoSisalto } from "routes/Ammattitutkinto/AmmattitutkintoSi
 
 const SectionContainer = styled("div")`
   display: flex;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    flex-direction: column-reverse;
+  }
 `
 
 export interface AmmattitutkintoProps {

@@ -1,4 +1,4 @@
-import { format } from "date-fns/esm"
+import format from "date-fns/format"
 import React from "react"
 import styled from "react-emotion"
 import { MdUnfoldLess, MdUnfoldMore } from "react-icons/md"

@@ -20,7 +20,7 @@ const SocialMediaIcon = styled("img")`
   margin-left: 20px;
   width: 30px;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     a:first-of-type & {
       margin-left: 0;
     }
@@ -35,7 +35,7 @@ const FooterContainer = styled("div")`
   margin-top: 10px;
   border-top: 1px solid #c8cdcf;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     background-color: #fff;
   }
 `
@@ -45,13 +45,16 @@ const Footer = styled("div")`
   margin: 0 auto;
   display: flex;
   align-items: flex-end;
-  padding: 20px 20px 30px 20px;
+  padding: 20px 50px 30px 40px;
+
+  /* @media screen and (max-width: ${props =>
+    props.theme.breakpoints.Desktop}px) {
+    display: block;
+    padding: 20px 20px 30px 20px;
+  } */
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     display: block;
-  }
-
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     padding: 0;
   }
 `
@@ -65,9 +68,9 @@ const LinksContainer = styled(FooterColumn)`
   align-self: flex-start;
   flex-direction: column;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     flex-direction: row;
-    padding: 20px 20px 30px 20px;
+    padding: 20px 50px 30px 20px;
   }
 `
 
@@ -87,7 +90,7 @@ const DisclaimerAndLogos = styled("div")`
   display: flex;
   flex-direction: row;
   background: transparent;
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     background: #f8f8f8;
     border-top: 1px solid #979797;
     flex-direction: column-reverse;
@@ -97,7 +100,7 @@ const DisclaimerAndLogos = styled("div")`
 const LogosContainer = styled(FooterColumn)`
   display: flex;
   align-items: flex-end;
-  flex: 1;
+  flex: 2;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     justify-content: center;
@@ -107,6 +110,7 @@ const LogosContainer = styled(FooterColumn)`
 
 const Disclaimer = styled(FooterColumn)`
   align-items: flex-end;
+  flex: 4;
 
   p {
     font-size: 14px;
@@ -117,15 +121,10 @@ const Disclaimer = styled(FooterColumn)`
   }
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
-    p {
-      text-align: left;
-    }
-  }
-
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     padding: 0 20px;
     p {
       margin-bottom: 0;
+      text-align: left;
     }
   }
 `
@@ -139,7 +138,7 @@ const MobileButtons = styled("div")`
 const OpintopolkuLogo = styled("img")`
   width: 200px;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     width: 150px;
   }
 `
@@ -150,10 +149,6 @@ const DisclaimerLinks = styled("div")`
   justify-content: flex-end;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
-    justify-content: flex-start;
-  }
-
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     display: none;
   }
 `
@@ -178,7 +173,7 @@ const SocialMediaIconsContainer = styled("div")`
   display: ${(props: SocialMediaIconsContainerProps) =>
     props.desktop ? "block" : "none"};
   @media screen and (max-width: ${(props: SocialMediaIconsContainerProps) =>
-      props.theme.breakpoints.Tablet}px) {
+      props.theme.breakpoints.Desktop}px) {
     display: ${(props: SocialMediaIconsContainerProps) =>
       props.mobile ? "block" : "none"};
   }

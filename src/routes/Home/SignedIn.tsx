@@ -22,6 +22,16 @@ const ProgressPies = styled("div")`
   display: flex;
   justify-content: center;
   margin: 20px 0;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    margin: 0;
+  }
+`
+
+const MainHeading = styled(Heading)`
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    display: none;
+  }
 `
 
 export interface SignedInProps {
@@ -42,12 +52,12 @@ export class SignedIn extends React.Component<SignedInProps> {
           return (
             <React.Fragment>
               <ProgressContainer>
-                <Heading>
+                <MainHeading>
                   <FormattedMessage
                     id="signedIn.title"
                     defaultMessage="Omien opintojen suunnittelu"
                   />
-                </Heading>
+                </MainHeading>
 
                 <ProgressPies>
                   <ProgressPie

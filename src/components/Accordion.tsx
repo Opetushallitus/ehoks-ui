@@ -53,6 +53,8 @@ const Content = styled("div")`
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     margin-left: 0px;
+    border-width: 0;
+    background: transparent;
   }
 `
 
