@@ -3,6 +3,7 @@ import React from "react"
 import styled from "react-emotion"
 import { MdUnfoldLess, MdUnfoldMore } from "react-icons/md"
 import { FormattedMessage, intlShape } from "react-intl"
+import { CompetenceRequirement } from "./CompetenceRequirement"
 
 interface ContainerProps {
   accentColor?: string
@@ -58,9 +59,13 @@ const Details = styled("div")`
   justify-content: space-between;
 `
 
+interface AdditionalInfoProps {
+  fadedColor: string
+}
 const AdditionalInfo = styled("div")`
   padding: 20px;
-  background: #f8f8f8;
+  background: ${(props: AdditionalInfoProps) =>
+    props.fadedColor ? props.fadedColor : "#fef8f3"};
   border-top: 1px solid #c8cdcf;
   min-height: 87px;
 `
@@ -78,14 +83,13 @@ const LearningEnvironments = styled("div")`
 
 const InfoToggle = styled("div")`
   display: flex;
-  cursor: pointer;
 `
 
-const ToggleTitle = styled("div")`
-  flex: 1;
+const ToggleLink = styled("div")`
   font-size: 18px;
   text-decoration: underline;
   color: #0076d9;
+  cursor: pointer;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Max}px) {
     font-size: 16px;
@@ -96,15 +100,18 @@ const ToggleTitle = styled("div")`
   }
 `
 
-const ToggleHeader = styled("h2")`
+const ShowAllTitle = styled(ToggleLink)`
+  padding-right: 20px;
+`
+
+const ExpandTitle = styled(ToggleLink)`
   flex: 1;
-  margin: 0;
-  border-bottom: 1px solid #000;
 `
 
 const Expand = styled(MdUnfoldMore)`
   fill: #717171;
   transform: rotate(45deg);
+  cursor: pointer;
 `
 
 const Collapse = styled(MdUnfoldLess)`
@@ -112,7 +119,39 @@ const Collapse = styled(MdUnfoldLess)`
   transform: rotate(45deg);
 `
 
-const InfoContainer = styled("ul")``
+const CollapseHeader = styled("h2")`
+  flex: 1;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+`
+
+const CollapseContainer = styled("div")`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #000;
+`
+
+const IconContainer = styled("div")`
+  cursor: pointer;
+`
+
+const InfoContainer = styled("ul")`
+  padding: 0;
+  background: #fff;
+  color: #2b2b2b;
+  border-radius: 2px;
+  border: 1px solid #999;
+  list-style: none;
+
+  li {
+    padding: 6px 12px;
+    &:nth-child(2n) {
+      background: #fafafa;
+    }
+  }
+`
 
 interface PeriodProps {
   accentColor?: string
@@ -131,12 +170,16 @@ export interface StudyInfoProps {
    * List of assessment criteria
    * @default []
    */
-  assessment?: string[]
+  assessment?: Array<{
+    [key: string]: string[]
+  }>
   /**
    * List of competence requirements
    * @default []
    */
   competenceRequirements?: string[]
+  /** Color of additional info container */
+  fadedColor?: string
   /** URI to link to */
   href: string
   /**
@@ -153,19 +196,42 @@ export interface StudyInfoProps {
   title?: React.ReactNode
 }
 
+export interface StudyInfoState {
+  expanded: boolean
+  expandedCompetences: number[]
+}
+
 /**
  * Toggleable content panel with inline help popup
  */
-export class StudyInfo extends React.Component<StudyInfoProps> {
+export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
   static contextTypes = {
     intl: intlShape
   }
-  state = {
-    expanded: false
+  state: StudyInfoState = {
+    expanded: false,
+    expandedCompetences: []
   }
 
   toggle = () => {
     this.setState({ expanded: !this.state.expanded })
+  }
+
+  expandCompetence = (index: number) => () => {
+    this.setState((state: StudyInfoState) => ({
+      expandedCompetences:
+        state.expandedCompetences.indexOf(index) > -1
+          ? state.expandedCompetences.filter(i => i !== index)
+          : [...state.expandedCompetences, index]
+    }))
+  }
+
+  expandAll = () => {
+    this.setState({
+      expandedCompetences: (this.props.competenceRequirements || []).map(
+        (_, i) => i
+      )
+    })
   }
 
   render() {
@@ -175,11 +241,13 @@ export class StudyInfo extends React.Component<StudyInfoProps> {
       approved,
       assessment = [],
       competenceRequirements = [],
+      fadedColor,
       href,
       learningEnvironments = [],
       period = [],
       title
     } = this.props
+    const { expandedCompetences } = this.state
 
     const [startDate, endDate] = period
     const periodText = approved
@@ -211,37 +279,51 @@ export class StudyInfo extends React.Component<StudyInfoProps> {
               <Period accentColor={accentColor}>{periodText}</Period>
             )}
           </Details>
-          <AdditionalInfo>
-            <InfoToggle onClick={this.toggle}>
+          <AdditionalInfo fadedColor={fadedColor}>
+            <InfoToggle>
               {this.state.expanded ? (
-                <React.Fragment>
-                  <ToggleHeader>
+                <CollapseContainer>
+                  <CollapseHeader>
                     <FormattedMessage
                       id="opiskelusuunnitelma.competenceRequirements"
                       defaultMessage="Ammattitaitovaatimukset"
                     />
-                  </ToggleHeader>
-                  <Collapse size={40} />
-                </React.Fragment>
+                  </CollapseHeader>
+                  <ShowAllTitle onClick={this.expandAll}>
+                    <FormattedMessage
+                      id="opiskelusuunnitelma.showAllAssessments"
+                      defaultMessage="Näytä kaikki arvioinnit"
+                    />
+                  </ShowAllTitle>
+                  <IconContainer onClick={this.toggle}>
+                    <Collapse size={40} />
+                  </IconContainer>
+                </CollapseContainer>
               ) : (
                 <React.Fragment>
-                  <ToggleTitle>
+                  <ExpandTitle onClick={this.toggle}>
                     <FormattedMessage
                       id="opiskelusuunnitelma.expandStudyInfo"
                       defaultMessage="Lue lisää ammattitaito-vaatimuksista ja arvioinnista"
                     />
-                  </ToggleTitle>
-                  <Expand size={40} />
+                  </ExpandTitle>
+                  <Expand size={40} onClick={this.toggle} />
                 </React.Fragment>
               )}
             </InfoToggle>
             {this.state.expanded && (
               <InfoContainer>
-                {[...assessment, ...competenceRequirements].map(
-                  (infoRow, i) => {
-                    return <li key={i}>{infoRow}</li>
-                  }
-                )}
+                {competenceRequirements.map((competenceRequirement, i) => {
+                  return (
+                    <CompetenceRequirement
+                      key={i}
+                      text={competenceRequirement}
+                      assessment={assessment[i]}
+                      expanded={expandedCompetences.indexOf(i) > -1}
+                      expand={this.expandCompetence(i)}
+                    />
+                  )
+                })}
               </InfoContainer>
             )}
           </AdditionalInfo>

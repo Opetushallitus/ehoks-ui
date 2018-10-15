@@ -22,7 +22,8 @@
     ],
     "no-console": false,
     "no-unused-expression": [true, "allow-tagged-template"],
-    "no-submodule-imports": false
+    "no-submodule-imports": false,
+    "object-literal-sort-keys": false
   },
   "jsRules": {}
 }
