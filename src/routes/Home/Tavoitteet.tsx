@@ -9,12 +9,12 @@ import { SectionContainer } from "routes/Home/SectionContainer"
 import { ISessionStore } from "stores/SessionStore"
 import { injectSession } from "utils"
 
-export interface GoalProps {
+export interface TavoitteetProps {
   children?: React.ReactChildren
   session?: ISessionStore
 }
 
-export interface GoalState {
+export interface TavoitteetState {
   activeAccordions: {
     [accordionName: string]: boolean
   }
@@ -22,9 +22,9 @@ export interface GoalState {
 
 @inject(injectSession)
 @observer
-export class Goal extends React.Component<
-  GoalProps & RouteComponentProps,
-  GoalState
+export class Tavoitteet extends React.Component<
+  TavoitteetProps & RouteComponentProps,
+  TavoitteetState
 > {
   state = {
     activeAccordions: {
@@ -47,11 +47,12 @@ export class Goal extends React.Component<
   }
 
   render() {
+    const { user } = this.props.session
     return (
       <SectionContainer>
         <Heading>
           <FormattedMessage
-            id="goal.title"
+            id="tavoitteet.title"
             defaultMessage="Tavoitteeni ja perustietoni"
           />
         </Heading>
@@ -60,7 +61,7 @@ export class Goal extends React.Component<
           open={this.state.activeAccordions.personalGoal}
           title={
             <FormattedMessage
-              id="goal.personalGoal"
+              id="tavoitteet.personalGoal"
               defaultMessage="Oma tavoitteeni"
             />
           }
@@ -74,7 +75,7 @@ export class Goal extends React.Component<
           open={this.state.activeAccordions.degreeOrEducation}
           title={
             <FormattedMessage
-              id="goal.degreeOrEducation"
+              id="tavoitteet.degreeOrEducation"
               defaultMessage="Tutkinto tai koulutus"
             />
           }
@@ -87,7 +88,7 @@ export class Goal extends React.Component<
           open={this.state.activeAccordions.personalDetails}
           title={
             <FormattedMessage
-              id="goal.personalDetails"
+              id="tavoitteet.personalDetails"
               defaultMessage="Omat henkilötiedot"
             />
           }
@@ -101,9 +102,11 @@ export class Goal extends React.Component<
                 <th>Oppijanumero</th>
               </tr>
               <tr>
-                <td data-label="Etunimi Sukunimi">Maija Meikäläinen</td>
-                <td data-label="Kutsumanimi">Maija</td>
-                <td data-label="Oppijanumero">1234344</td>
+                <td data-label="Etunimi Sukunimi">
+                  {user.firstName} {user.surname}
+                </td>
+                <td data-label="Kutsumanimi">{user.commonName}</td>
+                <td data-label="Oppijanumero">{user.oid}</td>
               </tr>
               <tr>
                 <th>Osoite</th>
@@ -111,9 +114,11 @@ export class Goal extends React.Component<
                 <th>Kotikunta</th>
               </tr>
               <tr>
-                <td data-label="Osoite">Mäntsälänviertotie 478 B</td>
-                <td data-label="Postiosoite">123123 Mäntsälä</td>
-                <td data-label="Kotikunta">Mäntsälä</td>
+                <td data-label="Osoite">{user.yhteystiedot.katuosoite}</td>
+                <td data-label="Postiosoite">
+                  {user.yhteystiedot.postinumero} {user.yhteystiedot.kunta}
+                </td>
+                <td data-label="Kotikunta">{user.yhteystiedot.kunta}</td>
               </tr>
               <tr>
                 <th>Sähköposti</th>
@@ -121,11 +126,11 @@ export class Goal extends React.Component<
                 <th>Puhelinnumero</th>
               </tr>
               <tr>
-                <td data-label="Sähköposti">
-                  maija.meikalainen@kotipostilokero.fi
-                </td>
+                <td data-label="Sähköposti">{user.yhteystiedot.sahkoposti}</td>
                 <td />
-                <td data-label="Puhelinnumero">+35850505050505</td>
+                <td data-label="Puhelinnumero">
+                  {user.yhteystiedot.puhelinnumero}
+                </td>
               </tr>
             </tbody>
           </InfoTable>
@@ -135,7 +140,7 @@ export class Goal extends React.Component<
           open={this.state.activeAccordions.custodianDetails}
           title={
             <FormattedMessage
-              id="goal.custodianDetails"
+              id="tavoitteet.custodianDetails"
               defaultMessage="Huoltajatiedot"
             />
           }
@@ -148,7 +153,7 @@ export class Goal extends React.Component<
           open={this.state.activeAccordions.currentEducation}
           title={
             <FormattedMessage
-              id="goal.currentEducation"
+              id="tavoitteet.currentEducation"
               defaultMessage="Nykyinen koulutus"
             />
           }

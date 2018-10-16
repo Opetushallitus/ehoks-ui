@@ -4,11 +4,11 @@ import { inject, observer } from "mobx-react"
 import React from "react"
 import styled from "react-emotion"
 import { FormattedMessage } from "react-intl"
-import { Goal } from "routes/Home/Goal"
 import { Heading } from "routes/Home/Heading"
 import { Opintosuunnitelma } from "routes/Home/Opintosuunnitelma"
 import { PreviousCompetence } from "routes/Home/PreviousCompetence"
 import { RecognizingPriorLearning } from "routes/Home/RecognizingPriorLearning"
+import { Tavoitteet } from "routes/Home/Tavoitteet"
 import { ISessionStore } from "stores/SessionStore"
 import { injectSession } from "utils"
 
@@ -114,7 +114,7 @@ export class SignedIn extends React.Component<SignedInProps> {
               </ProgressContainer>
 
               <Router basepath="/ehoks">
-                <Goal path="/" />
+                <Tavoitteet path="/" />
                 <PreviousCompetence path="osaamiseni" />
                 <RecognizingPriorLearning path="tunnustaminen" />
                 <Opintosuunnitelma path="opiskelusuunnitelmani" />
