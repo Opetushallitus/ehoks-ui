@@ -268,11 +268,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
             </Title>
             {learningEnvironments.length > 0 && (
               <LearningEnvironments>
-                <FormattedMessage
-                  id="opiskelusuunnitelma.learningEnvironment"
-                  defaultMessage="Oppimisympäristö"
-                />
-                : {learningEnvironments.join(", ")}
+                {learningEnvironments.join(", ")}
               </LearningEnvironments>
             )}
             {periodText && (

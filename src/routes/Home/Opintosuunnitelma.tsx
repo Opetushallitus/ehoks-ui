@@ -21,6 +21,7 @@ interface MockStudy {
   link: string
   period?: Date[]
   title: string
+  competencePoints?: number
 }
 const mockPlannedStudies: MockStudy[] = [
   {
@@ -128,6 +129,7 @@ const mockPlannedStudies: MockStudy[] = [
       "arvioida ja kehittää toimintaansa",
       "arvioida mahdollisuuksiaan toimia hyvinvointialan yrittäjänä."
     ],
+    competencePoints: 35,
     id: 0,
     learningEnvironments: ["Opinpaikka", "Lähiopetus"],
     link: "https://www.google.fi",
@@ -138,6 +140,7 @@ const mockPlannedStudies: MockStudy[] = [
     approved: new Date("2018.04.01"),
     assessment: [],
     competenceRequirements: [],
+    competencePoints: 4,
     id: 1,
     learningEnvironments: ["Tavastia", "Muualla suoritettu"],
     link: "https://www.google.fi",
@@ -149,6 +152,7 @@ const mockCompletedStudies: MockStudy[] = [
   {
     assessment: [],
     competenceRequirements: [],
+    competencePoints: 40,
     id: 0,
     learningEnvironments: [
       "Palvelutalo Villilän niemi",
@@ -161,6 +165,7 @@ const mockCompletedStudies: MockStudy[] = [
   {
     assessment: [],
     competenceRequirements: [],
+    competencePoints: 30,
     id: 1,
     learningEnvironments: ["Opinpaikka", "Lähiopetus"],
     link: "https://www.google.fi",
@@ -171,6 +176,7 @@ const mockCompletedStudies: MockStudy[] = [
     approved: new Date("2018.04.01"),
     assessment: [],
     competenceRequirements: [],
+    competencePoints: 4,
     id: 2,
     learningEnvironments: ["Tavastia", "Muualla suoritettu"],
     link: "https://www.google.fi",
@@ -180,6 +186,7 @@ const mockCompletedStudies: MockStudy[] = [
   {
     assessment: [],
     competenceRequirements: [],
+    competencePoints: 15,
     id: 3,
     learningEnvironments: ["Projektiryhmä", "Verkko-opiskelu ja lähiopetus"],
     link: "https://www.google.fi",
@@ -191,6 +198,7 @@ const mockUnscheduledStudies: MockStudy[] = [
   {
     assessment: [],
     competenceRequirements: [],
+    competencePoints: 3,
     id: 0,
     learningEnvironments: [],
     link: "https://www.google.fi",
@@ -200,6 +208,7 @@ const mockUnscheduledStudies: MockStudy[] = [
   {
     assessment: [],
     competenceRequirements: [],
+    competencePoints: 6,
     id: 1,
     learningEnvironments: [],
     link: "https://www.google.fi",
@@ -209,6 +218,7 @@ const mockUnscheduledStudies: MockStudy[] = [
   {
     assessment: [],
     competenceRequirements: [],
+    competencePoints: 9,
     id: 2,
     learningEnvironments: [],
     link: "https://www.google.fi",
@@ -218,6 +228,7 @@ const mockUnscheduledStudies: MockStudy[] = [
   {
     assessment: [],
     competenceRequirements: [],
+    competencePoints: 15,
     id: 3,
     learningEnvironments: [],
     link: "https://www.google.fi",
@@ -227,6 +238,7 @@ const mockUnscheduledStudies: MockStudy[] = [
   {
     assessment: [],
     competenceRequirements: [],
+    competencePoints: 15,
     id: 4,
     learningEnvironments: [],
     link: "https://www.google.fi",
@@ -236,6 +248,7 @@ const mockUnscheduledStudies: MockStudy[] = [
   {
     assessment: [],
     competenceRequirements: [],
+    competencePoints: 35,
     id: 5,
     learningEnvironments: [],
     link: "https://www.google.fi",
@@ -312,6 +325,10 @@ export class Opintosuunnitelma extends React.Component<
   render() {
     const { intl } = this.context
     const { activeAccordions } = this.state
+    const competencePointsTitle = intl.formatMessage({
+      defaultMessage: "osp",
+      id: "opintosuunnitelma.competencePointsAbbreviation"
+    })
 
     return (
       <SectionContainer>
@@ -472,7 +489,9 @@ export class Opintosuunnitelma extends React.Component<
                     <StudyInfo
                       accentColor="#EB6F02"
                       fadedColor="#FDF1E6"
-                      title={study.title}
+                      title={`${study.title} ${
+                        study.competencePoints
+                      } ${competencePointsTitle}`}
                       approved={study.approved}
                       learningEnvironments={study.learningEnvironments}
                       period={study.period}
@@ -517,7 +536,9 @@ export class Opintosuunnitelma extends React.Component<
                     <StudyInfo
                       accentColor="#43A047"
                       fadedColor="#ECF6ED"
-                      title={study.title}
+                      title={`${study.title} ${
+                        study.competencePoints
+                      } ${competencePointsTitle}`}
                       approved={study.approved}
                       learningEnvironments={study.learningEnvironments}
                       period={study.period}
@@ -562,7 +583,9 @@ export class Opintosuunnitelma extends React.Component<
                     <StudyInfo
                       accentColor="#E2A626"
                       fadedColor="#FDF6E9"
-                      title={study.title}
+                      title={`${study.title} ${
+                        study.competencePoints
+                      } ${competencePointsTitle}`}
                       approved={study.approved}
                       learningEnvironments={study.learningEnvironments}
                       period={study.period}
