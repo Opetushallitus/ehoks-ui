@@ -2,7 +2,7 @@ import React from "react"
 import styled from "react-emotion"
 
 const ButtonContainer = styled("button")`
-  background: #1976d2;
+  background: ${props => props.theme.colors.waterBlue};
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 600;
   color: #fff;
@@ -35,6 +35,11 @@ export class Button extends React.Component<ButtonProps> {
 }
 
 export const HeroButton = styled(Button)`
-  padding: 15px 50px;
+  padding: 15px 60px;
   font-size: 16px;
+  font-weight: 400;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    padding: 15px 0;
+  }
 `

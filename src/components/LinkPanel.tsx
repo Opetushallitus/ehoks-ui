@@ -1,14 +1,13 @@
 import { Link } from "@reach/router"
 import React from "react"
-import styled, { css } from "react-emotion"
-import { breakpoints } from "utils"
+import styled from "react-emotion"
 
 const LinkPanelContainer = styled("div")`
   background-color: ${(props: LinkPanelProps) =>
     props.backgroundColor || "#00AC3D"};
   border: 1px solid #979797;
-  margin: 0 0 10px 10px;
-  min-height: 300px;
+  margin: 0 0 20px 0;
+  min-height: 320px;
   display: flex;
   flex-direction: column;
 `
@@ -18,6 +17,7 @@ const Content = styled("div")`
   display: flex;
   padding: 10px;
   min-height: 120px;
+  justify-content: space-between;
 `
 
 const Image = styled("div")`
@@ -29,7 +29,7 @@ const Image = styled("div")`
 `
 
 const Title = styled("div")`
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 300;
   text-transform: uppercase;
 `
@@ -38,13 +38,13 @@ const Description = styled("div")`
   font-weight: 300;
 `
 
-const linkStyles = css`
+const StyledLink = styled(Link)`
   display: block;
   text-decoration: none;
   color: #fff;
   flex: 1;
 
-  @media screen and (max-width: ${breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     flex: auto;
   }
 `
@@ -55,6 +55,8 @@ export interface LinkPanelProps {
    * @default #00AC3D
    */
   backgroundColor?: string
+  /** Custom className, enables emotion composability */
+  className?: string
   /** Image to show as background image */
   image?: string
   /** Title inside text container */
@@ -70,17 +72,27 @@ export interface LinkPanelProps {
  */
 export class LinkPanel extends React.Component<LinkPanelProps> {
   render() {
-    const { backgroundColor, to, title, description, image } = this.props
+    const {
+      backgroundColor,
+      className,
+      to,
+      title,
+      description,
+      image
+    } = this.props
     return (
-      <Link className={linkStyles} to={to}>
-        <LinkPanelContainer backgroundColor={backgroundColor}>
+      <StyledLink to={to}>
+        <LinkPanelContainer
+          backgroundColor={backgroundColor}
+          className={className}
+        >
           <Content>
             <Title>{title}</Title>
             <Description>{description}</Description>
           </Content>
           <Image image={image} />
         </LinkPanelContainer>
-      </Link>
+      </StyledLink>
     )
   }
 }

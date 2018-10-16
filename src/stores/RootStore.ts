@@ -24,7 +24,7 @@ export interface ApiResponse<T> {
 }
 
 export interface InjectedStores {
-  store: Instance<typeof RootStore>
+  store: IRootStore
 }
 
 const RootStoreModel = {
@@ -93,3 +93,5 @@ export const RootStore = types
 
     return { fetchSingle, fetchCollection, deleteResource }
   })
+
+export interface IRootStore extends Instance<typeof RootStore> {}

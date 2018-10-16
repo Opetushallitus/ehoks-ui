@@ -1,16 +1,15 @@
 import { Location, navigate, Router } from "@reach/router"
 import { ProgressPie } from "components/ProgressPie"
 import { inject, observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
 import { FormattedMessage } from "react-intl"
 import { Goal } from "routes/Home/Goal"
 import { Heading } from "routes/Home/Heading"
+import { Opintosuunnitelma } from "routes/Home/Opintosuunnitelma"
 import { PreviousCompetence } from "routes/Home/PreviousCompetence"
 import { RecognizingPriorLearning } from "routes/Home/RecognizingPriorLearning"
-import { StudyPlan } from "routes/Home/StudyPlan"
-import { SessionStore } from "stores/SessionStore"
+import { ISessionStore } from "stores/SessionStore"
 import { injectSession } from "utils"
 
 const ProgressContainer = styled("div")`
@@ -23,10 +22,20 @@ const ProgressPies = styled("div")`
   display: flex;
   justify-content: center;
   margin: 20px 0;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    margin: 0;
+  }
+`
+
+const MainHeading = styled(Heading)`
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    display: none;
+  }
 `
 
 export interface SignedInProps {
-  session?: Instance<typeof SessionStore>
+  session?: ISessionStore
 }
 
 @inject(injectSession)
@@ -43,19 +52,19 @@ export class SignedIn extends React.Component<SignedInProps> {
           return (
             <React.Fragment>
               <ProgressContainer>
-                <Heading>
+                <MainHeading>
                   <FormattedMessage
                     id="signedIn.title"
                     defaultMessage="Omien opintojen suunnittelu"
                   />
-                </Heading>
+                </MainHeading>
 
                 <ProgressPies>
                   <ProgressPie
                     step={"1"}
                     percentage={100}
                     selected={location.pathname === "/ehoks"}
-                    onClick={this.setActiveTab("/ehoks/")}
+                    onClick={this.setActiveTab("/ehoks")}
                     title={
                       <FormattedMessage
                         id="signedIn.myGoalsAndBasicInfo"
@@ -97,7 +106,7 @@ export class SignedIn extends React.Component<SignedInProps> {
                     title={
                       <FormattedMessage
                         id="signedIn.myStudyPlan"
-                        defaultMessage="Opiskelu&shy;suunni&shy;telmani"
+                        defaultMessage="Opinto&shy;suunni&shy;telmani"
                       />
                     }
                   />
@@ -108,7 +117,7 @@ export class SignedIn extends React.Component<SignedInProps> {
                 <Goal path="/" />
                 <PreviousCompetence path="osaamiseni" />
                 <RecognizingPriorLearning path="tunnustaminen" />
-                <StudyPlan path="opiskelusuunnitelmani" />
+                <Opintosuunnitelma path="opiskelusuunnitelmani" />
               </Router>
             </React.Fragment>
           )

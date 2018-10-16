@@ -16,6 +16,12 @@ const ProgressPieContainer = styled("div")`
   }
 `
 
+const Title = styled("span")`
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    display: none;
+  }
+`
+
 export interface ProgressPieProps {
   /**
    * Progress bar indicator fill percentage
@@ -78,7 +84,7 @@ export class ProgressPie extends React.Component<ProgressPieProps> {
     return (
       <ProgressPieContainer onClick={onClick}>
         <CircularProgressbar {...props} />
-        {title}
+        <Title>{title}</Title>
       </ProgressPieContainer>
     )
   }

@@ -8,10 +8,10 @@ exports[`App renders correctly 1`] = `
     className="css-1c9pu1m"
   >
     <div
-      className="css-oi691e"
+      className="css-1bg6mpz"
     >
       <div
-        className="css-1jb87fu"
+        className="css-1lhzg4m"
       >
         <a
           className="css-vphjtl"
@@ -48,31 +48,89 @@ exports[`App renders correctly 1`] = `
       </div>
     </div>
     <div
-      className="css-1pk09a"
+      className="css-1xu5u1k"
     >
       <div
-        className="css-s2r9ht"
+        className="css-1oo5bs0"
+      >
+        <svg
+          attr={
+            Object {
+              "viewBox": "0 0 24 24",
+            }
+          }
+          fill="currentColor"
+          height="40"
+          size="40"
+          stroke="currentColor"
+          strokeWidth="0"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          viewBox="0 0 24 24"
+          width="40"
+        >
+          <path
+            d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+          />
+        </svg>
+        <h3>
+          <span>
+            Valikko
+          </span>
+        </h3>
+      </div>
+      <div
+        className="css-fmwec3"
       >
         eHOKS
       </div>
-      <div
-        className="css-1joa9di"
-      />
     </div>
   </div>
   <div
-    className="css-1h0xhvt"
+    className="css-cqueuz"
   >
     <div
-      className="css-7ap1wq"
+      className="css-1twx585"
     >
       <div
-        className="css-16tkskh"
+        className="css-1dnql38"
       >
-        <img
-          className="css-1inivuc"
-          src=""
-        />
+        <div
+          className="css-1qxls6i"
+        >
+          <img
+            className="css-29yp7r"
+            src=""
+          />
+          <div
+            className="css-139jliq"
+          >
+            <a>
+              <img
+                alt="Twitter"
+                className="css-1rcxayq"
+                src=""
+              />
+            </a>
+            <a>
+              <img
+                alt="Facebook"
+                className="css-1rcxayq"
+                src=""
+              />
+            </a>
+            <a>
+              <img
+                alt="Instagram"
+                className="css-1rcxayq"
+                src=""
+              />
+            </a>
+          </div>
+        </div>
         <ul
           className="css-1fmvbse"
         >
@@ -99,78 +157,82 @@ exports[`App renders correctly 1`] = `
         </ul>
       </div>
       <div
-        className="css-rbwqx6"
+        className="css-os38x1"
       >
-        <img
-          className="css-14qd04p"
-          src=""
-        />
-        <img
-          className="css-14qd04p"
-          src=""
-        />
-      </div>
-      <div
-        className="css-y2szpd"
-      >
-        <p>
-          <span>
-            Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja
+        <div
+          className="css-of0swa"
+        >
+          <img
+            className="css-14qd04p"
+            src=""
+          />
+          <img
+            className="css-14qd04p"
+            src=""
+          />
+        </div>
+        <div
+          className="css-nadzu"
+        >
+          <p>
+            <span>
+              Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja
               koulutuksistaan Opintopolku.fi-palvelussa. Tietojen oikeellisuuden
               voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.
-          </span>
-        </p>
-        <div
-          className="css-1ybikle"
-        >
+            </span>
+          </p>
           <div
-            className="css-fth9yi"
+            className="css-1hgh9qx"
           >
-            <a>
-              <span>
-                Suomeksi
-              </span>
-            </a>
-            <a>
-              <span>
-                In English
-              </span>
-            </a>
-            <a>
-              <span>
-                På svenska
-              </span>
-            </a>
-          </div>
-          <div
-            className="css-1cmi7g3"
-          >
-            |
-          </div>
-          <div
-            className="css-0"
-          >
-            <a>
-              <img
-                alt="Twitter"
-                className="css-1ywoo4k"
-                src=""
-              />
-            </a>
-            <a>
-              <img
-                alt="Facebook"
-                className="css-1ywoo4k"
-                src=""
-              />
-            </a>
-            <a>
-              <img
-                alt="Instagram"
-                className="css-1ywoo4k"
-                src=""
-              />
-            </a>
+            <div
+              className="css-fth9yi"
+            >
+              <a>
+                <span>
+                  Suomeksi
+                </span>
+              </a>
+              <a>
+                <span>
+                  In English
+                </span>
+              </a>
+              <a>
+                <span>
+                  På svenska
+                </span>
+              </a>
+            </div>
+            <div
+              className="css-1cmi7g3"
+            >
+              |
+            </div>
+            <div
+              className="css-hx8h8z"
+            >
+              <a>
+                <img
+                  alt="Twitter"
+                  className="css-1rcxayq"
+                  src=""
+                />
+              </a>
+              <a>
+                <img
+                  alt="Facebook"
+                  className="css-1rcxayq"
+                  src=""
+                />
+              </a>
+              <a>
+                <img
+                  alt="Instagram"
+                  className="css-1rcxayq"
+                  src=""
+                />
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -2,14 +2,15 @@ import { Router } from "@reach/router"
 import "components/App/globalStyles"
 import { AppFooter } from "components/AppFooter"
 import { AppHeader } from "components/AppHeader"
+import { ThemeProvider } from "emotion-theming"
 import { inject, observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
 import { IntlProvider } from "react-intl"
 import { Ammattitutkinto } from "routes/Ammattitutkinto"
 import { Henkilokohtaistaminen } from "routes/Henkilokohtaistaminen"
-import { RootStore } from "stores/RootStore"
+import { IRootStore } from "stores/RootStore"
+import { theme } from "theme"
 import { Home } from "../routes/Home"
 
 const Container = styled("div")`
@@ -17,7 +18,7 @@ const Container = styled("div")`
 `
 
 export interface AppProps {
-  store?: Instance<typeof RootStore>
+  store?: IRootStore
 }
 
 @inject("store")
@@ -31,21 +32,25 @@ export class App extends React.Component<AppProps> {
   render() {
     const { store } = this.props
     return (
-      <IntlProvider
-        defaultLocale="fi"
-        locale={store.translations.activeLocale}
-        messages={store.translations.messages[store.translations.activeLocale]}
-      >
-        <Container>
-          <AppHeader />
-          <Router basepath="/ehoks">
-            <Home path="/*" />
-            <Henkilokohtaistaminen path="henkilokohtaistaminen" />
-            <Ammattitutkinto path="ammattitutkinto" />
-          </Router>
-          <AppFooter />
-        </Container>
-      </IntlProvider>
+      <ThemeProvider theme={theme}>
+        <IntlProvider
+          defaultLocale="fi"
+          locale={store.translations.activeLocale}
+          messages={
+            store.translations.messages[store.translations.activeLocale]
+          }
+        >
+          <Container>
+            <AppHeader />
+            <Router basepath="/ehoks">
+              <Home path="/*" />
+              <Henkilokohtaistaminen path="henkilokohtaistaminen" />
+              <Ammattitutkinto path="ammattitutkinto" />
+            </Router>
+            <AppFooter />
+          </Container>
+        </IntlProvider>
+      </ThemeProvider>
     )
   }
 }

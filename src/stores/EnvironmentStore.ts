@@ -1,6 +1,6 @@
 import { apiUrl } from "config"
 import { flow, getRoot, Instance, types } from "mobx-state-tree"
-import { RootStore } from "stores/RootStore"
+import { IRootStore } from "stores/RootStore"
 
 const EnvironmentStoreModel = {
   eperusteetPerusteUrl: types.optional(types.string, ""),
@@ -13,7 +13,7 @@ const EnvironmentStoreModel = {
 export const EnvironmentStore = types
   .model("EnvironmentStore", EnvironmentStoreModel)
   .actions(self => {
-    const root = getRoot<Instance<typeof RootStore>>(self)
+    const root = getRoot<IRootStore>(self)
 
     const getEnvironment = flow(function*(): any {
       self.isLoading = true
@@ -31,3 +31,5 @@ export const EnvironmentStore = types
 
     return { getEnvironment }
   })
+
+export interface IEnvironmentStore extends Instance<typeof EnvironmentStore> {}

@@ -3,7 +3,6 @@ import range from "lodash.range"
 import slice from "lodash.slice"
 import take from "lodash.take"
 import { inject, observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
 import React from "react"
 import styled from "react-emotion"
 import { MdSearch } from "react-icons/md"
@@ -11,15 +10,26 @@ import { FormattedMessage, intlShape } from "react-intl"
 import { SearchResult } from "routes/Ammattitutkinto/SearchResult"
 import { Section } from "routes/Ammattitutkinto/Section"
 import { SectionTitle } from "routes/Ammattitutkinto/SectionTitle"
-import { RootStore } from "stores/RootStore"
+import { IRootStore } from "stores/RootStore"
 
 interface PageProps {
   active?: boolean
 }
 
+const Loading = styled(LoadingSpinner)`
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    position: absolute;
+    right: 20px;
+  }
+`
+
 const SearchContainer = styled("div")`
   border: 1px solid #979797;
   padding: 10px;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    border-width: 0;
+  }
 `
 
 const SearchResultsContainer = styled("div")`
@@ -38,6 +48,10 @@ const SearchHeader = styled("div")`
 
 const SearchIcon = styled(MdSearch)`
   margin: 0 20px 0 10px;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    position: absolute;
+  }
 `
 
 const SearchInput = styled("input")`
@@ -48,6 +62,12 @@ const SearchInput = styled("input")`
   height: 40px;
   padding: 0 10px;
   min-width: 330px;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    min-width: unset;
+    width: 100%;
+    padding-left: 40px;
+  }
 `
 
 const SearchResultsList = styled("div")`
@@ -69,7 +89,7 @@ const Page = styled("div")`
 `
 
 export interface AmmattitutkintoHakuProps {
-  store?: Instance<typeof RootStore>
+  store?: IRootStore
 }
 
 @inject("store")
@@ -133,7 +153,7 @@ export class AmmattitutkintoHaku extends React.Component<
               })}
               onChange={this.updateSearchText}
             />
-            {oppilas.isLoading && <LoadingSpinner />}
+            {oppilas.isLoading && <Loading />}
           </SearchHeader>
           {this.state.searchText.length > 0 &&
             oppilas.perusteet.length > 0 && (

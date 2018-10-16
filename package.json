@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --inline --history-api-fallback --compress --content-base public/ehoks",
+    "start": "webpack-dev-server --hot --inline --history-api-fallback --compress --host 0.0.0.0 --disable-host-check --content-base public/ehoks",
     "styleguide": "styleguidist server",
     "lint": "tslint src/*.tsx src/**/*.tsx",
     "test": "jest",
@@ -50,16 +50,18 @@
     "@types/react-intl": "^2.3.9",
     "@types/react-loadable": "^5.4.1",
     "@types/react-test-renderer": "^16.0.2",
+    "date-fns": "^2.0.0-alpha.20",
     "emotion": "^9.2.6",
+    "emotion-theming": "^9.2.9",
     "lodash.camelcase": "^4.3.0",
     "lodash.kebabcase": "^4.1.1",
     "lodash.range": "^3.2.0",
     "lodash.slice": "^4.2.0",
     "lodash.take": "^4.1.1",
     "map-obj": "^3.0.0",
-    "mobx": "^5.0.3",
+    "mobx": "^5.5.0",
     "mobx-react": "^5.2.8",
-    "mobx-state-tree": "^3.4.0",
+    "mobx-state-tree": "^3.5.0",
     "promise-polyfill": "^8.1.0",
     "react": "^16.5.0",
     "react-circular-progressbar": "^1.0.0",
@@ -68,6 +70,7 @@
     "react-icons": "^3.0.5",
     "react-intl": "^2.4.0",
     "react-loadable": "^5.5.0",
+    "reactjs-popup": "^1.3.0",
     "whatwg-fetch": "^3.0.0"
   },
   "jest": {
@@ -88,6 +91,7 @@
       "^config$": "<rootDir>/src/config",
       "^utils$": "<rootDir>/src/utils",
       "^testUtils$": "<rootDir>/src/testUtils",
+      "^theme$": "<rootDir>/src/theme",
       "\\.(css|jpg|png|svg)$": "<rootDir>/empty-module.js"
     }
   }

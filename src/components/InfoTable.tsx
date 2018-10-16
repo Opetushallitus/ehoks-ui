@@ -1,11 +1,11 @@
 import styled from "react-emotion"
-import { breakpoints } from "utils"
 
 /**
  * Responsive wrapper for three column tables
  */
 export const InfoTable = styled("table")`
   table-layout: fixed;
+  width: 100%;
 
   th {
     font-weight: 400;
@@ -14,7 +14,7 @@ export const InfoTable = styled("table")`
   }
 
   td {
-    padding-bottom: 10px;
+    padding: 0 10px 10px 0;
     word-break: break-word;
   }
 
@@ -29,7 +29,7 @@ export const InfoTable = styled("table")`
     }
   }
 
-  @media screen and (max-width: ${breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     width: 100%;
 
     tr {
@@ -42,12 +42,12 @@ export const InfoTable = styled("table")`
 
     td {
       display: block;
-      text-align: right;
+      padding-left: 40px;
 
       &:before {
         content: attr(data-label);
         color: #6e6e7e;
-        float: left;
+        display: block;
       }
     }
   }

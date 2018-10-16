@@ -31,9 +31,11 @@ const Bounce = styled("div")`
   animation-fill-mode: both;
   animation-delay: ${(props: BounceProps) => props.delay || 0};
 `
-
-export const LoadingSpinner = () => (
-  <SpinnerContainer>
+export interface LoadingSpinnerProps {
+  className?: string
+}
+export const LoadingSpinner = ({ className }: LoadingSpinnerProps) => (
+  <SpinnerContainer className={className}>
     <Bounce delay="-.32s" />
     <Bounce delay="-.16s" />
     <Bounce />

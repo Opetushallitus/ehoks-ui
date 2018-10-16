@@ -1,5 +1,4 @@
-import { Instance } from "mobx-state-tree"
-import { Peruste } from "models/Peruste"
+import { IPeruste } from "models/Peruste"
 import React from "react"
 import styled from "react-emotion"
 import { FormattedMessage } from "react-intl"
@@ -28,13 +27,13 @@ const Link = styled("a")`
   display: flex;
   justify-content: flex-end;
   padding: 10px 30px 10px 0;
-  color: #1976d2;
+  color: ${props => props.theme.colors.waterBlue};
   font-size: 17px;
   font-weight: 600;
 `
 
 interface SearchResultProps {
-  result?: Instance<typeof Peruste>
+  result?: IPeruste
 }
 
 export class SearchResult extends React.Component<SearchResultProps> {
