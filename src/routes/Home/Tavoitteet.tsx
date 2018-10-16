@@ -3,7 +3,7 @@ import { Accordion } from "components/Accordion"
 import { InfoTable } from "components/InfoTable"
 import { inject, observer } from "mobx-react"
 import React from "react"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, intlShape } from "react-intl"
 import { Heading } from "routes/Home/Heading"
 import { SectionContainer } from "routes/Home/SectionContainer"
 import { ISessionStore } from "stores/SessionStore"
@@ -26,6 +26,9 @@ export class Tavoitteet extends React.Component<
   TavoitteetProps & RouteComponentProps,
   TavoitteetState
 > {
+  static contextTypes = {
+    intl: intlShape
+  }
   state = {
     activeAccordions: {
       currentEducation: false,
@@ -48,6 +51,10 @@ export class Tavoitteet extends React.Component<
 
   render() {
     const { user } = this.props.session
+    const {
+      intl: { formatMessage }
+    } = this.context
+
     return (
       <SectionContainer>
         <Heading>
@@ -68,7 +75,76 @@ export class Tavoitteet extends React.Component<
           onToggle={this.toggleAccordion("personalGoal")}
           helpIcon={true}
         >
-          oma tavoite
+          <InfoTable>
+            <tbody>
+              <tr>
+                <th>
+                  <FormattedMessage
+                    id="tavoitteet.furtherStudiesPlan"
+                    defaultMessage="Suunnitelma jatko-opintoihin siirtymisestä"
+                  />
+                </th>
+                <th />
+                <th />
+              </tr>
+              <tr>
+                <td
+                  data-label={formatMessage({
+                    id: "tavoitteet.furtherStudiesPlan",
+                    defaultMessage: "Suunnitelma jatko-opintoihin siirtymisestä"
+                  })}
+                >
+                  Tähän tekstiä
+                </td>
+                <td />
+                <td />
+              </tr>
+              <tr>
+                <th>
+                  <FormattedMessage
+                    id="tavoitteet.osoite"
+                    defaultMessage="Osoite"
+                  />
+                </th>
+                <th />
+                <th />
+              </tr>
+              <tr>
+                <td
+                  data-label={formatMessage({
+                    id: "tavoitteet.osoite",
+                    defaultMessage: "Osoite"
+                  })}
+                >
+                  {user.yhteystiedot.katuosoite}
+                </td>
+                <td />
+                <td />
+              </tr>
+              <tr>
+                <th>
+                  <FormattedMessage
+                    id="tavoitteet.email"
+                    defaultMessage="Sähköposti"
+                  />
+                </th>
+                <th />
+                <th />
+              </tr>
+              <tr>
+                <td
+                  data-label={formatMessage({
+                    id: "tavoitteet.email",
+                    defaultMessage: "Sähköposti"
+                  })}
+                >
+                  {user.yhteystiedot.sahkoposti}
+                </td>
+                <td />
+                <td />
+              </tr>
+            </tbody>
+          </InfoTable>
         </Accordion>
 
         <Accordion
