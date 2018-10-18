@@ -90,6 +90,9 @@ exports[`App renders correctly 1`] = `
     </div>
   </div>
   <div
+    className="css-abysv6"
+  />
+  <div
     className="css-cqueuz"
   >
     <div

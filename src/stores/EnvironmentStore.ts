@@ -17,15 +17,23 @@ export const EnvironmentStore = types
 
     const getEnvironment = flow(function*(): any {
       self.isLoading = true
-      const response = yield root.fetchSingle(apiUrl("misc/environment"))
-      const {
-        eperusteetPerusteUrl,
-        opintopolkuLoginUrl,
-        opintopolkuLogoutUrl
-      } = response.data
-      self.eperusteetPerusteUrl = eperusteetPerusteUrl
-      self.opintopolkuLoginUrl = opintopolkuLoginUrl
-      self.opintopolkuLogoutUrl = opintopolkuLogoutUrl
+      try {
+        const response = yield root.fetchSingle(apiUrl("misc/environment"))
+        const {
+          eperusteetPerusteUrl,
+          opintopolkuLoginUrl,
+          opintopolkuLogoutUrl
+        } = response.data
+        self.eperusteetPerusteUrl = eperusteetPerusteUrl
+        self.opintopolkuLoginUrl = opintopolkuLoginUrl
+        self.opintopolkuLogoutUrl = opintopolkuLogoutUrl
+      } catch (error) {
+        root.errors.logError(
+          "EnvironmentStore.getEnvironment",
+          "Ympäristömuuttujien haku epäonnistui",
+          error.message
+        )
+      }
       self.isLoading = false
     })
 
