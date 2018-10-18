@@ -21,10 +21,18 @@ export const SessionStore = types
       // if logged in, call update-user-info API, which updates current session with 'oid'
       // we don't need to deal with 'oid' in UI, this is just needed to obtain valid session cookie
       if (self.user) {
-        yield root.fetchSingle(apiUrl("session/update-user-info"), {
-          method: "POST"
-        })
-        yield getUserInfo()
+        try {
+          yield root.fetchSingle(apiUrl("session/update-user-info"), {
+            method: "POST"
+          })
+          yield getUserInfo()
+        } catch (error) {
+          root.errors.logError(
+            "SessionStore.checkSession",
+            "Kirjautumistietojen tarkastus epäonnistui",
+            error.message
+          )
+        }
       }
       self.isLoading = false
     })
@@ -35,17 +43,28 @@ export const SessionStore = types
         const response = yield root.fetchSingle(apiUrl("session/user-info"))
         self.user = response.data
       } catch (error) {
-        // TODO: show error in UI
-        self.error = error.message
+        root.errors.logError(
+          "SessionStore.getUserInfo",
+          "Käyttäjätietojen haku epäonnistui",
+          error.message
+        )
       }
       self.isLoading = false
     })
 
     const logout = flow(function*(): any {
       self.isLoading = true
-      yield root.deleteResource(apiUrl("session"))
-      self.user = null
-      self.isLoading = false
+      try {
+        yield root.deleteResource(apiUrl("session"))
+        self.user = null
+        self.isLoading = false
+      } catch (error) {
+        root.errors.logError(
+          "SessionStore.logout",
+          "Uloskirjautuminen epäonnistui",
+          error.message
+        )
+      }
     })
 
     return { checkSession, getUserInfo, logout }

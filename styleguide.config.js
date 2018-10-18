@@ -29,6 +29,9 @@ module.exports = {
       }
     }
   ).parse,
+  styleguideComponents: {
+    Wrapper: path.join(__dirname, "src/components/ThemeWrapper")
+  },
   webpackConfig: require("./webpack.config"),
   template: {
     head: {

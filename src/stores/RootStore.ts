@@ -9,6 +9,7 @@ import { OppilasStore } from "stores/OppilasStore"
 import { SessionStore } from "stores/SessionStore"
 import { TranslationStore } from "stores/TranslationStore"
 import { WorkplaceProviderStore } from "stores/WorkplaceProviderStore"
+import { ErrorStore } from "./ErrorStore"
 
 function camelCaseDeep(model: any) {
   return mapObj(model, (key: string, value: any) => [camelCase(key), value], {
@@ -30,6 +31,7 @@ export interface InjectedStores {
 const RootStoreModel = {
   education: types.optional(EducationProviderStore, { info: {} }),
   environment: types.optional(EnvironmentStore, {}),
+  errors: types.optional(ErrorStore, {}),
   isLoading: false,
   learningPeriods: types.optional(types.array(LearningPeriod), []),
   oppilas: types.optional(OppilasStore, {}),

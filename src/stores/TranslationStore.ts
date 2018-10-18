@@ -46,8 +46,16 @@ export const TranslationStore = types
 
     const haeLokalisoinnit = flow(function*(): any {
       self.isLoading = true
-      const response = yield root.fetchCollection(apiUrl("lokalisointi"))
-      self.translations = mapTranslations(response.data)
+      try {
+        const response = yield root.fetchCollection(apiUrl("lokalisointi"))
+        self.translations = mapTranslations(response.data)
+      } catch (error) {
+        root.errors.logError(
+          "TranslationStore.haeLokalisoinnit",
+          "Käännösten haku epäonnistui",
+          error.message
+        )
+      }
       self.isLoading = false
     })
 

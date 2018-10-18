@@ -15,7 +15,7 @@ interface TopLinkProps {
 const HeaderContainer = styled("div")`
   width: 100%;
   color: #fff;
-  background-color: ${props => props.theme.colors.headerBg};
+  background-color: ${props => props.theme.colors.header.background};
   line-height: 16px;
   font-size: 18px;
   font-weight: 600;
@@ -49,7 +49,7 @@ const TopLink = styled("a")`
   color: #fff;
   line-height: 20px;
   background: ${(props: TopLinkProps) =>
-    props.active ? props.theme.colors.headerBg : "transparent"};
+    props.active ? props.theme.colors.header.background : "transparent"};
 `
 
 const TitleContainer = styled("div")`
