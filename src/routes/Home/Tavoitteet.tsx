@@ -31,8 +31,6 @@ export class Tavoitteet extends React.Component<
   }
   state = {
     activeAccordions: {
-      currentEducation: false,
-      custodianDetails: false,
       degreeOrEducation: false,
       personalDetails: false,
       personalGoal: false
@@ -156,6 +154,7 @@ export class Tavoitteet extends React.Component<
             />
           }
           onToggle={this.toggleAccordion("degreeOrEducation")}
+          helpIcon={true}
         >
           tutkinto tai koulutus
         </Accordion>
@@ -169,6 +168,7 @@ export class Tavoitteet extends React.Component<
             />
           }
           onToggle={this.toggleAccordion("personalDetails")}
+          helpIcon={true}
         >
           <InfoTable>
             <tbody>
@@ -210,32 +210,6 @@ export class Tavoitteet extends React.Component<
               </tr>
             </tbody>
           </InfoTable>
-        </Accordion>
-
-        <Accordion
-          open={this.state.activeAccordions.custodianDetails}
-          title={
-            <FormattedMessage
-              id="tavoitteet.custodianDetails"
-              defaultMessage="Huoltajatiedot"
-            />
-          }
-          onToggle={this.toggleAccordion("custodianDetails")}
-        >
-          huoltajan tiedot
-        </Accordion>
-
-        <Accordion
-          open={this.state.activeAccordions.currentEducation}
-          title={
-            <FormattedMessage
-              id="tavoitteet.currentEducation"
-              defaultMessage="Nykyinen koulutus"
-            />
-          }
-          onToggle={this.toggleAccordion("currentEducation")}
-        >
-          nykyinen koulutus
         </Accordion>
       </SectionContainer>
     )

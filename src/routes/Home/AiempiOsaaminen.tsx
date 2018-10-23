@@ -5,19 +5,19 @@ import { FormattedMessage } from "react-intl"
 import { Heading } from "routes/Home/Heading"
 import { SectionContainer } from "routes/Home/SectionContainer"
 
-export interface PreviousCompetenceProps {
+export interface AiempiOsaaminenProps {
   children?: React.ReactChildren
 }
 
-export interface PreviousCompetenceState {
+export interface AiempiOsaaminenState {
   activeAccordions: {
     [accordionName: string]: boolean
   }
 }
 
-export class PreviousCompetence extends React.Component<
-  PreviousCompetenceProps & RouteComponentProps,
-  PreviousCompetenceState
+export class AiempiOsaaminen extends React.Component<
+  AiempiOsaaminenProps & RouteComponentProps,
+  AiempiOsaaminenState
 > {
   state = {
     activeAccordions: {
@@ -40,8 +40,8 @@ export class PreviousCompetence extends React.Component<
       <SectionContainer>
         <Heading>
           <FormattedMessage
-            id="previousCompetence.title"
-            defaultMessage="Mitä osaamista minulla jo on?"
+            id="aiempiOsaaminen.title"
+            defaultMessage="Osaamisen tunnustaminen"
           />
         </Heading>
 
@@ -49,8 +49,8 @@ export class PreviousCompetence extends React.Component<
           open={this.state.activeAccordions.previousCompetence}
           title={
             <FormattedMessage
-              id="previousCompetence.previousCompetence"
-              defaultMessage="Aiemmin hankittu osaamiseni"
+              id="aiempiOsaaminen.previousCompetence"
+              defaultMessage="Tunnustetut opintoni"
             />
           }
           onToggle={this.toggleAccordion("previousCompetence")}

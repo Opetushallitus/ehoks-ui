@@ -302,6 +302,13 @@ export class Opintosuunnitelma extends React.Component<
       tukevatOpinnot: false
     }
   }
+
+  componentDidMount() {
+    window.requestAnimationFrame(() => {
+      window.scrollTo(0, 0)
+    })
+  }
+
   toggleAccordion = (accordion: string, subAccordion?: string) => () => {
     this.setState(state => ({
       ...state,
