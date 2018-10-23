@@ -1,13 +1,14 @@
 import { Location, navigate, Router } from "@reach/router"
-import { ProgressPie } from "components/ProgressPie"
+import Flag from "components/Flag"
+import { SectionItem } from "components/SectionNavigation"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import styled from "react-emotion"
+import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
+import { AiempiOsaaminen } from "routes/Home/AiempiOsaaminen"
 import { Heading } from "routes/Home/Heading"
 import { Opintosuunnitelma } from "routes/Home/Opintosuunnitelma"
-import { PreviousCompetence } from "routes/Home/PreviousCompetence"
-import { RecognizingPriorLearning } from "routes/Home/RecognizingPriorLearning"
 import { Tavoitteet } from "routes/Home/Tavoitteet"
 import { ISessionStore } from "stores/SessionStore"
 import { injectSession } from "utils"
@@ -54,69 +55,56 @@ export class SignedIn extends React.Component<SignedInProps> {
               <ProgressContainer>
                 <MainHeading>
                   <FormattedMessage
-                    id="signedIn.title"
+                    id="kirjautunut.title"
                     defaultMessage="Omien opintojen suunnittelu"
                   />
                 </MainHeading>
 
                 <ProgressPies>
-                  <ProgressPie
-                    step={"1"}
-                    percentage={100}
+                  <SectionItem
                     selected={location.pathname === "/ehoks"}
                     onClick={this.setActiveTab("/ehoks")}
                     title={
                       <FormattedMessage
-                        id="signedIn.myGoalsAndBasicInfo"
-                        defaultMessage="Tavoitteeni ja perustietoni"
+                        id="kirjautunut.myGoalsAndBasicInfo"
+                        defaultMessage="Oma tavoitteeni"
                       />
                     }
-                  />
-                  <ProgressPie
-                    step={"2"}
-                    percentage={100}
+                  >
+                    <Flag size={54} />
+                  </SectionItem>
+                  <SectionItem
                     selected={location.pathname === "/ehoks/osaamiseni"}
                     onClick={this.setActiveTab("/ehoks/osaamiseni")}
                     title={
                       <FormattedMessage
-                        id="signedIn.myPreviousCompetence"
+                        id="kirjautunut.myPreviousCompetence"
                         defaultMessage="Aiempi osaamiseni"
                       />
                     }
-                  />
-                  <ProgressPie
-                    step={"3"}
-                    percentage={100}
-                    selected={location.pathname === "/ehoks/tunnustaminen"}
-                    onClick={this.setActiveTab("/ehoks/tunnustaminen")}
-                    title={
-                      <FormattedMessage
-                        id="signedIn.recognizingPriorLearning"
-                        defaultMessage="Osaamisen tunnus&shy;taminen"
-                      />
-                    }
-                  />
-                  <ProgressPie
-                    step={"4"}
-                    percentage={100}
+                  >
+                    <MdExtension size={64} />
+                  </SectionItem>
+                  <SectionItem
                     selected={
                       location.pathname === "/ehoks/opiskelusuunnitelmani"
                     }
                     onClick={this.setActiveTab("/ehoks/opiskelusuunnitelmani")}
                     title={
                       <FormattedMessage
-                        id="signedIn.myStudyPlan"
-                        defaultMessage="Opinto&shy;suunni&shy;telmani"
+                        id="kirjautunut.myStudyPlan"
+                        defaultMessage="Opiskelu&shy;suunnitelmani"
                       />
                     }
-                  />
+                  >
+                    <MdEventNote size={64} />
+                  </SectionItem>
                 </ProgressPies>
               </ProgressContainer>
 
               <Router basepath="/ehoks">
                 <Tavoitteet path="/" />
-                <PreviousCompetence path="osaamiseni" />
-                <RecognizingPriorLearning path="tunnustaminen" />
+                <AiempiOsaaminen path="osaamiseni" />
                 <Opintosuunnitelma path="opiskelusuunnitelmani" />
               </Router>
             </React.Fragment>

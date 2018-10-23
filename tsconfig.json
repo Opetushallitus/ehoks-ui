@@ -14,10 +14,7 @@
     "target": "es5",
     "jsx": "react",
     "lib": ["es5", "es6", "dom"],
-    "baseUrl": ".",
-    "paths": {
-      "*": ["*", "src/*"]
-    }
+    "baseUrl": "./src"
   },
   "awesomeTypescriptLoaderOptions": {
     "silent": true
