@@ -1,17 +1,15 @@
 import styled from "react-emotion"
 
-export const StatBoxes = styled("div")`
-  display: flex;
-  margin: 10px 0;
-  flex-direction: row;
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
-    flex-direction: column;
-  }
-`
-
 interface StatBoxProps {
+  /**
+   * Color of top border
+   * @default #979797
+   */
   borderTop?: string
 }
+/**
+ * Statistics components for showing stats using numbers and colors
+ */
 export const StatBox = styled("div")`
   display: flex;
   flex: 1;
@@ -46,4 +44,14 @@ export const StatTitle = styled("div")`
   color: #000;
   font-size: 16px;
   padding-right: 20px;
+  hyphens: manual;
+`
+
+export const StatBoxes = styled("div")`
+  display: flex;
+  margin: 10px 0;
+  flex-direction: row;
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    flex-direction: column;
+  }
 `

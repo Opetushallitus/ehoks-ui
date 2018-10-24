@@ -118,7 +118,7 @@ export class Accordion extends React.Component<AccordionProps> {
     const Title = inline ? AccordionInlineTitle : AccordionTitle
     const Toggle = inline ? AccordionInlineToggle : AccordionToggle
     const childContent = childContainer ? (
-      <Content>{children}</Content>
+      <Content data-testid="Content">{children}</Content>
     ) : (
       children
     )
@@ -126,14 +126,24 @@ export class Accordion extends React.Component<AccordionProps> {
     return (
       <Container>
         <TitleRow>
-          <Toggle onClick={onToggle}>
+          <Toggle onClick={onToggle} data-testid="Toggle">
             {open ? (
-              <MdExpandLess size="28" color={inline ? "#000" : "#027fa9"} />
+              <MdExpandLess
+                size="28"
+                color={inline ? "#000" : "#027fa9"}
+                data-testid="Collapse"
+              />
             ) : (
-              <MdExpandMore size="28" color={inline ? "#000" : "#027fa9"} />
+              <MdExpandMore
+                size="28"
+                color={inline ? "#000" : "#027fa9"}
+                data-testid="Expand"
+              />
             )}
           </Toggle>
-          <Title onClick={onToggle}>{title}</Title>
+          <Title onClick={onToggle} data-testid="Title">
+            {title}
+          </Title>
           {helpIcon ? (
             <Popup
               trigger={<HelpToggle size="28" color="#027fa9" />}

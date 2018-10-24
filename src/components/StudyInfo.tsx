@@ -8,12 +8,13 @@ import { CompetenceRequirement } from "./CompetenceRequirement"
 interface ContainerProps {
   accentColor?: string
   expanded: boolean
+  width: string
 }
 const Container = styled("div")`
   display: ${(props: ContainerProps) => (props.expanded ? "block" : "flex")};
   flex: ${(props: ContainerProps) => (props.expanded ? "unset" : 1)};
   max-width: ${(props: ContainerProps) =>
-    props.expanded ? "100%" : "calc(25% - 15px)"};
+    props.expanded ? "100%" : `calc(${props.width} - 15px)`};
   width: ${(props: ContainerProps) => (props.expanded ? "100%" : "unset")};
   border-top-style: solid;
   border-top-width: 4px;
@@ -35,13 +36,6 @@ const Container = styled("div")`
   &:nth-child(5n + 1) {
     margin-left: 0;
   }
-`
-
-export const EmptyItem = styled("div")`
-  flex-basis: 100%;
-  width: 0px;
-  height: 0px;
-  overflow: hidden;
 `
 
 const InnerContainer = styled("div")`
@@ -71,7 +65,7 @@ const AdditionalInfo = styled("div")`
 `
 
 const Title = styled("a")`
-  color: #0076d9;
+  color: #000;
   font-weight: 600;
   font-size: 18px;
   display: block;
@@ -180,8 +174,6 @@ export interface StudyInfoProps {
   competenceRequirements?: string[]
   /** Color of additional info container */
   fadedColor?: string
-  /** URI to link to */
-  href: string
   /**
    * List of learning environments
    * @default []
@@ -194,6 +186,11 @@ export interface StudyInfoProps {
   period?: Date[]
   /** Title of the accordion, always visible */
   title?: React.ReactNode
+  /**
+   * Width of the element for desktop resolutions
+   * @default 25%
+   */
+  width?: string
 }
 
 export interface StudyInfoState {
@@ -202,7 +199,7 @@ export interface StudyInfoState {
 }
 
 /**
- * Toggleable content panel with inline help popup
+ * Shows information about single study
  */
 export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
   static contextTypes = {
@@ -242,10 +239,10 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       assessment = [],
       competenceRequirements = [],
       fadedColor,
-      href,
       learningEnvironments = [],
       period = [],
-      title
+      title,
+      width = "25%"
     } = this.props
     const { expandedCompetences } = this.state
 
@@ -260,12 +257,14 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
         : null
 
     return (
-      <Container accentColor={accentColor} expanded={this.state.expanded}>
+      <Container
+        accentColor={accentColor}
+        expanded={this.state.expanded}
+        width={width}
+      >
         <InnerContainer>
           <Details>
-            <Title href={href} target="_blank">
-              {title}
-            </Title>
+            <Title>{title}</Title>
             {learningEnvironments.length > 0 && (
               <LearningEnvironments>
                 {learningEnvironments.join(", ")}

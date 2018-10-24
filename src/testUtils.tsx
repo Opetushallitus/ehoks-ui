@@ -1,3 +1,4 @@
+import ThemeWrapper from "components/ThemeWrapper"
 import React from "react"
 import { IntlProvider } from "react-intl"
 import renderer from "react-test-renderer"
@@ -16,4 +17,8 @@ export const createComponentWithIntl = (
     <IntlProvider {...props}>{children}</IntlProvider>,
     options
   )
+}
+
+export const createThemeRenderer = (children: React.ReactNode) => {
+  return renderer.create(<ThemeWrapper>{children}</ThemeWrapper>)
 }

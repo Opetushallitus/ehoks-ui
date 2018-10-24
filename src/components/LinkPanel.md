@@ -1,5 +1,6 @@
 ```js
-<LinkPanelContainer>
+const { LinkPanelContainer } = require("components/LinkPanelContainer")
+;<LinkPanelContainer>
   <LinkPanel
     to="henkilokohtaistaminen"
     title="Mitä opintojen henkilökohtaistaminen tarkoittaa?"

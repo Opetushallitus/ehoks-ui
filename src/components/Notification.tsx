@@ -52,10 +52,18 @@ const Icon = ({ type }: { type: string }) => {
 export type NotificationType = "success" | "question" | "error" | "warning"
 
 export interface NotificationProps {
+  /** Custom CSS class name for container */
   className?: string
+  /**
+   * Type of notfication (success, question, error, warning)
+   * @default success
+   */
   type?: NotificationType
 }
 
+/**
+ * Notification based on styleguide styles
+ */
 export class Notification extends React.Component<NotificationProps> {
   render() {
     const { children, className, type = "success" } = this.props

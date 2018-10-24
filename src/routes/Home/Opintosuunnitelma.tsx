@@ -1,8 +1,9 @@
 import { RouteComponentProps } from "@reach/router"
 import { Accordion } from "components/Accordion"
+import { EmptyItem } from "components/EmptyItem"
 import { InfoTable } from "components/InfoTable"
 import { StatBox, StatBoxes, StatNumber, StatTitle } from "components/StatBox"
-import { EmptyItem, StudyInfo } from "components/StudyInfo"
+import { StudyInfo } from "components/StudyInfo"
 import React from "react"
 import styled from "react-emotion"
 import { FormattedMessage, intlShape } from "react-intl"
@@ -18,7 +19,6 @@ interface MockStudy {
   }>
   competenceRequirements?: string[]
   learningEnvironments?: string[]
-  link: string
   period?: Date[]
   title: string
   competencePoints?: number
@@ -132,7 +132,6 @@ const mockPlannedStudies: MockStudy[] = [
     competencePoints: 35,
     id: 0,
     learningEnvironments: ["Opinpaikka", "Lähiopetus"],
-    link: "https://www.google.fi",
     period: [new Date("2018.05.24"), new Date("2018.05.31")],
     title: "Ikääntyvien osallisuuden edistäminen"
   },
@@ -143,7 +142,6 @@ const mockPlannedStudies: MockStudy[] = [
     competencePoints: 4,
     id: 1,
     learningEnvironments: ["Tavastia", "Muualla suoritettu"],
-    link: "https://www.google.fi",
     period: [],
     title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
   }
@@ -158,7 +156,6 @@ const mockCompletedStudies: MockStudy[] = [
       "Palvelutalo Villilän niemi",
       "Työpaikalla oppiminen"
     ],
-    link: "https://www.google.fi",
     period: [new Date("2018.03.01"), new Date("2018.05.31")],
     title: "Kotihoidossa toimiminen"
   },
@@ -168,7 +165,6 @@ const mockCompletedStudies: MockStudy[] = [
     competencePoints: 30,
     id: 1,
     learningEnvironments: ["Opinpaikka", "Lähiopetus"],
-    link: "https://www.google.fi",
     period: [new Date("2018.05.24"), new Date("2018.05.31")],
     title: "Ikääntyvien osallisuuden edistäminen"
   },
@@ -179,7 +175,6 @@ const mockCompletedStudies: MockStudy[] = [
     competencePoints: 4,
     id: 2,
     learningEnvironments: ["Tavastia", "Muualla suoritettu"],
-    link: "https://www.google.fi",
     period: [],
     title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
   },
@@ -189,7 +184,6 @@ const mockCompletedStudies: MockStudy[] = [
     competencePoints: 15,
     id: 3,
     learningEnvironments: ["Projektiryhmä", "Verkko-opiskelu ja lähiopetus"],
-    link: "https://www.google.fi",
     period: [new Date("2018.09.01"), new Date("2018.09.15")],
     title: "Yrityksessä toimiminen"
   }
@@ -201,7 +195,6 @@ const mockUnscheduledStudies: MockStudy[] = [
     competencePoints: 3,
     id: 0,
     learningEnvironments: [],
-    link: "https://www.google.fi",
     period: [],
     title: "Kotihoidossa toimiminen"
   },
@@ -211,7 +204,6 @@ const mockUnscheduledStudies: MockStudy[] = [
     competencePoints: 6,
     id: 1,
     learningEnvironments: [],
-    link: "https://www.google.fi",
     period: [],
     title: "Ikääntyvien osallisuuden edistäminen"
   },
@@ -221,7 +213,6 @@ const mockUnscheduledStudies: MockStudy[] = [
     competencePoints: 9,
     id: 2,
     learningEnvironments: [],
-    link: "https://www.google.fi",
     period: [],
     title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
   },
@@ -231,7 +222,6 @@ const mockUnscheduledStudies: MockStudy[] = [
     competencePoints: 15,
     id: 3,
     learningEnvironments: [],
-    link: "https://www.google.fi",
     period: [],
     title: "Yrityksessä toimiminen"
   },
@@ -241,7 +231,6 @@ const mockUnscheduledStudies: MockStudy[] = [
     competencePoints: 15,
     id: 4,
     learningEnvironments: [],
-    link: "https://www.google.fi",
     period: [],
     title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
   },
@@ -251,7 +240,6 @@ const mockUnscheduledStudies: MockStudy[] = [
     competencePoints: 35,
     id: 5,
     learningEnvironments: [],
-    link: "https://www.google.fi",
     period: [],
     title: "Yrityksessä toimiminen"
   }
@@ -504,7 +492,6 @@ export class Opintosuunnitelma extends React.Component<
                       period={study.period}
                       competenceRequirements={study.competenceRequirements}
                       assessment={study.assessment}
-                      href={study.link}
                     />
                     {renderExtraItem && <EmptyItem />}
                   </React.Fragment>
@@ -551,7 +538,6 @@ export class Opintosuunnitelma extends React.Component<
                       period={study.period}
                       competenceRequirements={study.competenceRequirements}
                       assessment={study.assessment}
-                      href={study.link}
                     />
                     {renderExtraItem && <EmptyItem />}
                   </React.Fragment>
@@ -598,7 +584,6 @@ export class Opintosuunnitelma extends React.Component<
                       period={study.period}
                       competenceRequirements={study.competenceRequirements}
                       assessment={study.assessment}
-                      href={study.link}
                     />
                     {renderExtraItem && <EmptyItem />}
                   </React.Fragment>

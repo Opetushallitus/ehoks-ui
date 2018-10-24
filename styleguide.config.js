@@ -4,9 +4,25 @@ const glob = require("glob")
 module.exports = {
   ignore: [
     "**/src/components/App.tsx",
+    "**/src/components/AppErrors.tsx",
     "**/src/components/AppFooter.tsx",
     "**/src/components/AppHeader.tsx",
-    "**/src/components/Header.tsx"
+    "**/src/components/CompetenceRequirement.tsx",
+    "**/src/components/Container.tsx",
+    "**/src/components/EmptyItem.tsx",
+    "**/src/components/Header.tsx",
+    "**/src/components/HomeLink.tsx",
+    "**/src/components/HomeOrb.tsx",
+    "**/src/components/LinkPanelContainer.tsx",
+    "**/src/components/ListColumnHeaders.tsx",
+    "**/src/components/ListContainer.tsx",
+    "**/src/components/ListHeading.tsx",
+    "**/src/components/ListItem.tsx",
+    "**/src/components/Paging.tsx",
+    "**/src/components/StyleguidistWrapper.tsx",
+    "**/src/components/SubHeader.tsx",
+    "**/src/components/ThemeWrapper.tsx",
+    "**/src/components/TitleContainer.tsx"
   ],
   title: "eHOKS styleguide",
   components: function() {
@@ -30,7 +46,7 @@ module.exports = {
     }
   ).parse,
   styleguideComponents: {
-    Wrapper: path.join(__dirname, "src/components/ThemeWrapper")
+    Wrapper: path.join(__dirname, "src/components/StyleguidistWrapper")
   },
   webpackConfig: require("./webpack.config"),
   template: {
