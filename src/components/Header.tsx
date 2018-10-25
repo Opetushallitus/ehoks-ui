@@ -1,9 +1,9 @@
 import { Link } from "@reach/router"
 import { inject, observer } from "mobx-react"
 import React from "react"
-import styled from "react-emotion"
 import { GoThreeBars } from "react-icons/go"
 import { IRootStore } from "stores/RootStore"
+import styled from "styled"
 
 const HeaderContainer = styled("div")`
   display: flex;

@@ -1,7 +1,7 @@
 import { Icon } from "components/Icon"
 import React from "react"
-import styled from "react-emotion"
 import { GoX } from "react-icons/go"
+import styled from "styled"
 
 interface TitleProps {
   titleSize?: "regular" | "large"

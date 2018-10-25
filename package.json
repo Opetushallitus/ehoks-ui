@@ -92,6 +92,7 @@
       "^utils$": "<rootDir>/src/utils",
       "^testUtils$": "<rootDir>/src/testUtils",
       "^theme$": "<rootDir>/src/theme",
+      "^styled$": "<rootDir>/src/styled",
       "\\.(css|jpg|png|svg)$": "<rootDir>/empty-module.js"
     }
   }

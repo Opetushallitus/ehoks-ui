@@ -2,7 +2,7 @@ import React from "react"
 import CircularProgressbar, {
   ProgressbarStyles
 } from "react-circular-progressbar"
-import styled from "react-emotion"
+import styled from "styled"
 
 const ProgressPieContainer = styled("div")`
   cursor: pointer;

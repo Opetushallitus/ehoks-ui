@@ -1,5 +1,5 @@
 import { Link } from "@reach/router"
-import styled from "react-emotion"
+import styled from "styled"
 
 export const HomeLink = styled(Link)`
   color: ${props => props.theme.colors.waterBlue};

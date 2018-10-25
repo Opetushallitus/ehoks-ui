@@ -1,11 +1,11 @@
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
-import styled from "react-emotion"
 import { MdClose } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import { AppError } from "stores/ErrorStore"
 import { IRootStore } from "stores/RootStore"
+import styled from "styled"
 import { Container } from "./Container"
 import { Notification } from "./Notification"
 

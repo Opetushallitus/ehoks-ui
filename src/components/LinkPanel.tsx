@@ -1,6 +1,6 @@
 import { Link } from "@reach/router"
 import React from "react"
-import styled from "react-emotion"
+import styled from "styled"
 
 const LinkPanelContainer = styled("div")`
   background-color: ${(props: LinkPanelProps) =>

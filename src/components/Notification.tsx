@@ -1,6 +1,6 @@
 import React from "react"
-import styled from "react-emotion"
 import { MdCheck, MdHelp, MdWarning } from "react-icons/md"
+import styled from "styled"
 
 const Container = styled("div")`
   display: flex;

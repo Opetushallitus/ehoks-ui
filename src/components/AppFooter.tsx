@@ -1,7 +1,7 @@
 import React from "react"
-import styled, { css } from "react-emotion"
-
+import { css } from "react-emotion"
 import { FormattedMessage } from "react-intl"
+import styled from "styled"
 import facebookLogo from "./AppFooter/facebook.svg"
 import instagramLogo from "./AppFooter/instagram.svg"
 import okmLogo from "./AppFooter/okm_logo.png"

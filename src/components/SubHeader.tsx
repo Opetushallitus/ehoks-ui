@@ -1,6 +1,6 @@
 import { TitleContainer } from "components/TitleContainer"
 import React from "react"
-import styled from "react-emotion"
+import styled from "styled"
 
 const SubHeaderContainer = styled("div")`
   display: flex;
