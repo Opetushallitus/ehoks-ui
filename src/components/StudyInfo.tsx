@@ -1,9 +1,14 @@
-import format from "date-fns/format"
 import React from "react"
-import styled from "react-emotion"
 import { MdUnfoldLess, MdUnfoldMore } from "react-icons/md"
-import { FormattedMessage, intlShape } from "react-intl"
+import { FormattedMessage } from "react-intl"
+import styled from "styled"
 import { CompetenceRequirement } from "./CompetenceRequirement"
+import { HorizontalLine } from "./HorizontalLine"
+import { Demonstration } from "./StudyInfo/Demonstration"
+import { DemonstrationDates } from "./StudyInfo/DemonstrationDates"
+import { LearningPeriod } from "./StudyInfo/LearningPeriod"
+import { LearningPeriodDates } from "./StudyInfo/LearningPeriodDates"
+import { Period } from "./StudyInfo/Period"
 
 interface ContainerProps {
   accentColor?: string
@@ -45,42 +50,55 @@ const InnerContainer = styled("div")`
   justify-content: space-between;
 `
 
-const Details = styled("div")`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 20px;
-  justify-content: space-between;
-`
-
-interface AdditionalInfoProps {
+interface DetailsProps {
   fadedColor: string
 }
-const AdditionalInfo = styled("div")`
-  padding: 20px;
-  background: ${(props: AdditionalInfoProps) =>
+const Details = styled("div")`
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  padding: 10px 10px 20px 20px;
+  justify-content: space-between;
+  background: ${(props: DetailsProps) =>
     props.fadedColor ? props.fadedColor : "#fef8f3"};
-  border-top: 1px solid #c8cdcf;
-  min-height: 87px;
+  border-top: 1px solid #c9cdcf;
+  border-bottom: 1px solid #c9cdcf;
 `
 
-const Title = styled("a")`
+const DetailsExpanded = styled(Details)`
+  padding: 10px 10px 0 20px;
+`
+
+const DetailsContent = styled("div")`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`
+
+const AdditionalInfo = styled("div")`
+  background: #fff;
+`
+
+const Title = styled("h2")`
   color: #000;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 20px;
   display: block;
+  margin: 10px 20px;
 `
 
 const LearningEnvironments = styled("div")`
-  margin: 20px 0;
+  margin: 10px 0 20px 0;
 `
 
-const InfoToggle = styled("div")`
+const ExpandContainer = styled("div")`
   display: flex;
+  align-items: center;
+  padding: 10px 10px 10px 20px;
 `
 
 const ToggleLink = styled("div")`
-  font-size: 18px;
+  font-size: 16px;
   text-decoration: underline;
   color: #0076d9;
   cursor: pointer;
@@ -94,8 +112,8 @@ const ToggleLink = styled("div")`
   }
 `
 
-const ShowAllTitle = styled(ToggleLink)`
-  padding-right: 20px;
+const ToggleAllTitle = styled(ToggleLink)`
+  padding-right: 10px;
 `
 
 const ExpandTitle = styled(ToggleLink)`
@@ -123,8 +141,8 @@ const CollapseHeader = styled("h2")`
 const CollapseContainer = styled("div")`
   flex: 1;
   display: flex;
-  align-items: center;
-  border-bottom: 1px solid #000;
+  align-items: flex-end;
+  padding: 10px 10px 10px 20px;
 `
 
 const IconContainer = styled("div")`
@@ -133,6 +151,7 @@ const IconContainer = styled("div")`
 
 const InfoContainer = styled("ul")`
   padding: 0;
+  margin: 10px 20px 20px 20px;
   background: #fff;
   color: #2b2b2b;
   border-radius: 2px;
@@ -147,19 +166,31 @@ const InfoContainer = styled("ul")`
   }
 `
 
-interface PeriodProps {
-  accentColor?: string
-}
-const Period = styled("div")`
-  color: ${(props: PeriodProps) =>
-    props.accentColor ? props.accentColor : "#979797"};
+const Line = styled(HorizontalLine)`
+  width: unset;
+  margin: 0 20px;
 `
+
+// TODO: use type from mobx-state-tree
+export interface TempLearningPeriod {
+  approved?: string
+  period?: [string, string]
+  instructor?: string
+  assignments?: string[]
+}
+
+// TODO: use type from mobx-state-tree
+export interface TempDemonstration {
+  period: string[]
+  organisation: string
+  environment: string
+  assessors: string[]
+  assignments: string[]
+}
 
 export interface StudyInfoProps {
   /** Color of top border */
   accentColor?: string
-  /** Approval date */
-  approved?: Date
   /**
    * List of assessment criteria
    * @default []
@@ -172,18 +203,20 @@ export interface StudyInfoProps {
    * @default []
    */
   competenceRequirements?: string[]
+  /** List of competence demonstrations */
+  demonstrations?: TempDemonstration[]
   /** Color of additional info container */
   fadedColor?: string
   /**
-   * List of learning environments
+   * List of learning periods
    * @default []
    */
-  learningEnvironments?: string[]
+  learningPeriods?: TempLearningPeriod[]
   /**
-   * Starting and ending dates
+   * List of locations
    * @default []
    */
-  period?: Date[]
+  locations?: string[]
   /** Title of the accordion, always visible */
   title?: React.ReactNode
   /**
@@ -194,7 +227,10 @@ export interface StudyInfoProps {
 }
 
 export interface StudyInfoState {
-  expanded: boolean
+  expanded: {
+    competences: boolean
+    details: boolean
+  }
   expandedCompetences: number[]
 }
 
@@ -202,16 +238,19 @@ export interface StudyInfoState {
  * Shows information about single study
  */
 export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
-  static contextTypes = {
-    intl: intlShape
-  }
   state: StudyInfoState = {
-    expanded: false,
+    expanded: {
+      competences: false,
+      details: false
+    },
     expandedCompetences: []
   }
 
-  toggle = () => {
-    this.setState({ expanded: !this.state.expanded })
+  toggle = (name: "competences" | "details") => () => {
+    this.setState(state => ({
+      ...state,
+      expanded: { ...state.expanded, [name]: !state.expanded[name] }
+    }))
   }
 
   expandCompetence = (index: number) => () => {
@@ -231,52 +270,97 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     })
   }
 
+  collapseAll = () => {
+    this.setState({ expandedCompetences: [] })
+  }
+
   render() {
-    const { intl } = this.context
     const {
       accentColor,
-      approved,
       assessment = [],
       competenceRequirements = [],
+      demonstrations = [],
       fadedColor,
-      learningEnvironments = [],
-      period = [],
+      locations = [],
+      learningPeriods: periods,
       title,
       width = "25%"
     } = this.props
-    const { expandedCompetences } = this.state
+    const learningPeriods: TempLearningPeriod[] =
+      periods && periods.length
+        ? this.props.learningPeriods
+        : [{ approved: "", period: ["", ""] }]
+    const { expandedCompetences, expanded } = this.state
+    const allExpanded =
+      this.state.expandedCompetences.length === competenceRequirements.length
 
-    const [startDate, endDate] = period
-    const periodText = approved
-      ? `${intl.formatMessage({
-          defaultMessage: "Hyväksytty",
-          id: "opiskelusuunnitelma.approved"
-        })} ${format(approved, "d.M.YYYY")}`
-      : startDate && endDate
-        ? `${format(startDate, "d.M.YYYY")}-${format(endDate, "d.M.YYYY")}`
-        : null
+    const learningPeriod = learningPeriods[0]
 
     return (
       <Container
         accentColor={accentColor}
-        expanded={this.state.expanded}
+        expanded={expanded.competences || expanded.details}
         width={width}
       >
         <InnerContainer>
-          <Details>
-            <Title>{title}</Title>
-            {learningEnvironments.length > 0 && (
-              <LearningEnvironments>
-                {learningEnvironments.join(", ")}
-              </LearningEnvironments>
-            )}
-            {periodText && (
-              <Period accentColor={accentColor}>{periodText}</Period>
-            )}
-          </Details>
-          <AdditionalInfo fadedColor={fadedColor}>
-            <InfoToggle>
-              {this.state.expanded ? (
+          <Title>{title}</Title>
+          {expanded.details ? (
+            <DetailsExpanded fadedColor={fadedColor}>
+              <DetailsContent>
+                {locations.length > 0 && (
+                  <LearningEnvironments>
+                    {locations.join(", ")}
+                  </LearningEnvironments>
+                )}
+                {learningPeriods.map((period, i) => {
+                  return (
+                    <LearningPeriod
+                      key={i}
+                      learningPeriod={period}
+                      accentColor={accentColor}
+                    />
+                  )
+                })}
+                {demonstrations.map((demonstration, i) => {
+                  return (
+                    <Demonstration
+                      key={i}
+                      demonstration={demonstration}
+                      accentColor={accentColor}
+                    />
+                  )
+                })}
+              </DetailsContent>
+              <IconContainer onClick={this.toggle("details")}>
+                <Collapse size={40} />
+              </IconContainer>
+            </DetailsExpanded>
+          ) : (
+            <Details fadedColor={fadedColor}>
+              <DetailsContent>
+                {locations.length > 0 && (
+                  <LearningEnvironments>
+                    {locations.join(", ")}
+                  </LearningEnvironments>
+                )}
+                <Period accentColor={accentColor}>
+                  <LearningPeriodDates learningPeriod={learningPeriod} />
+                  {demonstrations.length > 0 && (
+                    <React.Fragment>
+                      {", "}
+                      <DemonstrationDates demonstration={demonstrations[0]} />
+                    </React.Fragment>
+                  )}
+                </Period>
+              </DetailsContent>
+              <IconContainer onClick={this.toggle("details")}>
+                <Expand size={40} />
+              </IconContainer>
+            </Details>
+          )}
+          <AdditionalInfo>
+            {expanded.competences ? (
+              <React.Fragment>
                 <CollapseContainer>
                   <CollapseHeader>
                     <FormattedMessage
@@ -284,29 +368,39 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
                       defaultMessage="Ammattitaitovaatimukset"
                     />
                   </CollapseHeader>
-                  <ShowAllTitle onClick={this.expandAll}>
-                    <FormattedMessage
-                      id="opiskelusuunnitelma.showAllAssessments"
-                      defaultMessage="Näytä kaikki arvioinnit"
-                    />
-                  </ShowAllTitle>
-                  <IconContainer onClick={this.toggle}>
+                  <ToggleAllTitle
+                    onClick={allExpanded ? this.collapseAll : this.expandAll}
+                  >
+                    {allExpanded ? (
+                      <FormattedMessage
+                        id="opiskelusuunnitelma.collapseAllAssessments"
+                        defaultMessage="Piilota arviointikriteerit"
+                      />
+                    ) : (
+                      <FormattedMessage
+                        id="opiskelusuunnitelma.showAllAssessments"
+                        defaultMessage="Näytä kaikki arviointikriteerit"
+                      />
+                    )}
+                  </ToggleAllTitle>
+                  <IconContainer onClick={this.toggle("competences")}>
                     <Collapse size={40} />
                   </IconContainer>
                 </CollapseContainer>
-              ) : (
-                <React.Fragment>
-                  <ExpandTitle onClick={this.toggle}>
-                    <FormattedMessage
-                      id="opiskelusuunnitelma.expandStudyInfo"
-                      defaultMessage="Lue lisää ammattitaito-vaatimuksista ja arvioinnista"
-                    />
-                  </ExpandTitle>
-                  <Expand size={40} onClick={this.toggle} />
-                </React.Fragment>
-              )}
-            </InfoToggle>
-            {this.state.expanded && (
+                <Line height="2px" backgroundColor="#000" />
+              </React.Fragment>
+            ) : (
+              <ExpandContainer>
+                <ExpandTitle onClick={this.toggle("competences")}>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.expandStudyInfo"
+                    defaultMessage="Ammattitaitovaatimukset ja arviointikriteerit"
+                  />
+                </ExpandTitle>
+                <Expand size={40} onClick={this.toggle("competences")} />
+              </ExpandContainer>
+            )}
+            {expanded.competences && (
               <InfoContainer>
                 {competenceRequirements.map((competenceRequirement, i) => {
                   return (
