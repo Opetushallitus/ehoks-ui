@@ -1,4 +1,4 @@
-import styled from "react-emotion"
+import styled from "styled"
 
 export interface AvatarImageProps {
   /** Image url to show */

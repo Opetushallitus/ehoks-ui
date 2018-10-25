@@ -1,10 +1,10 @@
 import { Link } from "@reach/router"
 import { inject, observer } from "mobx-react"
 import React from "react"
-import styled from "react-emotion"
 import { MdMenu } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import { ISessionStore } from "stores/SessionStore"
+import styled from "styled"
 import { injectSession } from "utils"
 
 interface TopLinkProps {

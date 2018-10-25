@@ -4,13 +4,13 @@ import slice from "lodash.slice"
 import take from "lodash.take"
 import { inject, observer } from "mobx-react"
 import React from "react"
-import styled from "react-emotion"
 import { MdSearch } from "react-icons/md"
 import { FormattedMessage, intlShape } from "react-intl"
 import { SearchResult } from "routes/Ammattitutkinto/SearchResult"
 import { Section } from "routes/Ammattitutkinto/Section"
 import { SectionTitle } from "routes/Ammattitutkinto/SectionTitle"
 import { IRootStore } from "stores/RootStore"
+import styled from "styled"
 
 interface PageProps {
   active?: boolean

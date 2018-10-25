@@ -1,4 +1,4 @@
-import styled from "react-emotion"
+import styled from "styled"
 
 /**
  * Responsive wrapper for three column tables

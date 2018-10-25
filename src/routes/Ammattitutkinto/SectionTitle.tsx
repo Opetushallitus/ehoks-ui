@@ -1,4 +1,4 @@
-import styled from "react-emotion"
+import styled from "styled"
 
 export const SectionTitle = styled("h1")`
   font-weight: 400;

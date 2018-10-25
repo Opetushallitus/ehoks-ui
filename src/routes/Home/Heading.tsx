@@ -1,4 +1,4 @@
-import styled from "react-emotion"
+import styled from "styled"
 
 export const Heading = styled("h1")`
   margin: 0;

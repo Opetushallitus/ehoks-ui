@@ -1,7 +1,7 @@
 import React from "react"
-import styled from "react-emotion"
 import { MdExpandLess, MdExpandMore, MdHelp } from "react-icons/md"
 import Popup from "reactjs-popup"
+import styled from "styled"
 
 const AccordionContainer = styled("div")`
   padding: 20px 0 10px 0;

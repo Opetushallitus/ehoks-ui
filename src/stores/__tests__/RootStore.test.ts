@@ -25,7 +25,6 @@ describe("RootStore", () => {
         errors: []
       },
       isLoading: false,
-      learningPeriods: [],
       oppilas: {
         isLoading: false,
         perusteet: []

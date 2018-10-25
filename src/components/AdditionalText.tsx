@@ -1,4 +1,4 @@
-import styled from "react-emotion"
+import styled from "styled"
 
 /**
  * Renders additional text, to be used in conjunction with `<SubHeader />`

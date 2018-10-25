@@ -2,11 +2,11 @@ import { Container } from "components/Container"
 import { HomeLink } from "components/HomeLink"
 import { HomeOrb } from "components/HomeOrb"
 import React from "react"
-import styled from "react-emotion"
 import { MdHome } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import { AmmattitutkintoHaku } from "routes/Ammattitutkinto/AmmattitutkintoHaku"
 import { AmmattitutkintoSisalto } from "routes/Ammattitutkinto/AmmattitutkintoSisalto"
+import styled from "styled"
 
 const SectionContainer = styled("div")`
   display: flex;

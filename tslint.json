@@ -17,7 +17,8 @@
         "config",
         "utils",
         "testUtils",
-        "theme"
+        "theme",
+        "styled"
       ]
     ],
     "no-console": false,

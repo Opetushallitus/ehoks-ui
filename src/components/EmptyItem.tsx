@@ -1,4 +1,4 @@
-import styled from "react-emotion"
+import styled from "styled"
 
 export const EmptyItem = styled("div")`
   flex-basis: 100%;

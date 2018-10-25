@@ -1,6 +1,6 @@
 import React from "react"
-import styled from "react-emotion"
 import { FormattedMessage } from "react-intl"
+import styled from "styled"
 
 const Container = styled("li")`
   display: flex;
@@ -76,12 +76,12 @@ export class CompetenceRequirement extends React.Component<
             {expanded ? (
               <FormattedMessage
                 id="opiskelusuunnitelma.hideAssessment"
-                defaultMessage="Piilota arviointi"
+                defaultMessage="Piilota arviointikriteerit"
               />
             ) : (
               <FormattedMessage
                 id="opiskelusuunnitelma.showAssessment"
-                defaultMessage="Näytä arviointi"
+                defaultMessage="Näytä arviointikriteerit"
               />
             )}
           </ToggleAssessment>

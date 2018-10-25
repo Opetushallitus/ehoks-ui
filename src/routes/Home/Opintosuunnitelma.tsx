@@ -5,23 +5,35 @@ import { InfoTable } from "components/InfoTable"
 import { StatBox, StatBoxes, StatNumber, StatTitle } from "components/StatBox"
 import { StudyInfo } from "components/StudyInfo"
 import React from "react"
-import styled from "react-emotion"
 import { FormattedMessage, intlShape } from "react-intl"
 import { Heading } from "routes/Home/Heading"
 import { SectionContainer } from "routes/Home/SectionContainer"
+import styled from "styled"
 
 // TODO: map real API response after this in Model's views
 interface MockStudy {
   id: number
-  approved?: Date
+  approved?: string
   assessment?: Array<{
     [key: string]: string[]
   }>
   competenceRequirements?: string[]
-  learningEnvironments?: string[]
-  period?: Date[]
+  learningPeriods?: Array<{
+    approved?: string
+    period?: [string, string]
+    instructor: string
+    assignments: string[]
+  }>
+  locations?: string[]
   title: string
   competencePoints?: number
+  demonstrations?: Array<{
+    period: string[]
+    organisation: string
+    environment: string
+    assessors: string[]
+    assignments: string[]
+  }>
 }
 const mockPlannedStudies: MockStudy[] = [
   {
@@ -131,18 +143,51 @@ const mockPlannedStudies: MockStudy[] = [
     ],
     competencePoints: 35,
     id: 0,
-    learningEnvironments: ["Opinpaikka", "Lähiopetus"],
-    period: [new Date("2018.05.24"), new Date("2018.05.31")],
+    locations: ["Opinpaikka", "Lähiopetus"],
+    learningPeriods: [
+      {
+        period: ["2018-05-24", "2018-05-31"],
+        instructor: "Etunimi Sukunimi, Organisaatio",
+        assignments: [
+          "Tehtävä ja kuvaus tehtävän sisällöstä",
+          "Tehtävä ja kuvaus tehtävän sisällöstä",
+          "Tehtävä ja kuvaus tehtävän sisällöstä",
+          "Tehtävä ja kuvaus tehtävän sisällöstä"
+        ]
+      }
+    ],
+    demonstrations: [
+      {
+        period: ["2018-08-01"],
+        organisation: "Organisaation nimi",
+        environment: "Kuvaus näyttöympäristöstä",
+        assessors: ["Etunimi Sukunimi", "Etunimi Sukunimi", "Etunimi Sukunimi"],
+        assignments: [
+          "Tehtävä ja kuvaus tehtävän sisällöstä",
+          "Tehtävä ja kuvaus tehtävän sisällöstä"
+        ]
+      }
+    ],
     title: "Ikääntyvien osallisuuden edistäminen"
   },
   {
-    approved: new Date("2018.04.01"),
     assessment: [],
     competenceRequirements: [],
     competencePoints: 4,
     id: 1,
-    learningEnvironments: ["Tavastia", "Muualla suoritettu"],
-    period: [],
+    learningPeriods: [
+      {
+        approved: "2018-04-01",
+        instructor: "Etunimi Sukunimi, Organisaatio",
+        assignments: [
+          "Tehtävä ja kuvaus tehtävän sisällöstä",
+          "Tehtävä ja kuvaus tehtävän sisällöstä",
+          "Tehtävä ja kuvaus tehtävän sisällöstä",
+          "Tehtävä ja kuvaus tehtävän sisällöstä"
+        ]
+      }
+    ],
+    locations: ["Tavastia", "Muualla suoritettu"],
     title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
   }
 ]
@@ -152,11 +197,14 @@ const mockCompletedStudies: MockStudy[] = [
     competenceRequirements: [],
     competencePoints: 40,
     id: 0,
-    learningEnvironments: [
-      "Palvelutalo Villilän niemi",
-      "Työpaikalla oppiminen"
+    locations: ["Palvelutalo Villilän niemi", "Työpaikalla oppiminen"],
+    learningPeriods: [
+      {
+        period: ["2018-03-01", "2018-05-31"],
+        instructor: "",
+        assignments: []
+      }
     ],
-    period: [new Date("2018.03.01"), new Date("2018.05.31")],
     title: "Kotihoidossa toimiminen"
   },
   {
@@ -164,18 +212,29 @@ const mockCompletedStudies: MockStudy[] = [
     competenceRequirements: [],
     competencePoints: 30,
     id: 1,
-    learningEnvironments: ["Opinpaikka", "Lähiopetus"],
-    period: [new Date("2018.05.24"), new Date("2018.05.31")],
+    locations: ["Opinpaikka", "Lähiopetus"],
+    learningPeriods: [
+      {
+        period: ["2018-05-24", "2018-05-31"],
+        instructor: "",
+        assignments: []
+      }
+    ],
     title: "Ikääntyvien osallisuuden edistäminen"
   },
   {
-    approved: new Date("2018.04.01"),
     assessment: [],
     competenceRequirements: [],
     competencePoints: 4,
     id: 2,
-    learningEnvironments: ["Tavastia", "Muualla suoritettu"],
-    period: [],
+    locations: ["Tavastia", "Muualla suoritettu"],
+    learningPeriods: [
+      {
+        approved: "2018-04-01",
+        instructor: "",
+        assignments: []
+      }
+    ],
     title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
   },
   {
@@ -183,8 +242,14 @@ const mockCompletedStudies: MockStudy[] = [
     competenceRequirements: [],
     competencePoints: 15,
     id: 3,
-    learningEnvironments: ["Projektiryhmä", "Verkko-opiskelu ja lähiopetus"],
-    period: [new Date("2018.09.01"), new Date("2018.09.15")],
+    locations: ["Projektiryhmä", "Verkko-opiskelu ja lähiopetus"],
+    learningPeriods: [
+      {
+        period: ["2018-09-01", "2018-09-15"],
+        instructor: "",
+        assignments: []
+      }
+    ],
     title: "Yrityksessä toimiminen"
   }
 ]
@@ -194,8 +259,7 @@ const mockUnscheduledStudies: MockStudy[] = [
     competenceRequirements: [],
     competencePoints: 3,
     id: 0,
-    learningEnvironments: [],
-    period: [],
+    locations: [],
     title: "Kotihoidossa toimiminen"
   },
   {
@@ -203,8 +267,7 @@ const mockUnscheduledStudies: MockStudy[] = [
     competenceRequirements: [],
     competencePoints: 6,
     id: 1,
-    learningEnvironments: [],
-    period: [],
+    locations: [],
     title: "Ikääntyvien osallisuuden edistäminen"
   },
   {
@@ -212,8 +275,7 @@ const mockUnscheduledStudies: MockStudy[] = [
     competenceRequirements: [],
     competencePoints: 9,
     id: 2,
-    learningEnvironments: [],
-    period: [],
+    locations: [],
     title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
   },
   {
@@ -221,8 +283,7 @@ const mockUnscheduledStudies: MockStudy[] = [
     competenceRequirements: [],
     competencePoints: 15,
     id: 3,
-    learningEnvironments: [],
-    period: [],
+    locations: [],
     title: "Yrityksessä toimiminen"
   },
   {
@@ -230,8 +291,7 @@ const mockUnscheduledStudies: MockStudy[] = [
     competenceRequirements: [],
     competencePoints: 15,
     id: 4,
-    learningEnvironments: [],
-    period: [],
+    locations: [],
     title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
   },
   {
@@ -239,8 +299,7 @@ const mockUnscheduledStudies: MockStudy[] = [
     competenceRequirements: [],
     competencePoints: 35,
     id: 5,
-    learningEnvironments: [],
-    period: [],
+    locations: [],
     title: "Yrityksessä toimiminen"
   }
 ]
@@ -487,11 +546,11 @@ export class Opintosuunnitelma extends React.Component<
                       title={`${study.title} ${
                         study.competencePoints
                       } ${competencePointsTitle}`}
-                      approved={study.approved}
-                      learningEnvironments={study.learningEnvironments}
-                      period={study.period}
+                      locations={study.locations}
+                      learningPeriods={study.learningPeriods}
                       competenceRequirements={study.competenceRequirements}
                       assessment={study.assessment}
+                      demonstrations={study.demonstrations}
                     />
                     {renderExtraItem && <EmptyItem />}
                   </React.Fragment>
@@ -533,11 +592,11 @@ export class Opintosuunnitelma extends React.Component<
                       title={`${study.title} ${
                         study.competencePoints
                       } ${competencePointsTitle}`}
-                      approved={study.approved}
-                      learningEnvironments={study.learningEnvironments}
-                      period={study.period}
+                      locations={study.locations}
+                      learningPeriods={study.learningPeriods}
                       competenceRequirements={study.competenceRequirements}
                       assessment={study.assessment}
+                      demonstrations={study.demonstrations}
                     />
                     {renderExtraItem && <EmptyItem />}
                   </React.Fragment>
@@ -579,11 +638,11 @@ export class Opintosuunnitelma extends React.Component<
                       title={`${study.title} ${
                         study.competencePoints
                       } ${competencePointsTitle}`}
-                      approved={study.approved}
-                      learningEnvironments={study.learningEnvironments}
-                      period={study.period}
+                      locations={study.locations}
+                      learningPeriods={study.learningPeriods}
                       competenceRequirements={study.competenceRequirements}
                       assessment={study.assessment}
+                      demonstrations={study.demonstrations}
                     />
                     {renderExtraItem && <EmptyItem />}
                   </React.Fragment>

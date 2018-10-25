@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "react-emotion"
+import styled from "styled"
 
 const ButtonContainer = styled("button")`
   background: ${props => props.theme.colors.waterBlue};

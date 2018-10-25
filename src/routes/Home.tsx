@@ -2,10 +2,10 @@ import { RouteComponentProps } from "@reach/router"
 import { reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
-import styled from "react-emotion"
 import { SignedIn } from "routes/Home/SignedIn"
 import { SignedOut } from "routes/Home/SignedOut"
 import { IRootStore } from "stores/RootStore"
+import styled from "styled"
 
 const Container = styled("div")`
   max-width: ${props => props.theme.maxWidth}px;

@@ -2,8 +2,9 @@ import { Link } from "@reach/router"
 import { Icon } from "components/Icon"
 import { TitleContainer } from "components/TitleContainer"
 import React from "react"
-import styled, { css } from "react-emotion"
+import { css } from "react-emotion"
 import { GoChevronRight } from "react-icons/go"
+import styled from "styled"
 
 const LinkItemContainer = styled("div")`
   display: flex;
