@@ -2,7 +2,6 @@ import camelCase from "lodash.camelcase"
 // import kebabCase from "lodash.kebabcase"
 import mapObj from "map-obj"
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
-import { LearningPeriod } from "models/LearningPeriod"
 import { EducationProviderStore } from "stores/EducationProviderStore"
 import { EnvironmentStore } from "stores/EnvironmentStore"
 import { OppilasStore } from "stores/OppilasStore"
@@ -33,7 +32,6 @@ const RootStoreModel = {
   environment: types.optional(EnvironmentStore, {}),
   errors: types.optional(ErrorStore, {}),
   isLoading: false,
-  learningPeriods: types.optional(types.array(LearningPeriod), []),
   oppilas: types.optional(OppilasStore, {}),
   session: types.optional(SessionStore, {}),
   translations: types.optional(TranslationStore, {}),
