@@ -1,5 +1,5 @@
 const defaultConfig = () => ({
-  backendUrl: "http://localhost:3000/ehoks-backend/api/v1"
+  backendUrl: `http://${window.location.hostname}:3000/ehoks-backend/api/v1`
 })
 
 const config = (() => {

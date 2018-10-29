@@ -1,5 +1,5 @@
 import { Location, navigate, Router } from "@reach/router"
-import Flag from "components/Flag"
+import Flag from "components/icons/Flag"
 import { SectionItem } from "components/SectionNavigation"
 import { inject, observer } from "mobx-react"
 import React from "react"

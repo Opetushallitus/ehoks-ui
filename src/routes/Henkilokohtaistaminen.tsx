@@ -1,8 +1,27 @@
+import {
+  ChartArrowBottom,
+  ChartArrowLeft,
+  ChartArrowRight,
+  ChartArrowTop
+} from "components/ChartArrow"
+import { ChartBox } from "components/ChartBox"
+import { ChartContainer } from "components/ChartContainer"
+import { ChartContent, ChartFlex } from "components/ChartContent"
+import { ChartRow } from "components/ChartRow"
 import { Container } from "components/Container"
 import { HomeLink } from "components/HomeLink"
 import { HomeOrb } from "components/HomeOrb"
+import PenPaper from "components/icons/PenPaper"
+import Ribbon from "components/icons/Ribbon"
+import User from "components/icons/User"
 import React from "react"
-import { MdHome } from "react-icons/md"
+import {
+  MdAccountBalance,
+  MdDescription,
+  MdHome,
+  MdSearch,
+  MdVerifiedUser
+} from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
 
@@ -23,17 +42,6 @@ const SectionTitle = styled("h1")`
   font-size: 30px;
   color: #4a4a4a;
   margin: 0 0 10px 0;
-`
-
-const DashedList = styled("ul")`
-  list-style-type: none;
-  padding: 0 0 0 10px;
-
-  & li:before {
-    content: "-";
-    position: absolute;
-    margin-left: -10px;
-  }
 `
 
 export interface HenkilokohtaistaminenProps {
@@ -69,47 +77,239 @@ export class Henkilokohtaistaminen extends React.Component<
                 defaultMessage="Mitä opiskelujen henkilökohtaistaminen tarkoittaa?"
               />
             </SectionTitle>
-            <p>
-              <FormattedMessage
-                id="henkilokohtaistaminen.first_paragraph"
-                defaultMessage="Opiskelun alussa sinulle laaditaan henkilökohtainen osaamisen kehittämissuunnitelma (HOKS), jonka avulla tunnistetaan aiempi osaamisesi ja suunnitellaan, miten hankit tarvittavan osaamisen tutkintoa varten. HOKS sisältää myös tiedot mahdollisesta ohjaus- ja tukitoimista. HOKSiin merkitään muun muassa:"
-              />
-            </p>
-            <DashedList>
-              <li>
-                <FormattedMessage
-                  id="henkilokohtaistaminen.bullet1"
-                  defaultMessage="suoritettava tutkinto ja tutkinnon osat"
-                />
-              </li>
-              <li>
-                <FormattedMessage
-                  id="henkilokohtaistaminen.bullet2"
-                  defaultMessage="aiempi osaamisesi, joka liittyy tutkintoon jota suoritat"
-                />
-              </li>
-              <li>
-                <FormattedMessage
-                  id="henkilokohtaistaminen.bullet3"
-                  defaultMessage="mitä erityistä tukea mahdollisesti tarvitset"
-                />
-              </li>
-              <li>
-                <FormattedMessage
-                  id="henkilokohtaistaminen.bullet4"
-                  defaultMessage="mitä opiskeluvalmiuksia tukevia opintoja mahdollisesti tarvitset"
-                />
-              </li>
-              <li>
-                <FormattedMessage
-                  id="henkilokohtaistaminen.bullet5"
-                  defaultMessage="milloin suoritat tutkintoon liittyvät näytöt sekä mitä näytöt sisältävät, missä suoritat ne sekä kuka on järjestäjänä."
-                />
-              </li>
-            </DashedList>
           </Section>
-          <Section />
         </SectionContainer>
+        <Section>
+          <ChartContainer>
+            <ChartRow height="200px" marginBottom="15px">
+              <ChartBox
+                flex={1}
+                backgroundColor="#2874BA"
+                icon={
+                  <MdAccountBalance
+                    size={160}
+                    color="rgba(255, 255, 255, 0.1)"
+                  />
+                }
+              >
+                <ChartContent>
+                  <h2>
+                    <FormattedMessage
+                      id="henkilokohtaistaminen.tavoitteeniAsettaminen"
+                      defaultMessage="Tavoitteeni asettaminen"
+                    />
+                  </h2>
+                  <ul>
+                    <li>
+                      <FormattedMessage
+                        id="henkilokohtaistaminen.uratavoite"
+                        defaultMessage="Uratavoite"
+                      />
+                    </li>
+                    <li>
+                      <FormattedMessage
+                        id="henkilokohtaistaminen.koulutustavoite"
+                        defaultMessage="Koulutustavoite"
+                      />
+                    </li>
+                  </ul>
+                </ChartContent>
+                <ChartArrowRight
+                  backgroundColor="#2874BA"
+                  size={40}
+                  borderWidth={5}
+                />
+              </ChartBox>
+              <ChartBox
+                flex={2}
+                backgroundColor="#9459A4"
+                icon={<MdSearch size={160} color="rgba(255, 255, 255, 0.1)" />}
+              >
+                <ChartContent>
+                  <h2>
+                    <FormattedMessage
+                      id="henkilokohtaistaminen.mitaOsaanJo"
+                      defaultMessage="Mitä osaan jo?"
+                    />
+                  </h2>
+                  <ul>
+                    <li>
+                      <FormattedMessage
+                        id="henkilokohtaistaminen.osaamisenTunnustaminen"
+                        defaultMessage="Aiemmin hankitun osaamisen tunnistaminen ja tunnustaminen suhteessa tavoitteeseen"
+                      />
+                    </li>
+                  </ul>
+                </ChartContent>
+                <ChartArrowBottom
+                  backgroundColor="#9459A4"
+                  size={20}
+                  borderWidth={15}
+                  right="25%"
+                />
+              </ChartBox>
+            </ChartRow>
+            <ChartRow marginBottom="5px">
+              <ChartBox
+                flex={1}
+                backgroundColor="#636466"
+                icon={<User size={140} color="rgba(255, 255, 255, 0.1)" />}
+              >
+                <ChartContent>
+                  <h2>
+                    <FormattedMessage
+                      id="henkilokohtaistaminen.osaamisenHankkiminen"
+                      defaultMessage="Osaamisen hankkiminen"
+                    />
+                  </h2>
+                  <ul>
+                    <li>
+                      <FormattedMessage
+                        id="henkilokohtaistaminen.tyopaikalla"
+                        defaultMessage="Työpaikalla"
+                      />
+                    </li>
+                    <li>
+                      <FormattedMessage
+                        id="henkilokohtaistaminen.muissaYmparistoissa"
+                        defaultMessage="Muissa sovituissa oppimisympäristöissä"
+                      />
+                    </li>
+                    <li>
+                      <FormattedMessage
+                        id="henkilokohtaistaminen.opetusOhjaus"
+                        defaultMessage="Opetus, ohjaus ja tarvittava tuki"
+                      />
+                    </li>
+                    <li>
+                      <FormattedMessage
+                        id="henkilokohtaistaminen.palauteKehittymisesta"
+                        defaultMessage="Palaute osaamisen kehittymisestä"
+                      />
+                    </li>
+                  </ul>
+                </ChartContent>
+                <ChartArrowBottom
+                  backgroundColor="#636466"
+                  size={20}
+                  borderWidth={5}
+                  left="20%"
+                />
+              </ChartBox>
+              <ChartBox
+                flex={1}
+                backgroundColor="#42A147"
+                icon={<PenPaper size={140} color="rgba(255, 255, 255, 0.1)" />}
+              >
+                <ChartContent>
+                  <h2>
+                    <FormattedMessage
+                      id="henkilokohtaistaminen.mitaPuuttuu"
+                      defaultMessage="Mitä osaamista minulta puuttuu?"
+                    />
+                  </h2>
+                  <ul>
+                    <li>
+                      <FormattedMessage
+                        id="henkilokohtaistaminen.suunnittelu"
+                        defaultMessage="Suunnittelu tavoitteen saavuttamiseksi tutkinnon osa kerrallaan"
+                      />
+                    </li>
+                  </ul>
+                </ChartContent>
+                <ChartArrowLeft
+                  backgroundColor="#42A147"
+                  size={40}
+                  borderWidth={5}
+                />
+              </ChartBox>
+            </ChartRow>
+            <ChartRow height="200px" marginBottom="15px">
+              <ChartBox
+                flex={2}
+                backgroundColor="#C72829"
+                icon={
+                  <MdDescription size={160} color="rgba(255, 255, 255, 0.1)" />
+                }
+              >
+                <ChartContent>
+                  <h2>
+                    <FormattedMessage
+                      id="henkilokohtaistaminen.osaamisenOsoittaminen"
+                      defaultMessage="Osaamisen osoittaminen"
+                    />
+                  </h2>
+                  <ul>
+                    <li>
+                      <FormattedMessage
+                        id="henkilokohtaistaminen.naytto"
+                        defaultMessage="Näyttö"
+                      />
+                    </li>
+                    <li>
+                      <FormattedMessage
+                        id="henkilokohtaistaminen.osaamisenArviointi"
+                        defaultMessage="Osaamisen arviointi"
+                      />
+                    </li>
+                    <li>
+                      <FormattedMessage
+                        id="henkilokohtaistaminen.palaute"
+                        defaultMessage="Palaute"
+                      />
+                    </li>
+                  </ul>
+                </ChartContent>
+                <ChartArrowRight
+                  backgroundColor="#C72829"
+                  size={40}
+                  borderWidth={5}
+                />
+              </ChartBox>
+              <ChartBox
+                flex={1}
+                backgroundColor="#2C70A2"
+                icon={
+                  <MdVerifiedUser size={160} color="rgba(255, 255, 255, 0.1)" />
+                }
+              >
+                <ChartContent>
+                  <h2>
+                    <FormattedMessage
+                      id="henkilokohtaistaminen.osatavoiteSaavutettu"
+                      defaultMessage="Osatavoite saavutettu"
+                    />
+                  </h2>
+                </ChartContent>
+                <ChartArrowTop
+                  backgroundColor="#2C70A2"
+                  size={20}
+                  borderWidth={5}
+                  right="50%"
+                />
+                <ChartArrowBottom
+                  backgroundColor="#2C70A2"
+                  size={20}
+                  borderWidth={15}
+                  right="50%"
+                />
+              </ChartBox>
+            </ChartRow>
+            <ChartRow height="100px" marginBottom="25px">
+              <ChartBox flex={1} backgroundColor="#EC7123" padding="0">
+                <ChartFlex>
+                  <Ribbon size={80} />
+                  <h2>
+                    <FormattedMessage
+                      id="henkilokohtaistaminen.tavoitteenSaavuttaminen"
+                      defaultMessage="Tavoitteen saavuttaminen"
+                    />
+                  </h2>
+                </ChartFlex>
+              </ChartBox>
+            </ChartRow>
+          </ChartContainer>
+        </Section>
       </Container>
     )
   }
