@@ -1,4 +1,4 @@
-import { Container } from "components/Container"
+import { Container, PaddedContainer } from "components/Container"
 import { BackLink, HomeLink } from "components/HomeLink"
 import { HomeOrb } from "components/HomeOrb"
 import React from "react"
@@ -32,25 +32,27 @@ export class Ammatillinentutkinto extends React.Component<
   render() {
     return (
       <Container>
-        <HomeLink to="../">
-          <HomeOrb>
-            <MdHome size="24" color="#fff" />
-          </HomeOrb>
-          <FormattedMessage
-            id="ammattitutkinto.backToFrontpage"
-            defaultMessage="Palaa aloitussivulle"
-          />
-        </HomeLink>
-        <BackLink to="../">
-          <FormattedMessage
-            id="ammattitutkinto.backToLandingPage"
-            defaultMessage="Etusivu - Mitä ammatillinen tutkinto sisältää?"
-          />
-        </BackLink>
-        <SectionContainer>
-          <AmmattitutkintoSisalto />
-          <AmmattitutkintoHaku />
-        </SectionContainer>
+        <PaddedContainer>
+          <HomeLink to="../">
+            <HomeOrb>
+              <MdHome size="24" color="#fff" />
+            </HomeOrb>
+            <FormattedMessage
+              id="ammattitutkinto.backToFrontpage"
+              defaultMessage="Palaa aloitussivulle"
+            />
+          </HomeLink>
+          <BackLink to="../">
+            <FormattedMessage
+              id="ammattitutkinto.backToLandingPage"
+              defaultMessage="Etusivu - Mitä ammatillinen tutkinto sisältää?"
+            />
+          </BackLink>
+          <SectionContainer>
+            <AmmattitutkintoSisalto />
+            <AmmattitutkintoHaku />
+          </SectionContainer>
+        </PaddedContainer>
       </Container>
     )
   }
