@@ -9,3 +9,11 @@ export const HomeLink = styled(Link)`
   align-items: center;
   padding: 20px;
 `
+
+export const BackLink = styled(Link)`
+  display: block;
+  color: #d5d8d8;
+  font-size: 19px;
+  font-weight: 400;
+  padding: 0px 20px 20px 20px;
+`
