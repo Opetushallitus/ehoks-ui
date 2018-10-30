@@ -1,5 +1,6 @@
 import { IPeruste } from "models/Peruste"
 import React from "react"
+import { MdLaunch } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
 
@@ -16,20 +17,25 @@ const Container = styled("div")`
   }
 `
 
-const Title = styled("h2")`
-  margin: 0 0 20px 0;
-  font-size: 20px;
-  font-weight: 400;
-  color: #222;
+const TitleContainer = styled("a")`
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 `
 
-const Link = styled("a")`
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px 30px 10px 0;
-  color: ${props => props.theme.colors.waterBlue};
-  font-size: 17px;
+const LinkIcon = styled(MdLaunch)`
+  margin-right: 10px;
+`
+
+const Title = styled("div")`
+  font-size: 20px;
   font-weight: 600;
+  color: ${props => props.theme.colors.waterBlue};
+  text-decoration: underline;
+`
+
+const Values = styled("div")`
+  margin-top: 20px;
 `
 
 interface SearchResultProps {
@@ -41,35 +47,37 @@ export class SearchResult extends React.Component<SearchResultProps> {
     const { result } = this.props
     return (
       <Container>
-        <Title>{result.title}</Title>
-        {result.qualificationTitles.length > 0 && (
-          <div>
-            <strong>
-              <FormattedMessage
-                id="ammattitutkinto.qualificationTitles"
-                defaultMessage="Tutkintonimikkeet"
-              />
-            </strong>
-            : {result.qualificationTitles.join(", ")}
-          </div>
+        <TitleContainer href={result.link} target="_blank">
+          <LinkIcon size={16} color="#84898C" />
+          <Title>{result.title}</Title>
+        </TitleContainer>
+        {(result.qualificationTitles.length > 0 ||
+          result.competenceAreas.length > 0) && (
+          <Values>
+            {result.qualificationTitles.length > 0 && (
+              <div>
+                <strong>
+                  <FormattedMessage
+                    id="ammattitutkinto.qualificationTitles"
+                    defaultMessage="Tutkintonimikkeet"
+                  />
+                </strong>
+                : {result.qualificationTitles.join(", ")}
+              </div>
+            )}
+            {result.competenceAreas.length > 0 && (
+              <div>
+                <strong>
+                  <FormattedMessage
+                    id="ammattitutkinto.competenceAreas"
+                    defaultMessage="Osaamisalat"
+                  />
+                </strong>
+                : {result.competenceAreas.join(", ")}
+              </div>
+            )}
+          </Values>
         )}
-        {result.competenceAreas.length > 0 && (
-          <div>
-            <strong>
-              <FormattedMessage
-                id="ammattitutkinto.competenceAreas"
-                defaultMessage="Osaamisalat"
-              />
-            </strong>
-            : {result.competenceAreas.join(", ")}
-          </div>
-        )}
-        <Link href={result.link} target="_blank">
-          <FormattedMessage
-            id="ammattitutkinto.qualificationContent"
-            defaultMessage="Tutkinnon sisältö"
-          />
-        </Link>
       </Container>
     )
   }
