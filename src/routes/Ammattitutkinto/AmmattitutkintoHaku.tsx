@@ -181,21 +181,22 @@ export class AmmattitutkintoHaku extends React.Component<
                   </SearchResultsList>
                 </SearchResultsContainer>
 
-                {oppilas.perusteet.length > 0 && (
-                  <PagingContainer>
-                    {range(totalPages).map(index => {
-                      return (
-                        <Page
-                          key={index}
-                          active={this.state.activePage === index}
-                          onClick={this.goToPage(index)}
-                        >
-                          {index + 1}
-                        </Page>
-                      )
-                    })}
-                  </PagingContainer>
-                )}
+                {totalPages > 1 &&
+                  oppilas.perusteet.length > 0 && (
+                    <PagingContainer>
+                      {range(totalPages).map(index => {
+                        return (
+                          <Page
+                            key={index}
+                            active={this.state.activePage === index}
+                            onClick={this.goToPage(index)}
+                          >
+                            {index + 1}
+                          </Page>
+                        )
+                      })}
+                    </PagingContainer>
+                  )}
               </React.Fragment>
             )}
         </SearchContainer>

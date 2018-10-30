@@ -137,7 +137,7 @@ export class SignedOut extends React.Component<SignedOutProps> {
               image={students}
             />
             <StyledLinkPanel
-              to="ammattitutkinto"
+              to="ammatillinentutkinto"
               title={
                 <FormattedMessage
                   id="signedOut.qualificationTitle"

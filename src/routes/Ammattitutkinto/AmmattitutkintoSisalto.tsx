@@ -2,6 +2,12 @@ import React from "react"
 import { FormattedMessage } from "react-intl"
 import { Section } from "routes/Ammattitutkinto/Section"
 import { SectionTitle } from "routes/Ammattitutkinto/SectionTitle"
+import styled from "styled";
+
+const OpintopolkuLink = styled("a")`
+  display: block;
+  color: ${props => props.theme.colors.waterBlue};
+`
 
 export class AmmattitutkintoSisalto extends React.Component<{}> {
   render() {
@@ -10,30 +16,27 @@ export class AmmattitutkintoSisalto extends React.Component<{}> {
         <SectionTitle>
           <FormattedMessage
             id="ammattitutkinto.title"
-            defaultMessage="Mitä ammatillinen tutkinto sisältää?"
+            defaultMessage="Mitä ammatilliset tutkinnot sisältävät?"
           />
         </SectionTitle>
         <p>
           <FormattedMessage
             id="ammattitutkinto.first_paragraph"
-            defaultMessage="
-          Tutkinnon laajuus lasketaan osaamispisteissä. Ammattilliseen
-          perustutkintoon (180 osaamispistettä, osp) kuuluu ammattillisia
-          tutkinnon osia (145 osp) ja yhteisiä tutkinnon osia (35 osp).
-          "
+            defaultMessage="Ammatillisessa koulutuksessa hankit osaamista työelämää varten. Ammatillisia tutkintoja ovat ammatilliset perustutkinnot, ammattitutkinnot ja erikoisammattitutkinnot. Ammatillisessa perustutkinnossa osoitat laaja-alaiset ammatilliset perusvalmiudet alan eri tehtäviin. Lisäksi voit saada valmiuksia yrittäjyyteen sekä jatko-opintojen kannalta tarpeellisia tietoja ja taitoja. Ammatillinen perustutkinto 180 osaamispisteen laajuinen tutkinto."
           />
         </p>
         <p>
           <FormattedMessage
             id="ammattitutkinto.second_paragraph"
-            defaultMessage="Ammatillinen tutkinto suoritetaan näytöillä osoittamalla ammattitaitoasi käytännön työtehtävissä pääosin työpaikoilla. Näytöissä arvioidaan, miten hyvin olet saavuttanut tutkinnnon vaatiman ammattitaidon. Osaamisesi arvioivat opettaja ja työelämän edustaja yhdessä."
+            defaultMessage="Ammattitutkinnossa osoitat työelämän tarpeiden mukaisesti kohdennettua ammattitaitoa, joka on perustutkintoa syvällisempää tai kohdistuu rajatumpiin työtehtäviin. Ammattitutkinto on 150 tai 120 osaamispisteen laajuinen tutkinto. Erikoisammattitutkinnossa osoitat ammattitutkintoa syvällisempää ammatin hallintaa tai monialaista osaamista. Erikoisammattitutkinto on 180 osaamispisteen laajuinen tutkinto."
           />
         </p>
         <p>
           <FormattedMessage
             id="ammattitutkinto.third_paragraph"
-            defaultMessage="Jos sinulla on jo entuudestaan johonkin ammattiin riittävä osaaminen, osaamisesi kartoitetaan haun jälkeen henkilökohtaistamisvaiheessa."
+            defaultMessage="Lisää tietoa ammatillisesta koulutuksesta"
           />
+          <OpintopolkuLink href="https://opintopolku.fi/wp/ammatillinen-koulutus/" target="_blank">https://opintopolku.fi/wp/ammatillinen-koulutus/</OpintopolkuLink>
         </p>
       </Section>
     )
