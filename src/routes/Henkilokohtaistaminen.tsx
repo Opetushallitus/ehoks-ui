@@ -9,7 +9,7 @@ import { ChartContainer } from "components/ChartContainer"
 import { ChartContent, ChartFlex } from "components/ChartContent"
 import { ChartRow } from "components/ChartRow"
 import { Container } from "components/Container"
-import { HomeLink } from "components/HomeLink"
+import { BackLink, HomeLink } from "components/HomeLink"
 import { HomeOrb } from "components/HomeOrb"
 import PenPaper from "components/icons/PenPaper"
 import Ribbon from "components/icons/Ribbon"
@@ -69,6 +69,12 @@ export class Henkilokohtaistaminen extends React.Component<
             defaultMessage="Palaa aloitussivulle"
           />
         </HomeLink>
+        <BackLink to="../">
+          <FormattedMessage
+            id="henkilokohtaistaminen.backToLandingPage"
+            defaultMessage="Etusivu - Mitä ammatillinen tutkinto sisältää?"
+          />
+        </BackLink>
         <SectionContainer>
           <Section>
             <SectionTitle>
