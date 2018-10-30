@@ -5,7 +5,7 @@ import { AppHeader } from "components/AppHeader"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { IntlProvider } from "react-intl"
-import { Ammattitutkinto } from "routes/Ammattitutkinto"
+import { Ammatillinentutkinto } from "routes/Ammatillinentutkinto"
 import { Henkilokohtaistaminen } from "routes/Henkilokohtaistaminen"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
@@ -46,7 +46,7 @@ export class App extends React.Component<AppProps> {
             <Router basepath="/ehoks">
               <Home path="/*" />
               <Henkilokohtaistaminen path="henkilokohtaistaminen" />
-              <Ammattitutkinto path="ammattitutkinto" />
+              <Ammatillinentutkinto path="ammatillinentutkinto" />
             </Router>
             <AppFooter />
           </Container>

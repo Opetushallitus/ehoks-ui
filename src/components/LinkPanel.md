@@ -10,8 +10,8 @@ const { LinkPanelContainer } = require("components/LinkPanelContainer")
     }
   />
   <LinkPanel
-    to="ammattitutkinto"
-    title="Mitä ammattitutkinto sisältää?"
+    to="ammatillinentutkinto"
+    title="Mitä ammatillinen tutkinto sisältää?"
     description="Jokaiselle tutkinnon osalle on ammattitaitovaatimukset..."
     image={"https://ui-avatars.com/api/?name=Ammatti+tutkinto&size=500"}
   />

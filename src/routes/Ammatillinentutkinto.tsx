@@ -16,11 +16,13 @@ const SectionContainer = styled("div")`
   }
 `
 
-export interface AmmattitutkintoProps {
+export interface AmmatillinentutkintoProps {
   path?: string
 }
 
-export class Ammattitutkinto extends React.Component<AmmattitutkintoProps> {
+export class Ammatillinentutkinto extends React.Component<
+  AmmatillinentutkintoProps
+> {
   componentDidMount() {
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
