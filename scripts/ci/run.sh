@@ -3,7 +3,9 @@
 set -euo pipefail
 
 echo "Downloading environment-specific properties…"
-aws s3 cp "s3://${ENV_BUCKET}/services/latest/opintopolku.yml" /root/oph-configuration/
+env_config_path=${ENV_CONFIG_S3_PATH:-/services/}
+env_config_version=${ENV_CONFIG_VERSION:-latest}
+aws s3 cp "s3://${ENV_BUCKET}${env_config_path}${env_config_version}/opintopolku.yml" /root/oph-configuration/
 
 echo "Applying configuration templates…"
 while IFS= read -r -d '' tpl_file; do
