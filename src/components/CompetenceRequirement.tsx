@@ -10,6 +10,10 @@ const Container = styled("li")`
 const TitleRow = styled("div")`
   display: flex;
   flex: 1;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    flex-direction: column;
+  }
 `
 
 const Assessment = styled("div")`

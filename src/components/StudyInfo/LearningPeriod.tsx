@@ -4,12 +4,12 @@ import { FormattedMessage } from "react-intl"
 import { LearningPeriodDates } from "./LearningPeriodDates"
 import {
   Container,
+  EmptyTD,
   InfoContainer,
   Table,
   TBody,
   TD,
   TH,
-  THead,
   Title
 } from "./Shared"
 
@@ -28,7 +28,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
           <LearningPeriodDates learningPeriod={learningPeriod} />
         </Title>
         <Table>
-          <THead>
+          <TBody>
             <tr>
               <TH>
                 <FormattedMessage
@@ -36,6 +36,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                   defaultMessage="Työpaikkaohjaaja"
                 />
               </TH>
+              <TD>{learningPeriod.instructor}</TD>
             </tr>
             <tr>
               <TH>
@@ -44,14 +45,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                   defaultMessage="Keskeiset työtehtävät"
                 />
               </TH>
-            </tr>
-          </THead>
-          <TBody>
-            <tr>
-              <TD>{learningPeriod.instructor}</TD>
-            </tr>
-            <tr>
-              <TD>&nbsp;</TD>
+              <EmptyTD />
             </tr>
           </TBody>
         </Table>

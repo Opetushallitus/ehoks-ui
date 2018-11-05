@@ -131,11 +131,25 @@ const Collapse = styled(MdUnfoldLess)`
   transform: rotate(45deg);
 `
 
+const CollapseHeaderContainer = styled("div")`
+  display: flex;
+  flex: 1;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    flex-direction: column;
+  }
+`
+
 const CollapseHeader = styled("h2")`
   flex: 1;
   margin: 0;
   font-size: 22px;
   font-weight: 600;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    flex: unset;
+    font-size: 16px;
+  }
 `
 
 const CollapseContainer = styled("div")`
@@ -362,27 +376,29 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
             {expanded.competences ? (
               <React.Fragment>
                 <CollapseContainer>
-                  <CollapseHeader>
-                    <FormattedMessage
-                      id="opiskelusuunnitelma.competenceRequirements"
-                      defaultMessage="Ammattitaitovaatimukset"
-                    />
-                  </CollapseHeader>
-                  <ToggleAllTitle
-                    onClick={allExpanded ? this.collapseAll : this.expandAll}
-                  >
-                    {allExpanded ? (
+                  <CollapseHeaderContainer>
+                    <CollapseHeader>
                       <FormattedMessage
-                        id="opiskelusuunnitelma.collapseAllAssessments"
-                        defaultMessage="Piilota arviointikriteerit"
+                        id="opiskelusuunnitelma.competenceRequirements"
+                        defaultMessage="Ammattitaitovaatimukset"
                       />
-                    ) : (
-                      <FormattedMessage
-                        id="opiskelusuunnitelma.showAllAssessments"
-                        defaultMessage="Näytä kaikki arviointikriteerit"
-                      />
-                    )}
-                  </ToggleAllTitle>
+                    </CollapseHeader>
+                    <ToggleAllTitle
+                      onClick={allExpanded ? this.collapseAll : this.expandAll}
+                    >
+                      {allExpanded ? (
+                        <FormattedMessage
+                          id="opiskelusuunnitelma.collapseAllAssessments"
+                          defaultMessage="Piilota arviointikriteerit"
+                        />
+                      ) : (
+                        <FormattedMessage
+                          id="opiskelusuunnitelma.showAllAssessments"
+                          defaultMessage="Näytä kaikki arviointikriteerit"
+                        />
+                      )}
+                    </ToggleAllTitle>
+                  </CollapseHeaderContainer>
                   <IconContainer onClick={this.toggle("competences")}>
                     <Collapse size={40} />
                   </IconContainer>

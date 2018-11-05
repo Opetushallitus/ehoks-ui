@@ -21,7 +21,7 @@ const ProgressContainer = styled("div")`
 
 const ProgressPies = styled("div")`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   margin: 20px 0;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
@@ -71,7 +71,7 @@ export class SignedIn extends React.Component<SignedInProps> {
                       />
                     }
                   >
-                    <Flag size={54} />
+                    <Flag />
                   </SectionItem>
                   <SectionItem
                     selected={location.pathname === "/ehoks/osaamiseni"}
@@ -83,7 +83,7 @@ export class SignedIn extends React.Component<SignedInProps> {
                       />
                     }
                   >
-                    <MdExtension size={64} />
+                    <MdExtension />
                   </SectionItem>
                   <SectionItem
                     selected={
@@ -97,7 +97,7 @@ export class SignedIn extends React.Component<SignedInProps> {
                       />
                     }
                   >
-                    <MdEventNote size={64} />
+                    <MdEventNote />
                   </SectionItem>
                 </ProgressPies>
               </ProgressContainer>

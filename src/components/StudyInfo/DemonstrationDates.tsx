@@ -14,7 +14,7 @@ export const DemonstrationDates = injectIntl(
           defaultMessage: "Näyttö",
           id: "opiskelusuunnitelma.competenceDemonstration"
         })}{" "}
-        {format(demonstration.period[0], "d.M.YYYY")}
+        {format(demonstration.period[0], "d.M.yyyy")}
       </span>
     ) : null
   }

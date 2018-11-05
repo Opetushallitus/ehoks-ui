@@ -68,7 +68,7 @@ const HelpToggle = styled(MdHelp)`
     margin-right: 100px;
   }
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
-    margin-right: 50px;
+    margin-right: unset;
   }
 `
 

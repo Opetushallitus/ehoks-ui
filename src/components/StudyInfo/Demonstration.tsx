@@ -2,16 +2,7 @@ import { TempDemonstration } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import { DemonstrationDates } from "./DemonstrationDates"
-import {
-  Container,
-  InfoContainer,
-  Table,
-  TBody,
-  TD,
-  TH,
-  THead,
-  Title
-} from "./Shared"
+import { Container, InfoContainer, Table, TBody, TD, TH, Title } from "./Shared"
 
 interface DemonstrationProps {
   accentColor?: string
@@ -28,7 +19,7 @@ export class Demonstration extends React.Component<DemonstrationProps> {
           <DemonstrationDates demonstration={demonstration} />
         </Title>
         <Table>
-          <THead>
+          <TBody>
             <tr>
               <TH>
                 <FormattedMessage
@@ -36,6 +27,7 @@ export class Demonstration extends React.Component<DemonstrationProps> {
                   defaultMessage="Näyttöpaikka"
                 />
               </TH>
+              <TD>{demonstration.organisation}</TD>
             </tr>
             <tr>
               <TH>
@@ -44,6 +36,7 @@ export class Demonstration extends React.Component<DemonstrationProps> {
                   defaultMessage="Näyttöympäristö"
                 />
               </TH>
+              <TD>{demonstration.environment}</TD>
             </tr>
             <tr>
               <TH>
@@ -52,16 +45,6 @@ export class Demonstration extends React.Component<DemonstrationProps> {
                   defaultMessage="Näytön arvioijat"
                 />
               </TH>
-            </tr>
-          </THead>
-          <TBody>
-            <tr>
-              <TD>{demonstration.organisation}</TD>
-            </tr>
-            <tr>
-              <TD>{demonstration.environment}</TD>
-            </tr>
-            <tr>
               <TD>{demonstration.assessors.join(", ")}</TD>
             </tr>
           </TBody>

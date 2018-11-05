@@ -28,11 +28,24 @@ export const TBody = styled("tbody")`
 `
 
 export const TH = styled("th")`
-  padding: 5px 0;
+  text-align: left;
+  padding: 5px 30px 5px 0;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    display: block;
+  }
 `
 
 export const TD = styled("td")`
   padding: 5px 0;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    display: block;
+  }
+`
+
+export const EmptyTD = styled("td")`
+  display: none;
 `
 
 export const InfoContainer = styled("ul")`
