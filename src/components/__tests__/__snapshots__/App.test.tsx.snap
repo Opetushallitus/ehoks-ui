@@ -54,11 +54,6 @@ exports[`App renders correctly 1`] = `
         className="css-1oo5bs0"
       >
         <svg
-          attr={
-            Object {
-              "viewBox": "0 0 24 24",
-            }
-          }
           fill="currentColor"
           height="40"
           size="40"
