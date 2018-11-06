@@ -21,11 +21,12 @@ const ProgressContainer = styled("div")`
 
 const ProgressPies = styled("div")`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   margin: 20px 0;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     margin: 0;
+    justify-content: space-around;
   }
 `
 

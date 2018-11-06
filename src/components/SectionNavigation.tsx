@@ -7,7 +7,7 @@ const Container = styled("div")`
   align-items: center;
   cursor: pointer;
   text-align: center;
-  width: 120px;
+  width: 200px;
 
   svg {
     width: 54px;

@@ -528,7 +528,7 @@ export class Opintosuunnitelma extends React.Component<
             title={
               <FormattedMessage
                 id="opintosuunnitelma.plannedStudiesTitle"
-                defaultMessage="Suunnitellut opintoni ({amount})"
+                defaultMessage="Aikataulutetut opintoni ({amount})"
                 values={{ amount: mockPlannedStudies.length }}
               />
             }
@@ -560,7 +560,7 @@ export class Opintosuunnitelma extends React.Component<
                 <div>
                   <FormattedMessage
                     id="opintosuunnitelma.noPlannedStudies"
-                    defaultMessage="Ei suunniteltuja opintoja"
+                    defaultMessage="Ei aikataulutettuja opintoja"
                   />
                   .
                 </div>
@@ -620,7 +620,7 @@ export class Opintosuunnitelma extends React.Component<
             title={
               <FormattedMessage
                 id="opintosuunnitelma.unscheduledStudiesTitle"
-                defaultMessage="Aikatauluttomat opintoni ({amount})"
+                defaultMessage="Suunnitellut opintoni ({amount})"
                 values={{ amount: mockUnscheduledStudies.length }}
               />
             }
@@ -652,7 +652,7 @@ export class Opintosuunnitelma extends React.Component<
                 <div>
                   <FormattedMessage
                     id="opintosuunnitelma.noUnscheduledStudies"
-                    defaultMessage="Ei aikatauluttomia opintoja"
+                    defaultMessage="Ei suunniteltuja opintoja"
                   />
                   .
                 </div>
