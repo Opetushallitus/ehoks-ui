@@ -1,6 +1,9 @@
+import { MobileSlider, Slide } from "components/MobileSlider"
 import { TempDemonstration } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage } from "react-intl"
+import MediaQuery from "react-responsive"
+import { breakpoints } from "theme"
 import { DemonstrationDates } from "./DemonstrationDates"
 import { Container, InfoContainer, Table, TBody, TD, TH, Title } from "./Shared"
 
@@ -49,11 +52,27 @@ export class Demonstration extends React.Component<DemonstrationProps> {
             </tr>
           </TBody>
         </Table>
-        <InfoContainer>
-          {demonstration.assignments.map((assignment, i) => {
-            return <li key={i}>{assignment}</li>
-          })}
-        </InfoContainer>
+        <MediaQuery maxWidth={breakpoints.Tablet}>
+          {matches => {
+            if (matches) {
+              return (
+                <MobileSlider>
+                  {demonstration.assignments.map((assignment, i) => {
+                    return <Slide key={i}>{assignment}</Slide>
+                  })}
+                </MobileSlider>
+              )
+            } else {
+              return (
+                <InfoContainer>
+                  {demonstration.assignments.map((assignment, i) => {
+                    return <li key={i}>{assignment}</li>
+                  })}
+                </InfoContainer>
+              )
+            }
+          }}
+        </MediaQuery>
       </Container>
     )
   }

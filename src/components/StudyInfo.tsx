@@ -57,7 +57,7 @@ const Details = styled("div")`
   display: flex;
   flex-direction: row;
   height: 100%;
-  padding: 10px 10px 20px 20px;
+  padding: 10px 15px 20px 15px;
   justify-content: space-between;
   background: ${(props: DetailsProps) =>
     props.fadedColor ? props.fadedColor : "#fef8f3"};
@@ -66,13 +66,14 @@ const Details = styled("div")`
 `
 
 const DetailsExpanded = styled(Details)`
-  padding: 10px 10px 0 20px;
+  padding: 10px 15px 0 15px;
 `
 
 const DetailsContent = styled("div")`
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `
 
 const AdditionalInfo = styled("div")`
@@ -88,6 +89,7 @@ const Title = styled("h2")`
 `
 
 const LearningEnvironments = styled("div")`
+  flex: 1;
   margin: 10px 0 20px 0;
 `
 
@@ -183,6 +185,10 @@ const InfoContainer = styled("ul")`
 const Line = styled(HorizontalLine)`
   width: unset;
   margin: 0 20px;
+`
+
+const LocationsContainer = styled("div")`
+  display: flex;
 `
 
 // TODO: use type from mobx-state-tree
@@ -321,11 +327,16 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
           {expanded.details ? (
             <DetailsExpanded fadedColor={fadedColor}>
               <DetailsContent>
-                {locations.length > 0 && (
-                  <LearningEnvironments>
-                    {locations.join(", ")}
-                  </LearningEnvironments>
-                )}
+                <LocationsContainer>
+                  {locations.length > 0 && (
+                    <LearningEnvironments>
+                      {locations.join(", ")}
+                    </LearningEnvironments>
+                  )}
+                  <IconContainer onClick={this.toggle("details")}>
+                    <Collapse size={40} />
+                  </IconContainer>
+                </LocationsContainer>
                 {learningPeriods.map((period, i) => {
                   return (
                     <LearningPeriod
@@ -345,18 +356,20 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
                   )
                 })}
               </DetailsContent>
-              <IconContainer onClick={this.toggle("details")}>
-                <Collapse size={40} />
-              </IconContainer>
             </DetailsExpanded>
           ) : (
             <Details fadedColor={fadedColor}>
               <DetailsContent>
-                {locations.length > 0 && (
-                  <LearningEnvironments>
-                    {locations.join(", ")}
-                  </LearningEnvironments>
-                )}
+                <LocationsContainer>
+                  {locations.length > 0 && (
+                    <LearningEnvironments>
+                      {locations.join(", ")}
+                    </LearningEnvironments>
+                  )}
+                  <IconContainer onClick={this.toggle("details")}>
+                    <Expand size={40} />
+                  </IconContainer>
+                </LocationsContainer>
                 <Period accentColor={accentColor}>
                   <LearningPeriodDates learningPeriod={learningPeriod} />
                   {demonstrations.length > 0 && (
@@ -367,9 +380,6 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
                   )}
                 </Period>
               </DetailsContent>
-              <IconContainer onClick={this.toggle("details")}>
-                <Expand size={40} />
-              </IconContainer>
             </Details>
           )}
           <AdditionalInfo>

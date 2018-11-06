@@ -149,10 +149,10 @@ const mockPlannedStudies: MockStudy[] = [
         period: ["2018-05-24", "2018-05-31"],
         instructor: "Etunimi Sukunimi, Organisaatio",
         assignments: [
-          "Tehtävä ja kuvaus tehtävän sisällöstä",
-          "Tehtävä ja kuvaus tehtävän sisällöstä",
-          "Tehtävä ja kuvaus tehtävän sisällöstä",
-          "Tehtävä ja kuvaus tehtävän sisällöstä"
+          "Ensimmäinen tehtävä ja kuvaus tehtävän sisällöstä",
+          "Toinen tehtävä ja kuvaus tehtävän sisällöstä",
+          "Kolmas tehtävä ja kuvaus tehtävän sisällöstä",
+          "Neljäs tehtävä ja kuvaus tehtävän sisällöstä"
         ]
       }
     ],

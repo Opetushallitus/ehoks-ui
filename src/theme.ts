@@ -1,4 +1,4 @@
-enum breakpoints {
+export enum breakpoints {
   Tablet = 720,
   Desktop = 900,
   Large = 1160,

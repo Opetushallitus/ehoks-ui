@@ -1,6 +1,9 @@
+import { MobileSlider, Slide } from "components/MobileSlider"
 import { TempLearningPeriod } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage } from "react-intl"
+import MediaQuery from "react-responsive"
+import { breakpoints } from "theme"
 import { LearningPeriodDates } from "./LearningPeriodDates"
 import {
   Container,
@@ -49,11 +52,27 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
             </tr>
           </TBody>
         </Table>
-        <InfoContainer>
-          {learningPeriod.assignments.map((assignment, i) => {
-            return <li key={i}>{assignment}</li>
-          })}
-        </InfoContainer>
+        <MediaQuery maxWidth={breakpoints.Tablet}>
+          {matches => {
+            if (matches) {
+              return (
+                <MobileSlider>
+                  {learningPeriod.assignments.map((assignment, i) => {
+                    return <Slide key={i}>{assignment}</Slide>
+                  })}
+                </MobileSlider>
+              )
+            } else {
+              return (
+                <InfoContainer>
+                  {learningPeriod.assignments.map((assignment, i) => {
+                    return <li key={i}>{assignment}</li>
+                  })}
+                </InfoContainer>
+              )
+            }
+          }}
+        </MediaQuery>
       </Container>
     )
   }
