@@ -40,7 +40,17 @@ const RightArrow = styled(MdChevronRight)`
 `
 
 interface MobileSliderProps {
+  /**
+   * Shows count of slides at the bottom of the slider
+   * @default true
+   */
+  showCount?: boolean
+  /** Slides */
   children?: React.ReactNode[]
+  /** Renders custom element at the end of the slider */
+  footer?: React.ReactNode
+  /** Callback that gets called when slide is changed using arrows or swipe events */
+  onSlideChange?: (index: number) => void
 }
 
 interface MobileSliderState {
@@ -56,27 +66,28 @@ export class MobileSlider extends React.Component<
   }
 
   handleChangeIndex = (index: number) => {
-    this.setState({
-      index
-    })
+    this.setState(
+      {
+        index
+      },
+      () => {
+        if (this.props.onSlideChange) {
+          this.props.onSlideChange(this.state.index)
+        }
+      }
+    )
   }
 
   back = () => {
-    this.setState(state => ({
-      ...state,
-      index: state.index - 1
-    }))
+    this.handleChangeIndex(this.state.index - 1)
   }
 
   forward = () => {
-    this.setState(state => ({
-      ...state,
-      index: state.index + 1
-    }))
+    this.handleChangeIndex(this.state.index + 1)
   }
 
   render() {
-    const { children } = this.props
+    const { children, footer, showCount = true } = this.props
     if (!children.length) {
       return null
     }
@@ -92,9 +103,12 @@ export class MobileSlider extends React.Component<
         {this.state.index < children.length - 1 && (
           <RightArrow size={32} onClick={this.forward} />
         )}
-        <Count>
-          {this.state.index + 1}/{children.length}
-        </Count>
+        {showCount && (
+          <Count>
+            {this.state.index + 1}/{children.length}
+          </Count>
+        )}
+        {footer}
       </Container>
     )
   }

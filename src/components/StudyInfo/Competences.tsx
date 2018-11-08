@@ -2,10 +2,14 @@ import { CompetenceRequirement } from "components/CompetenceRequirement"
 import { HorizontalLine } from "components/HorizontalLine"
 import React from "react"
 import { FormattedMessage } from "react-intl"
+import MediaQuery from "react-responsive"
 import styled from "styled"
+import { breakpoints } from "theme"
 import { Collapse } from "./Collapse"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
+import { MobileCompetences } from "./MobileCompetences"
+import { ToggleLink } from "./ToggleLink"
 
 const Container = styled("div")`
   background: #fff;
@@ -23,23 +27,12 @@ const ExpandContainer = styled("div")`
     !props.hasDetails && props.fadedColor ? props.fadedColor : "unset"};
 `
 
-const ToggleLink = styled("div")`
-  font-size: 16px;
-  text-decoration: underline;
-  color: #0076d9;
-  cursor: pointer;
-
-  @media screen and (max-width: ${props => props.theme.breakpoints.Max}px) {
-    font-size: 16px;
-  }
-
-  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
-    font-size: 14px;
-  }
-`
-
 const ToggleAllTitle = styled(ToggleLink)`
   padding-right: 10px;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    display: none;
+  }
 `
 
 const ExpandTitle = styled(ToggleLink)`
@@ -72,6 +65,11 @@ const CollapseContainer = styled("div")`
   display: flex;
   align-items: flex-end;
   padding: 10px 10px 10px 20px;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    align-items: center;
+    padding-bottom: 0;
+  }
 `
 
 const InfoContainer = styled("ul")`
@@ -94,6 +92,10 @@ const InfoContainer = styled("ul")`
 const Line = styled(HorizontalLine)`
   width: unset;
   margin: 0 20px;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    display: none;
+  }
 `
 
 interface CompetencesProps {
@@ -171,19 +173,34 @@ export class Competences extends React.Component<CompetencesProps> {
           </ExpandContainer>
         )}
         {expanded && (
-          <InfoContainer>
-            {competenceRequirements.map((competenceRequirement, i) => {
-              return (
-                <CompetenceRequirement
-                  key={i}
-                  text={competenceRequirement}
-                  assessment={assessment[i]}
-                  expanded={expandedCompetences.indexOf(i) > -1}
-                  expand={expandCompetence(i)}
-                />
-              )
-            })}
-          </InfoContainer>
+          <MediaQuery maxWidth={breakpoints.Tablet}>
+            {matches => {
+              if (matches) {
+                return (
+                  <MobileCompetences
+                    assessment={assessment}
+                    competenceRequirements={competenceRequirements}
+                  />
+                )
+              } else {
+                return (
+                  <InfoContainer>
+                    {competenceRequirements.map((competenceRequirement, i) => {
+                      return (
+                        <CompetenceRequirement
+                          key={i}
+                          text={competenceRequirement}
+                          assessment={assessment[i]}
+                          expanded={expandedCompetences.indexOf(i) > -1}
+                          expand={expandCompetence(i)}
+                        />
+                      )
+                    })}
+                  </InfoContainer>
+                )
+              }
+            }}
+          </MediaQuery>
         )}
       </Container>
     )
