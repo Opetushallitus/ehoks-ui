@@ -14,12 +14,12 @@ export const LearningPeriodDates = injectIntl(
           defaultMessage: "Hyväksytty",
           id: "opiskelusuunnitelma.approved"
         })}{" "}
-        {format(learningPeriod.approved, "d.M.YYYY")}
+        {format(learningPeriod.approved, "d.M.yyyy")}
       </span>
     ) : learningPeriod.period[0] && learningPeriod.period[1] ? (
       <span>
         {format(learningPeriod.period[0], "d.M.")} {" - "}
-        {format(learningPeriod.period[1], "d.M.YYYY")}
+        {format(learningPeriod.period[1], "d.M.yyyy")}
       </span>
     ) : null
   }

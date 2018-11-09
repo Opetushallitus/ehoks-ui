@@ -1,15 +1,18 @@
+import { MobileSlider, Slide } from "components/MobileSlider"
 import { TempLearningPeriod } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage } from "react-intl"
+import MediaQuery from "react-responsive"
+import { breakpoints } from "theme"
 import { LearningPeriodDates } from "./LearningPeriodDates"
 import {
   Container,
+  EmptyTD,
   InfoContainer,
   Table,
   TBody,
   TD,
   TH,
-  THead,
   Title
 } from "./Shared"
 
@@ -28,7 +31,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
           <LearningPeriodDates learningPeriod={learningPeriod} />
         </Title>
         <Table>
-          <THead>
+          <TBody>
             <tr>
               <TH>
                 <FormattedMessage
@@ -36,6 +39,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                   defaultMessage="Työpaikkaohjaaja"
                 />
               </TH>
+              <TD>{learningPeriod.instructor}</TD>
             </tr>
             <tr>
               <TH>
@@ -44,22 +48,31 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                   defaultMessage="Keskeiset työtehtävät"
                 />
               </TH>
-            </tr>
-          </THead>
-          <TBody>
-            <tr>
-              <TD>{learningPeriod.instructor}</TD>
-            </tr>
-            <tr>
-              <TD>&nbsp;</TD>
+              <EmptyTD />
             </tr>
           </TBody>
         </Table>
-        <InfoContainer>
-          {learningPeriod.assignments.map((assignment, i) => {
-            return <li key={i}>{assignment}</li>
-          })}
-        </InfoContainer>
+        <MediaQuery maxWidth={breakpoints.Tablet}>
+          {matches => {
+            if (matches) {
+              return (
+                <MobileSlider>
+                  {learningPeriod.assignments.map((assignment, i) => {
+                    return <Slide key={i}>{assignment}</Slide>
+                  })}
+                </MobileSlider>
+              )
+            } else {
+              return (
+                <InfoContainer>
+                  {learningPeriod.assignments.map((assignment, i) => {
+                    return <li key={i}>{assignment}</li>
+                  })}
+                </InfoContainer>
+              )
+            }
+          }}
+        </MediaQuery>
       </Container>
     )
   }

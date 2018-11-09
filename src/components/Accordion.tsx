@@ -45,14 +45,15 @@ const AccordionInlineTitle = styled(AccordionTitle)`
 `
 
 const Content = styled("div")`
-  margin: 10px 10px 10px 50px;
+  margin: 10px 0 10px 50px;
   border-radius: 4px;
   border: 1px solid #a8a8a8;
   background: #fff;
   padding: 10px;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
-    margin-left: 0px;
+    margin: 0;
+    padding: 0;
     border-width: 0;
     background: transparent;
   }
@@ -68,7 +69,7 @@ const HelpToggle = styled(MdHelp)`
     margin-right: 100px;
   }
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
-    margin-right: 50px;
+    margin-right: unset;
   }
 `
 

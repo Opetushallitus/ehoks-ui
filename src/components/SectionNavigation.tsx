@@ -7,11 +7,19 @@ const Container = styled("div")`
   align-items: center;
   cursor: pointer;
   text-align: center;
-  width: 120px;
-  margin-right: 30px;
+  width: 200px;
 
-  &:last-of-type {
-    margin-right: 0;
+  svg {
+    width: 54px;
+    height: 54px;
+  }
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    width: 100px;
+    svg {
+      width: 32px;
+      height: 32px;
+    }
   }
 `
 
@@ -27,6 +35,11 @@ const Item = styled("div")`
   height: 90px;
   border: 4px solid #027fa9;
   background: ${(props: ItemProps) => (props.selected ? "#027FA9" : "#fff")};
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    width: 58px;
+    height: 58px;
+  }
 `
 
 const Title = styled("div")`

@@ -88,8 +88,13 @@ const Title = styled("div")`
 `
 
 const LogoutContainer = styled("div")`
+  display: block;
   margin: 0 20px 0 0;
   font-weight: 300;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    display: none;
+  }
 `
 
 const User = styled("div")`
