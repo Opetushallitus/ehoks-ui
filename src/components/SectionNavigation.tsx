@@ -69,7 +69,7 @@ export class SectionItem extends React.Component<SectionItemProps> {
   render() {
     const { children, title, onClick, selected } = this.props
     return (
-      <Container onClick={onClick}>
+      <Container onClick={onClick} role="button" tabIndex={0}>
         <Item selected={selected}>{children}</Item>
         <Title>{title}</Title>
       </Container>

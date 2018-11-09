@@ -1,6 +1,6 @@
 import React from "react"
 import { css } from "react-emotion"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
 import facebookLogo from "./AppFooter/facebook.svg"
 import instagramLogo from "./AppFooter/instagram.svg"
@@ -29,7 +29,7 @@ const SocialMediaIcon = styled("img")`
   }
 `
 
-const FooterContainer = styled("div")`
+const FooterContainer = styled("footer")`
   width: 100%;
   background-color: #f8f8f8;
   margin-top: 10px;
@@ -202,13 +202,23 @@ const SocialMediaIcons = ({
 }
 
 export class AppFooter extends React.Component<{}> {
+  static contextTypes = {
+    intl: intlShape
+  }
   render() {
+    const { intl } = this.context
     return (
       <FooterContainer>
         <Footer>
           <LinksContainer>
             <MobileButtons>
-              <OpintopolkuLogo src={opintopolku} />
+              <OpintopolkuLogo
+                src={opintopolku}
+                alt={intl.formatMessage({
+                  defaultMessage: "Opintopolku logo",
+                  id: "footer.opintopolkuLogoLabel"
+                })}
+              />
               <SocialMediaIcons desktop={false} mobile={true} />
             </MobileButtons>
             <LinksList>
@@ -240,8 +250,22 @@ export class AppFooter extends React.Component<{}> {
           </LinksContainer>
           <DisclaimerAndLogos>
             <LogosContainer>
-              <img className={logo} src={okmLogo} />
-              <img className={logo} src={ophLogo} />
+              <img
+                className={logo}
+                src={okmLogo}
+                alt={intl.formatMessage({
+                  defaultMessage: "Opetus- ja kulttuuriministeriö logo",
+                  id: "footer.okmLogoLabel"
+                })}
+              />
+              <img
+                className={logo}
+                src={ophLogo}
+                alt={intl.formatMessage({
+                  defaultMessage: "Opetushallitus logo",
+                  id: "footer.ophLogoLabel"
+                })}
+              />
             </LogosContainer>
             <Disclaimer>
               <p>

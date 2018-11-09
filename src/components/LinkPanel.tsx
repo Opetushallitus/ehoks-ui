@@ -59,6 +59,8 @@ export interface LinkPanelProps {
   className?: string
   /** Image to show as background image */
   image?: string
+  /** WAI-ARIA image label */
+  imageLabel?: string
   /** Title inside text container */
   title?: React.ReactNode
   /** Description text under title */
@@ -78,7 +80,8 @@ export class LinkPanel extends React.Component<LinkPanelProps> {
       to,
       title,
       description,
-      image
+      image,
+      imageLabel
     } = this.props
     return (
       <StyledLink to={to}>
@@ -90,7 +93,7 @@ export class LinkPanel extends React.Component<LinkPanelProps> {
             <Title>{title}</Title>
             <Description>{description}</Description>
           </Content>
-          <Image image={image} />
+          <Image image={image} role="img" aria-label={imageLabel} />
         </LinkPanelContainer>
       </StyledLink>
     )

@@ -87,7 +87,7 @@ export class Henkilokohtaistaminen extends React.Component<
             </Section>
           </SectionContainer>
           <Section>
-            <ChartContainer>
+            <ChartContainer role="list">
               <ChartRow height="200px" marginBottom="15px">
                 <ChartBox
                   flex={1}

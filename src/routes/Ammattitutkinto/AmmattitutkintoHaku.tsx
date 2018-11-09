@@ -41,7 +41,7 @@ const SearchResultsTitle = styled(SectionTitle)`
   margin: 10px;
 `
 
-const SearchHeader = styled("div")`
+const SearchHeader = styled("form")`
   display: flex;
   align-items: center;
 `
@@ -74,7 +74,7 @@ const SearchResultsList = styled("div")`
   padding: 10px;
 `
 
-const PagingContainer = styled("div")`
+const PagingContainer = styled("nav")`
   margin: 10px;
 `
 
@@ -107,6 +107,10 @@ export class AmmattitutkintoHaku extends React.Component<
     searchTimeout: 0
   }
 
+  formSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+  }
+
   updateSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchText = event.target.value
     if (this.state.searchTimeout) {
@@ -123,6 +127,12 @@ export class AmmattitutkintoHaku extends React.Component<
         }
       }, 300)
     })
+  }
+
+  onPaginationResultEnter = (index: number) => (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      this.setState({ activePage: index })
+    }
   }
 
   goToPage = (index: number) => () => {
@@ -144,16 +154,29 @@ export class AmmattitutkintoHaku extends React.Component<
         </SectionTitle>
 
         <SearchContainer>
-          <SearchHeader>
+          <SearchHeader role="search" onSubmit={this.formSubmit}>
             <SearchIcon size="24" />
             <SearchInput
               placeholder={intl.formatMessage({
                 defaultMessage: "Hae tietoa",
-                id: "ammattitutkinto.placeholder"
+                id: "ammattitutkinto.searchPlaceholder"
+              })}
+              aria-label={intl.formatMessage({
+                defaultMessage: "Hae tietoa",
+                id: "ammattitutkinto.searchPlaceholder"
               })}
               onChange={this.updateSearchText}
+              required={true}
             />
-            {oppilas.isLoading && <Loading />}
+            {oppilas.isLoading && (
+              <Loading
+                role="alert"
+                ariaLabel={intl.formatMessage({
+                  defaultMessage: "Ammattitutkintoja ladataan",
+                  id: "ammattitutkinto.searchLoading"
+                })}
+              />
+            )}
           </SearchHeader>
           {this.state.searchText.length > 0 &&
             oppilas.perusteet.length > 0 && (
@@ -168,7 +191,7 @@ export class AmmattitutkintoHaku extends React.Component<
                       }}
                     />
                   </SearchResultsTitle>
-                  <SearchResultsList>
+                  <SearchResultsList role="list">
                     {take(
                       slice(
                         oppilas.perusteet,
@@ -183,13 +206,29 @@ export class AmmattitutkintoHaku extends React.Component<
 
                 {totalPages > 1 &&
                   oppilas.perusteet.length > 0 && (
-                    <PagingContainer>
+                    <PagingContainer
+                      aria-label={intl.formatMessage({
+                        defaultMessage: "Hakutuloksien sivutuksen navigaatio",
+                        id: "ammattitutkinto.searchPagingNavigation"
+                      })}
+                    >
                       {range(totalPages).map(index => {
                         return (
                           <Page
                             key={index}
                             active={this.state.activePage === index}
+                            aria-current={this.state.activePage === index}
                             onClick={this.goToPage(index)}
+                            onKeyPress={this.onPaginationResultEnter(index)}
+                            tabIndex={0}
+                            aria-label={intl.formatMessage(
+                              {
+                                defaultMessage:
+                                  "Mene hakutuloksien sivulle {page}",
+                                id: "ammattitutkinto.searchPagingItem"
+                              },
+                              { page: index + 1 }
+                            )}
                           >
                             {index + 1}
                           </Page>
