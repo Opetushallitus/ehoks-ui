@@ -2,7 +2,7 @@ import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
 import { MdClose } from "react-icons/md"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, intlShape } from "react-intl"
 import { AppError } from "stores/ErrorStore"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
@@ -23,10 +23,14 @@ const Text = styled("div")`
   flex: 1;
 `
 
-const IconContainer = styled("div")`
+const IconContainer = styled("button")`
   display: flex;
   margin: 0 20px;
   cursor: pointer;
+  appearance: none;
+  padding: 0;
+  border: none;
+  background: transparent;
 `
 
 export interface AppErrorsProps {
@@ -36,8 +40,12 @@ export interface AppErrorsProps {
 @inject("store")
 @observer
 export class AppErrors extends React.Component<AppErrorsProps> {
+  static contextTypes = {
+    intl: intlShape
+  }
   render() {
     const { store } = this.props
+    const { intl } = this.context
     const {
       errors: { unhandled }
     } = store
@@ -54,8 +62,14 @@ export class AppErrors extends React.Component<AppErrorsProps> {
                   />
                   : {error.errorText}
                 </Text>
-                <IconContainer>
-                  <MdClose size={20} onClick={error.handle} />
+                <IconContainer
+                  onClick={error.handle}
+                  aria-label={intl.formatMessage({
+                    defaultMessage: "Piilota virhe",
+                    id: "errors.hideButtonLabel"
+                  })}
+                >
+                  <MdClose size={20} />
                 </IconContainer>
               </ErrorContent>
             </ErrorNotification>
