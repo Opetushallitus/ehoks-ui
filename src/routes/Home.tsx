@@ -2,8 +2,8 @@ import { RouteComponentProps } from "@reach/router"
 import { reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
+import { Etusivu } from "routes/Home/Etusivu"
 import { SignedIn } from "routes/Home/SignedIn"
-import { SignedOut } from "routes/Home/SignedOut"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 
@@ -41,7 +41,7 @@ export class Home extends React.Component<HomeProps & RouteComponentProps> {
     const path = this.props["*"]
     return (
       <Container>
-        {store.session.isLoggedIn ? <SignedIn /> : <SignedOut path={path} />}
+        {store.session.isLoggedIn ? <SignedIn /> : <Etusivu path={path} />}
       </Container>
     )
   }

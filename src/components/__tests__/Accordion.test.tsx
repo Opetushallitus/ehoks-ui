@@ -3,7 +3,11 @@ import { createThemeRenderer } from "testUtils"
 import { Accordion } from "../Accordion"
 
 test("open=true renders collapse icon and child content", () => {
-  const tree = createThemeRenderer(<Accordion open={true}>Content</Accordion>)
+  const tree = createThemeRenderer(
+    <Accordion id="test" open={true}>
+      Content
+    </Accordion>
+  )
   const collapse = tree.root.find(el => {
     return el.props["data-testid"] === "Collapse"
   })
@@ -15,7 +19,11 @@ test("open=true renders collapse icon and child content", () => {
 })
 
 test("open=false renders expand icon and no child content", () => {
-  const tree = createThemeRenderer(<Accordion open={false}>Content</Accordion>)
+  const tree = createThemeRenderer(
+    <Accordion id="test" open={false}>
+      Content
+    </Accordion>
+  )
   const expand = tree.root.find(el => {
     return el.props["data-testid"] === "Expand"
   })
@@ -26,22 +34,17 @@ test("open=false renders expand icon and no child content", () => {
   expect(content).toEqual([])
 })
 
-test("onToggle prop function gets invoked with title and icon clicks", () => {
+test("onToggle prop function gets invoked with title row clicks", () => {
   const mockOnToggle = jest.fn()
   const tree = createThemeRenderer(
-    <Accordion open={false} onToggle={mockOnToggle}>
+    <Accordion id="test" open={false} onToggle={mockOnToggle}>
       Content
     </Accordion>
   )
-  const title = tree.root.find(el => {
-    return el.props["data-testid"] === "Title"
-  })
-  title.props.onClick()
-  expect(mockOnToggle).toHaveBeenCalledTimes(1)
 
   const toggle = tree.root.find(el => {
     return el.props["data-testid"] === "Toggle"
   })
   toggle.props.onClick()
-  expect(mockOnToggle).toHaveBeenCalledTimes(2)
+  expect(mockOnToggle).toHaveBeenCalledTimes(1)
 })

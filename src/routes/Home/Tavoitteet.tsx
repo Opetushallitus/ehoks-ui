@@ -63,6 +63,7 @@ export class Tavoitteet extends React.Component<
         </Heading>
 
         <Accordion
+          id="omaTavoitteeni"
           open={this.state.activeAccordions.personalGoal}
           title={
             <FormattedMessage
@@ -146,6 +147,7 @@ export class Tavoitteet extends React.Component<
         </Accordion>
 
         <Accordion
+          id="tutkintoTaiKoulutus"
           open={this.state.activeAccordions.degreeOrEducation}
           title={
             <FormattedMessage
@@ -160,6 +162,7 @@ export class Tavoitteet extends React.Component<
         </Accordion>
 
         <Accordion
+          id="henkiloTiedot"
           open={this.state.activeAccordions.personalDetails}
           title={
             <FormattedMessage

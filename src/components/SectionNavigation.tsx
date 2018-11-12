@@ -1,13 +1,16 @@
 import React from "react"
 import styled from "styled"
 
-const Container = styled("div")`
+const Container = styled("button")`
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
   text-align: center;
   width: 200px;
+  border: 0;
+  background: transparent;
+  padding: 0;
 
   svg {
     width: 54px;

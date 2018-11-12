@@ -52,6 +52,7 @@ export class ChartBox extends React.Component<ChartBoxProps> {
         backgroundColor={backgroundColor}
         flex={flex}
         padding={padding}
+        role="listitem"
       >
         <IconContainer>{icon}</IconContainer>
         {children}

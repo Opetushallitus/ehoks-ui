@@ -1,7 +1,7 @@
 import { CompetenceRequirement } from "components/CompetenceRequirement"
 import { HorizontalLine } from "components/HorizontalLine"
 import React from "react"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, intlShape } from "react-intl"
 import MediaQuery from "react-responsive"
 import styled from "styled"
 import { breakpoints } from "theme"
@@ -114,6 +114,9 @@ interface CompetencesProps {
 }
 
 export class Competences extends React.Component<CompetencesProps> {
+  static contextTypes = {
+    intl: intlShape
+  }
   render() {
     const {
       assessment,
@@ -127,6 +130,7 @@ export class Competences extends React.Component<CompetencesProps> {
       hasDetails,
       toggle
     } = this.props
+    const { intl } = this.context
     const allExpanded =
       expandedCompetences.length === competenceRequirements.length
     return (
@@ -155,7 +159,14 @@ export class Competences extends React.Component<CompetencesProps> {
                   )}
                 </ToggleAllTitle>
               </CollapseHeaderContainer>
-              <IconContainer onClick={toggle("competences")}>
+              <IconContainer
+                onClick={toggle("competences")}
+                aria-label={intl.formatMessage({
+                  defaultMessage:
+                    "Piilota ammattitaitovaatimukset ja arviointikriteerit",
+                  id: "opiskelusuunnitelma.collapseStudyInfoButtonLabel"
+                })}
+              >
                 <Collapse size={40} />
               </IconContainer>
             </CollapseContainer>
@@ -169,7 +180,16 @@ export class Competences extends React.Component<CompetencesProps> {
                 defaultMessage="Ammattitaitovaatimukset ja arviointikriteerit"
               />
             </ExpandTitle>
-            <Expand size={40} onClick={toggle("competences")} />
+            <IconContainer
+              onClick={toggle("competences")}
+              aria-label={intl.formatMessage({
+                defaultMessage:
+                  "Näytä ammattitaitovaatimukset ja arviointikriteerit",
+                id: "opiskelusuunnitelma.expandStudyInfoButtonLabel"
+              })}
+            >
+              <Expand size={40} />
+            </IconContainer>
           </ExpandContainer>
         )}
         {expanded && (

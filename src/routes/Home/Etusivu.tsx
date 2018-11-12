@@ -3,7 +3,7 @@ import { LinkPanel } from "components/LinkPanel"
 import { LinkPanelContainer } from "components/LinkPanelContainer"
 import { inject, observer } from "mobx-react"
 import React from "react"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, intlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 import education from "./education.jpg"
@@ -34,7 +34,7 @@ const Header = styled("h1")`
   margin: 0;
 `
 
-const Content = styled("div")`
+const Content = styled("main")`
   display: flex;
   flex: 1;
 
@@ -76,33 +76,38 @@ const StyledLinkPanel = styled(LinkPanel)`
   }
 `
 
-export interface SignedOutProps {
+export interface EtusivuProps {
   store?: IRootStore
   path?: string
 }
 
 @inject("store")
 @observer
-export class SignedOut extends React.Component<SignedOutProps> {
+export class Etusivu extends React.Component<EtusivuProps> {
+  static contextTypes = {
+    intl: intlShape
+  }
+
   login = (event: React.MouseEvent) => {
     event.preventDefault()
     window.location.href = this.props.store.environment.opintopolkuLoginUrl
   }
 
   render() {
+    const { intl } = this.context
     return (
       <Container>
-        <Hero>
+        <Hero role="banner">
           <Description>
             <Header>
               <FormattedMessage
-                id="signedOut.title"
+                id="etusivu.title"
                 defaultMessage="Opiskelun henkilökohtainen suunnittelu"
               />
             </Header>
             <p>
               <FormattedMessage
-                id="signedOut.description"
+                id="etusivu.description"
                 defaultMessage="eHOKS palvelussa voit kirjautumalla siirtyä henkilökohtaiseen
               opintojen suunnitteluun. Ilman kirjautumista voit tutustua eri
               alojen ammattitaitovaatimuksiin ja osaamistavoitteisiin."
@@ -112,7 +117,7 @@ export class SignedOut extends React.Component<SignedOutProps> {
           <LoginContainer>
             <LoginButton onClick={this.login}>
               <FormattedMessage
-                id="signedOut.loginButton"
+                id="etusivu.loginButton"
                 defaultMessage="Kirjaudu omaan suunnitelmaan"
               />
             </LoginButton>
@@ -124,33 +129,41 @@ export class SignedOut extends React.Component<SignedOutProps> {
               to="henkilokohtaistaminen"
               title={
                 <FormattedMessage
-                  id="signedOut.individualisationTitle"
+                  id="etusivu.individualisationTitle"
                   defaultMessage="Mitä opintojen henkilökohtaistaminen tarkoittaa?"
                 />
               }
               description={
                 <FormattedMessage
-                  id="signedOut.individualisationDescription"
+                  id="etusivu.individualisationDescription"
                   defaultMessage="Opiskelu sovitetaan lähtötilanteeseesi..."
                 />
               }
               image={students}
+              imageLabel={intl.formatMessage({
+                defaultMessage: "Hymyileviä opiskelijoita työn touhussa",
+                id: "etusivu.henkilokohtaistaminenKuvanKuvaus"
+              })}
             />
             <StyledLinkPanel
               to="ammatillinentutkinto"
               title={
                 <FormattedMessage
-                  id="signedOut.qualificationTitle"
+                  id="etusivu.qualificationTitle"
                   defaultMessage="Mitä ammatilliset tutkinnot sisältävät?"
                 />
               }
               description={
                 <FormattedMessage
-                  id="signedOut.qualificationDescription"
+                  id="etusivu.qualificationDescription"
                   defaultMessage="Jokaiselle tutkinnon osalle on ammattitaitovaatimukset..."
                 />
               }
               image={education}
+              imageLabel={intl.formatMessage({
+                defaultMessage: "Näppäimistön näppäin jossa lukee 'Education'",
+                id: "etusivu.ammatillisetTutkinnotKuvanKuvaus"
+              })}
             />
           </LinkPanelContainer>
         </Content>

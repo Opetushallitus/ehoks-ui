@@ -12,7 +12,7 @@ interface TopLinkProps {
   theme?: any
 }
 
-const HeaderContainer = styled("div")`
+const HeaderContainer = styled("header")`
   width: 100%;
   color: #fff;
   background-color: ${props => props.theme.colors.header.background};
@@ -36,7 +36,7 @@ const TopLinksContainer = styled("div")`
   }
 `
 
-const TopLinks = styled("div")`
+const TopLinks = styled("nav")`
   line-height: 20px;
   max-width: ${props => props.theme.maxWidth}px;
   margin: 0 auto;
@@ -50,6 +50,10 @@ const TopLink = styled("a")`
   line-height: 20px;
   background: ${(props: TopLinkProps) =>
     props.active ? props.theme.colors.header.background : "transparent"};
+
+  &:focus {
+    outline: 2px solid ${props => props.theme.colors.waterBlue};
+  }
 `
 
 const TitleContainer = styled("div")`

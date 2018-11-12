@@ -46,7 +46,7 @@ export class SearchResult extends React.Component<SearchResultProps> {
   render() {
     const { result } = this.props
     return (
-      <Container>
+      <Container role="listitem">
         <TitleContainer href={result.link} target="_blank">
           <LinkIcon size={16} color="#84898C" />
           <Title>{result.title}</Title>

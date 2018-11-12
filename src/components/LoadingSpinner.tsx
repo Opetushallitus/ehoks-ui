@@ -35,10 +35,18 @@ const Bounce = styled("div")`
 export interface LoadingSpinnerProps {
   /** Custom CSS class name */
   className?: string
+  /** Custom role */
+  role?: string
+  /** WAI-ARIA label */
+  ariaLabel?: string
 }
 /** Animated loading indicator  */
-export const LoadingSpinner = ({ className }: LoadingSpinnerProps) => (
-  <SpinnerContainer className={className}>
+export const LoadingSpinner = ({
+  className,
+  role,
+  ariaLabel
+}: LoadingSpinnerProps) => (
+  <SpinnerContainer className={className} role={role} aria-label={ariaLabel}>
     <Bounce delay="-.32s" />
     <Bounce delay="-.16s" />
     <Bounce />

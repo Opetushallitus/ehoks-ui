@@ -68,7 +68,7 @@ export class Notification extends React.Component<NotificationProps> {
   render() {
     const { children, className, type = "success" } = this.props
     return (
-      <Container className={className} type={type}>
+      <Container className={className} type={type} role="alert">
         <IconContainer type={type}>
           <Icon type={type} />
         </IconContainer>

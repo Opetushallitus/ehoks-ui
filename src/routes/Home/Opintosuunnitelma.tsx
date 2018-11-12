@@ -394,6 +394,7 @@ export class Opintosuunnitelma extends React.Component<
         </Heading>
 
         <Accordion
+          id="tavoitteet"
           open={activeAccordions.tavoitteet}
           title={
             <FormattedMessage
@@ -510,6 +511,7 @@ export class Opintosuunnitelma extends React.Component<
         </Accordion>
 
         <Accordion
+          id="suunnitelma"
           open={activeAccordions.suunnitelma}
           title={
             <FormattedMessage
@@ -523,6 +525,7 @@ export class Opintosuunnitelma extends React.Component<
           childContainer={false}
         >
           <Accordion
+            id="suunnitelma.suunnitellut"
             open={activeAccordions.suunnitelmat.suunnitellut}
             onToggle={this.toggleAccordion("suunnitelmat", "suunnitellut")}
             title={
@@ -569,6 +572,7 @@ export class Opintosuunnitelma extends React.Component<
           </Accordion>
 
           <Accordion
+            id="suunnitelma.valmiit"
             open={activeAccordions.suunnitelmat.valmiit}
             onToggle={this.toggleAccordion("suunnitelmat", "valmiit")}
             title={
@@ -615,6 +619,7 @@ export class Opintosuunnitelma extends React.Component<
           </Accordion>
 
           <Accordion
+            id="suunnitelma.aikatauluttomat"
             open={activeAccordions.suunnitelmat.aikatauluttomat}
             onToggle={this.toggleAccordion("suunnitelmat", "aikatauluttomat")}
             title={
@@ -662,6 +667,7 @@ export class Opintosuunnitelma extends React.Component<
         </Accordion>
 
         <Accordion
+          id="tukevatOpinnot"
           open={activeAccordions.tukevatOpinnot}
           title={
             <FormattedMessage

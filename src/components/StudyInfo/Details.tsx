@@ -1,5 +1,6 @@
 import { TempDemonstration, TempLearningPeriod } from "components/StudyInfo"
 import React from "react"
+import { intlShape } from "react-intl"
 import styled from "styled"
 import { Collapse } from "./Collapse"
 import { Demonstration } from "./Demonstration"
@@ -47,6 +48,7 @@ const LearningEnvironments = styled("div")`
 
 const LocationsContainer = styled("div")`
   display: flex;
+  align-items: center;
 `
 
 interface DetailsProps {
@@ -60,6 +62,9 @@ interface DetailsProps {
 }
 
 export class Details extends React.Component<DetailsProps> {
+  static contextTypes = {
+    intl: intlShape
+  }
   render() {
     const {
       accentColor,
@@ -70,6 +75,7 @@ export class Details extends React.Component<DetailsProps> {
       locations,
       toggle
     } = this.props
+    const { intl } = this.context
     const learningPeriod = learningPeriods[0]
     return expanded ? (
       <DetailsExpanded fadedColor={fadedColor}>
@@ -80,7 +86,14 @@ export class Details extends React.Component<DetailsProps> {
                 {locations.join(", ")}
               </LearningEnvironments>
             )}
-            <IconContainer onClick={toggle("details")}>
+            <IconContainer
+              onClick={toggle("details")}
+              aria-label={intl.formatMessage({
+                defaultMessage:
+                  "Piilota työssäoppimisen ja näytön laajennetut tiedot",
+                id: "opiskelusuunnitelma.collapseDetailsButtonlabel"
+              })}
+            >
               <Collapse size={40} />
             </IconContainer>
           </LocationsContainer>
@@ -113,7 +126,14 @@ export class Details extends React.Component<DetailsProps> {
                 {locations.join(", ")}
               </LearningEnvironments>
             )}
-            <IconContainer onClick={toggle("details")}>
+            <IconContainer
+              onClick={toggle("details")}
+              aria-label={intl.formatMessage({
+                defaultMessage:
+                  "Näytä työssäoppimisen ja näytön laajennetut tiedot",
+                id: "opiskelusuunnitelma.expandDetailsButtonlabel"
+              })}
+            >
               <Expand size={40} />
             </IconContainer>
           </LocationsContainer>
