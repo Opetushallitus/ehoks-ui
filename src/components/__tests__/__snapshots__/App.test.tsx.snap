@@ -4,17 +4,17 @@ exports[`App renders correctly 1`] = `
 <div
   className="css-r44k6v"
 >
-  <div
+  <header
     className="css-1c9pu1m"
   >
     <div
       className="css-1bg6mpz"
     >
-      <div
+      <nav
         className="css-1lhzg4m"
       >
         <a
-          className="css-vphjtl"
+          className="css-fxt1xk"
           href="https://opintopolku.fi/"
         >
           <span>
@@ -22,7 +22,7 @@ exports[`App renders correctly 1`] = `
           </span>
         </a>
         <a
-          className="css-vphjtl"
+          className="css-fxt1xk"
           href="https://opintopolku.fi/oma-opintopolku/"
         >
           <span>
@@ -30,7 +30,7 @@ exports[`App renders correctly 1`] = `
           </span>
         </a>
         <a
-          className="css-vphjtl"
+          className="css-fxt1xk"
           href="https://eperusteet.opintopolku.fi/"
         >
           <span>
@@ -38,14 +38,14 @@ exports[`App renders correctly 1`] = `
           </span>
         </a>
         <a
-          className="css-qtdcwy"
+          className="css-qn17of"
           href="/"
         >
           <span>
             eHOKS
           </span>
         </a>
-      </div>
+      </nav>
     </div>
     <div
       className="css-1xu5u1k"
@@ -83,11 +83,11 @@ exports[`App renders correctly 1`] = `
         eHOKS
       </div>
     </div>
-  </div>
+  </header>
   <div
     className="css-abysv6"
   />
-  <div
+  <footer
     className="css-cqueuz"
   >
     <div
@@ -100,6 +100,7 @@ exports[`App renders correctly 1`] = `
           className="css-1qxls6i"
         >
           <img
+            alt="Opintopolku logo"
             className="css-29yp7r"
             src=""
           />
@@ -161,10 +162,12 @@ exports[`App renders correctly 1`] = `
           className="css-of0swa"
         >
           <img
+            alt="Opetus- ja kulttuuriministeriö logo"
             className="css-14qd04p"
             src=""
           />
           <img
+            alt="Opetushallitus logo"
             className="css-14qd04p"
             src=""
           />
@@ -235,6 +238,6 @@ exports[`App renders correctly 1`] = `
         </div>
       </div>
     </div>
-  </div>
+  </footer>
 </div>
 `;

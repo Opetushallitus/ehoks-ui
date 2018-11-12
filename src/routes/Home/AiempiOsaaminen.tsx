@@ -46,6 +46,7 @@ export class AiempiOsaaminen extends React.Component<
         </Heading>
 
         <Accordion
+          id="aiempiOsaaminen"
           open={this.state.activeAccordions.previousCompetence}
           title={
             <FormattedMessage

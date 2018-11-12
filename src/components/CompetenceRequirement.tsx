@@ -53,10 +53,15 @@ const Text = styled("div")`
   font-weight: ${(props: TextProps) => (props.expanded ? "600" : "400")};
 `
 
-const ToggleAssessment = styled("div")`
+const ToggleAssessment = styled("button")`
   cursor: pointer;
   color: #0076d9;
   text-decoration: underline;
+  appearance: none;
+  border: none;
+  text-align: left;
+  padding: 0;
+  background: transparent;
 `
 
 interface CompetenceRequirementProps {

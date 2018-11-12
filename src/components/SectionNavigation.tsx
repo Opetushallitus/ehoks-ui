@@ -1,13 +1,16 @@
 import React from "react"
 import styled from "styled"
 
-const Container = styled("div")`
+const Container = styled("button")`
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
   text-align: center;
   width: 200px;
+  border: 0;
+  background: transparent;
+  padding: 0;
 
   svg {
     width: 54px;
@@ -69,7 +72,7 @@ export class SectionItem extends React.Component<SectionItemProps> {
   render() {
     const { children, title, onClick, selected } = this.props
     return (
-      <Container onClick={onClick} role="button" tabIndex={0}>
+      <Container onClick={onClick}>
         <Item selected={selected}>{children}</Item>
         <Title>{title}</Title>
       </Container>

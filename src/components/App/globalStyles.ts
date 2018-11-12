@@ -19,6 +19,11 @@ injectGlobal`
     font-family: 'Source Sans Pro', sans-serif;
   }
 
+  :focus {
+    outline-color: rgba(25, 118, 210, .4);
+    outline-style: solid;
+  }
+
   /*
   * react-circular-progressbar styles
   *
