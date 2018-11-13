@@ -81,7 +81,7 @@ export class CompetenceRequirement extends React.Component<
       <Container>
         <TitleRow>
           <Text expanded={expanded}>{text}</Text>
-          <ToggleAssessment onClick={expand}>
+          <ToggleAssessment onClick={expand} data-testid="ToggleAssessment">
             {expanded ? (
               <FormattedMessage
                 id="opiskelusuunnitelma.hideAssessment"
@@ -96,7 +96,7 @@ export class CompetenceRequirement extends React.Component<
           </ToggleAssessment>
         </TitleRow>
         {expanded ? (
-          <Assessment>
+          <Assessment data-testid="Assessment">
             {Object.keys(assessment).map(title => {
               return (
                 <AssessmentItem key={title}>
