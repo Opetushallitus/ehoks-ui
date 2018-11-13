@@ -119,15 +119,15 @@ export class Competences extends React.Component<CompetencesProps> {
   }
   render() {
     const {
-      assessment,
+      assessment = [],
       collapseAll,
-      competenceRequirements,
+      competenceRequirements = [],
       expandAll,
       expandCompetence,
       expanded,
       expandedCompetences,
-      fadedColor,
-      hasDetails,
+      fadedColor = "",
+      hasDetails = false,
       toggle
     } = this.props
     const { intl } = this.context

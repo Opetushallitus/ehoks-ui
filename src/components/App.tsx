@@ -26,7 +26,7 @@ export interface AppProps {
 export class App extends React.Component<AppProps> {
   componentDidMount() {
     // load user session info from backend
-    this.props.store.session.checkSession()
+    this.props.store!.session.checkSession()
   }
 
   render() {
@@ -35,9 +35,9 @@ export class App extends React.Component<AppProps> {
       <ThemeWrapper>
         <IntlProvider
           defaultLocale="fi"
-          locale={store.translations.activeLocale}
+          locale={store!.translations.activeLocale}
           messages={
-            store.translations.messages[store.translations.activeLocale]
+            store!.translations.messages[store!.translations.activeLocale]
           }
         >
           <Container>

@@ -5,8 +5,8 @@ import { ApiResponse, RootStore } from "../RootStore"
 describe("RootStore", () => {
   test("constructor should produce valid tree even with empty input object", () => {
     const store = RootStore.create({}, { fetch: mockFetch() })
-
-    expect(store.toJSON()).toEqual({
+    // for some reason store.toJSON can be undefined, ensure that it exists first
+    expect(typeof store.toJSON === "function" && store.toJSON()).toEqual({
       education: {
         info: {
           basicInformation: { fi: "", sv: "" },

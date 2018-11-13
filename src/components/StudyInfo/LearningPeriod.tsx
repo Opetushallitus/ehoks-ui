@@ -25,6 +25,7 @@ interface LearningPeriodProps {
 export class LearningPeriod extends React.Component<LearningPeriodProps> {
   render() {
     const { accentColor, learningPeriod } = this.props
+    const { assignments = [] } = learningPeriod
     return (
       <Container>
         <Title accentColor={accentColor}>
@@ -57,7 +58,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
             if (matches) {
               return (
                 <MobileSlider>
-                  {learningPeriod.assignments.map((assignment, i) => {
+                  {assignments.map((assignment, i) => {
                     return <Slide key={i}>{assignment}</Slide>
                   })}
                 </MobileSlider>
@@ -65,7 +66,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
             } else {
               return (
                 <InfoContainer>
-                  {learningPeriod.assignments.map((assignment, i) => {
+                  {assignments.map((assignment, i) => {
                     return <li key={i}>{assignment}</li>
                   })}
                 </InfoContainer>

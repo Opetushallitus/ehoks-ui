@@ -116,14 +116,14 @@ export class AmmattitutkintoHaku extends React.Component<
     if (this.state.searchTimeout) {
       window.clearTimeout(this.state.searchTimeout)
     }
-    this.props.store.oppilas.tyhjennaPerusteet()
+    this.props.store!.oppilas.tyhjennaPerusteet()
 
     this.setState({
       activePage: 0,
       searchText,
       searchTimeout: setTimeout(() => {
         if (searchText.length > 0) {
-          this.props.store.oppilas.haePerusteet(searchText)
+          this.props.store!.oppilas.haePerusteet(searchText)
         }
       }, 300)
     })
@@ -142,7 +142,7 @@ export class AmmattitutkintoHaku extends React.Component<
   render() {
     const { intl } = this.context
     const { store } = this.props
-    const { oppilas } = store
+    const { oppilas } = store!
     const totalPages = Math.ceil(oppilas.perusteet.length / this.state.perPage)
     return (
       <Section>

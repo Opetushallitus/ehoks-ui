@@ -48,10 +48,10 @@ export class AppErrors extends React.Component<AppErrorsProps> {
     const { intl } = this.context
     const {
       errors: { unhandled }
-    } = store
+    } = store!
     return (
       <Container>
-        {unhandled.map((error: Instance<typeof AppError>, i) => {
+        {unhandled.map((error: Instance<typeof AppError>, i: number) => {
           return (
             <ErrorNotification key={i} type="error">
               <ErrorContent>

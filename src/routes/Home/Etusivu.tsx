@@ -90,7 +90,7 @@ export class Etusivu extends React.Component<EtusivuProps> {
 
   login = (event: React.MouseEvent) => {
     event.preventDefault()
-    window.location.href = this.props.store.environment.opintopolkuLoginUrl
+    window.location.href = this.props.store!.environment.opintopolkuLoginUrl
   }
 
   render() {

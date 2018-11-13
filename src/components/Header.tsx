@@ -43,12 +43,12 @@ export interface HeaderProps {
 export class Header extends React.Component<HeaderProps> {
   logout = (event: React.MouseEvent) => {
     event.preventDefault()
-    this.props.store.session.logout()
+    this.props.store!.session.logout()
   }
 
   login = (event: React.MouseEvent) => {
     event.preventDefault()
-    window.location.href = this.props.store.environment.opintopolkuLoginUrl
+    window.location.href = this.props.store!.environment.opintopolkuLoginUrl
   }
 
   render() {
@@ -60,9 +60,9 @@ export class Header extends React.Component<HeaderProps> {
         </Link>
         <Text>{children}</Text>
         <LoginContainer>
-          {store.session.isLoggedIn ? (
+          {store!.session.isLoggedIn ? (
             <React.Fragment>
-              <User>{store.session.user.commonName}</User>
+              <User>{store!.session!.user!.commonName}</User>
               <StyledLink to="" onClick={this.logout}>
                 Kirjaudu ulos
               </StyledLink>

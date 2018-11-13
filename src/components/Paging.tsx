@@ -22,7 +22,7 @@ export class Paging extends React.Component<PagingProps> {
   }
 
   render() {
-    const { children, itemsLength, perPage } = this.props
+    const { children, itemsLength = 0, perPage = 0 } = this.props
     const { activePage } = this.state
     const totalPages = Math.ceil(itemsLength / perPage)
     return children({

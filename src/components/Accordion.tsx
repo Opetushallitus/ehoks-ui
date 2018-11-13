@@ -135,8 +135,14 @@ export class Accordion extends React.Component<AccordionProps> {
     intl: intlShape
   }
   onEnter = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter" && this.props.id === document.activeElement.id) {
-      this.props.onToggle()
+    const { id, onToggle } = this.props
+    if (
+      typeof onToggle === "function" &&
+      event.key === "Enter" &&
+      document.activeElement &&
+      id === document.activeElement.id
+    ) {
+      onToggle()
     }
   }
 

@@ -87,7 +87,7 @@ export class MobileSlider extends React.Component<
   }
 
   render() {
-    const { children, footer, showCount = true } = this.props
+    const { children = [], footer, showCount = true } = this.props
     if (!children.length) {
       return null
     }

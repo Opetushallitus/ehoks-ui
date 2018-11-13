@@ -23,11 +23,11 @@ export class Home extends React.Component<HomeProps & RouteComponentProps> {
   componentDidMount() {
     const { store } = this.props
     reaction(
-      () => store.session.isLoggedIn,
+      () => store!.session.isLoggedIn,
       isLoggedIn => {
         // navigate to Opintopolku logout url after logging out
         if (!isLoggedIn) {
-          window.location.href = this.props.store.environment.opintopolkuLogoutUrl
+          window.location.href = this.props.store!.environment.opintopolkuLogoutUrl
         }
       }
     )
@@ -41,7 +41,7 @@ export class Home extends React.Component<HomeProps & RouteComponentProps> {
     const path = this.props["*"]
     return (
       <Container>
-        {store.session.isLoggedIn ? <SignedIn /> : <Etusivu path={path} />}
+        {store!.session.isLoggedIn ? <SignedIn /> : <Etusivu path={path} />}
       </Container>
     )
   }
