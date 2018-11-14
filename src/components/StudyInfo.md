@@ -1,4 +1,4 @@
-## Planned study
+### Planned study
 
 ```js
 <StudyInfo
@@ -22,7 +22,7 @@
 />
 ```
 
-## Completed study
+### Completed study
 
 ```js
 <StudyInfo
@@ -46,7 +46,7 @@
 />
 ```
 
-## Unscheduled study
+### Unscheduled study
 
 ```js
 <StudyInfo
