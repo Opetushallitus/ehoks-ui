@@ -38,9 +38,13 @@ const IconContainer = styled("div")`
 `
 
 export interface ChartBoxProps {
+  /** Container background color */
   backgroundColor?: string
+  /** Container CSS 'flex' property */
   flex?: number
+  /** Icon to show in the background */
   icon?: React.ReactNode
+  /** Container CSS 'padding' property */
   padding?: string
 }
 

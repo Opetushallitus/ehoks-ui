@@ -48,7 +48,10 @@ export class Tavoitteet extends React.Component<
   }
 
   render() {
-    const { user } = this.props.session
+    const { user } = this.props.session!
+    if (!user) {
+      return null
+    }
     const {
       intl: { formatMessage }
     } = this.context

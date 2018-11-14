@@ -68,11 +68,11 @@ export class Details extends React.Component<DetailsProps> {
   render() {
     const {
       accentColor,
-      demonstrations,
+      demonstrations = [],
       expanded,
-      fadedColor,
-      learningPeriods,
-      locations,
+      fadedColor = "",
+      learningPeriods = [],
+      locations = [],
       toggle
     } = this.props
     const { intl } = this.context

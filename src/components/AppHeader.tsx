@@ -119,7 +119,7 @@ export interface AppHeaderProps {
 export class AppHeader extends React.Component<AppHeaderProps> {
   logout = (event: React.MouseEvent) => {
     event.preventDefault()
-    this.props.session.logout()
+    this.props.session!.logout()
   }
 
   render() {
@@ -162,9 +162,9 @@ export class AppHeader extends React.Component<AppHeaderProps> {
             </h3>
           </MobileMenu>
           <Title>eHOKS</Title>
-          {session.isLoggedIn && (
+          {session!.isLoggedIn && (
             <LogoutContainer>
-              <User>{session.user.commonName}</User>
+              <User>{session!.user!.commonName}</User>
               <LogoutLink to="" onClick={this.logout}>
                 <FormattedMessage
                   id="header.logoutButton"

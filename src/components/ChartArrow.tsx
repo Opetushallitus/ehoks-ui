@@ -2,7 +2,7 @@ import styled from "styled"
 
 const defaultSize = 30
 const defaultBorderWidth = 5
-const borderWidth = (size: number, borderSize: number) => {
+const getBorderWidth = (size: number, borderSize: number) => {
   return size + Math.round(borderSize * Math.cos(Math.PI / 4) * 2)
 }
 
@@ -32,15 +32,15 @@ const ChartArrow = styled("div")`
   }
 
   &:after {
-    border-width: ${(props: ChartArrowProps) =>
-      props.size ? `${props.size}px` : `${defaultSize}px`};
+    border-width: ${({ size }: ChartArrowProps) =>
+      size ? `${size}px` : `${defaultSize}px`};
   }
 
   &:before {
-    border-width: ${(props: ChartArrowProps) =>
-      props.borderWidth
-        ? `${borderWidth(props.size, props.borderWidth)}px`
-        : `${borderWidth(defaultSize, defaultBorderWidth)}px`};
+    border-width: ${({ size, borderWidth }: ChartArrowProps) =>
+      size && borderWidth
+        ? `${getBorderWidth(size, borderWidth)}px`
+        : `${getBorderWidth(defaultSize, defaultBorderWidth)}px`};
   }
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
@@ -48,16 +48,15 @@ const ChartArrow = styled("div")`
       border-width: 10px;
     }
     &:before {
-      border-width: ${borderWidth(10, 5)}px;
+      border-width: ${getBorderWidth(10, 5)}px;
     }
   }
 `
 
 export const ChartArrowLeft = styled(ChartArrow)`
   left: 0;
-  top: ${(props: ChartArrowProps) => (props.top ? props.top : "unset")};
-  bottom: ${(props: ChartArrowProps) =>
-    props.bottom ? props.bottom : "unset"};
+  top: ${({ top }: ChartArrowProps) => (top ? top : "unset")};
+  bottom: ${({ bottom }: ChartArrowProps) => (bottom ? bottom : "unset")};
 
   &:after,
   &:before {
@@ -66,18 +65,18 @@ export const ChartArrowLeft = styled(ChartArrow)`
   }
 
   &:after {
-    border-right-color: ${(props: ChartArrowProps) =>
-      props.backgroundColor ? props.backgroundColor : "transparent"};
-    margin-top: ${(props: ChartArrowProps) =>
-      props.size ? `-${props.size}px` : `-${defaultSize}px`};
+    border-right-color: ${({ backgroundColor }: ChartArrowProps) =>
+      backgroundColor ? backgroundColor : "transparent"};
+    margin-top: ${({ size }: ChartArrowProps) =>
+      size ? `-${size}px` : `-${defaultSize}px`};
   }
   &:before {
-    border-right-color: ${(props: ChartArrowProps) =>
-      props.borderColor ? props.borderColor : "#fff"};
-    margin-top: ${(props: ChartArrowProps) =>
-      props.borderWidth
-        ? `-${borderWidth(props.size, props.borderWidth)}px`
-        : `-${borderWidth(defaultSize, defaultBorderWidth)}px`};
+    border-right-color: ${({ borderColor }: ChartArrowProps) =>
+      borderColor ? borderColor : "#fff"};
+    margin-top: ${({ size, borderWidth }: ChartArrowProps) =>
+      size && borderWidth
+        ? `-${getBorderWidth(size, borderWidth)}px`
+        : `-${getBorderWidth(defaultSize, defaultBorderWidth)}px`};
   }
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
@@ -85,16 +84,15 @@ export const ChartArrowLeft = styled(ChartArrow)`
       margin-top: -10px;
     }
     &:before {
-      margin-top: -${borderWidth(10, 5)}px;
+      margin-top: -${getBorderWidth(10, 5)}px;
     }
   }
 `
 
 export const ChartArrowRight = styled(ChartArrow)`
   right: 0;
-  top: ${(props: ChartArrowProps) => (props.top ? props.top : "unset")};
-  bottom: ${(props: ChartArrowProps) =>
-    props.bottom ? props.bottom : "unset"};
+  top: ${({ top }: ChartArrowProps) => (top ? top : "unset")};
+  bottom: ${({ bottom }: ChartArrowProps) => (bottom ? bottom : "unset")};
 
   &:after,
   &:before {
@@ -103,33 +101,33 @@ export const ChartArrowRight = styled(ChartArrow)`
   }
 
   &:after {
-    border-left-color: ${(props: ChartArrowProps) =>
-      props.backgroundColor ? props.backgroundColor : "transparent"};
-    margin-top: ${(props: ChartArrowProps) =>
-      props.size ? `-${props.size}px` : `-${defaultSize}px`};
+    border-left-color: ${({ backgroundColor }: ChartArrowProps) =>
+      backgroundColor ? backgroundColor : "transparent"};
+    margin-top: ${({ size }: ChartArrowProps) =>
+      size ? `-${size}px` : `-${defaultSize}px`};
   }
   &:before {
-    border-left-color: ${(props: ChartArrowProps) =>
-      props.borderColor ? props.borderColor : "#fff"};
-    margin-top: ${(props: ChartArrowProps) =>
-      props.borderWidth
-        ? `-${borderWidth(props.size, props.borderWidth)}px`
-        : `-${borderWidth(defaultSize, defaultBorderWidth)}px`};
+    border-left-color: ${({ borderColor }: ChartArrowProps) =>
+      borderColor ? borderColor : "#fff"};
+    margin-top: ${({ size, borderWidth }: ChartArrowProps) =>
+      size && borderWidth
+        ? `-${getBorderWidth(size, borderWidth)}px`
+        : `-${getBorderWidth(defaultSize, defaultBorderWidth)}px`};
   }
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     &:after {
       margin-top: -10px;
     }
     &:before {
-      margin-top: -${borderWidth(10, 5)}px;
+      margin-top: -${getBorderWidth(10, 5)}px;
     }
   }
 `
 
 export const ChartArrowTop = styled(ChartArrow)`
   top: 0;
-  left: ${(props: ChartArrowProps) => (props.left ? props.left : "unset")};
-  right: ${(props: ChartArrowProps) => (props.right ? props.right : "unset")};
+  left: ${({ left }: ChartArrowProps) => (left ? left : "unset")};
+  right: ${({ right }: ChartArrowProps) => (right ? right : "unset")};
 
   &:after,
   &:before {
@@ -138,18 +136,18 @@ export const ChartArrowTop = styled(ChartArrow)`
   }
 
   &:after {
-    border-bottom-color: ${(props: ChartArrowProps) =>
-      props.backgroundColor ? props.backgroundColor : "transparent"};
-    margin-left: ${(props: ChartArrowProps) =>
-      props.size ? `-${props.size}px` : `-${defaultSize}px`};
+    border-bottom-color: ${({ backgroundColor }: ChartArrowProps) =>
+      backgroundColor ? backgroundColor : "transparent"};
+    margin-left: ${({ size }: ChartArrowProps) =>
+      size ? `-${size}px` : `-${defaultSize}px`};
   }
   &:before {
-    border-bottom-color: ${(props: ChartArrowProps) =>
-      props.borderColor ? props.borderColor : "#fff"};
-    margin-left: ${(props: ChartArrowProps) =>
-      props.borderWidth
-        ? `-${borderWidth(props.size, props.borderWidth)}px`
-        : `-${borderWidth(defaultSize, defaultBorderWidth)}px`};
+    border-bottom-color: ${({ borderColor }: ChartArrowProps) =>
+      borderColor ? borderColor : "#fff"};
+    margin-left: ${({ size, borderWidth }: ChartArrowProps) =>
+      size && borderWidth
+        ? `-${getBorderWidth(size, borderWidth)}px`
+        : `-${getBorderWidth(defaultSize, defaultBorderWidth)}px`};
   }
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
@@ -157,15 +155,15 @@ export const ChartArrowTop = styled(ChartArrow)`
       margin-left: -10px;
     }
     &:before {
-      margin-left: -${borderWidth(10, 5)}px;
+      margin-left: -${getBorderWidth(10, 5)}px;
     }
   }
 `
 
 export const ChartArrowBottom = styled(ChartArrow)`
   bottom: 0;
-  left: ${(props: ChartArrowProps) => (props.left ? props.left : "unset")};
-  right: ${(props: ChartArrowProps) => (props.right ? props.right : "unset")};
+  left: ${({ left }: ChartArrowProps) => (left ? left : "unset")};
+  right: ${({ right }: ChartArrowProps) => (right ? right : "unset")};
 
   &:after,
   &:before {
@@ -174,18 +172,18 @@ export const ChartArrowBottom = styled(ChartArrow)`
   }
 
   &:after {
-    border-top-color: ${(props: ChartArrowProps) =>
-      props.backgroundColor ? props.backgroundColor : "transparent"};
-    margin-left: ${(props: ChartArrowProps) =>
-      props.size ? `-${props.size}px` : `-${defaultSize}px`};
+    border-top-color: ${({ backgroundColor }: ChartArrowProps) =>
+      backgroundColor ? backgroundColor : "transparent"};
+    margin-left: ${({ size }: ChartArrowProps) =>
+      size ? `-${size}px` : `-${defaultSize}px`};
   }
   &:before {
-    border-top-color: ${(props: ChartArrowProps) =>
-      props.borderColor ? props.borderColor : "#fff"};
-    margin-left: ${(props: ChartArrowProps) =>
-      props.borderWidth
-        ? `-${borderWidth(props.size, props.borderWidth)}px`
-        : `-${borderWidth(defaultSize, defaultBorderWidth)}px`};
+    border-top-color: ${({ borderColor }: ChartArrowProps) =>
+      borderColor ? borderColor : "#fff"};
+    margin-left: ${({ borderWidth, size }: ChartArrowProps) =>
+      size && borderWidth
+        ? `-${getBorderWidth(size, borderWidth)}px`
+        : `-${getBorderWidth(defaultSize, defaultBorderWidth)}px`};
   }
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
@@ -193,7 +191,7 @@ export const ChartArrowBottom = styled(ChartArrow)`
       margin-left: -10px;
     }
     &:before {
-      margin-left: -${borderWidth(10, 5)}px;
+      margin-left: -${getBorderWidth(10, 5)}px;
     }
   }
 `

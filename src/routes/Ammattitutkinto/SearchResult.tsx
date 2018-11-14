@@ -39,7 +39,7 @@ const Values = styled("div")`
 `
 
 interface SearchResultProps {
-  result?: IPeruste
+  result: IPeruste
 }
 
 export class SearchResult extends React.Component<SearchResultProps> {

@@ -59,18 +59,18 @@ export interface SectionItemProps {
   children?: React.ReactNode
   /** Text below circle */
   title?: React.ReactNode
-  /** Selected circle has solid background without progress indicator */
+  /** Selected circle has solid background */
   selected?: boolean
   /** Click handler function */
   onClick?: () => void
 }
 
 /**
- * Clickable circular progress button with title
+ * Clickable circular navigation button with title
  */
 export class SectionItem extends React.Component<SectionItemProps> {
   render() {
-    const { children, title, onClick, selected } = this.props
+    const { children, title, onClick, selected = false } = this.props
     return (
       <Container onClick={onClick}>
         <Item selected={selected}>{children}</Item>

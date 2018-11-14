@@ -162,14 +162,13 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       demonstrations = [],
       fadedColor,
       locations = [],
-      learningPeriods: periods,
+      learningPeriods: periods = [],
       title,
       width = "25%"
     } = this.props
-    const learningPeriods: TempLearningPeriod[] =
-      periods && periods.length
-        ? this.props.learningPeriods
-        : [{ approved: "", period: ["", ""] }]
+    const learningPeriods: TempLearningPeriod[] = periods.length
+      ? periods
+      : [{ approved: "", period: ["", ""] }]
     const { expandedCompetences, expanded } = this.state
 
     const hasDetails =

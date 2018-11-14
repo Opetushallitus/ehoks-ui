@@ -1,6 +1,6 @@
 import { Location, navigate, Router } from "@reach/router"
 import Flag from "components/icons/Flag"
-import { SectionItem } from "components/SectionNavigation"
+import { SectionItem } from "components/SectionItem"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"

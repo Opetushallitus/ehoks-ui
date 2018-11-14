@@ -8,18 +8,19 @@ interface LearningPeriodDatesProps {
 }
 export const LearningPeriodDates = injectIntl(
   ({ learningPeriod, intl }: LearningPeriodDatesProps & InjectedIntlProps) => {
-    return learningPeriod.approved ? (
+    const { approved, period = [] } = learningPeriod
+    return approved ? (
       <span>
         {intl.formatMessage({
           defaultMessage: "Hyväksytty",
           id: "opiskelusuunnitelma.approved"
         })}{" "}
-        {format(learningPeriod.approved, "d.M.yyyy")}
+        {format(approved, "d.M.yyyy")}
       </span>
-    ) : learningPeriod.period[0] && learningPeriod.period[1] ? (
+    ) : period[0] && period[1] ? (
       <span>
-        {format(learningPeriod.period[0], "d.M.")} {" - "}
-        {format(learningPeriod.period[1], "d.M.yyyy")}
+        {format(period[0], "d.M.")} {" - "}
+        {format(period[1], "d.M.yyyy")}
       </span>
     ) : null
   }

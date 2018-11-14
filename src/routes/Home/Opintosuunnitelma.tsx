@@ -361,19 +361,29 @@ export class Opintosuunnitelma extends React.Component<
       ...state,
       activeAccordions: {
         ...state.activeAccordions,
-        [accordion]:
-          typeof state.activeAccordions[accordion] === "boolean"
-            ? !state.activeAccordions[accordion]
-            : {
-                ...(state.activeAccordions[accordion] as {
-                  [subAccordionName: string]: boolean
-                }),
-                [subAccordion]: !(state.activeAccordions[accordion] as {
-                  [subAccordionName: string]: boolean
-                })[subAccordion]
-              }
+        [accordion]: !subAccordion
+          ? !state.activeAccordions[accordion]
+          : this.toggleSubAccordion(
+              state.activeAccordions[accordion],
+              subAccordion
+            )
       }
     }))
+  }
+
+  toggleSubAccordion = (
+    accordion: boolean | { [subAccordionName: string]: boolean },
+    subAccordion: string
+  ) => {
+    // no-op if accordion with sub-accordion has been accidentally initalized as boolean
+    if (typeof accordion === "boolean") {
+      return accordion
+    } else {
+      return {
+        ...accordion,
+        [subAccordion]: !accordion[subAccordion]
+      }
+    }
   }
 
   render() {

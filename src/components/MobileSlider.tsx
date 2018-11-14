@@ -3,10 +3,6 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md"
 import SwipeableViews from "react-swipeable-views"
 import styled from "styled"
 
-export const Slide = styled("div")`
-  padding: 20px 25px 40px 25px;
-`
-
 const Container = styled("div")`
   display: flex;
   flex-direction: column;
@@ -87,7 +83,7 @@ export class MobileSlider extends React.Component<
   }
 
   render() {
-    const { children, footer, showCount = true } = this.props
+    const { children = [], footer, showCount = true } = this.props
     if (!children.length) {
       return null
     }
@@ -113,3 +109,7 @@ export class MobileSlider extends React.Component<
     )
   }
 }
+
+export const Slide = styled("div")`
+  padding: 20px 25px 40px 25px;
+`

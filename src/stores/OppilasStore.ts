@@ -17,16 +17,25 @@ export const OppilasStore = types
 
     const haePerusteet = flow(function*(name: string): any {
       self.isLoading = true
-      const fetchPromise = root.fetchCollection(
-        apiUrl(`external/eperusteet/?nimi=${name}`)
-      )
-      newestPromise = fetchPromise
-      const response = yield fetchPromise
-      // react only to most recent search by user
-      if (newestPromise === fetchPromise) {
-        self.perusteet = response.data
+      try {
+        const fetchPromise = root.fetchCollection(
+          apiUrl(`external/eperusteet/?nimi=${name}`)
+        )
+        newestPromise = fetchPromise
+        const response = yield fetchPromise
+        // react only to most recent search by user
+        if (newestPromise === fetchPromise) {
+          self.perusteet = response.data
+          self.isLoading = false
+        }
+      } catch (error) {
+        root.errors.logError(
+          "OppilasStore.haePerusteet",
+          "Ammatillisten tutkintojen haku epäonnistui",
+          error.message
+        )
+        self.isLoading = false
       }
-      self.isLoading = false
     })
 
     const tyhjennaPerusteet = () => {

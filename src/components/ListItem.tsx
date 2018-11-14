@@ -39,7 +39,7 @@ export class ListItem extends React.Component<ListItemProps> {
     const { avatar, title, subtitle, date, className } = this.props
     return (
       <ListItemContainer className={className}>
-        <AvatarImage src={avatar} />
+        {avatar && <AvatarImage src={avatar} />}
 
         <TitleContainer>
           <h1>{title}</h1>

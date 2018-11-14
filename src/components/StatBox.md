@@ -1,4 +1,4 @@
-## Complete example with StatBoxes, StatNumber and StatTitle
+### Complete example with StatBoxes, StatNumber and StatTitle
 
 ```js
 const { StatBoxes, StatNumber, StatTitle } = require("components/StatBox")
