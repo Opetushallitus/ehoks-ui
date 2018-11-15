@@ -8,7 +8,7 @@
     "styleguide": "styleguidist server",
     "lint": "tslint src/*.tsx src/**/*.tsx",
     "test": "jest",
-    "build": "webpack --config webpack.config.js --mode production"
+    "build": "webpack --config webpack.config.production.js --mode production"
   },
   "private": true,
   "author": "Lari Hoppula",
