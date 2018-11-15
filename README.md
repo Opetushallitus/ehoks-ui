@@ -12,6 +12,8 @@ Frontend repository for [eHOKS project](https://confluence.csc.fi/display/OPHPAL
 
 `npm run styleguide` launches [react-styleguidist](https://react-styleguidist.js.org/) styleguide server in [localhost:6060](http://localhost:6060/)
 
+`npm run extract_translations` will parse all TypeScript source code for `<FormattedMessage />` components and extract their `id` & `defaultMessage` pairs to `translations.json`.
+
 ## Technologies used
 
 - [React](https://facebook.github.io/react/) for rendering views
