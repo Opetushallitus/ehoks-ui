@@ -6,8 +6,7 @@ import { StatBox, StatBoxes, StatNumber, StatTitle } from "components/StatBox"
 import { StudyInfo } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
-import { Heading } from "routes/Home/Heading"
-import { SectionContainer } from "routes/Home/SectionContainer"
+import { Heading } from "routes/Etusivu/Heading"
 import styled from "styled"
 
 // TODO: map real API response after this in Model's views
@@ -394,7 +393,7 @@ export class Opiskelusuunnitelma extends React.Component<
     })
 
     return (
-      <SectionContainer>
+      <React.Fragment>
         <Heading>
           <FormattedMessage
             id="opiskelusuunnitelma.title"
@@ -685,7 +684,7 @@ export class Opiskelusuunnitelma extends React.Component<
         >
           opiskeluvalmiuksia tukevat opinnot
         </Accordion>
-      </SectionContainer>
+      </React.Fragment>
     )
   }
 }

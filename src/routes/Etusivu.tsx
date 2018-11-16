@@ -2,24 +2,19 @@ import { RouteComponentProps } from "@reach/router"
 import { reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
-import { Etusivu } from "routes/Home/Etusivu"
-import { SignedIn } from "routes/Home/SignedIn"
+import { Kirjautumaton } from "routes/Etusivu/Kirjautumaton"
+import { OmienOpintojenSuunnittelu } from "routes/Etusivu/OmienOpintojenSuunnittelu"
 import { IRootStore } from "stores/RootStore"
-import styled from "styled"
 
-const Container = styled("div")`
-  max-width: ${props => props.theme.maxWidth}px;
-  margin: 0 auto;
-`
-
-export interface HomeProps {
+export interface EtusivuProps {
   store?: IRootStore
-  "*"?: string
 }
 
 @inject("store")
 @observer
-export class Home extends React.Component<HomeProps & RouteComponentProps> {
+export class Etusivu extends React.Component<
+  EtusivuProps & RouteComponentProps
+> {
   componentDidMount() {
     const { store } = this.props
     reaction(
@@ -38,11 +33,14 @@ export class Home extends React.Component<HomeProps & RouteComponentProps> {
 
   render() {
     const { store } = this.props
-    const path = this.props["*"]
     return (
-      <Container>
-        {store!.session.isLoggedIn ? <SignedIn /> : <Etusivu path={path} />}
-      </Container>
+      <React.Fragment>
+        {store!.session.isLoggedIn ? (
+          <OmienOpintojenSuunnittelu />
+        ) : (
+          <Kirjautumaton />
+        )}
+      </React.Fragment>
     )
   }
 }

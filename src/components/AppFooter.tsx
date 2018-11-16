@@ -32,7 +32,6 @@ const SocialMediaIcon = styled("img")`
 const FooterContainer = styled("footer")`
   width: 100%;
   background-color: #f8f8f8;
-  margin-top: 10px;
   border-top: 1px solid #c8cdcf;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
