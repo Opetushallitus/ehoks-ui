@@ -5,7 +5,7 @@ import { EnvironmentStore } from "stores/EnvironmentStore"
 import { OppilasStore } from "stores/OppilasStore"
 import { SessionStore } from "stores/SessionStore"
 import { TranslationStore } from "stores/TranslationStore"
-import { WorkplaceProviderStore } from "stores/WorkplaceProviderStore"
+import { TyopaikanToimijaStore } from "stores/TyopaikanToimijaStore"
 
 export interface ApiResponse<T> {
   meta: {
@@ -25,7 +25,7 @@ const RootStoreModel = {
   oppilas: types.optional(OppilasStore, {}),
   session: types.optional(SessionStore, {}),
   translations: types.optional(TranslationStore, {}),
-  work: types.optional(WorkplaceProviderStore, { info: {} })
+  tyopaikanToimija: types.optional(TyopaikanToimijaStore, {})
 }
 
 export const RootStore = types

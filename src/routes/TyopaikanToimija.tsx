@@ -29,7 +29,7 @@ export class TyopaikanToimija extends React.Component<TyopaikanToimijaProps> {
             <PaddedContent>
               <MainHeading>
                 <FormattedMessage
-                  id="tyopaikantoimija.title"
+                  id="tyopaikanToimija.title"
                   defaultMessage="Ammatillisten opintojen henkilökohtaistaminen"
                 />
               </MainHeading>
@@ -42,7 +42,7 @@ export class TyopaikanToimija extends React.Component<TyopaikanToimijaProps> {
             <PaddedContent>
               <Heading>
                 <FormattedMessage
-                  id="tyopaikantoimija.tyopaikallaOppijatTitle"
+                  id="tyopaikanToimija.tyopaikallaOppijatTitle"
                   defaultMessage="Työpaikalla oppijat"
                 />
               </Heading>
