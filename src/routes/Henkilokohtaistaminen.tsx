@@ -66,13 +66,13 @@ export class Henkilokohtaistaminen extends React.Component<
               <MdHome size="24" color="#fff" />
             </HomeOrb>
             <FormattedMessage
-              id="henkilokohtaistaminen.backToFrontpage"
+              id="navigaatio.palaaAloitussivulleLink"
               defaultMessage="Palaa aloitussivulle"
             />
           </HomeLink>
           <BackLink to="../">
             <FormattedMessage
-              id="henkilokohtaistaminen.backToLandingPage"
+              id="navigaatio.palaaEtusivulleLink"
               defaultMessage="Etusivu - Mitä ammatillinen tutkinto sisältää?"
             />
           </BackLink>
@@ -80,7 +80,7 @@ export class Henkilokohtaistaminen extends React.Component<
             <Section>
               <SectionTitle>
                 <FormattedMessage
-                  id="henkilokohtaistaminen.backToFrontpage"
+                  id="henkilokohtaistaminen.title"
                   defaultMessage="Mitä opiskelujen henkilökohtaistaminen tarkoittaa?"
                 />
               </SectionTitle>
@@ -102,7 +102,7 @@ export class Henkilokohtaistaminen extends React.Component<
                   <ChartContent>
                     <h2>
                       <FormattedMessage
-                        id="henkilokohtaistaminen.tavoitteeniAsettaminen"
+                        id="henkilokohtaistaminen.tavoitteeniAsettaminenTitle"
                         defaultMessage="Tavoitteeni asettaminen"
                       />
                     </h2>
@@ -137,7 +137,7 @@ export class Henkilokohtaistaminen extends React.Component<
                   <ChartContent>
                     <h2>
                       <FormattedMessage
-                        id="henkilokohtaistaminen.mitaOsaanJo"
+                        id="henkilokohtaistaminen.mitaOsaanJoTitle"
                         defaultMessage="Mitä osaan jo?"
                       />
                     </h2>
@@ -167,7 +167,7 @@ export class Henkilokohtaistaminen extends React.Component<
                   <ChartContent>
                     <h2>
                       <FormattedMessage
-                        id="henkilokohtaistaminen.osaamisenHankkiminen"
+                        id="henkilokohtaistaminen.osaamisenHankkiminenTitle"
                         defaultMessage="Osaamisen hankkiminen"
                       />
                     </h2>
@@ -215,7 +215,7 @@ export class Henkilokohtaistaminen extends React.Component<
                   <ChartContent>
                     <h2>
                       <FormattedMessage
-                        id="henkilokohtaistaminen.mitaPuuttuu"
+                        id="henkilokohtaistaminen.mitaPuuttuuTitle"
                         defaultMessage="Mitä osaamista minulta puuttuu?"
                       />
                     </h2>
@@ -249,7 +249,7 @@ export class Henkilokohtaistaminen extends React.Component<
                   <ChartContent>
                     <h2>
                       <FormattedMessage
-                        id="henkilokohtaistaminen.osaamisenOsoittaminen"
+                        id="henkilokohtaistaminen.osaamisenOsoittaminenTitle"
                         defaultMessage="Osaamisen osoittaminen"
                       />
                     </h2>
@@ -293,7 +293,7 @@ export class Henkilokohtaistaminen extends React.Component<
                   <ChartContent>
                     <h2>
                       <FormattedMessage
-                        id="henkilokohtaistaminen.osatavoiteSaavutettu"
+                        id="henkilokohtaistaminen.osatavoiteSaavutettuTitle"
                         defaultMessage="Osatavoite saavutettu"
                       />
                     </h2>
@@ -318,7 +318,7 @@ export class Henkilokohtaistaminen extends React.Component<
                     <Ribbon size={80} />
                     <h2>
                       <FormattedMessage
-                        id="henkilokohtaistaminen.tavoitteenSaavuttaminen"
+                        id="henkilokohtaistaminen.tavoitteenSaavuttaminenTitle"
                         defaultMessage="Tavoitteen saavuttaminen"
                       />
                     </h2>

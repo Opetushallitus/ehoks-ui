@@ -215,7 +215,6 @@ export class AppFooter extends React.Component<{}> {
               <OpintopolkuLogo
                 src={opintopolku}
                 alt={intl.formatMessage({
-                  defaultMessage: "Opintopolku logo",
                   id: "footer.opintopolkuLogoLabel"
                 })}
               />
@@ -230,19 +229,19 @@ export class AppFooter extends React.Component<{}> {
               </li>
               <li>
                 <FormattedMessage
-                  id="footer.opintoPolkuLink"
+                  id="footer.opintopolkuLink"
                   defaultMessage="Mikä on opintopolku"
                 />
               </li>
               <li>
                 <FormattedMessage
-                  id="footer.registerDescriptionLink"
+                  id="footer.tietoturvaselosteLink"
                   defaultMessage="Tietoturvaseloste"
                 />
               </li>
               <li>
                 <FormattedMessage
-                  id="footer.feedbackLink"
+                  id="footer.palauteLink"
                   defaultMessage="Anna palautetta"
                 />
               </li>
@@ -254,7 +253,6 @@ export class AppFooter extends React.Component<{}> {
                 className={logo}
                 src={okmLogo}
                 alt={intl.formatMessage({
-                  defaultMessage: "Opetus- ja kulttuuriministeriö logo",
                   id: "footer.okmLogoLabel"
                 })}
               />
@@ -262,7 +260,6 @@ export class AppFooter extends React.Component<{}> {
                 className={logo}
                 src={ophLogo}
                 alt={intl.formatMessage({
-                  defaultMessage: "Opetushallitus logo",
                   id: "footer.ophLogoLabel"
                 })}
               />
@@ -270,7 +267,7 @@ export class AppFooter extends React.Component<{}> {
             <Disclaimer>
               <p>
                 <FormattedMessage
-                  id="footer.description"
+                  id="footer.kuvaus"
                   defaultMessage="Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja
               koulutuksistaan Opintopolku.fi-palvelussa. Tietojen oikeellisuuden
               voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta."
@@ -280,19 +277,19 @@ export class AppFooter extends React.Component<{}> {
                 <LanguageVersions>
                   <a>
                     <FormattedMessage
-                      id="footer.finnishLocale"
+                      id="footer.finnishLocaleLink"
                       defaultMessage="Suomeksi"
                     />
                   </a>
                   <a>
                     <FormattedMessage
-                      id="footer.englishLocale"
+                      id="footer.englishLocaleLink"
                       defaultMessage="In English"
                     />
                   </a>
                   <a>
                     <FormattedMessage
-                      id="footer.swedishLocale"
+                      id="footer.swedishLocaleLink"
                       defaultMessage="På svenska"
                     />
                   </a>

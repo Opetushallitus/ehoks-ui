@@ -84,12 +84,12 @@ export class CompetenceRequirement extends React.Component<
           <ToggleAssessment onClick={expand} data-testid="ToggleAssessment">
             {expanded ? (
               <FormattedMessage
-                id="opiskelusuunnitelma.hideAssessment"
+                id="opiskelusuunnitelma.piilotaKriteeritLink"
                 defaultMessage="Piilota arviointikriteerit"
               />
             ) : (
               <FormattedMessage
-                id="opiskelusuunnitelma.showAssessment"
+                id="opiskelusuunnitelma.naytaKriteeritLink"
                 defaultMessage="Näytä arviointikriteerit"
               />
             )}

@@ -107,7 +107,7 @@ export class Etusivu extends React.Component<EtusivuProps> {
             </Header>
             <p>
               <FormattedMessage
-                id="etusivu.description"
+                id="etusivu.kuvaus"
                 defaultMessage="eHOKS palvelussa voit kirjautumalla siirtyä henkilökohtaiseen
               opintojen suunnitteluun. Ilman kirjautumista voit tutustua eri
               alojen ammattitaitovaatimuksiin ja osaamistavoitteisiin."
@@ -117,7 +117,7 @@ export class Etusivu extends React.Component<EtusivuProps> {
           <LoginContainer>
             <LoginButton onClick={this.login}>
               <FormattedMessage
-                id="etusivu.loginButton"
+                id="etusivu.kirjauduButtonLabel"
                 defaultMessage="Kirjaudu omaan suunnitelmaan"
               />
             </LoginButton>
@@ -129,40 +129,38 @@ export class Etusivu extends React.Component<EtusivuProps> {
               to="henkilokohtaistaminen"
               title={
                 <FormattedMessage
-                  id="etusivu.individualisationTitle"
+                  id="etusivu.henkilokohtaistaminenTitle"
                   defaultMessage="Mitä opintojen henkilökohtaistaminen tarkoittaa?"
                 />
               }
               description={
                 <FormattedMessage
-                  id="etusivu.individualisationDescription"
+                  id="etusivu.henkilokohtaistaminenKuvaus"
                   defaultMessage="Opiskelu sovitetaan lähtötilanteeseesi..."
                 />
               }
               image={students}
               imageLabel={intl.formatMessage({
-                defaultMessage: "Hymyileviä opiskelijoita työn touhussa",
-                id: "etusivu.henkilokohtaistaminenKuvanKuvaus"
+                id: "etusivu.henkilokohtaistaminenKuvanAriaLabel"
               })}
             />
             <StyledLinkPanel
               to="ammatillinentutkinto"
               title={
                 <FormattedMessage
-                  id="etusivu.qualificationTitle"
+                  id="etusivu.ammatillisetTutkinnotTitle"
                   defaultMessage="Mitä ammatilliset tutkinnot sisältävät?"
                 />
               }
               description={
                 <FormattedMessage
-                  id="etusivu.qualificationDescription"
+                  id="etusivu.ammatillisetTutkinnotKuvaus"
                   defaultMessage="Jokaiselle tutkinnon osalle on ammattitaitovaatimukset..."
                 />
               }
               image={education}
               imageLabel={intl.formatMessage({
-                defaultMessage: "Näppäimistön näppäin jossa lukee 'Education'",
-                id: "etusivu.ammatillisetTutkinnotKuvanKuvaus"
+                id: "etusivu.ammatillisetTutkinnotKuvanAriaLabel"
               })}
             />
           </LinkPanelContainer>

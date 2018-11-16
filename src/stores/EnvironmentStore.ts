@@ -28,11 +28,7 @@ export const EnvironmentStore = types
         self.opintopolkuLoginUrl = opintopolkuLoginUrl
         self.opintopolkuLogoutUrl = opintopolkuLogoutUrl
       } catch (error) {
-        root.errors.logError(
-          "EnvironmentStore.getEnvironment",
-          "Ympäristömuuttujien haku epäonnistui",
-          error.message
-        )
+        root.errors.logError("EnvironmentStore.getEnvironment", error.message)
       }
       self.isLoading = false
     })

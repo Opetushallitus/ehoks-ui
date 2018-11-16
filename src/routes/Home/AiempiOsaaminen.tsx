@@ -50,7 +50,7 @@ export class AiempiOsaaminen extends React.Component<
           open={this.state.activeAccordions.previousCompetence}
           title={
             <FormattedMessage
-              id="aiempiOsaaminen.previousCompetence"
+              id="aiempiOsaaminen.tunnustetutOpintoniTitle"
               defaultMessage="Tunnustetut opintoni"
             />
           }

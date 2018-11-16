@@ -1,10 +1,11 @@
 import { apiUrl } from "config"
 import { flow, getRoot, Instance, types } from "mobx-state-tree"
 import { IRootStore } from "stores/RootStore"
+import defaultMessages from "./TranslationStore/defaultMessages.json"
 
-interface ApiTranslation {
+export interface ApiTranslation {
   key: string
-  locale: string
+  locale: "fi" | "sv"
   value: string
 }
 
@@ -32,7 +33,7 @@ const TranslationStoreModel = {
     "fi"
   ),
   isLoading: false,
-  translations: types.optional(types.array(Lokalisaatio), [])
+  translations: types.array(Lokalisaatio)
 }
 
 export const TranslationStore = types
@@ -46,15 +47,17 @@ export const TranslationStore = types
 
     const haeLokalisoinnit = flow(function*(): any {
       self.isLoading = true
+      // insert defaultMessages for context.intl.formatMessage calls
+      self.translations.replace(defaultMessages as ApiTranslation[])
       try {
         const response = yield root.fetchCollection(apiUrl("lokalisointi"))
-        self.translations = mapTranslations(response.data)
+        // add custom translations from API
+        self.translations.replace([
+          ...self.translations,
+          ...mapTranslations(response.data)
+        ])
       } catch (error) {
-        root.errors.logError(
-          "TranslationStore.haeLokalisoinnit",
-          "Käännösten haku epäonnistui",
-          error.message
-        )
+        root.errors.logError("TranslationStore.haeLokalisoinnit", error.message)
       }
       self.isLoading = false
     })

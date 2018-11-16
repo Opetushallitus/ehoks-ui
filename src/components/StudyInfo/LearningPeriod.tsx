@@ -36,7 +36,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
             <tr>
               <TH>
                 <FormattedMessage
-                  id="opiskelusuunnitelma.workplaceInstructor"
+                  id="opiskelusuunnitelma.tyopaikkaohjaajaTitle"
                   defaultMessage="Työpaikkaohjaaja"
                 />
               </TH>
@@ -45,7 +45,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
             <tr>
               <TH>
                 <FormattedMessage
-                  id="opiskelusuunnitelma.assignments"
+                  id="opiskelusuunnitelma.keskeisetTyotehtavatTitle"
                   defaultMessage="Keskeiset työtehtävät"
                 />
               </TH>

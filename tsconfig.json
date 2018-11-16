@@ -10,6 +10,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "strictNullChecks": true,
+    "resolveJsonModule": true,
     "module": "esnext",
     "moduleResolution": "node",
     "target": "es5",

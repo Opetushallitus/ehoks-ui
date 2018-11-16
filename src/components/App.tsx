@@ -39,6 +39,7 @@ export class App extends React.Component<AppProps> {
           messages={
             store!.translations.messages[store!.translations.activeLocale]
           }
+          textComponent={React.Fragment}
         >
           <Container>
             <AppHeader />

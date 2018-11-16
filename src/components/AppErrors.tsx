@@ -56,17 +56,13 @@ export class AppErrors extends React.Component<AppErrorsProps> {
             <ErrorNotification key={i} type="error">
               <ErrorContent>
                 <Text>
-                  <FormattedMessage
-                    id={`errors.${error.id}`}
-                    defaultMessage={error.defaultMessage}
-                  />
-                  : {error.errorText}
+                  <FormattedMessage id={`errors.${error.id}`} />:{" "}
+                  {error.errorText}
                 </Text>
                 <IconContainer
                   onClick={error.handle}
                   aria-label={intl.formatMessage({
-                    defaultMessage: "Piilota virhe",
-                    id: "errors.hideButtonLabel"
+                    id: "errors.piilotaVirheAriaLabel"
                   })}
                 >
                   <MdClose size={20} />

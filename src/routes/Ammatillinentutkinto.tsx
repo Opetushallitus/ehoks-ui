@@ -38,13 +38,13 @@ export class Ammatillinentutkinto extends React.Component<
               <MdHome size="24" color="#fff" />
             </HomeOrb>
             <FormattedMessage
-              id="ammattitutkinto.backToFrontpage"
+              id="navigaatio.palaaAloitussivulleLink"
               defaultMessage="Palaa aloitussivulle"
             />
           </HomeLink>
           <BackLink to="../">
             <FormattedMessage
-              id="ammattitutkinto.backToLandingPage"
+              id="navigaatio.palaaEtusivulleLink"
               defaultMessage="Etusivu - Mitä ammatillinen tutkinto sisältää?"
             />
           </BackLink>

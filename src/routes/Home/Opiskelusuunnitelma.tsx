@@ -318,19 +318,19 @@ const Studies = styled("div")`
   }
 `
 
-export interface OpintosuunnitelmaProps {
+export interface OpiskelusuunnitelmaProps {
   children?: React.ReactChildren
 }
 
-export interface OpintosuunnitelmaState {
+export interface OpiskelusuunnitelmaState {
   activeAccordions: {
     [accordionName: string]: boolean | { [subAccordionName: string]: boolean }
   }
 }
 
-export class Opintosuunnitelma extends React.Component<
-  OpintosuunnitelmaProps & RouteComponentProps,
-  OpintosuunnitelmaState
+export class Opiskelusuunnitelma extends React.Component<
+  OpiskelusuunnitelmaProps & RouteComponentProps,
+  OpiskelusuunnitelmaState
 > {
   static contextTypes = {
     intl: intlShape
@@ -390,15 +390,14 @@ export class Opintosuunnitelma extends React.Component<
     const { intl } = this.context
     const { activeAccordions } = this.state
     const competencePointsTitle = intl.formatMessage({
-      defaultMessage: "osp",
-      id: "opintosuunnitelma.competencePointsAbbreviation"
+      id: "opiskelusuunnitelma.osaamispisteLyhenne"
     })
 
     return (
       <SectionContainer>
         <Heading>
           <FormattedMessage
-            id="opintosuunnitelma.title"
+            id="opiskelusuunnitelma.title"
             defaultMessage="Opiskelusuunnitelmani"
           />
         </Heading>
@@ -408,7 +407,7 @@ export class Opintosuunnitelma extends React.Component<
           open={activeAccordions.tavoitteet}
           title={
             <FormattedMessage
-              id="opintosuunnitelma.goalsAndProgress"
+              id="opiskelusuunnitelma.tavoitteetTitle"
               defaultMessage="Tavoitteeni ja opintojen eteneminen"
             />
           }
@@ -421,13 +420,13 @@ export class Opintosuunnitelma extends React.Component<
               <tr>
                 <th>
                   <FormattedMessage
-                    id="opintosuunnitelma.qualificationName"
+                    id="opiskelusuunnitelma.tutkinnonNimiTitle"
                     defaultMessage="Tutkinnon nimi"
                   />
                 </th>
                 <th>
                   <FormattedMessage
-                    id="opintosuunnitelma.scope"
+                    id="opiskelusuunnitelma.laajuusTitle"
                     defaultMessage="Laajuus"
                   />
                 </th>
@@ -436,16 +435,14 @@ export class Opintosuunnitelma extends React.Component<
               <tr>
                 <td
                   data-label={intl.formatMessage({
-                    defaultMessage: "Tutkinnon nimi",
-                    id: "opintosuunnitelma.qualificationName"
+                    id: "opiskelusuunnitelma.tutkinnonNimiTitle"
                   })}
                 >
                   Sosiaali- ja terveysalan perustutkinnon perusteet
                 </td>
                 <td
                   data-label={intl.formatMessage({
-                    defaultMessage: "Laajuus",
-                    id: "opintosuunnitelma.scope"
+                    id: "opiskelusuunnitelma.laajuusTitle"
                   })}
                 >
                   180 osaamispistettä
@@ -455,13 +452,13 @@ export class Opintosuunnitelma extends React.Component<
               <tr>
                 <th>
                   <FormattedMessage
-                    id="opintosuunnitelma.competenceArea"
+                    id="opiskelusuunnitelma.osaamisalaTitle"
                     defaultMessage="Osaamisala"
                   />
                 </th>
                 <th>
                   <FormattedMessage
-                    id="opintosuunnitelma.qualificationTitle"
+                    id="opiskelusuunnitelma.tutkintonimikeTitle"
                     defaultMessage="Tutkintonimike"
                   />
                 </th>
@@ -470,16 +467,14 @@ export class Opintosuunnitelma extends React.Component<
               <tr>
                 <td
                   data-label={intl.formatMessage({
-                    defaultMessage: "Osaamisala",
-                    id: "opintosuunnitelma.competenceArea"
+                    id: "opiskelusuunnitelma.osaamisalaTitle"
                   })}
                 >
                   Ikääntyvien hoidon ja kuntoutumisen osaamisala
                 </td>
                 <td
                   data-label={intl.formatMessage({
-                    defaultMessage: "Tutkintonimike",
-                    id: "opintosuunnitelma.qualificationTitle"
+                    id: "opiskelusuunnitelma.tutkintonimikeTitle"
                   })}
                 >
                   Lähihoitaja
@@ -493,7 +488,7 @@ export class Opintosuunnitelma extends React.Component<
               <StatNumber color="#EB6F02">2</StatNumber>
               <StatTitle>
                 <FormattedMessage
-                  id="opintosuunnitelma.plannedStudies"
+                  id="opiskelusuunnitelma.suunniteltuaOpintoaTitle"
                   defaultMessage="Suunniteltua opintoa"
                 />
               </StatTitle>
@@ -502,7 +497,7 @@ export class Opintosuunnitelma extends React.Component<
               <StatNumber color="#43A047">4</StatNumber>
               <StatTitle>
                 <FormattedMessage
-                  id="opintosuunnitelma.completedStudies"
+                  id="opiskelusuunnitelma.valmistaOpintoaTitle"
                   defaultMessage="Valmista opintoa"
                 />
               </StatTitle>
@@ -511,7 +506,7 @@ export class Opintosuunnitelma extends React.Component<
               <StatNumber color="#E2A626">6</StatNumber>
               <StatTitle>
                 <FormattedMessage
-                  id="opintosuunnitelma.unscheduledStudies"
+                  id="opiskelusuunnitelma.aikatauluttamatontaOpintoa"
                   defaultMessage="Aikatauluttamatonta opintoa"
                 />
               </StatTitle>
@@ -525,7 +520,7 @@ export class Opintosuunnitelma extends React.Component<
           open={activeAccordions.suunnitelma}
           title={
             <FormattedMessage
-              id="opintosuunnitelma.plan"
+              id="opiskelusuunnitelma.suunnitelmaTutkinnonosittainTitle"
               defaultMessage="Suunnitelma tutkinnonosittain"
             />
           }
@@ -540,7 +535,7 @@ export class Opintosuunnitelma extends React.Component<
             onToggle={this.toggleAccordion("suunnitelmat", "suunnitellut")}
             title={
               <FormattedMessage
-                id="opintosuunnitelma.plannedStudiesTitle"
+                id="opiskelusuunnitelma.aikataulutetutOpintoniTitle"
                 defaultMessage="Aikataulutetut opintoni ({amount})"
                 values={{ amount: mockPlannedStudies.length }}
               />
@@ -572,7 +567,7 @@ export class Opintosuunnitelma extends React.Component<
               {!mockPlannedStudies.length && (
                 <div>
                   <FormattedMessage
-                    id="opintosuunnitelma.noPlannedStudies"
+                    id="opiskelusuunnitelma.eiAikataulutettujaOpintojaTitle"
                     defaultMessage="Ei aikataulutettuja opintoja"
                   />
                   .
@@ -587,7 +582,7 @@ export class Opintosuunnitelma extends React.Component<
             onToggle={this.toggleAccordion("suunnitelmat", "valmiit")}
             title={
               <FormattedMessage
-                id="opintosuunnitelma.completedStudiesTitle"
+                id="opiskelusuunnitelma.valmiitOpintoniTitle"
                 defaultMessage="Valmiit opintoni ({amount})"
                 values={{ amount: mockCompletedStudies.length }}
               />
@@ -619,7 +614,7 @@ export class Opintosuunnitelma extends React.Component<
               {!mockCompletedStudies.length && (
                 <div>
                   <FormattedMessage
-                    id="opintosuunnitelma.noCompletedStudies"
+                    id="opiskelusuunnitelma.eiValmiitaOpintojaTitle"
                     defaultMessage="Ei valmiita opintoja"
                   />
                   .
@@ -634,7 +629,7 @@ export class Opintosuunnitelma extends React.Component<
             onToggle={this.toggleAccordion("suunnitelmat", "aikatauluttomat")}
             title={
               <FormattedMessage
-                id="opintosuunnitelma.unscheduledStudiesTitle"
+                id="opiskelusuunnitelma.suunnitellutOpintoniTitle"
                 defaultMessage="Suunnitellut opintoni ({amount})"
                 values={{ amount: mockUnscheduledStudies.length }}
               />
@@ -666,7 +661,7 @@ export class Opintosuunnitelma extends React.Component<
               {!mockUnscheduledStudies.length && (
                 <div>
                   <FormattedMessage
-                    id="opintosuunnitelma.noUnscheduledStudies"
+                    id="opiskelusuunnitelma.eiSuunniteltujaOpintojaTitle"
                     defaultMessage="Ei suunniteltuja opintoja"
                   />
                   .
@@ -681,7 +676,7 @@ export class Opintosuunnitelma extends React.Component<
           open={activeAccordions.tukevatOpinnot}
           title={
             <FormattedMessage
-              id="opintosuunnitelma.supportingStudies"
+              id="opiskelusuunnitelma.opiskeluvalmiuksiaTukevatOpinnotTitle"
               defaultMessage="Opiskeluvalmiuksia tukevat opinnot"
             />
           }

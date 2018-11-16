@@ -58,7 +58,7 @@ export class SearchResult extends React.Component<SearchResultProps> {
               <div>
                 <strong>
                   <FormattedMessage
-                    id="ammattitutkinto.qualificationTitles"
+                    id="ammattitutkinto.tutkintonimikkeetTitle"
                     defaultMessage="Tutkintonimikkeet"
                   />
                 </strong>
@@ -69,7 +69,7 @@ export class SearchResult extends React.Component<SearchResultProps> {
               <div>
                 <strong>
                   <FormattedMessage
-                    id="ammattitutkinto.competenceAreas"
+                    id="ammattitutkinto.osaamisalatTitle"
                     defaultMessage="Osaamisalat"
                   />
                 </strong>

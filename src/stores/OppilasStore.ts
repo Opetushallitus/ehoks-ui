@@ -29,11 +29,7 @@ export const OppilasStore = types
           self.isLoading = false
         }
       } catch (error) {
-        root.errors.logError(
-          "OppilasStore.haePerusteet",
-          "Ammatillisten tutkintojen haku epäonnistui",
-          error.message
-        )
+        root.errors.logError("OppilasStore.haePerusteet", error.message)
         self.isLoading = false
       }
     })

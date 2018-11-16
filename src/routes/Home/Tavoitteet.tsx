@@ -52,9 +52,7 @@ export class Tavoitteet extends React.Component<
     if (!user) {
       return null
     }
-    const {
-      intl: { formatMessage }
-    } = this.context
+    const { intl } = this.context
 
     return (
       <SectionContainer>
@@ -70,7 +68,7 @@ export class Tavoitteet extends React.Component<
           open={this.state.activeAccordions.personalGoal}
           title={
             <FormattedMessage
-              id="tavoitteet.personalGoal"
+              id="tavoitteet.omaTavoitteeniTitle"
               defaultMessage="Oma tavoitteeni"
             />
           }
@@ -82,7 +80,7 @@ export class Tavoitteet extends React.Component<
               <tr>
                 <th>
                   <FormattedMessage
-                    id="tavoitteet.furtherStudiesPlan"
+                    id="tavoitteet.suunnitelmaJatkoOpintoihinTitle"
                     defaultMessage="Suunnitelma jatko-opintoihin siirtymisestä"
                   />
                 </th>
@@ -91,9 +89,8 @@ export class Tavoitteet extends React.Component<
               </tr>
               <tr>
                 <td
-                  data-label={formatMessage({
-                    id: "tavoitteet.furtherStudiesPlan",
-                    defaultMessage: "Suunnitelma jatko-opintoihin siirtymisestä"
+                  data-label={intl.formatMessage({
+                    id: "tavoitteet.suunnitelmaJatkoOpintoihinTitle"
                   })}
                 >
                   Tähän tekstiä
@@ -104,7 +101,7 @@ export class Tavoitteet extends React.Component<
               <tr>
                 <th>
                   <FormattedMessage
-                    id="tavoitteet.osoite"
+                    id="tavoitteet.osoiteTitle"
                     defaultMessage="Osoite"
                   />
                 </th>
@@ -113,9 +110,8 @@ export class Tavoitteet extends React.Component<
               </tr>
               <tr>
                 <td
-                  data-label={formatMessage({
-                    id: "tavoitteet.osoite",
-                    defaultMessage: "Osoite"
+                  data-label={intl.formatMessage({
+                    id: "tavoitteet.osoiteTitle"
                   })}
                 >
                   {user.yhteystiedot.katuosoite}
@@ -126,7 +122,7 @@ export class Tavoitteet extends React.Component<
               <tr>
                 <th>
                   <FormattedMessage
-                    id="tavoitteet.email"
+                    id="tavoitteet.sahkopostiTitle"
                     defaultMessage="Sähköposti"
                   />
                 </th>
@@ -135,9 +131,8 @@ export class Tavoitteet extends React.Component<
               </tr>
               <tr>
                 <td
-                  data-label={formatMessage({
-                    id: "tavoitteet.email",
-                    defaultMessage: "Sähköposti"
+                  data-label={intl.formatMessage({
+                    id: "tavoitteet.sahkopostiTitle"
                   })}
                 >
                   {user.yhteystiedot.sahkoposti}
@@ -154,7 +149,7 @@ export class Tavoitteet extends React.Component<
           open={this.state.activeAccordions.degreeOrEducation}
           title={
             <FormattedMessage
-              id="tavoitteet.degreeOrEducation"
+              id="tavoitteet.tutkintoTaiKoulutusTitle"
               defaultMessage="Tutkinto tai koulutus"
             />
           }
@@ -165,11 +160,11 @@ export class Tavoitteet extends React.Component<
         </Accordion>
 
         <Accordion
-          id="henkiloTiedot"
+          id="henkilotiedot"
           open={this.state.activeAccordions.personalDetails}
           title={
             <FormattedMessage
-              id="tavoitteet.personalDetails"
+              id="tavoitteet.henkilotiedotTitle"
               defaultMessage="Omat henkilötiedot"
             />
           }
@@ -179,38 +174,120 @@ export class Tavoitteet extends React.Component<
           <InfoTable>
             <tbody>
               <tr>
-                <th>Etunimi Sukunimi</th>
-                <th>Kutsumanimi</th>
-                <th>Oppijanumero</th>
+                <th>
+                  <FormattedMessage
+                    id="tavoitteet.etunimiSukunimiTitle"
+                    defaultMessage="Etunimi Sukunimi"
+                  />
+                </th>
+                <th>
+                  <FormattedMessage
+                    id="tavoitteet.kutsumanimiTitle"
+                    defaultMessage="Kutsumanimi"
+                  />
+                </th>
+                <th>
+                  <FormattedMessage
+                    id="tavoitteet.oppijanumeroTitle"
+                    defaultMessage="Oppijanumero"
+                  />
+                </th>
               </tr>
               <tr>
-                <td data-label="Etunimi Sukunimi">
+                <td
+                  data-label={intl.formatMessage({
+                    id: "tavoitteet.etunimiSukunimiTitle"
+                  })}
+                >
                   {user.firstName} {user.surname}
                 </td>
-                <td data-label="Kutsumanimi">{user.commonName}</td>
-                <td data-label="Oppijanumero">{user.oid}</td>
+                <td
+                  data-label={intl.formatMessage({
+                    id: "tavoitteet.kutsumanimiTitle"
+                  })}
+                >
+                  {user.commonName}
+                </td>
+                <td
+                  data-label={intl.formatMessage({
+                    id: "tavoitteet.oppijanumeroTitle"
+                  })}
+                >
+                  {user.oid}
+                </td>
               </tr>
               <tr>
-                <th>Osoite</th>
-                <th>Postiosoite</th>
-                <th>Kotikunta</th>
+                <th>
+                  <FormattedMessage
+                    id="tavoitteet.osoiteTitle"
+                    defaultMessage="Osoite"
+                  />
+                </th>
+                <th>
+                  <FormattedMessage
+                    id="tavoitteet.postiosoiteTitle"
+                    defaultMessage="Postiosoite"
+                  />
+                </th>
+                <th>
+                  <FormattedMessage
+                    id="tavoitteet.kotikuntaTitle"
+                    defaultMessage="Kotikunta"
+                  />
+                </th>
               </tr>
               <tr>
-                <td data-label="Osoite">{user.yhteystiedot.katuosoite}</td>
-                <td data-label="Postiosoite">
+                <td
+                  data-label={intl.formatMessage({
+                    id: "tavoitteet.osoiteTitle"
+                  })}
+                >
+                  {user.yhteystiedot.katuosoite}
+                </td>
+                <td
+                  data-label={intl.formatMessage({
+                    id: "tavoitteet.postiosoiteTitle"
+                  })}
+                >
                   {user.yhteystiedot.postinumero} {user.yhteystiedot.kunta}
                 </td>
-                <td data-label="Kotikunta">{user.yhteystiedot.kunta}</td>
+                <td
+                  data-label={intl.formatMessage({
+                    id: "tavoitteet.kotikuntaTitle"
+                  })}
+                >
+                  {user.yhteystiedot.kunta}
+                </td>
               </tr>
               <tr>
-                <th>Sähköposti</th>
+                <th>
+                  <FormattedMessage
+                    id="tavoitteet.sahkopostiTitle"
+                    defaultMessage="Sähköposti"
+                  />
+                </th>
                 <th />
-                <th>Puhelinnumero</th>
+                <th>
+                  <FormattedMessage
+                    id="tavoitteet.puhelinnumeroTitle"
+                    defaultMessage="Puhelinnumero"
+                  />
+                </th>
               </tr>
               <tr>
-                <td data-label="Sähköposti">{user.yhteystiedot.sahkoposti}</td>
+                <td
+                  data-label={intl.formatMessage({
+                    id: "tavoitteet.sahkopostiTitle"
+                  })}
+                >
+                  {user.yhteystiedot.sahkoposti}
+                </td>
                 <td />
-                <td data-label="Puhelinnumero">
+                <td
+                  data-label={intl.formatMessage({
+                    id: "tavoitteet.puhelinnumeroTitle"
+                  })}
+                >
                   {user.yhteystiedot.puhelinnumero}
                 </td>
               </tr>
