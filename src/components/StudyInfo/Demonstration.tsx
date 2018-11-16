@@ -26,7 +26,7 @@ export class Demonstration extends React.Component<DemonstrationProps> {
             <tr>
               <TH>
                 <FormattedMessage
-                  id="opiskelusuunnitelma.organisation"
+                  id="opiskelusuunnitelma.nayttopaikkaTitle"
                   defaultMessage="Näyttöpaikka"
                 />
               </TH>
@@ -35,7 +35,7 @@ export class Demonstration extends React.Component<DemonstrationProps> {
             <tr>
               <TH>
                 <FormattedMessage
-                  id="opiskelusuunnitelma.environment"
+                  id="opiskelusuunnitelma.nayttoymparistoTitle"
                   defaultMessage="Näyttöympäristö"
                 />
               </TH>
@@ -44,7 +44,7 @@ export class Demonstration extends React.Component<DemonstrationProps> {
             <tr>
               <TH>
                 <FormattedMessage
-                  id="opiskelusuunnitelma.assessors"
+                  id="opiskelusuunnitelma.arvioijatTitle"
                   defaultMessage="Näytön arvioijat"
                 />
               </TH>

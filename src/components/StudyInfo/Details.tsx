@@ -89,9 +89,7 @@ export class Details extends React.Component<DetailsProps> {
             <IconContainer
               onClick={toggle("details")}
               aria-label={intl.formatMessage({
-                defaultMessage:
-                  "Piilota työssäoppimisen ja näytön laajennetut tiedot",
-                id: "opiskelusuunnitelma.collapseDetailsButtonlabel"
+                id: "opiskelusuunnitelma.piilotaTyossaOppiminenAriaLabel"
               })}
             >
               <Collapse size={40} />
@@ -129,9 +127,7 @@ export class Details extends React.Component<DetailsProps> {
             <IconContainer
               onClick={toggle("details")}
               aria-label={intl.formatMessage({
-                defaultMessage:
-                  "Näytä työssäoppimisen ja näytön laajennetut tiedot",
-                id: "opiskelusuunnitelma.expandDetailsButtonlabel"
+                id: "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel"
               })}
             >
               <Expand size={40} />

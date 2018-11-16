@@ -141,19 +141,19 @@ export class Competences extends React.Component<CompetencesProps> {
               <CollapseHeaderContainer>
                 <CollapseHeader>
                   <FormattedMessage
-                    id="opiskelusuunnitelma.competenceRequirements"
+                    id="opiskelusuunnitelma.ammattitaitovaatimuksetTitle"
                     defaultMessage="Ammattitaitovaatimukset"
                   />
                 </CollapseHeader>
                 <ToggleAllTitle onClick={allExpanded ? collapseAll : expandAll}>
                   {allExpanded ? (
                     <FormattedMessage
-                      id="opiskelusuunnitelma.collapseAllAssessments"
+                      id="opiskelusuunnitelma.piilotaKaikkiKriteeritLink"
                       defaultMessage="Piilota arviointikriteerit"
                     />
                   ) : (
                     <FormattedMessage
-                      id="opiskelusuunnitelma.showAllAssessments"
+                      id="opiskelusuunnitelma.naytaKaikkiKriteeritLink"
                       defaultMessage="Näytä kaikki arviointikriteerit"
                     />
                   )}
@@ -162,9 +162,8 @@ export class Competences extends React.Component<CompetencesProps> {
               <IconContainer
                 onClick={toggle("competences")}
                 aria-label={intl.formatMessage({
-                  defaultMessage:
-                    "Piilota ammattitaitovaatimukset ja arviointikriteerit",
-                  id: "opiskelusuunnitelma.collapseStudyInfoButtonLabel"
+                  id:
+                    "opiskelusuunnitelma.piilotaAmmattitaitovaatimuksetAriaLabel"
                 })}
               >
                 <Collapse size={40} />
@@ -176,16 +175,14 @@ export class Competences extends React.Component<CompetencesProps> {
           <ExpandContainer fadedColor={fadedColor} hasDetails={hasDetails}>
             <ExpandTitle onClick={toggle("competences")}>
               <FormattedMessage
-                id="opiskelusuunnitelma.expandStudyInfo"
+                id="opiskelusuunnitelma.naytaAmmattitaitovaatimuksetLink"
                 defaultMessage="Ammattitaitovaatimukset ja arviointikriteerit"
               />
             </ExpandTitle>
             <IconContainer
               onClick={toggle("competences")}
               aria-label={intl.formatMessage({
-                defaultMessage:
-                  "Näytä ammattitaitovaatimukset ja arviointikriteerit",
-                id: "opiskelusuunnitelma.expandStudyInfoButtonLabel"
+                id: "opiskelusuunnitelma.naytaAmmattitaitovaatimuksetAriaLabel"
               })}
             >
               <Expand size={40} />

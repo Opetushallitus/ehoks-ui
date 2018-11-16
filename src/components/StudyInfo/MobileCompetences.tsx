@@ -69,12 +69,12 @@ export class MobileCompetences extends React.Component<
               <ToggleLink onClick={this.toggleShowAssessment}>
                 {showAssessment ? (
                   <FormattedMessage
-                    id="opiskelusuunnitelma.hideAssessment"
+                    id="opiskelusuunnitelma.piilotaKriteeritLink"
                     defaultMessage="Piilota arviointikriteerit"
                   />
                 ) : (
                   <FormattedMessage
-                    id="opiskelusuunnitelma.showAssessment"
+                    id="opiskelusuunnitelma.naytaKriteeritLink"
                     defaultMessage="Näytä arviointikriteerit"
                   />
                 )}
@@ -87,7 +87,7 @@ export class MobileCompetences extends React.Component<
             return (
               <Slide key={i}>
                 <FormattedMessage
-                  id="opiskelusuunnitelma.opiskelijaOsaa"
+                  id="opiskelusuunnitelma.opiskelijaOsaaPrefix"
                   defaultMessage="Opiskelija osaa"
                 />{" "}
                 {competenceRequirement}

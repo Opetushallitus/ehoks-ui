@@ -156,7 +156,7 @@ export class AppHeader extends React.Component<AppHeaderProps> {
             <MdMenu size="40" />
             <h3>
               <FormattedMessage
-                id="header.mobileMenuTitle"
+                id="header.mobiilivalikkoTitle"
                 defaultMessage="Valikko"
               />
             </h3>
@@ -167,7 +167,7 @@ export class AppHeader extends React.Component<AppHeaderProps> {
               <User>{session!.user!.commonName}</User>
               <LogoutLink to="" onClick={this.logout}>
                 <FormattedMessage
-                  id="header.logoutButton"
+                  id="header.kirjauduUlosLink"
                   defaultMessage="Kirjaudu ulos"
                 />
               </LogoutLink>

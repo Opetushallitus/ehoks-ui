@@ -200,8 +200,7 @@ export class Accordion extends React.Component<AccordionProps> {
               trigger={
                 <HelpButton
                   aria-label={intl.formatMessage({
-                    defaultMessage: "Näytä ohjeteksti",
-                    id: "accordion.showHelpLabel"
+                    id: "accordion.naytaOhjetekstiAriaLabel"
                   })}
                 >
                   <HelpToggle size="28" color="#027fa9" />

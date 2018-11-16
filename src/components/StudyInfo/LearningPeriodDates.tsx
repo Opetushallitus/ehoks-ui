@@ -12,8 +12,7 @@ export const LearningPeriodDates = injectIntl(
     return approved ? (
       <span>
         {intl.formatMessage({
-          defaultMessage: "Hyväksytty",
-          id: "opiskelusuunnitelma.approved"
+          id: "opiskelusuunnitelma.hyvaksyttyTitle"
         })}{" "}
         {format(approved, "d.M.yyyy")}
       </span>

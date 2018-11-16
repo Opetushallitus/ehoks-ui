@@ -148,7 +148,7 @@ export class AmmattitutkintoHaku extends React.Component<
       <Section>
         <SectionTitle>
           <FormattedMessage
-            id="ammattitutkinto.searchTitle"
+            id="ammattitutkinto.hakuTitle"
             defaultMessage="Hae tietoa ammatillisista tutkinnoista"
           />
         </SectionTitle>
@@ -158,12 +158,10 @@ export class AmmattitutkintoHaku extends React.Component<
             <SearchIcon size="24" />
             <SearchInput
               placeholder={intl.formatMessage({
-                defaultMessage: "Hae tietoa",
-                id: "ammattitutkinto.searchPlaceholder"
+                id: "ammattitutkinto.hakuPlaceholder"
               })}
               aria-label={intl.formatMessage({
-                defaultMessage: "Hae tietoa",
-                id: "ammattitutkinto.searchPlaceholder"
+                id: "ammattitutkinto.hakuAriaLabel"
               })}
               onChange={this.updateSearchText}
               required={true}
@@ -172,8 +170,7 @@ export class AmmattitutkintoHaku extends React.Component<
               <Loading
                 role="alert"
                 ariaLabel={intl.formatMessage({
-                  defaultMessage: "Ammattitutkintoja ladataan",
-                  id: "ammattitutkinto.searchLoading"
+                  id: "ammattitutkinto.ammattitutkintojaLadataanAriaLabel"
                 })}
               />
             )}
@@ -184,7 +181,7 @@ export class AmmattitutkintoHaku extends React.Component<
                 <SearchResultsContainer>
                   <SearchResultsTitle>
                     <FormattedMessage
-                      id="ammattitutkinto.searchResultsTitle"
+                      id="ammattitutkinto.hakutuloksetTitle"
                       defaultMessage="Tutkinnot ({count})"
                       values={{
                         count: oppilas.perusteet.length
@@ -208,8 +205,8 @@ export class AmmattitutkintoHaku extends React.Component<
                   oppilas.perusteet.length > 0 && (
                     <PagingContainer
                       aria-label={intl.formatMessage({
-                        defaultMessage: "Hakutuloksien sivutuksen navigaatio",
-                        id: "ammattitutkinto.searchPagingNavigation"
+                        id:
+                          "ammattitutkinto.hakutuloksienSivutuksenNavigaatioAriaLabel"
                       })}
                     >
                       {range(totalPages).map(index => {
@@ -223,9 +220,8 @@ export class AmmattitutkintoHaku extends React.Component<
                             tabIndex={0}
                             aria-label={intl.formatMessage(
                               {
-                                defaultMessage:
-                                  "Mene hakutuloksien sivulle {page}",
-                                id: "ammattitutkinto.searchPagingItem"
+                                id:
+                                  "ammattitutkinto.meneHakutuloksienSivulleAriaLabel"
                               },
                               { page: index + 1 }
                             )}

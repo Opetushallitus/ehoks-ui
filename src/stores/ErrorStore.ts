@@ -3,7 +3,6 @@ import { Instance, types } from "mobx-state-tree"
 export const AppError = types
   .model("AppError", {
     id: types.string,
-    defaultMessage: types.string,
     errorText: types.string,
     handled: types.boolean
   })
@@ -21,12 +20,8 @@ const ErrorStoreModel = {
 export const ErrorStore = types
   .model("ErrorStore", ErrorStoreModel)
   .actions(self => {
-    const logError = (
-      id: string,
-      defaultMessage: string,
-      errorText: string
-    ) => {
-      const error = { errorText, id, defaultMessage, handled: false }
+    const logError = (id: string, errorText: string) => {
+      const error = { errorText, id, handled: false }
       self.errors.push(error as any) // https://github.com/mobxjs/mobx-state-tree/issues/501
     }
     return { logError }

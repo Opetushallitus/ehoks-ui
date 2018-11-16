@@ -7,7 +7,7 @@ import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import { AiempiOsaaminen } from "routes/Home/AiempiOsaaminen"
 import { Heading } from "routes/Home/Heading"
-import { Opintosuunnitelma } from "routes/Home/Opintosuunnitelma"
+import { Opiskelusuunnitelma } from "routes/Home/Opiskelusuunnitelma"
 import { Tavoitteet } from "routes/Home/Tavoitteet"
 import { ISessionStore } from "stores/SessionStore"
 import styled from "styled"
@@ -67,7 +67,7 @@ export class SignedIn extends React.Component<SignedInProps> {
                     onClick={this.setActiveTab("/ehoks")}
                     title={
                       <FormattedMessage
-                        id="kirjautunut.myGoalsAndBasicInfo"
+                        id="kirjautunut.omaTavoitteeniTitle"
                         defaultMessage="Oma tavoitteeni"
                       />
                     }
@@ -79,7 +79,7 @@ export class SignedIn extends React.Component<SignedInProps> {
                     onClick={this.setActiveTab("/ehoks/osaamiseni")}
                     title={
                       <FormattedMessage
-                        id="kirjautunut.myPreviousCompetence"
+                        id="kirjautunut.aiempiOsaamiseniTitle"
                         defaultMessage="Aiempi osaamiseni"
                       />
                     }
@@ -93,7 +93,7 @@ export class SignedIn extends React.Component<SignedInProps> {
                     onClick={this.setActiveTab("/ehoks/opiskelusuunnitelmani")}
                     title={
                       <FormattedMessage
-                        id="kirjautunut.myStudyPlan"
+                        id="kirjautunut.opiskelusuunnitelmaniTitle"
                         defaultMessage="Opiskelu&shy;suunnitelmani"
                       />
                     }
@@ -106,7 +106,7 @@ export class SignedIn extends React.Component<SignedInProps> {
               <Router basepath="/ehoks">
                 <Tavoitteet path="/" />
                 <AiempiOsaaminen path="osaamiseni" />
-                <Opintosuunnitelma path="opiskelusuunnitelmani" />
+                <Opiskelusuunnitelma path="opiskelusuunnitelmani" />
               </Router>
             </React.Fragment>
           )

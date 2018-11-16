@@ -1,6 +1,17 @@
 var fs = require("fs")
 var glob = require("glob")
 var parser = require("typescript-react-intl").default
+var messages = require("./src/stores/TranslationStore/defaultMessages.json")
+
+var defaultMessages = messages.reduce((result, message) => {
+  return [
+    ...result,
+    {
+      id: message.key,
+      defaultMessage: message.value
+    }
+  ]
+}, [])
 
 function runner(pattern, cb) {
   var results = []
@@ -23,12 +34,16 @@ function runner(pattern, cb) {
 runner(null, function(res) {
   var locale = {}
 
-  res.forEach(r => {
+  defaultMessages.concat(res).forEach(r => {
     locale[r.id] = r.defaultMessage
   })
 
+  const sortedKeys = Object.keys(locale).sort()
+
   var locales = {
-    fi: locale
+    fi: sortedKeys.reduce(function(result, key) {
+      return { ...result, [key]: locale[key] }
+    }, {})
   }
 
   fs.writeFileSync(`translations.json`, `${JSON.stringify(locales, null, 2)}\r`)

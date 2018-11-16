@@ -17,33 +17,25 @@ exports[`App renders correctly 1`] = `
           className="css-fxt1xk"
           href="https://opintopolku.fi/"
         >
-          <span>
-            Opintopolku.fi
-          </span>
+          Opintopolku.fi
         </a>
         <a
           className="css-fxt1xk"
           href="https://opintopolku.fi/oma-opintopolku/"
         >
-          <span>
-            Oma Opintopolku
-          </span>
+          Oma Opintopolku
         </a>
         <a
           className="css-fxt1xk"
           href="https://eperusteet.opintopolku.fi/"
         >
-          <span>
-            ePerusteet
-          </span>
+          ePerusteet
         </a>
         <a
           className="css-qn17of"
           href="/"
         >
-          <span>
-            eHOKS
-          </span>
+          eHOKS
         </a>
       </nav>
     </div>
@@ -72,9 +64,7 @@ exports[`App renders correctly 1`] = `
           />
         </svg>
         <h3>
-          <span>
-            Valikko
-          </span>
+          Valikko
         </h3>
       </div>
       <div
@@ -134,24 +124,16 @@ exports[`App renders correctly 1`] = `
           className="css-1fmvbse"
         >
           <li>
-            <span>
-              ePerusteet
-            </span>
+            ePerusteet
           </li>
           <li>
-            <span>
-              Mikä on opintopolku
-            </span>
+            Mikä on opintopolku
           </li>
           <li>
-            <span>
-              Tietoturvaseloste
-            </span>
+            Tietoturvaseloste
           </li>
           <li>
-            <span>
-              Anna palautetta
-            </span>
+            Anna palautetta
           </li>
         </ul>
       </div>
@@ -176,11 +158,9 @@ exports[`App renders correctly 1`] = `
           className="css-nadzu"
         >
           <p>
-            <span>
-              Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja
+            Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja
               koulutuksistaan Opintopolku.fi-palvelussa. Tietojen oikeellisuuden
               voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.
-            </span>
           </p>
           <div
             className="css-1hgh9qx"
@@ -189,19 +169,13 @@ exports[`App renders correctly 1`] = `
               className="css-fth9yi"
             >
               <a>
-                <span>
-                  Suomeksi
-                </span>
+                Suomeksi
               </a>
               <a>
-                <span>
-                  In English
-                </span>
+                In English
               </a>
               <a>
-                <span>
-                  På svenska
-                </span>
+                På svenska
               </a>
             </div>
             <div

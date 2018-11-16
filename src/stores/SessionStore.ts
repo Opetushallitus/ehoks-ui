@@ -27,11 +27,7 @@ export const SessionStore = types
           })
           yield getUserInfo()
         } catch (error) {
-          root.errors.logError(
-            "SessionStore.checkSession",
-            "Kirjautumistietojen tarkastus epäonnistui",
-            error.message
-          )
+          root.errors.logError("SessionStore.checkSession", error.message)
         }
       }
       self.isLoading = false
@@ -43,11 +39,7 @@ export const SessionStore = types
         const response = yield root.fetchSingle(apiUrl("session/user-info"))
         self.user = response.data
       } catch (error) {
-        root.errors.logError(
-          "SessionStore.getUserInfo",
-          "Käyttäjätietojen haku epäonnistui",
-          error.message
-        )
+        root.errors.logError("SessionStore.getUserInfo", error.message)
       }
       self.isLoading = false
     })
@@ -59,11 +51,7 @@ export const SessionStore = types
         self.user = null
         self.isLoading = false
       } catch (error) {
-        root.errors.logError(
-          "SessionStore.logout",
-          "Uloskirjautuminen epäonnistui",
-          error.message
-        )
+        root.errors.logError("SessionStore.logout", error.message)
       }
     })
 
