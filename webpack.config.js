@@ -15,6 +15,19 @@ module.exports = {
     path: path.resolve(__dirname, "public/ehoks/dist")
   },
 
+  devServer: {
+    compress: true,
+    contentBase: path.join(__dirname, "public", "ehoks"),
+    disableHostCheck: true,
+    historyApiFallback: true,
+    host: "0.0.0.0",
+    hot: true,
+    inline: true,
+    proxy: {
+      "/ehoks-backend": "http://localhost:3000"
+    }
+  },
+
   devtool: "inline-source-map",
 
   optimization: {},
@@ -25,7 +38,10 @@ module.exports = {
     modules: [path.resolve(__dirname, "src"), "node_modules"]
   },
 
-  plugins: [new ForkTsCheckerWebpackPlugin()],
+  plugins: [
+    new ForkTsCheckerWebpackPlugin(),
+    new webpack.HotModuleReplacementPlugin()
+  ],
 
   module: {
     rules: [
