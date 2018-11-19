@@ -24,6 +24,7 @@ module.exports = {
     hot: true,
     inline: true,
     proxy: {
+      "/auth-dev": "http://localhost:3000",
       "/ehoks-backend": "http://localhost:3000"
     }
   },

@@ -2,6 +2,12 @@ import { apiUrl } from "config"
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { IStoreEnvironment } from "utils"
 
+// this allows us to proxy http://localhost:3000/auth-dev/ calls
+// using webpack-development-server proxy
+const devBackendWithoutHost = (url: string) => {
+  return url.replace("http://localhost:3000", "")
+}
+
 const EnvironmentStoreModel = {
   eperusteetPerusteUrl: types.optional(types.string, ""),
   error: types.optional(types.string, ""),
@@ -25,8 +31,8 @@ export const EnvironmentStore = types
           opintopolkuLogoutUrl
         } = response.data
         self.eperusteetPerusteUrl = eperusteetPerusteUrl
-        self.opintopolkuLoginUrl = opintopolkuLoginUrl
-        self.opintopolkuLogoutUrl = opintopolkuLogoutUrl
+        self.opintopolkuLoginUrl = devBackendWithoutHost(opintopolkuLoginUrl)
+        self.opintopolkuLogoutUrl = devBackendWithoutHost(opintopolkuLogoutUrl)
       } catch (error) {
         errors.logError("EnvironmentStore.getEnvironment", error.message)
       }
