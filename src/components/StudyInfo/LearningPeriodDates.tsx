@@ -8,6 +8,9 @@ interface LearningPeriodDatesProps {
 }
 export const LearningPeriodDates = injectIntl(
   ({ learningPeriod, intl }: LearningPeriodDatesProps & InjectedIntlProps) => {
+    if (!learningPeriod) {
+      return null
+    }
     const { approved, period = [] } = learningPeriod
     return approved ? (
       <span>

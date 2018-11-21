@@ -1,6 +1,7 @@
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
+import { TempCompetenceRequirement } from "./StudyInfo"
 
 const Container = styled("li")`
   display: flex;
@@ -65,10 +66,7 @@ const ToggleAssessment = styled("button")`
 `
 
 interface CompetenceRequirementProps {
-  text: string
-  assessment: {
-    [key: string]: string[]
-  }
+  competenceRequirement: TempCompetenceRequirement
   expanded: boolean
   expand: () => void
 }
@@ -76,11 +74,11 @@ export class CompetenceRequirement extends React.Component<
   CompetenceRequirementProps
 > {
   render() {
-    const { assessment = {}, expanded, expand, text } = this.props
+    const { competenceRequirement, expanded, expand } = this.props
     return (
       <Container>
         <TitleRow>
-          <Text expanded={expanded}>{text}</Text>
+          <Text expanded={expanded}>{competenceRequirement.kuvaus}</Text>
           <ToggleAssessment onClick={expand} data-testid="ToggleAssessment">
             {expanded ? (
               <FormattedMessage
@@ -97,13 +95,15 @@ export class CompetenceRequirement extends React.Component<
         </TitleRow>
         {expanded ? (
           <Assessment data-testid="Assessment">
-            {Object.keys(assessment).map(title => {
+            {competenceRequirement.arviointikriteerit.map(arviointikriteeri => {
               return (
-                <AssessmentItem key={title}>
-                  <AssessmentHeader>{title}</AssessmentHeader>
-                  {assessment[title].map((criterion, i) => {
+                <AssessmentItem key={arviointikriteeri.kuvaus}>
+                  <AssessmentHeader>
+                    {arviointikriteeri.kuvaus}
+                  </AssessmentHeader>
+                  {arviointikriteeri.kriteerit.map((kriteeri, i) => {
                     return (
-                      <AssessmentContent key={i}>{criterion}</AssessmentContent>
+                      <AssessmentContent key={i}>{kriteeri}</AssessmentContent>
                     )
                   })}
                 </AssessmentItem>

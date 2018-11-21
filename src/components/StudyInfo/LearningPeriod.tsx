@@ -25,12 +25,14 @@ interface LearningPeriodProps {
 export class LearningPeriod extends React.Component<LearningPeriodProps> {
   render() {
     const { accentColor, learningPeriod } = this.props
-    const { assignments = [] } = learningPeriod
+    const { assignments = [], period = [] } = learningPeriod
     return (
       <Container>
-        <Title accentColor={accentColor}>
-          <LearningPeriodDates learningPeriod={learningPeriod} />
-        </Title>
+        {(period[0] || period[1]) && (
+          <Title accentColor={accentColor}>
+            <LearningPeriodDates learningPeriod={learningPeriod} />
+          </Title>
+        )}
         <Table>
           <TBody>
             <tr>

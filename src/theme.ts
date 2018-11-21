@@ -32,6 +32,10 @@ export const theme = {
     header: {
       background: "#149ecb"
     },
+    links: {
+      active: "#0076d9",
+      disabled: themeColors.pinkishGrey
+    },
     notification: {
       errorBorder: themeColors.brick,
       questionBorder: themeColors.waterBlue,

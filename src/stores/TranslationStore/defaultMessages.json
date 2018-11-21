@@ -188,5 +188,20 @@
     "locale": "fi",
     "key": "tavoitteet.puhelinnumeroTitle",
     "value": "Puhelinnumero"
+  },
+  {
+    "locale": "fi",
+    "key": "tyopaikanToimija.tutkinnonNimiTitle",
+    "value": "Tutkinnon nimi"
+  },
+  {
+    "locale": "fi",
+    "key": "tyopaikanToimija.laajuusTitle",
+    "value": "Laajuus"
+  },
+  {
+    "locale": "fi",
+    "key": "tyopaikanToimija.suunnitelmaJatkoOpintoihinTitle",
+    "value": "Suunnitelma jatko-opintoihin siirtymisestä"
   }
 ]

@@ -1,4 +1,5 @@
 import { MobileSlider, Slide } from "components/MobileSlider"
+import { TempCompetenceRequirement } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
@@ -26,10 +27,7 @@ const MobileSliderToggle = styled("div")`
 `
 
 interface MobileCompetencesProps {
-  assessment?: Array<{
-    [key: string]: string[]
-  }>
-  competenceRequirements?: string[]
+  competenceRequirements?: TempCompetenceRequirement[]
 }
 
 interface MobileCompetencesState {
@@ -58,7 +56,7 @@ export class MobileCompetences extends React.Component<
   }
 
   render() {
-    const { assessment = [], competenceRequirements = [] } = this.props
+    const { competenceRequirements = [] } = this.props
     const { showAssessment } = this.state
     return (
       <SliderContainer>
@@ -90,24 +88,24 @@ export class MobileCompetences extends React.Component<
                   id="opiskelusuunnitelma.opiskelijaOsaaPrefix"
                   defaultMessage="Opiskelija osaa"
                 />{" "}
-                {competenceRequirement}
+                {competenceRequirement.kuvaus}
               </Slide>
             )
           })}
         </MobileSlider>
         {showAssessment &&
-          Object.keys(assessment[this.state.activeSlide] || []).map(title => {
-            return (
-              <AssessmentItem key={title}>
-                <h2>{title}</h2>
-                {assessment[this.state.activeSlide][title].map(
-                  (criterion, i) => {
-                    return <p key={i}>{criterion}</p>
-                  }
-                )}
-              </AssessmentItem>
-            )
-          })}
+          competenceRequirements[this.state.activeSlide].arviointikriteerit.map(
+            (arviointikriteeri, ai) => {
+              return (
+                <AssessmentItem key={ai}>
+                  <h2>{arviointikriteeri.kuvaus}</h2>
+                  {arviointikriteeri.kriteerit.map((kriteeri, ki) => {
+                    return <p key={ki}>{kriteeri}</p>
+                  })}
+                </AssessmentItem>
+              )
+            }
+          )}
       </SliderContainer>
     )
   }

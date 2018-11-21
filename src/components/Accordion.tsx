@@ -102,9 +102,9 @@ const HelpButton = styled("button")`
 export interface AccordionProps {
   /** Unique identifier for accordion, required for accessibility features */
   id: string
-  /** Defines Accordion children visibility */
+  /** Defines Accordion children visibility, will use local state if not provided */
   open?: boolean
-  /** Action to execute whenever user clicks the toggle icon */
+  /** Action to execute whenever user clicks the toggle icon, will toggle local state if not provided */
   onToggle?: () => void
   /** Title of the accordion, always visible */
   title?: React.ReactNode
@@ -127,23 +127,36 @@ export interface AccordionProps {
   childContainer?: boolean
 }
 
+export interface AccordionState {
+  isOpen: boolean
+}
+
 /**
  * Toggleable content panel with inline help popup
  */
-export class Accordion extends React.Component<AccordionProps> {
+export class Accordion extends React.Component<AccordionProps, AccordionState> {
   static contextTypes = {
     intl: intlShape
+  }
+  state = {
+    isOpen: false // NOTE: this is only used if onToggle & open props are not provided
   }
   onEnter = (event: React.KeyboardEvent) => {
     const { id, onToggle } = this.props
     if (
-      typeof onToggle === "function" &&
       event.key === "Enter" &&
       document.activeElement &&
       id === document.activeElement.id
     ) {
-      onToggle()
+      typeof onToggle === "function" ? onToggle() : this.defaultOnToggle()
     }
+  }
+
+  defaultOnToggle = () => {
+    this.setState((state: AccordionState) => ({
+      ...state,
+      isOpen: !state.isOpen
+    }))
   }
 
   render() {
@@ -168,18 +181,21 @@ export class Accordion extends React.Component<AccordionProps> {
     ) : (
       children
     )
+    const onToggleFn =
+      typeof onToggle === "function" ? onToggle : this.defaultOnToggle
+    const isOpen = typeof open === "boolean" ? open : this.state.isOpen
 
     return (
       <Container>
         <TitleContainer>
           <TitleRow
-            onClick={onToggle}
-            aria-expanded={open}
+            onClick={onToggleFn}
+            aria-expanded={isOpen}
             aria-controls={`${id}-content`}
             data-testid="Toggle"
           >
             <Toggle>
-              {open ? (
+              {isOpen ? (
                 <MdExpandLess
                   size="28"
                   color={inline ? "#000" : "#027fa9"}
@@ -213,7 +229,7 @@ export class Accordion extends React.Component<AccordionProps> {
             </Popup>
           ) : null}
         </TitleContainer>
-        <div id={`${id}-content`}>{open ? childContent : null}</div>
+        <div id={`${id}-content`}>{isOpen ? childContent : null}</div>
       </Container>
     )
   }

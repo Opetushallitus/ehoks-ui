@@ -11,18 +11,13 @@ import { LearningPeriod } from "./LearningPeriod"
 import { LearningPeriodDates } from "./LearningPeriodDates"
 import { Period } from "./Period"
 
-interface DetailsCollapsedProps {
-  fadedColor: string
-}
 const DetailsCollapsed = styled("div")`
   display: flex;
   flex-direction: row;
   height: 100%;
   padding: 10px 10px 20px 20px;
   justify-content: space-between;
-  background: ${(props: DetailsCollapsedProps) =>
-    props.fadedColor ? props.fadedColor : "#fef8f3"};
-  border-top: 1px solid #c9cdcf;
+  background: #fff;
   border-bottom: 1px solid #c9cdcf;
 `
 
@@ -48,14 +43,15 @@ const LearningEnvironments = styled("div")`
 
 const LocationsContainer = styled("div")`
   display: flex;
+  flex: 1;
   align-items: center;
+  justify-content: flex-end;
 `
 
 interface DetailsProps {
   accentColor?: string
   demonstrations?: TempDemonstration[]
   expanded?: boolean
-  fadedColor?: string
   learningPeriods?: TempLearningPeriod[]
   locations?: string[]
   toggle: (name: "competences" | "details") => () => void
@@ -70,7 +66,6 @@ export class Details extends React.Component<DetailsProps> {
       accentColor,
       demonstrations = [],
       expanded,
-      fadedColor = "",
       learningPeriods = [],
       locations = [],
       toggle
@@ -78,7 +73,7 @@ export class Details extends React.Component<DetailsProps> {
     const { intl } = this.context
     const learningPeriod = learningPeriods[0]
     return expanded ? (
-      <DetailsExpanded fadedColor={fadedColor}>
+      <DetailsExpanded>
         <DetailsContent>
           <LocationsContainer>
             {locations.length > 0 && (
@@ -116,33 +111,37 @@ export class Details extends React.Component<DetailsProps> {
         </DetailsContent>
       </DetailsExpanded>
     ) : (
-      <DetailsCollapsed fadedColor={fadedColor}>
-        <DetailsContent>
-          <LocationsContainer>
+      <DetailsCollapsed>
+        <LocationsContainer>
+          <DetailsContent>
             {locations.length > 0 && (
               <LearningEnvironments>
                 {locations.join(", ")}
               </LearningEnvironments>
             )}
-            <IconContainer
-              onClick={toggle("details")}
-              aria-label={intl.formatMessage({
-                id: "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel"
-              })}
-            >
-              <Expand size={40} />
-            </IconContainer>
-          </LocationsContainer>
-          <Period accentColor={accentColor}>
-            <LearningPeriodDates learningPeriod={learningPeriod} />
-            {demonstrations.length > 0 && (
-              <React.Fragment>
-                {", "}
-                <DemonstrationDates demonstration={demonstrations[0]} />
-              </React.Fragment>
-            )}
-          </Period>
-        </DetailsContent>
+            <Period accentColor={accentColor}>
+              <LearningPeriodDates learningPeriod={learningPeriod} />
+              {demonstrations.length > 0 && (
+                <React.Fragment>
+                  {learningPeriod &&
+                  learningPeriod.period &&
+                  learningPeriod.period.some(Boolean)
+                    ? ", "
+                    : null}
+                  <DemonstrationDates demonstration={demonstrations[0]} />
+                </React.Fragment>
+              )}
+            </Period>
+          </DetailsContent>
+          <IconContainer
+            onClick={toggle("details")}
+            aria-label={intl.formatMessage({
+              id: "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel"
+            })}
+          >
+            <Expand size={40} />
+          </IconContainer>
+        </LocationsContainer>
       </DetailsCollapsed>
     )
   }

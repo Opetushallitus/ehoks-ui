@@ -1,5 +1,6 @@
 import { CompetenceRequirement } from "components/CompetenceRequirement"
 import { HorizontalLine } from "components/HorizontalLine"
+import { TempCompetenceRequirement } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import MediaQuery from "react-responsive"
@@ -17,14 +18,12 @@ const Container = styled("div")`
 
 interface ExpandContainerProps {
   fadedColor: string
-  hasDetails: boolean
 }
 const ExpandContainer = styled("div")`
   display: flex;
   align-items: center;
   padding: 10px 10px 10px 20px;
-  background: ${(props: ExpandContainerProps) =>
-    !props.hasDetails && props.fadedColor ? props.fadedColor : "unset"};
+  background: ${(props: ExpandContainerProps) => props.fadedColor};
 `
 
 const ToggleAllTitle = styled(ToggleLink)`
@@ -99,17 +98,13 @@ const Line = styled(HorizontalLine)`
 `
 
 interface CompetencesProps {
-  assessment?: Array<{
-    [key: string]: string[]
-  }>
   collapseAll: () => void
-  competenceRequirements?: string[]
+  competenceRequirements?: TempCompetenceRequirement[]
   expandAll: () => void
   expandCompetence: (index: number) => () => void
   expanded?: boolean
   expandedCompetences: number[]
   fadedColor?: string
-  hasDetails?: boolean
   toggle: (name: "competences" | "details") => () => void
 }
 
@@ -119,7 +114,6 @@ export class Competences extends React.Component<CompetencesProps> {
   }
   render() {
     const {
-      assessment = [],
       collapseAll,
       competenceRequirements = [],
       expandAll,
@@ -127,12 +121,12 @@ export class Competences extends React.Component<CompetencesProps> {
       expanded,
       expandedCompetences,
       fadedColor = "",
-      hasDetails = false,
       toggle
     } = this.props
     const { intl } = this.context
     const allExpanded =
       expandedCompetences.length === competenceRequirements.length
+
     return (
       <Container>
         {expanded ? (
@@ -172,7 +166,7 @@ export class Competences extends React.Component<CompetencesProps> {
             <Line height="2px" backgroundColor="#000" />
           </React.Fragment>
         ) : (
-          <ExpandContainer fadedColor={fadedColor} hasDetails={hasDetails}>
+          <ExpandContainer fadedColor={fadedColor}>
             <ExpandTitle onClick={toggle("competences")}>
               <FormattedMessage
                 id="opiskelusuunnitelma.naytaAmmattitaitovaatimuksetLink"
@@ -195,7 +189,6 @@ export class Competences extends React.Component<CompetencesProps> {
               if (matches) {
                 return (
                   <MobileCompetences
-                    assessment={assessment}
                     competenceRequirements={competenceRequirements}
                   />
                 )
@@ -206,8 +199,7 @@ export class Competences extends React.Component<CompetencesProps> {
                       return (
                         <CompetenceRequirement
                           key={i}
-                          text={competenceRequirement}
-                          assessment={assessment[i]}
+                          competenceRequirement={competenceRequirement}
                           expanded={expandedCompetences.indexOf(i) > -1}
                           expand={expandCompetence(i)}
                         />
