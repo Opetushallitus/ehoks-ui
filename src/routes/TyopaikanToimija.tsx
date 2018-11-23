@@ -16,7 +16,7 @@ const HeaderContainer = styled(NavigationContainer)`
 `
 
 const ContentContainer = styled("div")`
-  margin: 20px 30px;
+  margin: 20px 30px 0 30px;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     margin: 10px 0;

@@ -63,6 +63,7 @@ const ToggleAssessment = styled("button")`
   text-align: left;
   padding: 0;
   background: transparent;
+  font-size: 15px;
 `
 
 interface CompetenceRequirementProps {

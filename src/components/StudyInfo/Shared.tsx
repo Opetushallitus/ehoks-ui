@@ -2,7 +2,11 @@ import styled from "styled"
 import { Period } from "./Period"
 
 export const Container = styled("div")`
-  margin: 0 0 20px 0;
+  margin: 0 0 30px 0;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 `
 
 export const Title = styled(Period)`
@@ -50,15 +54,17 @@ export const EmptyTD = styled("td")`
 
 export const InfoContainer = styled("ul")`
   padding: 0;
-  margin: 10px 0;
+  margin: 10px 0 0 0;
   background: #fff;
   color: #2b2b2b;
   border-radius: 2px;
   border: 1px solid #999;
+  border-left: 0;
+  border-right: 0;
   list-style: none;
 
   li {
-    padding: 6px 12px;
+    padding: 6px 20px;
     &:nth-child(2n) {
       background: #fafafa;
     }

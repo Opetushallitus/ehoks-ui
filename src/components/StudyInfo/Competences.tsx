@@ -24,9 +24,11 @@ const ExpandContainer = styled("div")`
   align-items: center;
   padding: 10px 10px 10px 20px;
   background: ${(props: ExpandContainerProps) => props.fadedColor};
+  border-top: 1px solid #c9cdcf;
 `
 
 const ToggleAllTitle = styled(ToggleLink)`
+  padding-left: 10px;
   padding-right: 10px;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
@@ -62,8 +64,7 @@ const CollapseHeader = styled("h2")`
 const CollapseContainer = styled("div")`
   flex: 1;
   display: flex;
-  align-items: flex-end;
-  padding: 10px 10px 10px 20px;
+  padding: 20px 10px 10px 20px;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     align-items: center;
@@ -73,15 +74,14 @@ const CollapseContainer = styled("div")`
 
 const InfoContainer = styled("ul")`
   padding: 0;
-  margin: 10px 20px 20px 20px;
+  margin: 0;
   background: #fff;
   color: #2b2b2b;
   border-radius: 2px;
-  border: 1px solid #999;
   list-style: none;
 
   li {
-    padding: 6px 12px;
+    padding: 10px 20px;
     &:nth-child(2n) {
       background: #fafafa;
     }
@@ -90,11 +90,15 @@ const InfoContainer = styled("ul")`
 
 const Line = styled(HorizontalLine)`
   width: unset;
-  margin: 0 20px;
+  margin: 0;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     display: none;
   }
+`
+
+const Prefix = styled("div")`
+  margin: 10px 0 10px 20px;
 `
 
 interface CompetencesProps {
@@ -194,18 +198,30 @@ export class Competences extends React.Component<CompetencesProps> {
                 )
               } else {
                 return (
-                  <InfoContainer>
-                    {competenceRequirements.map((competenceRequirement, i) => {
-                      return (
-                        <CompetenceRequirement
-                          key={i}
-                          competenceRequirement={competenceRequirement}
-                          expanded={expandedCompetences.indexOf(i) > -1}
-                          expand={expandCompetence(i)}
-                        />
-                      )
-                    })}
-                  </InfoContainer>
+                  <React.Fragment>
+                    <Prefix>
+                      <FormattedMessage
+                        id="opiskelusuunnitelma.opiskelijaOsaaPrefix"
+                        defaultMessage="Opiskelija osaa"
+                        tagName="i"
+                      />
+                    </Prefix>
+
+                    <InfoContainer>
+                      {competenceRequirements.map(
+                        (competenceRequirement, i) => {
+                          return (
+                            <CompetenceRequirement
+                              key={i}
+                              competenceRequirement={competenceRequirement}
+                              expanded={expandedCompetences.indexOf(i) > -1}
+                              expand={expandCompetence(i)}
+                            />
+                          )
+                        }
+                      )}
+                    </InfoContainer>
+                  </React.Fragment>
                 )
               }
             }}

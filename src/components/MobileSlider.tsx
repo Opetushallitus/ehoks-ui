@@ -47,6 +47,8 @@ interface MobileSliderProps {
   footer?: React.ReactNode
   /** Callback that gets called when slide is changed using arrows or swipe events */
   onSlideChange?: (index: number) => void
+  /** Custom className */
+  className?: string
 }
 
 interface MobileSliderState {
@@ -83,12 +85,12 @@ export class MobileSlider extends React.Component<
   }
 
   render() {
-    const { children = [], footer, showCount = true } = this.props
+    const { children = [], className, footer, showCount = true } = this.props
     if (!children.length) {
       return null
     }
     return (
-      <Container>
+      <Container className={className}>
         <SwipeableViews
           index={this.state.index}
           onChangeIndex={this.handleChangeIndex}

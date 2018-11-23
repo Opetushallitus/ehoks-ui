@@ -18,15 +18,10 @@ const DetailsCollapsed = styled("div")`
   padding: 10px 10px 20px 20px;
   justify-content: space-between;
   background: #fff;
-  border-bottom: 1px solid #c9cdcf;
 `
 
 const DetailsExpanded = styled(DetailsCollapsed)`
-  padding: 10px 10px 0 20px;
-
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
-    padding: 10px 10px 0 10px;
-  }
+  padding: 0;
 `
 
 const DetailsContent = styled("div")`
@@ -41,11 +36,20 @@ const LearningEnvironments = styled("div")`
   margin: 10px 0 20px 0;
 `
 
+const LearningEnvironmentsExpanded = styled(LearningEnvironments)`
+  margin-left: 20px;
+`
+
 const LocationsContainer = styled("div")`
   display: flex;
   flex: 1;
   align-items: center;
   justify-content: flex-end;
+`
+
+const LocationsContainerExpanded = styled(LocationsContainer)`
+  padding-top: 10px;
+  padding-right: 10px;
 `
 
 interface DetailsProps {
@@ -75,11 +79,11 @@ export class Details extends React.Component<DetailsProps> {
     return expanded ? (
       <DetailsExpanded>
         <DetailsContent>
-          <LocationsContainer>
+          <LocationsContainerExpanded>
             {locations.length > 0 && (
-              <LearningEnvironments>
+              <LearningEnvironmentsExpanded>
                 {locations.join(", ")}
-              </LearningEnvironments>
+              </LearningEnvironmentsExpanded>
             )}
             <IconContainer
               onClick={toggle("details")}
@@ -89,7 +93,7 @@ export class Details extends React.Component<DetailsProps> {
             >
               <Collapse size={40} />
             </IconContainer>
-          </LocationsContainer>
+          </LocationsContainerExpanded>
           {learningPeriods.map((period, i) => {
             return (
               <LearningPeriod
