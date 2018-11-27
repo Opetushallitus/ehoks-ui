@@ -68,13 +68,9 @@ export const TranslationStore = types
     return {
       get messages() {
         return self.translations.reduce<Translations>((result, translation) => {
-          return {
-            ...result,
-            [translation.locale]: {
-              ...result[translation.locale],
-              [translation.key]: translation.value
-            }
-          }
+          result[translation.locale] = result[translation.locale] || {}
+          result[translation.locale][translation.key] = translation.value
+          return result
         }, {})
       }
     }
