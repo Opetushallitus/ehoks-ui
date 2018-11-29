@@ -1,38 +1,50 @@
 import { when } from "mobx"
-import { mockFetch } from "../../utils"
-import { RootStore } from "../RootStore"
+import { SessionStore } from "stores/SessionStore"
+import { fetchUtils, mockFetch } from "utils"
 
 describe("SessionStore", () => {
   test("checkSession without login", () => {
-    const store = RootStore.create({}, { fetch: mockFetch() })
+    const { fetchCollection, fetchSingle, deleteResource } = fetchUtils(
+      mockFetch()
+    )
+    const store = SessionStore.create(
+      {},
+      { fetchCollection, fetchSingle, deleteResource }
+    )
 
-    expect(store.session.isLoading).toBe(false)
-    expect(store.session.user).toEqual(null)
+    expect(store.isLoading).toBe(false)
+    expect(store.user).toEqual(null)
 
-    store.session.checkSession()
-    expect(store.session.isLoading).toBe(true)
+    store.checkSession()
+    expect(store.isLoading).toBe(true)
 
     when(
-      () => !store.session.isLoading,
+      () => !store.isLoading,
       () => {
-        expect(store.session.user).toEqual(null)
+        expect(store.user).toEqual(null)
       }
     )
   })
 
   test("checkSession with login", done => {
-    const store = RootStore.create({}, { fetch: mockFetch(1) })
+    const { fetchCollection, fetchSingle, deleteResource } = fetchUtils(
+      mockFetch(1)
+    )
+    const store = SessionStore.create(
+      {},
+      { fetchCollection, fetchSingle, deleteResource }
+    )
 
-    expect(store.session.isLoading).toBe(false)
-    expect(store.session.user).toEqual(null)
+    expect(store.isLoading).toBe(false)
+    expect(store.user).toEqual(null)
 
-    store.session.checkSession()
-    expect(store.session.isLoading).toBe(true)
+    store.checkSession()
+    expect(store.isLoading).toBe(true)
 
     when(
-      () => !store.session.isLoading,
+      () => !store.isLoading,
       () => {
-        expect(store.session.user).toEqual({
+        expect(store.user).toEqual({
           commonName: "Teuvo",
           contactValuesGroup: [
             {
@@ -55,19 +67,20 @@ describe("SessionStore", () => {
   })
 
   test("logout", () => {
-    const store = RootStore.create(
+    const { fetchCollection, fetchSingle, deleteResource } = fetchUtils(
+      mockFetch(2)
+    )
+    const store = SessionStore.create(
       {
-        session: {
-          user: {
-            commonName: "Teuvo",
-            firstName: "Teuvo Taavetti",
-            surname: "Testaaja"
-          }
+        user: {
+          commonName: "Teuvo",
+          firstName: "Teuvo Taavetti",
+          surname: "Testaaja"
         }
       },
-      { fetch: mockFetch(2) }
+      { fetchCollection, fetchSingle, deleteResource }
     )
-    expect(store.session.user).toEqual({
+    expect(store.user).toEqual({
       commonName: "Teuvo",
       contactValuesGroup: [],
       firstName: "Teuvo Taavetti",
@@ -75,13 +88,13 @@ describe("SessionStore", () => {
       surname: "Testaaja"
     })
 
-    store.session.logout()
-    expect(store.session.isLoading).toBe(true)
+    store.logout()
+    expect(store.isLoading).toBe(true)
 
     when(
-      () => !store.session.isLoading,
+      () => !store.isLoading,
       () => {
-        expect(store.session.user).toEqual(null)
+        expect(store.user).toEqual(null)
       }
     )
   })
