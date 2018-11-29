@@ -1,7 +1,7 @@
 // import { apiUrl } from "config"
-import { flow, getRoot, types } from "mobx-state-tree"
+import { flow, getEnv, types } from "mobx-state-tree"
 import { Oppija } from "models/Oppija"
-import { IRootStore } from "./RootStore"
+import { IStoreEnvironment } from "utils"
 
 const ammattitaitovaatimuksetMock = [
   {
@@ -366,7 +366,7 @@ const TyopaikanToimijaModel = {
 export const TyopaikanToimijaStore = types
   .model("TyopaikanToimijaStore", TyopaikanToimijaModel)
   .actions(self => {
-    const root = getRoot<IRootStore>(self)
+    const { errors } = getEnv<IStoreEnvironment>(self)
 
     const haeOppijat = flow(function*(): any {
       self.isLoading = true
@@ -376,7 +376,7 @@ export const TyopaikanToimijaStore = types
         // self.oppijat.replace(response.data)
         self.oppijat.replace(mockData as any)
       } catch (error) {
-        root.errors.logError("TyopaikanToimijaStore.haeOppijat", error.message)
+        errors.logError("TyopaikanToimijaStore.haeOppijat", error.message)
       }
     })
 
