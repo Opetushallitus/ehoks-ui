@@ -3,7 +3,7 @@ import styled from "styled"
 export const ToggleLink = styled("button")`
   font-size: 16px;
   text-decoration: underline;
-  color: #0076d9;
+  color: ${props => props.theme.colors.links.active};
   cursor: pointer;
   appearance: none;
   border: none;

@@ -2,8 +2,7 @@ import { RouteComponentProps } from "@reach/router"
 import { Accordion } from "components/Accordion"
 import React from "react"
 import { FormattedMessage } from "react-intl"
-import { Heading } from "routes/Home/Heading"
-import { SectionContainer } from "routes/Home/SectionContainer"
+import { Heading } from "routes/Etusivu/Heading"
 
 export interface AiempiOsaaminenProps {
   children?: React.ReactChildren
@@ -37,7 +36,7 @@ export class AiempiOsaaminen extends React.Component<
 
   render() {
     return (
-      <SectionContainer>
+      <React.Fragment>
         <Heading>
           <FormattedMessage
             id="aiempiOsaaminen.title"
@@ -59,7 +58,7 @@ export class AiempiOsaaminen extends React.Component<
         >
           aiemmin hankittu osaaminen
         </Accordion>
-      </SectionContainer>
+      </React.Fragment>
     )
   }
 }

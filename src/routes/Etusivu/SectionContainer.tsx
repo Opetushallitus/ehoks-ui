@@ -1,10 +1,13 @@
 import styled from "styled"
 
-export const SectionContainer = styled("div")`
+export const BackgroundContainer = styled("div")`
   background: #f8f8f8;
-  padding: 20px;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     background: #fff;
   }
+`
+
+export const SectionContainer = styled(BackgroundContainer)`
+  padding: 20px;
 `

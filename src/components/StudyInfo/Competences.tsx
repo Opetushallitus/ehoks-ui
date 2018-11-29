@@ -1,5 +1,6 @@
 import { CompetenceRequirement } from "components/CompetenceRequirement"
 import { HorizontalLine } from "components/HorizontalLine"
+import { TempCompetenceRequirement } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import MediaQuery from "react-responsive"
@@ -17,17 +18,17 @@ const Container = styled("div")`
 
 interface ExpandContainerProps {
   fadedColor: string
-  hasDetails: boolean
 }
 const ExpandContainer = styled("div")`
   display: flex;
   align-items: center;
   padding: 10px 10px 10px 20px;
-  background: ${(props: ExpandContainerProps) =>
-    !props.hasDetails && props.fadedColor ? props.fadedColor : "unset"};
+  background: ${(props: ExpandContainerProps) => props.fadedColor};
+  border-top: 1px solid #c9cdcf;
 `
 
 const ToggleAllTitle = styled(ToggleLink)`
+  padding-left: 10px;
   padding-right: 10px;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
@@ -63,8 +64,7 @@ const CollapseHeader = styled("h2")`
 const CollapseContainer = styled("div")`
   flex: 1;
   display: flex;
-  align-items: flex-end;
-  padding: 10px 10px 10px 20px;
+  padding: 20px 10px 10px 20px;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     align-items: center;
@@ -74,15 +74,14 @@ const CollapseContainer = styled("div")`
 
 const InfoContainer = styled("ul")`
   padding: 0;
-  margin: 10px 20px 20px 20px;
+  margin: 0;
   background: #fff;
   color: #2b2b2b;
   border-radius: 2px;
-  border: 1px solid #999;
   list-style: none;
 
   li {
-    padding: 6px 12px;
+    padding: 10px 20px;
     &:nth-child(2n) {
       background: #fafafa;
     }
@@ -91,25 +90,25 @@ const InfoContainer = styled("ul")`
 
 const Line = styled(HorizontalLine)`
   width: unset;
-  margin: 0 20px;
+  margin: 0;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     display: none;
   }
 `
 
+const Prefix = styled("div")`
+  margin: 10px 0 10px 20px;
+`
+
 interface CompetencesProps {
-  assessment?: Array<{
-    [key: string]: string[]
-  }>
   collapseAll: () => void
-  competenceRequirements?: string[]
+  competenceRequirements?: TempCompetenceRequirement[]
   expandAll: () => void
   expandCompetence: (index: number) => () => void
   expanded?: boolean
   expandedCompetences: number[]
   fadedColor?: string
-  hasDetails?: boolean
   toggle: (name: "competences" | "details") => () => void
 }
 
@@ -119,7 +118,6 @@ export class Competences extends React.Component<CompetencesProps> {
   }
   render() {
     const {
-      assessment = [],
       collapseAll,
       competenceRequirements = [],
       expandAll,
@@ -127,12 +125,12 @@ export class Competences extends React.Component<CompetencesProps> {
       expanded,
       expandedCompetences,
       fadedColor = "",
-      hasDetails = false,
       toggle
     } = this.props
     const { intl } = this.context
     const allExpanded =
       expandedCompetences.length === competenceRequirements.length
+
     return (
       <Container>
         {expanded ? (
@@ -172,7 +170,7 @@ export class Competences extends React.Component<CompetencesProps> {
             <Line height="2px" backgroundColor="#000" />
           </React.Fragment>
         ) : (
-          <ExpandContainer fadedColor={fadedColor} hasDetails={hasDetails}>
+          <ExpandContainer fadedColor={fadedColor}>
             <ExpandTitle onClick={toggle("competences")}>
               <FormattedMessage
                 id="opiskelusuunnitelma.naytaAmmattitaitovaatimuksetLink"
@@ -195,25 +193,35 @@ export class Competences extends React.Component<CompetencesProps> {
               if (matches) {
                 return (
                   <MobileCompetences
-                    assessment={assessment}
                     competenceRequirements={competenceRequirements}
                   />
                 )
               } else {
                 return (
-                  <InfoContainer>
-                    {competenceRequirements.map((competenceRequirement, i) => {
-                      return (
-                        <CompetenceRequirement
-                          key={i}
-                          text={competenceRequirement}
-                          assessment={assessment[i]}
-                          expanded={expandedCompetences.indexOf(i) > -1}
-                          expand={expandCompetence(i)}
-                        />
-                      )
-                    })}
-                  </InfoContainer>
+                  <React.Fragment>
+                    <Prefix>
+                      <FormattedMessage
+                        id="opiskelusuunnitelma.opiskelijaOsaaPrefix"
+                        defaultMessage="Opiskelija osaa"
+                        tagName="i"
+                      />
+                    </Prefix>
+
+                    <InfoContainer>
+                      {competenceRequirements.map(
+                        (competenceRequirement, i) => {
+                          return (
+                            <CompetenceRequirement
+                              key={i}
+                              competenceRequirement={competenceRequirement}
+                              expanded={expandedCompetences.indexOf(i) > -1}
+                              expand={expandCompetence(i)}
+                            />
+                          )
+                        }
+                      )}
+                    </InfoContainer>
+                  </React.Fragment>
                 )
               }
             }}

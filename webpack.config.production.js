@@ -1,5 +1,6 @@
 var config = require("./webpack.config")
 
 module.exports = Object.assign({}, config, {
-  devtool: "source-map"
+  devtool: "source-map",
+  plugins: []
 })

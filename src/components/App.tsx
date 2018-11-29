@@ -7,9 +7,10 @@ import React from "react"
 import { IntlProvider } from "react-intl"
 import { Ammatillinentutkinto } from "routes/Ammatillinentutkinto"
 import { Henkilokohtaistaminen } from "routes/Henkilokohtaistaminen"
+import { TyopaikanToimija } from "routes/TyopaikanToimija"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
-import { Home } from "../routes/Home"
+import { Etusivu } from "../routes/Etusivu"
 import { AppErrors } from "./AppErrors"
 import { ThemeWrapper } from "./ThemeWrapper"
 
@@ -45,7 +46,8 @@ export class App extends React.Component<AppProps> {
             <AppHeader />
             <AppErrors />
             <Router basepath="/ehoks">
-              <Home path="/*" />
+              <Etusivu path="/*" />
+              <TyopaikanToimija path="tyopaikantoimija" />
               <Henkilokohtaistaminen path="henkilokohtaistaminen" />
               <Ammatillinentutkinto path="ammatillinentutkinto" />
             </Router>

@@ -1,11 +1,27 @@
 import { MobileSlider, Slide } from "components/MobileSlider"
 import { TempDemonstration } from "components/StudyInfo"
+import { css } from "emotion"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import MediaQuery from "react-responsive"
+import styled from "styled"
 import { breakpoints } from "theme"
 import { DemonstrationDates } from "./DemonstrationDates"
 import { Container, InfoContainer, Table, TBody, TD, TH, Title } from "./Shared"
+
+const DemonstrationTitle = styled(Title)`
+  padding-left: 20px;
+`
+
+const DemonstrationTable = styled(Table)`
+  margin-left: 20px;
+`
+
+const customSlider = css`
+  margin: 10px 0 0 0;
+  border-left: 0;
+  border-right: 0;
+`
 
 interface DemonstrationProps {
   accentColor?: string
@@ -18,10 +34,10 @@ export class Demonstration extends React.Component<DemonstrationProps> {
     const { accentColor, demonstration } = this.props
     return (
       <Container>
-        <Title accentColor={accentColor}>
+        <DemonstrationTitle accentColor={accentColor}>
           <DemonstrationDates demonstration={demonstration} />
-        </Title>
-        <Table>
+        </DemonstrationTitle>
+        <DemonstrationTable>
           <TBody>
             <tr>
               <TH>
@@ -51,12 +67,12 @@ export class Demonstration extends React.Component<DemonstrationProps> {
               <TD>{demonstration.assessors.join(", ")}</TD>
             </tr>
           </TBody>
-        </Table>
+        </DemonstrationTable>
         <MediaQuery maxWidth={breakpoints.Tablet}>
           {matches => {
             if (matches) {
               return (
-                <MobileSlider>
+                <MobileSlider className={customSlider}>
                   {demonstration.assignments.map((assignment, i) => {
                     return <Slide key={i}>{assignment}</Slide>
                   })}

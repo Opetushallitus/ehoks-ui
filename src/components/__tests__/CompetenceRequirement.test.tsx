@@ -2,12 +2,37 @@ import React from "react"
 import { createRendererWithContext } from "testUtils"
 import { CompetenceRequirement } from "../CompetenceRequirement"
 
+const competenceRequirement = {
+  kuvaus: "ammattitaitovaatimuksen kuvaus",
+  arviointikriteerit: [
+    {
+      kuvaus: "Tyydyttävä T1",
+      kriteerit: ["1", "2", "3"]
+    },
+    {
+      kuvaus: "Tyydyttävä T2",
+      kriteerit: []
+    },
+    {
+      kuvaus: "Hyvä H3",
+      kriteerit: ["1", "2", "3"]
+    },
+    {
+      kuvaus: "Hyvä H4",
+      kriteerit: []
+    },
+    {
+      kuvaus: "Kiitettävä K5",
+      kriteerit: ["1", "2", "3"]
+    }
+  ]
+}
+
 test("expanded=false renders only title", () => {
   const mockExpand = jest.fn()
   const tree = createRendererWithContext(
     <CompetenceRequirement
-      text="Test"
-      assessment={{ firstCategory: ["1", "2", "3"] }}
+      competenceRequirement={competenceRequirement}
       expanded={false}
       expand={mockExpand}
     />
@@ -22,11 +47,7 @@ test("expanded=true renders title and assessment items", () => {
   const mockExpand = jest.fn()
   const tree = createRendererWithContext(
     <CompetenceRequirement
-      text="Test"
-      assessment={{
-        firstCategory: ["1", "2", "3"],
-        secondCategory: ["4", "5", "6"]
-      }}
+      competenceRequirement={competenceRequirement}
       expanded={true}
       expand={mockExpand}
     />
@@ -41,11 +62,7 @@ test("click toggle assessment button calls expand callback", () => {
   const mockExpand = jest.fn()
   const tree = createRendererWithContext(
     <CompetenceRequirement
-      text="Test"
-      assessment={{
-        firstCategory: ["1", "2", "3"],
-        secondCategory: ["4", "5", "6"]
-      }}
+      competenceRequirement={competenceRequirement}
       expanded={false}
       expand={mockExpand}
     />

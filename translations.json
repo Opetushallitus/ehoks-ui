@@ -30,9 +30,11 @@
     "etusivu.henkilokohtaistaminenKuvanAriaLabel": "Hymyileviä opiskelijoita työn touhussa",
     "etusivu.henkilokohtaistaminenKuvaus": "Opiskelu sovitetaan lähtötilanteeseesi...",
     "etusivu.henkilokohtaistaminenTitle": "Mitä opintojen henkilökohtaistaminen tarkoittaa?",
-    "etusivu.kirjauduButtonLabel": "Kirjaudu omaan suunnitelmaan",
-    "etusivu.kuvaus": "eHOKS palvelussa voit kirjautumalla siirtyä henkilökohtaiseen\n              opintojen suunnitteluun. Ilman kirjautumista voit tutustua eri\n              alojen ammattitaitovaatimuksiin ja osaamistavoitteisiin.",
+    "etusivu.opiskelijaKirjauduButtonLabel": "Kirjaudu omaan opiskelusuunnitelmaasi",
+    "etusivu.opiskelijaKuvaus": "Opiskelijana eHOKS palvelussa voit kirjautumalla siirtyä henkilökohtaiseen\n              opintojen suunnitteluun. Ilman kirjautumista voit tutustua ammatillisten tutkintojen sisältöihin.",
     "etusivu.title": "Opiskelun henkilökohtainen suunnittelu",
+    "etusivu.tyopaikkaohjaajaKirjauduButtonLabel": "Kirjaudu työpaikkaohjaajana",
+    "etusivu.tyopaikkaohjaajaKuvaus": "Työpaikkaohjaajan eHOKS tukee sinua työpaikalla oppijoiden ohjauksessa ja pystyt seuraamaan heidän suunnitelmaansa.",
     "footer.ePerusteetLink": "ePerusteet",
     "footer.englishLocaleLink": "In English",
     "footer.finnishLocaleLink": "Suomeksi",
@@ -123,6 +125,13 @@
     "tavoitteet.sahkopostiTitle": "Sähköposti",
     "tavoitteet.suunnitelmaJatkoOpintoihinTitle": "Suunnitelma jatko-opintoihin siirtymisestä",
     "tavoitteet.title": "Tavoitteeni ja perustietoni",
-    "tavoitteet.tutkintoTaiKoulutusTitle": "Tutkinto tai koulutus"
+    "tavoitteet.tutkintoTaiKoulutusTitle": "Tutkinto tai koulutus",
+    "tyopaikanToimija.laajuusTitle": "Laajuus",
+    "tyopaikanToimija.opiskelijanTavoitteetTitle": "Opiskelijan tavoitteet",
+    "tyopaikanToimija.osaamispistetta": "osaamispistettä",
+    "tyopaikanToimija.suunnitelmaJatkoOpintoihinTitle": "Suunnitelma jatko-opintoihin siirtymisestä",
+    "tyopaikanToimija.title": "Ammatillisten opintojen henkilökohtaistaminen",
+    "tyopaikanToimija.tutkinnonNimiTitle": "Tutkinnon nimi",
+    "tyopaikanToimija.tyopaikallaOppijatTitle": "Työpaikalla oppijat"
   }
 }

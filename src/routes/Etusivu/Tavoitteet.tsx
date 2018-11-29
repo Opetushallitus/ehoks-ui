@@ -4,8 +4,7 @@ import { InfoTable } from "components/InfoTable"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
-import { Heading } from "routes/Home/Heading"
-import { SectionContainer } from "routes/Home/SectionContainer"
+import { Heading } from "routes/Etusivu/Heading"
 import { ISessionStore } from "stores/SessionStore"
 import { injectSession } from "utils"
 
@@ -55,7 +54,7 @@ export class Tavoitteet extends React.Component<
     const { intl } = this.context
 
     return (
-      <SectionContainer>
+      <React.Fragment>
         <Heading>
           <FormattedMessage
             id="tavoitteet.title"
@@ -294,7 +293,7 @@ export class Tavoitteet extends React.Component<
             </tbody>
           </InfoTable>
         </Accordion>
-      </SectionContainer>
+      </React.Fragment>
     )
   }
 }

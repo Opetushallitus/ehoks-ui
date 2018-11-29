@@ -51,15 +51,17 @@ const Title = styled("h2")`
   margin: 10px 20px;
 `
 
-// TODO: use type from mobx-state-tree
+// TODO: use inferred type from mobx-state-tree
+// TODO: translate field names to finnish for consistency?
 export interface TempLearningPeriod {
   approved?: string
-  period?: [string, string]
+  period?: string[]
   instructor?: string
   assignments?: string[]
 }
 
-// TODO: use type from mobx-state-tree
+// TODO: use inferred type from mobx-state-tree
+// TODO: translate field names to finnish for consistency?
 export interface TempDemonstration {
   period: string[]
   organisation: string
@@ -68,21 +70,23 @@ export interface TempDemonstration {
   assignments: string[]
 }
 
+// TODO: use inferred type from mobx-state-tree
+export interface TempCompetenceRequirement {
+  kuvaus: string
+  arviointikriteerit: Array<{
+    kuvaus: string
+    kriteerit: string[]
+  }>
+}
+
 export interface StudyInfoProps {
   /** Color of top border */
   accentColor?: string
   /**
-   * List of assessment criteria
-   * @default []
-   */
-  assessment?: Array<{
-    [key: string]: string[]
-  }>
-  /**
    * List of competence requirements
    * @default []
    */
-  competenceRequirements?: string[]
+  competenceRequirements?: TempCompetenceRequirement[]
   /** List of competence demonstrations */
   demonstrations?: TempDemonstration[]
   /** Color of additional info container */
@@ -157,22 +161,19 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
   render() {
     const {
       accentColor,
-      assessment = [],
       competenceRequirements = [],
       demonstrations = [],
       fadedColor,
       locations = [],
-      learningPeriods: periods = [],
+      learningPeriods = [],
       title,
       width = "25%"
     } = this.props
-    const learningPeriods: TempLearningPeriod[] = periods.length
-      ? periods
-      : [{ approved: "", period: ["", ""] }]
     const { expandedCompetences, expanded } = this.state
 
     const hasDetails =
-      (periods && periods.length > 0) || demonstrations.length > 0
+      (learningPeriods && learningPeriods.length > 0) ||
+      demonstrations.length > 0
 
     return (
       <Container
@@ -187,14 +188,12 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
               accentColor={accentColor}
               demonstrations={demonstrations}
               expanded={expanded.details}
-              fadedColor={fadedColor}
               learningPeriods={learningPeriods}
               locations={locations}
               toggle={this.toggle}
             />
           )}
           <Competences
-            assessment={assessment}
             collapseAll={this.collapseAll}
             competenceRequirements={competenceRequirements}
             expandAll={this.expandAll}
@@ -202,7 +201,6 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
             expanded={expanded.competences}
             expandedCompetences={expandedCompetences}
             fadedColor={fadedColor}
-            hasDetails={hasDetails}
             toggle={this.toggle}
           />
         </InnerContainer>

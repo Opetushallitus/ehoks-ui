@@ -3,21 +3,17 @@ import { Accordion } from "components/Accordion"
 import { EmptyItem } from "components/EmptyItem"
 import { InfoTable } from "components/InfoTable"
 import { StatBox, StatBoxes, StatNumber, StatTitle } from "components/StatBox"
-import { StudyInfo } from "components/StudyInfo"
+import { StudyInfo, TempCompetenceRequirement } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
-import { Heading } from "routes/Home/Heading"
-import { SectionContainer } from "routes/Home/SectionContainer"
+import { Heading } from "routes/Etusivu/Heading"
 import styled from "styled"
 
 // TODO: map real API response after this in Model's views
 interface MockStudy {
   id: number
   approved?: string
-  assessment?: Array<{
-    [key: string]: string[]
-  }>
-  competenceRequirements?: string[]
+  competenceRequirements?: TempCompetenceRequirement[]
   learningPeriods?: Array<{
     approved?: string
     period?: [string, string]
@@ -35,111 +31,180 @@ interface MockStudy {
     assignments: string[]
   }>
 }
+
 const mockPlannedStudies: MockStudy[] = [
   {
-    assessment: [
-      {
-        "Tyydyttävä T1": [
-          "toimii asiakkaan perus- ja ihmisoikeuksia kunnioittaen",
-          "noudattaa sosiaali- ja terveysalan säädöksiä, säännöksiä, määräyksiä ja eettisiä periaatteita",
-          "noudattaa työskentelyssään tietosuojaa ja salassapitoa",
-          "toimii kestävän kehityksen periaatteiden mukaisesti"
-        ],
-        "Tyydyttävä T2": [],
-        "Hyvä H3": [
-          "toimii asiakkaan perus- ja ihmisoikeuksia kunnioittaen",
-          "noudattaa sosiaali- ja terveysalan säädöksiä, säännöksiä, määräyksiä ja eettisiä periaatteita perustellen toimintaansa",
-          "noudattaa työskentelyssään tietosuojaa ja salassapitoa",
-          "toimii kestävän kehityksen periaatteiden mukaisesti ja perustelee toimintaansa"
-        ],
-        "Hyvä H4": [],
-        "Kiitettävä K5": [
-          "toimii asiakkaan perus- ja ihmisoikeuksia kunnioittaen",
-          "noudattaa sosiaali- ja terveysalan säädöksiä, säännöksiä, määräyksiä ja eettisiä periaatteita perustellen monipuolisesti toimintaansa",
-          "noudattaa työskentelyssään tietosuojaa ja salassapitoa",
-          "toimii kestävän kehityksen periaatteiden mukaisesti, perustelee monipuolisesti toimintaansa ja tekee kehittämisehdotuksia."
-        ]
-      },
-      {
-        "Tyydyttävä T1": [
-          "havainnoi ja arvioi asiakkaan toimintakyvyn eri osa-alueita ja tuen tarvetta",
-          "huomioi toimintaa suunnitellessaan asiakkaan elämänhistorian, elinympäristön ja elämänlaadun",
-          "huomioi työpaikan päivän suunnitelmat toimintaa suunnitellessaan",
-          "laatii yhteistyössä asiakkaan kanssa mielekästä arkea tukevan suunnitelman, toteuttaa sitä ja arvioi sen toteutumista",
-          "huomioi toiminnassaan kuntoutumista edistävät ja sosiaalisia verkostoja ylläpitävät asiat työryhmän kanssa",
-          "toimii moniammatillisen työryhmän ja verkoston jäsenenä noudattaen suunnitelmia ja sopimuksia",
-          "raportoi ja kirjaa ymmärrettävästi asiakkaan vointiin ja toimintakykyyn liittyviä havaintoja asiakasturvallisuutta vaarantamatta",
-          "käyttää työyhteisön asiakastietojärjestelmiä ja sosiaali- ja terveysalan tietokantoja lähihoitajan vastuualueella"
-        ],
-        "Tyydyttävä T2": [],
-        "Hyvä H3": [
-          "havainnoi ja arvioi asiakkaan toimintakyvyn eri osa-alueita ja tuen tarvetta käyttäen apunaan toimintakykymittareita",
-          "huomioi toimintaa suunnitellessaan asiakkaan elämänhistorian, elinympäristön ja elämänlaadun tukien asiakkaan omanarvontuntoa",
-          "huomioi työpaikan päivä- ja viikkokohtaiset suunnitelmat toimintaa suunnitellessaan",
-          "laatii yhteistyössä asiakkaan kanssa mielekästä arkea tukevan suunnitelman huomioiden asiakkaan sosiaaliset verkostot sekä toteuttaa sitä ja arvioi sen toteutumista",
-          "huomioi toiminnassaan kuntoutumista edistävät ja sosiaalisia verkostoja ylläpitävät asiat",
-          "toimii vastuullisesti moniammatillisen työryhmän ja verkoston jäsenenä noudattaen suunnitelmia ja sopimuksia",
-          "raportoi ja kirjaa sujuvasti asiakkaan vointiin ja toimintakykyyn liittyviä havaintoja asiakasturvallisuutta vaarantamatta",
-          "käyttää sujuvasti työyhteisön asiakastietojärjestelmiä ja sosiaali- ja terveysalan tietokantoja lähihoitajan vastuualueella"
-        ],
-        "Hyvä H4": [],
-        "Kiitettävä K5": [
-          "havainnoi ja arvioi asiakkaan toimintakyvyn eri osa-alueita käyttäen apunaan monipuolisesti erilaisia toimintakykymittareita ja perustelee valintojaan",
-          "huomioi toimintaa suunnitellessaan monipuolisesti asiakkaan elämänhistorian, elinympäristön ja elämänlaadun tukien asiakkaan omanarvontuntoa",
-          "huomioi työpaikan päivä- ja viikkokohtaiset suunnitelmat toimintaa suunnitellessaan perustellen toimintaansa",
-          "laatii yhteistyössä asiakkaan kanssa mielekästä arkea tukevan monipuolisen suunnitelman huomioiden asiakkaan sosiaaliset verkostot sekä toteuttaa sitä ja arvioi sen toteutumista",
-          "huomioi monipuolisesti toiminnassaan kuntoutumista ylläpitävät ja edistävät sekä sosiaalisia verkostoja ylläpitävät asiat",
-          "toimii aktiivisesti ja vastuullisesti moniammatillisen työryhmän ja verkoston jäsenenä noudattaen suunnitelmia ja sopimuksia",
-          "raportoi ja kirjaa aktiivisesti ja monipuolisesti asiakkaan vointiin ja toimintakykyyn liittyviä havaintoja asiakasturvallisuutta vaarantamatta",
-          "käyttää monipuolisesti työyhteisön asiakastietojärjestelmiä ja sosiaali- ja terveysalan tietokantoja lähihoitajan vastuualueella."
-        ]
-      },
-      {
-        "Tyydyttävä T1": [
-          "kohtaa arvostavasti, kunnioittavasti ja tasavertaisesti asiakkaan",
-          "havaitsee asiakkaan vuorovaikutusaloitteita ja vastaa niihin",
-          "kuulee asiakkaan ja omaisten mielipiteitä ja huomioi yksilöllisiä toiveita",
-          "tukee asiakkaan elämänhallintaa ja vuorovaikutusta käyttäen erilaisia menetelmiä ja toimintamalleja",
-          "käyttää selkokieltä mukauttaen tarvittaessa ilmaisuaan",
-          "hyödyntää puhetta tukevia ja korvaavia kommunikointikeinoja",
-          "toimii ammatillisesti vuorovaikutustilanteissa asiakkaan perheen, tukiverkoston ja omaishoitajan kanssa",
-          "palvelee asiakkaita vastuullisesti eri tilanteissa, myös puhelimessa ja sähköisillä viestimillä huomioiden tietoturvan ja salassapidon"
-        ],
-        "Tyydyttävä T2": [],
-        "Hyvä H3": [
-          "kohtaa arvostavasti, kunnioittavasti ja tasavertaisesti asiakkaan ja tämän lähiverkoston",
-          "havaitsee asiakkaan pienetkin vuorovaikutusaloitteet ja vastaa niihin",
-          "kuulee asiakkaan ja omaisten mielipiteitä ja toiveita tukien asiakkaan osallisuutta",
-          "tukee asiakkaan elämänhallintaa ja vuorovaikutusta käyttäen erilaisia menetelmiä ja toimintamalleja",
-          "käyttää selkokieltä ja mukauttaa ilmaisuaan asiakkaan ja ryhmän kommunikointitaitoja vastaavaksi",
-          "käyttää sujuvasti puhetta tukevia ja korvaavia kommunikointikeinoja",
-          "toimii ammatillisesti ja yhteistyökykyisesti asiakkaan perheen, tukiverkoston ja omaishoitajan kanssa",
-          "palvelee asiakkaita vastuullisesti eri tilanteissa, myös puhelimessa ja sähköisillä viestimillä huomioiden tietoturvan ja salassapidon"
-        ],
-        "Hyvä H4": [],
-        "Kiitettävä K5": [
-          "kohtaa arvostavasti, kunnioittavasti ja tasavertaisesti asiakkaan ja tämän lähiverkoston",
-          "havaitsee asiakkaan pienetkin vuorovaikutusaloitteet ja vastaa niihin varmistaen asiakkaan ymmärretyksi tulemisen",
-          "kuulee asiakkaan ja omaisten mielipiteitä ja toiveita tukien asiakkaan osallisuutta ja elämän merkityksellisyyttä",
-          "tukee asiakkaan elämänhallintaa ja vuorovaikutusta käyttäen erilaisia menetelmiä ja toimintamalleja",
-          "käyttää luontevasti selkokieltä ja mukauttaa ilmaisuaan asiakkaan ja ryhmän kommunikointitaitoja vastaavaksi rohkaisten asiakasta itsensä ilmaisuun",
-          "käyttää tilanteeseen soveltuvia puhetta tukevia ja korvaavia kommunikointikeinoja perustellen valintojaan",
-          "toimii ammatillisesti ja aktiivisesti yhteistyössä asiakkaan perheen, tukiverkoston ja omaishoitajan kanssa ja tukee omaishoitajaa työssään",
-          "palvelee asiakkaita vastuullisesti eri tilanteissa, myös puhelimessa ja sähköisillä viestimillä huomioiden tietoturvan ja salassapidon."
-        ]
-      }
-    ],
     competenceRequirements: [
-      "työskennellä sosiaali- ja terveysalan työn säädösten, toimintaperiaatteiden, arvojen ja eettisten periaatteiden mukaan",
-      "suunnitella, toteuttaa ja arvioida työtään",
-      "toimia vuorovaikutuksessa asiakkaan kanssa",
-      "käyttää alan työmenetelmiä, -välineitä ja materiaaleja asiakkaan osallisuuden edistämisessä",
-      "käyttää alan työmenetelmiä, -välineitä ja materiaaleja edistäessään asiakkaan inhimillistä elämää saattohoitovaiheessa",
-      "ohjata palveluiden käytössä ja valintojen tekemisessä",
-      "toimia työyhteisön jäsenenä",
-      "ylläpitää ja edistää turvallisuutta, työkykyään ja työhyvinvointiaan",
-      "arvioida ja kehittää toimintaansa",
-      "arvioida mahdollisuuksiaan toimia hyvinvointialan yrittäjänä."
+      {
+        kuvaus:
+          "työskennellä sosiaali- ja terveysalan työn säädösten, toimintaperiaatteiden, arvojen ja eettisten periaatteiden mukaan",
+        arviointikriteerit: [
+          {
+            kuvaus: "Tyydyttävä T1",
+            kriteerit: [
+              "toimii asiakkaan perus- ja ihmisoikeuksia kunnioittaen",
+              "noudattaa sosiaali- ja terveysalan säädöksiä, säännöksiä, määräyksiä ja eettisiä periaatteita",
+              "noudattaa työskentelyssään tietosuojaa ja salassapitoa",
+              "toimii kestävän kehityksen periaatteiden mukaisesti"
+            ]
+          },
+          {
+            kuvaus: "Tyydyttävä T2",
+            kriteerit: []
+          },
+          {
+            kuvaus: "Hyvä H3",
+            kriteerit: [
+              "toimii asiakkaan perus- ja ihmisoikeuksia kunnioittaen",
+              "noudattaa sosiaali- ja terveysalan säädöksiä, säännöksiä, määräyksiä ja eettisiä periaatteita perustellen toimintaansa",
+              "noudattaa työskentelyssään tietosuojaa ja salassapitoa",
+              "toimii kestävän kehityksen periaatteiden mukaisesti ja perustelee toimintaansa"
+            ]
+          },
+          {
+            kuvaus: "Hyvä H4",
+            kriteerit: []
+          },
+          {
+            kuvaus: "Kiitettävä K5",
+            kriteerit: [
+              "toimii asiakkaan perus- ja ihmisoikeuksia kunnioittaen",
+              "noudattaa sosiaali- ja terveysalan säädöksiä, säännöksiä, määräyksiä ja eettisiä periaatteita perustellen monipuolisesti toimintaansa",
+              "noudattaa työskentelyssään tietosuojaa ja salassapitoa",
+              "toimii kestävän kehityksen periaatteiden mukaisesti, perustelee monipuolisesti toimintaansa ja tekee kehittämisehdotuksia."
+            ]
+          }
+        ]
+      },
+      {
+        kuvaus: "suunnitella, toteuttaa ja arvioida työtään",
+        arviointikriteerit: [
+          {
+            kuvaus: "Tyydyttävä T1",
+            kriteerit: [
+              "havainnoi ja arvioi asiakkaan toimintakyvyn eri osa-alueita ja tuen tarvetta",
+              "huomioi toimintaa suunnitellessaan asiakkaan elämänhistorian, elinympäristön ja elämänlaadun",
+              "huomioi työpaikan päivän suunnitelmat toimintaa suunnitellessaan",
+              "laatii yhteistyössä asiakkaan kanssa mielekästä arkea tukevan suunnitelman, toteuttaa sitä ja arvioi sen toteutumista",
+              "huomioi toiminnassaan kuntoutumista edistävät ja sosiaalisia verkostoja ylläpitävät asiat työryhmän kanssa",
+              "toimii moniammatillisen työryhmän ja verkoston jäsenenä noudattaen suunnitelmia ja sopimuksia",
+              "raportoi ja kirjaa ymmärrettävästi asiakkaan vointiin ja toimintakykyyn liittyviä havaintoja asiakasturvallisuutta vaarantamatta",
+              "käyttää työyhteisön asiakastietojärjestelmiä ja sosiaali- ja terveysalan tietokantoja lähihoitajan vastuualueella"
+            ]
+          },
+          {
+            kuvaus: "Tyydyttävä T2",
+            kriteerit: []
+          },
+          {
+            kuvaus: "Hyvä H3",
+            kriteerit: [
+              "havainnoi ja arvioi asiakkaan toimintakyvyn eri osa-alueita ja tuen tarvetta käyttäen apunaan toimintakykymittareita",
+              "huomioi toimintaa suunnitellessaan asiakkaan elämänhistorian, elinympäristön ja elämänlaadun tukien asiakkaan omanarvontuntoa",
+              "huomioi työpaikan päivä- ja viikkokohtaiset suunnitelmat toimintaa suunnitellessaan",
+              "laatii yhteistyössä asiakkaan kanssa mielekästä arkea tukevan suunnitelman huomioiden asiakkaan sosiaaliset verkostot sekä toteuttaa sitä ja arvioi sen toteutumista",
+              "huomioi toiminnassaan kuntoutumista edistävät ja sosiaalisia verkostoja ylläpitävät asiat",
+              "toimii vastuullisesti moniammatillisen työryhmän ja verkoston jäsenenä noudattaen suunnitelmia ja sopimuksia",
+              "raportoi ja kirjaa sujuvasti asiakkaan vointiin ja toimintakykyyn liittyviä havaintoja asiakasturvallisuutta vaarantamatta",
+              "käyttää sujuvasti työyhteisön asiakastietojärjestelmiä ja sosiaali- ja terveysalan tietokantoja lähihoitajan vastuualueella"
+            ]
+          },
+          {
+            kuvaus: "Hyvä H4",
+            kriteerit: []
+          },
+          {
+            kuvaus: "Kiitettävä K5",
+            kriteerit: [
+              "havainnoi ja arvioi asiakkaan toimintakyvyn eri osa-alueita käyttäen apunaan monipuolisesti erilaisia toimintakykymittareita ja perustelee valintojaan",
+              "huomioi toimintaa suunnitellessaan monipuolisesti asiakkaan elämänhistorian, elinympäristön ja elämänlaadun tukien asiakkaan omanarvontuntoa",
+              "huomioi työpaikan päivä- ja viikkokohtaiset suunnitelmat toimintaa suunnitellessaan perustellen toimintaansa",
+              "laatii yhteistyössä asiakkaan kanssa mielekästä arkea tukevan monipuolisen suunnitelman huomioiden asiakkaan sosiaaliset verkostot sekä toteuttaa sitä ja arvioi sen toteutumista",
+              "huomioi monipuolisesti toiminnassaan kuntoutumista ylläpitävät ja edistävät sekä sosiaalisia verkostoja ylläpitävät asiat",
+              "toimii aktiivisesti ja vastuullisesti moniammatillisen työryhmän ja verkoston jäsenenä noudattaen suunnitelmia ja sopimuksia",
+              "raportoi ja kirjaa aktiivisesti ja monipuolisesti asiakkaan vointiin ja toimintakykyyn liittyviä havaintoja asiakasturvallisuutta vaarantamatta",
+              "käyttää monipuolisesti työyhteisön asiakastietojärjestelmiä ja sosiaali- ja terveysalan tietokantoja lähihoitajan vastuualueella."
+            ]
+          }
+        ]
+      },
+      {
+        kuvaus: "toimia vuorovaikutuksessa asiakkaan kanssa",
+        arviointikriteerit: [
+          {
+            kuvaus: "Tyydyttävä T1",
+            kriteerit: [
+              "kohtaa arvostavasti, kunnioittavasti ja tasavertaisesti asiakkaan",
+              "havaitsee asiakkaan vuorovaikutusaloitteita ja vastaa niihin",
+              "kuulee asiakkaan ja omaisten mielipiteitä ja huomioi yksilöllisiä toiveita",
+              "tukee asiakkaan elämänhallintaa ja vuorovaikutusta käyttäen erilaisia menetelmiä ja toimintamalleja",
+              "käyttää selkokieltä mukauttaen tarvittaessa ilmaisuaan",
+              "hyödyntää puhetta tukevia ja korvaavia kommunikointikeinoja",
+              "toimii ammatillisesti vuorovaikutustilanteissa asiakkaan perheen, tukiverkoston ja omaishoitajan kanssa",
+              "palvelee asiakkaita vastuullisesti eri tilanteissa, myös puhelimessa ja sähköisillä viestimillä huomioiden tietoturvan ja salassapidon"
+            ]
+          },
+          {
+            kuvaus: "Tyydyttävä T2",
+            kriteerit: []
+          },
+          {
+            kuvaus: "Hyvä H3",
+            kriteerit: [
+              "kohtaa arvostavasti, kunnioittavasti ja tasavertaisesti asiakkaan ja tämän lähiverkoston",
+              "havaitsee asiakkaan pienetkin vuorovaikutusaloitteet ja vastaa niihin",
+              "kuulee asiakkaan ja omaisten mielipiteitä ja toiveita tukien asiakkaan osallisuutta",
+              "tukee asiakkaan elämänhallintaa ja vuorovaikutusta käyttäen erilaisia menetelmiä ja toimintamalleja",
+              "käyttää selkokieltä ja mukauttaa ilmaisuaan asiakkaan ja ryhmän kommunikointitaitoja vastaavaksi",
+              "käyttää sujuvasti puhetta tukevia ja korvaavia kommunikointikeinoja",
+              "toimii ammatillisesti ja yhteistyökykyisesti asiakkaan perheen, tukiverkoston ja omaishoitajan kanssa",
+              "palvelee asiakkaita vastuullisesti eri tilanteissa, myös puhelimessa ja sähköisillä viestimillä huomioiden tietoturvan ja salassapidon"
+            ]
+          },
+          {
+            kuvaus: "Hyvä H4",
+            kriteerit: []
+          },
+          {
+            kuvaus: "Kiitettävä K5",
+            kriteerit: [
+              "kohtaa arvostavasti, kunnioittavasti ja tasavertaisesti asiakkaan ja tämän lähiverkoston",
+              "havaitsee asiakkaan pienetkin vuorovaikutusaloitteet ja vastaa niihin varmistaen asiakkaan ymmärretyksi tulemisen",
+              "kuulee asiakkaan ja omaisten mielipiteitä ja toiveita tukien asiakkaan osallisuutta ja elämän merkityksellisyyttä",
+              "tukee asiakkaan elämänhallintaa ja vuorovaikutusta käyttäen erilaisia menetelmiä ja toimintamalleja",
+              "käyttää luontevasti selkokieltä ja mukauttaa ilmaisuaan asiakkaan ja ryhmän kommunikointitaitoja vastaavaksi rohkaisten asiakasta itsensä ilmaisuun",
+              "käyttää tilanteeseen soveltuvia puhetta tukevia ja korvaavia kommunikointikeinoja perustellen valintojaan",
+              "toimii ammatillisesti ja aktiivisesti yhteistyössä asiakkaan perheen, tukiverkoston ja omaishoitajan kanssa ja tukee omaishoitajaa työssään",
+              "palvelee asiakkaita vastuullisesti eri tilanteissa, myös puhelimessa ja sähköisillä viestimillä huomioiden tietoturvan ja salassapidon."
+            ]
+          }
+        ]
+      },
+      {
+        kuvaus:
+          "käyttää alan työmenetelmiä, -välineitä ja materiaaleja asiakkaan osallisuuden edistämisessä",
+        arviointikriteerit: []
+      },
+      {
+        kuvaus:
+          "käyttää alan työmenetelmiä, -välineitä ja materiaaleja edistäessään asiakkaan inhimillistä elämää saattohoitovaiheessa",
+        arviointikriteerit: []
+      },
+      {
+        kuvaus: "ohjata palveluiden käytössä ja valintojen tekemisessä",
+        arviointikriteerit: []
+      },
+      { kuvaus: "toimia työyhteisön jäsenenä", arviointikriteerit: [] },
+      {
+        kuvaus:
+          "ylläpitää ja edistää turvallisuutta, työkykyään ja työhyvinvointiaan",
+        arviointikriteerit: []
+      },
+      { kuvaus: "arvioida ja kehittää toimintaansa", arviointikriteerit: [] },
+      {
+        kuvaus: "arvioida mahdollisuuksiaan toimia hyvinvointialan yrittäjänä.",
+        arviointikriteerit: []
+      }
     ],
     competencePoints: 35,
     id: 0,
@@ -171,7 +236,6 @@ const mockPlannedStudies: MockStudy[] = [
     title: "Ikääntyvien osallisuuden edistäminen"
   },
   {
-    assessment: [],
     competenceRequirements: [],
     competencePoints: 4,
     id: 1,
@@ -193,7 +257,6 @@ const mockPlannedStudies: MockStudy[] = [
 ]
 const mockCompletedStudies: MockStudy[] = [
   {
-    assessment: [],
     competenceRequirements: [],
     competencePoints: 40,
     id: 0,
@@ -208,7 +271,6 @@ const mockCompletedStudies: MockStudy[] = [
     title: "Kotihoidossa toimiminen"
   },
   {
-    assessment: [],
     competenceRequirements: [],
     competencePoints: 30,
     id: 1,
@@ -223,7 +285,6 @@ const mockCompletedStudies: MockStudy[] = [
     title: "Ikääntyvien osallisuuden edistäminen"
   },
   {
-    assessment: [],
     competenceRequirements: [],
     competencePoints: 4,
     id: 2,
@@ -238,7 +299,6 @@ const mockCompletedStudies: MockStudy[] = [
     title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
   },
   {
-    assessment: [],
     competenceRequirements: [],
     competencePoints: 15,
     id: 3,
@@ -255,7 +315,6 @@ const mockCompletedStudies: MockStudy[] = [
 ]
 const mockUnscheduledStudies: MockStudy[] = [
   {
-    assessment: [],
     competenceRequirements: [],
     competencePoints: 3,
     id: 0,
@@ -263,7 +322,6 @@ const mockUnscheduledStudies: MockStudy[] = [
     title: "Kotihoidossa toimiminen"
   },
   {
-    assessment: [],
     competenceRequirements: [],
     competencePoints: 6,
     id: 1,
@@ -271,7 +329,6 @@ const mockUnscheduledStudies: MockStudy[] = [
     title: "Ikääntyvien osallisuuden edistäminen"
   },
   {
-    assessment: [],
     competenceRequirements: [],
     competencePoints: 9,
     id: 2,
@@ -279,7 +336,6 @@ const mockUnscheduledStudies: MockStudy[] = [
     title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
   },
   {
-    assessment: [],
     competenceRequirements: [],
     competencePoints: 15,
     id: 3,
@@ -287,7 +343,6 @@ const mockUnscheduledStudies: MockStudy[] = [
     title: "Yrityksessä toimiminen"
   },
   {
-    assessment: [],
     competenceRequirements: [],
     competencePoints: 15,
     id: 4,
@@ -295,7 +350,6 @@ const mockUnscheduledStudies: MockStudy[] = [
     title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
   },
   {
-    assessment: [],
     competenceRequirements: [],
     competencePoints: 35,
     id: 5,
@@ -394,7 +448,7 @@ export class Opiskelusuunnitelma extends React.Component<
     })
 
     return (
-      <SectionContainer>
+      <React.Fragment>
         <Heading>
           <FormattedMessage
             id="opiskelusuunnitelma.title"
@@ -557,7 +611,6 @@ export class Opiskelusuunnitelma extends React.Component<
                       locations={study.locations}
                       learningPeriods={study.learningPeriods}
                       competenceRequirements={study.competenceRequirements}
-                      assessment={study.assessment}
                       demonstrations={study.demonstrations}
                     />
                     {renderExtraItem && <EmptyItem />}
@@ -604,7 +657,6 @@ export class Opiskelusuunnitelma extends React.Component<
                       locations={study.locations}
                       learningPeriods={study.learningPeriods}
                       competenceRequirements={study.competenceRequirements}
-                      assessment={study.assessment}
                       demonstrations={study.demonstrations}
                     />
                     {renderExtraItem && <EmptyItem />}
@@ -651,7 +703,6 @@ export class Opiskelusuunnitelma extends React.Component<
                       locations={study.locations}
                       learningPeriods={study.learningPeriods}
                       competenceRequirements={study.competenceRequirements}
-                      assessment={study.assessment}
                       demonstrations={study.demonstrations}
                     />
                     {renderExtraItem && <EmptyItem />}
@@ -685,7 +736,7 @@ export class Opiskelusuunnitelma extends React.Component<
         >
           opiskeluvalmiuksia tukevat opinnot
         </Accordion>
-      </SectionContainer>
+      </React.Fragment>
     )
   }
 }

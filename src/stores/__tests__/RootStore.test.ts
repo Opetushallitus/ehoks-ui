@@ -30,11 +30,8 @@ describe("RootStore", () => {
         user: null
       },
       translations: { activeLocale: "fi", isLoading: false, translations: [] },
-      work: {
-        info: {
-          basicInformation: { fi: "", sv: "" },
-          hoksProcess: { fi: "", sv: "" }
-        },
+      tyopaikanToimija: {
+        oppijat: [],
         isLoading: false
       }
     })

@@ -1,8 +1,10 @@
 import { MobileSlider, Slide } from "components/MobileSlider"
 import { TempLearningPeriod } from "components/StudyInfo"
+import { css } from "emotion"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import MediaQuery from "react-responsive"
+import styled from "styled"
 import { breakpoints } from "theme"
 import { LearningPeriodDates } from "./LearningPeriodDates"
 import {
@@ -16,6 +18,20 @@ import {
   Title
 } from "./Shared"
 
+const LearningPeriodTitle = styled(Title)`
+  padding-left: 20px;
+`
+
+const LearningPeriodTable = styled(Table)`
+  margin-left: 20px;
+`
+
+const customSlider = css`
+  margin: 10px 0 0 0;
+  border-left: 0;
+  border-right: 0;
+`
+
 interface LearningPeriodProps {
   accentColor?: string
   // TODO: use type from mobx-state-tree
@@ -25,13 +41,15 @@ interface LearningPeriodProps {
 export class LearningPeriod extends React.Component<LearningPeriodProps> {
   render() {
     const { accentColor, learningPeriod } = this.props
-    const { assignments = [] } = learningPeriod
+    const { assignments = [], period = [] } = learningPeriod
     return (
       <Container>
-        <Title accentColor={accentColor}>
-          <LearningPeriodDates learningPeriod={learningPeriod} />
-        </Title>
-        <Table>
+        {(period[0] || period[1]) && (
+          <LearningPeriodTitle accentColor={accentColor}>
+            <LearningPeriodDates learningPeriod={learningPeriod} />
+          </LearningPeriodTitle>
+        )}
+        <LearningPeriodTable>
           <TBody>
             <tr>
               <TH>
@@ -52,12 +70,12 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
               <EmptyTD />
             </tr>
           </TBody>
-        </Table>
+        </LearningPeriodTable>
         <MediaQuery maxWidth={breakpoints.Tablet}>
           {matches => {
             if (matches) {
               return (
-                <MobileSlider>
+                <MobileSlider className={customSlider}>
                   {assignments.map((assignment, i) => {
                     return <Slide key={i}>{assignment}</Slide>
                   })}
