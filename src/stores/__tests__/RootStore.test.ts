@@ -1,10 +1,8 @@
-import { apiUrl } from "config"
-import { mockFetch } from "../../utils"
-import { ApiResponse, RootStore } from "../RootStore"
+import { RootStore } from "../RootStore"
 
 describe("RootStore", () => {
   test("constructor should produce valid tree even with empty input object", () => {
-    const store = RootStore.create({}, { fetch: mockFetch() })
+    const store = RootStore.create({}, {})
     // for some reason store.toJSON can be undefined, ensure that it exists first
     expect(typeof store.toJSON === "function" && store.toJSON()).toEqual({
       education: {
@@ -42,53 +40,6 @@ describe("RootStore", () => {
         },
         isLoading: false
       }
-    })
-  })
-
-  test("fetchSingle camelCases object keys", async () => {
-    // uses session_opintopolku_1.json mock
-    const store = RootStore.create({}, { fetch: mockFetch(1) })
-
-    const result: ApiResponse<any> = await store.fetchSingle(apiUrl("session"))
-    expect(result).toEqual({
-      data: {
-        commonName: "Teuvo",
-        firstName: "Teuvo Taavetti",
-        surname: "Testaaja"
-      },
-      meta: {
-        opintopolkuLoginUrl: "http://localhost:3000/auth-dev/opintopolku-login/"
-      }
-    })
-  })
-
-  test("fetchCollection camelCases object keys", async () => {
-    // uses lokalisointi0.json mock
-    const store = RootStore.create({}, { fetch: mockFetch() })
-
-    const result: ApiResponse<any> = await store.fetchCollection(
-      apiUrl("lokalisointi")
-    )
-    expect(result).toEqual({
-      data: [
-        {
-          category: "ehoks",
-          createdBy: "1.2.246.562.24.31103582397",
-          key: "testiavain",
-          locale: "fi",
-          modifiedBy: "1.2.246.562.24.31103582397",
-          value: "joo"
-        },
-        {
-          category: "ehoks",
-          createdBy: "1.2.246.562.24.43953048723",
-          key: "toinentesti",
-          locale: "fi",
-          modifiedBy: "1.2.246.562.24.43953048723",
-          value: "Upeeta"
-        }
-      ],
-      meta: {}
     })
   })
 })

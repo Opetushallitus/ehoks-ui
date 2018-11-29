@@ -1,6 +1,7 @@
 import { apiUrl } from "config"
-import { flow, getRoot, Instance, types } from "mobx-state-tree"
+import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
 import { IRootStore } from "stores/RootStore"
+import { IStoreEnvironment } from "utils"
 import defaultMessages from "./TranslationStore/defaultMessages.json"
 
 export interface ApiTranslation {
@@ -40,6 +41,7 @@ export const TranslationStore = types
   .model("TranslationStore", TranslationStoreModel)
   .actions(self => {
     const root = getRoot<IRootStore>(self)
+    const { fetchCollection } = getEnv<IStoreEnvironment>(self)
 
     const setActiveLocale = (locale: "fi" | "sv") => {
       self.activeLocale = locale
@@ -50,7 +52,7 @@ export const TranslationStore = types
       // insert defaultMessages for context.intl.formatMessage calls
       self.translations.replace(defaultMessages as ApiTranslation[])
       try {
-        const response = yield root.fetchCollection(apiUrl("lokalisointi"))
+        const response = yield fetchCollection(apiUrl("lokalisointi"))
         // add custom translations from API
         self.translations.replace([
           ...self.translations,

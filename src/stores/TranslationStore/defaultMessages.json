@@ -176,11 +176,6 @@
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.osoiteTitle",
-    "value": "Osoite"
-  },
-  {
-    "locale": "fi",
     "key": "tavoitteet.postiosoiteTitle",
     "value": "Postiosoite"
   },
@@ -188,11 +183,6 @@
     "locale": "fi",
     "key": "tavoitteet.kotikuntaTitle",
     "value": "Kotikunta"
-  },
-  {
-    "locale": "fi",
-    "key": "avoitteet.sahkopostiTitle",
-    "value": "Sähköposti"
   },
   {
     "locale": "fi",

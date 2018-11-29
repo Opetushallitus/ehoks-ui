@@ -1,22 +1,26 @@
+import { Provider } from "mobx-react"
 import React from "react"
 import ReactDOM from "react-dom"
-
-import { Provider } from "mobx-react"
 import { addLocaleData } from "react-intl"
 import fi from "react-intl/locale-data/fi"
 import sv from "react-intl/locale-data/sv"
 import { App } from "./components/App"
 import { RootStore } from "./stores/RootStore"
-import { fetch } from "./utils"
+import { fetch, fetchUtils } from "./utils"
 
 // polyfill Promise for IE 11
+
 import "promise-polyfill/src/polyfill"
 
 // load finnish & swedish locale data (currency units, separators etc.)
 addLocaleData([...fi, ...sv])
 
-// pass fetch to RootStore using MST's context, so we can easily mock it in tests
-const store = RootStore.create({}, { fetch })
+// pass fetch utils to RootStore using MST's environment context, so we can easily mock it in tests
+const { fetchCollection, fetchSingle, deleteResource } = fetchUtils(fetch)
+const store = RootStore.create(
+  {},
+  { fetchCollection, fetchSingle, deleteResource }
+)
 store.environment.getEnvironment()
 store.translations.haeLokalisoinnit()
 
