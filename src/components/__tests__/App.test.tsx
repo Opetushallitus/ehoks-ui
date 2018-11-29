@@ -1,6 +1,7 @@
 import { Provider } from "mobx-react"
 import React from "react"
 import renderer from "react-test-renderer"
+import { ErrorStore } from "stores/ErrorStore"
 import { RootStore } from "stores/RootStore"
 import { fetchUtils, mockFetch } from "../../utils"
 import { App } from "../App"
@@ -10,9 +11,10 @@ it("App renders correctly", async () => {
   const { fetchCollection, fetchSingle, deleteResource } = fetchUtils(
     mockFetch()
   )
+  const errors = ErrorStore.create({})
   const store = RootStore.create(
     {},
-    { fetchCollection, fetchSingle, deleteResource }
+    { fetchCollection, fetchSingle, deleteResource, errors }
   )
   // fetch default translations
   await store.translations.haeLokalisoinnit()

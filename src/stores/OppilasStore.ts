@@ -1,7 +1,6 @@
 import { apiUrl } from "config"
-import { flow, getEnv, getRoot, types } from "mobx-state-tree"
+import { flow, getEnv, types } from "mobx-state-tree"
 import { Peruste } from "models/Peruste"
-import { IRootStore } from "stores/RootStore"
 import { IStoreEnvironment } from "utils"
 
 const OppilasStoreModel = {
@@ -12,8 +11,7 @@ const OppilasStoreModel = {
 export const OppilasStore = types
   .model("OppilasStore", OppilasStoreModel)
   .actions(self => {
-    const root = getRoot<IRootStore>(self)
-    const { fetchCollection } = getEnv<IStoreEnvironment>(self)
+    const { fetchCollection, errors } = getEnv<IStoreEnvironment>(self)
     // tracks the most recent fetch by user
     let newestPromise = null
 
@@ -31,7 +29,7 @@ export const OppilasStore = types
           self.isLoading = false
         }
       } catch (error) {
-        root.errors.logError("OppilasStore.haePerusteet", error.message)
+        errors.logError("OppilasStore.haePerusteet", error.message)
         self.isLoading = false
       }
     })

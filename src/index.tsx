@@ -11,6 +11,7 @@ import { fetch, fetchUtils } from "./utils"
 // polyfill Promise for IE 11
 
 import "promise-polyfill/src/polyfill"
+import { ErrorStore } from "stores/ErrorStore"
 
 // load finnish & swedish locale data (currency units, separators etc.)
 addLocaleData([...fi, ...sv])
@@ -19,7 +20,12 @@ addLocaleData([...fi, ...sv])
 const { fetchCollection, fetchSingle, deleteResource } = fetchUtils(fetch)
 const store = RootStore.create(
   {},
-  { fetchCollection, fetchSingle, deleteResource }
+  {
+    fetchCollection,
+    fetchSingle,
+    deleteResource,
+    errors: ErrorStore.create({})
+  }
 )
 store.environment.getEnvironment()
 store.translations.haeLokalisoinnit()

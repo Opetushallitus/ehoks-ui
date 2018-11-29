@@ -1,6 +1,5 @@
 import { apiUrl } from "config"
-import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
-import { IRootStore } from "stores/RootStore"
+import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { IStoreEnvironment } from "utils"
 
 const EnvironmentStoreModel = {
@@ -14,8 +13,7 @@ const EnvironmentStoreModel = {
 export const EnvironmentStore = types
   .model("EnvironmentStore", EnvironmentStoreModel)
   .actions(self => {
-    const root = getRoot<IRootStore>(self)
-    const { fetchSingle } = getEnv<IStoreEnvironment>(self)
+    const { fetchSingle, errors } = getEnv<IStoreEnvironment>(self)
 
     const getEnvironment = flow(function*(): any {
       self.isLoading = true
@@ -30,7 +28,7 @@ export const EnvironmentStore = types
         self.opintopolkuLoginUrl = opintopolkuLoginUrl
         self.opintopolkuLogoutUrl = opintopolkuLogoutUrl
       } catch (error) {
-        root.errors.logError("EnvironmentStore.getEnvironment", error.message)
+        errors.logError("EnvironmentStore.getEnvironment", error.message)
       }
       self.isLoading = false
     })

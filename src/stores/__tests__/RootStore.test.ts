@@ -19,9 +19,6 @@ describe("RootStore", () => {
         opintopolkuLoginUrl: "",
         opintopolkuLogoutUrl: ""
       },
-      errors: {
-        errors: []
-      },
       isLoading: false,
       oppilas: {
         isLoading: false,

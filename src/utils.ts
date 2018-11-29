@@ -2,6 +2,7 @@ import { apiUrl } from "config"
 import camelCase from "lodash.camelcase"
 import mapObj from "map-obj"
 import { IEnvironmentStore } from "stores/EnvironmentStore"
+import { IErrorStore } from "stores/ErrorStore"
 import { InjectedStores, IRootStore } from "stores/RootStore"
 import { ITranslationStore } from "stores/TranslationStore"
 import "whatwg-fetch" // polyfill window.fetch for IE 11
@@ -88,4 +89,6 @@ export function fetchUtils(fetchImplementation: any) {
   }
 }
 
-export type IStoreEnvironment = ReturnType<typeof fetchUtils>
+export type IStoreEnvironment = ReturnType<typeof fetchUtils> & {
+  errors: IErrorStore
+}

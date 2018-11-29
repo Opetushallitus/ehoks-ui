@@ -1,6 +1,5 @@
 import { apiUrl } from "config"
-import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
-import { IRootStore } from "stores/RootStore"
+import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { IStoreEnvironment } from "utils"
 import defaultMessages from "./TranslationStore/defaultMessages.json"
 
@@ -40,8 +39,7 @@ const TranslationStoreModel = {
 export const TranslationStore = types
   .model("TranslationStore", TranslationStoreModel)
   .actions(self => {
-    const root = getRoot<IRootStore>(self)
-    const { fetchCollection } = getEnv<IStoreEnvironment>(self)
+    const { fetchCollection, errors } = getEnv<IStoreEnvironment>(self)
 
     const setActiveLocale = (locale: "fi" | "sv") => {
       self.activeLocale = locale
@@ -59,7 +57,7 @@ export const TranslationStore = types
           ...mapTranslations(response.data)
         ])
       } catch (error) {
-        root.errors.logError("TranslationStore.haeLokalisoinnit", error.message)
+        errors.logError("TranslationStore.haeLokalisoinnit", error.message)
       }
       self.isLoading = false
     })

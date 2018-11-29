@@ -1,7 +1,6 @@
 import { apiUrl } from "config"
-import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
+import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { SessionUser } from "models/SessionUser"
-import { IRootStore } from "stores/RootStore"
 import { IStoreEnvironment } from "utils"
 
 const SessionStoreModel = {
@@ -13,8 +12,9 @@ const SessionStoreModel = {
 export const SessionStore = types
   .model("SessionStore", SessionStoreModel)
   .actions(self => {
-    const root = getRoot<IRootStore>(self)
-    const { fetchSingle, deleteResource } = getEnv<IStoreEnvironment>(self)
+    const { fetchSingle, deleteResource, errors } = getEnv<IStoreEnvironment>(
+      self
+    )
 
     const checkSession = flow(function*(): any {
       self.isLoading = true
@@ -29,7 +29,7 @@ export const SessionStore = types
           })
           yield getUserInfo()
         } catch (error) {
-          root.errors.logError("SessionStore.checkSession", error.message)
+          errors.logError("SessionStore.checkSession", error.message)
         }
       }
       self.isLoading = false
@@ -41,7 +41,7 @@ export const SessionStore = types
         const response = yield fetchSingle(apiUrl("session/user-info"))
         self.user = response.data
       } catch (error) {
-        root.errors.logError("SessionStore.getUserInfo", error.message)
+        errors.logError("SessionStore.getUserInfo", error.message)
       }
       self.isLoading = false
     })
@@ -53,7 +53,7 @@ export const SessionStore = types
         self.user = null
         self.isLoading = false
       } catch (error) {
-        root.errors.logError("SessionStore.logout", error.message)
+        errors.logError("SessionStore.logout", error.message)
       }
     })
 
