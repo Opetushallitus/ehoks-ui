@@ -1,6 +1,8 @@
+import { inject, observer } from "mobx-react"
 import React from "react"
 import { css } from "react-emotion"
 import { FormattedMessage, intlShape } from "react-intl"
+import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 import facebookLogo from "./AppFooter/facebook.svg"
 import instagramLogo from "./AppFooter/instagram.svg"
@@ -156,6 +158,7 @@ const LanguageVersions = styled("div")`
   a {
     margin-right: 10px;
     font-size: 13px;
+    cursor: pointer;
   }
 `
 
@@ -200,10 +203,22 @@ const SocialMediaIcons = ({
   )
 }
 
-export class AppFooter extends React.Component<{}> {
+interface AppFooterProps {
+  store?: IRootStore
+}
+
+@inject("store")
+@observer
+export class AppFooter extends React.Component<AppFooterProps> {
   static contextTypes = {
     intl: intlShape
   }
+
+  changeLocale = (locale: "fi" | "sv") => (event: React.MouseEvent) => {
+    event.preventDefault()
+    this.props.store!.translations.setActiveLocale(locale)
+  }
+
   render() {
     const { intl } = this.context
     return (
@@ -274,19 +289,19 @@ export class AppFooter extends React.Component<{}> {
               </p>
               <DisclaimerLinks>
                 <LanguageVersions>
-                  <a>
+                  <a onClick={this.changeLocale("fi")} role="button">
                     <FormattedMessage
                       id="footer.finnishLocaleLink"
                       defaultMessage="Suomeksi"
                     />
                   </a>
-                  <a>
+                  {/* <a>
                     <FormattedMessage
                       id="footer.englishLocaleLink"
                       defaultMessage="In English"
                     />
-                  </a>
-                  <a>
+                  </a> */}
+                  <a onClick={this.changeLocale("sv")} role="button">
                     <FormattedMessage
                       id="footer.swedishLocaleLink"
                       defaultMessage="På svenska"

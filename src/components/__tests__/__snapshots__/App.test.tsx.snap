@@ -166,15 +166,18 @@ exports[`App renders correctly 1`] = `
             className="css-1hgh9qx"
           >
             <div
-              className="css-fth9yi"
+              className="css-1nspfwy"
             >
-              <a>
+              <a
+                onClick={[Function]}
+                role="button"
+              >
                 Suomeksi
               </a>
-              <a>
-                In English
-              </a>
-              <a>
+              <a
+                onClick={[Function]}
+                role="button"
+              >
                 På svenska
               </a>
             </div>
