@@ -2,7 +2,8 @@ import { RouteComponentProps } from "@reach/router"
 import { Accordion } from "components/Accordion"
 import { EmptyItem } from "components/EmptyItem"
 import { InfoTable } from "components/InfoTable"
-import { StatBox, StatBoxes, StatNumber, StatTitle } from "components/StatBox"
+import { ProgressPie } from "components/ProgressPie"
+import { StatBoxes } from "components/StatBox"
 import { StudyInfo, TempCompetenceRequirement } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
@@ -359,8 +360,8 @@ const mockUnscheduledStudies: MockStudy[] = [
   }
 ]
 
-const FlexFiller = styled("div")`
-  flex: 1;
+const ProgressTitle = styled("h2")`
+  margin-left: 30px;
 `
 
 export interface OpiskelusuunnitelmaProps {
@@ -382,15 +383,13 @@ export class Opiskelusuunnitelma extends React.Component<
   }
   state = {
     activeAccordions: {
-      // suunnitelma: false,
-      suunnitelma: true,
+      suunnitelma: false,
       suunnitelmat: {
-        // aikatauluttomat: false,
-        aikatauluttomat: true,
-        suunnitellut: true,
+        aikataulutetut: false,
+        suunnitellut: false,
         valmiit: false
       },
-      tavoitteet: true,
+      tavoitteet: false,
       tukevatOpinnot: false
     }
   }
@@ -399,6 +398,22 @@ export class Opiskelusuunnitelma extends React.Component<
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
     })
+  }
+
+  showPlanSubAccordion = (subAccordion: string) => () => {
+    this.setState(state => ({
+      ...state,
+      activeAccordions: {
+        ...state.activeAccordions,
+        suunnitelma: true,
+        suunnitelmat: {
+          ...(state.activeAccordions.suunnitelmat as {
+            [subAccordionName: string]: boolean
+          }),
+          [subAccordion]: true
+        }
+      }
+    }))
   }
 
   toggleAccordion = (accordion: string, subAccordion?: string) => () => {
@@ -437,6 +452,11 @@ export class Opiskelusuunnitelma extends React.Component<
     const competencePointsTitle = intl.formatMessage({
       id: "opiskelusuunnitelma.osaamispisteLyhenne"
     })
+
+    const totalStudiesLength =
+      mockPlannedStudies.length +
+      mockUnscheduledStudies.length +
+      mockCompletedStudies.length
 
     return (
       <React.Fragment>
@@ -528,35 +548,54 @@ export class Opiskelusuunnitelma extends React.Component<
               </tr>
             </tbody>
           </InfoTable>
+
+          <ProgressTitle>
+            <FormattedMessage
+              id="opiskelusuunnitelma.opintosiTitle"
+              defaultMessage="Opintosi"
+            />
+          </ProgressTitle>
+
           <StatBoxes>
-            <StatBox borderTop="#EB6F02">
-              <StatNumber color="#EB6F02">2</StatNumber>
-              <StatTitle>
+            <ProgressPie
+              percentage={Math.round(
+                (mockPlannedStudies.length / totalStudiesLength) * 100
+              )}
+              stroke="#EB6F02"
+              title={
                 <FormattedMessage
-                  id="opiskelusuunnitelma.suunniteltuaOpintoaTitle"
-                  defaultMessage="Suunniteltua opintoa"
+                  id="opiskelusuunnitelma.aikataulutettunaTitle"
+                  defaultMessage="Aikataulutettuna"
                 />
-              </StatTitle>
-            </StatBox>
-            <StatBox borderTop="#43A047">
-              <StatNumber color="#43A047">4</StatNumber>
-              <StatTitle>
+              }
+              onClick={this.showPlanSubAccordion("aikataulutetut")}
+            />
+            <ProgressPie
+              percentage={Math.round(
+                (mockUnscheduledStudies.length / totalStudiesLength) * 100
+              )}
+              stroke="#E2A626"
+              title={
                 <FormattedMessage
-                  id="opiskelusuunnitelma.valmistaOpintoaTitle"
-                  defaultMessage="Valmista opintoa"
+                  id="opiskelusuunnitelma.suunniteltunaTitle"
+                  defaultMessage="Suunniteltuna"
                 />
-              </StatTitle>
-            </StatBox>
-            <StatBox borderTop="#E2A626">
-              <StatNumber color="#E2A626">6</StatNumber>
-              <StatTitle>
+              }
+              onClick={this.showPlanSubAccordion("suunnitellut")}
+            />
+            <ProgressPie
+              percentage={Math.round(
+                (mockCompletedStudies.length / totalStudiesLength) * 100
+              )}
+              stroke="#43A047"
+              title={
                 <FormattedMessage
-                  id="opiskelusuunnitelma.aikatauluttamatontaOpintoa"
-                  defaultMessage="Aikatauluttamatonta opintoa"
+                  id="opiskelusuunnitelma.valmiinaTitle"
+                  defaultMessage="Valmiina"
                 />
-              </StatTitle>
-            </StatBox>
-            <FlexFiller />
+              }
+              onClick={this.showPlanSubAccordion("valmiit")}
+            />
           </StatBoxes>
         </Accordion>
 
@@ -575,9 +614,9 @@ export class Opiskelusuunnitelma extends React.Component<
           childContainer={false}
         >
           <Accordion
-            id="suunnitelma.suunnitellut"
-            open={activeAccordions.suunnitelmat.suunnitellut}
-            onToggle={this.toggleAccordion("suunnitelmat", "suunnitellut")}
+            id="suunnitelma.aikataulutetut"
+            open={activeAccordions.suunnitelmat.aikataulutetut}
+            onToggle={this.toggleAccordion("suunnitelmat", "aikataulutetut")}
             title={
               <FormattedMessage
                 id="opiskelusuunnitelma.aikataulutetutOpintoniTitle"
@@ -613,6 +652,52 @@ export class Opiskelusuunnitelma extends React.Component<
                   <FormattedMessage
                     id="opiskelusuunnitelma.eiAikataulutettujaOpintojaTitle"
                     defaultMessage="Ei aikataulutettuja opintoja"
+                  />
+                  .
+                </div>
+              )}
+            </StudiesContainer>
+          </Accordion>
+
+          <Accordion
+            id="suunnitelma.suunnitellut"
+            open={activeAccordions.suunnitelmat.suunnitellut}
+            onToggle={this.toggleAccordion("suunnitelmat", "suunnitellut")}
+            title={
+              <FormattedMessage
+                id="opiskelusuunnitelma.suunnitellutOpintoniTitle"
+                defaultMessage="Suunnitellut opintoni ({amount})"
+                values={{ amount: mockUnscheduledStudies.length }}
+              />
+            }
+            inline={true}
+            childContainer={false}
+          >
+            <StudiesContainer>
+              {mockUnscheduledStudies.map((study, i) => {
+                const renderExtraItem = (i + 1) % 4 === 0
+                return (
+                  <React.Fragment key={study.id}>
+                    <StudyInfo
+                      accentColor="#E2A626"
+                      fadedColor="#FDF6E9"
+                      title={`${study.title} ${
+                        study.competencePoints
+                      } ${competencePointsTitle}`}
+                      locations={study.locations}
+                      learningPeriods={study.learningPeriods}
+                      competenceRequirements={study.competenceRequirements}
+                      demonstrations={study.demonstrations}
+                    />
+                    {renderExtraItem && <EmptyItem />}
+                  </React.Fragment>
+                )
+              })}
+              {!mockUnscheduledStudies.length && (
+                <div>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.eiSuunniteltujaOpintojaTitle"
+                    defaultMessage="Ei suunniteltuja opintoja"
                   />
                   .
                 </div>
@@ -659,52 +744,6 @@ export class Opiskelusuunnitelma extends React.Component<
                   <FormattedMessage
                     id="opiskelusuunnitelma.eiValmiitaOpintojaTitle"
                     defaultMessage="Ei valmiita opintoja"
-                  />
-                  .
-                </div>
-              )}
-            </StudiesContainer>
-          </Accordion>
-
-          <Accordion
-            id="suunnitelma.aikatauluttomat"
-            open={activeAccordions.suunnitelmat.aikatauluttomat}
-            onToggle={this.toggleAccordion("suunnitelmat", "aikatauluttomat")}
-            title={
-              <FormattedMessage
-                id="opiskelusuunnitelma.suunnitellutOpintoniTitle"
-                defaultMessage="Suunnitellut opintoni ({amount})"
-                values={{ amount: mockUnscheduledStudies.length }}
-              />
-            }
-            inline={true}
-            childContainer={false}
-          >
-            <StudiesContainer>
-              {mockUnscheduledStudies.map((study, i) => {
-                const renderExtraItem = (i + 1) % 4 === 0
-                return (
-                  <React.Fragment key={study.id}>
-                    <StudyInfo
-                      accentColor="#E2A626"
-                      fadedColor="#FDF6E9"
-                      title={`${study.title} ${
-                        study.competencePoints
-                      } ${competencePointsTitle}`}
-                      locations={study.locations}
-                      learningPeriods={study.learningPeriods}
-                      competenceRequirements={study.competenceRequirements}
-                      demonstrations={study.demonstrations}
-                    />
-                    {renderExtraItem && <EmptyItem />}
-                  </React.Fragment>
-                )
-              })}
-              {!mockUnscheduledStudies.length && (
-                <div>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.eiSuunniteltujaOpintojaTitle"
-                    defaultMessage="Ei suunniteltuja opintoja"
                   />
                   .
                 </div>
