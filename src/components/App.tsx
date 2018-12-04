@@ -1,5 +1,5 @@
 import { Router } from "@reach/router"
-import "components/App/globalStyles"
+import { GlobalStyles } from "components/App/globalStyles"
 import { AppFooter } from "components/AppFooter"
 import { AppHeader } from "components/AppHeader"
 import { inject, observer } from "mobx-react"
@@ -52,6 +52,7 @@ export class App extends React.Component<AppProps> {
               <Ammatillinentutkinto path="ammatillinentutkinto" />
             </Router>
             <AppFooter />
+            <GlobalStyles />
           </Container>
         </IntlProvider>
       </ThemeWrapper>

@@ -3,7 +3,7 @@ import { Icon } from "components/Icon"
 import { TitleContainer } from "components/TitleContainer"
 import React from "react"
 import { GoChevronRight } from "react-icons/go"
-import styled, { css } from "styled"
+import styled from "styled"
 
 const LinkItemContainer = styled("div")`
   display: flex;
@@ -21,7 +21,7 @@ const SubTitle = styled("div")`
   color: #ccc;
 `
 
-const linkStyles = css`
+const StyledLink = styled(Link)`
   display: block;
   text-decoration: none;
 `
@@ -46,7 +46,7 @@ export class LinkItem extends React.Component<LinkItemProps> {
   render() {
     const { className, icon, title, subTitle, to } = this.props
     return (
-      <Link className={css`${linkStyles}${className}`} to={to}>
+      <StyledLink className={className} to={to}>
         <LinkItemContainer>
           <Icon>{icon}</Icon>
           <TitleContainer>
@@ -57,7 +57,7 @@ export class LinkItem extends React.Component<LinkItemProps> {
             <GoChevronRight size="24" color="#000" />
           </Icon>
         </LinkItemContainer>
-      </Link>
+      </StyledLink>
     )
   }
 }

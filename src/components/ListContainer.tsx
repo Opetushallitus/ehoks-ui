@@ -3,6 +3,7 @@ import styled from "styled"
 
 export interface ListContainerProps {
   className?: string
+  children?: JSX.Element | JSX.Element[]
 }
 
 const Container = styled("div")`

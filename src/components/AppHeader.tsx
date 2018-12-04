@@ -42,13 +42,13 @@ const TopLinks = styled("nav")`
   margin: 0 auto;
 `
 
-const TopLink = styled("a")`
+const TopLink = styled("a")<TopLinkProps>`
   display: inline-block;
   padding: 5px 20px 5px 20px;
   text-decoration: none;
   color: #fff;
   line-height: 20px;
-  background: ${(props: TopLinkProps) =>
+  background: ${props =>
     props.active ? props.theme.colors.header.background : "transparent"};
 
   &:focus {

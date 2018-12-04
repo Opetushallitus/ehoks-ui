@@ -20,11 +20,11 @@ export const createComponentWithIntl = (
   )
 }
 
-export const createThemeRenderer = (children: React.ReactNode) => {
+export const createThemeRenderer = (children: React.ReactChild) => {
   return renderer.create(<ThemeWrapper>{children}</ThemeWrapper>)
 }
 
-export const createRendererWithContext = (children: React.ReactNode) => {
+export const createRendererWithContext = (children: React.ReactChild) => {
   const tree = createComponentWithIntl(<ThemeWrapper>{children}</ThemeWrapper>)
 
   const mapChildrenContent = (node: any) => {

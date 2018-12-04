@@ -5,21 +5,21 @@ import { inject, observer } from "mobx-react"
 import React from "react"
 import { GoLightBulb } from "react-icons/go"
 import { IRootStore } from "stores/RootStore"
-import { css } from "styled"
+import styled from "styled"
 
 export interface StudyInformationProps {
   store?: IRootStore
 }
 
-const listContainerStyles = css`
+const StyledListContainer = styled(ListContainer)`
   background-color: #68d1e3;
 `
 
-const listHeadingStyles = css`
+const BulbIcon = styled(GoLightBulb)`
   color: #fff;
 `
 
-const listHeadingIconStyles = css`
+const StyledListHeading = styled(ListHeading)`
   margin: 0 10px 0 0;
 `
 
@@ -34,16 +34,15 @@ export class StudyInformation extends React.Component<
     // const { store } = this.props
     return (
       <div>
-        <ListContainer className={listContainerStyles}>
-          <ListHeading
-            className={listHeadingStyles}
-            icon={<GoLightBulb size="48" className={listHeadingIconStyles} />}
+        <StyledListContainer>
+          <StyledListHeading
+            icon={<BulbIcon size="48" />}
             onClose={this.close}
             titleSize="large"
           >
             Opintotietoa
-          </ListHeading>
-        </ListContainer>
+          </StyledListHeading>
+        </StyledListContainer>
       </div>
     )
   }

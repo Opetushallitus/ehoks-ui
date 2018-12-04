@@ -10,21 +10,21 @@ import { inject, observer } from "mobx-react"
 import React from "react"
 import { GoGraph, GoLightBulb, GoOrganization, GoX } from "react-icons/go"
 import { IRootStore } from "stores/RootStore"
-import { css } from "styled"
+import styled from "styled"
 
 export interface GoalsProps {
   store?: IRootStore
 }
 
-const linkItemStyles = css`
+const StyledLinkItem = styled(LinkItem)`
   margin-bottom: 6px;
 `
 
-const listContainerStyles = css`
+const StyledListContainer = styled(ListContainer)`
   background-color: #9b96ff;
 `
 
-const listHeadingIconStyles = css`
+const BulbIcon = styled(GoLightBulb)`
   margin: 0 10px 0 0;
 `
 
@@ -45,7 +45,7 @@ export class Goals extends React.Component<GoalsProps & RouteComponentProps> {
     // const { store } = this.props
     return (
       <div>
-        <ListContainer className={listContainerStyles}>
+        <StyledListContainer>
           <SubHeader
             icon={
               <AvatarImage src="https://ui-avatars.com/api/?name=Kirsi+Korhonen&size=50" />
@@ -58,7 +58,7 @@ export class Goals extends React.Component<GoalsProps & RouteComponentProps> {
           <HorizontalLine />
 
           <SubHeader
-            icon={<GoLightBulb size="32" className={listHeadingIconStyles} />}
+            icon={<BulbIcon size="32" />}
             title="Tehtävät työpaikalla"
             subTitle="Kuljettajana toimiminen"
             additionalContent={
@@ -66,16 +66,14 @@ export class Goals extends React.Component<GoalsProps & RouteComponentProps> {
             }
           />
 
-          <LinkItem
-            className={linkItemStyles}
+          <StyledLinkItem
             title="Osaamisen tiedot ja urasuunnitelma"
             subTitle="Viimeisin palaute 3.5.2018"
             icon={<GoGraph size="24" color="#000" />}
             to="/404"
           />
 
-          <LinkItem
-            className={linkItemStyles}
+          <StyledLinkItem
             title="Tehtävät työpaikalla"
             subTitle="Viimeisin palaute 18.4.2018"
             icon={<GoOrganization size="24" color="#000" />}
@@ -85,7 +83,7 @@ export class Goals extends React.Component<GoalsProps & RouteComponentProps> {
           <Button onClick={this.sendMessage}>
             Lähetä viesti opiskelijalle
           </Button>
-        </ListContainer>
+        </StyledListContainer>
       </div>
     )
   }

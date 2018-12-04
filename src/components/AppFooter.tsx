@@ -2,7 +2,7 @@ import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
-import styled, { css } from "styled"
+import styled from "styled"
 import facebookLogo from "./AppFooter/facebook.svg"
 import instagramLogo from "./AppFooter/instagram.svg"
 import okmLogo from "./AppFooter/okm_logo.png"
@@ -10,7 +10,7 @@ import ophLogo from "./AppFooter/oph_logo.svg"
 import opintopolku from "./AppFooter/opintopolku.png"
 import twitterLogo from "./AppFooter/twitter.svg"
 
-const logo = css`
+const Logo = styled("img")`
   height: 50px;
   &:first-of-type {
     margin-right: 20px;
@@ -262,15 +262,13 @@ export class AppFooter extends React.Component<AppFooterProps> {
           </LinksContainer>
           <DisclaimerAndLogos>
             <LogosContainer>
-              <img
-                className={logo}
+              <Logo
                 src={okmLogo}
                 alt={intl.formatMessage({
                   id: "footer.okmLogoLabel"
                 })}
               />
-              <img
-                className={logo}
+              <Logo
                 src={ophLogo}
                 alt={intl.formatMessage({
                   id: "footer.ophLogoLabel"

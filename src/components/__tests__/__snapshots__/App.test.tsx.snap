@@ -2,37 +2,37 @@
 
 exports[`App renders correctly 1`] = `
 <div
-  className="css-r44k6v"
+  className="sc-kaNhvL eewPXE"
 >
   <header
-    className="css-1c9pu1m"
+    className="sc-jzJRlG jRzaWZ"
   >
     <div
-      className="css-1bg6mpz"
+      className="sc-cSHVUG hswJuw"
     >
       <nav
-        className="css-1lhzg4m"
+        className="sc-kAzzGY dYfGvu"
       >
         <a
-          className="css-fxt1xk"
+          className="sc-chPdSV hVOCyc"
           href="https://opintopolku.fi/"
         >
           Opintopolku.fi
         </a>
         <a
-          className="css-fxt1xk"
+          className="sc-chPdSV hVOCyc"
           href="https://opintopolku.fi/oma-opintopolku/"
         >
           Oma Opintopolku
         </a>
         <a
-          className="css-fxt1xk"
+          className="sc-chPdSV hVOCyc"
           href="https://eperusteet.opintopolku.fi/"
         >
           ePerusteet
         </a>
         <a
-          className="css-qn17of"
+          className="sc-chPdSV jXCnsQ"
           href="/"
         >
           eHOKS
@@ -40,10 +40,10 @@ exports[`App renders correctly 1`] = `
       </nav>
     </div>
     <div
-      className="css-1xu5u1k"
+      className="sc-kgoBCf fMgJaS"
     >
       <div
-        className="css-1oo5bs0"
+        className="sc-kGXeez kXfuta"
       >
         <svg
           fill="currentColor"
@@ -68,60 +68,60 @@ exports[`App renders correctly 1`] = `
         </h3>
       </div>
       <div
-        className="css-fmwec3"
+        className="sc-kpOJdX bhFZDr"
       >
         eHOKS
       </div>
     </div>
   </header>
   <div
-    className="css-abysv6"
+    className="sc-eNQAEJ WrvOD"
   />
   <footer
-    className="css-9n3ktw"
+    className="sc-htpNat gmFmLO"
   >
     <div
-      className="css-1twx585"
+      className="sc-bxivhb bhJmli"
     >
       <div
-        className="css-1dnql38"
+        className="sc-ifAKCX sc-EHOje mcchK"
       >
         <div
-          className="css-1qxls6i"
+          className="sc-iwsKbI ecoLSS"
         >
           <img
             alt="Opintopolku logo"
-            className="css-29yp7r"
+            className="sc-gZMcBi hqpIlk"
             src=""
           />
           <div
-            className="css-139jliq"
+            className="sc-fjdhpX zYUDg"
           >
             <a>
               <img
                 alt="Twitter"
-                className="css-1rcxayq"
+                className="sc-bwzfXH jgJxsv"
                 src=""
               />
             </a>
             <a>
               <img
                 alt="Facebook"
-                className="css-1rcxayq"
+                className="sc-bwzfXH jgJxsv"
                 src=""
               />
             </a>
             <a>
               <img
                 alt="Instagram"
-                className="css-1rcxayq"
+                className="sc-bwzfXH jgJxsv"
                 src=""
               />
             </a>
           </div>
         </div>
         <ul
-          className="css-1fmvbse"
+          className="sc-bZQynM bovPkV"
         >
           <li>
             ePerusteet
@@ -138,24 +138,24 @@ exports[`App renders correctly 1`] = `
         </ul>
       </div>
       <div
-        className="css-os38x1"
+        className="sc-gzVnrw eILMJo"
       >
         <div
-          className="css-of0swa"
+          className="sc-ifAKCX sc-htoDjs gYgmVe"
         >
           <img
             alt="Opetus- ja kulttuuriministeriö logo"
-            className="css-14qd04p"
+            className="sc-bdVaJa eHyVvy"
             src=""
           />
           <img
             alt="Opetushallitus logo"
-            className="css-14qd04p"
+            className="sc-bdVaJa eHyVvy"
             src=""
           />
         </div>
         <div
-          className="css-nadzu"
+          className="sc-ifAKCX sc-dnqmqq jnXCrH"
         >
           <p>
             Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja
@@ -163,10 +163,10 @@ exports[`App renders correctly 1`] = `
               voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.
           </p>
           <div
-            className="css-1hgh9qx"
+            className="sc-gqjmRU bqqCvz"
           >
             <div
-              className="css-1nspfwy"
+              className="sc-VigVT eewXcY"
             >
               <a
                 onClick={[Function]}
@@ -182,31 +182,31 @@ exports[`App renders correctly 1`] = `
               </a>
             </div>
             <div
-              className="css-1cmi7g3"
+              className="sc-jTzLTM jJwTLL"
             >
               |
             </div>
             <div
-              className="css-hx8h8z"
+              className="sc-fjdhpX hZWzop"
             >
               <a>
                 <img
                   alt="Twitter"
-                  className="css-1rcxayq"
+                  className="sc-bwzfXH jgJxsv"
                   src=""
                 />
               </a>
               <a>
                 <img
                   alt="Facebook"
-                  className="css-1rcxayq"
+                  className="sc-bwzfXH jgJxsv"
                   src=""
                 />
               </a>
               <a>
                 <img
                   alt="Instagram"
-                  className="css-1rcxayq"
+                  className="sc-bwzfXH jgJxsv"
                   src=""
                 />
               </a>

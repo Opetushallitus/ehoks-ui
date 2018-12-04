@@ -3,7 +3,7 @@ import { TempDemonstration } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import MediaQuery from "react-responsive"
-import styled, { css } from "styled"
+import styled from "styled"
 import { breakpoints } from "theme"
 import { DemonstrationDates } from "./DemonstrationDates"
 import { Container, InfoContainer, Table, TBody, TD, TH, Title } from "./Shared"
@@ -16,7 +16,7 @@ const DemonstrationTable = styled(Table)`
   margin-left: 20px;
 `
 
-const customSlider = css`
+const CustomSlider = styled(MobileSlider)`
   margin: 10px 0 0 0;
   border-left: 0;
   border-right: 0;
@@ -71,11 +71,11 @@ export class Demonstration extends React.Component<DemonstrationProps> {
           {matches => {
             if (matches) {
               return (
-                <MobileSlider className={customSlider}>
+                <CustomSlider>
                   {demonstration.assignments.map((assignment, i) => {
                     return <Slide key={i}>{assignment}</Slide>
                   })}
-                </MobileSlider>
+                </CustomSlider>
               )
             } else {
               return (

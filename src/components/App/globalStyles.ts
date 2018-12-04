@@ -1,6 +1,6 @@
-import { injectGlobal } from "styled"
+import { createGlobalStyle } from "styled"
 
-injectGlobal`
+export const GlobalStyles = createGlobalStyle`
   html {
     box-sizing: border-box;
   }
