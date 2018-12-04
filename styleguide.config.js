@@ -51,8 +51,9 @@ module.exports = {
       }
     }
   ).parse,
+  require: [path.resolve(__dirname, "src/styleguide/setup")],
   styleguideComponents: {
-    Wrapper: path.join(__dirname, "src/components/StyleguidistWrapper")
+    Wrapper: path.join(__dirname, "src/styleguide/StyleguidistWrapper")
   },
   webpackConfig: require("./webpack.config"),
   template: {

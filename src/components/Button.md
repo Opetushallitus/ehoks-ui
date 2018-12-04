@@ -4,11 +4,9 @@
 <Button onClick={() => console.log("Hello")}>Esimerkkipainike</Button>
 ```
 
-### Custom className
+### Custom styles
 
 ```js
-const { css } = require("react-emotion")
-;<Button className={css({ backgroundColor: "red" })}>
-  Punaisella taustalla
-</Button>
+const RedButton = styled(Button)({ backgroundColor: "red" })
+;<RedButton>Punaisella taustalla</RedButton>
 ```
