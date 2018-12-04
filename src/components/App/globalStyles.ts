@@ -1,4 +1,4 @@
-import { injectGlobal } from "emotion"
+import { injectGlobal } from "styled"
 
 injectGlobal`
   html {

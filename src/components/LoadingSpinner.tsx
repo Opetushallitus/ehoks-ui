@@ -1,6 +1,5 @@
 import React from "react"
-import { keyframes } from "react-emotion"
-import styled from "styled"
+import styled, { keyframes } from "styled"
 
 const SpinnerContainer = styled("div")`
   width: 100px;

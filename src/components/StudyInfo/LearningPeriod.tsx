@@ -1,10 +1,9 @@
 import { MobileSlider, Slide } from "components/MobileSlider"
 import { TempLearningPeriod } from "components/StudyInfo"
-import { css } from "emotion"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import MediaQuery from "react-responsive"
-import styled from "styled"
+import styled, { css } from "styled"
 import { breakpoints } from "theme"
 import { LearningPeriodDates } from "./LearningPeriodDates"
 import {

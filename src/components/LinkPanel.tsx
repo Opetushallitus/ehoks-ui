@@ -55,7 +55,7 @@ export interface LinkPanelProps {
    * @default #00AC3D
    */
   backgroundColor?: string
-  /** Custom className, enables emotion composability */
+  /** Custom className, enables component composability */
   className?: string
   /** Image to show as background image */
   image?: string

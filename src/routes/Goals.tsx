@@ -6,11 +6,11 @@ import { HorizontalLine } from "components/HorizontalLine"
 import { LinkItem } from "components/LinkItem"
 import { ListContainer } from "components/ListContainer"
 import { SubHeader } from "components/SubHeader"
-import { css } from "emotion"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { GoGraph, GoLightBulb, GoOrganization, GoX } from "react-icons/go"
 import { IRootStore } from "stores/RootStore"
+import { css } from "styled"
 
 export interface GoalsProps {
   store?: IRootStore
