@@ -45,7 +45,7 @@ export const TranslationStore = types
       self.activeLocale = locale
     }
 
-    const haeLokalisoinnit = flow(function*(): any {
+    const haeLokalisoinnit = flow(function*() {
       self.isLoading = true
       // insert defaultMessages for context.intl.formatMessage calls
       self.translations.replace(defaultMessages as ApiTranslation[])

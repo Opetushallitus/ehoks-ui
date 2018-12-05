@@ -1,10 +1,10 @@
+import { getSnapshot } from "mobx-state-tree"
 import { RootStore } from "../RootStore"
 
 describe("RootStore", () => {
   test("constructor should produce valid tree even with empty input object", () => {
     const store = RootStore.create({}, {})
-    // for some reason store.toJSON can be undefined, ensure that it exists first
-    expect(typeof store.toJSON === "function" && store.toJSON()).toEqual({
+    expect(getSnapshot(store)).toEqual({
       education: {
         info: {
           basicInformation: { fi: "", sv: "" },

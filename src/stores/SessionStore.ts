@@ -16,7 +16,7 @@ export const SessionStore = types
       self
     )
 
-    const checkSession = flow(function*(): any {
+    const checkSession = flow(function*() {
       self.isLoading = true
       const response = yield fetchSingle(apiUrl("session"))
       self.user = response.data
@@ -35,7 +35,7 @@ export const SessionStore = types
       self.isLoading = false
     })
 
-    const getUserInfo = flow(function*(): any {
+    const getUserInfo = flow(function*() {
       self.isLoading = true
       try {
         const response = yield fetchSingle(apiUrl("session/user-info"))
@@ -46,7 +46,7 @@ export const SessionStore = types
       self.isLoading = false
     })
 
-    const logout = flow(function*(): any {
+    const logout = flow(function*() {
       self.isLoading = true
       try {
         yield deleteResource(apiUrl("session"))

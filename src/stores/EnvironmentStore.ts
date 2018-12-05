@@ -21,7 +21,7 @@ export const EnvironmentStore = types
   .actions(self => {
     const { fetchSingle, errors } = getEnv<IStoreEnvironment>(self)
 
-    const getEnvironment = flow(function*(): any {
+    const getEnvironment = flow(function*() {
       self.isLoading = true
       try {
         const response = yield fetchSingle(apiUrl("misc/environment"))

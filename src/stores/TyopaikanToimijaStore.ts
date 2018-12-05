@@ -1,5 +1,5 @@
 // import { apiUrl } from "config"
-import { flow, getEnv, types } from "mobx-state-tree"
+import { getEnv, types } from "mobx-state-tree"
 import { Oppija } from "models/Oppija"
 import { IStoreEnvironment } from "utils"
 
@@ -368,7 +368,8 @@ export const TyopaikanToimijaStore = types
   .actions(self => {
     const { errors } = getEnv<IStoreEnvironment>(self)
 
-    const haeOppijat = flow(function*(): any {
+    // const haeOppijat = flow(function*() {
+    const haeOppijat = () => {
       self.isLoading = true
       try {
         // TODO: replace with real API call
@@ -378,7 +379,7 @@ export const TyopaikanToimijaStore = types
       } catch (error) {
         errors.logError("TyopaikanToimijaStore.haeOppijat", error.message)
       }
-    })
+    }
 
     return { haeOppijat }
   })

@@ -15,7 +15,7 @@ export const OppilasStore = types
     // tracks the most recent fetch by user
     let newestPromise = null
 
-    const haePerusteet = flow(function*(name: string): any {
+    const haePerusteet = flow(function*(name: string) {
       self.isLoading = true
       try {
         const fetchPromise = fetchCollection(

@@ -17,7 +17,7 @@ export const EducationProviderStore = types
   .actions(self => {
     const { fetchSingle } = getEnv<IStoreEnvironment>(self)
 
-    const fetchInfo = flow(function*(): any {
+    const fetchInfo = flow(function*() {
       self.isLoading = true
       const response: ApiResponse<IEducationProviderInfo> = yield fetchSingle(
         apiUrl("education/info/")
