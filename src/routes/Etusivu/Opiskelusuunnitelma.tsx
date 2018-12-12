@@ -8,6 +8,7 @@ import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import { Heading } from "routes/Etusivu/Heading"
 import styled from "styled"
+import { StudiesContainer } from "./StudiesContainer"
 
 // TODO: map real API response after this in Model's views
 interface MockStudy {
@@ -362,16 +363,6 @@ const FlexFiller = styled("div")`
   flex: 1;
 `
 
-const Studies = styled("div")`
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 20px;
-
-  @media screen and (max-width: 1060px) {
-    flex-direction: column;
-  }
-`
-
 export interface OpiskelusuunnitelmaProps {
   children?: React.ReactChildren
 }
@@ -597,7 +588,7 @@ export class Opiskelusuunnitelma extends React.Component<
             inline={true}
             childContainer={false}
           >
-            <Studies>
+            <StudiesContainer>
               {mockPlannedStudies.map((study, i) => {
                 const renderExtraItem = (i + 1) % 4 === 0
                 return (
@@ -626,7 +617,7 @@ export class Opiskelusuunnitelma extends React.Component<
                   .
                 </div>
               )}
-            </Studies>
+            </StudiesContainer>
           </Accordion>
 
           <Accordion
@@ -643,7 +634,7 @@ export class Opiskelusuunnitelma extends React.Component<
             inline={true}
             childContainer={false}
           >
-            <Studies>
+            <StudiesContainer>
               {mockCompletedStudies.map((study, i) => {
                 const renderExtraItem = (i + 1) % 4 === 0
                 return (
@@ -672,7 +663,7 @@ export class Opiskelusuunnitelma extends React.Component<
                   .
                 </div>
               )}
-            </Studies>
+            </StudiesContainer>
           </Accordion>
 
           <Accordion
@@ -689,7 +680,7 @@ export class Opiskelusuunnitelma extends React.Component<
             inline={true}
             childContainer={false}
           >
-            <Studies>
+            <StudiesContainer>
               {mockUnscheduledStudies.map((study, i) => {
                 const renderExtraItem = (i + 1) % 4 === 0
                 return (
@@ -718,7 +709,7 @@ export class Opiskelusuunnitelma extends React.Component<
                   .
                 </div>
               )}
-            </Studies>
+            </StudiesContainer>
           </Accordion>
         </Accordion>
 

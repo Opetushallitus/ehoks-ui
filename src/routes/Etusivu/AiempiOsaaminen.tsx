@@ -1,8 +1,22 @@
 import { RouteComponentProps } from "@reach/router"
-import { Accordion } from "components/Accordion"
+import { ContentArea } from "components/ContentArea"
+import { EmptyItem } from "components/EmptyItem"
+import { HelpPopup } from "components/HelpPopup"
+import { StudyInfo } from "components/StudyInfo"
 import React from "react"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, intlShape } from "react-intl"
 import { Heading } from "routes/Etusivu/Heading"
+import styled from "styled"
+import { StudiesContainer } from "./StudiesContainer"
+
+const HeadingContainer = styled("div")`
+  display: flex;
+  align-items: center;
+`
+
+const HelpHeading = styled(Heading)`
+  margin-right: 20px;
+`
 
 export interface AiempiOsaaminenProps {
   children?: React.ReactChildren
@@ -18,6 +32,9 @@ export class AiempiOsaaminen extends React.Component<
   AiempiOsaaminenProps & RouteComponentProps,
   AiempiOsaaminenState
 > {
+  static contextTypes = {
+    intl: intlShape
+  }
   state = {
     activeAccordions: {
       previousCompetence: false
@@ -35,29 +52,68 @@ export class AiempiOsaaminen extends React.Component<
   }
 
   render() {
+    const { intl } = this.context
+    const mockStudy = {
+      id: 1,
+      competenceRequirements: [],
+      demonstrations: [],
+      title: "Yrityksessä toimiminen",
+      competencePoints: 4,
+      locations: ["Tavastia", "Muualla suoritettu"],
+      learningPeriods: [
+        {
+          approved: "2018-04-01",
+          instructor: "Etunimi Sukunimi, Organisaatio",
+          assignments: [
+            "Tehtävä ja kuvaus tehtävän sisällöstä",
+            "Tehtävä ja kuvaus tehtävän sisällöstä",
+            "Tehtävä ja kuvaus tehtävän sisällöstä",
+            "Tehtävä ja kuvaus tehtävän sisällöstä"
+          ]
+        }
+      ]
+    }
+    const mockStudies = [mockStudy, mockStudy, mockStudy, mockStudy, mockStudy]
+
+    const competencePointsTitle = intl.formatMessage({
+      id: "opiskelusuunnitelma.osaamispisteLyhenne"
+    })
+
     return (
       <React.Fragment>
-        <Heading>
-          <FormattedMessage
-            id="aiempiOsaaminen.title"
-            defaultMessage="Osaamisen tunnustaminen"
-          />
-        </Heading>
-
-        <Accordion
-          id="aiempiOsaaminen"
-          open={this.state.activeAccordions.previousCompetence}
-          title={
+        <HeadingContainer>
+          <HelpHeading>
             <FormattedMessage
-              id="aiempiOsaaminen.tunnustetutOpintoniTitle"
-              defaultMessage="Tunnustetut opintoni"
+              id="aiempiOsaaminen.title"
+              defaultMessage="Aiempi osaamiseni"
             />
-          }
-          onToggle={this.toggleAccordion("previousCompetence")}
-          helpIcon={true}
-        >
-          aiemmin hankittu osaaminen
-        </Accordion>
+          </HelpHeading>
+          <HelpPopup helpContent={"Test"} />
+        </HeadingContainer>
+
+        <ContentArea>
+          <StudiesContainer>
+            {mockStudies.map((study, i) => {
+              const renderExtraItem = (i + 1) % 4 === 0
+              return (
+                <React.Fragment key={i}>
+                  <StudyInfo
+                    accentColor="#43A047"
+                    fadedColor="#ECF6ED"
+                    title={`${study.title} ${
+                      study.competencePoints
+                    } ${competencePointsTitle}`}
+                    locations={study.locations}
+                    learningPeriods={study.learningPeriods}
+                    competenceRequirements={study.competenceRequirements}
+                    demonstrations={study.demonstrations}
+                  />
+                  {renderExtraItem && <EmptyItem />}
+                </React.Fragment>
+              )
+            })}
+          </StudiesContainer>
+        </ContentArea>
       </React.Fragment>
     )
   }
