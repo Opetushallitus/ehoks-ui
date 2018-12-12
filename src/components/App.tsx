@@ -32,14 +32,19 @@ export class App extends React.Component<AppProps> {
 
   render() {
     const { store } = this.props
+    const activeLocale = store!.translations.activeLocale
+    const translations = store!.translations.messages[activeLocale]
+    const messages =
+      activeLocale === "fi"
+        ? translations
+        : // use finnish translations as fallback, merge provided translations
+          { ...store!.translations.messages.fi, ...translations }
     return (
       <ThemeWrapper>
         <IntlProvider
           defaultLocale="fi"
-          locale={store!.translations.activeLocale}
-          messages={
-            store!.translations.messages[store!.translations.activeLocale]
-          }
+          locale={activeLocale}
+          messages={messages}
           textComponent={React.Fragment}
         >
           <Container>

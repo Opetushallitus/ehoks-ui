@@ -1,18 +1,12 @@
 import React from "react"
-import { MdExpandLess, MdExpandMore, MdHelp } from "react-icons/md"
-import { intlShape } from "react-intl"
-import Popup from "reactjs-popup"
+import { MdExpandLess, MdExpandMore } from "react-icons/md"
+
 import styled from "styled"
+import { ChildContentArea, ContentArea } from "./ContentArea"
+import { HelpPopup } from "./HelpPopup"
 
 const AccordionContainer = styled("div")`
   padding: 20px 0 10px 0;
-`
-
-const AccordionInlineContainer = styled("div")`
-  margin-top: 10px;
-  padding: 20px;
-  background: #fff;
-  border: 1px solid #a8a8a8;
 `
 
 const AccordionToggle = styled("div")`
@@ -54,51 +48,6 @@ const AccordionInlineTitle = styled(AccordionTitle)`
   font-weight: 600;
 `
 
-const Content = styled("div")`
-  margin: 10px 0 10px 50px;
-  border-radius: 4px;
-  border: 1px solid #a8a8a8;
-  background: #fff;
-  padding: 10px;
-
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
-    margin: 0;
-    padding: 0;
-    border-width: 0;
-    background: transparent;
-  }
-`
-
-const HelpToggle = styled(MdHelp)``
-
-const HelpButton = styled("button")`
-  appearance: none;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  margin: 0;
-  padding: 0;
-  width: auto;
-  font: inherit;
-  color: inherit;
-
-  &::-moz-focus-inner {
-    border: 0;
-    padding: 0;
-  }
-
-  margin-right: 45%;
-  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
-    margin-right: 300px;
-  }
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
-    margin-right: 100px;
-  }
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
-    margin-right: unset;
-  }
-`
-
 export interface AccordionProps {
   /** Unique identifier for accordion, required for accessibility features */
   id: string
@@ -135,9 +84,6 @@ export interface AccordionState {
  * Toggleable content panel with inline help popup
  */
 export class Accordion extends React.Component<AccordionProps, AccordionState> {
-  static contextTypes = {
-    intl: intlShape
-  }
   state = {
     isOpen: false // NOTE: this is only used if onToggle & open props are not provided
   }
@@ -171,13 +117,12 @@ export class Accordion extends React.Component<AccordionProps, AccordionState> {
       open,
       title
     } = this.props
-    const { intl } = this.context
 
-    const Container = inline ? AccordionInlineContainer : AccordionContainer
+    const Container = inline ? ContentArea : AccordionContainer
     const Title = inline ? AccordionInlineTitle : AccordionTitle
     const Toggle = inline ? AccordionInlineToggle : AccordionToggle
     const childContent = childContainer ? (
-      <Content data-testid="Content">{children}</Content>
+      <ChildContentArea data-testid="Content">{children}</ChildContentArea>
     ) : (
       children
     )
@@ -211,23 +156,7 @@ export class Accordion extends React.Component<AccordionProps, AccordionState> {
             </Toggle>
             <Title data-testid="Title">{title}</Title>
           </TitleRow>
-          {helpIcon ? (
-            <Popup
-              trigger={
-                <HelpButton
-                  aria-label={intl.formatMessage({
-                    id: "accordion.naytaOhjetekstiAriaLabel"
-                  })}
-                >
-                  <HelpToggle size="28" color="#027fa9" />
-                </HelpButton>
-              }
-              position={["left center", "bottom center", "right center"]}
-              keepTooltipInside={true}
-            >
-              <div role="alert">{helpContent}</div>
-            </Popup>
-          ) : null}
+          {helpIcon ? <HelpPopup helpContent={helpContent} /> : null}
         </TitleContainer>
         <div id={`${id}-content`}>{isOpen ? childContent : null}</div>
       </Container>
