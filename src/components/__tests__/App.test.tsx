@@ -1,3 +1,4 @@
+import "jest-styled-components"
 import { Provider } from "mobx-react"
 import React from "react"
 import renderer from "react-test-renderer"
