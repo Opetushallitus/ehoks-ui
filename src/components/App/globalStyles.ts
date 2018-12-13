@@ -35,7 +35,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   .CircularProgressbar .CircularProgressbar-trail {
-    stroke: #d6d6d6;
+    stroke: #f5f5f5;
   }
 
   .CircularProgressbar .CircularProgressbar-text {
