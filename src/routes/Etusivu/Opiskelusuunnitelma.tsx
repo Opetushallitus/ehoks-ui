@@ -561,7 +561,7 @@ export class Opiskelusuunnitelma extends React.Component<
               percentage={Math.round(
                 (mockPlannedStudies.length / totalStudiesLength) * 100
               )}
-              stroke="#EB6F02"
+              stroke="#FF5000"
               title={
                 <FormattedMessage
                   id="opiskelusuunnitelma.aikataulutettunaTitle"
@@ -574,7 +574,7 @@ export class Opiskelusuunnitelma extends React.Component<
               percentage={Math.round(
                 (mockUnscheduledStudies.length / totalStudiesLength) * 100
               )}
-              stroke="#E2A626"
+              stroke="#FFD900"
               title={
                 <FormattedMessage
                   id="opiskelusuunnitelma.suunniteltunaTitle"
@@ -587,7 +587,7 @@ export class Opiskelusuunnitelma extends React.Component<
               percentage={Math.round(
                 (mockCompletedStudies.length / totalStudiesLength) * 100
               )}
-              stroke="#43A047"
+              stroke="#5BCA16"
               title={
                 <FormattedMessage
                   id="opiskelusuunnitelma.valmiinaTitle"
