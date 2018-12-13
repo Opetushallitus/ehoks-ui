@@ -42,7 +42,10 @@ runner(null, function(res) {
 
   var locales = {
     fi: sortedKeys.reduce(function(result, key) {
-      return { ...result, [key]: locale[key] }
+      return {
+        ...result,
+        [key]: locale[key].replace(/\s+/g, " ").replace("\n", "")
+      }
     }, {})
   }
 
