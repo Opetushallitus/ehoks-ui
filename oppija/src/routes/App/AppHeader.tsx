@@ -42,6 +42,27 @@ const TopLinks = styled("nav")`
   margin: 0 auto;
 `
 
+const SkipToMain = styled("a")`
+  left: -999px;
+  position: absolute;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: -999;
+
+  &:focus,
+  &:active {
+    position: unset;
+    color: #fff;
+    width: auto;
+    height: auto;
+    padding: 5px 20px 5px 20px;
+    line-height: 20px;
+    z-index: 999;
+  }
+`
+
 const TopLink = styled("a")<TopLinkProps>`
   display: inline-block;
   padding: 5px 20px 5px 20px;
@@ -132,6 +153,12 @@ export class AppHeader extends React.Component<AppHeaderProps> {
       <HeaderContainer>
         <TopLinksContainer>
           <TopLinks>
+            <SkipToMain href="#main">
+              <FormattedMessage
+                id="header.skipToMainLink"
+                defaultMessage="Siirry pääsisältöön"
+              />
+            </SkipToMain>
             <TopLink href="https://opintopolku.fi/">
               <FormattedMessage
                 id="header.opintopolkuLink"
