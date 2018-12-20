@@ -45,6 +45,9 @@ export const theme = {
       questionBg: "rgba(0, 153, 250, 0.1)",
       successBg: "rgba(86, 189, 91, 0.05)",
       warningBg: "rgba(247, 180, 34, 0.05)"
+    },
+    table: {
+      cellBorder: "#000"
     }
   },
   maxWidth: 1440

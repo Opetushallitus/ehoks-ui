@@ -203,5 +203,30 @@
     "locale": "fi",
     "key": "tyopaikanToimija.suunnitelmaJatkoOpintoihinTitle",
     "value": "Suunnitelma jatko-opintoihin siirtymisestä"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.hakuPlaceholder",
+    "value": "Hae opiskelijaa"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.hakuAriaLabel",
+    "value": "Hae opiskelijaa"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.jarjestaTitle",
+    "value": "Järjestä"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.haunSivutuksenAriaLabel",
+    "value": "Hakutuloksien sivutuksen navigaatio"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.meneHakutuloksienSivulleAriaLabel",
+    "value": "Mene hakutuloksien sivulle {page}"
   }
 ]

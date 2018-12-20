@@ -7,6 +7,7 @@ import React from "react"
 import { IntlProvider } from "react-intl"
 import { Ammatillinentutkinto } from "routes/Ammatillinentutkinto"
 import { Henkilokohtaistaminen } from "routes/Henkilokohtaistaminen"
+import { KoulutuksenJarjestaja } from "routes/KoulutuksenJarjestaja"
 import { TyopaikanToimija } from "routes/TyopaikanToimija"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
@@ -55,6 +56,7 @@ export class App extends React.Component<AppProps> {
               <TyopaikanToimija path="tyopaikantoimija" />
               <Henkilokohtaistaminen path="henkilokohtaistaminen" />
               <Ammatillinentutkinto path="ammatillinentutkinto" />
+              <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />
             </Router>
             <AppFooter />
             <GlobalStyles />
