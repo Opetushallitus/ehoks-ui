@@ -1,15 +1,15 @@
 import { Accordion } from "components/Accordion"
 import { Container, PaddedContent } from "components/Container"
+import { Heading } from "components/Heading"
 import { InfoTable } from "components/InfoTable"
 import { NavigationContainer } from "components/NavigationContainer"
+import { BackgroundContainer } from "components/SectionContainer"
 import { StudyInfo } from "components/StudyInfo"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
-import { Heading } from "routes/Etusivu/Heading"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
-import { BackgroundContainer } from "./Etusivu/SectionContainer"
 
 const HeaderContainer = styled(NavigationContainer)`
   border: none;

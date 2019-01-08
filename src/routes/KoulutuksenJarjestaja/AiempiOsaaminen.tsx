@@ -1,13 +1,13 @@
 import { RouteComponentProps } from "@reach/router"
 import { ContentArea } from "components/ContentArea"
 import { EmptyItem } from "components/EmptyItem"
+import { Heading } from "components/Heading"
 import { HelpPopup } from "components/HelpPopup"
+import { StudiesContainer } from "components/StudiesContainer"
 import { StudyInfo } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
-import { Heading } from "routes/Etusivu/Heading"
 import styled from "styled"
-import { StudiesContainer } from "./StudiesContainer"
 
 const HeadingContainer = styled("div")`
   display: flex;
@@ -84,8 +84,8 @@ export class AiempiOsaaminen extends React.Component<
         <HeadingContainer>
           <HelpHeading>
             <FormattedMessage
-              id="aiempiOsaaminen.title"
-              defaultMessage="Aiempi osaamiseni"
+              id="koulutuksenJarjestaja.aiempiOsaaminen.title"
+              defaultMessage="Aiempi osaaminen"
             />
           </HelpHeading>
           <HelpPopup helpContent={"Test"} />

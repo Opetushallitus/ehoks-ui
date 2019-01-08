@@ -2,98 +2,25 @@ import { Link } from "@reach/router"
 import { Checkbox } from "components/Checkbox"
 import { Container, PaddedContent } from "components/Container"
 import { ContentArea } from "components/ContentArea"
+import { Heading } from "components/Heading"
 import { LoadingSpinner } from "components/LoadingSpinner"
 import { Page } from "components/Page"
 import { SearchField } from "components/SearchField"
+import { BackgroundContainer } from "components/SectionContainer"
 import { Table } from "components/Table"
 import { TableBody } from "components/Table/TableBody"
 import { TableCell } from "components/Table/TableCell"
 import { TableHead } from "components/Table/TableHead"
 import { TableHeader } from "components/Table/TableHeader"
 import { TableRow } from "components/Table/TableRow"
-import addDays from "date-fns/addDays"
 import format from "date-fns/format"
-import drop from "lodash.drop"
 import range from "lodash.range"
-import take from "lodash.take"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
-import { Heading } from "routes/Etusivu/Heading"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
-import { BackgroundContainer } from "./Etusivu/SectionContainer"
-
-const firstNames = [
-  "Matti",
-  "Timo",
-  "Juha",
-  "Kari",
-  "Antti",
-  "Tuula",
-  "Ritva",
-  "Leena",
-  "Anne",
-  "Päivi"
-]
-const lastNames = [
-  "Korhonen",
-  "Virtanen",
-  "Mäkinen",
-  "Nieminen",
-  "Mäkelä",
-  "Hämäläinen",
-  "Laine",
-  "Heikkinen",
-  "Koskinen",
-  "Järvinen"
-]
-
-const qualifications = [
-  "Sosiaali- ja terveysalan perustutkinto",
-  "Ravintola- ja catering-alan perustutkinto",
-  "Autoalan perustutkinto",
-  "Musiikkialan perustutkinto",
-  "Tieto- ja viestintätekniikan perustutkinto",
-  "Liiketoiminnan perustutkinto"
-]
-
-const startRange = [1451606400000, 1514764800000]
-
-interface MockStudent {
-  id: number
-  nimi: string
-  tutkinto: string
-  aloitus: string
-  hyvaksytty: string
-  paivitetty: string
-}
-
-const mockStudents: MockStudent[] = Array.from(Array(100).keys()).map(key => {
-  const startingDate = new Date(
-    Math.floor(
-      Math.random() * (startRange[1] - startRange[0] + 1) + startRange[0]
-    )
-  )
-  const acceptedDate = addDays(
-    startingDate,
-    Math.floor(Math.random() * (30 - 7 + 1) + 7)
-  )
-  const updateDate = addDays(
-    acceptedDate,
-    Math.floor(Math.random() * (120 - 7 + 1) + 7)
-  )
-  return {
-    id: key,
-    nimi: `${firstNames[Math.floor(Math.random() * firstNames.length)]} ${
-      lastNames[Math.floor(Math.random() * firstNames.length)]
-    }`,
-    tutkinto: qualifications[Math.floor(Math.random() * qualifications.length)],
-    aloitus: format(startingDate, "yyyy-MM-dd"),
-    hyvaksytty: format(acceptedDate, "yyyy-MM-dd"),
-    paivitetty: format(updateDate, "yyyy-MM-dd")
-  }
-})
+import { MockStudent } from "./KoulutuksenJarjestaja/MockStudent"
 
 const TopContainer = styled("div")`
   display: flex;
@@ -134,47 +61,27 @@ interface KoulutuksenJarjestajaProps {
   path?: string
 }
 
-interface KoulutuksenJarjestajaState {
-  showApprovedOnly: boolean
-  searchText: string
-  searchTimeout: number
-  sortBy: keyof MockStudent
-  sortDirection: string
-  activePage: number
-  perPage: number
-  searchResults: MockStudent[]
-}
-
 @inject("store")
 @observer
 export class KoulutuksenJarjestaja extends React.Component<
-  KoulutuksenJarjestajaProps,
-  KoulutuksenJarjestajaState
+  KoulutuksenJarjestajaProps
 > {
   static contextTypes = {
     intl: intlShape
   }
-  state = {
-    showApprovedOnly: true,
-    searchText: "",
-    searchTimeout: 0,
-    sortBy: "nimi" as keyof MockStudent,
-    sortDirection: "desc",
-    activePage: 0,
-    perPage: 10,
-    searchResults: mockStudents
-  }
+
   componentDidMount() {
+    const { store } = this.props
+    store!.koulutuksenJarjestaja.search.fetchStudents()
+
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
     })
   }
 
   toggleApprovedOnly = () => {
-    this.setState(state => ({
-      ...state,
-      showApprovedOnly: !state.showApprovedOnly
-    }))
+    const { koulutuksenJarjestaja } = this.props.store!
+    koulutuksenJarjestaja.search.toggleApprovedOnly()
   }
 
   formSubmit = (event: React.FormEvent) => {
@@ -182,55 +89,44 @@ export class KoulutuksenJarjestaja extends React.Component<
   }
 
   updateSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const searchText = event.target.value
-    if (this.state.searchTimeout) {
-      window.clearTimeout(this.state.searchTimeout)
-    }
-    this.setState(state => ({
-      ...state,
-      searchText,
-      searchResults:
-        searchText.length > 0
-          ? mockStudents.filter(student => {
-              return !!student.nimi.toLowerCase().match(searchText)
-            })
-          : mockStudents
-    }))
+    const { koulutuksenJarjestaja } = this.props.store!
+    koulutuksenJarjestaja.search.changeSearchText(event.target.value)
+    koulutuksenJarjestaja.search.fetchStudents()
   }
 
   changeSort = (sortName: keyof MockStudent) => {
-    const changeDirection = (sortBy: keyof MockStudent) => sortBy === sortName
-    this.setState(state => ({
-      ...state,
-      sortBy: sortName,
-      sortDirection: changeDirection(state.sortBy)
-        ? state.sortDirection === "asc"
-          ? "desc"
-          : "asc"
-        : state.sortDirection
-    }))
+    const { koulutuksenJarjestaja } = this.props.store!
+    koulutuksenJarjestaja.search.changeSort(sortName)
   }
 
   goToPage = (index: number) => () => {
-    this.setState({ activePage: index })
+    const { koulutuksenJarjestaja } = this.props.store!
+    koulutuksenJarjestaja.search.changeActivePage(index)
   }
 
   onPaginationResultEnter = (index: number) => (event: React.KeyboardEvent) => {
+    const { koulutuksenJarjestaja } = this.props.store!
     if (event.key === "Enter" || event.key === " ") {
-      this.setState({ activePage: index })
+      koulutuksenJarjestaja.search.changeActivePage(index)
     }
   }
 
   render() {
     const { intl } = this.context
+    const { koulutuksenJarjestaja } = this.props.store!
     const {
       activePage,
+      approvedOnly,
       perPage,
       sortBy,
       sortDirection,
-      searchResults
-    } = this.state
-    const totalPages = Math.ceil(searchResults.length / perPage)
+      sortedResults,
+      results,
+      toggleApprovedOnly,
+      isLoading,
+      searchText
+    } = koulutuksenJarjestaja.search
+    const totalPages = Math.ceil(results.length / perPage)
 
     return (
       <BackgroundContainer>
@@ -247,8 +143,8 @@ export class KoulutuksenJarjestaja extends React.Component<
               <SelectionContainer>
                 <Checkbox
                   id="showApprovedOnly"
-                  checked={this.state.showApprovedOnly}
-                  onToggle={this.toggleApprovedOnly}
+                  checked={approvedOnly}
+                  onToggle={toggleApprovedOnly}
                 >
                   <FormattedMessage
                     id="koulutuksenJarjestaja.naytaOpiskelijatButton"
@@ -259,7 +155,7 @@ export class KoulutuksenJarjestaja extends React.Component<
 
               <SearchContainer>
                 <SearchField
-                  isLoading={false}
+                  isLoading={isLoading}
                   onSubmit={this.formSubmit}
                   onTextChange={this.updateSearchText}
                   placeholder={intl.formatMessage({
@@ -270,6 +166,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                   })}
                   loadingSpinner={<Spinner />}
                   headerStyles={SearchHeaderStyles}
+                  value={searchText}
                 />
               </SearchContainer>
             </TopContainer>
@@ -317,26 +214,11 @@ export class KoulutuksenJarjestaja extends React.Component<
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {take(
-                    drop(
-                      searchResults.sort((a, b) => {
-                        const reverse = sortDirection === "desc"
-                        if (a[sortBy] > b[sortBy]) {
-                          return reverse ? -1 : 1
-                        } else if (a[sortBy] < b[sortBy]) {
-                          return reverse ? 1 : -1
-                        } else {
-                          return 0
-                        }
-                      }),
-                      activePage * perPage
-                    ),
-                    perPage
-                  ).map(student => {
+                  {sortedResults.map(student => {
                     return (
                       <TableRow key={student.id}>
                         <TableCell>
-                          <Link to={`/test/${student.id}`}>{student.nimi}</Link>
+                          <Link to={`${student.id}`}>{student.nimi}</Link>
                         </TableCell>
                         <TableCell>{student.tutkinto}</TableCell>
                         <TableCell>
@@ -355,7 +237,7 @@ export class KoulutuksenJarjestaja extends React.Component<
               </Table>
 
               {totalPages > 1 &&
-                searchResults.length > 0 && (
+                sortedResults.length > 0 && (
                   <PagingContainer
                     aria-label={intl.formatMessage({
                       id: "koulutuksenJarjestaja.haunSivutuksenAriaLabel"
@@ -365,8 +247,8 @@ export class KoulutuksenJarjestaja extends React.Component<
                       return (
                         <Page
                           key={index}
-                          active={this.state.activePage === index}
-                          aria-current={this.state.activePage === index}
+                          active={activePage === index}
+                          aria-current={activePage === index}
                           onClick={this.goToPage(index)}
                           onKeyPress={this.onPaginationResultEnter(index)}
                           tabIndex={0}

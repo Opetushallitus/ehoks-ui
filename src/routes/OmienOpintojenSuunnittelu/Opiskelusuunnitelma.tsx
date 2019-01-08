@@ -1,15 +1,15 @@
 import { RouteComponentProps } from "@reach/router"
 import { Accordion } from "components/Accordion"
 import { EmptyItem } from "components/EmptyItem"
+import { Heading } from "components/Heading"
 import { InfoTable } from "components/InfoTable"
 import { ProgressPie } from "components/ProgressPie"
 import { StatBoxes } from "components/StatBox"
+import { StudiesContainer } from "components/StudiesContainer"
 import { StudyInfo, TempCompetenceRequirement } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
-import { Heading } from "routes/Etusivu/Heading"
 import styled from "styled"
-import { StudiesContainer } from "./StudiesContainer"
 
 // TODO: map real API response after this in Model's views
 interface MockStudy {

@@ -1,16 +1,31 @@
 import { RouteComponentProps } from "@reach/router"
 import { Accordion } from "components/Accordion"
+import { Heading } from "components/Heading"
 import { InfoTable } from "components/InfoTable"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
-import { Heading } from "routes/Etusivu/Heading"
 import { ISessionStore } from "stores/SessionStore"
 import { injectSession } from "utils"
+
+interface MockUser {
+  firstName: string
+  surname: string
+  commonName: string
+  oid: string
+  yhteystiedot: {
+    sahkoposti: string
+    katuosoite: string
+    postinumero: string
+    kunta: string
+    puhelinnumero: string
+  }
+}
 
 export interface TavoitteetProps {
   children?: React.ReactChildren
   session?: ISessionStore
+  student: MockUser
 }
 
 export interface TavoitteetState {
@@ -32,7 +47,7 @@ export class Tavoitteet extends React.Component<
     activeAccordions: {
       degreeOrEducation: false,
       personalDetails: false,
-      personalGoal: false
+      studentGoals: false
     }
   }
 
@@ -47,31 +62,27 @@ export class Tavoitteet extends React.Component<
   }
 
   render() {
-    const { user } = this.props.session!
-    if (!user) {
-      return null
-    }
     const { intl } = this.context
-
+    const { student } = this.props
     return (
       <React.Fragment>
         <Heading>
           <FormattedMessage
-            id="tavoitteet.title"
-            defaultMessage="Tavoitteeni ja perustietoni"
+            id="koulutuksenJarjestaja.tavoite.title"
+            defaultMessage="Opiskelijan tavoite ja perustiedot"
           />
         </Heading>
 
         <Accordion
           id="omaTavoitteeni"
-          open={this.state.activeAccordions.personalGoal}
+          open={this.state.activeAccordions.studentGoals}
           title={
             <FormattedMessage
-              id="tavoitteet.omaTavoitteeniTitle"
-              defaultMessage="Oma tavoitteeni"
+              id="koulutuksenJarjestaja.tavoite.opiskelijanTavoitteetTitle"
+              defaultMessage="Opiskelijan tavoitteet"
             />
           }
-          onToggle={this.toggleAccordion("personalGoal")}
+          onToggle={this.toggleAccordion("studentGoals")}
           helpIcon={true}
         >
           <InfoTable>
@@ -79,7 +90,7 @@ export class Tavoitteet extends React.Component<
               <tr>
                 <th>
                   <FormattedMessage
-                    id="tavoitteet.suunnitelmaJatkoOpintoihinTitle"
+                    id="koulutuksenJarjestaja.tavoite.suunnitelmaJatkoOpintoihinTitle"
                     defaultMessage="Suunnitelma jatko-opintoihin siirtymisestä"
                   />
                 </th>
@@ -89,7 +100,8 @@ export class Tavoitteet extends React.Component<
               <tr>
                 <td
                   data-label={intl.formatMessage({
-                    id: "tavoitteet.suunnitelmaJatkoOpintoihinTitle"
+                    id:
+                      "koulutuksenJarjestaja.tavoite.suunnitelmaJatkoOpintoihinTitle"
                   })}
                 >
                   Tähän tekstiä
@@ -100,7 +112,7 @@ export class Tavoitteet extends React.Component<
               <tr>
                 <th>
                   <FormattedMessage
-                    id="tavoitteet.osoiteTitle"
+                    id="koulutuksenJarjestaja.tavoite.osoiteTitle"
                     defaultMessage="Osoite"
                   />
                 </th>
@@ -110,10 +122,10 @@ export class Tavoitteet extends React.Component<
               <tr>
                 <td
                   data-label={intl.formatMessage({
-                    id: "tavoitteet.osoiteTitle"
+                    id: "koulutuksenJarjestaja.tavoite.osoiteTitle"
                   })}
                 >
-                  {user.yhteystiedot.katuosoite}
+                  {student.yhteystiedot.katuosoite}
                 </td>
                 <td />
                 <td />
@@ -121,7 +133,7 @@ export class Tavoitteet extends React.Component<
               <tr>
                 <th>
                   <FormattedMessage
-                    id="tavoitteet.sahkopostiTitle"
+                    id="koulutuksenJarjestaja.tavoite.sahkopostiTitle"
                     defaultMessage="Sähköposti"
                   />
                 </th>
@@ -131,10 +143,10 @@ export class Tavoitteet extends React.Component<
               <tr>
                 <td
                   data-label={intl.formatMessage({
-                    id: "tavoitteet.sahkopostiTitle"
+                    id: "koulutuksenJarjestaja.tavoite.sahkopostiTitle"
                   })}
                 >
-                  {user.yhteystiedot.sahkoposti}
+                  {student.yhteystiedot.sahkoposti}
                 </td>
                 <td />
                 <td />
@@ -148,7 +160,7 @@ export class Tavoitteet extends React.Component<
           open={this.state.activeAccordions.degreeOrEducation}
           title={
             <FormattedMessage
-              id="tavoitteet.tutkintoTaiKoulutusTitle"
+              id="koulutuksenJarjestaja.tavoite.tutkintoTaiKoulutusTitle"
               defaultMessage="Tutkinto tai koulutus"
             />
           }
@@ -163,8 +175,8 @@ export class Tavoitteet extends React.Component<
           open={this.state.activeAccordions.personalDetails}
           title={
             <FormattedMessage
-              id="tavoitteet.henkilotiedotTitle"
-              defaultMessage="Omat henkilötiedot"
+              id="koulutuksenJarjestaja.tavoite.henkilotiedotTitle"
+              defaultMessage="Henkilötiedot"
             />
           }
           onToggle={this.toggleAccordion("personalDetails")}
@@ -175,19 +187,19 @@ export class Tavoitteet extends React.Component<
               <tr>
                 <th>
                   <FormattedMessage
-                    id="tavoitteet.etunimiSukunimiTitle"
+                    id="koulutuksenJarjestaja.tavoite.etunimiSukunimiTitle"
                     defaultMessage="Etunimi Sukunimi"
                   />
                 </th>
                 <th>
                   <FormattedMessage
-                    id="tavoitteet.kutsumanimiTitle"
+                    id="koulutuksenJarjestaja.tavoite.kutsumanimiTitle"
                     defaultMessage="Kutsumanimi"
                   />
                 </th>
                 <th>
                   <FormattedMessage
-                    id="tavoitteet.oppijanumeroTitle"
+                    id="koulutuksenJarjestaja.tavoite.oppijanumeroTitle"
                     defaultMessage="Oppijanumero"
                   />
                 </th>
@@ -195,42 +207,42 @@ export class Tavoitteet extends React.Component<
               <tr>
                 <td
                   data-label={intl.formatMessage({
-                    id: "tavoitteet.etunimiSukunimiTitle"
+                    id: "koulutuksenJarjestaja.tavoite.etunimiSukunimiTitle"
                   })}
                 >
-                  {user.firstName} {user.surname}
+                  {student.firstName} {student.surname}
                 </td>
                 <td
                   data-label={intl.formatMessage({
-                    id: "tavoitteet.kutsumanimiTitle"
+                    id: "koulutuksenJarjestaja.tavoite.kutsumanimiTitle"
                   })}
                 >
-                  {user.commonName}
+                  {student.commonName}
                 </td>
                 <td
                   data-label={intl.formatMessage({
-                    id: "tavoitteet.oppijanumeroTitle"
+                    id: "koulutuksenJarjestaja.tavoite.oppijanumeroTitle"
                   })}
                 >
-                  {user.oid}
+                  {student.oid}
                 </td>
               </tr>
               <tr>
                 <th>
                   <FormattedMessage
-                    id="tavoitteet.osoiteTitle"
+                    id="koulutuksenJarjestaja.tavoite.osoiteTitle"
                     defaultMessage="Osoite"
                   />
                 </th>
                 <th>
                   <FormattedMessage
-                    id="tavoitteet.postiosoiteTitle"
+                    id="koulutuksenJarjestaja.tavoite.postiosoiteTitle"
                     defaultMessage="Postiosoite"
                   />
                 </th>
                 <th>
                   <FormattedMessage
-                    id="tavoitteet.kotikuntaTitle"
+                    id="koulutuksenJarjestaja.tavoite.kotikuntaTitle"
                     defaultMessage="Kotikunta"
                   />
                 </th>
@@ -238,37 +250,38 @@ export class Tavoitteet extends React.Component<
               <tr>
                 <td
                   data-label={intl.formatMessage({
-                    id: "tavoitteet.osoiteTitle"
+                    id: "koulutuksenJarjestaja.tavoite.osoiteTitle"
                   })}
                 >
-                  {user.yhteystiedot.katuosoite}
+                  {student.yhteystiedot.katuosoite}
                 </td>
                 <td
                   data-label={intl.formatMessage({
-                    id: "tavoitteet.postiosoiteTitle"
+                    id: "koulutuksenJarjestaja.tavoite.postiosoiteTitle"
                   })}
                 >
-                  {user.yhteystiedot.postinumero} {user.yhteystiedot.kunta}
+                  {student.yhteystiedot.postinumero}{" "}
+                  {student.yhteystiedot.kunta}
                 </td>
                 <td
                   data-label={intl.formatMessage({
-                    id: "tavoitteet.kotikuntaTitle"
+                    id: "koulutuksenJarjestaja.tavoite.kotikuntaTitle"
                   })}
                 >
-                  {user.yhteystiedot.kunta}
+                  {student.yhteystiedot.kunta}
                 </td>
               </tr>
               <tr>
                 <th>
                   <FormattedMessage
-                    id="tavoitteet.sahkopostiTitle"
+                    id="koulutuksenJarjestaja.tavoite.sahkopostiTitle"
                     defaultMessage="Sähköposti"
                   />
                 </th>
                 <th />
                 <th>
                   <FormattedMessage
-                    id="tavoitteet.puhelinnumeroTitle"
+                    id="koulutuksenJarjestaja.tavoite.puhelinnumeroTitle"
                     defaultMessage="Puhelinnumero"
                   />
                 </th>
@@ -276,18 +289,18 @@ export class Tavoitteet extends React.Component<
               <tr>
                 <td
                   data-label={intl.formatMessage({
-                    id: "tavoitteet.sahkopostiTitle"
+                    id: "koulutuksenJarjestaja.tavoite.sahkopostiTitle"
                   })}
                 >
-                  {user.yhteystiedot.sahkoposti}
+                  {student.yhteystiedot.sahkoposti}
                 </td>
                 <td />
                 <td
                   data-label={intl.formatMessage({
-                    id: "tavoitteet.puhelinnumeroTitle"
+                    id: "koulutuksenJarjestaja.tavoite.puhelinnumeroTitle"
                   })}
                 >
-                  {user.yhteystiedot.puhelinnumero}
+                  {student.yhteystiedot.puhelinnumero}
                 </td>
               </tr>
             </tbody>

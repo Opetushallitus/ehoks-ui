@@ -6,12 +6,14 @@ import { inject, observer } from "mobx-react"
 import React from "react"
 import { IntlProvider } from "react-intl"
 import { Ammatillinentutkinto } from "routes/Ammatillinentutkinto"
+import { Etusivu } from "routes/Etusivu"
 import { Henkilokohtaistaminen } from "routes/Henkilokohtaistaminen"
 import { KoulutuksenJarjestaja } from "routes/KoulutuksenJarjestaja"
+import { Opiskelija } from "routes/KoulutuksenJarjestaja/Opiskelija"
+import { OmienOpintojenSuunnittelu } from "routes/OmienOpintojenSuunnittelu"
 import { TyopaikanToimija } from "routes/TyopaikanToimija"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
-import { Etusivu } from "../routes/Etusivu"
 import { AppErrors } from "./AppErrors"
 import { ThemeWrapper } from "./ThemeWrapper"
 
@@ -52,11 +54,13 @@ export class App extends React.Component<AppProps> {
             <AppHeader />
             <AppErrors />
             <Router basepath="/ehoks">
-              <Etusivu path="/*" />
+              <Etusivu path="/" />
+              <OmienOpintojenSuunnittelu path="suunnittelu/*" />
               <TyopaikanToimija path="tyopaikantoimija" />
               <Henkilokohtaistaminen path="henkilokohtaistaminen" />
               <Ammatillinentutkinto path="ammatillinentutkinto" />
               <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />
+              <Opiskelija path="koulutuksenjarjestaja/:id/*" />
             </Router>
             <AppFooter />
             <GlobalStyles />

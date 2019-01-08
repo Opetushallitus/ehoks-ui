@@ -48,6 +48,7 @@ interface SearchFieldProps {
   ariaLabel?: string
   loadingSpinner?: React.ReactNode
   headerStyles?: React.CSSProperties
+  value: string
 }
 
 export class SearchField extends React.Component<SearchFieldProps> {
@@ -67,7 +68,8 @@ export class SearchField extends React.Component<SearchFieldProps> {
         id: "ammattitutkinto.hakuAriaLabel"
       }),
       loadingSpinner = <Loading />,
-      headerStyles = {}
+      headerStyles = {},
+      value
     } = this.props
     return (
       <SearchHeader role="search" onSubmit={onSubmit} style={headerStyles}>
@@ -77,6 +79,7 @@ export class SearchField extends React.Component<SearchFieldProps> {
           aria-label={ariaLabel}
           onChange={onTextChange}
           required={true}
+          value={value}
         />
         {isLoading && loadingSpinner}
       </SearchHeader>

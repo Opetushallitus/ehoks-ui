@@ -92,6 +92,7 @@ export class AmmattitutkintoHaku extends React.Component<
   render() {
     const { intl } = this.context
     const { store } = this.props
+    const { searchText } = this.state
     const { oppilas } = store!
     const totalPages = Math.ceil(oppilas.perusteet.length / this.state.perPage)
     return (
@@ -108,6 +109,7 @@ export class AmmattitutkintoHaku extends React.Component<
             isLoading={oppilas.isLoading}
             onSubmit={this.formSubmit}
             onTextChange={this.updateSearchText}
+            value={searchText}
           />
           {this.state.searchText.length > 0 &&
             oppilas.perusteet.length > 0 && (
