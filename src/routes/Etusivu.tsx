@@ -3,6 +3,7 @@ import { HeroButton } from "components/Button"
 import { Container } from "components/Container"
 import { LinkPanel } from "components/LinkPanel"
 import { LinkPanelContainer } from "components/LinkPanelContainer"
+import { IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
@@ -94,6 +95,23 @@ export interface EtusivuProps {
 export class Etusivu extends React.Component<EtusivuProps> {
   static contextTypes = {
     intl: intlShape
+  }
+  disposeLoginReaction: IReactionDisposer
+
+  componentDidMount() {
+    const { store } = this.props
+    this.disposeLoginReaction = reaction(
+      () => store!.session.isLoggedIn,
+      isLoggedIn => {
+        if (isLoggedIn) {
+          navigate("/ehoks/suunnittelu")
+        }
+      }
+    )
+  }
+
+  componentWillUnmount() {
+    this.disposeLoginReaction()
   }
 
   loginStudent = (event: React.MouseEvent) => {

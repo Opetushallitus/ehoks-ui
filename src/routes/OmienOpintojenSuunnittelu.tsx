@@ -6,7 +6,7 @@ import { NavigationContainer } from "components/NavigationContainer"
 import { ProgressPies } from "components/ProgressPies"
 import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
-import { reaction } from "mobx"
+import { IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
@@ -26,9 +26,11 @@ export interface OmienOpintojenSuunnitteluProps {
 export class OmienOpintojenSuunnittelu extends React.Component<
   OmienOpintojenSuunnitteluProps
 > {
+  disposeLoginReaction: IReactionDisposer
+
   componentDidMount() {
     const { store } = this.props
-    reaction(
+    this.disposeLoginReaction = reaction(
       () => store!.session.isLoggedIn,
       isLoggedIn => {
         // navigate to Opintopolku logout url after logging out
@@ -40,6 +42,10 @@ export class OmienOpintojenSuunnittelu extends React.Component<
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
     })
+  }
+
+  componentWillUnmount() {
+    this.disposeLoginReaction()
   }
 
   setActiveTab = (route: string) => () => {
