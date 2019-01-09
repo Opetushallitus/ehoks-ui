@@ -124,6 +124,11 @@ export class Etusivu extends React.Component<EtusivuProps> {
     navigate("/ehoks/tyopaikantoimija")
   }
 
+  loginEducationProvider = (event: React.MouseEvent) => {
+    event.preventDefault()
+    navigate("/ehoks/koulutuksenjarjestaja")
+  }
+
   render() {
     const { intl } = this.context
     return (
@@ -166,6 +171,14 @@ export class Etusivu extends React.Component<EtusivuProps> {
                 <FormattedMessage
                   id="etusivu.tyopaikkaohjaajaKirjauduButtonLabel"
                   defaultMessage="Kirjaudu työpaikkaohjaajana"
+                />
+              </LoginButton>
+            </LoginContainer>
+            <LoginContainer>
+              <LoginButton onClick={this.loginEducationProvider}>
+                <FormattedMessage
+                  id="etusivu.koulutuksenJarjestajaKirjauduButtonLabel"
+                  defaultMessage="Kirjaudu koulutuksen järjestäjänä"
                 />
               </LoginButton>
             </LoginContainer>
