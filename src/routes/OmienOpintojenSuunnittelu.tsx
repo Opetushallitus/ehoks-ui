@@ -1,41 +1,53 @@
 import { Location, navigate, Router } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
+import { MainHeading } from "components/Heading"
 import Flag from "components/icons/Flag"
 import { NavigationContainer } from "components/NavigationContainer"
+import { ProgressPies } from "components/ProgressPies"
+import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
+import { IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
-import { AiempiOsaaminen } from "routes/Etusivu/AiempiOsaaminen"
-import { MainHeading } from "routes/Etusivu/Heading"
-import { Opiskelusuunnitelma } from "routes/Etusivu/Opiskelusuunnitelma"
-import { Tavoitteet } from "routes/Etusivu/Tavoitteet"
-import { ISessionStore } from "stores/SessionStore"
-import styled from "styled"
-import { injectSession } from "utils"
-import { BackgroundContainer } from "./SectionContainer"
-
-const ProgressPies = styled("div")`
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
-    margin: 0;
-    justify-content: space-around;
-  }
-`
+import { AiempiOsaaminen } from "routes/OmienOpintojenSuunnittelu/AiempiOsaaminen"
+import { Opiskelusuunnitelma } from "routes/OmienOpintojenSuunnittelu/Opiskelusuunnitelma"
+import { Tavoitteet } from "routes/OmienOpintojenSuunnittelu/Tavoitteet"
+import { IRootStore } from "stores/RootStore"
 
 export interface OmienOpintojenSuunnitteluProps {
-  session?: ISessionStore
+  store?: IRootStore
+  path?: string
 }
 
-@inject(injectSession)
+@inject("store")
 @observer
 export class OmienOpintojenSuunnittelu extends React.Component<
   OmienOpintojenSuunnitteluProps
 > {
+  disposeLoginReaction: IReactionDisposer
+
+  componentDidMount() {
+    const { store } = this.props
+    this.disposeLoginReaction = reaction(
+      () => store!.session.isLoggedIn,
+      isLoggedIn => {
+        // navigate to Opintopolku logout url after logging out
+        if (!isLoggedIn) {
+          window.location.href = this.props.store!.environment.opintopolkuLogoutUrl
+        }
+      }
+    )
+    window.requestAnimationFrame(() => {
+      window.scrollTo(0, 0)
+    })
+  }
+
+  componentWillUnmount() {
+    this.disposeLoginReaction()
+  }
+
   setActiveTab = (route: string) => () => {
     navigate(route)
   }
@@ -58,8 +70,8 @@ export class OmienOpintojenSuunnittelu extends React.Component<
 
                     <ProgressPies>
                       <SectionItem
-                        selected={location.pathname === "/ehoks"}
-                        onClick={this.setActiveTab("/ehoks")}
+                        selected={location.pathname === "/ehoks/suunnittelu"}
+                        onClick={this.setActiveTab("/ehoks/suunnittelu")}
                         title={
                           <FormattedMessage
                             id="kirjautunut.omaTavoitteeniTitle"
@@ -70,8 +82,12 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                         <Flag />
                       </SectionItem>
                       <SectionItem
-                        selected={location.pathname === "/ehoks/osaamiseni"}
-                        onClick={this.setActiveTab("/ehoks/osaamiseni")}
+                        selected={
+                          location.pathname === "/ehoks/suunnittelu/osaamiseni"
+                        }
+                        onClick={this.setActiveTab(
+                          "/ehoks/suunnittelu/osaamiseni"
+                        )}
                         title={
                           <FormattedMessage
                             id="kirjautunut.aiempiOsaamiseniTitle"
@@ -83,10 +99,11 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                       </SectionItem>
                       <SectionItem
                         selected={
-                          location.pathname === "/ehoks/opiskelusuunnitelmani"
+                          location.pathname ===
+                          "/ehoks/suunnittelu/opiskelusuunnitelmani"
                         }
                         onClick={this.setActiveTab(
-                          "/ehoks/opiskelusuunnitelmani"
+                          "/ehoks/suunnittelu/opiskelusuunnitelmani"
                         )}
                         title={
                           <FormattedMessage
@@ -105,7 +122,7 @@ export class OmienOpintojenSuunnittelu extends React.Component<
               <BackgroundContainer>
                 <Container>
                   <PaddedContent>
-                    <Router basepath="/ehoks">
+                    <Router basepath="/ehoks/suunnittelu">
                       <Tavoitteet path="/" />
                       <AiempiOsaaminen path="osaamiseni" />
                       <Opiskelusuunnitelma path="opiskelusuunnitelmani" />

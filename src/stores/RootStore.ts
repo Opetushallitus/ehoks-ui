@@ -1,11 +1,11 @@
 // import kebabCase from "lodash.kebabcase"
 import { getEnv, Instance, types } from "mobx-state-tree"
-import { EducationProviderStore } from "stores/EducationProviderStore"
 import { EnvironmentStore } from "stores/EnvironmentStore"
 import { OppilasStore } from "stores/OppilasStore"
 import { SessionStore } from "stores/SessionStore"
 import { TranslationStore } from "stores/TranslationStore"
 import { TyopaikanToimijaStore } from "stores/TyopaikanToimijaStore"
+import { KoulutuksenJarjestajaStore } from "./KoulutuksenJarjestajaStore"
 
 export interface ApiResponse<T> {
   meta: {
@@ -19,7 +19,7 @@ export interface InjectedStores {
 }
 
 const RootStoreModel = {
-  education: types.optional(EducationProviderStore, { info: {} }),
+  koulutuksenJarjestaja: types.optional(KoulutuksenJarjestajaStore, {}),
   environment: types.optional(EnvironmentStore, {}),
   isLoading: false,
   oppilas: types.optional(OppilasStore, {}),

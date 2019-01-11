@@ -1,27 +1,16 @@
-import { LoadingSpinner } from "components/LoadingSpinner"
+import { Page } from "components/Page"
+import { SearchField } from "components/SearchField"
 import range from "lodash.range"
 import slice from "lodash.slice"
 import take from "lodash.take"
 import { inject, observer } from "mobx-react"
 import React from "react"
-import { MdSearch } from "react-icons/md"
 import { FormattedMessage, intlShape } from "react-intl"
 import { SearchResult } from "routes/Ammattitutkinto/SearchResult"
 import { Section } from "routes/Ammattitutkinto/Section"
 import { SectionTitle } from "routes/Ammattitutkinto/SectionTitle"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
-
-interface PageProps {
-  active?: boolean
-}
-
-const Loading = styled(LoadingSpinner)`
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
-    position: absolute;
-    right: 20px;
-  }
-`
 
 const SearchContainer = styled("div")`
   border: 1px solid #979797;
@@ -41,51 +30,12 @@ const SearchResultsTitle = styled(SectionTitle)`
   margin: 10px;
 `
 
-const SearchHeader = styled("form")`
-  display: flex;
-  align-items: center;
-`
-
-const SearchIcon = styled(MdSearch)`
-  margin: 0 20px 0 10px;
-
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
-    position: absolute;
-  }
-`
-
-const SearchInput = styled("input")`
-  border: 1px solid #6e6e7e;
-  border-radius: 2px;
-  color: #6e6e7e;
-  font-size: 16px;
-  height: 40px;
-  padding: 0 10px;
-  min-width: 330px;
-
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
-    min-width: unset;
-    width: 100%;
-    padding-left: 40px;
-  }
-`
-
 const SearchResultsList = styled("div")`
   padding: 10px;
 `
 
 const PagingContainer = styled("nav")`
   margin: 10px;
-`
-
-const Page = styled("div")`
-  display: inline-block;
-  background-color: ${(props: PageProps) =>
-    props.active ? "#316fa0" : "#ecf3fc"};
-  color: ${(props: PageProps) => (props.active ? "#fff" : "#000")};
-  padding: 5px 10px;
-  margin-right: 10px;
-  cursor: ${(props: PageProps) => (props.active ? "default" : "pointer")};
 `
 
 export interface AmmattitutkintoHakuProps {
@@ -121,7 +71,7 @@ export class AmmattitutkintoHaku extends React.Component<
     this.setState({
       activePage: 0,
       searchText,
-      searchTimeout: setTimeout(() => {
+      searchTimeout: window.setTimeout(() => {
         if (searchText.length > 0) {
           this.props.store!.oppilas.haePerusteet(searchText)
         }
@@ -130,7 +80,7 @@ export class AmmattitutkintoHaku extends React.Component<
   }
 
   onPaginationResultEnter = (index: number) => (event: React.KeyboardEvent) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" || event.key === " ") {
       this.setState({ activePage: index })
     }
   }
@@ -142,6 +92,7 @@ export class AmmattitutkintoHaku extends React.Component<
   render() {
     const { intl } = this.context
     const { store } = this.props
+    const { searchText } = this.state
     const { oppilas } = store!
     const totalPages = Math.ceil(oppilas.perusteet.length / this.state.perPage)
     return (
@@ -154,27 +105,12 @@ export class AmmattitutkintoHaku extends React.Component<
         </SectionTitle>
 
         <SearchContainer>
-          <SearchHeader role="search" onSubmit={this.formSubmit}>
-            <SearchIcon size="24" />
-            <SearchInput
-              placeholder={intl.formatMessage({
-                id: "ammattitutkinto.hakuPlaceholder"
-              })}
-              aria-label={intl.formatMessage({
-                id: "ammattitutkinto.hakuAriaLabel"
-              })}
-              onChange={this.updateSearchText}
-              required={true}
-            />
-            {oppilas.isLoading && (
-              <Loading
-                role="alert"
-                ariaLabel={intl.formatMessage({
-                  id: "ammattitutkinto.ammattitutkintojaLadataanAriaLabel"
-                })}
-              />
-            )}
-          </SearchHeader>
+          <SearchField
+            isLoading={oppilas.isLoading}
+            onSubmit={this.formSubmit}
+            onTextChange={this.updateSearchText}
+            value={searchText}
+          />
           {this.state.searchText.length > 0 &&
             oppilas.perusteet.length > 0 && (
               <React.Fragment>

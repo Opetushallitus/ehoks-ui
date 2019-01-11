@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RootStore constructor should produce valid tree even with empty input object 1`] = `
+Object {
+  "environment": Object {
+    "eperusteetPerusteUrl": "",
+    "error": "",
+    "isLoading": false,
+    "opintopolkuLoginUrl": "",
+    "opintopolkuLogoutUrl": "",
+  },
+  "isLoading": false,
+  "koulutuksenJarjestaja": Object {
+    "search": Object {
+      "activePage": 0,
+      "approvedOnly": false,
+      "isLoading": false,
+      "perPage": 10,
+      "results": Array [],
+      "searchText": "",
+      "sortBy": "nimi",
+      "sortDirection": "desc",
+    },
+  },
+  "oppilas": Object {
+    "isLoading": false,
+    "perusteet": Array [],
+  },
+  "session": Object {
+    "error": "",
+    "isLoading": false,
+    "user": null,
+  },
+  "translations": Object {
+    "activeLocale": "fi",
+    "isLoading": false,
+    "translations": Array [],
+  },
+  "tyopaikanToimija": Object {
+    "isLoading": false,
+    "oppijat": Array [],
+  },
+}
+`;
