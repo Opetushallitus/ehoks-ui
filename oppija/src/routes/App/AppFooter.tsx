@@ -3,12 +3,12 @@ import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
-import facebookLogo from "./AppFooter/facebook.svg"
-import instagramLogo from "./AppFooter/instagram.svg"
-import okmLogo from "./AppFooter/okm_logo.png"
-import ophLogo from "./AppFooter/oph_logo.svg"
-import opintopolku from "./AppFooter/opintopolku.png"
-import twitterLogo from "./AppFooter/twitter.svg"
+import facebookLogo from "./facebook.svg"
+import instagramLogo from "./instagram.svg"
+import okmLogo from "./okm_logo.png"
+import ophLogo from "./oph_logo.svg"
+import opintopolku from "./opintopolku.png"
+import twitterLogo from "./twitter.svg"
 
 const Logo = styled("img")`
   height: 50px;

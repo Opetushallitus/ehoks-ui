@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "./public/ehoks/dist/",
     "sourceMap": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
@@ -16,11 +15,7 @@
     "target": "es5",
     "jsx": "react",
     "lib": ["es5", "es6", "dom"],
-    "baseUrl": "./src"
+    "baseUrl": "../"
   },
-  "awesomeTypescriptLoaderOptions": {
-    "silent": true
-  },
-  "include": ["./**/*"],
-  "exclude": ["node_modules", "components/__tests__"]
+  "include": ["../"]
 }

@@ -4,7 +4,7 @@ import ReactDOM from "react-dom"
 import { addLocaleData } from "react-intl"
 import fi from "react-intl/locale-data/fi"
 import sv from "react-intl/locale-data/sv"
-import { App } from "./components/App"
+import { App } from "./routes/App"
 import { RootStore } from "./stores/RootStore"
 import { fetch, fetchUtils } from "./utils"
 
@@ -41,8 +41,8 @@ ReactDOM.render(
 
 // setup webpack hot module replacement support
 if (module.hot) {
-  module.hot.accept("./components/App", () => {
-    const NextApp = require("./components/App").App
+  module.hot.accept("./routes/App", () => {
+    const NextApp = require("./routes/App").App
     ReactDOM.render(
       <Provider store={store}>
         <NextApp />

@@ -1,6 +1,7 @@
 var webpack = require("webpack")
 var path = require("path")
 var ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
+var TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
 
 module.exports = {
   mode: "development",
@@ -36,7 +37,8 @@ module.exports = {
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: [".ts", ".tsx", ".js"],
-    modules: [path.resolve(__dirname, "src"), "node_modules"]
+    modules: [path.resolve(__dirname, "src"), "node_modules"],
+    plugins: [new TsconfigPathsPlugin({})]
   },
 
   plugins: [

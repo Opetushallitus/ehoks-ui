@@ -1,3 +1,5 @@
+import { Container } from "components/Container"
+import { Notification } from "components/Notification"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
@@ -6,8 +8,6 @@ import { FormattedMessage, intlShape } from "react-intl"
 import { AppError } from "stores/ErrorStore"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
-import { Container } from "./Container"
-import { Notification } from "./Notification"
 
 const ErrorNotification = styled(Notification)`
   margin: 20px 0;

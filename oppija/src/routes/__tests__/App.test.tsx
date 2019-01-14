@@ -4,7 +4,7 @@ import React from "react"
 import renderer from "react-test-renderer"
 import { ErrorStore } from "stores/ErrorStore"
 import { RootStore } from "stores/RootStore"
-import { fetchUtils, mockFetch } from "../../utils"
+import { fetchUtils, mockFetch } from "utils"
 import { App } from "../App"
 
 it("App renders correctly", async () => {

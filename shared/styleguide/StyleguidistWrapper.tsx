@@ -1,6 +1,6 @@
 import React from "react"
 import { IntlProvider } from "react-intl"
-import { ThemeWrapper } from "../components/ThemeWrapper"
+import { ThemeWrapper } from "components/ThemeWrapper"
 
 export default class StyleguidistWrapper extends React.Component {
   render() {

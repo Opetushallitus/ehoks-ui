@@ -1,6 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App renders correctly 1`] = `
+.c9 {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
 .c20 {
   height: 50px;
 }
@@ -238,11 +243,6 @@ exports[`App renders correctly 1`] = `
   line-height: 100%;
   font-weight: 400;
   margin: 25px 5px 25px 40px;
-}
-
-.c9 {
-  max-width: 1440px;
-  margin: 0 auto;
 }
 
 .c0 {

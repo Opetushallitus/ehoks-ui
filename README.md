@@ -4,20 +4,16 @@ Frontend repository for [eHOKS project](https://confluence.csc.fi/display/OPHPAL
 
 ## Getting started
 
-`npm install` install all required npm dependencies
-
-`npm start` starts the development server in [localhost:8080](http://localhost:8080/)
-
-`npm test` runs the Jest test suite
+`npm install` installs required npm dependencies for `oppija` and `virkailija`
 
 `npm run styleguide` launches [react-styleguidist](https://react-styleguidist.js.org/) styleguide server in [localhost:6060](http://localhost:6060/)
 
-`npm run extract_translations` will parse all TypeScript source code for `<FormattedMessage />` components and extract their `id` & `defaultMessage` pairs to `translations.json`.
+## Dependencies and directory structure
 
-## Technologies used
+There are two frontend apps included in the repository:
 
-- [React](https://facebook.github.io/react/) for rendering views
-- [mobx-state-tree](https://github.com/mobxjs/mobx-state-tree) for state handling
-- [Jest](https://facebook.github.io/jest/) for tests
-- [TypeScript](https://www.typescriptlang.org) to provide type safety and ease maintenance & refactoring
-- [Webpack](https://webpack.js.org) for building the JS bundle
+`oppija` directory includes views for students and workplace instructors, it will be hosted at e.g. `https://testiopintopolku.fi/ehoks/`
+
+`virkailija` directory includes eHOKS views for education providers, it will be visible in Opintopolku's `virkailija` UI, e.g. `https://virkailija.testiopintopolku.fi`
+
+Running `npm install` in repository's root level will install dependencies for both `oppija` and `virkailija` apps. There's also `shared` directory that includes styled-components theme and UI components that are used by both apps.
