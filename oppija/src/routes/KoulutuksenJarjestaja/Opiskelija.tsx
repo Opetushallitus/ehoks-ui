@@ -6,6 +6,7 @@ import { ProgressPies } from "components/ProgressPies"
 import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
 import format from "date-fns/format"
+import parseISO from "date-fns/parseISO"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
@@ -157,7 +158,7 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
                           />
                           &nbsp;{" "}
                           {mockStudent &&
-                            format(mockStudent.aloitus, "d.M.yyyy")}
+                            format(parseISO(mockStudent.aloitus), "d.M.yyyy")}
                         </Timestamp>
                         <Timestamp>
                           <FormattedMessage
@@ -166,7 +167,10 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
                           />
                           &nbsp;{" "}
                           {mockStudent &&
-                            format(mockStudent.paivitetty, "d.M.yyyy")}
+                            format(
+                              parseISO(mockStudent.paivitetty),
+                              "d.M.yyyy"
+                            )}
                         </Timestamp>
                       </StudentDetails>
                       <SectionItems>

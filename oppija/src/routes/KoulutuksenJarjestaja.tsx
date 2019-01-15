@@ -14,6 +14,7 @@ import { TableHead } from "components/Table/TableHead"
 import { TableHeader } from "components/Table/TableHeader"
 import { TableRow } from "components/Table/TableRow"
 import format from "date-fns/format"
+import parseISO from "date-fns/parseISO"
 import range from "lodash.range"
 import { inject, observer } from "mobx-react"
 import React from "react"
@@ -222,13 +223,13 @@ export class KoulutuksenJarjestaja extends React.Component<
                         </TableCell>
                         <TableCell>{student.tutkinto}</TableCell>
                         <TableCell>
-                          {format(student.aloitus, "d.M.yyyy")}
+                          {format(parseISO(student.aloitus), "d.M.yyyy")}
                         </TableCell>
                         <TableCell>
-                          {format(student.hyvaksytty, "d.M.yyyy")}
+                          {format(parseISO(student.hyvaksytty), "d.M.yyyy")}
                         </TableCell>
                         <TableCell>
-                          {format(student.paivitetty, "d.M.yyyy")}
+                          {format(parseISO(student.paivitetty), "d.M.yyyy")}
                         </TableCell>
                       </TableRow>
                     )

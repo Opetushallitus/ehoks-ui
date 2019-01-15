@@ -25,5 +25,5 @@
     }
   },
   "include": ["./**/*", "../shared/**/*"],
-  "exclude": ["node_modules", "../shared/components/__tests__"]
+  "exclude": ["node_modules"]
 }

@@ -1,4 +1,5 @@
 import format from "date-fns/format"
+import parseISO from "date-fns/parseISO"
 import { types } from "mobx-state-tree"
 
 const Ajankohta = types.model({
@@ -108,8 +109,11 @@ export const Oppija = types
           return ""
         }
         return [
-          format(self.osaamisenHankkimistapa.ajankohta.alku, "d.M."),
-          format(self.osaamisenHankkimistapa.ajankohta.loppu, "d.M.yyyy")
+          format(parseISO(self.osaamisenHankkimistapa.ajankohta.alku), "d.M."),
+          format(
+            parseISO(self.osaamisenHankkimistapa.ajankohta.loppu),
+            "d.M.yyyy"
+          )
         ].join("-")
       },
       get oppijanOtsikko() {

@@ -1,5 +1,6 @@
 import { TempLearningPeriod } from "components/StudyInfo"
 import format from "date-fns/format"
+import parseISO from "date-fns/parseISO"
 import React from "react"
 import { InjectedIntlProps, injectIntl } from "react-intl"
 
@@ -17,12 +18,12 @@ export const LearningPeriodDates = injectIntl(
         {intl.formatMessage({
           id: "opiskelusuunnitelma.hyvaksyttyTitle"
         })}{" "}
-        {format(approved, "d.M.yyyy")}
+        {format(parseISO(approved), "d.M.yyyy")}
       </span>
     ) : period[0] && period[1] ? (
       <span>
-        {format(period[0], "d.M.")} {" - "}
-        {format(period[1], "d.M.yyyy")}
+        {format(parseISO(period[0]), "d.M.")} {" - "}
+        {format(parseISO(period[1]), "d.M.yyyy")}
       </span>
     ) : null
   }
