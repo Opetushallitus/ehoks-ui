@@ -1,0 +1,41 @@
+{
+  "name": "ehoks-ui-virkailija",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "../node_modules/.bin/webpack-dev-server",
+    "lint": "../node_modules/.bin/tslint src/*.tsx src/**/*.tsx",
+    "test": "../node_modules/.bin/jest",
+    "build": "../node_modules/.bin/webpack --config webpack.config.production.js --mode production",
+    "extract_translations": "node extractMessages.js"
+  },
+  "private": true,
+  "author": "Lari Hoppula",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {},
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "moduleNameMapper": {
+      "^components(.*)$": "<rootDir>/../shared/components$1",
+      "^models(.*)$": "<rootDir>/src/models$1",
+      "^routes(.*)$": "<rootDir>/src/routes$1",
+      "^stores(.*)$": "<rootDir>/src/stores$1",
+      "^config$": "<rootDir>/src/config",
+      "^utils$": "<rootDir>/src/utils",
+      "^testUtils$": "<rootDir>/../shared/testUtils",
+      "^theme$": "<rootDir>/../shared/theme",
+      "^styled$": "<rootDir>/../shared/styled",
+      "\\.(css|jpg|png|svg)$": "<rootDir>/empty-module.js"
+    }
+  }
+}

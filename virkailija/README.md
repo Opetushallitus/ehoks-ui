@@ -1,8 +1,8 @@
-# eHOKS - student and workplace instructor views (oppija)
+# eHOKS - education provider views (virkailija)
 
 ## Getting started
 
-`npm start` starts the development server in [localhost:8080](http://localhost:8080/)
+`npm start` starts the development server in [localhost:4000](http://localhost:4000/)
 
 `npm test` runs the Jest test suite
 
@@ -10,7 +10,7 @@
 
 ## Dependencies
 
-Run `npm install` in repository's root to install all required dependencies, `DO NOT INSTALL` any dependencies to `oppija` directory.
+Run `npm install` in repository's root to install all required dependencies, `DO NOT INSTALL` any dependencies to `virkailija` directory.
 
 ## Technologies used
 

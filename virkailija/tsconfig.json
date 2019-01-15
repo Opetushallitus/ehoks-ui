@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "outDir": "./public/dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es5",
+    "jsx": "react",
+    "lib": ["es5", "es6", "dom"],
+    "baseUrl": "./src",
+    "paths": {
+      "components/*": ["../../shared/components/*"],
+      "styled": ["../../shared/styled"],
+      "theme": ["../../shared/theme"],
+      "testUtils": ["../../shared/testUtils"]
+    }
+  },
+  "include": ["./**/*", "../shared/**/*"],
+  "exclude": ["node_modules"]
+}
