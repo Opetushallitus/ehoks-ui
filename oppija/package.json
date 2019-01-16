@@ -25,16 +25,15 @@
       "tsx",
       "js"
     ],
+    "modulePaths": [
+      "<rootDir>/src",
+      "<rootDir>/../shared"
+    ],
+    "roots": [
+      "<rootDir>",
+      "<rootDir>/../shared"
+    ],
     "moduleNameMapper": {
-      "^components(.*)$": "<rootDir>/../shared/components$1",
-      "^models(.*)$": "<rootDir>/src/models$1",
-      "^routes(.*)$": "<rootDir>/src/routes$1",
-      "^stores(.*)$": "<rootDir>/src/stores$1",
-      "^config$": "<rootDir>/src/config",
-      "^utils$": "<rootDir>/src/utils",
-      "^testUtils$": "<rootDir>/../shared/testUtils",
-      "^theme$": "<rootDir>/../shared/theme",
-      "^styled$": "<rootDir>/../shared/styled",
       "\\.(css|jpg|png|svg)$": "<rootDir>/empty-module.js"
     }
   }

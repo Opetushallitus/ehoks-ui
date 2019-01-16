@@ -18,10 +18,7 @@
     "lib": ["es5", "es6", "dom"],
     "baseUrl": "./src",
     "paths": {
-      "components/*": ["../../shared/components/*"],
-      "styled": ["../../shared/styled"],
-      "theme": ["../../shared/theme"],
-      "testUtils": ["../../shared/testUtils"]
+      "*": ["*", "../../shared/*"]
     }
   },
   "include": ["./**/*", "../shared/**/*"],

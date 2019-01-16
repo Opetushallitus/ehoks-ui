@@ -1,7 +1,7 @@
 import { apiUrl } from "config"
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { SessionUser } from "models/SessionUser"
-import { IStoreEnvironment } from "utils"
+import { StoreEnvironment } from "types/StoreEnvironment"
 
 const SessionStoreModel = {
   error: types.optional(types.string, ""),
@@ -12,7 +12,7 @@ const SessionStoreModel = {
 export const SessionStore = types
   .model("SessionStore", SessionStoreModel)
   .actions(self => {
-    const { fetchSingle, deleteResource, errors } = getEnv<IStoreEnvironment>(
+    const { fetchSingle, deleteResource, errors } = getEnv<StoreEnvironment>(
       self
     )
 

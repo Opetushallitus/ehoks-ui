@@ -1,7 +1,7 @@
 // import { apiUrl } from "config"
 import { getEnv, types } from "mobx-state-tree"
 import { Oppija } from "models/Oppija"
-import { IStoreEnvironment } from "utils"
+import { StoreEnvironment } from "types/StoreEnvironment"
 
 const ammattitaitovaatimuksetMock = [
   {
@@ -366,7 +366,7 @@ const TyopaikanToimijaModel = {
 export const TyopaikanToimijaStore = types
   .model("TyopaikanToimijaStore", TyopaikanToimijaModel)
   .actions(self => {
-    const { errors } = getEnv<IStoreEnvironment>(self)
+    const { errors } = getEnv<StoreEnvironment>(self)
 
     // const haeOppijat = flow(function*() {
     const haeOppijat = () => {

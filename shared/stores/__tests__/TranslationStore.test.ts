@@ -1,24 +1,24 @@
+import { mockFetch } from "fetchUtils"
 import { when } from "mobx"
-import { TranslationStore } from "stores/TranslationStore"
-import { fetchUtils, mockFetch } from "utils"
+import { TranslationStore } from "../TranslationStore"
 import lokalisointi from "../mocks/lokalisointi0.json"
 import defaultMessages from "../TranslationStore/defaultMessages.json"
+import { createEnvironment } from "createEnvironment"
+
+const apiUrl = (path: string) => `/${path}`
 
 describe("TranslationStore", () => {
   test("haeLokalisoinnit fetches both defaultMessages and API translations", () => {
-    const { fetchCollection, fetchSingle, deleteResource } = fetchUtils(
-      mockFetch()
-    )
     const store = TranslationStore.create(
       {},
-      { fetchCollection, fetchSingle, deleteResource }
+      createEnvironment(mockFetch(apiUrl))
     )
 
     expect(store.isLoading).toBe(false)
     expect(store.translations).toEqual([])
     expect(store.activeLocale).toEqual("fi")
 
-    store.haeLokalisoinnit()
+    store.haeLokalisoinnit(apiUrl)
     expect(store.isLoading).toBe(true)
 
     when(
@@ -32,14 +32,11 @@ describe("TranslationStore", () => {
   })
 
   test("messages view returns translations in a format suitable for react-intl", () => {
-    const { fetchCollection, fetchSingle, deleteResource } = fetchUtils(
-      mockFetch()
-    )
     const store = TranslationStore.create(
       {},
-      { fetchCollection, fetchSingle, deleteResource }
+      createEnvironment(mockFetch(apiUrl))
     )
-    store.haeLokalisoinnit()
+    store.haeLokalisoinnit(apiUrl)
     when(
       () => !store.isLoading,
       () => {

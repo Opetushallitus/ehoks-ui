@@ -5,7 +5,7 @@ import {
   IEducationProviderInfo
 } from "models/EducationProviderInfo"
 import { ApiResponse } from "stores/RootStore"
-import { IStoreEnvironment } from "utils"
+import { StoreEnvironment } from "types/StoreEnvironment"
 
 const EducationProviderModel = {
   info: types.optional(EducationProviderInfo, {}),
@@ -15,7 +15,7 @@ const EducationProviderModel = {
 export const EducationProviderStore = types
   .model("EducationProviderStore", EducationProviderModel)
   .actions(self => {
-    const { fetchSingle } = getEnv<IStoreEnvironment>(self)
+    const { fetchSingle } = getEnv<StoreEnvironment>(self)
 
     const fetchInfo = flow(function*() {
       self.isLoading = true

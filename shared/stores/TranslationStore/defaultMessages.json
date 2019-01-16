@@ -228,5 +228,50 @@
     "locale": "fi",
     "key": "koulutuksenJarjestaja.meneHakutuloksienSivulleAriaLabel",
     "value": "Mene hakutuloksien sivulle {page}"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.suunnitelmaJatkoOpintoihinTitle",
+    "value": "Suunnitelma jatko-opintoihin siirtymisestä"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.osoiteTitle",
+    "value": "Osoite"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.sahkopostiTitle",
+    "value": "Sähköposti"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.etunimiSukunimiTitle",
+    "value": "Etunimi Sukunimi"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.kutsumanimiTitle",
+    "value": "Kutsumanimi"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.oppijanumeroTitle",
+    "value": "Oppijanumero"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.postiosoiteTitle",
+    "value": "Postiosoite"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.kotikuntaTitle",
+    "value": "Kotikunta"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.puhelinnumeroTitle",
+    "value": "Puhelinnumero"
   }
 ]

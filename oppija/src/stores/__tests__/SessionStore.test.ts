@@ -1,16 +1,12 @@
+import { apiUrl } from "config"
+import { createEnvironment } from "createEnvironment"
+import { mockFetch } from "fetchUtils"
 import { when } from "mobx"
 import { SessionStore } from "stores/SessionStore"
-import { fetchUtils, mockFetch } from "utils"
 
 describe("SessionStore", () => {
   test("checkSession without login", () => {
-    const { fetchCollection, fetchSingle, deleteResource } = fetchUtils(
-      mockFetch()
-    )
-    const store = SessionStore.create(
-      {},
-      { fetchCollection, fetchSingle, deleteResource }
-    )
+    const store = SessionStore.create({}, createEnvironment(mockFetch(apiUrl)))
 
     expect(store.isLoading).toBe(false)
     expect(store.user).toEqual(null)
@@ -27,12 +23,9 @@ describe("SessionStore", () => {
   })
 
   test("checkSession with login", done => {
-    const { fetchCollection, fetchSingle, deleteResource } = fetchUtils(
-      mockFetch(1)
-    )
     const store = SessionStore.create(
       {},
-      { fetchCollection, fetchSingle, deleteResource }
+      createEnvironment(mockFetch(apiUrl, 1))
     )
 
     expect(store.isLoading).toBe(false)
@@ -67,9 +60,6 @@ describe("SessionStore", () => {
   })
 
   test("logout", () => {
-    const { fetchCollection, fetchSingle, deleteResource } = fetchUtils(
-      mockFetch(2)
-    )
     const store = SessionStore.create(
       {
         user: {
@@ -78,7 +68,7 @@ describe("SessionStore", () => {
           surname: "Testaaja"
         }
       },
-      { fetchCollection, fetchSingle, deleteResource }
+      createEnvironment(mockFetch(apiUrl, 2))
     )
     expect(store.user).toEqual({
       commonName: "Teuvo",

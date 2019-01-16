@@ -1,10 +1,10 @@
 import { apiUrl } from "config"
-import { fetchUtils, mockFetch } from "utils"
+import { fetchUtils, mockFetch } from "fetchUtils"
 
 describe("fetchUtils", () => {
   test("fetchSingle camelCases object keys", async () => {
     // uses session_opintopolku_1.json mock
-    const { fetchSingle } = fetchUtils(mockFetch(1))
+    const { fetchSingle } = fetchUtils(mockFetch(apiUrl, 1))
 
     const result = await fetchSingle(apiUrl("session"))
     expect(result).toEqual({
@@ -21,7 +21,7 @@ describe("fetchUtils", () => {
 
   test("fetchCollection camelCases object keys", async () => {
     // uses lokalisointi0.json mock
-    const { fetchCollection } = fetchUtils(mockFetch())
+    const { fetchCollection } = fetchUtils(mockFetch(apiUrl))
 
     const result = await fetchCollection(apiUrl("lokalisointi"))
     expect(result).toEqual({

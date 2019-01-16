@@ -1,6 +1,5 @@
-import { apiUrl } from "config"
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
-import { IStoreEnvironment } from "utils"
+import { StoreEnvironment } from "types/StoreEnvironment"
 import defaultMessages from "./TranslationStore/defaultMessages.json"
 
 export interface ApiTranslation {
@@ -39,13 +38,13 @@ const TranslationStoreModel = {
 export const TranslationStore = types
   .model("TranslationStore", TranslationStoreModel)
   .actions(self => {
-    const { fetchCollection, errors } = getEnv<IStoreEnvironment>(self)
+    const { fetchCollection, errors } = getEnv<StoreEnvironment>(self)
 
     const setActiveLocale = (locale: "fi" | "sv") => {
       self.activeLocale = locale
     }
 
-    const haeLokalisoinnit = flow(function*() {
+    const haeLokalisoinnit = flow(function*(apiUrl: (path: string) => string) {
       self.isLoading = true
       // insert defaultMessages for context.intl.formatMessage calls
       self.translations.replace(defaultMessages as ApiTranslation[])

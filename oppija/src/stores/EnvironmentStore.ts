@@ -1,6 +1,6 @@
 import { apiUrl } from "config"
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
-import { IStoreEnvironment } from "utils"
+import { StoreEnvironment } from "types/StoreEnvironment"
 
 // this allows us to proxy http://localhost:3000/auth-dev/ calls
 // using webpack-development-server proxy
@@ -19,7 +19,7 @@ const EnvironmentStoreModel = {
 export const EnvironmentStore = types
   .model("EnvironmentStore", EnvironmentStoreModel)
   .actions(self => {
-    const { fetchSingle, errors } = getEnv<IStoreEnvironment>(self)
+    const { fetchSingle, errors } = getEnv<StoreEnvironment>(self)
 
     const getEnvironment = flow(function*() {
       self.isLoading = true

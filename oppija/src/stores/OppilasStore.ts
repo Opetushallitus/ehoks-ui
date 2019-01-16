@@ -1,7 +1,7 @@
 import { apiUrl } from "config"
 import { flow, getEnv, types } from "mobx-state-tree"
 import { Peruste } from "models/Peruste"
-import { IStoreEnvironment } from "utils"
+import { StoreEnvironment } from "types/StoreEnvironment"
 
 const OppilasStoreModel = {
   isLoading: false,
@@ -11,7 +11,7 @@ const OppilasStoreModel = {
 export const OppilasStore = types
   .model("OppilasStore", OppilasStoreModel)
   .actions(self => {
-    const { fetchCollection, errors } = getEnv<IStoreEnvironment>(self)
+    const { fetchCollection, errors } = getEnv<StoreEnvironment>(self)
     // tracks the most recent fetch by user
     let newestPromise = null
 
