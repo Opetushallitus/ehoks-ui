@@ -1,0 +1,277 @@
+[
+  {
+    "locale": "fi",
+    "key": "etusivu.ammatillisetTutkinnotKuvanAriaLabel",
+    "value": "Näppäimistön näppäin jossa lukee 'Education'"
+  },
+  {
+    "locale": "fi",
+    "key": "etusivu.henkilokohtaistaminenKuvanAriaLabel",
+    "value": "Hymyileviä opiskelijoita työn touhussa"
+  },
+  {
+    "locale": "fi",
+    "key": "accordion.naytaOhjetekstiAriaLabel",
+    "value": "Näytä ohjeteksti"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.piilotaVirheAriaLabel",
+    "value": "Piilota virhe"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.EnvironmentStore.getEnvironment",
+    "value": "Ympäristömuuttujien haku epäonnistui"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.TranslationStore.haeLokalisoinnit",
+    "value": "Käännösten haku epäonnistui"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.OppilasStore.haePerusteet",
+    "value": "Ammatillisten tutkintojen haku epäonnistui"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.SessionStore.checkSession",
+    "value": "Kirjautumistietojen tarkastus epäonnistui"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.SessionStore.getUserInfo",
+    "value": "Käyttäjätietojen haku epäonnistui"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.SessionStore.logout",
+    "value": "Uloskirjautuminen epäonnistui"
+  },
+  {
+    "locale": "fi",
+    "key": "footer.opintopolkuLogoLabel",
+    "value": "Opintopolku logo"
+  },
+  {
+    "locale": "fi",
+    "key": "footer.okmLogoLabel",
+    "value": "Opetus- ja kulttuuriministeriö logo"
+  },
+  {
+    "locale": "fi",
+    "key": "footer.ophLogoLabel",
+    "value": "Opetushallitus logo"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.piilotaAmmattitaitovaatimuksetAriaLabel",
+    "value": "Piilota ammattitaitovaatimukset ja arviointikriteerit"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.naytaAmmattitaitovaatimuksetAriaLabel",
+    "value": "Näytä ammattitaitovaatimukset ja arviointikriteerit"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.nayttoTitle",
+    "value": "Näyttö"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel",
+    "value": "Näytä työssäoppimisen ja näytön laajennetut tiedot"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.piilotaTyossaOppiminenAriaLabel",
+    "value": "Piilota työssäoppimisen ja näytön laajennetut tiedot"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.hyvaksyttyTitle",
+    "value": "Hyväksytty"
+  },
+  {
+    "locale": "fi",
+    "key": "ammattitutkinto.hakuPlaceholder",
+    "value": "Hae tietoa"
+  },
+  {
+    "locale": "fi",
+    "key": "ammattitutkinto.hakuAriaLabel",
+    "value": "Hae tietoa"
+  },
+  {
+    "locale": "fi",
+    "key": "ammattitutkinto.ammattitutkintojaLadataanAriaLabel",
+    "value": "Ammattitutkintoja ladataan"
+  },
+  {
+    "locale": "fi",
+    "key": "ammattitutkinto.hakutuloksienSivutuksenNavigaatioAriaLabel",
+    "value": "Hakutuloksien sivutuksen navigaatio"
+  },
+  {
+    "locale": "fi",
+    "key": "ammattitutkinto.meneHakutuloksienSivulleAriaLabel",
+    "value": "Mene hakutuloksien sivulle {page}"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.osaamispisteLyhenne",
+    "value": "osp"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.tutkinnonNimiTitle",
+    "value": "Tutkinnon nimi"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.laajuusTitle",
+    "value": "Laajuus"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.osaamisalaTitle",
+    "value": "Osaamisala"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.tutkintonimikeTitle",
+    "value": "Tutkintonimike"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.suunnitelmaJatkoOpintoihinTitle",
+    "value": "Suunnitelma jatko-opintoihin siirtymisestä"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.osoiteTitle",
+    "value": "Osoite"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.sahkopostiTitle",
+    "value": "Sähköposti"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.etunimiSukunimiTitle",
+    "value": "Etunimi Sukunimi"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.kutsumanimiTitle",
+    "value": "Kutsumanimi"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.oppijanumeroTitle",
+    "value": "Oppijanumero"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.postiosoiteTitle",
+    "value": "Postiosoite"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.kotikuntaTitle",
+    "value": "Kotikunta"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.puhelinnumeroTitle",
+    "value": "Puhelinnumero"
+  },
+  {
+    "locale": "fi",
+    "key": "tyopaikanToimija.tutkinnonNimiTitle",
+    "value": "Tutkinnon nimi"
+  },
+  {
+    "locale": "fi",
+    "key": "tyopaikanToimija.laajuusTitle",
+    "value": "Laajuus"
+  },
+  {
+    "locale": "fi",
+    "key": "tyopaikanToimija.suunnitelmaJatkoOpintoihinTitle",
+    "value": "Suunnitelma jatko-opintoihin siirtymisestä"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.hakuPlaceholder",
+    "value": "Hae opiskelijaa"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.hakuAriaLabel",
+    "value": "Hae opiskelijaa"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.jarjestaTitle",
+    "value": "Järjestä"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.haunSivutuksenAriaLabel",
+    "value": "Hakutuloksien sivutuksen navigaatio"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.meneHakutuloksienSivulleAriaLabel",
+    "value": "Mene hakutuloksien sivulle {page}"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.suunnitelmaJatkoOpintoihinTitle",
+    "value": "Suunnitelma jatko-opintoihin siirtymisestä"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.osoiteTitle",
+    "value": "Osoite"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.sahkopostiTitle",
+    "value": "Sähköposti"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.etunimiSukunimiTitle",
+    "value": "Etunimi Sukunimi"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.kutsumanimiTitle",
+    "value": "Kutsumanimi"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.oppijanumeroTitle",
+    "value": "Oppijanumero"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.postiosoiteTitle",
+    "value": "Postiosoite"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.kotikuntaTitle",
+    "value": "Kotikunta"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.puhelinnumeroTitle",
+    "value": "Puhelinnumero"
+  }
+]

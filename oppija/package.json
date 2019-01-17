@@ -1,0 +1,40 @@
+{
+  "name": "ehoks-ui-oppija",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "../node_modules/.bin/webpack-dev-server",
+    "lint": "../node_modules/.bin/tslint src/*.tsx src/**/*.tsx",
+    "test": "../node_modules/.bin/jest",
+    "build": "../node_modules/.bin/webpack --config webpack.config.production.js --mode production",
+    "extract_translations": "node extractMessages.js"
+  },
+  "private": true,
+  "author": "Lari Hoppula",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {},
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "modulePaths": [
+      "<rootDir>/src",
+      "<rootDir>/../shared"
+    ],
+    "roots": [
+      "<rootDir>",
+      "<rootDir>/../shared"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|jpg|png|svg)$": "<rootDir>/empty-module.js"
+    }
+  }
+}

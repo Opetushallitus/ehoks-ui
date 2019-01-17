@@ -1,0 +1,589 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App renders correctly 1`] = `
+.c9 {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.c20 {
+  height: 50px;
+}
+
+.c20:first-of-type {
+  margin-right: 20px;
+}
+
+.c16 {
+  margin-left: 20px;
+  width: 30px;
+}
+
+.c10 {
+  width: 100%;
+  background-color: #f8f8f8;
+  border-top: 1px solid #c8cdcf;
+}
+
+.c11 {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  padding: 20px 50px 30px 40px;
+}
+
+.c12 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-self: flex-start;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c17 {
+  list-style: none;
+  margin: 10px 0 0 0;
+  padding-left: 0;
+}
+
+.c17 li {
+  line-height: 30px;
+  color: #4a4a4a;
+}
+
+.c18 {
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  background: transparent;
+}
+
+.c19 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+}
+
+.c21 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  -webkit-flex: 4;
+  -ms-flex: 4;
+  flex: 4;
+}
+
+.c21 p {
+  font-size: 14px;
+  line-height: 24px;
+  text-align: right;
+  color: #626769;
+  margin-bottom: 30px;
+}
+
+.c13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c14 {
+  width: 200px;
+}
+
+.c22 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.c23 a {
+  margin-right: 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.c24 {
+  color: #cfd5d7;
+}
+
+.c15 {
+  display: none;
+}
+
+.c25 {
+  display: block;
+}
+
+.c1 {
+  width: 100%;
+  color: #fff;
+  background-color: #149ecb;
+  line-height: 16px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.c2 {
+  width: 100%;
+  background-color: #06526b;
+  font-size: 16px;
+  padding-left: 20px;
+}
+
+.c3 {
+  line-height: 20px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.c4 {
+  display: inline-block;
+  padding: 5px 20px 5px 20px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #fff;
+  line-height: 20px;
+  background: transparent;
+}
+
+.c4:focus {
+  outline: 2px solid #1976d2;
+}
+
+.c5 {
+  display: inline-block;
+  padding: 5px 20px 5px 20px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #fff;
+  line-height: 20px;
+  background: #149ecb;
+}
+
+.c5:focus {
+  outline: 2px solid #1976d2;
+}
+
+.c6 {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c7 {
+  display: none;
+}
+
+.c8 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  font-size: 32px;
+  line-height: 100%;
+  font-weight: 400;
+  margin: 25px 5px 25px 40px;
+}
+
+.c0 {
+  margin: 0;
+}
+
+@media screen and (max-width:900px) {
+  .c16 {
+    margin-top: 15px;
+    margin-left: 10px;
+  }
+
+  a:first-of-type .c16 {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c10 {
+    background-color: #fff;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c11 {
+    display: block;
+    padding: 0;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c12 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    padding: 20px 50px 30px 20px;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c18 {
+    background: #f8f8f8;
+    border-top: 1px solid #979797;
+    -webkit-flex-direction: column-reverse;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c19 {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin: 20px 0;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c21 {
+    padding: 0 20px;
+  }
+
+  .c21 p {
+    margin-bottom: 0;
+    text-align: left;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c14 {
+    width: 150px;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c22 {
+    display: none;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c15 {
+    display: block;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c25 {
+    display: none;
+  }
+}
+
+@media screen and (max-width:720px) {
+  .c2 {
+    display: none;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c2 {
+    padding-left: 0;
+  }
+}
+
+@media screen and (max-width:720px) {
+  .c7 {
+    display: block;
+    margin: 0 20px;
+  }
+
+  .c7 h3 {
+    margin: -5px 0 0 0;
+    font-size: 12px;
+    font-weight: 300;
+    text-transform: uppercase;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c8 {
+    margin: 25px 5px 25px 20px;
+  }
+}
+
+<div
+  className="c0"
+>
+  <header
+    className="c1"
+  >
+    <div
+      className="c2"
+    >
+      <nav
+        className="c3"
+      >
+        <a
+          className="c4"
+          href="https://opintopolku.fi/"
+        >
+          Opintopolku.fi
+        </a>
+        <a
+          className="c4"
+          href="https://opintopolku.fi/oma-opintopolku/"
+        >
+          Oma Opintopolku
+        </a>
+        <a
+          className="c4"
+          href="https://eperusteet.opintopolku.fi/"
+        >
+          ePerusteet
+        </a>
+        <a
+          className="c5"
+          href="/"
+        >
+          eHOKS
+        </a>
+      </nav>
+    </div>
+    <div
+      className="c6"
+    >
+      <div
+        className="c7"
+      >
+        <svg
+          fill="currentColor"
+          height="40"
+          size="40"
+          stroke="currentColor"
+          strokeWidth="0"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          viewBox="0 0 24 24"
+          width="40"
+        >
+          <path
+            d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+          />
+        </svg>
+        <h3>
+          Valikko
+        </h3>
+      </div>
+      <div
+        className="c8"
+      >
+        eHOKS
+      </div>
+    </div>
+  </header>
+  <div
+    className="c9"
+  />
+  <footer
+    className="c10"
+  >
+    <div
+      className="c11"
+    >
+      <div
+        className="c12"
+      >
+        <div
+          className="c13"
+        >
+          <img
+            alt="Opintopolku logo"
+            className="c14"
+            src=""
+          />
+          <div
+            className="c15"
+          >
+            <a>
+              <img
+                alt="Twitter"
+                className="c16"
+                src=""
+              />
+            </a>
+            <a>
+              <img
+                alt="Facebook"
+                className="c16"
+                src=""
+              />
+            </a>
+            <a>
+              <img
+                alt="Instagram"
+                className="c16"
+                src=""
+              />
+            </a>
+          </div>
+        </div>
+        <ul
+          className="c17"
+        >
+          <li>
+            ePerusteet
+          </li>
+          <li>
+            Mikä on opintopolku
+          </li>
+          <li>
+            Tietoturvaseloste
+          </li>
+          <li>
+            Anna palautetta
+          </li>
+        </ul>
+      </div>
+      <div
+        className="c18"
+      >
+        <div
+          className="c19"
+        >
+          <img
+            alt="Opetus- ja kulttuuriministeriö logo"
+            className="c20"
+            src=""
+          />
+          <img
+            alt="Opetushallitus logo"
+            className="c20"
+            src=""
+          />
+        </div>
+        <div
+          className="c21"
+        >
+          <p>
+            Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja
+              koulutuksistaan Opintopolku.fi-palvelussa. Tietojen oikeellisuuden
+              voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.
+          </p>
+          <div
+            className="c22"
+          >
+            <div
+              className="c23"
+            >
+              <a
+                onClick={[Function]}
+                role="button"
+              >
+                Suomeksi
+              </a>
+              <a
+                onClick={[Function]}
+                role="button"
+              >
+                På svenska
+              </a>
+            </div>
+            <div
+              className="c24"
+            >
+              |
+            </div>
+            <div
+              className="c25"
+            >
+              <a>
+                <img
+                  alt="Twitter"
+                  className="c16"
+                  src=""
+                />
+              </a>
+              <a>
+                <img
+                  alt="Facebook"
+                  className="c16"
+                  src=""
+                />
+              </a>
+              <a>
+                <img
+                  alt="Instagram"
+                  className="c16"
+                  src=""
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+`;
