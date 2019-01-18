@@ -17,7 +17,9 @@ export interface ButtonProps {
   /** Custom class name to append to button */
   className?: string
   /** Event handler to execute when clicked */
-  onClick: (event: React.MouseEvent) => void
+  onClick?: (event: React.MouseEvent) => void
+  /** Button type */
+  type?: string
 }
 
 /**
@@ -25,9 +27,9 @@ export interface ButtonProps {
  */
 export class Button extends React.Component<ButtonProps> {
   render() {
-    const { children, className, onClick } = this.props
+    const { children, className, type = "button", onClick } = this.props
     return (
-      <ButtonContainer className={className} onClick={onClick}>
+      <ButtonContainer className={className} onClick={onClick} type={type}>
         {children}
       </ButtonContainer>
     )
