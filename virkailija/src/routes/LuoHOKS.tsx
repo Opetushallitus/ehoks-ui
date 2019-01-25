@@ -2,7 +2,7 @@ import { Button } from "components/Button"
 import { Heading } from "components/Heading"
 import { JSONSchema6 } from "json-schema"
 import React from "react"
-import Form from "react-jsonschema-form"
+import Form, { FieldProps, IChangeEvent } from "react-jsonschema-form"
 import styled from "styled"
 // import "./LuoHOKS/bootstrap.min.css"
 import "./LuoHOKS/glyphicons.css"
@@ -77,6 +77,17 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     this.setState({ schema })
   }
 
+  create = async (fieldProps: IChangeEvent<FieldProps>) => {
+    // TODO: authenticate user, this fails now
+    const request = await window.fetch("/ehoks-backend/api/v1/hoks", {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify(fieldProps.formData)
+    })
+    const json = await request.json()
+    console.log("RESPONSE JSON", json)
+  }
+
   render() {
     return (
       <Container>
@@ -84,7 +95,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
         <Form
           schema={this.state.schema}
           onChange={log("changed")}
-          onSubmit={log("submitted")}
+          onSubmit={this.create}
           onError={log("errors")}
         >
           <ButtonsContainer>
