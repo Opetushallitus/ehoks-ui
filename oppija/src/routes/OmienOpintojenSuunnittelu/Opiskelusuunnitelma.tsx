@@ -361,7 +361,9 @@ const mockUnscheduledStudies: MockStudy[] = [
 ]
 
 const ProgressTitle = styled("h2")`
-  margin-left: 30px;
+  font-weight: 600;
+  font-size: 20px;
+  margin-left: 4px;
 `
 
 export interface OpiskelusuunnitelmaProps {
@@ -401,19 +403,24 @@ export class Opiskelusuunnitelma extends React.Component<
   }
 
   showPlanSubAccordion = (subAccordion: string) => () => {
-    this.setState(state => ({
-      ...state,
-      activeAccordions: {
-        ...state.activeAccordions,
-        suunnitelma: true,
-        suunnitelmat: {
-          ...(state.activeAccordions.suunnitelmat as {
-            [subAccordionName: string]: boolean
-          }),
-          [subAccordion]: true
+    this.setState(
+      state => ({
+        ...state,
+        activeAccordions: {
+          ...state.activeAccordions,
+          suunnitelma: true,
+          suunnitelmat: {
+            ...(state.activeAccordions.suunnitelmat as {
+              [subAccordionName: string]: boolean
+            }),
+            [subAccordion]: true
+          }
         }
+      }),
+      () => {
+        window.location.hash = `suunnitelma.${subAccordion}`
       }
-    }))
+    )
   }
 
   toggleAccordion = (accordion: string, subAccordion?: string) => () => {
@@ -552,7 +559,7 @@ export class Opiskelusuunnitelma extends React.Component<
           <ProgressTitle>
             <FormattedMessage
               id="opiskelusuunnitelma.opintosiTitle"
-              defaultMessage="Opintosi"
+              defaultMessage="Opintojen eteneminen"
             />
           </ProgressTitle>
 

@@ -131,7 +131,7 @@ export class Accordion extends React.Component<AccordionProps, AccordionState> {
     const isOpen = typeof open === "boolean" ? open : this.state.isOpen
 
     return (
-      <Container>
+      <Container id={id}>
         <TitleContainer>
           <TitleRow
             onClick={onToggleFn}

@@ -50,7 +50,6 @@ const PercentageTitle = styled("div")`
 
 const Title = styled("span")`
   margin-top: 10px;
-  font-weight: bold;
   text-align: center;
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     display: none;
