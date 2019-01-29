@@ -9,6 +9,10 @@ Object {
     "opintopolkuLoginUrl": "",
     "opintopolkuLogoutUrl": "",
   },
+  "hoks": Object {
+    "isLoading": false,
+    "suunnitelmat": Array [],
+  },
   "isLoading": false,
   "koulutuksenJarjestaja": Object {
     "search": Object {
