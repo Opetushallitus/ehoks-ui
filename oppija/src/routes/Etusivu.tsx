@@ -103,7 +103,7 @@ export class Etusivu extends React.Component<EtusivuProps> {
       () => store!.session.isLoggedIn,
       isLoggedIn => {
         if (isLoggedIn) {
-          navigate("/ehoks/suunnittelu")
+          navigate("/ehoks/valitse")
         }
       }
     )
