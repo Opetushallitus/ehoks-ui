@@ -15,7 +15,6 @@ env:
     - secure: "T3p7wOOSSG25lJQxmubYAIofQQcrmBfUamSxKKSUPTSKAg9OFiRHxGwUsY7EMN1dKxJXzd4E0owypGUNluf0+tISCUn763HYVhPMYluuoRHclGNjdmKbi7V7mqftNBE4raDcMf2cz+elBx4GsMpL7BNY1RoDq9Z1b/8wcAS73Fm98KTkKoq5gONRPe1LZQw7B/MDzLCMOd+DGhazv17O5hBVKp4Xe7SVF644f8rg+5ICxa9rZ4NgdwFzlj7VIyrBUnp+Fj/JDZ93jSsMvK+dlEJwgAIycmqLzIdF0zKfKR9MwliGZ4zx2TWVmYaVHi7INthjIMoc7YeYo/b/L+KodCsisv5KteqJrK5XFUL0VrxRl19XfSnZr68ElEW5GHCVGRA16umoBchnmgBdsgqamLX+iW1UO8/1dqyi0G8+xdyx9XclaPE5RRxkHJ8MoFpyIlr2rU8ZiVOnDCcnR51q0XXSnkQM3/UV7gWbtAW6R/hZYmhCSEXOQMCuD8qy5QvgWRCd79uO8/E9LZ1/RxYnQFIflY/tYoC81E1JuhMgfUbVBm/G1UEgbeHSjoE6dcubH8845kfAIXtRADF9FnNBKL2NskRr3j4VEGYX+NaOfk3m6sOD7ZU2t1TrT8R8MPGWLRntZW3R5BmVrW0ncC+yNDQu3lbzfGOx3eJhZhFSWt8="
 
 before_install:
-  - cd oppija
   - npm i -g npm@6
 
 install:
@@ -30,11 +29,8 @@ script:
   - npm test
   - npm run build
   - export BASE_IMAGE=base-legacy:0.1
-  - ./ci-tools/common/pull-image.sh
-  - ./scripts/ci/build.sh ehoks-ui
-
-before_deploy:
-  - cd oppija
+  - ../ci-tools/common/pull-image.sh
+  - ../scripts/ci/build.sh ehoks-ui
 
 deploy:
   provider: script
