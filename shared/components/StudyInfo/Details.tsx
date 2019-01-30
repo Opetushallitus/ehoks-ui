@@ -125,15 +125,9 @@ export class Details extends React.Component<DetailsProps> {
             )}
             <Period accentColor={accentColor}>
               <LearningPeriodDates learningPeriod={learningPeriod} />
+              <br />
               {demonstrations.length > 0 && (
-                <React.Fragment>
-                  {learningPeriod &&
-                  learningPeriod.period &&
-                  learningPeriod.period.some(Boolean)
-                    ? ", "
-                    : null}
-                  <DemonstrationDates demonstration={demonstrations[0]} />
-                </React.Fragment>
+                <DemonstrationDates demonstration={demonstrations[0]} />
               )}
             </Period>
           </DetailsContent>

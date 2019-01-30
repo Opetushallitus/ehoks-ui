@@ -92,49 +92,7 @@ export class Tavoitteet extends React.Component<
                     id: "tavoitteet.suunnitelmaJatkoOpintoihinTitle"
                   })}
                 >
-                  Tähän tekstiä
-                </td>
-                <td />
-                <td />
-              </tr>
-              <tr>
-                <th>
-                  <FormattedMessage
-                    id="tavoitteet.osoiteTitle"
-                    defaultMessage="Osoite"
-                  />
-                </th>
-                <th />
-                <th />
-              </tr>
-              <tr>
-                <td
-                  data-label={intl.formatMessage({
-                    id: "tavoitteet.osoiteTitle"
-                  })}
-                >
-                  {user.yhteystiedot.katuosoite}
-                </td>
-                <td />
-                <td />
-              </tr>
-              <tr>
-                <th>
-                  <FormattedMessage
-                    id="tavoitteet.sahkopostiTitle"
-                    defaultMessage="Sähköposti"
-                  />
-                </th>
-                <th />
-                <th />
-              </tr>
-              <tr>
-                <td
-                  data-label={intl.formatMessage({
-                    id: "tavoitteet.sahkopostiTitle"
-                  })}
-                >
-                  {user.yhteystiedot.sahkoposti}
+                  Työelämään siirtyminen
                 </td>
                 <td />
                 <td />

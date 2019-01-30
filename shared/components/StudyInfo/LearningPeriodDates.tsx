@@ -22,7 +22,7 @@ export const LearningPeriodDates = injectIntl(
       </span>
     ) : period[0] && period[1] ? (
       <span>
-        {format(parseISO(period[0]), "d.M.")} {" - "}
+        {format(parseISO(period[0]), "d.M.")} {"-"}
         {format(parseISO(period[1]), "d.M.yyyy")}
       </span>
     ) : null
