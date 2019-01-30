@@ -32,9 +32,11 @@ script:
   - ../ci-tools/common/pull-image.sh
   - ./scripts/ci/build.sh ehoks-ui
 
+before_deploy: cd oppija
+
 deploy:
   provider: script
-  script: ./ci-tools/build/upload-image.sh ehoks-ui
+  script: ../ci-tools/build/upload-image.sh ehoks-ui
   on:
     all_branches: true
 
