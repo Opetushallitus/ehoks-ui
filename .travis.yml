@@ -32,7 +32,6 @@ script:
   - ../ci-tools/common/pull-image.sh
   - ./scripts/ci/build.sh ehoks-ui
 
-before_deploy: cd oppija
 
 deploy:
   provider: script
