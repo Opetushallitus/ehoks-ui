@@ -30,7 +30,7 @@ script:
   - npm run build
   - export BASE_IMAGE=base-legacy:0.1
   - ../ci-tools/common/pull-image.sh
-  - ../scripts/ci/build.sh ehoks-ui
+  - ./scripts/ci/build.sh ehoks-ui
 
 deploy:
   provider: script
