@@ -213,7 +213,7 @@ const mockPlannedStudies: MockStudy[] = [
     locations: ["Opinpaikka", "Lähiopetus"],
     learningPeriods: [
       {
-        period: ["2018-05-24", "2018-05-31"],
+        period: ["2019-05-24", "2019-05-31"],
         instructor: "Etunimi Sukunimi, Organisaatio",
         assignments: [
           "Ensimmäinen tehtävä ja kuvaus tehtävän sisällöstä",
@@ -225,7 +225,7 @@ const mockPlannedStudies: MockStudy[] = [
     ],
     demonstrations: [
       {
-        period: ["2018-08-01"],
+        period: ["2019-08-01"],
         organisation: "Organisaation nimi",
         environment: "Kuvaus näyttöympäristöstä",
         assessors: ["Etunimi Sukunimi", "Etunimi Sukunimi", "Etunimi Sukunimi"],
@@ -243,7 +243,7 @@ const mockPlannedStudies: MockStudy[] = [
     id: 1,
     learningPeriods: [
       {
-        approved: "2018-04-01",
+        period: ["2019-05-01", "2019-05-31"],
         instructor: "Etunimi Sukunimi, Organisaatio",
         assignments: [
           "Tehtävä ja kuvaus tehtävän sisällöstä",
@@ -253,7 +253,19 @@ const mockPlannedStudies: MockStudy[] = [
         ]
       }
     ],
-    locations: ["Tavastia", "Muualla suoritettu"],
+    demonstrations: [
+      {
+        period: ["2019-08-30"],
+        organisation: "Organisaation nimi",
+        environment: "Kuvaus näyttöympäristöstä",
+        assessors: ["Etunimi Sukunimi", "Etunimi Sukunimi", "Etunimi Sukunimi"],
+        assignments: [
+          "Tehtävä ja kuvaus tehtävän sisällöstä",
+          "Tehtävä ja kuvaus tehtävän sisällöstä"
+        ]
+      }
+    ],
+    locations: ["Tavastia", "Verkko-opetus"],
     title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
   }
 ]
@@ -274,36 +286,8 @@ const mockCompletedStudies: MockStudy[] = [
   },
   {
     competenceRequirements: [],
-    competencePoints: 30,
-    id: 1,
-    locations: ["Opinpaikka", "Lähiopetus"],
-    learningPeriods: [
-      {
-        period: ["2018-05-24", "2018-05-31"],
-        instructor: "",
-        assignments: []
-      }
-    ],
-    title: "Ikääntyvien osallisuuden edistäminen"
-  },
-  {
-    competenceRequirements: [],
-    competencePoints: 4,
-    id: 2,
-    locations: ["Tavastia", "Muualla suoritettu"],
-    learningPeriods: [
-      {
-        approved: "2018-04-01",
-        instructor: "",
-        assignments: []
-      }
-    ],
-    title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
-  },
-  {
-    competenceRequirements: [],
     competencePoints: 15,
-    id: 3,
+    id: 1,
     locations: ["Projektiryhmä", "Verkko-opiskelu ja lähiopetus"],
     learningPeriods: [
       {
@@ -566,22 +550,9 @@ export class Opiskelusuunnitelma extends React.Component<
           <StatBoxes>
             <ProgressPie
               percentage={Math.round(
-                (mockPlannedStudies.length / totalStudiesLength) * 100
-              )}
-              stroke="#FF5000"
-              title={
-                <FormattedMessage
-                  id="opiskelusuunnitelma.aikataulutettunaTitle"
-                  defaultMessage="Aikataulutettuna"
-                />
-              }
-              onClick={this.showPlanSubAccordion("aikataulutetut")}
-            />
-            <ProgressPie
-              percentage={Math.round(
                 (mockUnscheduledStudies.length / totalStudiesLength) * 100
               )}
-              stroke="#FFD900"
+              stroke="#FF5000"
               title={
                 <FormattedMessage
                   id="opiskelusuunnitelma.suunniteltunaTitle"
@@ -589,6 +560,19 @@ export class Opiskelusuunnitelma extends React.Component<
                 />
               }
               onClick={this.showPlanSubAccordion("suunnitellut")}
+            />
+            <ProgressPie
+              percentage={Math.round(
+                (mockPlannedStudies.length / totalStudiesLength) * 100
+              )}
+              stroke="#FFD900"
+              title={
+                <FormattedMessage
+                  id="opiskelusuunnitelma.aikataulutettunaTitle"
+                  defaultMessage="Aikataulutettuna"
+                />
+              }
+              onClick={this.showPlanSubAccordion("aikataulutetut")}
             />
             <ProgressPie
               percentage={Math.round(
@@ -621,52 +605,6 @@ export class Opiskelusuunnitelma extends React.Component<
           childContainer={false}
         >
           <Accordion
-            id="suunnitelma.aikataulutetut"
-            open={activeAccordions.suunnitelmat.aikataulutetut}
-            onToggle={this.toggleAccordion("suunnitelmat", "aikataulutetut")}
-            title={
-              <FormattedMessage
-                id="opiskelusuunnitelma.aikataulutetutOpintoniTitle"
-                defaultMessage="Aikataulutetut opintoni ({amount})"
-                values={{ amount: mockPlannedStudies.length }}
-              />
-            }
-            inline={true}
-            childContainer={false}
-          >
-            <StudiesContainer>
-              {mockPlannedStudies.map((study, i) => {
-                const renderExtraItem = (i + 1) % 4 === 0
-                return (
-                  <React.Fragment key={study.id}>
-                    <StudyInfo
-                      accentColor="#EB6F02"
-                      fadedColor="#FDF1E6"
-                      title={`${study.title} ${
-                        study.competencePoints
-                      } ${competencePointsTitle}`}
-                      locations={study.locations}
-                      learningPeriods={study.learningPeriods}
-                      competenceRequirements={study.competenceRequirements}
-                      demonstrations={study.demonstrations}
-                    />
-                    {renderExtraItem && <EmptyItem />}
-                  </React.Fragment>
-                )
-              })}
-              {!mockPlannedStudies.length && (
-                <div>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.eiAikataulutettujaOpintojaTitle"
-                    defaultMessage="Ei aikataulutettuja opintoja"
-                  />
-                  .
-                </div>
-              )}
-            </StudiesContainer>
-          </Accordion>
-
-          <Accordion
             id="suunnitelma.suunnitellut"
             open={activeAccordions.suunnitelmat.suunnitellut}
             onToggle={this.toggleAccordion("suunnitelmat", "suunnitellut")}
@@ -686,8 +624,8 @@ export class Opiskelusuunnitelma extends React.Component<
                 return (
                   <React.Fragment key={study.id}>
                     <StudyInfo
-                      accentColor="#E2A626"
-                      fadedColor="#FDF6E9"
+                      accentColor="#EB6F02"
+                      fadedColor="#FDF1E6"
                       title={`${study.title} ${
                         study.competencePoints
                       } ${competencePointsTitle}`}
@@ -705,6 +643,52 @@ export class Opiskelusuunnitelma extends React.Component<
                   <FormattedMessage
                     id="opiskelusuunnitelma.eiSuunniteltujaOpintojaTitle"
                     defaultMessage="Ei suunniteltuja opintoja"
+                  />
+                  .
+                </div>
+              )}
+            </StudiesContainer>
+          </Accordion>
+
+          <Accordion
+            id="suunnitelma.aikataulutetut"
+            open={activeAccordions.suunnitelmat.aikataulutetut}
+            onToggle={this.toggleAccordion("suunnitelmat", "aikataulutetut")}
+            title={
+              <FormattedMessage
+                id="opiskelusuunnitelma.aikataulutetutOpintoniTitle"
+                defaultMessage="Aikataulutetut opintoni ({amount})"
+                values={{ amount: mockPlannedStudies.length }}
+              />
+            }
+            inline={true}
+            childContainer={false}
+          >
+            <StudiesContainer>
+              {mockPlannedStudies.map((study, i) => {
+                const renderExtraItem = (i + 1) % 4 === 0
+                return (
+                  <React.Fragment key={study.id}>
+                    <StudyInfo
+                      accentColor="#E2A626"
+                      fadedColor="#FDF6E9"
+                      title={`${study.title} ${
+                        study.competencePoints
+                      } ${competencePointsTitle}`}
+                      locations={study.locations}
+                      learningPeriods={study.learningPeriods}
+                      competenceRequirements={study.competenceRequirements}
+                      demonstrations={study.demonstrations}
+                    />
+                    {renderExtraItem && <EmptyItem />}
+                  </React.Fragment>
+                )
+              })}
+              {!mockPlannedStudies.length && (
+                <div>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.eiAikataulutettujaOpintojaTitle"
+                    defaultMessage="Ei aikataulutettuja opintoja"
                   />
                   .
                 </div>
