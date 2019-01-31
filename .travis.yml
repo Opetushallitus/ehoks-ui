@@ -22,16 +22,14 @@ install:
   - source ci-tools/common/setup-tools.sh
   - npm ci
 
-before_script: cd oppija
-
 script:
+  - cd oppija
   - npm run lint
   - npm test
   - npm run build
   - export BASE_IMAGE=base-legacy:0.1
   - ../ci-tools/common/pull-image.sh
   - ./scripts/ci/build.sh ehoks-ui
-
 
 deploy:
   provider: script
