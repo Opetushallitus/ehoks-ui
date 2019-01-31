@@ -327,20 +327,6 @@ const mockUnscheduledStudies: MockStudy[] = [
     id: 3,
     locations: [],
     title: "Yrityksessä toimiminen"
-  },
-  {
-    competenceRequirements: [],
-    competencePoints: 15,
-    id: 4,
-    locations: [],
-    title: "Viestintä ja vuorovaikutus suomi toisena kielenä"
-  },
-  {
-    competenceRequirements: [],
-    competencePoints: 35,
-    id: 5,
-    locations: [],
-    title: "Yrityksessä toimiminen"
   }
 ]
 
