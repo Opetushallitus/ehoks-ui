@@ -16,7 +16,7 @@ const Content = styled("div")`
   flex-direction: column;
   display: flex;
   padding: 10px;
-  min-height: 120px;
+  min-height: 90px;
   justify-content: space-between;
 `
 
@@ -29,7 +29,8 @@ const Image = styled("div")`
 `
 
 const Title = styled("div")`
-  font-size: 18px;
+  font-size: 25px;
+  font-weight: 300;
 `
 const Description = styled("div")`
   font-size: 16px;
@@ -89,7 +90,7 @@ export class LinkPanel extends React.Component<LinkPanelProps> {
         >
           <Content>
             <Title>{title}</Title>
-            <Description>{description}</Description>
+            {description && <Description>{description}</Description>}
           </Content>
           <Image image={image} role="img" aria-label={imageLabel} />
         </LinkPanelContainer>
