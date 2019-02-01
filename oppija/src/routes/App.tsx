@@ -21,6 +21,8 @@ const Container = styled("div")`
   margin: 0;
 `
 
+const Main = styled("main")``
+
 export interface AppProps {
   store?: IRootStore
 }
@@ -53,15 +55,17 @@ export class App extends React.Component<AppProps> {
           <Container>
             <AppHeader />
             <AppErrors />
-            <Router basepath="/ehoks">
-              <Etusivu path="/" />
-              <OmienOpintojenSuunnittelu path="suunnittelu/*" />
-              <TyopaikanToimija path="tyopaikantoimija" />
-              <Henkilokohtaistaminen path="henkilokohtaistaminen" />
-              <Ammatillinentutkinto path="ammatillinentutkinto" />
-              <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />
-              <Opiskelija path="koulutuksenjarjestaja/:id/*" />
-            </Router>
+            <Main id="main" role="main">
+              <Router basepath="/ehoks">
+                <Etusivu path="/" />
+                <OmienOpintojenSuunnittelu path="suunnittelu/*" />
+                <TyopaikanToimija path="tyopaikantoimija" />
+                <Henkilokohtaistaminen path="henkilokohtaistaminen" />
+                <Ammatillinentutkinto path="ammatillinentutkinto" />
+                <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />
+                <Opiskelija path="koulutuksenjarjestaja/:id/*" />
+              </Router>
+            </Main>
             <AppFooter />
             <GlobalStyles />
           </Container>

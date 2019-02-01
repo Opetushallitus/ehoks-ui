@@ -1,5 +1,5 @@
 import { Container, PaddedContainer } from "components/Container"
-import { BackLink, HomeLink } from "components/HomeLink"
+import { HomeLink } from "components/HomeLink"
 import { HomeOrb } from "components/HomeOrb"
 import React from "react"
 import { MdHome } from "react-icons/md"
@@ -42,12 +42,6 @@ export class Ammatillinentutkinto extends React.Component<
               defaultMessage="Palaa aloitussivulle"
             />
           </HomeLink>
-          <BackLink to="../">
-            <FormattedMessage
-              id="navigaatio.palaaEtusivulleLink"
-              defaultMessage="Etusivu - Mitä ammatillinen tutkinto sisältää?"
-            />
-          </BackLink>
           <SectionContainer>
             <AmmattitutkintoSisalto />
             <AmmattitutkintoHaku />

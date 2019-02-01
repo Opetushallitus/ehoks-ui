@@ -6,7 +6,7 @@ import { LinkPanelContainer } from "components/LinkPanelContainer"
 import { IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
-import { FormattedMessage, intlShape } from "react-intl"
+import { FormattedMessage } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 import education from "./Etusivu/education.jpg"
@@ -14,7 +14,7 @@ import students from "./Etusivu/students.jpg"
 
 const ContentContainer = styled("div")`
   display: flex;
-  margin: 30px 90px 50px 40px;
+  margin: 30px 50px 50px 40px;
   flex-direction: row;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
@@ -80,8 +80,10 @@ const StyledLinkPanel = styled(LinkPanel)`
     margin-right: 0;
   }
 
-  a:last-child & {
-    margin-right: 0;
+  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
+    a:last-child & {
+      margin-right: 0;
+    }
   }
 `
 
@@ -93,9 +95,6 @@ export interface EtusivuProps {
 @inject("store")
 @observer
 export class Etusivu extends React.Component<EtusivuProps> {
-  static contextTypes = {
-    intl: intlShape
-  }
   disposeLoginReaction: IReactionDisposer
 
   componentDidMount() {
@@ -130,7 +129,6 @@ export class Etusivu extends React.Component<EtusivuProps> {
   }
 
   render() {
-    const { intl } = this.context
     return (
       <Container>
         <ContentContainer>
@@ -200,9 +198,6 @@ export class Etusivu extends React.Component<EtusivuProps> {
                   />
                 }
                 image={students}
-                imageLabel={intl.formatMessage({
-                  id: "etusivu.henkilokohtaistaminenKuvanAriaLabel"
-                })}
               />
               <StyledLinkPanel
                 to="ammatillinentutkinto"
@@ -219,9 +214,6 @@ export class Etusivu extends React.Component<EtusivuProps> {
                   />
                 }
                 image={education}
-                imageLabel={intl.formatMessage({
-                  id: "etusivu.ammatillisetTutkinnotKuvanAriaLabel"
-                })}
               />
             </LinkPanelContainer>
           </Content>

@@ -9,7 +9,7 @@ import { ChartContainer } from "components/ChartContainer"
 import { ChartContent, ChartFlex } from "components/ChartContent"
 import { ChartRow } from "components/ChartRow"
 import { Container, PaddedContainer } from "components/Container"
-import { BackLink, HomeLink } from "components/HomeLink"
+import { HomeLink } from "components/HomeLink"
 import { HomeOrb } from "components/HomeOrb"
 import PenPaper from "components/icons/PenPaper"
 import Ribbon from "components/icons/Ribbon"
@@ -70,12 +70,6 @@ export class Henkilokohtaistaminen extends React.Component<
               defaultMessage="Palaa aloitussivulle"
             />
           </HomeLink>
-          <BackLink to="../">
-            <FormattedMessage
-              id="navigaatio.palaaEtusivulleLink"
-              defaultMessage="Etusivu - Mitä ammatillinen tutkinto sisältää?"
-            />
-          </BackLink>
           <SectionContainer>
             <Section>
               <SectionTitle>
@@ -88,7 +82,7 @@ export class Henkilokohtaistaminen extends React.Component<
           </SectionContainer>
           <Section>
             <ChartContainer role="list">
-              <ChartRow height="200px" marginBottom="15px">
+              <ChartRow role="presentation" height="200px" marginBottom="15px">
                 <ChartBox
                   flex={1}
                   backgroundColor="#2874BA"
@@ -158,7 +152,7 @@ export class Henkilokohtaistaminen extends React.Component<
                   />
                 </ChartBox>
               </ChartRow>
-              <ChartRow marginBottom="5px">
+              <ChartRow role="presentation" marginBottom="5px">
                 <ChartBox
                   flex={1}
                   backgroundColor="#636466"
@@ -235,7 +229,7 @@ export class Henkilokohtaistaminen extends React.Component<
                   />
                 </ChartBox>
               </ChartRow>
-              <ChartRow height="200px" marginBottom="15px">
+              <ChartRow role="presentation" height="200px" marginBottom="15px">
                 <ChartBox
                   flex={2}
                   backgroundColor="#C72829"
@@ -312,7 +306,7 @@ export class Henkilokohtaistaminen extends React.Component<
                   />
                 </ChartBox>
               </ChartRow>
-              <ChartRow height="100px" marginBottom="25px">
+              <ChartRow role="presentation" height="100px" marginBottom="25px">
                 <ChartBox flex={1} backgroundColor="#EC7123" padding="0">
                   <ChartFlex>
                     <Ribbon size={80} />
