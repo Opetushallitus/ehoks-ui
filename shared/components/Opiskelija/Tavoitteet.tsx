@@ -1,6 +1,7 @@
 import { RouteComponentProps } from "@reach/router"
 import { Accordion } from "components/Accordion"
-import { Heading } from "components/Heading"
+import { HeadingContainer, HelpHeading } from "components/Heading"
+import { HelpPopup } from "components/HelpPopup"
 import { InfoTable } from "components/InfoTable"
 import { LabeledColumn } from "components/LabeledColumn"
 import { observer } from "mobx-react"
@@ -84,14 +85,21 @@ export class Tavoitteet extends React.Component<
 
     return (
       <React.Fragment>
-        <Heading>{titles.heading}</Heading>
+        <HeadingContainer>
+          <HelpHeading>
+            <FormattedMessage
+              id="tavoitteet.title"
+              defaultMessage="Tavoitteeni ja perustietoni"
+            />
+          </HelpHeading>
+          <HelpPopup helpContent={"Test"} />
+        </HeadingContainer>
 
         <Accordion
           id="omaTavoitteeni"
           open={this.state.activeAccordions.personalGoal}
           title={titles.goals}
           onToggle={this.toggleAccordion("personalGoal")}
-          helpIcon={true}
         >
           <InfoTable>
             <tbody>
@@ -121,7 +129,6 @@ export class Tavoitteet extends React.Component<
           open={this.state.activeAccordions.degreeOrEducation}
           title={titles.degreeOrEducation}
           onToggle={this.toggleAccordion("degreeOrEducation")}
-          helpIcon={true}
         >
           tutkinto tai koulutus
         </Accordion>
@@ -131,7 +138,6 @@ export class Tavoitteet extends React.Component<
           open={this.state.activeAccordions.personalDetails}
           title={titles.personalDetails}
           onToggle={this.toggleAccordion("personalDetails")}
-          helpIcon={true}
         >
           <InfoTable>
             <tbody>

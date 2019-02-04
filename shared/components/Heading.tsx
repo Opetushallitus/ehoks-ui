@@ -11,3 +11,12 @@ export const MainHeading = styled(Heading)`
     display: none;
   }
 `
+
+export const HeadingContainer = styled("div")`
+  display: flex;
+  align-items: center;
+`
+
+export const HelpHeading = styled(Heading)`
+  margin-right: 20px;
+`

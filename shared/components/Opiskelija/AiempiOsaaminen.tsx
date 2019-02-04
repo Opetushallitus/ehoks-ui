@@ -1,7 +1,7 @@
 import { RouteComponentProps } from "@reach/router"
 import { ContentArea } from "components/ContentArea"
 import { EmptyItem } from "components/EmptyItem"
-import { Heading } from "components/Heading"
+import { HeadingContainer, HelpHeading } from "components/Heading"
 import { HelpPopup } from "components/HelpPopup"
 import { StudiesContainer } from "components/StudiesContainer"
 import { StudyInfo } from "components/StudyInfo"
@@ -9,16 +9,6 @@ import { Instance } from "mobx-state-tree"
 import { Opinto } from "models/Opinto"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
-import styled from "styled"
-
-const HeadingContainer = styled("div")`
-  display: flex;
-  align-items: center;
-`
-
-const HelpHeading = styled(Heading)`
-  margin-right: 20px;
-`
 
 export interface AiempiOsaaminenProps {
   children?: React.ReactChildren
