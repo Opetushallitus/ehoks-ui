@@ -26,6 +26,10 @@ const Image = styled("div")`
   background-position: center;
   background-repeat: no-repeat;
   flex: 1;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
+    background-position: top;
+  }
 `
 
 const Title = styled("div")`
@@ -43,7 +47,8 @@ const StyledLink = styled(Link)`
   color: #fff;
   flex: 1;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props =>
+      props.theme.breakpoints.SmallTablet}px) {
     flex: auto;
   }
 `

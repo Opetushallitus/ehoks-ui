@@ -32,6 +32,8 @@ const LoginBoxes = styled("div")`
   flex: 1;
   flex-direction: row;
   flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
   margin-right: 30px;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
@@ -58,9 +60,11 @@ const Content = styled("main")`
   flex: 1;
   margin-right: 20px;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+  /* @media screen and (max-width: ${props =>
+    props.theme.breakpoints.Desktop}px) {
     display: block;
-  }
+  } */
+
   @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
     margin-right: 0;
   }
@@ -95,9 +99,12 @@ const StyledLinkPanel = styled(LinkPanel)`
   min-height: 400px;
   margin-right: 20px;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
-    min-height: 320px;
+  @media screen and (max-width: ${props =>
+      props.theme.breakpoints.SmallTablet}px) {
     margin-right: 0;
+  }
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     a:last-child & {
       margin-right: 0;
     }

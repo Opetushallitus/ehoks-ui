@@ -1,4 +1,5 @@
 export enum breakpoints {
+  SmallTablet = 600,
   Tablet = 720,
   Desktop = 900,
   Large = 1160,
