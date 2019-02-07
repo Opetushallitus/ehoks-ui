@@ -1,5 +1,5 @@
-import { apiUrl } from "config"
 import { fetchUtils, mockFetch } from "fetchUtils"
+const apiUrl = (path: string) => `/${path}`
 
 describe("fetchUtils", () => {
   test("fetchSingle camelCases object keys", async () => {

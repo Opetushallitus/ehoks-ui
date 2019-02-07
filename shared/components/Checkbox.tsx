@@ -37,10 +37,13 @@ export interface CheckboxProps {
   id: string
   /** Checkbox state */
   checked: boolean
-  /** Function to call after uses changes the checkbox state */
+  /** Function to call after user changes the checkbox state */
   onToggle?: () => void
 }
 
+/**
+ * Accessible checkbox component
+ */
 export class Checkbox extends React.Component<CheckboxProps> {
   checkboxRef = React.createRef<HTMLDivElement>()
 

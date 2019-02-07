@@ -237,36 +237,35 @@ export class KoulutuksenJarjestaja extends React.Component<
                 </TableBody>
               </Table>
 
-              {totalPages > 1 &&
-                sortedResults.length > 0 && (
-                  <PagingContainer
-                    aria-label={intl.formatMessage({
-                      id: "koulutuksenJarjestaja.haunSivutuksenAriaLabel"
-                    })}
-                  >
-                    {range(totalPages).map(index => {
-                      return (
-                        <Page
-                          key={index}
-                          active={activePage === index}
-                          aria-current={activePage === index}
-                          onClick={this.goToPage(index)}
-                          onKeyPress={this.onPaginationResultEnter(index)}
-                          tabIndex={0}
-                          aria-label={intl.formatMessage(
-                            {
-                              id:
-                                "koulutuksenJarjestaja.meneHakutuloksienSivulleAriaLabel"
-                            },
-                            { page: index + 1 }
-                          )}
-                        >
-                          {index + 1}
-                        </Page>
-                      )
-                    })}
-                  </PagingContainer>
-                )}
+              {totalPages > 1 && sortedResults.length > 0 && (
+                <PagingContainer
+                  aria-label={intl.formatMessage({
+                    id: "koulutuksenJarjestaja.haunSivutuksenAriaLabel"
+                  })}
+                >
+                  {range(totalPages).map(index => {
+                    return (
+                      <Page
+                        key={index}
+                        active={activePage === index}
+                        aria-current={activePage === index}
+                        onClick={this.goToPage(index)}
+                        onKeyPress={this.onPaginationResultEnter(index)}
+                        tabIndex={0}
+                        aria-label={intl.formatMessage(
+                          {
+                            id:
+                              "koulutuksenJarjestaja.meneHakutuloksienSivulleAriaLabel"
+                          },
+                          { page: index + 1 }
+                        )}
+                      >
+                        {index + 1}
+                      </Page>
+                    )
+                  })}
+                </PagingContainer>
+              )}
             </ContentArea>
           </PaddedContent>
         </Container>

@@ -1,7 +1,7 @@
 var fs = require("fs")
 var glob = require("glob")
 var parser = require("typescript-react-intl").default
-var messages = require("./src/stores/TranslationStore/defaultMessages.json")
+var messages = require("../shared/stores/TranslationStore/defaultMessages.json")
 
 var defaultMessages = messages.reduce((result, message) => {
   return [
@@ -15,7 +15,7 @@ var defaultMessages = messages.reduce((result, message) => {
 
 function runner(pattern, cb) {
   var results = []
-  pattern = pattern || "src/**/*.@(tsx|ts)"
+  pattern = pattern || "{src/**/*.@(tsx|ts),../shared/**/*.@(tsx|ts)}"
   glob(pattern, function(err, files) {
     if (err) {
       throw new Error(err)
@@ -49,5 +49,5 @@ runner(null, function(res) {
     }, {})
   }
 
-  fs.writeFileSync(`translations.json`, `${JSON.stringify(locales, null, 2)}\r`)
+  fs.writeFileSync(`translations.json`, `${JSON.stringify(locales, null, 2)}\n`)
 })

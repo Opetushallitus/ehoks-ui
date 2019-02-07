@@ -111,65 +111,63 @@ export class AmmattitutkintoHaku extends React.Component<
             onTextChange={this.updateSearchText}
             value={searchText}
           />
-          {this.state.searchText.length > 0 &&
-            oppilas.perusteet.length > 0 && (
-              <React.Fragment>
-                <SearchResultsContainer>
-                  <SearchResultsTitle>
-                    <FormattedMessage
-                      id="ammattitutkinto.hakutuloksetTitle"
-                      defaultMessage="Tutkinnot ({count})"
-                      values={{
-                        count: oppilas.perusteet.length
-                      }}
-                    />
-                  </SearchResultsTitle>
-                  <SearchResultsList role="list">
-                    {take(
-                      slice(
-                        oppilas.perusteet,
-                        this.state.activePage * this.state.perPage
-                      ),
-                      this.state.perPage
-                    ).map(peruste => {
-                      return <SearchResult key={peruste.id} result={peruste} />
-                    })}
-                  </SearchResultsList>
-                </SearchResultsContainer>
+          {this.state.searchText.length > 0 && oppilas.perusteet.length > 0 && (
+            <React.Fragment>
+              <SearchResultsContainer>
+                <SearchResultsTitle>
+                  <FormattedMessage
+                    id="ammattitutkinto.hakutuloksetTitle"
+                    defaultMessage="Tutkinnot ({count})"
+                    values={{
+                      count: oppilas.perusteet.length
+                    }}
+                  />
+                </SearchResultsTitle>
+                <SearchResultsList role="list">
+                  {take(
+                    slice(
+                      oppilas.perusteet,
+                      this.state.activePage * this.state.perPage
+                    ),
+                    this.state.perPage
+                  ).map(peruste => {
+                    return <SearchResult key={peruste.id} result={peruste} />
+                  })}
+                </SearchResultsList>
+              </SearchResultsContainer>
 
-                {totalPages > 1 &&
-                  oppilas.perusteet.length > 0 && (
-                    <PagingContainer
-                      aria-label={intl.formatMessage({
-                        id:
-                          "ammattitutkinto.hakutuloksienSivutuksenNavigaatioAriaLabel"
-                      })}
-                    >
-                      {range(totalPages).map(index => {
-                        return (
-                          <Page
-                            key={index}
-                            active={this.state.activePage === index}
-                            aria-current={this.state.activePage === index}
-                            onClick={this.goToPage(index)}
-                            onKeyPress={this.onPaginationResultEnter(index)}
-                            tabIndex={0}
-                            aria-label={intl.formatMessage(
-                              {
-                                id:
-                                  "ammattitutkinto.meneHakutuloksienSivulleAriaLabel"
-                              },
-                              { page: index + 1 }
-                            )}
-                          >
-                            {index + 1}
-                          </Page>
-                        )
-                      })}
-                    </PagingContainer>
-                  )}
-              </React.Fragment>
-            )}
+              {totalPages > 1 && oppilas.perusteet.length > 0 && (
+                <PagingContainer
+                  aria-label={intl.formatMessage({
+                    id:
+                      "ammattitutkinto.hakutuloksienSivutuksenNavigaatioAriaLabel"
+                  })}
+                >
+                  {range(totalPages).map(index => {
+                    return (
+                      <Page
+                        key={index}
+                        active={this.state.activePage === index}
+                        aria-current={this.state.activePage === index}
+                        onClick={this.goToPage(index)}
+                        onKeyPress={this.onPaginationResultEnter(index)}
+                        tabIndex={0}
+                        aria-label={intl.formatMessage(
+                          {
+                            id:
+                              "ammattitutkinto.meneHakutuloksienSivulleAriaLabel"
+                          },
+                          { page: index + 1 }
+                        )}
+                      >
+                        {index + 1}
+                      </Page>
+                    )
+                  })}
+                </PagingContainer>
+              )}
+            </React.Fragment>
+          )}
         </SearchContainer>
       </Section>
     )
