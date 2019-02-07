@@ -27,7 +27,6 @@ export function fetchUtils(fetchImplementation: any) {
       return camelCaseDeep(model)
     },
 
-    // extra typings needed because of https://github.com/mobxjs/mobx-state-tree/issues/507
     fetchCollection: async (url: string, init?: RequestInit) => {
       const response = await fetchImplementation(url, init)
       if (!response.ok) {
@@ -41,7 +40,6 @@ export function fetchUtils(fetchImplementation: any) {
       return model
     },
 
-    // extra typings needed because of https://github.com/mobxjs/mobx-state-tree/issues/507
     deleteResource: async (url: string, init?: RequestInit) => {
       const response = await fetchImplementation(url, {
         ...init,
