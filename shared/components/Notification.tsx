@@ -59,6 +59,7 @@ export interface NotificationProps {
    * @default success
    */
   type?: NotificationType
+  children?: React.ReactNode
 }
 
 /**
