@@ -6,14 +6,13 @@ import { NavigationContainer } from "components/NavigationContainer"
 import { BackgroundContainer } from "components/SectionContainer"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
-import { IReactionDisposer, reaction } from "mobx"
-import { inject, observer } from "mobx-react"
+import { observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 
-const Suunnitelma = styled("div")`
+const SuunnitelmaContainer = styled("div")`
   display: flex;
   align-items: center;
   border: 1px solid #979797;
@@ -33,38 +32,15 @@ const Text = styled("div")`
 `
 
 interface ValitseHOKSProps {
-  store?: IRootStore
+  suunnitelmat: IRootStore["hoks"]["suunnitelmat"]
 }
 
-@inject("store")
 @observer
 export class ValitseHOKS extends React.Component<
   ValitseHOKSProps & RouteComponentProps
 > {
-  disposeLoginReaction: IReactionDisposer
-  componentDidMount() {
-    const { store } = this.props
-    this.disposeLoginReaction = reaction(
-      () => store!.session.isLoggedIn,
-      isLoggedIn => {
-        // navigate to Opintopolku logout url after logging out
-        if (!isLoggedIn) {
-          window.location.href = this.props.store!.environment.opintopolkuLogoutUrl
-        }
-      }
-    )
-    store!.hoks.haeSuunnitelmat()
-    window.requestAnimationFrame(() => {
-      window.scrollTo(0, 0)
-    })
-  }
-
-  componentWillUnmount() {
-    this.disposeLoginReaction()
-  }
-
   render() {
-    const store = this.props.store!
+    const { suunnitelmat } = this.props
 
     return (
       <React.Fragment>
@@ -91,9 +67,9 @@ export class ValitseHOKS extends React.Component<
                 />
               </Heading>
 
-              {store.hoks.suunnitelmat.map((suunnitelma, i) => {
+              {suunnitelmat.map((suunnitelma, i) => {
                 return (
-                  <Suunnitelma key={i}>
+                  <SuunnitelmaContainer key={i}>
                     <Text>
                       {suunnitelma.tutkinnonNimi}, {suunnitelma.oppilaitos}.{" "}
                       {suunnitelma.keskeytysPvm ? (
@@ -125,7 +101,7 @@ export class ValitseHOKS extends React.Component<
                         defaultMessage="Avaa HOKS"
                       />
                     </HOKSButton>
-                  </Suunnitelma>
+                  </SuunnitelmaContainer>
                 )
               })}
             </PaddedContent>

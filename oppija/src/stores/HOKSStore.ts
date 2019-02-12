@@ -1,34 +1,15 @@
 // import { apiUrl } from "config"
 import { flow, Instance, types } from "mobx-state-tree"
+import { suunnitelmat } from "mocks/mockSuunnitelmat"
 import { Suunnitelma } from "models/Suunnitelma"
 // import { StoreEnvironment } from "types/StoreEnvironment"
 
-const suunnitelmatMock: { [eid: string]: any } = {
-  "1": {
-    eid: "1",
-    tutkinnonNimi: "Sosiaali- ja terveysalan perustutkinto",
-    oppilaitos: "Opinpaikka",
-    aloitusPvm: "2018-08-15"
-  },
-  "2": {
-    eid: "2",
-    tutkinnonNimi: "Asiakaskokemuksen kehittäminen ja palvelumuotoilu",
-    oppilaitos: "Keuda",
-    aloitusPvm: "2018-08-01"
-  },
-  "3": {
-    eid: "3",
-    tutkinnonNimi: "Media-alan ammattitutkinto",
-    oppilaitos: "Keuda",
-    keskeytysPvm: "2017-01-12"
-  }
-}
-
 const mockFetchHOKS = (eid: string) => {
+  const suunnitelma = suunnitelmat.find(s => s.eid === eid)
   return Promise.resolve({
     data: {
       eid,
-      ...suunnitelmatMock[eid]
+      ...suunnitelma
     }
   })
 }
@@ -43,7 +24,8 @@ const mockFetchSuunnitelmat = () => {
 
 const HOKSStoreModel = {
   isLoading: false,
-  suunnitelmat: types.optional(types.array(Suunnitelma), [])
+  suunnitelmat: types.optional(types.array(Suunnitelma), []),
+  suunnitelma: types.optional(Suunnitelma, {}) // TODO: used only for KoulutuksenJarjestaja views, remove later
 }
 
 export const HOKSStore = types
@@ -75,5 +57,13 @@ export const HOKSStore = types
       // }
     })
 
-    return { haeSuunnitelmat }
+    // TODO: remove this when KoulutuksenJarjestaja is fully testable in virkailija app
+    const haeSuunnitelma = flow(function*(_: string) {
+      self.isLoading = true
+      const response = yield mockFetchHOKS("1") // always fetch the first mock
+      self.suunnitelma = response.data
+      self.isLoading = false
+    })
+
+    return { haeSuunnitelmat, haeSuunnitelma }
   })

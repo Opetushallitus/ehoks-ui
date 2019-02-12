@@ -93,9 +93,9 @@ export class TyopaikanToimija extends React.Component<TyopaikanToimijaProps> {
                           oppija.tutkinnonOsanOtsikko
                         } ${competencePointsTitle}`}
                         locations={[]}
-                        learningPeriods={oppija.oppimisjaksot}
+                        learningPeriods={oppija.harjoittelujaksot}
                         competenceRequirements={oppija.ammattitaitovaatimukset}
-                        demonstrations={oppija.naytonTiedot}
+                        demonstrations={oppija.naytot}
                       />
                       <Accordion
                         id={`oppija_${i}_tavoitteet`}

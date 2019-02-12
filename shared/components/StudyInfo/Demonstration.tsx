@@ -1,5 +1,4 @@
 import { MobileSlider, Slide } from "components/MobileSlider"
-import { TempDemonstration } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import MediaQuery from "react-responsive"
@@ -7,6 +6,8 @@ import styled from "styled"
 import { breakpoints } from "theme"
 import { DemonstrationDates } from "./DemonstrationDates"
 import { Container, InfoContainer, Table, TBody, TD, TH, Title } from "./Shared"
+import { SnapshotOrInstance } from "mobx-state-tree"
+import { Naytto } from "models/Naytto"
 
 const DemonstrationTitle = styled(Title)`
   padding-left: 20px;
@@ -24,8 +25,7 @@ const CustomSlider = styled(MobileSlider)`
 
 interface DemonstrationProps {
   accentColor?: string
-  // TODO: use type from mobx-state-tree
-  demonstration: TempDemonstration
+  demonstration: SnapshotOrInstance<typeof Naytto>
 }
 
 export class Demonstration extends React.Component<DemonstrationProps> {
@@ -45,7 +45,7 @@ export class Demonstration extends React.Component<DemonstrationProps> {
                   defaultMessage="Näyttöpaikka"
                 />
               </TH>
-              <TD>{demonstration.organisation}</TD>
+              <TD>{demonstration.organisaatio}</TD>
             </tr>
             <tr>
               <TH>
@@ -54,7 +54,7 @@ export class Demonstration extends React.Component<DemonstrationProps> {
                   defaultMessage="Näyttöympäristö"
                 />
               </TH>
-              <TD>{demonstration.environment}</TD>
+              <TD>{demonstration.ymparisto}</TD>
             </tr>
             <tr>
               <TH>
@@ -63,7 +63,11 @@ export class Demonstration extends React.Component<DemonstrationProps> {
                   defaultMessage="Näytön arvioijat"
                 />
               </TH>
-              <TD>{demonstration.assessors.join(", ")}</TD>
+              <TD>
+                {demonstration &&
+                  demonstration.arvioijat &&
+                  demonstration.arvioijat.join(", ")}
+              </TD>
             </tr>
           </TBody>
         </DemonstrationTable>
@@ -72,17 +76,21 @@ export class Demonstration extends React.Component<DemonstrationProps> {
             if (matches) {
               return (
                 <CustomSlider>
-                  {demonstration.assignments.map((assignment, i) => {
-                    return <Slide key={i}>{assignment}</Slide>
-                  })}
+                  {demonstration &&
+                    demonstration.tyotehtavat &&
+                    demonstration.tyotehtavat.map((tyotehtava, i) => {
+                      return <Slide key={i}>{tyotehtava}</Slide>
+                    })}
                 </CustomSlider>
               )
             } else {
               return (
                 <InfoContainer>
-                  {demonstration.assignments.map((assignment, i) => {
-                    return <li key={i}>{assignment}</li>
-                  })}
+                  {demonstration &&
+                    demonstration.tyotehtavat &&
+                    demonstration.tyotehtavat.map((tyotehtava, i) => {
+                      return <li key={i}>{tyotehtava}</li>
+                    })}
                 </InfoContainer>
               )
             }

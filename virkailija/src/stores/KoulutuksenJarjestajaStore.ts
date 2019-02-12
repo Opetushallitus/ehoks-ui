@@ -101,6 +101,29 @@ const Search = types
           ),
           self.perPage
         )
+      },
+      // TODO: real implementation
+      studentById(id: string) {
+        const student = self.results.find(result => {
+          return result.id.toString() === id
+        })
+        const [firstName, surname] = student
+          ? student.nimi.split(" ")
+          : ["Mock", "User"]
+        return {
+          firstName,
+          surname,
+          oid: id,
+          commonName: firstName,
+          contactValuesGroup: [] as any,
+          yhteystiedot: {
+            sahkoposti: "mock@user.dev",
+            katuosoite: "Esimerkkikatu 123",
+            postinumero: "12345",
+            kunta: "Kunta",
+            puhelinnumero: "000000000"
+          }
+        }
       }
     }
   })

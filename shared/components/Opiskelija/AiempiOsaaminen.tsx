@@ -5,6 +5,8 @@ import { Heading } from "components/Heading"
 import { HelpPopup } from "components/HelpPopup"
 import { StudiesContainer } from "components/StudiesContainer"
 import { StudyInfo } from "components/StudyInfo"
+import { Instance } from "mobx-state-tree"
+import { Opinto } from "models/Opinto"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
@@ -20,6 +22,8 @@ const HelpHeading = styled(Heading)`
 
 export interface AiempiOsaaminenProps {
   children?: React.ReactChildren
+  heading?: React.ReactNode
+  studies: Array<Instance<typeof Opinto>>
 }
 
 export interface AiempiOsaaminenState {
@@ -52,29 +56,16 @@ export class AiempiOsaaminen extends React.Component<
   }
 
   render() {
+    const {
+      studies,
+      heading = (
+        <FormattedMessage
+          id="aiempiOsaaminen.title"
+          defaultMessage="Aiempi osaamiseni"
+        />
+      )
+    } = this.props
     const { intl } = this.context
-    const mockStudy = {
-      id: 1,
-      competenceRequirements: [],
-      demonstrations: [],
-      title: "Yrityksessä toimiminen",
-      competencePoints: 4,
-      locations: ["Tavastia", "Muualla suoritettu"],
-      learningPeriods: [
-        {
-          approved: "2018-04-01",
-          instructor: "Etunimi Sukunimi, Organisaatio",
-          assignments: [
-            "Tehtävä ja kuvaus tehtävän sisällöstä",
-            "Tehtävä ja kuvaus tehtävän sisällöstä",
-            "Tehtävä ja kuvaus tehtävän sisällöstä",
-            "Tehtävä ja kuvaus tehtävän sisällöstä"
-          ]
-        }
-      ]
-    }
-    const mockStudies = [mockStudy, mockStudy, mockStudy, mockStudy, mockStudy]
-
     const competencePointsTitle = intl.formatMessage({
       id: "opiskelusuunnitelma.osaamispisteLyhenne"
     })
@@ -82,31 +73,26 @@ export class AiempiOsaaminen extends React.Component<
     return (
       <React.Fragment>
         <HeadingContainer>
-          <HelpHeading>
-            <FormattedMessage
-              id="koulutuksenJarjestaja.aiempiOsaaminen.title"
-              defaultMessage="Aiempi osaaminen"
-            />
-          </HelpHeading>
+          <HelpHeading>{heading}</HelpHeading>
           <HelpPopup helpContent={"Test"} />
         </HeadingContainer>
 
         <ContentArea>
           <StudiesContainer>
-            {mockStudies.map((study, i) => {
+            {studies.map((study, i) => {
               const renderExtraItem = (i + 1) % 4 === 0
               return (
                 <React.Fragment key={i}>
                   <StudyInfo
                     accentColor="#43A047"
                     fadedColor="#ECF6ED"
-                    title={`${study.title} ${
-                      study.competencePoints
+                    title={`${study.otsikko} ${
+                      study.osaamispisteet
                     } ${competencePointsTitle}`}
-                    locations={study.locations}
-                    learningPeriods={study.learningPeriods}
-                    competenceRequirements={study.competenceRequirements}
-                    demonstrations={study.demonstrations}
+                    locations={study.sijainnit}
+                    learningPeriods={study.harjoittelujaksot}
+                    competenceRequirements={study.osaamisvaatimukset}
+                    demonstrations={study.naytot}
                   />
                   {renderExtraItem && <EmptyItem />}
                 </React.Fragment>

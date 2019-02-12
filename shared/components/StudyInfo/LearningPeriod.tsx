@@ -1,5 +1,4 @@
 import { MobileSlider, Slide } from "components/MobileSlider"
-import { TempLearningPeriod } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import MediaQuery from "react-responsive"
@@ -16,6 +15,8 @@ import {
   TH,
   Title
 } from "./Shared"
+import { SnapshotOrInstance } from "mobx-state-tree"
+import { Harjoittelujakso } from "models/Harjoittelujakso"
 
 const LearningPeriodTitle = styled(Title)`
   padding-left: 20px;
@@ -33,17 +34,16 @@ const CustomSlider = styled(MobileSlider)`
 
 interface LearningPeriodProps {
   accentColor?: string
-  // TODO: use type from mobx-state-tree
-  learningPeriod: TempLearningPeriod
+  learningPeriod: SnapshotOrInstance<typeof Harjoittelujakso>
 }
 
 export class LearningPeriod extends React.Component<LearningPeriodProps> {
   render() {
     const { accentColor, learningPeriod } = this.props
-    const { assignments = [], period = [] } = learningPeriod
+    const { tyotehtavat = [], ajankohta } = learningPeriod
     return (
       <Container>
-        {(period[0] || period[1]) && (
+        {ajankohta && (ajankohta.alku || ajankohta.loppu) && (
           <LearningPeriodTitle accentColor={accentColor}>
             <LearningPeriodDates learningPeriod={learningPeriod} />
           </LearningPeriodTitle>
@@ -57,7 +57,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                   defaultMessage="Työpaikkaohjaaja"
                 />
               </TH>
-              <TD>{learningPeriod.instructor}</TD>
+              <TD>{learningPeriod.ohjaaja}</TD>
             </tr>
             <tr>
               <TH>
@@ -75,16 +75,16 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
             if (matches) {
               return (
                 <CustomSlider>
-                  {assignments.map((assignment, i) => {
-                    return <Slide key={i}>{assignment}</Slide>
+                  {tyotehtavat.map((tyotehtava, i) => {
+                    return <Slide key={i}>{tyotehtava}</Slide>
                   })}
                 </CustomSlider>
               )
             } else {
               return (
                 <InfoContainer>
-                  {assignments.map((assignment, i) => {
-                    return <li key={i}>{assignment}</li>
+                  {tyotehtavat.map((tyotehtava, i) => {
+                    return <li key={i}>{tyotehtava}</li>
                   })}
                 </InfoContainer>
               )

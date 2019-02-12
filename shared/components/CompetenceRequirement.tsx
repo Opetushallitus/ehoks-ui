@@ -1,7 +1,8 @@
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
-import { TempCompetenceRequirement } from "./StudyInfo"
+import { Instance } from "mobx-state-tree"
+import { Osaamisvaatimus } from "models/Osaamisvaatimus"
 
 const Container = styled("li")`
   display: flex;
@@ -67,7 +68,7 @@ const ToggleAssessment = styled("button")`
 `
 
 interface CompetenceRequirementProps {
-  competenceRequirement: TempCompetenceRequirement
+  competenceRequirement: Instance<typeof Osaamisvaatimus>
   expanded: boolean
   expand: () => void
 }
@@ -96,7 +97,7 @@ export class CompetenceRequirement extends React.Component<
         </TitleRow>
         {expanded ? (
           <Assessment data-testid="Assessment">
-            {competenceRequirement.arviointikriteerit.map(arviointikriteeri => {
+            {competenceRequirement.kriteerit.map(arviointikriteeri => {
               return (
                 <AssessmentItem key={arviointikriteeri.kuvaus}>
                   <AssessmentHeader>

@@ -1,10 +1,11 @@
 import React from "react"
 import { createRendererWithContext } from "testUtils"
 import { CompetenceRequirement } from "../CompetenceRequirement"
+import { Osaamisvaatimus } from "models/Osaamisvaatimus"
 
-const competenceRequirement = {
+const competenceRequirement = Osaamisvaatimus.create({
   kuvaus: "ammattitaitovaatimuksen kuvaus",
-  arviointikriteerit: [
+  kriteerit: [
     {
       kuvaus: "Tyydyttävä T1",
       kriteerit: ["1", "2", "3"]
@@ -26,7 +27,7 @@ const competenceRequirement = {
       kriteerit: ["1", "2", "3"]
     }
   ]
-}
+})
 
 test("expanded=false renders only title", () => {
   const mockExpand = jest.fn()

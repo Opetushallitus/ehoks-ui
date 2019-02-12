@@ -1,11 +1,7 @@
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import { types } from "mobx-state-tree"
-
-const Ajankohta = types.model({
-  alku: types.optional(types.string, ""),
-  loppu: types.optional(types.string, "")
-})
+import { Ajankohta } from "models/Ajankohta"
 
 const Organisaatio = types.model({
   nimi: types.optional(types.string, "")
@@ -73,7 +69,7 @@ export const Oppija = types
     ammattitaitovaatimukset: types.array(
       types.model({
         kuvaus: types.optional(types.string, ""),
-        arviointikriteerit: types.array(
+        kriteerit: types.array(
           types.model({
             kuvaus: types.optional(types.string, ""),
             kriteerit: types.array(types.string)
@@ -87,15 +83,18 @@ export const Oppija = types
       get tutkinnonOsanOtsikko() {
         return `${self.tutkinnonOsa.nimi} ${self.tutkinnonOsa.laajuus}`
       },
-      get naytonTiedot() {
+      get naytot() {
         const { hankitunOsaamisenNaytto: naytto } = self
         return [
           {
-            period: [naytto.ajankohta.alku, naytto.ajankohta.loppu],
-            organisation: naytto.jarjestaja.nimi,
-            environment: naytto.nayttoYmparisto.nimi,
-            assessors: naytto.arvioijat.map(a => a.nimi),
-            assignments: naytto.yksilollisetArviointikriteerit.map(
+            ajankohta: {
+              alku: naytto.ajankohta.alku,
+              loppu: naytto.ajankohta.loppu
+            },
+            organisaatio: naytto.jarjestaja.nimi,
+            ymparisto: naytto.nayttoYmparisto.nimi,
+            arvioijat: naytto.arvioijat.map(a => a.nimi),
+            tyotehtavat: naytto.yksilollisetArviointikriteerit.map(
               k => k.kuvaus
             )
           }
@@ -122,15 +121,15 @@ export const Oppija = types
             .jarjestajanEdustaja.organisaatio.nimi
         } ${this.ajankohta}`
       },
-      get oppimisjaksot() {
+      get harjoittelujaksot() {
         const {
           osaamisenHankkimistapa: { ajankohta, tyopaikallaHankittavaOsaaminen }
         } = self
         return [
           {
-            period: [ajankohta.alku, ajankohta.loppu],
-            instructor: tyopaikallaHankittavaOsaaminen.vastuullinenOhjaaja.nimi,
-            assignments: tyopaikallaHankittavaOsaaminen.keskeisetTyotehtavat.map(
+            ajankohta: { alku: ajankohta.alku, loppu: ajankohta.loppu },
+            ohjaaja: tyopaikallaHankittavaOsaaminen.vastuullinenOhjaaja.nimi,
+            tyotehtavat: tyopaikallaHankittavaOsaaminen.keskeisetTyotehtavat.map(
               t => t
             )
           }

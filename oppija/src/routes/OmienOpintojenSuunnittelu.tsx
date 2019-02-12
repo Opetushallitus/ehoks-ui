@@ -4,18 +4,19 @@ import { MainHeading } from "components/Heading"
 import { HOKSButton } from "components/HOKSButton"
 import Flag from "components/icons/Flag"
 import { NavigationContainer } from "components/NavigationContainer"
+import { AiempiOsaaminen } from "components/Opiskelija/AiempiOsaaminen"
+import { Opiskelusuunnitelma } from "components/Opiskelija/Opiskelusuunnitelma"
+import { Tavoitteet } from "components/Opiskelija/Tavoitteet"
 import { ProgressPies } from "components/ProgressPies"
 import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
-import { IReactionDisposer, reaction } from "mobx"
-import { inject, observer } from "mobx-react"
+import { observer } from "mobx-react"
+import { Instance } from "mobx-state-tree"
+import { SessionUser } from "models/SessionUser"
+import { Suunnitelma } from "models/Suunnitelma"
 import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
-import { AiempiOsaaminen } from "routes/OmienOpintojenSuunnittelu/AiempiOsaaminen"
-import { Opiskelusuunnitelma } from "routes/OmienOpintojenSuunnittelu/Opiskelusuunnitelma"
-import { Tavoitteet } from "routes/OmienOpintojenSuunnittelu/Tavoitteet"
-import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 
 const Section = styled("div")`
@@ -37,36 +38,20 @@ const SectionItems = styled(ProgressPies)`
 `
 
 export interface OmienOpintojenSuunnitteluProps {
-  store?: IRootStore
+  student: Instance<typeof SessionUser> | null
+  suunnitelmat: Array<Instance<typeof Suunnitelma>>
   path?: string
   id?: string
 }
 
-@inject("store")
 @observer
 export class OmienOpintojenSuunnittelu extends React.Component<
   OmienOpintojenSuunnitteluProps
 > {
-  disposeLoginReaction: IReactionDisposer
-
   componentDidMount() {
-    const { store } = this.props
-    this.disposeLoginReaction = reaction(
-      () => store!.session.isLoggedIn,
-      isLoggedIn => {
-        // navigate to Opintopolku logout url after logging out
-        if (!isLoggedIn) {
-          window.location.href = this.props.store!.environment.opintopolkuLogoutUrl
-        }
-      }
-    )
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
     })
-  }
-
-  componentWillUnmount() {
-    this.disposeLoginReaction()
   }
 
   setActiveTab = (route: string) => () => {
@@ -74,7 +59,13 @@ export class OmienOpintojenSuunnittelu extends React.Component<
   }
 
   render() {
-    const { id } = this.props
+    const { id, student, suunnitelmat } = this.props
+    const suunnitelma = suunnitelmat.find(s => s.eid === id)
+
+    if (!suunnitelma) {
+      return null
+    }
+
     return (
       <Location>
         {({ location }) => {
@@ -144,7 +135,7 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                         </SectionItem>
                       </SectionItems>
                       <SectionContainer>
-                        <HOKSButton to="/ehoks/valitse">
+                        <HOKSButton to="/ehoks/suunnittelu">
                           <FormattedMessage
                             id="kirjautunut.suljeHOKSLink"
                             defaultMessage="Sulje HOKS"
@@ -160,9 +151,15 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                 <Container>
                   <PaddedContent>
                     <Router basepath={`/ehoks/suunnittelu/${id}`}>
-                      <Tavoitteet path="/" />
-                      <AiempiOsaaminen path="osaamiseni" />
-                      <Opiskelusuunnitelma path="opiskelusuunnitelmani" />
+                      <Tavoitteet path="/" student={student} />
+                      <AiempiOsaaminen
+                        path="osaamiseni"
+                        studies={suunnitelma ? suunnitelma.aiemmatOpinnot : []}
+                      />
+                      <Opiskelusuunnitelma
+                        path="opiskelusuunnitelmani"
+                        plan={suunnitelma}
+                      />
                     </Router>
                   </PaddedContent>
                 </Container>

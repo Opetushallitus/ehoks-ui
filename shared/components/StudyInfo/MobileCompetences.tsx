@@ -1,9 +1,10 @@
 import { MobileSlider, Slide } from "components/MobileSlider"
-import { TempCompetenceRequirement } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
 import { ToggleLink } from "./ToggleLink"
+import { Instance } from "mobx-state-tree"
+import { Osaamisvaatimus } from "models/Osaamisvaatimus"
 
 const SliderContainer = styled("div")`
   margin: 0 10px;
@@ -27,7 +28,7 @@ const MobileSliderToggle = styled("div")`
 `
 
 interface MobileCompetencesProps {
-  competenceRequirements?: TempCompetenceRequirement[]
+  competenceRequirements: Array<Instance<typeof Osaamisvaatimus>>
 }
 
 interface MobileCompetencesState {
@@ -56,7 +57,7 @@ export class MobileCompetences extends React.Component<
   }
 
   render() {
-    const { competenceRequirements = [] } = this.props
+    const { competenceRequirements } = this.props
     const { showAssessment } = this.state
     return (
       <SliderContainer>
@@ -94,7 +95,7 @@ export class MobileCompetences extends React.Component<
           })}
         </MobileSlider>
         {showAssessment &&
-          competenceRequirements[this.state.activeSlide].arviointikriteerit.map(
+          competenceRequirements[this.state.activeSlide].kriteerit.map(
             (arviointikriteeri, ai) => {
               return (
                 <AssessmentItem key={ai}>

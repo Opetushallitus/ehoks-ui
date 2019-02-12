@@ -1,6 +1,5 @@
 import { CompetenceRequirement } from "components/CompetenceRequirement"
 import { HorizontalLine } from "components/HorizontalLine"
-import { TempCompetenceRequirement } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import MediaQuery from "react-responsive"
@@ -11,6 +10,8 @@ import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
 import { MobileCompetences } from "./MobileCompetences"
 import { ToggleLink } from "./ToggleLink"
+import { Osaamisvaatimus } from "models/Osaamisvaatimus"
+import { Instance } from "mobx-state-tree"
 
 const Container = styled("div")`
   background: #fff;
@@ -103,7 +104,7 @@ const Prefix = styled("div")`
 
 interface CompetencesProps {
   collapseAll: () => void
-  competenceRequirements?: TempCompetenceRequirement[]
+  competenceRequirements?: Array<Instance<typeof Osaamisvaatimus>>
   expandAll: () => void
   expandCompetence: (index: number) => () => void
   expanded?: boolean

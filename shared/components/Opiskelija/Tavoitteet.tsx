@@ -2,15 +2,22 @@ import { RouteComponentProps } from "@reach/router"
 import { Accordion } from "components/Accordion"
 import { Heading } from "components/Heading"
 import { InfoTable } from "components/InfoTable"
-import { inject, observer } from "mobx-react"
+import { LabeledColumn } from "components/LabeledColumn"
+import { observer } from "mobx-react"
+import { Instance } from "mobx-state-tree"
+import { SessionUser } from "models/SessionUser"
 import React from "react"
-import { FormattedMessage, intlShape } from "react-intl"
-import { ISessionStore } from "stores/SessionStore"
-import { injectSession } from "utils"
+import { FormattedMessage } from "react-intl"
 
 export interface TavoitteetProps {
   children?: React.ReactChildren
-  session?: ISessionStore
+  student: Instance<typeof SessionUser> | null
+  titles?: {
+    heading?: React.ReactNode
+    goals?: React.ReactNode
+    degreeOrEducation?: React.ReactNode
+    personalDetails?: React.ReactNode
+  }
 }
 
 export interface TavoitteetState {
@@ -19,15 +26,11 @@ export interface TavoitteetState {
   }
 }
 
-@inject(injectSession)
 @observer
 export class Tavoitteet extends React.Component<
   TavoitteetProps & RouteComponentProps,
   TavoitteetState
 > {
-  static contextTypes = {
-    intl: intlShape
-  }
   state = {
     activeAccordions: {
       degreeOrEducation: false,
@@ -47,30 +50,46 @@ export class Tavoitteet extends React.Component<
   }
 
   render() {
-    const { user } = this.props.session!
-    if (!user) {
+    const { student, titles: customTitles = {} } = this.props
+    if (!student) {
       return null
     }
-    const { intl } = this.context
+
+    const titles = {
+      heading: customTitles.heading || (
+        <FormattedMessage
+          id="tavoitteet.title"
+          defaultMessage="Tavoitteeni ja perustietoni"
+        />
+      ),
+      goals: customTitles.goals || (
+        <FormattedMessage
+          id="tavoitteet.omaTavoitteeniTitle"
+          defaultMessage="Oma tavoitteeni"
+        />
+      ),
+      degreeOrEducation: customTitles.degreeOrEducation || (
+        <FormattedMessage
+          id="tavoitteet.tutkintoTaiKoulutusTitle"
+          defaultMessage="Tutkinto tai koulutus"
+        />
+      ),
+      personalDetails: customTitles.personalDetails || (
+        <FormattedMessage
+          id="tavoitteet.henkilotiedotTitle"
+          defaultMessage="Omat henkilötiedot"
+        />
+      )
+    }
 
     return (
       <React.Fragment>
-        <Heading>
-          <FormattedMessage
-            id="tavoitteet.title"
-            defaultMessage="Tavoitteeni ja perustietoni"
-          />
-        </Heading>
+        <Heading>{titles.heading}</Heading>
 
         <Accordion
           id="omaTavoitteeni"
           open={this.state.activeAccordions.personalGoal}
-          title={
-            <FormattedMessage
-              id="tavoitteet.omaTavoitteeniTitle"
-              defaultMessage="Oma tavoitteeni"
-            />
-          }
+          title={titles.goals}
           onToggle={this.toggleAccordion("personalGoal")}
           helpIcon={true}
         >
@@ -87,13 +106,9 @@ export class Tavoitteet extends React.Component<
                 <th />
               </tr>
               <tr>
-                <td
-                  data-label={intl.formatMessage({
-                    id: "tavoitteet.suunnitelmaJatkoOpintoihinTitle"
-                  })}
-                >
+                <LabeledColumn id="tavoitteet.suunnitelmaJatkoOpintoihinTitle">
                   Työelämään siirtyminen
-                </td>
+                </LabeledColumn>
                 <td />
                 <td />
               </tr>
@@ -104,12 +119,7 @@ export class Tavoitteet extends React.Component<
         <Accordion
           id="tutkintoTaiKoulutus"
           open={this.state.activeAccordions.degreeOrEducation}
-          title={
-            <FormattedMessage
-              id="tavoitteet.tutkintoTaiKoulutusTitle"
-              defaultMessage="Tutkinto tai koulutus"
-            />
-          }
+          title={titles.degreeOrEducation}
           onToggle={this.toggleAccordion("degreeOrEducation")}
           helpIcon={true}
         >
@@ -119,12 +129,7 @@ export class Tavoitteet extends React.Component<
         <Accordion
           id="henkilotiedot"
           open={this.state.activeAccordions.personalDetails}
-          title={
-            <FormattedMessage
-              id="tavoitteet.henkilotiedotTitle"
-              defaultMessage="Omat henkilötiedot"
-            />
-          }
+          title={titles.personalDetails}
           onToggle={this.toggleAccordion("personalDetails")}
           helpIcon={true}
         >
@@ -151,27 +156,15 @@ export class Tavoitteet extends React.Component<
                 </th>
               </tr>
               <tr>
-                <td
-                  data-label={intl.formatMessage({
-                    id: "tavoitteet.etunimiSukunimiTitle"
-                  })}
-                >
-                  {user.firstName} {user.surname}
-                </td>
-                <td
-                  data-label={intl.formatMessage({
-                    id: "tavoitteet.kutsumanimiTitle"
-                  })}
-                >
-                  {user.commonName}
-                </td>
-                <td
-                  data-label={intl.formatMessage({
-                    id: "tavoitteet.oppijanumeroTitle"
-                  })}
-                >
-                  {user.oid}
-                </td>
+                <LabeledColumn id="tavoitteet.etunimiSukunimiTitle">
+                  {student.firstName} {student.surname}
+                </LabeledColumn>
+                <LabeledColumn id="tavoitteet.kutsumanimiTitle">
+                  {student.commonName}
+                </LabeledColumn>
+                <LabeledColumn id="tavoitteet.oppijanumeroTitle">
+                  {student.oid}
+                </LabeledColumn>
               </tr>
               <tr>
                 <th>
@@ -194,27 +187,16 @@ export class Tavoitteet extends React.Component<
                 </th>
               </tr>
               <tr>
-                <td
-                  data-label={intl.formatMessage({
-                    id: "tavoitteet.osoiteTitle"
-                  })}
-                >
-                  {user.yhteystiedot.katuosoite}
-                </td>
-                <td
-                  data-label={intl.formatMessage({
-                    id: "tavoitteet.postiosoiteTitle"
-                  })}
-                >
-                  {user.yhteystiedot.postinumero} {user.yhteystiedot.kunta}
-                </td>
-                <td
-                  data-label={intl.formatMessage({
-                    id: "tavoitteet.kotikuntaTitle"
-                  })}
-                >
-                  {user.yhteystiedot.kunta}
-                </td>
+                <LabeledColumn id="tavoitteet.osoiteTitle">
+                  {student.yhteystiedot.katuosoite}
+                </LabeledColumn>
+                <LabeledColumn id="tavoitteet.postiosoiteTitle">
+                  {student.yhteystiedot.postinumero}{" "}
+                  {student.yhteystiedot.kunta}
+                </LabeledColumn>
+                <LabeledColumn id="tavoitteet.kotikuntaTitle">
+                  {student.yhteystiedot.kunta}
+                </LabeledColumn>
               </tr>
               <tr>
                 <th>
@@ -232,21 +214,13 @@ export class Tavoitteet extends React.Component<
                 </th>
               </tr>
               <tr>
-                <td
-                  data-label={intl.formatMessage({
-                    id: "tavoitteet.sahkopostiTitle"
-                  })}
-                >
-                  {user.yhteystiedot.sahkoposti}
-                </td>
+                <LabeledColumn id="tavoitteet.sahkopostiTitle">
+                  {student.yhteystiedot.sahkoposti}
+                </LabeledColumn>
                 <td />
-                <td
-                  data-label={intl.formatMessage({
-                    id: "tavoitteet.puhelinnumeroTitle"
-                  })}
-                >
-                  {user.yhteystiedot.puhelinnumero}
-                </td>
+                <LabeledColumn id="tavoitteet.puhelinnumeroTitle">
+                  {student.yhteystiedot.puhelinnumero}
+                </LabeledColumn>
               </tr>
             </tbody>
           </InfoTable>
