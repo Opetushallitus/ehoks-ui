@@ -84,9 +84,14 @@ export class Opiskelija extends React.Component<
   OpiskelijaProps & RouteComponentProps
 > {
   // TODO: redirect to root after logout, check implementation in src/routes/OmienOpintojenSuunnittelu.tsx
-  // TODO: refetch suunnitelma when this.props.id changes?
   componentDidMount() {
     if (this.props.id) {
+      this.props.store!.hoks.haeSuunnitelma(this.props.id)
+    }
+  }
+
+  componentDidUpdate(prevProps: OpiskelijaProps) {
+    if (this.props.id && this.props.id !== prevProps.id) {
       this.props.store!.hoks.haeSuunnitelma(this.props.id)
     }
   }
