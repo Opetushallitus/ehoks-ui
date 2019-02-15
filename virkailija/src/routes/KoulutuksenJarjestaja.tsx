@@ -21,7 +21,7 @@ import { MockStudent } from "mocks/MockStudent"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
-import styled from "styled"
+import styled, { css } from "styled"
 
 const TopContainer = styled("div")`
   display: flex;
@@ -41,12 +41,9 @@ const SearchContainer = styled("div")`
   justify-content: flex-end;
   position: relative;
 `
-
-// TODO: implement using styled-components' css helper
-// when TS typings are improved
-const SearchHeaderStyles = {
-  justifyContent: "flex-end"
-}
+const searchHeaderStyles = css`
+  justify-content: flex-end;
+`
 
 const Spinner = styled(LoadingSpinner)`
   position: absolute;
@@ -166,7 +163,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                     id: "koulutuksenJarjestaja.hakuAriaLabel"
                   })}
                   loadingSpinner={<Spinner />}
-                  headerStyles={SearchHeaderStyles}
+                  headerStyles={searchHeaderStyles}
                   value={searchText}
                 />
               </SearchContainer>
