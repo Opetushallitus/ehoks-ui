@@ -8,13 +8,6 @@ import { TranslationStore } from "stores/TranslationStore"
 import { TyopaikanToimijaStore } from "stores/TyopaikanToimijaStore"
 import { KoulutuksenJarjestajaStore } from "./KoulutuksenJarjestajaStore"
 
-export interface ApiResponse<T> {
-  meta: {
-    [name: string]: any
-  }
-  data: T
-}
-
 export interface InjectedStores {
   store: IRootStore
 }

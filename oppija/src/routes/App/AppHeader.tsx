@@ -9,7 +9,6 @@ import { injectSession } from "utils"
 
 interface TopLinkProps {
   active?: boolean
-  theme?: any
 }
 
 const HeaderContainer = styled("header")`

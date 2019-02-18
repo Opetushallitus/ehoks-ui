@@ -55,7 +55,7 @@ const Search = types
           ? mockStudents.filter(student => {
               return !!student.nimi.toLowerCase().match(self.searchText)
             })
-          : (mockStudents as any)
+          : mockStudents
       )
       self.isLoading = false
     }
