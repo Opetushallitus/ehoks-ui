@@ -44,6 +44,7 @@ const Search = types
     }
 
     const changeSearchText = (searchText: string = "") => {
+      self.activePage = 0
       self.searchText = searchText
     }
 

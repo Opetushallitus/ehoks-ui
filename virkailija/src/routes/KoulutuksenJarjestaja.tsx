@@ -41,6 +41,7 @@ const SearchContainer = styled("div")`
   justify-content: flex-end;
   position: relative;
 `
+
 const searchHeaderStyles = css`
   justify-content: flex-end;
 `
