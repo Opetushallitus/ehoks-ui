@@ -4,7 +4,7 @@ import {
   EducationProviderInfo,
   IEducationProviderInfo
 } from "models/EducationProviderInfo"
-import { ApiResponse } from "stores/RootStore"
+import { APIResponse } from "stores/types/APIResponse"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
 const EducationProviderModel = {
@@ -19,7 +19,7 @@ export const EducationProviderStore = types
 
     const fetchInfo = flow(function*() {
       self.isLoading = true
-      const response: ApiResponse<IEducationProviderInfo> = yield fetchSingle(
+      const response: APIResponse<IEducationProviderInfo> = yield fetchSingle(
         apiUrl("education/info/")
       )
       self.info = response.data

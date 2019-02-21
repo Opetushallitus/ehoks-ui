@@ -2,6 +2,10 @@ import React from "react"
 import styled from "styled"
 import { Competences } from "./StudyInfo/Competences"
 import { Details } from "./StudyInfo/Details"
+import { Instance, SnapshotOrInstance } from "mobx-state-tree"
+import { Harjoittelujakso } from "models/Harjoittelujakso"
+import { Osaamisvaatimus } from "models/Osaamisvaatimus"
+import { Naytto } from "models/Naytto"
 
 interface ContainerProps {
   accentColor?: string
@@ -51,34 +55,6 @@ const Title = styled("h2")`
   margin: 10px 20px;
 `
 
-// TODO: use inferred type from mobx-state-tree
-// TODO: translate field names to finnish for consistency?
-export interface TempLearningPeriod {
-  approved?: string
-  period?: string[]
-  instructor?: string
-  assignments?: string[]
-}
-
-// TODO: use inferred type from mobx-state-tree
-// TODO: translate field names to finnish for consistency?
-export interface TempDemonstration {
-  period: string[]
-  organisation: string
-  environment: string
-  assessors: string[]
-  assignments: string[]
-}
-
-// TODO: use inferred type from mobx-state-tree
-export interface TempCompetenceRequirement {
-  kuvaus: string
-  arviointikriteerit: Array<{
-    kuvaus: string
-    kriteerit: string[]
-  }>
-}
-
 export interface StudyInfoProps {
   /** Color of top border */
   accentColor?: string
@@ -86,16 +62,16 @@ export interface StudyInfoProps {
    * List of competence requirements
    * @default []
    */
-  competenceRequirements?: TempCompetenceRequirement[]
+  competenceRequirements?: Array<Instance<typeof Osaamisvaatimus>>
   /** List of competence demonstrations */
-  demonstrations?: TempDemonstration[]
+  demonstrations?: Array<SnapshotOrInstance<typeof Naytto>>
   /** Color of additional info container */
   fadedColor?: string
   /**
    * List of learning periods
    * @default []
    */
-  learningPeriods?: TempLearningPeriod[]
+  learningPeriods?: Array<SnapshotOrInstance<typeof Harjoittelujakso>>
   /**
    * List of locations
    * @default []

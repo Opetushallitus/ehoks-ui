@@ -1,4 +1,3 @@
-import { TempDemonstration, TempLearningPeriod } from "components/StudyInfo"
 import React from "react"
 import { intlShape } from "react-intl"
 import styled from "styled"
@@ -10,6 +9,9 @@ import { IconContainer } from "./IconContainer"
 import { LearningPeriod } from "./LearningPeriod"
 import { LearningPeriodDates } from "./LearningPeriodDates"
 import { Period } from "./Period"
+import { SnapshotOrInstance } from "mobx-state-tree"
+import { Harjoittelujakso } from "models/Harjoittelujakso"
+import { Naytto } from "models/Naytto"
 
 const DetailsCollapsed = styled("div")`
   display: flex;
@@ -54,9 +56,9 @@ const LocationsContainerExpanded = styled(LocationsContainer)`
 
 interface DetailsProps {
   accentColor?: string
-  demonstrations?: TempDemonstration[]
+  demonstrations?: Array<SnapshotOrInstance<typeof Naytto>>
   expanded?: boolean
-  learningPeriods?: TempLearningPeriod[]
+  learningPeriods?: Array<SnapshotOrInstance<typeof Harjoittelujakso>>
   locations?: string[]
   toggle: (name: "competences" | "details") => () => void
 }

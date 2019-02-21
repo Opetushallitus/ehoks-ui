@@ -12,7 +12,7 @@ import { Etusivu } from "routes/Etusivu"
 import { Henkilokohtaistaminen } from "routes/Henkilokohtaistaminen"
 import { KoulutuksenJarjestaja } from "routes/KoulutuksenJarjestaja"
 import { Opiskelija } from "routes/KoulutuksenJarjestaja/Opiskelija"
-import { OmienOpintojenSuunnittelu } from "routes/OmienOpintojenSuunnittelu"
+import { Suunnittelu } from "routes/Suunnittelu"
 import { TyopaikanToimija } from "routes/TyopaikanToimija"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
@@ -58,7 +58,7 @@ export class App extends React.Component<AppProps> {
             <Main id="main" role="main">
               <Router basepath="/ehoks">
                 <Etusivu path="/" />
-                <OmienOpintojenSuunnittelu path="suunnittelu/*" />
+                <Suunnittelu path="suunnittelu/*" />
                 <TyopaikanToimija path="tyopaikantoimija" />
                 <Henkilokohtaistaminen path="henkilokohtaistaminen" />
                 <Ammatillinentutkinto path="ammatillinentutkinto" />

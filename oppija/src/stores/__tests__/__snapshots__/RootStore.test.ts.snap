@@ -9,6 +9,22 @@ Object {
     "opintopolkuLoginUrl": "",
     "opintopolkuLogoutUrl": "",
   },
+  "hoks": Object {
+    "isLoading": false,
+    "suunnitelma": Object {
+      "aiemmatOpinnot": Array [],
+      "aloitusPvm": "",
+      "eid": "",
+      "keskeytysPvm": "",
+      "opinnot": Array [],
+      "oppilaitos": "",
+      "osaamisala": "",
+      "osaamispisteet": 0,
+      "tutkinnonNimi": "",
+      "tutkintonimike": "",
+    },
+    "suunnitelmat": Array [],
+  },
   "isLoading": false,
   "koulutuksenJarjestaja": Object {
     "search": Object {

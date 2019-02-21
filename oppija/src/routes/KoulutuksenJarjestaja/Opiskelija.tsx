@@ -2,6 +2,9 @@ import { Link, Location, navigate, Router } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import Flag from "components/icons/Flag"
 import { NavigationContainer } from "components/NavigationContainer"
+import { AiempiOsaaminen } from "components/Opiskelija/AiempiOsaaminen"
+import { Opiskelusuunnitelma } from "components/Opiskelija/Opiskelusuunnitelma"
+import { Tavoitteet } from "components/Opiskelija/Tavoitteet"
 import { ProgressPies } from "components/ProgressPies"
 import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
@@ -13,9 +16,6 @@ import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
-import { AiempiOsaaminen } from "./AiempiOsaaminen"
-import { Opiskelusuunnitelma } from "./Opiskelusuunnitelma"
-import { Tavoitteet } from "./Tavoitteet"
 
 const LinkContainer = styled("div")`
   flex: 1;
@@ -77,6 +77,17 @@ export interface OpiskelijaProps {
 @observer
 export class Opiskelija extends React.Component<OpiskelijaProps> {
   // TODO: redirect to root after logout, check implementation in src/routes/OmienOpintojenSuunnittelu.tsx
+  componentDidMount() {
+    if (this.props.id) {
+      this.props.store!.hoks.haeSuunnitelma(this.props.id)
+    }
+  }
+
+  componentDidUpdate(prevProps: OpiskelijaProps) {
+    if (this.props.id && this.props.id !== prevProps.id) {
+      this.props.store!.hoks.haeSuunnitelma(this.props.id)
+    }
+  }
 
   setActiveTab = (route: string) => () => {
     navigate(route)
@@ -84,28 +95,14 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
 
   render() {
     const { id, store } = this.props
-    const { koulutuksenJarjestaja } = store!
-    const results = koulutuksenJarjestaja.search.sortedResults
-    // TODO: replace with real student data
-    const mockStudent = results.find(u => u.id.toString() === id)
-    const [firstName, surname] = mockStudent
-      ? mockStudent.nimi.split(" ")
-      : ["Mock", "User"]
-    const student = {
-      firstName,
-      surname,
-      commonName: firstName,
-      oid: id ? id.toString() : "0",
-      yhteystiedot: {
-        sahkoposti: "mock@user.dev",
-        katuosoite: "Esimerkkikatu 123",
-        postinumero: "12345",
-        kunta: "Kunta",
-        puhelinnumero: "000000000"
-      }
+    if (!id) {
+      return null
     }
-
-    const studentIndex = mockStudent ? results.indexOf(mockStudent) : -1
+    const { koulutuksenJarjestaja, hoks } = store!
+    const results = koulutuksenJarjestaja.search.sortedResults
+    const searchResult = results.find(u => u.id.toString() === id)
+    const student = koulutuksenJarjestaja.search.studentById(id)
+    const studentIndex = searchResult ? results.indexOf(searchResult) : -1
     const previous = studentIndex > 0 ? results[studentIndex - 1] : null
     const next =
       studentIndex < results.length ? results[studentIndex + 1] : null
@@ -149,7 +146,7 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
 
                     <NaviContainer>
                       <StudentDetails>
-                        <h2>{mockStudent && mockStudent.nimi}</h2>
+                        <h2>{searchResult && searchResult.nimi}</h2>
 
                         <Timestamp>
                           <FormattedMessage
@@ -157,8 +154,8 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
                             defaultMessage="Laadittu"
                           />
                           &nbsp;{" "}
-                          {mockStudent &&
-                            format(parseISO(mockStudent.aloitus), "d.M.yyyy")}
+                          {searchResult &&
+                            format(parseISO(searchResult.aloitus), "d.M.yyyy")}
                         </Timestamp>
                         <Timestamp>
                           <FormattedMessage
@@ -166,9 +163,9 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
                             defaultMessage="Päivitetty"
                           />
                           &nbsp;{" "}
-                          {mockStudent &&
+                          {searchResult &&
                             format(
-                              parseISO(mockStudent.paivitetty),
+                              parseISO(searchResult.paivitetty),
                               "d.M.yyyy"
                             )}
                         </Timestamp>
@@ -235,9 +232,62 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
                 <Container>
                   <PaddedContent>
                     <Router basepath={`/ehoks/koulutuksenjarjestaja/${id}`}>
-                      <Tavoitteet path="/" student={student} />
-                      <AiempiOsaaminen path="osaaminen" />
-                      <Opiskelusuunnitelma path="opiskelusuunnitelma" />
+                      <Tavoitteet
+                        path="/"
+                        student={student}
+                        titles={{
+                          heading: (
+                            <FormattedMessage
+                              id="koulutuksenJarjestaja.tavoite.title"
+                              defaultMessage="Opiskelijan tavoite ja perustiedot"
+                            />
+                          ),
+                          goals: (
+                            <FormattedMessage
+                              id="koulutuksenJarjestaja.tavoite.opiskelijanTavoitteetTitle"
+                              defaultMessage="Opiskelijan tavoitteet"
+                            />
+                          ),
+                          personalDetails: (
+                            <FormattedMessage
+                              id="koulutuksenJarjestaja.tavoite.henkilotiedotTitle"
+                              defaultMessage="Henkilötiedot"
+                            />
+                          )
+                        }}
+                      />
+                      <AiempiOsaaminen
+                        path="osaaminen"
+                        studies={
+                          hoks.suunnitelma
+                            ? hoks.suunnitelma.aiemmatOpinnot
+                            : []
+                        }
+                        heading={
+                          <FormattedMessage
+                            id="koulutuksenJarjestaja.aiempiOsaaminen.title"
+                            defaultMessage="Aiempi osaaminen"
+                          />
+                        }
+                      />
+                      <Opiskelusuunnitelma
+                        path="opiskelusuunnitelma"
+                        plan={hoks.suunnitelma}
+                        titles={{
+                          heading: (
+                            <FormattedMessage
+                              id="koulutuksenJarjestaja.opiskelusuunnitelma.title"
+                              defaultMessage="Opiskelusuunnitelma"
+                            />
+                          ),
+                          goals: (
+                            <FormattedMessage
+                              id="koulutuksenJarjestaja.opiskelusuunnitelma.tavoitteetTitle"
+                              defaultMessage="Opiskelijan tavoitteet ja opintojen eteneminen"
+                            />
+                          )
+                        }}
+                      />
                     </Router>
                   </PaddedContent>
                 </Container>

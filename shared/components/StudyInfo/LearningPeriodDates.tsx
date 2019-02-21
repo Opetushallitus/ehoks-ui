@@ -1,29 +1,30 @@
-import { TempLearningPeriod } from "components/StudyInfo"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import React from "react"
 import { InjectedIntlProps, injectIntl } from "react-intl"
+import { Harjoittelujakso } from "models/Harjoittelujakso"
+import { SnapshotOrInstance } from "mobx-state-tree"
 
 interface LearningPeriodDatesProps {
-  learningPeriod: TempLearningPeriod // TODO: use correct interface
+  learningPeriod: SnapshotOrInstance<typeof Harjoittelujakso>
 }
 export const LearningPeriodDates = injectIntl(
   ({ learningPeriod, intl }: LearningPeriodDatesProps & InjectedIntlProps) => {
     if (!learningPeriod) {
       return null
     }
-    const { approved, period = [] } = learningPeriod
-    return approved ? (
+    const { hyvaksytty, ajankohta } = learningPeriod
+    return hyvaksytty ? (
       <span>
         {intl.formatMessage({
           id: "opiskelusuunnitelma.hyvaksyttyTitle"
         })}{" "}
-        {format(parseISO(approved), "d.M.yyyy")}
+        {format(parseISO(hyvaksytty), "d.M.yyyy")}
       </span>
-    ) : period[0] && period[1] ? (
+    ) : ajankohta && ajankohta.alku && ajankohta.loppu ? (
       <span>
-        {format(parseISO(period[0]), "d.M.")} {"-"}
-        {format(parseISO(period[1]), "d.M.yyyy")}
+        {format(parseISO(ajankohta.alku), "d.M.")} {"-"}
+        {format(parseISO(ajankohta.loppu), "d.M.yyyy")}
       </span>
     ) : null
   }

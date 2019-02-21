@@ -3,6 +3,7 @@ import { MdSearch } from "react-icons/md"
 import { intlShape } from "react-intl"
 import styled from "styled"
 import { LoadingSpinner } from "./LoadingSpinner"
+import { SimpleInterpolation } from "styled-components"
 
 const Loading = styled(LoadingSpinner)`
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
@@ -11,9 +12,13 @@ const Loading = styled(LoadingSpinner)`
   }
 `
 
-const SearchHeader = styled("form")`
+interface SearchHeaderProps {
+  headerStyles?: SimpleInterpolation
+}
+const SearchHeader = styled("form")<SearchHeaderProps>`
   display: flex;
   align-items: center;
+  ${props => props.headerStyles}
 `
 
 const SearchIcon = styled(MdSearch)`
@@ -47,7 +52,7 @@ interface SearchFieldProps {
   placeholder?: string
   ariaLabel?: string
   loadingSpinner?: React.ReactNode
-  headerStyles?: React.CSSProperties
+  headerStyles?: SimpleInterpolation
   value: string
 }
 
@@ -72,7 +77,11 @@ export class SearchField extends React.Component<SearchFieldProps> {
       value
     } = this.props
     return (
-      <SearchHeader role="search" onSubmit={onSubmit} style={headerStyles}>
+      <SearchHeader
+        role="search"
+        onSubmit={onSubmit}
+        headerStyles={headerStyles}
+      >
         <SearchIcon size="24" />
         <SearchInput
           placeholder={placeholder}

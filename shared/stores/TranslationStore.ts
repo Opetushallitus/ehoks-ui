@@ -14,8 +14,8 @@ interface Translations {
   }
 }
 
-function mapTranslations(translations: any) {
-  return translations.map(({ key, locale, value }: ApiTranslation) => {
+function mapTranslations(translations: ApiTranslation[]) {
+  return translations.map(({ key, locale, value }) => {
     return { key, locale, value }
   })
 }

@@ -166,17 +166,14 @@ const Separator = styled("div")`
 `
 
 interface SocialMediaIconsContainerProps {
-  theme?: any
   desktop: boolean
   mobile: boolean
 }
-const SocialMediaIconsContainer = styled("div")`
+const SocialMediaIconsContainer = styled("div")<SocialMediaIconsContainerProps>`
   display: ${(props: SocialMediaIconsContainerProps) =>
     props.desktop ? "block" : "none"};
-  @media screen and (max-width: ${(props: SocialMediaIconsContainerProps) =>
-      props.theme.breakpoints.Desktop}px) {
-    display: ${(props: SocialMediaIconsContainerProps) =>
-      props.mobile ? "block" : "none"};
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+    display: ${props => (props.mobile ? "block" : "none")};
   }
 `
 
