@@ -1,16 +1,16 @@
 import { navigate } from "@reach/router"
 import { HeroButton } from "components/Button"
 import { Container } from "components/Container"
+import { HelpPopup } from "components/HelpPopup"
 import { LinkPanel } from "components/LinkPanel"
-import { LinkPanelContainer } from "components/LinkPanelContainer"
 import { IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
-import education from "./Etusivu/education.jpg"
-import students from "./Etusivu/students.jpg"
+import ammatillisetTutkinnotImage from "./Etusivu/kampaaja_ehoks.jpg"
+import henkilokohtaistaminenImage from "./Etusivu/talonrakennus_ehoks.jpg"
 
 const ContentContainer = styled("div")`
   display: flex;
@@ -27,64 +27,104 @@ const ContentContainer = styled("div")`
   }
 `
 
-const Hero = styled("div")`
+const LoginBoxes = styled("div")`
   display: flex;
-  flex-direction: column;
   flex: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  margin-right: 30px;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
+    margin-right: 0;
+    flex-direction: column;
+  }
 `
 
 const Header = styled("h1")`
-  margin: 0;
+  margin: 30px 50px 30px 40px;
+  font-weight: 400;
+  color: #4a4a4a;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+    margin: 30px 50px 0 20px;
+  }
 `
 
 const Content = styled("main")`
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0;
   flex: 1;
+  margin-right: 20px;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+  /* @media screen and (max-width: ${props =>
+    props.theme.breakpoints.Desktop}px) {
     display: block;
-  }
-`
+  } */
 
-const Description = styled("div")`
-  h1 {
-    font-weight: 400;
-  }
-
-  p {
-    font-size: 18px;
-    margin: 20px 20px 20px 0;
+  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
+    margin-right: 0;
   }
 `
 
 const LoginContainer = styled("div")`
-  flex: 1;
-  margin: 0 0 30px 0;
+  margin: 0 20px 10px 0;
+  padding: 10px;
+  border: 1px solid #6e6e7e;
+  width: calc(50% - 20px);
+
+  p {
+    color: #6e6e7e;
+  }
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
+    width: calc(100% - 20px);
+    margin: 0 0 10px 0;
+  }
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+    width: 100%;
+  }
 `
 
 const LoginButton = styled(HeroButton)`
-  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
-    width: 100%;
-    margin-left: 0;
-  }
-  width: 60%;
+  width: 100%;
   padding: 15px 0;
 `
 
 const StyledLinkPanel = styled(LinkPanel)`
   min-height: 400px;
-  margin-right: 40px;
+  margin-right: 20px;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
-    min-height: 320px;
+  @media screen and (max-width: ${props =>
+      props.theme.breakpoints.SmallTablet}px) {
     margin-right: 0;
   }
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     a:last-child & {
       margin-right: 0;
     }
   }
+`
+
+const LoginTitle = styled("div")`
+  display: flex;
+
+  h2 {
+    flex: 1;
+    color: #000;
+    font-weight: 400;
+    margin: 0;
+    font-size: 34px;
+  }
+`
+
+const HelpButton = styled(HelpPopup)`
+  margin-top: 7px;
 `
 
 export interface EtusivuProps {
@@ -131,91 +171,102 @@ export class Etusivu extends React.Component<EtusivuProps> {
   render() {
     return (
       <Container>
+        <Header>
+          <FormattedMessage
+            id="etusivu.title"
+            defaultMessage="Opiskelun henkilökohtainen suunnittelu"
+          />
+        </Header>
+
         <ContentContainer>
-          <Hero role="banner">
-            <Description>
-              <Header>
-                <FormattedMessage
-                  id="etusivu.title"
-                  defaultMessage="Opiskelun henkilökohtainen suunnittelu"
-                />
-              </Header>
+          <LoginBoxes role="banner">
+            <LoginContainer>
+              <LoginTitle>
+                <h2>
+                  <FormattedMessage
+                    id="etusivu.omaSuunnitelmaTitle"
+                    defaultMessage="Opiskelija"
+                  />
+                </h2>
+                <HelpButton helpContent="Lisätietoa" />
+              </LoginTitle>
               <p>
                 <FormattedMessage
-                  id="etusivu.opiskelijaKuvaus"
-                  defaultMessage="Opiskelijana eHOKS palvelussa voit kirjautumalla siirtyä henkilökohtaiseen
-              opintojen suunnitteluun. Ilman kirjautumista voit tutustua ammatillisten tutkintojen sisältöihin."
+                  id="etusivu.omaSuunnitelmaKuvaus"
+                  defaultMessage="Kirjautumalla siirryt oman henkilö­kohtaiseen opintojen suunnitteluun."
                 />
               </p>
-            </Description>
-            <LoginContainer>
+
               <LoginButton onClick={this.loginStudent}>
                 <FormattedMessage
-                  id="etusivu.opiskelijaKirjauduButtonLabel"
-                  defaultMessage="Kirjaudu omaan opiskelusuunnitelmaasi"
+                  id="etusivu.omaSuunnitelmaKirjauduButtonLabel"
+                  defaultMessage="Kirjaudu omaan suunnitelmaan"
                 />
               </LoginButton>
             </LoginContainer>
-            <Description>
+
+            <LoginContainer>
+              <LoginTitle>
+                <h2>
+                  <FormattedMessage
+                    id="etusivu.oppilaitoksenEdustajaTitle"
+                    defaultMessage="Ohjaaja"
+                  />
+                </h2>
+                <HelpButton helpContent="Lisätietoa" />
+              </LoginTitle>
               <p>
                 <FormattedMessage
-                  id="etusivu.tyopaikkaohjaajaKuvaus"
-                  defaultMessage="Työpaikkaohjaajan eHOKS tukee sinua työpaikalla oppijoiden ohjauksessa ja pystyt seuraamaan heidän suunnitelmaansa."
+                  id="etusivu.oppilaitoksenEdustajaKuvaus"
+                  defaultMessage="Kirjautumalla siirryt ohjattavien opiskelijoiden suunnitelmiin."
                 />
               </p>
-            </Description>
-            <LoginContainer>
               <LoginButton onClick={this.loginInstructor}>
                 <FormattedMessage
-                  id="etusivu.tyopaikkaohjaajaKirjauduButtonLabel"
-                  defaultMessage="Kirjaudu työpaikkaohjaajana"
+                  id="etusivu.oppilaitoksenEdustajaKirjauduButtonLabel"
+                  defaultMessage="Kirjaudu oppilaitoksen edustajana"
                 />
               </LoginButton>
             </LoginContainer>
             <LoginContainer>
-              <LoginButton onClick={this.loginEducationProvider}>
+              <LoginTitle>
+                <h2>
+                  <FormattedMessage
+                    id="etusivu.tyoelamanToimijaTitle"
+                    defaultMessage="Työelämän toimija"
+                  />
+                </h2>
+                <HelpButton helpContent="Lisätietoa" />
+              </LoginTitle>
+              <p>
                 <FormattedMessage
-                  id="etusivu.koulutuksenJarjestajaKirjauduButtonLabel"
-                  defaultMessage="Kirjaudu koulutuksen järjestäjänä"
+                  id="etusivu.tyoelamanToimijaKuvaus"
+                  defaultMessage="Kirjaudu palveluun saamasi sähköpostilinkin kautta."
                 />
-              </LoginButton>
+              </p>
             </LoginContainer>
-          </Hero>
+          </LoginBoxes>
           <Content>
-            <LinkPanelContainer>
-              <StyledLinkPanel
-                to="henkilokohtaistaminen"
-                title={
-                  <FormattedMessage
-                    id="etusivu.henkilokohtaistaminenTitle"
-                    defaultMessage="Mitä opintojen henkilökohtaistaminen tarkoittaa?"
-                  />
-                }
-                description={
-                  <FormattedMessage
-                    id="etusivu.henkilokohtaistaminenKuvaus"
-                    defaultMessage="Opiskelu sovitetaan lähtötilanteeseesi..."
-                  />
-                }
-                image={students}
-              />
-              <StyledLinkPanel
-                to="ammatillinentutkinto"
-                title={
-                  <FormattedMessage
-                    id="etusivu.ammatillisetTutkinnotTitle"
-                    defaultMessage="Mitä ammatilliset tutkinnot sisältävät?"
-                  />
-                }
-                description={
-                  <FormattedMessage
-                    id="etusivu.ammatillisetTutkinnotKuvaus"
-                    defaultMessage="Jokaiselle tutkinnon osalle on ammattitaitovaatimukset..."
-                  />
-                }
-                image={education}
-              />
-            </LinkPanelContainer>
+            <StyledLinkPanel
+              to="henkilokohtaistaminen"
+              title={
+                <FormattedMessage
+                  id="etusivu.henkilokohtaistaminenLinkTitle"
+                  defaultMessage="Mitä henkilökohtaista­minen tarkoittaa?"
+                />
+              }
+              image={henkilokohtaistaminenImage}
+            />
+            <StyledLinkPanel
+              to="ammatillinentutkinto"
+              title={
+                <FormattedMessage
+                  id="etusivu.ammatillisetTutkinnotTitle"
+                  defaultMessage="Mitä ammatilliset tutkinnot sisältävät?"
+                />
+              }
+              image={ammatillisetTutkinnotImage}
+            />
           </Content>
         </ContentContainer>
       </Container>

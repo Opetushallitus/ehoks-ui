@@ -22,21 +22,13 @@ const HelpButton = styled("button")`
     border: 0;
     padding: 0;
   }
-  margin-right: 45%;
-  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
-    margin-right: 300px;
-  }
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
-    margin-right: 100px;
-  }
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
-    margin-right: unset;
-  }
 `
 
 interface HelpPopupProps {
   /** Defines help popup content */
   helpContent?: React.ReactNode
+  /** Custom classname for button */
+  className?: string
 }
 
 export class HelpPopup extends React.Component<HelpPopupProps> {
@@ -45,7 +37,7 @@ export class HelpPopup extends React.Component<HelpPopupProps> {
   }
   render() {
     const { intl } = this.context
-    const { helpContent } = this.props
+    const { className, helpContent } = this.props
     return (
       <Popup
         trigger={
@@ -53,6 +45,7 @@ export class HelpPopup extends React.Component<HelpPopupProps> {
             aria-label={intl.formatMessage({
               id: "accordion.naytaOhjetekstiAriaLabel"
             })}
+            className={className}
           >
             <HelpToggle size="28" color="#027fa9" />
           </HelpButton>
