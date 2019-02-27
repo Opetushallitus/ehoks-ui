@@ -52,7 +52,7 @@ export default function ErrorList(props: ErrorListProps) {
         {errors.map((error: AjvError, i: number) => {
           return (
             <ErrorMessage key={i} onClick={scrollToError(error)} role="button">
-              {error.property} {error.message}
+              {error.property} on {error.message}
             </ErrorMessage>
           )
         })}

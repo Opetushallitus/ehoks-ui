@@ -6,10 +6,230 @@ import React from "react"
 import { FormattedMessage } from "react-intl"
 import Form, { AjvError, FieldProps, IChangeEvent } from "react-jsonschema-form"
 import styled from "styled"
+import { ArrayFieldTemplate } from "./LuoHOKS/ArrayFieldTemplate"
+import { CustomSchemaField } from "./LuoHOKS/CustomSchemaField"
 // import "./LuoHOKS/bootstrap.min.css"
 import ErrorList from "./LuoHOKS/ErrorList"
 import "./LuoHOKS/glyphicons.css"
 import "./LuoHOKS/styles.css"
+
+const fields = {
+  SchemaField: CustomSchemaField
+}
+
+const uiSchema = {
+  "ui:order": [
+    "opiskeluoikeus-oid",
+    "oppija-oid",
+    "ensikertainen-hyvaksyminen",
+    "sahkoposti",
+    "urasuunnitelma",
+    "laatija",
+    "paivittaja",
+    "hyvaksyja",
+    "olemassa-olevat-ammatilliset-tutkinnon-osat",
+    "olemassa-oleva-paikallinen-tutkinnon-osat",
+    "olemassa-olevat-yhteiset-tutkinnon-osat",
+    "puuttuva-ammatillinen-tutkinnon-osat",
+    "puuttuva-paikallinen-tutkinnon-osat",
+    "puuttuva-yhteisen-tutkinnon-osat",
+    "opiskeluvalmiuksia-tukevat-opinnot",
+    "*"
+  ],
+  "olemassa-olevat-ammatilliset-tutkinnon-osat": {
+    items: {
+      "ui:order": [
+        "tutkinnon-osa-koodi-uri",
+        "valittu-todentamisen-prosessi-koodi-uri",
+        "koulutuksen-jarjestaja-oid",
+        "tarkentavat-tiedot-arvioija",
+        "tarkentavat-tiedot-naytto",
+        "*"
+      ],
+      id: {
+        "ui:widget": "hidden"
+      },
+      "tarkentavat-tiedot-arvioija": {
+        "aiemmin-hankitun-osaamisen-arvioija": {
+          items: {
+            "ui:order": ["nimi", "*"],
+            id: {
+              "ui:widget": "hidden"
+            }
+          }
+        }
+      },
+      "tarkentavat-tiedot-naytto": {
+        items: {
+          "ui:order": [
+            "alku",
+            "loppu",
+            "nayttoymparisto",
+            "jarjestaja",
+            "koulutuksenjarjestaja-arvioijat",
+            "tyoelama-arvioijat",
+            "yto-osa-alue",
+            "*"
+          ],
+          id: {
+            "ui:widget": "hidden"
+          },
+          jarjestaja: {
+            id: {
+              "ui:widget": "hidden"
+            }
+          },
+          "koulutuksenjarjestaja-arvioijat": {
+            items: {
+              id: {
+                "ui:widget": "hidden"
+              }
+            }
+          },
+          "tyoelama-arvioijat": {
+            items: {
+              id: {
+                "ui:widget": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "olemassa-olevat-yhteiset-tutkinnon-osat": {
+    items: {
+      "ui:order": [
+        "tutkinnon-osa-koodi-uri",
+        "valittu-todentamisen-prosessi-koodi-uri",
+        "koulutuksen-jarjestaja-oid",
+        "tarkentavat-tiedot-arvioija",
+        "tarkentavat-tiedot-naytto",
+        "osa-alueet",
+        "*"
+      ],
+      id: {
+        "ui:widget": "hidden"
+      },
+      "tarkentavat-tiedot-arvioija": {
+        "aiemmin-hankitun-osaamisen-arvioija": {
+          items: {
+            "ui:order": ["nimi", "*"],
+            id: {
+              "ui:widget": "hidden"
+            }
+          }
+        }
+      },
+      "tarkentavat-tiedot-naytto": {
+        items: {
+          "ui:order": [
+            "alku",
+            "loppu",
+            "nayttoymparisto",
+            "jarjestaja",
+            "koulutuksenjarjestaja-arvioijat",
+            "tyoelama-arvioijat",
+            "yto-osa-alue",
+            "*"
+          ],
+          id: {
+            "ui:widget": "hidden"
+          },
+          jarjestaja: {
+            id: {
+              "ui:widget": "hidden"
+            }
+          },
+          "koulutuksenjarjestaja-arvioijat": {
+            items: {
+              id: {
+                "ui:widget": "hidden"
+              }
+            }
+          },
+          "tyoelama-arvioijat": {
+            items: {
+              id: {
+                "ui:widget": "hidden"
+              }
+            }
+          }
+        }
+      },
+      "osa-alueet": {
+        items: {
+          "ui:order": [
+            "osa-alueen-koodi-uri",
+            "valittu-todentamisen-prosessi-koodi-uri",
+            "koulutuksen-jarjestaja-oid",
+            "*"
+          ],
+          id: {
+            "ui:widget": "hidden"
+          },
+          "tarkentavat-tiedot": {
+            items: {
+              "ui:order": [
+                "alku",
+                "loppu",
+                "nayttoymparisto",
+                "jarjestaja",
+                "koulutuksenjarjestaja-arvioijat",
+                "tyoelama-arvioijat",
+                "yto-osa-alue",
+                "*"
+              ],
+              id: {
+                "ui:widget": "hidden"
+              },
+              jarjestaja: {
+                id: {
+                  "ui:widget": "hidden"
+                }
+              },
+              "koulutuksenjarjestaja-arvioijat": {
+                items: {
+                  id: {
+                    "ui:widget": "hidden"
+                  }
+                }
+              },
+              "tyoelama-arvioijat": {
+                items: {
+                  id: {
+                    "ui:widget": "hidden"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "puuttuva-ammatillinen-tutkinnon-osat": {},
+  "puuttuva-paikallinen-tutkinnon-osat": {},
+  "puuttuva-yhteisen-tutkinnon-osat": {
+    items: {
+      "ui:order": [
+        "tutkinnon-osa-koodi-uri",
+        "koulutuksen-jarjestaja-oid",
+        "*"
+      ],
+      id: {
+        "ui:widget": "hidden"
+      }
+    }
+  },
+  "opiskeluvalmiuksia-tukevat-opinnot": {
+    items: {
+      id: {
+        "ui:widget": "hidden"
+      }
+    }
+  }
+}
 
 const Container = styled("div")`
   margin: 20px 40px 60px 40px;
@@ -76,8 +296,6 @@ interface LuoHOKSState {
   userEnteredText: boolean
 }
 
-const log = (type: any) => console.log.bind(console, type)
-
 // Schema formats supported by react-jsonschema-form
 const SUPPORTED_SCHEMA_FORMATS = [
   "data-url",
@@ -112,7 +330,7 @@ const stripUnsupportedFormats = (definitions: any) => {
 function transformErrors(errors: AjvError[]) {
   return errors.map(error => {
     if (error.name === "required") {
-      error.message = "vaaditaan"
+      error.message = "pakollinen kenttä"
     }
     return error
   })
@@ -200,28 +418,30 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       <Container onKeyUp={this.userHasEnteredText}>
         <Header>HOKS luonti</Header>
         <Form
+          fields={fields}
           schema={this.state.schema}
+          uiSchema={uiSchema}
           formData={this.state.formData as any}
           onChange={this.onChange}
           onSubmit={this.create}
           onError={this.setErrors}
           ErrorList={ErrorList}
-          liveValidate={true}
           transformErrors={transformErrors}
+          ArrayFieldTemplate={ArrayFieldTemplate}
         >
           <BottomToolbar>
             <ButtonsContainer>
-              <Button type="submit" disabled={!!this.state.errors.length}>
-                Luo HOKS
-              </Button>
-              {!!this.state.errors.length && this.state.userEnteredText && (
-                <ModificationsNeeded onClick={this.scrollToErrors}>
-                  <FormattedMessage
-                    id="luoHoks.muutoksiaTarvitaan"
-                    defaultMessage="Muutoksia tarvitaan"
-                  />
-                </ModificationsNeeded>
-              )}
+              <Button type="submit">Luo HOKS</Button>
+              {!!this.state.errors.length &&
+                this.state.success === undefined &&
+                this.state.userEnteredText && (
+                  <ModificationsNeeded onClick={this.scrollToErrors}>
+                    <FormattedMessage
+                      id="luoHoks.muutoksiaTarvitaan"
+                      defaultMessage="Muutoksia tarvitaan"
+                    />
+                  </ModificationsNeeded>
+                )}
               {this.state.isLoading && (
                 <SpinnerContainer>
                   <LoadingSpinner />
