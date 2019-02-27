@@ -1,15 +1,18 @@
 import { Button } from "components/Button"
 import { Heading } from "components/Heading"
+import { LoadingSpinner } from "components/LoadingSpinner"
 import { JSONSchema6 } from "json-schema"
 import React from "react"
-import Form, { FieldProps, IChangeEvent } from "react-jsonschema-form"
+import { FormattedMessage } from "react-intl"
+import Form, { AjvError, FieldProps, IChangeEvent } from "react-jsonschema-form"
 import styled from "styled"
 // import "./LuoHOKS/bootstrap.min.css"
+import ErrorList from "./LuoHOKS/ErrorList"
 import "./LuoHOKS/glyphicons.css"
 import "./LuoHOKS/styles.css"
 
 const Container = styled("div")`
-  margin: 20px 40px 40px 40px;
+  margin: 20px 40px 60px 40px;
 `
 
 const Header = styled(Heading)`
@@ -17,7 +20,47 @@ const Header = styled(Heading)`
 `
 
 const ButtonsContainer = styled("div")`
-  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  margin-left: 40px;
+`
+
+const BottomToolbar = styled("div")`
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  height: 60px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  border-top: 1px solid #ccc;
+`
+
+const ModificationsNeeded = styled("button")`
+  margin-left: 20px;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  color: ${props => props.theme.colors.waterBlue};
+  &:hover {
+    color: ${props => props.theme.colors.flatBlue};
+  }
+`
+
+const SpinnerContainer = styled("div")`
+  width: 100px;
+`
+
+const SuccessMessage = styled("div")`
+  margin-left: 20px;
+  color: ${props => props.theme.colors.midGreen};
+`
+
+const FailureMessage = styled("div")`
+  margin-left: 20px;
+  color: ${props => props.theme.colors.brick};
 `
 
 interface LuoHOKSProps {
@@ -26,6 +69,11 @@ interface LuoHOKSProps {
 
 interface LuoHOKSState {
   schema: JSONSchema6
+  formData: any
+  errors: AjvError[]
+  isLoading: boolean
+  success: boolean | undefined
+  userEnteredText: boolean
 }
 
 const log = (type: any) => console.log.bind(console, type)
@@ -61,9 +109,23 @@ const stripUnsupportedFormats = (definitions: any) => {
   }, {})
 }
 
+function transformErrors(errors: AjvError[]) {
+  return errors.map(error => {
+    if (error.name === "required") {
+      error.message = "vaaditaan"
+    }
+    return error
+  })
+}
+
 export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
   state = {
-    schema: {}
+    schema: {},
+    formData: {},
+    errors: [],
+    isLoading: true,
+    success: undefined,
+    userEnteredText: false
   }
 
   async componentDidMount() {
@@ -74,33 +136,115 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       ...json.definitions.HOKSLuonti
     }
     console.log("HOKSLuonti", schema)
-    this.setState({ schema })
+    this.setState({ schema, isLoading: false })
+  }
+
+  setErrors = (errors: AjvError[]) => {
+    this.setState({ errors })
+  }
+
+  onChange = ({ formData, errors }: any) => {
+    this.setState({ formData, errors })
+  }
+
+  scrollToErrors = (event: React.MouseEvent) => {
+    event.preventDefault()
+    const element = document.querySelector("#form-errors")
+    if (element) {
+      element.scrollIntoView()
+    }
+  }
+
+  hideMessage = () => {
+    this.setState({ success: undefined })
+  }
+
+  userHasEnteredText = () => {
+    this.setState({ userEnteredText: true })
   }
 
   create = async (fieldProps: IChangeEvent<FieldProps>) => {
-    // TODO: authenticate user, this fails now
+    // TODO: authenticate user
+
+    this.setState({ isLoading: true })
     const request = await window.fetch("/ehoks-backend/api/v1/hoks", {
       method: "POST",
       credentials: "include",
+      headers: {
+        Accept: "application/json; charset=utf-8",
+        "Caller-Id": "ehoks", // TODO: replace for real authentication
+        "Content-Type": "application/json",
+        ticket: "testi" // TODO: replace for real authentication
+      },
       body: JSON.stringify(fieldProps.formData)
     })
     const json = await request.json()
+
+    if (request.status === 200) {
+      this.setState({
+        formData: {},
+        errors: [],
+        success: true,
+        userEnteredText: false
+      })
+    } else {
+      this.setState({ success: false })
+    }
+    console.log("RESPONSE STATUS", request.status)
     console.log("RESPONSE JSON", json)
+    this.setState({ isLoading: false })
   }
 
   render() {
     return (
-      <Container>
+      <Container onKeyUp={this.userHasEnteredText}>
         <Header>HOKS luonti</Header>
         <Form
           schema={this.state.schema}
-          onChange={log("changed")}
+          formData={this.state.formData as any}
+          onChange={this.onChange}
           onSubmit={this.create}
-          onError={log("errors")}
+          onError={this.setErrors}
+          ErrorList={ErrorList}
+          liveValidate={true}
+          transformErrors={transformErrors}
         >
-          <ButtonsContainer>
-            <Button type="submit">Luo HOKS</Button>
-          </ButtonsContainer>
+          <BottomToolbar>
+            <ButtonsContainer>
+              <Button type="submit" disabled={!!this.state.errors.length}>
+                Luo HOKS
+              </Button>
+              {!!this.state.errors.length && this.state.userEnteredText && (
+                <ModificationsNeeded onClick={this.scrollToErrors}>
+                  <FormattedMessage
+                    id="luoHoks.muutoksiaTarvitaan"
+                    defaultMessage="Muutoksia tarvitaan"
+                  />
+                </ModificationsNeeded>
+              )}
+              {this.state.isLoading && (
+                <SpinnerContainer>
+                  <LoadingSpinner />
+                </SpinnerContainer>
+              )}
+              {this.state.success && (
+                <SuccessMessage onClick={this.hideMessage}>
+                  <FormattedMessage
+                    id="luoHoks.luontiOnnistui"
+                    defaultMessage="HOKS luotiin onnistuneesti"
+                  />
+                </SuccessMessage>
+              )}
+              {this.state.success === false && (
+                <FailureMessage onClick={this.hideMessage}>
+                  <FormattedMessage
+                    id="luoHoks.luontiEpaonnistui"
+                    defaultMessage="HOKSin luonti epäonnistui"
+                  />
+                </FailureMessage>
+              )}
+            </ButtonsContainer>
+          </BottomToolbar>
         </Form>
       </Container>
     )
