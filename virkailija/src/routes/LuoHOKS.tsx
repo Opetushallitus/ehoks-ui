@@ -217,6 +217,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
           transformErrors={transformErrors}
           ArrayFieldTemplate={ArrayFieldTemplate}
           safeRenderCompletion={true}
+          liveValidate={true}
         >
           <BottomToolbar>
             <ButtonsContainer>
