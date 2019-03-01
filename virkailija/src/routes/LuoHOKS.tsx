@@ -76,7 +76,7 @@ interface LuoHOKSProps {
 
 interface LuoHOKSState {
   schema: JSONSchema6
-  formData: any
+  formData: { [name: string]: any }
   errors: AjvError[]
   isLoading: boolean
   success: boolean | undefined
@@ -148,7 +148,8 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     this.setState({ errors })
   }
 
-  onChange = ({ formData, errors }: any) => {
+  onChange = (changes: any) => {
+    const { formData, errors } = changes
     this.setState({ formData, errors })
   }
 
@@ -215,6 +216,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
           ErrorList={ErrorList}
           transformErrors={transformErrors}
           ArrayFieldTemplate={ArrayFieldTemplate}
+          safeRenderCompletion={true}
         >
           <BottomToolbar>
             <ButtonsContainer>
