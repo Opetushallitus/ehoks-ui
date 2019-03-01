@@ -4,7 +4,7 @@ export const uiSchema = {
     "oppija-oid",
     "ensikertainen-hyvaksyminen",
     "sahkoposti",
-    "urasuunnitelma",
+    "urasuunnitelma-koodi-uri",
     "laatija",
     "paivittaja",
     "hyvaksyja",
