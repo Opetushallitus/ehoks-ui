@@ -1,5 +1,5 @@
 import { RouteComponentProps } from "@reach/router"
-import { Accordion } from "components/Accordion"
+import { Accordion, AccordionTitle } from "components/Accordion"
 import { EmptyItem } from "components/EmptyItem"
 import { Heading } from "components/Heading"
 import { InfoTable } from "components/InfoTable"
@@ -130,11 +130,15 @@ export class Opiskelusuunnitelma extends React.Component<
           defaultMessage="Opiskelusuunnitelmani"
         />
       ),
-      goals: customTitles.goals || (
-        <FormattedMessage
-          id="opiskelusuunnitelma.tavoitteetTitle"
-          defaultMessage="Tavoitteeni ja opintojen eteneminen"
-        />
+      goals: (
+        <AccordionTitle>
+          {customTitles.goals || (
+            <FormattedMessage
+              id="opiskelusuunnitelma.tavoitteetTitle"
+              defaultMessage="Tavoitteeni ja opintojen eteneminen"
+            />
+          )}
+        </AccordionTitle>
       )
     }
 
@@ -266,10 +270,12 @@ export class Opiskelusuunnitelma extends React.Component<
           id="suunnitelma"
           open={activeAccordions.suunnitelma}
           title={
-            <FormattedMessage
-              id="opiskelusuunnitelma.suunnitelmaTutkinnonosittainTitle"
-              defaultMessage="Suunnitelma tutkinnonosittain"
-            />
+            <AccordionTitle>
+              <FormattedMessage
+                id="opiskelusuunnitelma.suunnitelmaTutkinnonosittainTitle"
+                defaultMessage="Suunnitelma tutkinnonosittain"
+              />
+            </AccordionTitle>
           }
           onToggle={this.toggleAccordion("suunnitelma")}
           helpIcon={true}
@@ -281,11 +287,13 @@ export class Opiskelusuunnitelma extends React.Component<
             open={activeAccordions.suunnitelmat.suunnitellut}
             onToggle={this.toggleAccordion("suunnitelmat", "suunnitellut")}
             title={
-              <FormattedMessage
-                id="opiskelusuunnitelma.suunnitellutOpintoniTitle"
-                defaultMessage="Suunnitellut opintoni ({amount})"
-                values={{ amount: suunnitellutOpinnot.length }}
-              />
+              <AccordionTitle>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.suunnitellutOpintoniTitle"
+                  defaultMessage="Suunnitellut opintoni ({amount})"
+                  values={{ amount: suunnitellutOpinnot.length }}
+                />
+              </AccordionTitle>
             }
             inline={true}
             childContainer={false}
@@ -327,11 +335,13 @@ export class Opiskelusuunnitelma extends React.Component<
             open={activeAccordions.suunnitelmat.aikataulutetut}
             onToggle={this.toggleAccordion("suunnitelmat", "aikataulutetut")}
             title={
-              <FormattedMessage
-                id="opiskelusuunnitelma.aikataulutetutOpintoniTitle"
-                defaultMessage="Aikataulutetut opintoni ({amount})"
-                values={{ amount: aikataulutetutOpinnot.length }}
-              />
+              <AccordionTitle>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.aikataulutetutOpintoniTitle"
+                  defaultMessage="Aikataulutetut opintoni ({amount})"
+                  values={{ amount: aikataulutetutOpinnot.length }}
+                />
+              </AccordionTitle>
             }
             inline={true}
             childContainer={false}
@@ -373,11 +383,13 @@ export class Opiskelusuunnitelma extends React.Component<
             open={activeAccordions.suunnitelmat.valmiit}
             onToggle={this.toggleAccordion("suunnitelmat", "valmiit")}
             title={
-              <FormattedMessage
-                id="opiskelusuunnitelma.valmiitOpintoniTitle"
-                defaultMessage="Valmiit opintoni ({amount})"
-                values={{ amount: valmiitOpinnot.length }}
-              />
+              <AccordionTitle>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.valmiitOpintoniTitle"
+                  defaultMessage="Valmiit opintoni ({amount})"
+                  values={{ amount: valmiitOpinnot.length }}
+                />
+              </AccordionTitle>
             }
             inline={true}
             childContainer={false}
@@ -419,10 +431,12 @@ export class Opiskelusuunnitelma extends React.Component<
           id="tukevatOpinnot"
           open={activeAccordions.tukevatOpinnot}
           title={
-            <FormattedMessage
-              id="opiskelusuunnitelma.opiskeluvalmiuksiaTukevatOpinnotTitle"
-              defaultMessage="Opiskeluvalmiuksia tukevat opinnot"
-            />
+            <AccordionTitle>
+              <FormattedMessage
+                id="opiskelusuunnitelma.opiskeluvalmiuksiaTukevatOpinnotTitle"
+                defaultMessage="Opiskeluvalmiuksia tukevat opinnot"
+              />
+            </AccordionTitle>
           }
           onToggle={this.toggleAccordion("tukevatOpinnot")}
           helpIcon={true}

@@ -1,5 +1,5 @@
 import { RouteComponentProps } from "@reach/router"
-import { Accordion } from "components/Accordion"
+import { Accordion, AccordionTitle } from "components/Accordion"
 import { HeadingContainer, HelpHeading } from "components/Heading"
 import { HelpPopup } from "components/HelpPopup"
 import { InfoTable } from "components/InfoTable"
@@ -63,35 +63,42 @@ export class Tavoitteet extends React.Component<
           defaultMessage="Tavoitteeni ja perustietoni"
         />
       ),
-      goals: customTitles.goals || (
-        <FormattedMessage
-          id="tavoitteet.omaTavoitteeniTitle"
-          defaultMessage="Oma tavoitteeni"
-        />
+      goals: (
+        <AccordionTitle>
+          {customTitles.goals || (
+            <FormattedMessage
+              id="tavoitteet.omaTavoitteeniTitle"
+              defaultMessage="Oma tavoitteeni"
+            />
+          )}
+        </AccordionTitle>
       ),
-      degreeOrEducation: customTitles.degreeOrEducation || (
-        <FormattedMessage
-          id="tavoitteet.tutkintoTaiKoulutusTitle"
-          defaultMessage="Tutkinto tai koulutus"
-        />
+      degreeOrEducation: (
+        <AccordionTitle>
+          {customTitles.degreeOrEducation || (
+            <FormattedMessage
+              id="tavoitteet.tutkintoTaiKoulutusTitle"
+              defaultMessage="Tutkinto tai koulutus"
+            />
+          )}
+        </AccordionTitle>
       ),
-      personalDetails: customTitles.personalDetails || (
-        <FormattedMessage
-          id="tavoitteet.henkilotiedotTitle"
-          defaultMessage="Omat henkilötiedot"
-        />
+      personalDetails: (
+        <AccordionTitle>
+          {customTitles.personalDetails || (
+            <FormattedMessage
+              id="tavoitteet.henkilotiedotTitle"
+              defaultMessage="Omat henkilötiedot"
+            />
+          )}
+        </AccordionTitle>
       )
     }
 
     return (
       <React.Fragment>
         <HeadingContainer>
-          <HelpHeading>
-            <FormattedMessage
-              id="tavoitteet.title"
-              defaultMessage="Tavoitteeni ja perustietoni"
-            />
-          </HelpHeading>
+          <HelpHeading>{titles.heading}</HelpHeading>
           <HelpPopup helpContent={"Test"} />
         </HeadingContainer>
 
