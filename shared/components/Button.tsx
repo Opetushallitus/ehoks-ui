@@ -9,15 +9,24 @@ const ButtonContainer = styled("button")`
   padding: 10px;
   border: 0;
   border-radius: 2px;
-  cursor: pointer;
+  cursor: not-allowed;
+  opacity: 0.7;
+  &:not(:disabled) {
+    cursor: pointer;
+    opacity: unset;
+  }
 `
 
 export interface ButtonProps {
   children?: React.ReactNode
   /** Custom class name to append to button */
   className?: string
+  /** Disabled */
+  disabled?: boolean
   /** Event handler to execute when clicked */
-  onClick: (event: React.MouseEvent) => void
+  onClick?: (event: React.MouseEvent) => void
+  /** Button type */
+  type?: string
 }
 
 /**
@@ -25,9 +34,20 @@ export interface ButtonProps {
  */
 export class Button extends React.Component<ButtonProps> {
   render() {
-    const { children, className, onClick } = this.props
+    const {
+      children,
+      className,
+      disabled = false,
+      type = "button",
+      onClick
+    } = this.props
     return (
-      <ButtonContainer className={className} onClick={onClick}>
+      <ButtonContainer
+        className={className}
+        disabled={disabled}
+        onClick={onClick}
+        type={type}
+      >
         {children}
       </ButtonContainer>
     )

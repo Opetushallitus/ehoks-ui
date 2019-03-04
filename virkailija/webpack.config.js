@@ -54,6 +54,17 @@ module.exports = {
       },
       { test: /\.js$/, enforce: "pre", use: "source-map-loader" },
       {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
+      },
+      {
+        test: /\.(eot|ttf|woff|woff2)$/,
+        loader: "url-loader",
+        options: {
+          limit: 10000
+        }
+      },
+      {
         test: /\.(png|jpg|gif|svg)$/,
         use: [
           {

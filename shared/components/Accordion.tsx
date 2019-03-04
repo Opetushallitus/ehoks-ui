@@ -36,7 +36,7 @@ const TitleRow = styled("button")`
   text-align: left;
 `
 
-const AccordionTitle = styled("h2")`
+export const AccordionTitle = styled("h2")`
   flex: 1;
   margin: 0 20px 0 20px;
   font-size: 20px;
@@ -74,6 +74,10 @@ export interface AccordionProps {
    * @default true
    */
   childContainer?: boolean
+  /**
+   * Define initial open state, has no effect if onToggle and open props are used
+   */
+  initiallyOpen?: boolean
 }
 
 export interface AccordionState {
@@ -84,9 +88,14 @@ export interface AccordionState {
  * Toggleable content panel with inline help popup
  */
 export class Accordion extends React.Component<AccordionProps, AccordionState> {
-  state = {
-    isOpen: false // NOTE: this is only used if onToggle & open props are not provided
+  constructor(props: AccordionProps) {
+    super(props)
+    this.state = {
+      // NOTE: this is only used if onToggle & open props are not provided
+      isOpen: props.initiallyOpen !== undefined ? props.initiallyOpen : false
+    }
   }
+
   onEnter = (event: React.KeyboardEvent) => {
     const { id, onToggle } = this.props
     if (
@@ -94,11 +103,12 @@ export class Accordion extends React.Component<AccordionProps, AccordionState> {
       document.activeElement &&
       id === document.activeElement.id
     ) {
-      typeof onToggle === "function" ? onToggle() : this.defaultOnToggle()
+      typeof onToggle === "function" ? onToggle() : this.defaultOnToggle(event)
     }
   }
 
-  defaultOnToggle = () => {
+  defaultOnToggle = (event: React.MouseEvent | React.KeyboardEvent) => {
+    event.preventDefault()
     this.setState((state: AccordionState) => ({
       ...state,
       isOpen: !state.isOpen
@@ -154,7 +164,11 @@ export class Accordion extends React.Component<AccordionProps, AccordionState> {
                 />
               )}
             </Toggle>
-            <Title data-testid="Title">{title}</Title>
+            {typeof title === "string" ? (
+              <Title data-testid="Title">{title}</Title>
+            ) : (
+              <div data-testid="Title">{title}</div>
+            )}
           </TitleRow>
           {helpIcon ? <HelpPopup helpContent={helpContent} /> : null}
         </TitleContainer>

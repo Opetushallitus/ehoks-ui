@@ -1,4 +1,4 @@
-import { Accordion } from "components/Accordion"
+import { Accordion, AccordionTitle } from "components/Accordion"
 import { Container, PaddedContent } from "components/Container"
 import { Heading } from "components/Heading"
 import { InfoTable } from "components/InfoTable"
@@ -100,10 +100,12 @@ export class TyopaikanToimija extends React.Component<TyopaikanToimijaProps> {
                       <Accordion
                         id={`oppija_${i}_tavoitteet`}
                         title={
-                          <FormattedMessage
-                            id="tyopaikanToimija.opiskelijanTavoitteetTitle"
-                            defaultMessage="Opiskelijan tavoitteet"
-                          />
+                          <AccordionTitle>
+                            <FormattedMessage
+                              id="tyopaikanToimija.opiskelijanTavoitteetTitle"
+                              defaultMessage="Opiskelijan tavoitteet"
+                            />
+                          </AccordionTitle>
                         }
                         childContainer={false}
                         helpIcon={true}
