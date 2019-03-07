@@ -27,7 +27,7 @@ script:
   - npm run lint
   - npm test
   - npm run build
-  - export BASE_IMAGE=base-legacy:0.1
+  - export BASE_IMAGE=baseimage-fatjar:master
   - ../ci-tools/common/pull-image.sh
   - ./scripts/ci/build.sh ehoks-ui
 
