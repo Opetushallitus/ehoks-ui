@@ -1,6 +1,6 @@
 import { flow, types } from "mobx-state-tree"
 import { suunnitelmat } from "mocks/mockSuunnitelmat"
-import { Suunnitelma } from "models/Suunnitelma"
+import { HOKS } from "models/HOKS"
 
 const mockFetchHOKS = (eid: string) => {
   return Promise.resolve({
@@ -11,7 +11,7 @@ const mockFetchHOKS = (eid: string) => {
 
 const HOKSStoreModel = {
   isLoading: false,
-  suunnitelma: types.optional(Suunnitelma, {})
+  suunnitelma: types.optional(HOKS, {})
 }
 
 export const HOKSStore = types

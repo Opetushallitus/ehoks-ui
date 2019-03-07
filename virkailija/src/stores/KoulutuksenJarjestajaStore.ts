@@ -1,4 +1,3 @@
-// import { apiUrl } from "config"
 import drop from "lodash.drop"
 import take from "lodash.take"
 import { types } from "mobx-state-tree"

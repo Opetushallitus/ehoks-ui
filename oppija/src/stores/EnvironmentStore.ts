@@ -1,4 +1,3 @@
-import { apiUrl } from "config"
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
@@ -19,7 +18,7 @@ const EnvironmentStoreModel = {
 export const EnvironmentStore = types
   .model("EnvironmentStore", EnvironmentStoreModel)
   .actions(self => {
-    const { fetchSingle, errors } = getEnv<StoreEnvironment>(self)
+    const { apiUrl, fetchSingle, errors } = getEnv<StoreEnvironment>(self)
 
     const getEnvironment = flow(function*() {
       self.isLoading = true

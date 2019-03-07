@@ -78,14 +78,22 @@ export interface OpiskelijaProps {
 export class Opiskelija extends React.Component<OpiskelijaProps> {
   // TODO: redirect to root after logout, check implementation in src/routes/OmienOpintojenSuunnittelu.tsx
   componentDidMount() {
-    if (this.props.id) {
-      this.props.store!.hoks.haeSuunnitelma(this.props.id)
+    const { id, store } = this.props
+    if (id) {
+      const suunnitelma = store!.hoks.suunnitelmat.find(s => s.eid === id)
+      if (!suunnitelma) {
+        store!.hoks.haeSuunnitelmat(store!.session.user!.oid)
+      }
     }
   }
 
   componentDidUpdate(prevProps: OpiskelijaProps) {
-    if (this.props.id && this.props.id !== prevProps.id) {
-      this.props.store!.hoks.haeSuunnitelma(this.props.id)
+    const { id, store } = this.props
+    if (id && id !== prevProps.id) {
+      const suunnitelma = store!.hoks.suunnitelmat.find(s => s.eid === id)
+      if (!suunnitelma) {
+        store!.hoks.haeSuunnitelmat(store!.session.user!.oid)
+      }
     }
   }
 
@@ -235,6 +243,7 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
                       <Tavoitteet
                         path="/"
                         student={student}
+                        hoks={hoks}
                         titles={{
                           heading: (
                             <FormattedMessage
@@ -260,7 +269,7 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
                         path="osaaminen"
                         studies={
                           hoks.suunnitelma
-                            ? hoks.suunnitelma.aiemmatOpinnot
+                            ? hoks.suunnitelma.olemassaOlevatTutkinnonOsat
                             : []
                         }
                         heading={

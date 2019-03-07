@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled"
 import { Competences } from "./StudyInfo/Competences"
 import { Details } from "./StudyInfo/Details"
-import { Instance, SnapshotOrInstance } from "mobx-state-tree"
+import { SnapshotOrInstance } from "mobx-state-tree"
 import { Harjoittelujakso } from "models/Harjoittelujakso"
 import { Osaamisvaatimus } from "models/Osaamisvaatimus"
 import { Naytto } from "models/Naytto"
@@ -62,7 +62,7 @@ export interface StudyInfoProps {
    * List of competence requirements
    * @default []
    */
-  competenceRequirements?: Array<Instance<typeof Osaamisvaatimus>>
+  competenceRequirements?: Array<SnapshotOrInstance<typeof Osaamisvaatimus>>
   /** List of competence demonstrations */
   demonstrations?: Array<SnapshotOrInstance<typeof Naytto>>
   /** Color of additional info container */

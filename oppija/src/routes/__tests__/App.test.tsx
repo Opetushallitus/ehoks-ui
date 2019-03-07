@@ -10,7 +10,10 @@ import { App } from "../App"
 
 it("App renders correctly", async () => {
   // pass fetch utils to root store using store's environment context
-  const store = RootStore.create({}, createEnvironment(mockFetch(apiUrl)))
+  const store = RootStore.create(
+    {},
+    createEnvironment(mockFetch(apiUrl), apiUrl)
+  )
   // fetch default translations
   await store.translations.haeLokalisoinnit(apiUrl)
   const tree = renderer

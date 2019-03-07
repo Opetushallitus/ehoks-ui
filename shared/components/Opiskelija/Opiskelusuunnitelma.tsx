@@ -10,7 +10,7 @@ import { StudiesContainer } from "components/StudiesContainer"
 import { StudyInfo } from "components/StudyInfo"
 import { observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
-import { Suunnitelma } from "models/Suunnitelma"
+import { HOKS } from "models/HOKS"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
@@ -23,7 +23,7 @@ const ProgressTitle = styled("h2")`
 
 export interface OpiskelusuunnitelmaProps {
   children?: React.ReactChildren
-  plan: Instance<typeof Suunnitelma>
+  plan: Instance<typeof HOKS>
   titles?: {
     heading?: React.ReactNode
     goals?: React.ReactNode
@@ -302,13 +302,11 @@ export class Opiskelusuunnitelma extends React.Component<
               {suunnitellutOpinnot.map((study, i) => {
                 const renderExtraItem = (i + 1) % 4 === 0
                 return (
-                  <React.Fragment key={study.id}>
+                  <React.Fragment key={`${study.id}_${i}`}>
                     <StudyInfo
                       accentColor="#EB6F02"
                       fadedColor="#FDF1E6"
-                      title={`${study.otsikko} ${
-                        study.osaamispisteet
-                      } ${competencePointsTitle}`}
+                      title={study.opintoOtsikko(competencePointsTitle)}
                       locations={study.sijainnit}
                       learningPeriods={study.harjoittelujaksot}
                       competenceRequirements={study.osaamisvaatimukset}
@@ -350,13 +348,11 @@ export class Opiskelusuunnitelma extends React.Component<
               {aikataulutetutOpinnot.map((study, i) => {
                 const renderExtraItem = (i + 1) % 4 === 0
                 return (
-                  <React.Fragment key={study.id}>
+                  <React.Fragment key={`${study.id}_${i}`}>
                     <StudyInfo
                       accentColor="#E2A626"
                       fadedColor="#FDF6E9"
-                      title={`${study.otsikko} ${
-                        study.osaamispisteet
-                      } ${competencePointsTitle}`}
+                      title={study.opintoOtsikko(competencePointsTitle)}
                       locations={study.sijainnit}
                       learningPeriods={study.harjoittelujaksot}
                       competenceRequirements={study.osaamisvaatimukset}
@@ -398,13 +394,11 @@ export class Opiskelusuunnitelma extends React.Component<
               {valmiitOpinnot.map((study, i) => {
                 const renderExtraItem = (i + 1) % 4 === 0
                 return (
-                  <React.Fragment key={study.id}>
+                  <React.Fragment key={`${study.id}_${i}`}>
                     <StudyInfo
                       accentColor="#43A047"
                       fadedColor="#ECF6ED"
-                      title={`${study.otsikko} ${
-                        study.osaamispisteet
-                      } ${competencePointsTitle}`}
+                      title={study.opintoOtsikko(competencePointsTitle)}
                       locations={study.sijainnit}
                       learningPeriods={study.harjoittelujaksot}
                       competenceRequirements={study.osaamisvaatimukset}

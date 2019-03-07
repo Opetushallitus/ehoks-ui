@@ -1,9 +1,9 @@
 import { aiemmatOpinnot } from "mocks/mockAiemmatOpinnot"
 import { SnapshotOrInstance } from "mobx-state-tree"
-import { Suunnitelma } from "models/Suunnitelma"
+import { HOKS } from "models/HOKS"
 import { opinnot } from "mocks/mockOpinnot"
 
-export const suunnitelmat: Array<SnapshotOrInstance<typeof Suunnitelma>> = [
+export const suunnitelmat: Array<SnapshotOrInstance<typeof HOKS>> = [
   {
     eid: "1",
     tutkinnonNimi: "Sosiaali- ja terveysalan perustutkinto",

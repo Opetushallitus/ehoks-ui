@@ -1,4 +1,3 @@
-// import { apiUrl } from "config"
 import { getEnv, types } from "mobx-state-tree"
 import { oppijat } from "mocks/mockOppijat"
 import { Oppija } from "models/Oppija"

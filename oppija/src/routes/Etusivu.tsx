@@ -155,6 +155,7 @@ export class Etusivu extends React.Component<EtusivuProps> {
 
   loginStudent = (event: React.MouseEvent) => {
     event.preventDefault()
+    this.props.store!.session.resetUserDidLogout()
     window.location.href = this.props.store!.environment.opintopolkuLoginUrl
   }
 

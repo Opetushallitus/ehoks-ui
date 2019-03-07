@@ -264,7 +264,7 @@ export class Opiskelija extends React.Component<
                         path="osaaminen"
                         studies={
                           hoks.suunnitelma
-                            ? hoks.suunnitelma.aiemmatOpinnot
+                            ? hoks.suunnitelma.olemassaOlevatTutkinnonOsat
                             : []
                         }
                         heading={

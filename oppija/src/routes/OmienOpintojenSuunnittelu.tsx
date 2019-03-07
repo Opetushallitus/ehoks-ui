@@ -12,8 +12,8 @@ import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
 import { observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
+import { HOKS } from "models/HOKS"
 import { SessionUser } from "models/SessionUser"
-import { Suunnitelma } from "models/Suunnitelma"
 import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
@@ -39,7 +39,7 @@ const SectionItems = styled(ProgressPies)`
 
 export interface OmienOpintojenSuunnitteluProps {
   student: Instance<typeof SessionUser> | null
-  suunnitelmat: Array<Instance<typeof Suunnitelma>>
+  suunnitelmat: Array<Instance<typeof HOKS>>
   path?: string
   id?: string
 }
@@ -151,10 +151,18 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                 <Container>
                   <PaddedContent>
                     <Router basepath={`/ehoks/suunnittelu/${id}`}>
-                      <Tavoitteet path="/" student={student} />
+                      <Tavoitteet
+                        path="/"
+                        student={student}
+                        hoks={suunnitelma}
+                      />
                       <AiempiOsaaminen
                         path="osaamiseni"
-                        studies={suunnitelma ? suunnitelma.aiemmatOpinnot : []}
+                        studies={
+                          suunnitelma
+                            ? suunnitelma.olemassaOlevatTutkinnonOsat
+                            : []
+                        }
                       />
                       <Opiskelusuunnitelma
                         path="opiskelusuunnitelmani"
