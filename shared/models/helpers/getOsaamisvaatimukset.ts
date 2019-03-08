@@ -22,7 +22,7 @@ export function getOsaamisvaatimukset(
       kriteerit: kohdeAlue.arvioinninKohteet.map(arvioinninKohde => {
         return {
           kuvaus: arvioinninKohde.otsikko[activeLocale],
-          kriteerit: flattenDeep(
+          kriteerit: flattenDeep<string>(
             arvioinninKohde.osaamistasonKriteerit.map(tasoKriteeri => {
               return tasoKriteeri.kriteerit.map(
                 kriteeri =>

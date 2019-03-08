@@ -31,8 +31,6 @@ export const HOKSStore = types
           apiUrl(`oppija/oppijat/${oid}/hoks`)
         )
         self.suunnitelmat = response.data
-        console.log("RD", response.data)
-        console.log("SS", self.suunnitelmat.toJSON())
         self.isLoading = false
       } catch (error) {
         errors.logError("HOKSStore.haeSuunnitelmat", error.message)

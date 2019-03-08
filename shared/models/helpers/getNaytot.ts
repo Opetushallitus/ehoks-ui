@@ -7,7 +7,7 @@ export function getNaytot(
     jarjestaja: { oppilaitosOid: string }
     nayttoymparisto: { nimi: string; yTunnus: string; kuvaus: string }
     tyoelamaArvioijat: Array<{ nimi: string }>
-    koulutuksenjarjestajaArvioijat: Array<{ nimi: string }>
+    koulutuksenJarjestajaArvioijat: Array<{ nimi: string }>
     osaamistavoitteet?: string[]
   }>
 ): Naytto[] {
@@ -19,7 +19,7 @@ export function getNaytot(
     ymparisto: naytto.nayttoymparisto.kuvaus,
     arvioijat: [
       ...naytto.tyoelamaArvioijat,
-      ...naytto.koulutuksenjarjestajaArvioijat
+      ...naytto.koulutuksenJarjestajaArvioijat
     ].map(arvioija => arvioija.nimi),
     tyotehtavat: [] // TODO
   }))

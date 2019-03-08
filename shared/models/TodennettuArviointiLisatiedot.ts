@@ -1,10 +1,10 @@
 import { types } from "mobx-state-tree"
-import { KoulutuksenjarjestajaArvioija } from "./KoulutuksenjarjestajaArvioija"
+import { KoulutuksenJarjestajaArvioija } from "./KoulutuksenJarjestajaArvioija"
 
 export const TodennettuArviointiLisatiedot = types.model(
   "TodennettuArviointiLisatiedot",
   {
     lahetettyArvioitavaksi: types.optional(types.string, ""),
-    aiemminHankitunOsaamisenArvioija: types.array(KoulutuksenjarjestajaArvioija)
+    aiemminHankitunOsaamisenArvioija: types.array(KoulutuksenJarjestajaArvioija)
   }
 )
