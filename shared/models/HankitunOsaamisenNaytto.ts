@@ -13,5 +13,5 @@ export const HankitunOsaamisenNaytto = types.model("HankitunOsaamisenNaytto", {
   loppu: types.optional(types.string, ""),
   koulutuksenJarjestajaArvioijat: types.array(KoulutuksenJarjestajaArvioija),
   tyoelamaArvioijat: types.array(TyoelamaArvioija),
-  keskeisetTyotehtavatNaytto: types.optional(types.string, "")
+  keskeisetTyotehtavatNaytto: types.array(types.string)
 })

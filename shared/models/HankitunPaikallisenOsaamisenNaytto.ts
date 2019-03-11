@@ -14,6 +14,7 @@ export const HankitunPaikallisenOsaamisenNaytto = types.model(
     alku: types.optional(types.string, ""),
     loppu: types.optional(types.string, ""),
     koulutuksenJarjestajaArvioijat: types.array(KoulutuksenJarjestajaArvioija),
-    tyoelamaArvioijat: types.array(TyoelamaArvioija)
+    tyoelamaArvioijat: types.array(TyoelamaArvioija),
+    keskeisetTyotehtavatNaytto: types.array(types.string)
   }
 )
