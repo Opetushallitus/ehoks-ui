@@ -11,7 +11,7 @@ import { IconContainer } from "./IconContainer"
 import { MobileCompetences } from "./MobileCompetences"
 import { ToggleLink } from "./ToggleLink"
 import { Osaamisvaatimus } from "models/Osaamisvaatimus"
-import { Instance } from "mobx-state-tree"
+import { SnapshotOrInstance } from "mobx-state-tree"
 
 const Container = styled("div")`
   background: #fff;
@@ -104,7 +104,7 @@ const Prefix = styled("div")`
 
 interface CompetencesProps {
   collapseAll: () => void
-  competenceRequirements?: Array<Instance<typeof Osaamisvaatimus>>
+  competenceRequirements?: Array<SnapshotOrInstance<typeof Osaamisvaatimus>>
   expandAll: () => void
   expandCompetence: (index: number) => () => void
   expanded?: boolean
@@ -131,6 +131,10 @@ export class Competences extends React.Component<CompetencesProps> {
     const { intl } = this.context
     const allExpanded =
       expandedCompetences.length === competenceRequirements.length
+
+    if (!competenceRequirements.length) {
+      return <Container />
+    }
 
     return (
       <Container>

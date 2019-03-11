@@ -1,7 +1,7 @@
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
-import { Instance } from "mobx-state-tree"
+import { SnapshotOrInstance } from "mobx-state-tree"
 import { Osaamisvaatimus } from "models/Osaamisvaatimus"
 
 const Container = styled("li")`
@@ -68,7 +68,7 @@ const ToggleAssessment = styled("button")`
 `
 
 interface CompetenceRequirementProps {
-  competenceRequirement: Instance<typeof Osaamisvaatimus>
+  competenceRequirement: SnapshotOrInstance<typeof Osaamisvaatimus>
   expanded: boolean
   expand: () => void
 }
@@ -77,6 +77,7 @@ export class CompetenceRequirement extends React.Component<
 > {
   render() {
     const { competenceRequirement, expanded, expand } = this.props
+    const kriteerit = competenceRequirement.kriteerit || []
     return (
       <Container>
         <TitleRow>
@@ -97,13 +98,13 @@ export class CompetenceRequirement extends React.Component<
         </TitleRow>
         {expanded ? (
           <Assessment data-testid="Assessment">
-            {competenceRequirement.kriteerit.map(arviointikriteeri => {
+            {kriteerit.map(arviointikriteeri => {
               return (
                 <AssessmentItem key={arviointikriteeri.kuvaus}>
                   <AssessmentHeader>
                     {arviointikriteeri.kuvaus}
                   </AssessmentHeader>
-                  {arviointikriteeri.kriteerit.map((kriteeri, i) => {
+                  {(arviointikriteeri.kriteerit || []).map((kriteeri, i) => {
                     return (
                       <AssessmentContent key={i}>{kriteeri}</AssessmentContent>
                     )
