@@ -17,14 +17,10 @@ const Container = styled("div")`
   background: #fff;
 `
 
-interface ExpandContainerProps {
-  fadedColor: string
-}
 const ExpandContainer = styled("div")`
   display: flex;
   align-items: center;
   padding: 10px 10px 10px 20px;
-  background: ${(props: ExpandContainerProps) => props.fadedColor};
   border-top: 1px solid #c9cdcf;
 `
 
@@ -37,8 +33,9 @@ const ToggleAllTitle = styled(ToggleLink)`
   }
 `
 
-const ExpandTitle = styled(ToggleLink)`
+const ExpandTitle = styled("div")`
   flex: 1;
+  cursor: pointer;
 `
 
 const CollapseHeaderContainer = styled("div")`
@@ -109,7 +106,6 @@ interface CompetencesProps {
   expandCompetence: (index: number) => () => void
   expanded?: boolean
   expandedCompetences: number[]
-  fadedColor?: string
   toggle: (name: "competences" | "details") => () => void
 }
 
@@ -125,7 +121,6 @@ export class Competences extends React.Component<CompetencesProps> {
       expandCompetence,
       expanded,
       expandedCompetences,
-      fadedColor = "",
       toggle
     } = this.props
     const { intl } = this.context
@@ -175,7 +170,7 @@ export class Competences extends React.Component<CompetencesProps> {
             <Line height="2px" backgroundColor="#000" />
           </React.Fragment>
         ) : (
-          <ExpandContainer fadedColor={fadedColor}>
+          <ExpandContainer>
             <ExpandTitle onClick={toggle("competences")}>
               <FormattedMessage
                 id="opiskelusuunnitelma.naytaAmmattitaitovaatimuksetLink"

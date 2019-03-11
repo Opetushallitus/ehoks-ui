@@ -14,6 +14,8 @@ import { HOKS } from "models/HOKS"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
+import { theme } from "theme"
+const { colors } = theme
 
 const ProgressTitle = styled("h2")`
   font-weight: 600;
@@ -228,7 +230,7 @@ export class Opiskelusuunnitelma extends React.Component<
               percentage={Math.round(
                 (suunnitellutOpinnot.length / totalStudiesLength) * 100
               )}
-              stroke="#FF5000"
+              stroke={colors.planned}
               title={
                 <FormattedMessage
                   id="opiskelusuunnitelma.suunniteltunaTitle"
@@ -241,7 +243,7 @@ export class Opiskelusuunnitelma extends React.Component<
               percentage={Math.round(
                 (aikataulutetutOpinnot.length / totalStudiesLength) * 100
               )}
-              stroke="#FFD900"
+              stroke={colors.scheduled}
               title={
                 <FormattedMessage
                   id="opiskelusuunnitelma.aikataulutettunaTitle"
@@ -254,7 +256,7 @@ export class Opiskelusuunnitelma extends React.Component<
               percentage={Math.round(
                 (valmiitOpinnot.length / totalStudiesLength) * 100
               )}
-              stroke="#5BCA16"
+              stroke={colors.ready}
               title={
                 <FormattedMessage
                   id="opiskelusuunnitelma.valmiinaTitle"
@@ -304,7 +306,7 @@ export class Opiskelusuunnitelma extends React.Component<
                 return (
                   <React.Fragment key={`${study.id}_${i}`}>
                     <StudyInfo
-                      accentColor="#EB6F02"
+                      accentColor={colors.planned}
                       fadedColor="#FDF1E6"
                       title={study.opintoOtsikko(competencePointsTitle)}
                       locations={study.sijainnit}
@@ -350,7 +352,7 @@ export class Opiskelusuunnitelma extends React.Component<
                 return (
                   <React.Fragment key={`${study.id}_${i}`}>
                     <StudyInfo
-                      accentColor="#E2A626"
+                      accentColor={colors.scheduled}
                       fadedColor="#FDF6E9"
                       title={study.opintoOtsikko(competencePointsTitle)}
                       locations={study.sijainnit}
@@ -396,7 +398,7 @@ export class Opiskelusuunnitelma extends React.Component<
                 return (
                   <React.Fragment key={`${study.id}_${i}`}>
                     <StudyInfo
-                      accentColor="#43A047"
+                      accentColor={colors.ready}
                       fadedColor="#ECF6ED"
                       title={study.opintoOtsikko(competencePointsTitle)}
                       locations={study.sijainnit}

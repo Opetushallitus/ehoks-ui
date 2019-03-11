@@ -13,17 +13,24 @@ import { SnapshotOrInstance } from "mobx-state-tree"
 import { Harjoittelujakso } from "models/Harjoittelujakso"
 import { Naytto } from "models/Naytto"
 
+interface ColorProps {
+  fadedColor: string
+}
+
 const DetailsCollapsed = styled("div")`
   display: flex;
   flex-direction: row;
   height: 100%;
   padding: 10px 10px 20px 20px;
   justify-content: space-between;
-  background: #fff;
+  background: ${(props: ColorProps) => props.fadedColor};
+  border-top: 1px solid #c9cdcf;
 `
 
 const DetailsExpanded = styled(DetailsCollapsed)`
+  background: ${(props: ColorProps) => props.fadedColor};
   padding: 0;
+  border-top: 1px solid #c9cdcf;
 `
 
 const DetailsContent = styled("div")`
@@ -56,6 +63,7 @@ const LocationsContainerExpanded = styled(LocationsContainer)`
 
 interface DetailsProps {
   accentColor?: string
+  fadedColor?: string
   demonstrations?: Array<SnapshotOrInstance<typeof Naytto>>
   expanded?: boolean
   learningPeriods?: Array<SnapshotOrInstance<typeof Harjoittelujakso>>
@@ -70,6 +78,7 @@ export class Details extends React.Component<DetailsProps> {
   render() {
     const {
       accentColor,
+      fadedColor = "",
       demonstrations = [],
       expanded,
       learningPeriods = [],
@@ -79,7 +88,7 @@ export class Details extends React.Component<DetailsProps> {
     const { intl } = this.context
     const learningPeriod = learningPeriods[0]
     return expanded ? (
-      <DetailsExpanded>
+      <DetailsExpanded fadedColor={fadedColor}>
         <DetailsContent>
           <LocationsContainerExpanded>
             {locations.length > 0 && (
@@ -117,7 +126,7 @@ export class Details extends React.Component<DetailsProps> {
         </DetailsContent>
       </DetailsExpanded>
     ) : (
-      <DetailsCollapsed>
+      <DetailsCollapsed fadedColor={fadedColor}>
         <LocationsContainer>
           <DetailsContent>
             {locations.length > 0 && (

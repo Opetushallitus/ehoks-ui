@@ -162,6 +162,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
           {hasDetails && (
             <Details
               accentColor={accentColor}
+              fadedColor={fadedColor}
               demonstrations={demonstrations}
               expanded={expanded.details}
               learningPeriods={learningPeriods}
@@ -176,7 +177,6 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
             expandCompetence={this.expandCompetence}
             expanded={expanded.competences}
             expandedCompetences={expandedCompetences}
-            fadedColor={fadedColor}
             toggle={this.toggle}
           />
         </InnerContainer>
