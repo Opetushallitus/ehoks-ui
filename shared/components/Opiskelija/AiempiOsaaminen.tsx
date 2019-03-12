@@ -81,7 +81,6 @@ export class AiempiOsaaminen extends React.Component<
                     accentColor="#43A047"
                     fadedColor="#ECF6ED"
                     title={study.opintoOtsikko(competencePointsTitle)}
-                    locations={study.sijainnit}
                     learningPeriods={study.harjoittelujaksot}
                     competenceRequirements={study.osaamisvaatimukset}
                     demonstrations={study.naytot}

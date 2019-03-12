@@ -1,31 +1,32 @@
-interface Ajankohta {
-  alku?: string
-  loppu?: string
-}
-
 interface Arviointikriteeri {
   kuvaus?: string
   kriteerit?: string[]
 }
 
-interface Osaamisvaatimus {
+export interface Osaamisvaatimus {
   kuvaus?: string
   kriteerit?: Arviointikriteeri[]
 }
 
 export interface Naytto {
-  ajankohta?: Ajankohta
+  alku?: string
+  loppu?: string
   organisaatio?: string
   ymparisto?: string
-  arvioijat?: string[]
+  koulutuksenJarjestajaArvioijat?: string[]
+  tyoelamaArvioijat?: string[]
   tyotehtavat?: string[]
+  tyyppi: "DEMONSTRATION"
 }
 
-interface Harjoittelujakso {
-  ajankohta?: Ajankohta
-  hyvaksytty?: string
+export interface Harjoittelujakso {
+  alku?: string
+  loppu?: string
   ohjaaja?: string
   tyotehtavat?: string[]
+  nimi?: string
+  selite?: string
+  tyyppi: "WORKPLACE" | "OTHER"
 }
 
 export interface TutkinnonOsa {

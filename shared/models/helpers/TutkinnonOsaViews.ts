@@ -17,6 +17,7 @@ export const TutkinnonOsaViews = types.model({}).views((self: any) => {
     get naytot() {
       return getNaytot(self.hankitunOsaamisenNaytto)
     },
+    // deprecate
     get sijainnit() {
       return getSijainnit(
         self.hankitunOsaamisenNaytto,

@@ -5,5 +5,5 @@ interface PeriodProps {
 }
 export const Period = styled("strong")`
   color: ${(props: PeriodProps) =>
-    props.accentColor ? props.accentColor : "#979797"};
+    props.accentColor ? props.accentColor : "#000000"};
 `

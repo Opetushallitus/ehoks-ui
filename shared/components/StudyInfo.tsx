@@ -2,10 +2,11 @@ import React from "react"
 import styled from "styled"
 import { Competences } from "./StudyInfo/Competences"
 import { Details } from "./StudyInfo/Details"
-import { SnapshotOrInstance } from "mobx-state-tree"
-import { Harjoittelujakso } from "models/Harjoittelujakso"
-import { Osaamisvaatimus } from "models/Osaamisvaatimus"
-import { Naytto } from "models/Naytto"
+import {
+  Osaamisvaatimus,
+  Naytto,
+  Harjoittelujakso
+} from "models/helpers/TutkinnonOsa"
 
 interface ContainerProps {
   accentColor?: string
@@ -62,21 +63,16 @@ export interface StudyInfoProps {
    * List of competence requirements
    * @default []
    */
-  competenceRequirements?: Array<SnapshotOrInstance<typeof Osaamisvaatimus>>
+  competenceRequirements?: Array<Osaamisvaatimus>
   /** List of competence demonstrations */
-  demonstrations?: Array<SnapshotOrInstance<typeof Naytto>>
+  demonstrations?: Array<Naytto>
   /** Color of additional info container */
   fadedColor?: string
   /**
    * List of learning periods
    * @default []
    */
-  learningPeriods?: Array<SnapshotOrInstance<typeof Harjoittelujakso>>
-  /**
-   * List of locations
-   * @default []
-   */
-  locations?: string[]
+  learningPeriods?: Array<Harjoittelujakso>
   /** Title of the accordion, always visible */
   title?: React.ReactNode
   /**
@@ -140,7 +136,6 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       competenceRequirements = [],
       demonstrations = [],
       fadedColor,
-      locations = [],
       learningPeriods = [],
       title,
       width = "25%"
@@ -161,12 +156,10 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
           <Title>{title}</Title>
           {hasDetails && (
             <Details
-              accentColor={accentColor}
               fadedColor={fadedColor}
               demonstrations={demonstrations}
               expanded={expanded.details}
               learningPeriods={learningPeriods}
-              locations={locations}
               toggle={this.toggle}
             />
           )}

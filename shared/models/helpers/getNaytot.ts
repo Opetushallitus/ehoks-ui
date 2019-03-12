@@ -6,21 +6,29 @@ export function getNaytot(
     loppu: string
     jarjestaja: { oppilaitosOid: string }
     nayttoymparisto: { nimi: string; yTunnus: string; kuvaus: string }
-    tyoelamaArvioijat: Array<{ nimi: string }>
-    koulutuksenJarjestajaArvioijat: Array<{ nimi: string }>
+    tyoelamaArvioijat: Array<{ nimi: string; organisaatio: { nimi: string } }>
+    koulutuksenJarjestajaArvioijat: Array<{
+      nimi: string
+      organisaatio: { oppilaitosOid: string }
+    }>
     keskeisetTyotehtavatNaytto: string[]
   }>
-): Naytto[] {
-  return hankitunOsaamisenNaytto.map(naytto => ({
-    ajankohta: { alku: naytto.alku, loppu: naytto.loppu },
-    organisaatio: [naytto.nayttoymparisto.nimi, naytto.nayttoymparisto.yTunnus]
-      .filter(Boolean)
-      .join(", "),
+) {
+  return hankitunOsaamisenNaytto.map<Naytto>(naytto => ({
+    alku: naytto.alku,
+    loppu: naytto.loppu,
+    organisaatio: naytto.nayttoymparisto.nimi,
     ymparisto: naytto.nayttoymparisto.kuvaus,
-    arvioijat: [
-      ...naytto.tyoelamaArvioijat,
-      ...naytto.koulutuksenJarjestajaArvioijat
-    ].map(arvioija => arvioija.nimi),
-    tyotehtavat: naytto.keskeisetTyotehtavatNaytto
+    koulutuksenJarjestajaArvioijat: naytto.koulutuksenJarjestajaArvioijat.map(
+      a =>
+        // TODO: fetch oppilaitos using oppilaitosOid
+        [a.nimi, a.organisaatio.oppilaitosOid].filter(Boolean).join(", ")
+    ),
+    tyoelamaArvioijat: naytto.tyoelamaArvioijat.map(a =>
+      [a.nimi, a.organisaatio.nimi].filter(Boolean).join(", ")
+    ),
+
+    tyotehtavat: naytto.keskeisetTyotehtavatNaytto,
+    tyyppi: "DEMONSTRATION"
   }))
 }

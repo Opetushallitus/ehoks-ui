@@ -309,7 +309,6 @@ export class Opiskelusuunnitelma extends React.Component<
                       accentColor={colors.planned}
                       fadedColor="#FDF1E6"
                       title={study.opintoOtsikko(competencePointsTitle)}
-                      locations={study.sijainnit}
                       learningPeriods={study.harjoittelujaksot}
                       competenceRequirements={study.osaamisvaatimukset}
                       demonstrations={study.naytot}
@@ -355,7 +354,6 @@ export class Opiskelusuunnitelma extends React.Component<
                       accentColor={colors.scheduled}
                       fadedColor="#FDF6E9"
                       title={study.opintoOtsikko(competencePointsTitle)}
-                      locations={study.sijainnit}
                       learningPeriods={study.harjoittelujaksot}
                       competenceRequirements={study.osaamisvaatimukset}
                       demonstrations={study.naytot}
@@ -401,7 +399,6 @@ export class Opiskelusuunnitelma extends React.Component<
                       accentColor={colors.ready}
                       fadedColor="#ECF6ED"
                       title={study.opintoOtsikko(competencePointsTitle)}
-                      locations={study.sijainnit}
                       learningPeriods={study.harjoittelujaksot}
                       competenceRequirements={study.osaamisvaatimukset}
                       demonstrations={study.naytot}
