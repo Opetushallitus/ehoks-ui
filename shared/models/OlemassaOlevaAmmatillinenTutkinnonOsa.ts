@@ -3,15 +3,18 @@ import { HankitunOsaamisenNaytto } from "./HankitunOsaamisenNaytto"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 import { getNaytot } from "./helpers/getNaytot"
 import { getOtsikko } from "./helpers/getOtsikko"
-import { getSijainnit } from "./helpers/getSijainnit"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
+import { getOsaamispisteet } from "models/helpers/getOsaamispisteet"
+import { EnrichTutkinnonOsa } from "models/EnrichTutkinnonOsa"
+import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
 
 const Model = types.model({
   id: types.optional(types.number, 0),
   tutkinnonOsaKoodiUri: types.optional(types.string, ""),
   tutkinnonOsa: types.optional(EPerusteetVastaus, {}),
+  tutkinnonOsaViitteet: types.array(TutkinnonOsaViite),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
   valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
   tarkentavatTiedotNaytto: types.array(HankitunOsaamisenNaytto),
@@ -22,6 +25,7 @@ export const OlemassaOlevaAmmatillinenTutkinnonOsa = types
   .compose(
     "OlemassaOlevaAmmatillinenTutkinnonOsa",
     EnrichKoodiUri,
+    EnrichTutkinnonOsa("tutkinnonOsaViitteet"),
     Model
   )
   .views(self => {
@@ -33,14 +37,10 @@ export const OlemassaOlevaAmmatillinenTutkinnonOsa = types
           : ""
       },
       get osaamispisteet() {
-        // TODO: get from ePerusteet call
-        return 0
+        return getOsaamispisteet(self.tutkinnonOsaViitteet)
       },
       get naytot() {
         return getNaytot(self.tarkentavatTiedotNaytto)
-      },
-      get sijainnit() {
-        return getSijainnit(self.tarkentavatTiedotNaytto, [])
       },
       opintoOtsikko(ospLyhenne: string): string {
         return getOtsikko(this, ospLyhenne)

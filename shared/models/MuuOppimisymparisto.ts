@@ -1,6 +1,6 @@
 import { types } from "mobx-state-tree"
-import { EnrichKoodiUri } from "../../shared/models/EnrichKoodiUri"
-import { KoodistoVastaus } from "../../shared/models/KoodistoVastaus"
+import { EnrichKoodiUri } from "models/EnrichKoodiUri"
+import { KoodistoVastaus } from "models/KoodistoVastaus"
 
 const Model = types.model("MuuOppimisymparistoModel", {
   oppimisymparistoKoodiUri: types.optional(types.string, ""),

@@ -89,7 +89,7 @@ export const HOKS = types
           ...osaAlueet
         ]
       },
-      get olemassaOlevatTutkinnonOsat() {
+      get olemassaOlevatTutkinnonOsat(): TutkinnonOsa[] {
         return [
           ...self.olemassaOlevatAmmatillisetTutkinnonOsat,
           ...self.olemassaOlevatPaikallisetTutkinnonOsat,

@@ -2,10 +2,10 @@ import { getHarjoittelujaksot } from "./getHarjoittelujaksot"
 import { getNaytot } from "./getNaytot"
 import { getOsaamisvaatimukset } from "./getOsaamisvaatimukset"
 import { getOtsikko } from "./getOtsikko"
-import { getSijainnit } from "./getSijainnit"
 import { getTila } from "./getTila"
 import { types, getRoot } from "mobx-state-tree"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
+import { getOsaamispisteet } from "./getOsaamispisteet"
 
 // TODO: type tutkinnonOsa
 export const TutkinnonOsaViews = types.model({}).views((self: any) => {
@@ -16,13 +16,6 @@ export const TutkinnonOsaViews = types.model({}).views((self: any) => {
     },
     get naytot() {
       return getNaytot(self.hankitunOsaamisenNaytto)
-    },
-    // deprecate
-    get sijainnit() {
-      return getSijainnit(
-        self.hankitunOsaamisenNaytto,
-        self.osaamisenHankkimistavat
-      )
     },
     get harjoittelujaksot() {
       return getHarjoittelujaksot(self.osaamisenHankkimistavat)
@@ -35,6 +28,9 @@ export const TutkinnonOsaViews = types.model({}).views((self: any) => {
         self.tutkinnonOsa.arviointi,
         root.translations.activeLocale
       )
+    },
+    get osaamispisteet() {
+      return getOsaamispisteet(self.tutkinnonOsaViitteet)
     },
     opintoOtsikko(ospLyhenne: string): string {
       return getOtsikko(self, ospLyhenne)

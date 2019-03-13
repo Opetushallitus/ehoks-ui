@@ -3,7 +3,7 @@ import { Oppilaitoshenkilo } from "./Oppilaitoshenkilo"
 import { TyopaikallaHankittavaOsaaminen } from "./TyopaikallaHankittavaOsaaminen"
 import { MuuOppimisymparisto } from "./MuuOppimisymparisto"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
-import { KoodistoVastaus } from "../../shared/models/KoodistoVastaus"
+import { KoodistoVastaus } from "models/KoodistoVastaus"
 
 const Model = types.model("OsaamisenHankkimistapaModel", {
   id: types.optional(types.number, 0),

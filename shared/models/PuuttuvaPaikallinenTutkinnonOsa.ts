@@ -27,8 +27,7 @@ export const PuuttuvaPaikallinenTutkinnonOsa = types
         return self.nimi
       },
       get osaamispisteet() {
-        // TODO: get from ePerusteet call
-        return 0
+        return self.laajuus
       }
     }
   })

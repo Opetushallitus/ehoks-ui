@@ -7,6 +7,7 @@ const Organisaatio = types.model({
   nimi: types.optional(types.string, "")
 })
 
+// TODO: use HOKS model, update mocks
 export const Oppija = types
   .model("Oppija", {
     nimi: types.optional(types.string, ""),

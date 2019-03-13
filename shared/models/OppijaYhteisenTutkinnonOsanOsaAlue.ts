@@ -26,16 +26,8 @@ export const OppijaYhteisenTutkinnonOsanOsaAlue = types
         return self.osaAlue ? self.osaAlue.nimi : ""
       },
       get osaamispisteet() {
-        // TODO: get from ePerusteet call
+        // TODO: where do we get this?
         return 0
-      },
-      get osaamisvaatimukset() {
-        // TODO
-        return []
-      },
-      get harjoittelujaksot() {
-        // TODO
-        return []
       }
     }
   })

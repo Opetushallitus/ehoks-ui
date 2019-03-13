@@ -23,9 +23,6 @@ export const OlemassaOlevaPaikallinenTutkinnonOsa = types
       get naytot() {
         return []
       },
-      get sijainnit() {
-        return []
-      },
       opintoOtsikko(ospLyhenne: string): string {
         return getOtsikko(this, ospLyhenne)
       }
