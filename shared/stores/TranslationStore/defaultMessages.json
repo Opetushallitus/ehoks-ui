@@ -51,6 +51,26 @@
   },
   {
     "locale": "fi",
+    "key": "errors.HOKS.fetchOpiskeluoikeudet",
+    "value": "Opiskeluoikeuksien hakeminen epäonnistui"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.EnrichKoodiUri.fetchEPerusteet",
+    "value": "Tutkinnon osien haku ePerusteista epäonnistui"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.EnrichKoodiUri.fetchKoodisto",
+    "value": "Haku koodistosta epäonnistui"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.EnrichTutkinnonOsa.fetchViitteet",
+    "value": "Tutkinnon osan viitteiden haku epäonnistui"
+  },
+  {
+    "locale": "fi",
     "key": "footer.opintopolkuLogoLabel",
     "value": "Opintopolku logo"
   },

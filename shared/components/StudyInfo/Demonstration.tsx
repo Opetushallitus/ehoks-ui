@@ -70,15 +70,17 @@ export class Demonstration extends React.Component<DemonstrationProps> {
               <TD>
                 {demonstration &&
                   demonstration.koulutuksenJarjestajaArvioijat &&
-                  demonstration.koulutuksenJarjestajaArvioijat.map(arvioija => (
-                    <span>
-                      {arvioija} <br />
-                    </span>
-                  ))}
+                  demonstration.koulutuksenJarjestajaArvioijat.map(
+                    (arvioija, i) => (
+                      <span key={i}>
+                        {arvioija} <br />
+                      </span>
+                    )
+                  )}
                 {demonstration &&
                   demonstration.tyoelamaArvioijat &&
-                  demonstration.tyoelamaArvioijat.map(arvioija => (
-                    <span>
+                  demonstration.tyoelamaArvioijat.map((arvioija, i) => (
+                    <span key={i}>
                       {arvioija} <br />
                     </span>
                   ))}

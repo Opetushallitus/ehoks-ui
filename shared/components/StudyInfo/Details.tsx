@@ -95,9 +95,10 @@ export class Details extends React.Component<DetailsProps> {
       <DetailsCollapsed fadedColor={fadedColor}>
         <LocationsContainer>
           <DetailsContent>
-            {learningPeriods.map(lp => {
+            {learningPeriods.map((lp, i) => {
               return (
                 <LearningEvent
+                  key={i}
                   title={
                     lp.tyyppi === "OTHER" ? (
                       lp.nimi
@@ -115,9 +116,10 @@ export class Details extends React.Component<DetailsProps> {
                 />
               )
             })}
-            {demonstrations.map(d => {
+            {demonstrations.map((d, i) => {
               return (
                 <LearningEvent
+                  key={i}
                   title={
                     <FormattedMessage
                       id="opiskelusuunnitelma.nayttoTitle"

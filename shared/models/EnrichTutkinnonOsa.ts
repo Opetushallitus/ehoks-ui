@@ -19,18 +19,22 @@ export const EnrichTutkinnonOsa = (
       }
     )
     .actions(self => {
-      const { apiUrl, fetchCollection } = getEnv<StoreEnvironment>(self)
+      const { apiUrl, errors, fetchCollection } = getEnv<StoreEnvironment>(self)
 
       const fetchTutkinnonOsaViitteet = flow(function*(id: number) {
-        const response = yield fetchCollection(
-          apiUrl(`oppija/external/eperusteet/tutkinnonosat/${id}/viitteet`)
-        )
-        if (Object.keys(self).indexOf(fieldName) !== -1) {
-          self[fieldName] = response.data
-        } else {
-          throw new Error(
-            `Your mobx-state-tree model is missing definition for '${fieldName}'`
+        try {
+          const response = yield fetchCollection(
+            apiUrl(`oppija/external/eperusteet/tutkinnonosat/${id}/viitteet`)
           )
+          if (Object.keys(self).indexOf(fieldName) !== -1) {
+            self[fieldName] = response.data
+          } else {
+            throw new Error(
+              `Your mobx-state-tree model is missing definition for '${fieldName}'`
+            )
+          }
+        } catch (error) {
+          errors.logError("EnrichTutkinnonOsa.fetchViitteet", error.message)
         }
       })
 

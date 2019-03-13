@@ -55,26 +55,68 @@ export const HOKS = types
     EnrichKoodiUri,
     Model
   )
+  .volatile(_ => ({
+    osaamispisteet: 0
+  }))
   .actions(self => {
-    const { apiUrl, fetchCollection } = getEnv<StoreEnvironment>(self)
-    const afterCreate = flow(function*() {
-      const response = yield fetchCollection(
-        apiUrl(`oppija/oppijat/${self.oppijaOid}/opiskeluoikeudet`)
+    const { apiUrl, errors, fetchCollection, fetchSingle } = getEnv<
+      StoreEnvironment
+    >(self)
+
+    const fetchTutkinto = flow(function*() {
+      const diaarinumero =
+        self.opiskeluOikeus.suoritukset[0].koulutusmoduuli.perusteenDiaarinumero
+      const response = yield fetchSingle(
+        apiUrl(
+          `oppija/external/eperusteet/tutkinnot?diaarinumero=${diaarinumero}`
+        )
       )
-      const opiskeluOikeudet = response.data || []
-      const opiskeluOikeus = find(
-        opiskeluOikeudet,
-        // TODO: uncomment for real API, opiskeluoikeusOid
-        // does not match for mock data
-        // (oo: any) => oo.oid === self.opiskeluoikeusOid
-        (oo: any) => oo.oid === "1.2.246.562.15.10359275566"
+      return response.data
+    })
+
+    const fetchRakenne = flow(function*(id: string) {
+      const response = yield fetchSingle(
+        apiUrl(
+          `oppija/external/eperusteet/tutkinnot/${id}/suoritustavat/reformi/rakenne`
+        )
       )
-      if (opiskeluOikeus !== undefined) {
-        self.opiskeluOikeus = opiskeluOikeus
+      return response.data
+    })
+
+    const fetchOpiskeluoikeudet = flow(function*() {
+      try {
+        const response = yield fetchCollection(
+          apiUrl(`oppija/oppijat/${self.oppijaOid}/opiskeluoikeudet`)
+        )
+        const opiskeluOikeudet = response.data || []
+        const opiskeluOikeus = find(
+          opiskeluOikeudet,
+          // TODO: uncomment for real API,
+          // opiskeluoikeusOid does not match for mock data
+          // (oo: any) => oo.oid === self.opiskeluoikeusOid
+          (oo: any) => oo.oid === "1.2.246.562.15.10359275566"
+        )
+        if (opiskeluOikeus !== undefined) {
+          self.opiskeluOikeus = opiskeluOikeus
+          const tutkinto = yield fetchTutkinto()
+          const rakenne = yield fetchRakenne(tutkinto.id)
+          self.osaamispisteet = rakenne.osat.reduce((osp: number, osa: any) => {
+            osp += osa.muodostumisSaanto.laajuus.minimi
+            return osp
+          }, 0)
+        }
+      } catch (error) {
+        errors.logError("HOKS.fetchOpiskeluoikeudet", error.message)
       }
     })
-    return { afterCreate }
+
+    return { fetchOpiskeluoikeudet }
   })
+  .actions(self => ({
+    afterCreate() {
+      self.fetchOpiskeluoikeudet()
+    }
+  }))
   .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {
@@ -145,10 +187,6 @@ export const HOKS = types
       get keskeytysPvm() {
         // TODO: where do we get this value?
         return ""
-      },
-      get osaamispisteet() {
-        // TODO: where do we get this value?
-        return 0
       }
     }
   })

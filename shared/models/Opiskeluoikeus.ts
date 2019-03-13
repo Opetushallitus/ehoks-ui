@@ -6,7 +6,8 @@ const Nimi = types.model("Nimi", {
 })
 
 const Koulutusmoduuli = types.model("Koulutusmoduuli", {
-  perusteenNimi: types.optional(Nimi, {})
+  perusteenNimi: types.optional(Nimi, {}),
+  perusteenDiaarinumero: types.optional(types.string, "")
 })
 
 const Tutkintonimike = types.model("Tutkintonimike", {

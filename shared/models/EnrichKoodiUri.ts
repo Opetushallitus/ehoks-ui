@@ -14,38 +14,46 @@ export const EnrichKoodiUri = types
   // when assingning to self[dynamicKey]
   .volatile((_): DynamicObject => ({}))
   .actions(self => {
-    const { apiUrl, fetchSingle } = getEnv<StoreEnvironment>(self)
+    const { apiUrl, errors, fetchSingle } = getEnv<StoreEnvironment>(self)
 
     const fetchEPerusteet = flow(function*(key: string, code: string) {
-      const [dynamicKey] = key.split("KoodiUri") // key without KoodiUri
-      // check our global cache first
-      cachedResponses[code] =
-        cachedResponses[code] ||
-        fetchSingle(apiUrl(`oppija/external/eperusteet/${code}`))
-      const response = yield cachedResponses[code]
-      if (Object.keys(self).indexOf(dynamicKey) > -1) {
-        self[dynamicKey] = response.data
-      } else {
-        throw new Error(
-          `Your mobx-state-tree model is missing definition for '${dynamicKey}'`
-        )
+      try {
+        const [dynamicKey] = key.split("KoodiUri") // key without KoodiUri
+        // check our global cache first
+        cachedResponses[code] =
+          cachedResponses[code] ||
+          fetchSingle(apiUrl(`oppija/external/eperusteet/${code}`))
+        const response = yield cachedResponses[code]
+        if (Object.keys(self).indexOf(dynamicKey) > -1) {
+          self[dynamicKey] = response.data
+        } else {
+          throw new Error(
+            `Your mobx-state-tree model is missing definition for '${dynamicKey}'`
+          )
+        }
+      } catch (error) {
+        errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
       }
     })
 
     const fetchKoodisto = flow(function*(key: string, code: string) {
-      const [dynamicKey] = key.split("KoodiUri") // key without KoodiUri
-      // check our global cache first
-      cachedResponses[code] =
-        cachedResponses[code] ||
-        fetchSingle(apiUrl(`oppija/external/koodisto/${code}`))
-      const { data } = yield cachedResponses[code]
-      // we currently only need nimi from KoodistoKoodi
-      if (Object.keys(self).indexOf(dynamicKey) > -1) {
-        self[dynamicKey] = { nimi: data.metadata[0].nimi }
-      } else {
-        throw new Error(
-          `Your mobx-state-tree model is missing definition for '${dynamicKey}'`
-        )
+      try {
+        const [dynamicKey] = key.split("KoodiUri") // key without KoodiUri
+        // check our global cache first
+        cachedResponses[code] =
+          cachedResponses[code] ||
+          fetchSingle(apiUrl(`oppija/external/koodisto/${code}`))
+        const { data } = yield cachedResponses[code]
+        // we currently only need nimi from KoodistoKoodi
+        if (Object.keys(self).indexOf(dynamicKey) > -1) {
+          self[dynamicKey] = { nimi: data.metadata[0].nimi }
+        } else {
+          throw new Error(
+            `Your mobx-state-tree model is missing definition for '${dynamicKey}'`
+          )
+        }
+      } catch (error) {
+        errors.logError("EnrichKoodiUri.fetchKoodisto", error.message)
       }
     })
 

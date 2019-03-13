@@ -124,7 +124,7 @@ export class Tavoitteet extends React.Component<
               </tr>
               <tr>
                 <LabeledColumn id="tavoitteet.suunnitelmaJatkoOpintoihinTitle">
-                  {hoks.urasuunnitelma.nimi}
+                  {hoks.urasuunnitelma && hoks.urasuunnitelma.nimi}
                 </LabeledColumn>
                 <td />
                 <td />
