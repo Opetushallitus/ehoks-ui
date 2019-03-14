@@ -42,6 +42,13 @@ export const OlemassaOlevaAmmatillinenTutkinnonOsa = types
       get naytot() {
         return getNaytot(self.tarkentavatTiedotNaytto)
       },
+      get todentamisenProsessi() {
+        return {
+          koodiUri: self.valittuTodentamisenProsessiKoodiUri,
+          lahetettyArvioitavaksi:
+            self.tarkentavatTiedotArvioija.lahetettyArvioitavaksi
+        }
+      },
       opintoOtsikko(ospLyhenne: string): string {
         return getOtsikko(this, ospLyhenne)
       }

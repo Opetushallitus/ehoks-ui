@@ -5,8 +5,9 @@ import MediaQuery from "react-responsive"
 import styled from "styled"
 import { breakpoints } from "theme"
 import { Container, InfoContainer, Table, TBody, TD, TH, Title } from "./Shared"
-import { Naytto } from "models/helpers/TutkinnonOsa"
+import { Naytto, TodentamisenProsessi } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
+import { VerificationProcess } from "types/VerificationProcess"
 
 const DemonstrationTitle = styled(Title)`
   margin-left: 20px;
@@ -27,21 +28,30 @@ const CustomSlider = styled(MobileSlider)`
 
 interface DemonstrationProps {
   demonstration: Naytto
+  verificationProcess?: TodentamisenProsessi
 }
 
 export class Demonstration extends React.Component<DemonstrationProps> {
   render() {
-    const { demonstration } = this.props
+    const { demonstration, verificationProcess } = this.props
+    const title =
+      verificationProcess &&
+      verificationProcess.koodiUri === VerificationProcess.OHJAUS_NAYTTOON ? (
+        <FormattedMessage
+          id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
+          defaultMessage="Osaaminen osoitetaan näytössä"
+        />
+      ) : (
+        <FormattedMessage
+          id="opiskelusuunnitelma.nayttoTitle"
+          defaultMessage="Näyttö"
+        />
+      )
     return (
       <Container>
         <DemonstrationTitle>
           <LearningEvent
-            title={
-              <FormattedMessage
-                id="opiskelusuunnitelma.nayttoTitle"
-                defaultMessage="Näyttö"
-              />
-            }
+            title={title}
             type={demonstration.tyyppi}
             description={demonstration.organisaatio}
             startDate={demonstration.alku}

@@ -3,6 +3,11 @@ interface Arviointikriteeri {
   kriteerit?: string[]
 }
 
+export interface TodentamisenProsessi {
+  koodiUri?: string
+  lahetettyArvioitavaksi?: string
+}
+
 export interface Osaamisvaatimus {
   kuvaus?: string
   kriteerit?: Arviointikriteeri[]
@@ -38,5 +43,6 @@ export interface TutkinnonOsa {
   sijainnit?: string[]
   harjoittelujaksot?: Harjoittelujakso[]
   tila?: string
+  todentamisenProsessi?: TodentamisenProsessi
   opintoOtsikko: (ospLyhenne: string) => string
 }

@@ -5,7 +5,8 @@ import { Details } from "./StudyInfo/Details"
 import {
   Osaamisvaatimus,
   Naytto,
-  Harjoittelujakso
+  Harjoittelujakso,
+  TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
 
 interface ContainerProps {
@@ -73,6 +74,10 @@ export interface StudyInfoProps {
    * @default []
    */
   learningPeriods?: Array<Harjoittelujakso>
+  /**
+   * Verification process details
+   */
+  verificationProcess?: TodentamisenProsessi
   /** Title of the accordion, always visible */
   title?: React.ReactNode
   /**
@@ -137,6 +142,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       demonstrations = [],
       fadedColor,
       learningPeriods = [],
+      verificationProcess,
       title,
       width = "25%"
     } = this.props
@@ -144,7 +150,8 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
 
     const hasDetails =
       (learningPeriods && learningPeriods.length > 0) ||
-      demonstrations.length > 0
+      demonstrations.length > 0 ||
+      verificationProcess
 
     return (
       <Container
@@ -160,6 +167,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
               demonstrations={demonstrations}
               expanded={expanded.details}
               learningPeriods={learningPeriods}
+              verificationProcess={verificationProcess}
               toggle={this.toggle}
             />
           )}

@@ -54,7 +54,13 @@ export const OlemassaOlevaYhteinenTutkinnonOsa = types
           )
         ]
       },
-
+      get todentamisenProsessi() {
+        return {
+          koodiUri: self.valittuTodentamisenProsessiKoodiUri,
+          lahetettyArvioitavaksi:
+            self.tarkentavatTiedotArvioija.lahetettyArvioitavaksi
+        }
+      },
       opintoOtsikko(ospLyhenne: string): string {
         return getOtsikko(this, ospLyhenne)
       }
