@@ -75,11 +75,17 @@ export class LearningEvent extends React.Component<LearningEventProps> {
             )}
           </Icon>
           <DetailsContainer>
-            <Detail size={size}>
-              {format(parseISO(startDate), "d.M.")}
-              {" - "}
-              {format(parseISO(endDate), "d.M.yyyy")}
-            </Detail>
+            {startDate === endDate ? (
+              <Detail size={size}>
+                {startDate ? format(parseISO(startDate), "d.M.yyyy") : ""}
+              </Detail>
+            ) : (
+              <Detail size={size}>
+                {format(parseISO(startDate), "d.M.")}
+                {" - "}
+                {format(parseISO(endDate), "d.M.yyyy")}
+              </Detail>
+            )}
             <Detail size={size}>{description}</Detail>
           </DetailsContainer>
         </ContentContainer>

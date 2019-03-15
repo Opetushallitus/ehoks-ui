@@ -14,22 +14,22 @@ export function getHarjoittelujaksot(
 ) {
   return osaamisenHankkimistavat.map<Harjoittelujakso>(tapa => {
     return {
-      ajankohta: {
-        alku: tapa.alku,
-        loppu: tapa.loppu
-      },
+      alku: tapa.alku,
+      loppu: tapa.loppu,
       ohjaaja: tapa.tyopaikallaHankittavaOsaaminen
         ? tapa.tyopaikallaHankittavaOsaaminen.vastuullinenOhjaaja.nimi
         : "",
       tyotehtavat: tapa.tyopaikallaHankittavaOsaaminen
         ? tapa.tyopaikallaHankittavaOsaaminen.keskeisetTyotehtavat
         : [],
-      nimi: tapa.muutOppimisymparisto
-        ? tapa.muutOppimisymparisto.oppimisymparisto.nimi
-        : "",
-      selite: tapa.muutOppimisymparisto
-        ? tapa.muutOppimisymparisto.oppimisymparisto.selite
-        : tapa.tyopaikallaHankittavaOsaaminen.tyopaikanNimi,
+      nimi:
+        tapa.muutOppimisymparisto && tapa.muutOppimisymparisto.oppimisymparisto
+          ? tapa.muutOppimisymparisto.oppimisymparisto.nimi
+          : "",
+      selite:
+        tapa.muutOppimisymparisto && tapa.muutOppimisymparisto.oppimisymparisto
+          ? tapa.muutOppimisymparisto.oppimisymparisto.selite
+          : tapa.tyopaikallaHankittavaOsaaminen.tyopaikanNimi,
       tyyppi: tapa.muutOppimisymparisto ? "WORKPLACE" : "OTHER"
     }
   })

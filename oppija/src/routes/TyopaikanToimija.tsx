@@ -6,6 +6,7 @@ import { NavigationContainer } from "components/NavigationContainer"
 import { BackgroundContainer } from "components/SectionContainer"
 import { StudyInfo } from "components/StudyInfo"
 import { inject, observer } from "mobx-react"
+import { TutkinnonOsa } from "models/helpers/TutkinnonOsa"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
@@ -85,95 +86,103 @@ export class TyopaikanToimija extends React.Component<TyopaikanToimijaProps> {
                     inline={true}
                     childContainer={false}
                   >
-                    <ContentContainer>
-                      <StudyInfo
-                        accentColor="#EB6F02"
-                        fadedColor="#FDF1E6"
-                        title={`${
-                          oppija.tutkinnonOsanOtsikko
-                        } ${competencePointsTitle}`}
-                        locations={[]}
-                        learningPeriods={oppija.harjoittelujaksot}
-                        competenceRequirements={oppija.ammattitaitovaatimukset}
-                        demonstrations={oppija.naytot}
-                      />
-                      <Accordion
-                        id={`oppija_${i}_tavoitteet`}
-                        title={
-                          <AccordionTitle>
-                            <FormattedMessage
-                              id="tyopaikanToimija.opiskelijanTavoitteetTitle"
-                              defaultMessage="Opiskelijan tavoitteet"
+                    {oppija.hoks.puuttuvatTutkinnonOsat.map(
+                      (tutkinnonOsa: TutkinnonOsa, toi: number) => {
+                        return (
+                          <ContentContainer key={toi}>
+                            <StudyInfo
+                              accentColor="#EB6F02"
+                              fadedColor="#FDF1E6"
+                              title={tutkinnonOsa.opintoOtsikko(
+                                competencePointsTitle
+                              )}
+                              learningPeriods={tutkinnonOsa.harjoittelujaksot}
+                              competenceRequirements={
+                                tutkinnonOsa.osaamisvaatimukset
+                              }
+                              demonstrations={tutkinnonOsa.naytot}
                             />
-                          </AccordionTitle>
-                        }
-                        childContainer={false}
-                        helpIcon={true}
-                      >
-                        <GoalsTable>
-                          <tbody>
-                            <tr>
-                              <th>
-                                <FormattedMessage
-                                  id="tyopaikanToimija.tutkinnonNimiTitle"
-                                  defaultMessage="Tutkinnon nimi"
-                                />
-                              </th>
-                              <th>
-                                <FormattedMessage
-                                  id="tyopaikanToimija.laajuusTitle"
-                                  defaultMessage="Laajuus"
-                                />
-                              </th>
-                              <th />
-                            </tr>
-                            <tr>
-                              <td
-                                data-label={intl.formatMessage({
-                                  id: "tyopaikanToimija.tutkinnonNimiTitle"
-                                })}
-                              >
-                                {oppija.tutkinto.nimi}
-                              </td>
-                              <td
-                                data-label={intl.formatMessage({
-                                  id: "tyopaikanToimija.laajuusTitle"
-                                })}
-                              >
-                                {oppija.tutkinto.laajuus}{" "}
-                                <FormattedMessage
-                                  id="tyopaikanToimija.osaamispistetta"
-                                  defaultMessage="osaamispistettä"
-                                />
-                              </td>
-                              <td />
-                            </tr>
-                            <tr>
-                              <th>
-                                <FormattedMessage
-                                  id="tyopaikanToimija.suunnitelmaJatkoOpintoihinTitle"
-                                  defaultMessage="Suunnitelma jatko-opintoihin siirtymisestä"
-                                />
-                              </th>
-                              <th />
-                              <th />
-                            </tr>
-                            <tr>
-                              <td
-                                data-label={intl.formatMessage({
-                                  id:
-                                    "tyopaikanToimija.suunnitelmaJatkoOpintoihinTitle"
-                                })}
-                              >
-                                {oppija.tutkinto.suunnitelma}
-                              </td>
-                              <td />
-                              <td />
-                            </tr>
-                          </tbody>
-                        </GoalsTable>
-                      </Accordion>
-                    </ContentContainer>
+                            <Accordion
+                              id={`oppija_${i}_tavoitteet`}
+                              title={
+                                <AccordionTitle>
+                                  <FormattedMessage
+                                    id="tyopaikanToimija.opiskelijanTavoitteetTitle"
+                                    defaultMessage="Opiskelijan tavoitteet"
+                                  />
+                                </AccordionTitle>
+                              }
+                              childContainer={false}
+                              helpIcon={true}
+                            >
+                              <GoalsTable>
+                                <tbody>
+                                  <tr>
+                                    <th>
+                                      <FormattedMessage
+                                        id="tyopaikanToimija.tutkinnonNimiTitle"
+                                        defaultMessage="Tutkinnon nimi"
+                                      />
+                                    </th>
+                                    <th>
+                                      <FormattedMessage
+                                        id="tyopaikanToimija.laajuusTitle"
+                                        defaultMessage="Laajuus"
+                                      />
+                                    </th>
+                                    <th />
+                                  </tr>
+                                  <tr>
+                                    <td
+                                      data-label={intl.formatMessage({
+                                        id:
+                                          "tyopaikanToimija.tutkinnonNimiTitle"
+                                      })}
+                                    >
+                                      {oppija.hoks.tutkinnonNimi}
+                                    </td>
+                                    <td
+                                      data-label={intl.formatMessage({
+                                        id: "tyopaikanToimija.laajuusTitle"
+                                      })}
+                                    >
+                                      {oppija.hoks.osaamispisteet}{" "}
+                                      <FormattedMessage
+                                        id="tyopaikanToimija.osaamispistetta"
+                                        defaultMessage="osaamispistettä"
+                                      />
+                                    </td>
+                                    <td />
+                                  </tr>
+                                  <tr>
+                                    <th>
+                                      <FormattedMessage
+                                        id="tyopaikanToimija.suunnitelmaJatkoOpintoihinTitle"
+                                        defaultMessage="Suunnitelma jatko-opintoihin siirtymisestä"
+                                      />
+                                    </th>
+                                    <th />
+                                    <th />
+                                  </tr>
+                                  <tr>
+                                    <td
+                                      data-label={intl.formatMessage({
+                                        id:
+                                          "tyopaikanToimija.suunnitelmaJatkoOpintoihinTitle"
+                                      })}
+                                    >
+                                      {oppija.hoks.urasuunnitelma.nimi}
+                                    </td>
+                                    <td />
+                                    <td />
+                                  </tr>
+                                </tbody>
+                              </GoalsTable>
+                            </Accordion>
+                          </ContentContainer>
+                        )
+                      }
+                    )}
                   </Accordion>
                 )
               })}

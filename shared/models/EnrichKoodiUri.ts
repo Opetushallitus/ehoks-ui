@@ -59,14 +59,14 @@ export const EnrichKoodiUri = types
 
     const afterCreate = () => {
       Object.keys(self).forEach(key => {
-        if (key.match(/tutkinnonOsaKoodiUri/)) {
+        if (key.match(/tutkinnonOsaKoodiUri/) && self[key]) {
           const codes: string[] = Array.isArray(self[key])
             ? self[key]
             : [self[key]]
           codes.forEach(code => {
             fetchEPerusteet(key, code)
           })
-        } else if (key.match(/KoodiUri/)) {
+        } else if (key.match(/KoodiUri/) && self[key]) {
           const codes: string[] = Array.isArray(self[key])
             ? self[key]
             : [self[key]]

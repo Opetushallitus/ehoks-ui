@@ -84,6 +84,9 @@ export const HOKS = types
     })
 
     const fetchOpiskeluoikeudet = flow(function*() {
+      if (!self.oppijaOid) {
+        return
+      }
       try {
         const response = yield fetchCollection(
           apiUrl(`oppija/oppijat/${self.oppijaOid}/opiskeluoikeudet`)
