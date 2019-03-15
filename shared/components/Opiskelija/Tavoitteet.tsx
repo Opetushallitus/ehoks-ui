@@ -5,7 +5,7 @@ import { HelpPopup } from "components/HelpPopup"
 import { InfoTable } from "components/InfoTable"
 import { LabeledColumn } from "components/LabeledColumn"
 import { observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
+import { Instance, SnapshotOrInstance } from "mobx-state-tree"
 import { SessionUser } from "models/SessionUser"
 import React from "react"
 import { FormattedMessage } from "react-intl"
@@ -14,7 +14,7 @@ import { HOKS } from "models/HOKS"
 export interface TavoitteetProps {
   children?: React.ReactChildren
   student: Instance<typeof SessionUser> | null
-  hoks: Instance<typeof HOKS>
+  hoks: SnapshotOrInstance<typeof HOKS>
   titles?: {
     heading?: React.ReactNode
     goals?: React.ReactNode

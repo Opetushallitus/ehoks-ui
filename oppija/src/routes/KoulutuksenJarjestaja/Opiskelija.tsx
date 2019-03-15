@@ -243,7 +243,7 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
                       <Tavoitteet
                         path="/"
                         student={student}
-                        hoks={hoks}
+                        hoks={hoks.suunnitelmat[0]}
                         titles={{
                           heading: (
                             <FormattedMessage
@@ -281,7 +281,7 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
                       />
                       <Opiskelusuunnitelma
                         path="opiskelusuunnitelma"
-                        plan={hoks.suunnitelma}
+                        plan={hoks.suunnitelmat[0]}
                         titles={{
                           heading: (
                             <FormattedMessage
