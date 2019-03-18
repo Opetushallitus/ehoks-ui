@@ -1,38 +1,164 @@
-import { aiemmatOpinnot } from "mocks/mockAiemmatOpinnot"
 import { SnapshotOrInstance } from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
-import { opinnot } from "mocks/mockOpinnot"
 
 export const suunnitelmat: Array<SnapshotOrInstance<typeof HOKS>> = [
   {
-    eid: "1",
-    tutkinnonNimi: "Sosiaali- ja terveysalan perustutkinto",
-    osaamispisteet: 180,
-    osaamisala: "Sairaanhoidon ja huolenpidon osaamisala",
-    tutkintonimike: "Lähihoitaja",
-    oppilaitos: "Opinpaikka",
-    aloitusPvm: "2018-08-15",
-    aiemmatOpinnot: [{ ...aiemmatOpinnot[0] }],
-    opinnot: [...opinnot]
+    opiskeluoikeusOid: "1.2.246.562.15.76811932037",
+    oppijaOid: "1.2.246.562.24.44651722625",
+    urasuunnitelmaKoodiUri: "urasuunnitelma_0003",
+    puuttuvatAmmatillisetTutkinnonOsat: [
+      {
+        tutkinnonOsaKoodiUri: "tutkinnonosat_106228",
+        osaamisenHankkimistavat: [
+          {
+            alku: "2019-05-23",
+            loppu: "2019-06-15",
+            tyopaikallaHankittavaOsaaminen: {
+              tyopaikanNimi: "Opinpaikka",
+              vastuullinenOhjaaja: {
+                nimi: "Etunimi Sukunimi"
+              },
+              keskeisetTyotehtavat: ["Ensimmäinen tehtävä", "Toinen tehtävä"]
+            }
+          }
+        ],
+        hankitunOsaamisenNaytto: [
+          {
+            alku: "2019-08-01",
+            loppu: "2019-08-01",
+            nayttoymparisto: {
+              nimi: "Organisaation nimi",
+              kuvaus: "Kuvaus näyttöympäristöstä"
+            },
+            koulutuksenJarjestajaArvioijat: [
+              {
+                nimi: "Kimmo Kouluttaja",
+                organisaatio: {
+                  oppilaitosOid: "123"
+                }
+              }
+            ],
+            tyoelamaArvioijat: [
+              {
+                nimi: "Tiina Työelämäinen",
+                organisaatio: {
+                  nimi: "Organisaation nimi"
+                }
+              }
+            ],
+            keskeisetTyotehtavatNaytto: [
+              "Ensimmäinen näyttötehtävä",
+              "Toinen näyttötehtävä"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
-    eid: "2",
-    tutkinnonNimi: "Asiakaskokemuksen kehittäminen ja palvelumuotoilu",
-    osaamispisteet: 180,
-    osaamisala: "Palvelumuotoilun osaamisala",
-    tutkintonimike: "Palvelumuotoilija",
-    oppilaitos: "Keuda",
-    aloitusPvm: "2018-08-01",
-    opinnot: [...opinnot]
+    opiskeluoikeusOid: "1.2.246.562.15.76811932037",
+    oppijaOid: "1.2.246.562.24.44651722625",
+    urasuunnitelmaKoodiUri: "urasuunnitelma_0001",
+    puuttuvatAmmatillisetTutkinnonOsat: [
+      {
+        tutkinnonOsaKoodiUri: "tutkinnonosat_106228",
+        osaamisenHankkimistavat: [
+          {
+            alku: "2019-06-15",
+            loppu: "2019-06-30",
+            tyopaikallaHankittavaOsaaminen: {
+              tyopaikanNimi: "Koulutuskeskus Oppiva",
+              vastuullinenOhjaaja: {
+                nimi: "Etunimi Sukunimi"
+              },
+              keskeisetTyotehtavat: ["Ensimmäinen tehtävä", "Toinen tehtävä"]
+            }
+          }
+        ],
+        hankitunOsaamisenNaytto: [
+          {
+            alku: "2019-08-01",
+            loppu: "2019-08-01",
+            nayttoymparisto: {
+              nimi: "Organisaation nimi",
+              kuvaus: "Kuvaus näyttöympäristöstä"
+            },
+            koulutuksenJarjestajaArvioijat: [
+              {
+                nimi: "Kimmo Kouluttaja",
+                organisaatio: {
+                  oppilaitosOid: "123"
+                }
+              }
+            ],
+            tyoelamaArvioijat: [
+              {
+                nimi: "Tiina Työelämäinen",
+                organisaatio: {
+                  nimi: "Organisaation nimi"
+                }
+              }
+            ],
+            keskeisetTyotehtavatNaytto: [
+              "Ensimmäinen näyttötehtävä",
+              "Toinen näyttötehtävä"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
-    eid: "3",
-    tutkinnonNimi: "Media-alan ammattitutkinto",
-    osaamispisteet: 150,
-    osaamisala: "Valokuvauksen osaamisala",
-    tutkintonimike: "Valokuvaaja",
-    oppilaitos: "Keuda",
-    keskeytysPvm: "2017-01-12",
-    opinnot: [...opinnot]
+    opiskeluoikeusOid: "1.2.246.562.15.76811932037",
+    oppijaOid: "1.2.246.562.24.44651722625",
+    urasuunnitelmaKoodiUri: "urasuunnitelma_0002",
+    puuttuvatAmmatillisetTutkinnonOsat: [
+      {
+        tutkinnonOsaKoodiUri: "tutkinnonosat_300204",
+        osaamisenHankkimistavat: [
+          {
+            alku: "",
+            loppu: "",
+            tyopaikallaHankittavaOsaaminen: {
+              tyopaikanNimi: "Opinpaikka",
+              vastuullinenOhjaaja: {
+                nimi: "Etunimi Sukunimi"
+              },
+              keskeisetTyotehtavat: ["Ensimmäinen tehtävä", "Toinen tehtävä"]
+            }
+          }
+        ],
+        hankitunOsaamisenNaytto: [
+          {
+            alku: "2019-09-11",
+            loppu: "2019-09-11",
+            nayttoymparisto: {
+              nimi: "Organisaation nimi",
+              kuvaus: "Kuvaus näyttöympäristöstä"
+            },
+            koulutuksenJarjestajaArvioijat: [
+              {
+                nimi: "Kimmo Kouluttaja",
+                organisaatio: {
+                  oppilaitosOid: "123"
+                }
+              }
+            ],
+            tyoelamaArvioijat: [
+              {
+                nimi: "Tiina Työelämäinen",
+                organisaatio: {
+                  nimi: "Organisaation nimi"
+                }
+              }
+            ],
+            keskeisetTyotehtavatNaytto: [
+              "Ensimmäinen näyttötehtävä",
+              "Toinen näyttötehtävä"
+            ]
+          }
+        ]
+      }
+    ]
   }
 ]

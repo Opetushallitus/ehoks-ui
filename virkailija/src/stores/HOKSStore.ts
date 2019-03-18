@@ -2,13 +2,9 @@ import { flow, types } from "mobx-state-tree"
 import { suunnitelmat } from "mocks/mockSuunnitelmat"
 import { HOKS } from "models/HOKS"
 
-const mockFetchHOKS = (eid: string) => {
-  return Promise.resolve([
-    {
-      eid,
-      ...suunnitelmat[0]
-    }
-  ])
+const mockFetchHOKS = (_: string) => {
+  // we only need the first HOKS mock here
+  return Promise.resolve([suunnitelmat[0]])
 }
 
 const HOKSStoreModel = {
@@ -21,9 +17,10 @@ export const HOKSStore = types
   .actions(self => {
     // const { fetchCollection, errors } = getEnv<StoreEnvironment>(self)
 
-    const haeSuunnitelmat = flow(function*(eid: string) {
+    // fetch HOKSes using student oid
+    const haeSuunnitelmat = flow(function*(oid: string) {
       self.isLoading = true
-      self.suunnitelmat = yield mockFetchHOKS(eid)
+      self.suunnitelmat = yield mockFetchHOKS(oid)
       self.isLoading = false
     })
 

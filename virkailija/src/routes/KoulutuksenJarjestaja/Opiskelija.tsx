@@ -113,7 +113,12 @@ export class Opiskelija extends React.Component<
     const previous = studentIndex > 0 ? results[studentIndex - 1] : null
     const next =
       studentIndex < results.length ? results[studentIndex + 1] : null
-    const suunnitelma = hoks.suunnitelmat[0]
+    const suunnitelma = hoks.suunnitelmat.length
+      ? hoks.suunnitelmat[0]
+      : undefined
+    if (!suunnitelma) {
+      return null
+    }
 
     return (
       <Location>
