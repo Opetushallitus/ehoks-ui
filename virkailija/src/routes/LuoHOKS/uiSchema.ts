@@ -47,7 +47,7 @@ export const uiSchema = {
             "loppu",
             "nayttoymparisto",
             "jarjestaja",
-            "koulutuksenjarjestaja-arvioijat",
+            "koulutuksen-jarjestaja-arvioijat",
             "tyoelama-arvioijat",
             "*"
           ],
@@ -59,7 +59,7 @@ export const uiSchema = {
               "ui:widget": "hidden"
             }
           },
-          "koulutuksenjarjestaja-arvioijat": {
+          "koulutuksen-jarjestaja-arvioijat": {
             items: {
               id: {
                 "ui:widget": "hidden"
@@ -124,7 +124,7 @@ export const uiSchema = {
             "loppu",
             "nayttoymparisto",
             "jarjestaja",
-            "koulutuksenjarjestaja-arvioijat",
+            "koulutuksen-jarjestaja-arvioijat",
             "tyoelama-arvioijat",
             "*"
           ],
@@ -136,7 +136,7 @@ export const uiSchema = {
               "ui:widget": "hidden"
             }
           },
-          "koulutuksenjarjestaja-arvioijat": {
+          "koulutuksen-jarjestaja-arvioijat": {
             items: {
               id: {
                 "ui:widget": "hidden"
@@ -169,7 +169,7 @@ export const uiSchema = {
                 "loppu",
                 "nayttoymparisto",
                 "jarjestaja",
-                "koulutuksenjarjestaja-arvioijat",
+                "koulutuksen-jarjestaja-arvioijat",
                 "tyoelama-arvioijat",
                 "*"
               ],
@@ -181,7 +181,7 @@ export const uiSchema = {
                   "ui:widget": "hidden"
                 }
               },
-              "koulutuksenjarjestaja-arvioijat": {
+              "koulutuksen-jarjestaja-arvioijat": {
                 items: {
                   id: {
                     "ui:widget": "hidden"
@@ -285,7 +285,7 @@ export const uiSchema = {
             "jarjestaja",
             "nayttoymparisto",
             "tyoelama-arvioijat",
-            "koulutuksenjarjestaja-arvioijat",
+            "koulutuksen-jarjestaja-arvioijat",
             "yto-osa-alue-koodi-uri",
             "*"
           ],
@@ -305,7 +305,7 @@ export const uiSchema = {
               }
             }
           },
-          "koulutuksenjarjestaja-arvioijat": {
+          "koulutuksen-jarjestaja-arvioijat": {
             items: {
               "ui:order": ["nimi", "*"],
               id: {
@@ -399,7 +399,7 @@ export const uiSchema = {
             "jarjestaja",
             "nayttoymparisto",
             "tyoelama-arvioijat",
-            "koulutuksenjarjestaja-arvioijat",
+            "koulutuksen-jarjestaja-arvioijat",
             "yto-osa-alue-koodi-uri",
             "*"
           ],
@@ -419,7 +419,7 @@ export const uiSchema = {
               }
             }
           },
-          "koulutuksenjarjestaja-arvioijat": {
+          "koulutuksen-jarjestaja-arvioijat": {
             items: {
               "ui:order": ["nimi", "*"],
               id: {
@@ -521,7 +521,7 @@ export const uiSchema = {
                 "nayttoymparisto",
                 "osaamistavoitteet",
                 "tyoelama-arvioijat",
-                "koulutuksenjarjestaja-arvioijat",
+                "koulutuksen-jarjestaja-arvioijat",
                 "yto-osa-alue-koodi-uri",
                 "*"
               ],
@@ -541,7 +541,7 @@ export const uiSchema = {
                   }
                 }
               },
-              "koulutuksenjarjestaja-arvioijat": {
+              "koulutuksen-jarjestaja-arvioijat": {
                 items: {
                   "ui:order": ["nimi", "*"],
                   id: {
