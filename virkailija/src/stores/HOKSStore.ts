@@ -3,15 +3,17 @@ import { suunnitelmat } from "mocks/mockSuunnitelmat"
 import { HOKS } from "models/HOKS"
 
 const mockFetchHOKS = (eid: string) => {
-  return Promise.resolve({
-    eid,
-    ...suunnitelmat[0]
-  })
+  return Promise.resolve([
+    {
+      eid,
+      ...suunnitelmat[0]
+    }
+  ])
 }
 
 const HOKSStoreModel = {
   isLoading: false,
-  suunnitelma: types.optional(HOKS, {})
+  suunnitelmat: types.array(HOKS)
 }
 
 export const HOKSStore = types
@@ -19,11 +21,11 @@ export const HOKSStore = types
   .actions(self => {
     // const { fetchCollection, errors } = getEnv<StoreEnvironment>(self)
 
-    const haeSuunnitelma = flow(function*(eid: string) {
+    const haeSuunnitelmat = flow(function*(eid: string) {
       self.isLoading = true
-      self.suunnitelma = yield mockFetchHOKS(eid)
+      self.suunnitelmat = yield mockFetchHOKS(eid)
       self.isLoading = false
     })
 
-    return { haeSuunnitelma }
+    return { haeSuunnitelmat }
   })

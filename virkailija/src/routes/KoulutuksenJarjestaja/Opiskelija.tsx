@@ -86,13 +86,13 @@ export class Opiskelija extends React.Component<
   // TODO: redirect to root after logout, check implementation in src/routes/OmienOpintojenSuunnittelu.tsx
   componentDidMount() {
     if (this.props.id) {
-      this.props.store!.hoks.haeSuunnitelma(this.props.id)
+      this.props.store!.hoks.haeSuunnitelmat(this.props.id)
     }
   }
 
   componentDidUpdate(prevProps: OpiskelijaProps) {
     if (this.props.id && this.props.id !== prevProps.id) {
-      this.props.store!.hoks.haeSuunnitelma(this.props.id)
+      this.props.store!.hoks.haeSuunnitelmat(this.props.id)
     }
   }
 
@@ -113,6 +113,7 @@ export class Opiskelija extends React.Component<
     const previous = studentIndex > 0 ? results[studentIndex - 1] : null
     const next =
       studentIndex < results.length ? results[studentIndex + 1] : null
+    const suunnitelma = hoks.suunnitelmat[0]
 
     return (
       <Location>
@@ -239,6 +240,7 @@ export class Opiskelija extends React.Component<
                       <Tavoitteet
                         path="/"
                         student={student}
+                        hoks={suunnitelma}
                         titles={{
                           heading: (
                             <FormattedMessage
@@ -263,8 +265,8 @@ export class Opiskelija extends React.Component<
                       <AiempiOsaaminen
                         path="osaaminen"
                         studies={
-                          hoks.suunnitelma
-                            ? hoks.suunnitelma.olemassaOlevatTutkinnonOsat
+                          suunnitelma
+                            ? suunnitelma.olemassaOlevatTutkinnonOsat
                             : []
                         }
                         heading={
@@ -276,7 +278,7 @@ export class Opiskelija extends React.Component<
                       />
                       <Opiskelusuunnitelma
                         path="opiskelusuunnitelma"
-                        plan={hoks.suunnitelma}
+                        plan={suunnitelma}
                         titles={{
                           heading: (
                             <FormattedMessage

@@ -80,6 +80,8 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
   componentDidMount() {
     const { id, store } = this.props
     if (id) {
+      // TODO: do not fetch logged-in user's HOKS' here,
+      // fetch them for selected student
       const suunnitelma = store!.hoks.suunnitelmat.find(s => s.eid === id)
       if (!suunnitelma) {
         store!.hoks.haeSuunnitelmat(store!.session.user!.oid)
@@ -90,6 +92,8 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
   componentDidUpdate(prevProps: OpiskelijaProps) {
     const { id, store } = this.props
     if (id && id !== prevProps.id) {
+      // TODO: do not fetch logged-in user's HOKS' here,
+      // fetch them for selected student
       const suunnitelma = store!.hoks.suunnitelmat.find(s => s.eid === id)
       if (!suunnitelma) {
         store!.hoks.haeSuunnitelmat(store!.session.user!.oid)
@@ -268,8 +272,8 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
                       <AiempiOsaaminen
                         path="osaaminen"
                         studies={
-                          hoks.suunnitelma
-                            ? hoks.suunnitelma.olemassaOlevatTutkinnonOsat
+                          hoks.suunnitelmat[0]
+                            ? hoks.suunnitelmat[0].olemassaOlevatTutkinnonOsat
                             : []
                         }
                         heading={
