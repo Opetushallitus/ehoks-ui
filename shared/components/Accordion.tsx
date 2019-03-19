@@ -132,7 +132,7 @@ export class Accordion extends React.Component<AccordionProps, AccordionState> {
     const Title = inline ? AccordionInlineTitle : AccordionTitle
     const Toggle = inline ? AccordionInlineToggle : AccordionToggle
     const childContent = childContainer ? (
-      <ChildContentArea data-testid="Content">{children}</ChildContentArea>
+      <ChildContentArea>{children}</ChildContentArea>
     ) : (
       children
     )
@@ -172,7 +172,9 @@ export class Accordion extends React.Component<AccordionProps, AccordionState> {
           </TitleRow>
           {helpIcon ? <HelpPopup helpContent={helpContent} /> : null}
         </TitleContainer>
-        <div id={`${id}-content`}>{isOpen ? childContent : null}</div>
+        <div data-testid="Content" id={`${id}-content`}>
+          {isOpen ? childContent : null}
+        </div>
       </Container>
     )
   }

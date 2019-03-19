@@ -78,7 +78,7 @@ export interface StudyInfoProps {
    * Verification process details
    */
   verificationProcess?: TodentamisenProsessi
-  /** Title of the accordion, always visible */
+  /** Title of the study, always visible */
   title?: React.ReactNode
   /**
    * Width of the element for desktop resolutions
@@ -160,7 +160,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
         width={width}
       >
         <InnerContainer>
-          <Title>{title}</Title>
+          <Title data-testid="Title">{title}</Title>
           {hasDetails && (
             <Details
               fadedColor={fadedColor}

@@ -128,14 +128,14 @@ export class Competences extends React.Component<CompetencesProps> {
       expandedCompetences.length === competenceRequirements.length
 
     if (!competenceRequirements.length) {
-      return <Container />
+      return <Container data-testid="StudyInfo.Competences" />
     }
 
     return (
-      <Container>
+      <Container data-testid="StudyInfo.Competences">
         {expanded ? (
           <React.Fragment>
-            <CollapseContainer>
+            <CollapseContainer data-testid="StudyInfo.Competences.CollapseContainer">
               <CollapseHeaderContainer>
                 <CollapseHeader>
                   <FormattedMessage
@@ -163,6 +163,7 @@ export class Competences extends React.Component<CompetencesProps> {
                   id:
                     "opiskelusuunnitelma.piilotaAmmattitaitovaatimuksetAriaLabel"
                 })}
+                data-testid="StudyInfo.Competences.CollapseCompetences"
               >
                 <Collapse size={40} />
               </IconContainer>
@@ -182,6 +183,7 @@ export class Competences extends React.Component<CompetencesProps> {
               aria-label={intl.formatMessage({
                 id: "opiskelusuunnitelma.naytaAmmattitaitovaatimuksetAriaLabel"
               })}
+              data-testid="StudyInfo.Competences.ExpandCompetences"
             >
               <Expand size={40} />
             </IconContainer>
@@ -207,7 +209,7 @@ export class Competences extends React.Component<CompetencesProps> {
                       />
                     </Prefix>
 
-                    <InfoContainer>
+                    <InfoContainer data-testid="StudyInfo.Competences.CompetenceRequirements">
                       {competenceRequirements.map(
                         (competenceRequirement, i) => {
                           return (

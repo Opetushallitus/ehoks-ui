@@ -8,7 +8,7 @@ export interface ApiTranslation {
   value: string
 }
 
-interface Translations {
+export interface Translations {
   [locale: string]: {
     [key: string]: string
   }

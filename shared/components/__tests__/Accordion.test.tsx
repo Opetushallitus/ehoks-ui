@@ -1,50 +1,36 @@
 import React from "react"
-import { createThemeRenderer } from "testUtils"
+import { createRenderWithTheme } from "testUtils"
 import { Accordion } from "../Accordion"
+import { fireEvent } from "react-testing-library"
 
 test("open=true renders collapse icon and child content", () => {
-  const tree = createThemeRenderer(
+  const { getByTestId } = createRenderWithTheme(
     <Accordion id="test" open={true}>
-      Content
+      Test Content
     </Accordion>
   )
-  const collapse = tree.root.find(el => {
-    return el.props["data-testid"] === "Collapse"
-  })
-  const content = tree.root.find(el => {
-    return el.props["data-testid"] === "Content"
-  })
-  expect(collapse).toBeDefined()
-  expect(content).toBeDefined()
+  expect(getByTestId("Collapse")).toBeDefined()
+  expect(getByTestId("Content").textContent).toBe("Test Content")
 })
 
 test("open=false renders expand icon and no child content", () => {
-  const tree = createThemeRenderer(
+  const { getByTestId } = createRenderWithTheme(
     <Accordion id="test" open={false}>
       Content
     </Accordion>
   )
-  const expand = tree.root.find(el => {
-    return el.props["data-testid"] === "Expand"
-  })
-  const content = tree.root.findAll(el => {
-    return el.props["data-testid"] === "Content"
-  })
-  expect(expand).toBeDefined()
-  expect(content).toEqual([])
+  expect(getByTestId("Expand")).toBeDefined()
+  expect(getByTestId("Content")).toBeEmpty()
 })
 
 test("onToggle prop function gets invoked with title row clicks", () => {
   const mockOnToggle = jest.fn()
-  const tree = createThemeRenderer(
+  const { getByTestId } = createRenderWithTheme(
     <Accordion id="test" open={false} onToggle={mockOnToggle}>
       Content
     </Accordion>
   )
 
-  const toggle = tree.root.find(el => {
-    return el.props["data-testid"] === "Toggle"
-  })
-  toggle.props.onClick()
+  fireEvent.click(getByTestId("Toggle"))
   expect(mockOnToggle).toHaveBeenCalledTimes(1)
 })
