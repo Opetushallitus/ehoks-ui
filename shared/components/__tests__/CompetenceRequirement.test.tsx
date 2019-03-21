@@ -1,5 +1,5 @@
 import React from "react"
-import { createRenderWithContext } from "testUtils"
+import { renderWithContext } from "testUtils"
 import { CompetenceRequirement } from "../CompetenceRequirement"
 import { Osaamisvaatimus } from "models/Osaamisvaatimus"
 import { fireEvent } from "react-testing-library"
@@ -32,7 +32,7 @@ const competenceRequirement = Osaamisvaatimus.create({
 
 test("expanded=false renders only title", () => {
   const mockExpand = jest.fn()
-  const { getByTestId, queryByTestId } = createRenderWithContext(
+  const { getByTestId, queryByTestId } = renderWithContext(
     <CompetenceRequirement
       competenceRequirement={competenceRequirement}
       expanded={false}
@@ -47,7 +47,7 @@ test("expanded=false renders only title", () => {
 
 test("expanded=true renders title and assessment items", () => {
   const mockExpand = jest.fn()
-  const { getByTestId } = createRenderWithContext(
+  const { getByTestId } = renderWithContext(
     <CompetenceRequirement
       competenceRequirement={competenceRequirement}
       expanded={true}
@@ -62,7 +62,7 @@ test("expanded=true renders title and assessment items", () => {
 
 test("click toggle assessment button calls expand callback", () => {
   const mockExpand = jest.fn()
-  const { getByTestId } = createRenderWithContext(
+  const { getByTestId } = renderWithContext(
     <CompetenceRequirement
       competenceRequirement={competenceRequirement}
       expanded={false}

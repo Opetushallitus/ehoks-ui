@@ -51,7 +51,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
       selite
     } = learningPeriod
     return (
-      <Container>
+      <Container data-testid="StudyInfo.LearningPeriod">
         {(alku || loppu) && (
           <LearningPeriodTitle>
             <LearningEvent

@@ -48,7 +48,7 @@ export class Demonstration extends React.Component<DemonstrationProps> {
         />
       )
     return (
-      <Container>
+      <Container data-testid="StudyInfo.Demonstration">
         <DemonstrationTitle>
           <LearningEvent
             title={title}

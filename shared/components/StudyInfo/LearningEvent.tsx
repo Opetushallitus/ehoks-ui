@@ -64,7 +64,7 @@ export class LearningEvent extends React.Component<LearningEventProps> {
     const color = "#636769"
     const iconSize = size === "small" ? 24 : 32
     return (
-      <Container>
+      <Container data-testid="StudyInfo.LearningEvent">
         <Title size={size}>{title}</Title>
         <ContentContainer>
           <Icon pad={type === "DEMONSTRATION"}>

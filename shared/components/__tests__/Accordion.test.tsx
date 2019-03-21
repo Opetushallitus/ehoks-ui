@@ -1,10 +1,10 @@
 import React from "react"
-import { createRenderWithTheme } from "testUtils"
+import { renderWithContext } from "testUtils"
 import { Accordion } from "../Accordion"
 import { fireEvent } from "react-testing-library"
 
 test("open=true renders collapse icon and child content", () => {
-  const { getByTestId } = createRenderWithTheme(
+  const { getByTestId } = renderWithContext(
     <Accordion id="test" open={true}>
       Test Content
     </Accordion>
@@ -14,7 +14,7 @@ test("open=true renders collapse icon and child content", () => {
 })
 
 test("open=false renders expand icon and no child content", () => {
-  const { getByTestId } = createRenderWithTheme(
+  const { getByTestId } = renderWithContext(
     <Accordion id="test" open={false}>
       Content
     </Accordion>
@@ -25,7 +25,7 @@ test("open=false renders expand icon and no child content", () => {
 
 test("onToggle prop function gets invoked with title row clicks", () => {
   const mockOnToggle = jest.fn()
-  const { getByTestId } = createRenderWithTheme(
+  const { getByTestId } = renderWithContext(
     <Accordion id="test" open={false} onToggle={mockOnToggle}>
       Content
     </Accordion>

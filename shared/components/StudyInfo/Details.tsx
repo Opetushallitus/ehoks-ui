@@ -96,7 +96,10 @@ export class Details extends React.Component<DetailsProps> {
       verification === OHJAUS_NAYTTOON
 
     return expanded ? (
-      <DetailsExpanded fadedColor={fadedColor}>
+      <DetailsExpanded
+        fadedColor={fadedColor}
+        data-testid="StudyInfo.DetailsExpanded"
+      >
         <DetailsContent>
           <LocationsContainerExpanded>
             <IconContainer
@@ -123,11 +126,14 @@ export class Details extends React.Component<DetailsProps> {
         </DetailsContent>
       </DetailsExpanded>
     ) : (
-      <DetailsCollapsed fadedColor={fadedColor}>
+      <DetailsCollapsed
+        fadedColor={fadedColor}
+        data-testid="StudyInfo.DetailsCollapsed"
+      >
         <LocationsContainer>
           <DetailsContent>
             {verification === SUORAAN && (
-              <VerificationTitle>
+              <VerificationTitle data-testid="StudyInfo.DirectVerification">
                 <FormattedMessage
                   id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
                   defaultMessage="Osaaminen tunnistettu suoraan"
@@ -135,7 +141,7 @@ export class Details extends React.Component<DetailsProps> {
               </VerificationTitle>
             )}
             {verification === ARVIOIJIEN_KAUTTA && (
-              <VerificationTitle>
+              <VerificationTitle data-testid="StudyInfo.AssessmentVerification">
                 <FormattedMessage
                   id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
                   defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
@@ -181,7 +187,13 @@ export class Details extends React.Component<DetailsProps> {
                   <FormattedMessage
                     id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
                     defaultMessage="Osaaminen osoitetaan näytössä"
-                  />
+                  >
+                    {msg => (
+                      <span data-testid="StudyInfo.DemonstrationVerification">
+                        {msg}
+                      </span>
+                    )}
+                  </FormattedMessage>
                 ) : (
                   <FormattedMessage
                     id="opiskelusuunnitelma.nayttoTitle"
@@ -206,6 +218,7 @@ export class Details extends React.Component<DetailsProps> {
               aria-label={intl.formatMessage({
                 id: "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel"
               })}
+              data-testid="StudyInfo.ExpandDetails"
             >
               <Expand size={40} />
             </IconContainer>
