@@ -19,11 +19,12 @@ const ContentContainer = styled("div")`
 `
 
 interface IconProps {
-  pad: boolean
+  isDemonstration: boolean
 }
 const Icon = styled("div")<IconProps>`
   margin-right: 10px;
-  padding-top: ${props => (props.pad ? "7px" : "3px")};
+  padding-top: ${props => (props.isDemonstration ? "7px" : "3px")};
+  color: ${props => (props.isDemonstration ? "#636769" : "#000")};
 `
 
 const DetailsContainer = styled("div")`
@@ -61,17 +62,16 @@ export class LearningEvent extends React.Component<LearningEventProps> {
       endDate = "",
       type
     } = this.props
-    const color = "#636769"
     const iconSize = size === "small" ? 24 : 32
     return (
       <Container data-testid="StudyInfo.LearningEvent">
         <Title size={size}>{title}</Title>
         <ContentContainer>
-          <Icon pad={type === "DEMONSTRATION"}>
+          <Icon isDemonstration={type === "DEMONSTRATION"}>
             {type === "DEMONSTRATION" ? (
-              <Flag size={iconSize} color={color} />
+              <Flag size={iconSize} />
             ) : (
-              <MdEventNote size={iconSize} fill={color} />
+              <MdEventNote size={iconSize} fill="#636769" />
             )}
           </Icon>
           <DetailsContainer>

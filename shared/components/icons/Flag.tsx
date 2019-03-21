@@ -1,12 +1,6 @@
 import React from "react"
 
-export default ({
-  size = 16,
-  color = "#000000"
-}: {
-  size?: number
-  color?: string
-}) => {
+export default ({ size = 16 }: { size?: number }) => {
   return (
     <svg width={size} height={size} viewBox="0 0 334 511" version="1.1">
       <g
@@ -19,7 +13,7 @@ export default ({
         <g id="Flag" transform="translate(14.000000, -16.000000)">
           <circle
             id="Oval"
-            stroke={color}
+            stroke="currentColor"
             strokeWidth="27"
             cx="121"
             cy="392"
@@ -27,7 +21,7 @@ export default ({
           />
           <rect
             id="Rectangle-2"
-            fill={color}
+            fill="currentColor"
             fillRule="evenodd"
             x="107"
             y="155"
@@ -36,7 +30,7 @@ export default ({
           />
           <rect
             id="Rectangle-2-Copy"
-            fill={color}
+            fill="currentColor"
             fillRule="evenodd"
             x="107"
             y="16"
@@ -45,14 +39,14 @@ export default ({
           />
           <polygon
             id="Rectangle"
-            fill={color}
+            fill="currentColor"
             fillRule="evenodd"
             transform="translate(302.615234, 100.009099) rotate(-59.000000) translate(-302.615234, -100.009099) "
             points="239.402841 157.909152 221.816101 128.639902 270.336269 51.5828268 365.827628 42.1090467 383.414368 71.3782965 286.062967 78.3436096"
           />
           <rect
             id="Rectangle-3"
-            fill={color}
+            fill="currentColor"
             fillRule="evenodd"
             x="107"
             y="16"

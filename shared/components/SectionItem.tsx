@@ -29,7 +29,7 @@ const Container = styled("button")`
 interface ItemProps {
   selected: boolean
 }
-const Item = styled("div")`
+const Item = styled("div")<ItemProps>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,7 +37,8 @@ const Item = styled("div")`
   width: 90px;
   height: 90px;
   border: 4px solid #027fa9;
-  background: ${(props: ItemProps) => (props.selected ? "#027FA9" : "#fff")};
+  background: ${props => (props.selected ? "#027FA9" : "#fff")};
+  color: ${props => (props.selected ? "#fff" : "#000")};
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     width: 58px;
