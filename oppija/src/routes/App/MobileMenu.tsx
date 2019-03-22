@@ -1,6 +1,9 @@
+import { Link } from "@reach/router"
+import { Instance } from "mobx-state-tree"
 import React from "react"
 import { MdClose } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
+import { SessionStore } from "stores/SessionStore"
 import styled from "styled"
 import useOnClickOutside from "use-onclickoutside"
 
@@ -33,6 +36,10 @@ const Languages = styled("div")`
   padding: 15px 20px 15px 25px;
 `
 
+const LogoutLink = styled(Link)`
+  color: #ddd;
+`
+
 interface LanguageProps {
   selected: boolean
 }
@@ -52,16 +59,30 @@ const CloseButton = styled("button")`
   color: #a5acb0;
 `
 
+const LinksContainer = styled("div")`
+  background: #313334;
+  font-size: 16px;
+  padding: 20px;
+`
+
+const UserInfo = styled("div")`
+  margin-bottom: 15px;
+`
+
 interface MobileMenuProps {
   activeLocale: "fi" | "sv"
   changeLocale: (locale: string) => (event: React.MouseEvent) => void
   toggleMenu: () => void
+  logout: (event: React.MouseEvent) => void
+  session: Instance<typeof SessionStore>
 }
 
 export const MobileMenu: React.FunctionComponent<MobileMenuProps> = ({
   activeLocale,
   changeLocale,
-  toggleMenu
+  toggleMenu,
+  logout,
+  session
 }) => {
   const ref = React.useRef(null)
   useOnClickOutside(ref, toggleMenu)
@@ -98,6 +119,19 @@ export const MobileMenu: React.FunctionComponent<MobileMenuProps> = ({
           />
         </Language>
       </Languages>
+      {session.isLoggedIn && (
+        <LinksContainer>
+          <UserInfo>
+            {session.user!.firstName} {session.user!.surname}
+          </UserInfo>
+          <LogoutLink to="" onClick={logout}>
+            <FormattedMessage
+              id="mobileMenu.kirjauduUlosLink"
+              defaultMessage="Kirjaudu ulos"
+            />
+          </LogoutLink>
+        </LinksContainer>
+      )}
     </Container>
   )
 }

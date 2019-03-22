@@ -164,6 +164,7 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
 
   render() {
     const { store } = this.props
+    const { session } = store!
     const { activeLocale } = store!.translations
     return (
       <HeaderContainer>
@@ -209,9 +210,9 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
             </h3>
           </MobileMenuToggle>
           <Title>eHOKS</Title>
-          {store!.session!.isLoggedIn && (
+          {session!.isLoggedIn && (
             <LogoutContainer>
-              <User>{store!.session!.user!.commonName}</User>
+              <User>{session!.user!.commonName}</User>
               <LogoutLink to="" onClick={this.logout}>
                 <FormattedMessage
                   id="header.kirjauduUlosLink"
@@ -226,6 +227,8 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
             activeLocale={activeLocale}
             changeLocale={this.changeLocale}
             toggleMenu={this.toggleMenu}
+            logout={this.logout}
+            session={session!}
           />
         )}
       </HeaderContainer>
