@@ -11,8 +11,7 @@
     "extract_translations": "node ../shared/extractMessages.js"
   },
   "private": true,
-  "author": "Lari Hoppula",
-  "license": "MIT",
+  "license": "",
   "devDependencies": {},
   "dependencies": {}
 }
