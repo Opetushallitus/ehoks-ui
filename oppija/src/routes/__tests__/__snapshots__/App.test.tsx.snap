@@ -370,7 +370,7 @@ exports[`App renders correctly 1`] = `
   }
 }
 
-@media screen and (max-width:720px) {
+@media screen and (max-width:900px) {
   .c8 {
     display: block;
     margin: 0 20px;
@@ -440,6 +440,7 @@ exports[`App renders correctly 1`] = `
     >
       <div
         className="c8"
+        onClick={[Function]}
       >
         <svg
           fill="currentColor"
