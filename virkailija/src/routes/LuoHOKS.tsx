@@ -1,8 +1,10 @@
 import { Button } from "components/Button"
 import { Heading } from "components/Heading"
 import { LoadingSpinner } from "components/LoadingSpinner"
+import { TypeaheadField } from "components/react-jsonschema-form/TypeaheadField"
 import { JSONSchema6 } from "json-schema"
 import React from "react"
+import "react-bootstrap-typeahead/css/Typeahead.css"
 import { FormattedMessage } from "react-intl"
 import Form, { AjvError, FieldProps, IChangeEvent } from "react-jsonschema-form"
 import styled from "styled"
@@ -15,7 +17,8 @@ import "./LuoHOKS/styles.css"
 import { uiSchema } from "./LuoHOKS/uiSchema"
 
 const fields = {
-  SchemaField: CustomSchemaField
+  SchemaField: CustomSchemaField,
+  typeahead: TypeaheadField
 }
 
 const Container = styled("div")`
@@ -81,6 +84,7 @@ interface LuoHOKSState {
   isLoading: boolean
   success: boolean | undefined
   userEnteredText: boolean
+  uiSchema?: ReturnType<typeof uiSchema>
 }
 
 // Schema formats supported by react-jsonschema-form
@@ -123,14 +127,57 @@ function transformErrors(errors: AjvError[]) {
   })
 }
 
+export const koodistoUrls = {
+  urasuunnitelma:
+    "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/urasuunnitelma/1",
+  tutkinnonosat:
+    "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/tutkinnonosat/2",
+  osaamisentodentamisenprosessi:
+    "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/osaamisentodentamisenprosessi/1",
+  osaamisenhankkimistapa:
+    "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/osaamisenhankkimistapa/1",
+  ammatillisenoppiaineet:
+    "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/ammatillisenoppiaineet/1"
+}
+
+function mapKoodiUri({ koodiUri, metadata }: any) {
+  return {
+    koodiUri,
+    nimi: metadata[0].nimi
+  }
+}
+
 export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
   state = {
     schema: {},
     formData: {},
+    uiSchema: undefined,
     errors: [],
     isLoading: true,
     success: undefined,
     userEnteredText: false
+  }
+
+  async fetchKoodiUris() {
+    const requests = await Promise.all(
+      Object.keys(koodistoUrls).map(async (key: keyof typeof koodistoUrls) => {
+        const json = await window.fetch(koodistoUrls[key]).then(r => r.json())
+        return { key, value: json.map(mapKoodiUri) }
+      })
+    )
+    return requests.reduce<{ [key in keyof typeof koodistoUrls]: any[] }>(
+      (koodiUris, koodiUriObj) => {
+        koodiUris[koodiUriObj.key] = koodiUriObj.value
+        return koodiUris
+      },
+      Object.keys(koodistoUrls).reduce(
+        (urls, key) => {
+          urls[key] = []
+          return urls
+        },
+        {} as any
+      )
+    )
   }
 
   async componentDidMount() {
@@ -141,7 +188,8 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       ...json.definitions.HOKSLuonti
     }
     console.log("HOKSLuonti", schema)
-    this.setState({ schema, isLoading: false })
+    const options = await this.fetchKoodiUris()
+    this.setState({ schema, uiSchema: uiSchema(options), isLoading: false })
   }
 
   setErrors = (errors: AjvError[]) => {
@@ -208,7 +256,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
         <Form
           fields={fields}
           schema={this.state.schema}
-          uiSchema={uiSchema}
+          uiSchema={this.state.uiSchema}
           formData={this.state.formData as any}
           onChange={this.onChange}
           onSubmit={this.create}

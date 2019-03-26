@@ -1,10 +1,35 @@
-export const uiSchema = {
+import { koodistoUrls } from "routes/LuoHOKS"
+
+function typeaheadProps(options: any[]) {
+  return {
+    options: options.sort((a: any, b: any) => {
+      if (a.koodiUri > b.koodiUri) {
+        return 1
+      }
+      if (a.koodiUri < b.koodiUri) {
+        return -1
+      } else {
+        return 0
+      }
+    }),
+    labelKey: { fields: ["koodiUri", "nimi"], separator: " - " },
+    mapping: "koodiUri",
+    minLength: 0,
+    clearButton: true,
+    placeholder: "Valitse..."
+  }
+}
+
+type UiSchemaOptions = { [key in keyof typeof koodistoUrls]: any[] }
+
+export const uiSchema = (options: UiSchemaOptions) => ({
   "ui:order": [
     "opiskeluoikeus-oid",
     "oppija-oid",
     "ensikertainen-hyvaksyminen",
     "sahkoposti",
     "urasuunnitelma-koodi-uri",
+    "urasuunnitelma-koodi-versio",
     "laatija",
     "paivittaja",
     "hyvaksyja",
@@ -17,11 +42,29 @@ export const uiSchema = {
     "opiskeluvalmiuksia-tukevat-opinnot",
     "*"
   ],
+  luotu: {
+    "ui:widget": "hidden"
+  },
+  hyvaksytty: {
+    "ui:widget": "hidden"
+  },
+  versio: {
+    "ui:widget": "hidden"
+  },
+  paivitetty: {
+    "ui:widget": "hidden"
+  },
+  "urasuunnitelma-koodi-uri": {
+    "ui:field": "typeahead",
+    typeahead: typeaheadProps(options.urasuunnitelma)
+  },
   "olemassa-olevat-ammatilliset-tutkinnon-osat": {
     items: {
       "ui:order": [
         "tutkinnon-osa-koodi-uri",
+        "tutkinnon-osa-koodi-versio",
         "valittu-todentamisen-prosessi-koodi-uri",
+        "valittu-todentamisen-prosessi-koodi-versio",
         "koulutuksen-jarjestaja-oid",
         "tarkentavat-tiedot-arvioija",
         "tarkentavat-tiedot-naytto",
@@ -29,6 +72,14 @@ export const uiSchema = {
       ],
       id: {
         "ui:widget": "hidden"
+      },
+      "tutkinnon-osa-koodi-uri": {
+        "ui:field": "typeahead",
+        typeahead: typeaheadProps(options.tutkinnonosat)
+      },
+      "valittu-todentamisen-prosessi-koodi-uri": {
+        "ui:field": "typeahead",
+        typeahead: typeaheadProps(options.osaamisentodentamisenprosessi)
       },
       "tarkentavat-tiedot-arvioija": {
         "aiemmin-hankitun-osaamisen-arvioija": {
@@ -77,19 +128,25 @@ export const uiSchema = {
       }
     }
   },
-  "olemassa-oleva-paikallinen-tutkinnon-osat": {
+  "olemassa-olevat-paikalliset-tutkinnon-osat": {
     items: {
       "ui:order": [
         "nimi",
         "laajuus",
         "koulutuksen-jarjestaja-oid",
         "amosaa-tunniste",
+        "valittu-todentamisen-prosessi-koodi-uri",
+        "valittu-todentamisen-prosessi-koodi-versio",
         "tavoitteet-ja-sisallot",
         "vaatimuksista-tai-tavoitteista-poikkeaminen",
         "*"
       ],
       id: {
         "ui:widget": "hidden"
+      },
+      "valittu-todentamisen-prosessi-koodi-uri": {
+        "ui:field": "typeahead",
+        typeahead: typeaheadProps(options.osaamisentodentamisenprosessi)
       }
     }
   },
@@ -97,7 +154,9 @@ export const uiSchema = {
     items: {
       "ui:order": [
         "tutkinnon-osa-koodi-uri",
+        "tutkinnon-osa-koodi-versio",
         "valittu-todentamisen-prosessi-koodi-uri",
+        "valittu-todentamisen-prosessi-koodi-versio",
         "koulutuksen-jarjestaja-oid",
         "tarkentavat-tiedot-arvioija",
         "tarkentavat-tiedot-naytto",
@@ -106,6 +165,14 @@ export const uiSchema = {
       ],
       id: {
         "ui:widget": "hidden"
+      },
+      "tutkinnon-osa-koodi-uri": {
+        "ui:field": "typeahead",
+        typeahead: typeaheadProps(options.tutkinnonosat)
+      },
+      "valittu-todentamisen-prosessi-koodi-uri": {
+        "ui:field": "typeahead",
+        typeahead: typeaheadProps(options.osaamisentodentamisenprosessi)
       },
       "tarkentavat-tiedot-arvioija": {
         "aiemmin-hankitun-osaamisen-arvioija": {
@@ -156,11 +223,16 @@ export const uiSchema = {
         items: {
           "ui:order": [
             "valittu-todentamisen-prosessi-koodi-uri",
+            "valittu-todentamisen-prosessi-koodi-versio",
             "koulutuksen-jarjestaja-oid",
             "*"
           ],
           id: {
             "ui:widget": "hidden"
+          },
+          "valittu-todentamisen-prosessi-koodi-uri": {
+            "ui:field": "typeahead",
+            typeahead: typeaheadProps(options.osaamisentodentamisenprosessi)
           },
           "tarkentavat-tiedot": {
             items: {
@@ -201,12 +273,13 @@ export const uiSchema = {
       }
     }
   },
-  "puuttuva-ammatillinen-tutkinnon-osat": {
+  "puuttuvat-ammatilliset-tutkinnon-osat": {
     items: {
       "ui:order": [
         "koulutuksen-jarjestaja-oid",
         "vaatimuksista-tai-tavoitteista-poikkeaminen",
-        "tutkinnon-osa",
+        "tutkinnon-osa-koodi-uri",
+        "tutkinnon-osa-koodi-versio",
         "osaamisen-hankkimistavat",
         "hankitun-osaamisen-naytto",
         "*"
@@ -214,15 +287,15 @@ export const uiSchema = {
       id: {
         "ui:widget": "hidden"
       },
-      "tutkinnon-osa": {
-        id: {
-          "ui:widget": "hidden"
-        }
+      "tutkinnon-osa-koodi-uri": {
+        "ui:field": "typeahead",
+        typeahead: typeaheadProps(options.tutkinnonosat)
       },
       "osaamisen-hankkimistavat": {
         items: {
           "ui:order": [
-            "osamisen-hankkimistapa-koodi-uri",
+            "osaamisen-hankkimistapa-koodi-uri",
+            "osaamisen-hankkimistapa-koodi-versio",
             "alku",
             "loppu",
             "ajanjakson-tarkenne",
@@ -234,6 +307,10 @@ export const uiSchema = {
           ],
           id: {
             "ui:widget": "hidden"
+          },
+          "osaamisen-hankkimistapa-koodi-uri": {
+            "ui:field": "typeahead",
+            typeahead: typeaheadProps(options.osaamisenhankkimistapa)
           },
           "hankkijan-edustaja": {
             "ui:order": ["nimi", "oppilaitos-oid", "*"],
@@ -286,11 +363,15 @@ export const uiSchema = {
             "nayttoymparisto",
             "tyoelama-arvioijat",
             "koulutuksen-jarjestaja-arvioijat",
-            "yto-osa-alue-koodi-uri",
+            "osa-alue-koodi-uri",
             "*"
           ],
           id: {
             "ui:widget": "hidden"
+          },
+          "osa-alue-koodi-uri": {
+            "ui:field": "typeahead",
+            typeahead: typeaheadProps(options.ammatillisenoppiaineet)
           },
           jarjestaja: {
             id: {
@@ -317,7 +398,7 @@ export const uiSchema = {
       }
     }
   },
-  "puuttuva-paikallinen-tutkinnon-osat": {
+  "puuttuvat-paikalliset-tutkinnon-osat": {
     items: {
       "ui:order": [
         "nimi",
@@ -336,7 +417,8 @@ export const uiSchema = {
       "osaamisen-hankkimistavat": {
         items: {
           "ui:order": [
-            "osamisen-hankkimistapa-koodi-uri",
+            "osaamisen-hankkimistapa-koodi-uri",
+            "osaamisen-hankkimistapa-koodi-versio",
             "alku",
             "loppu",
             "ajanjakson-tarkenne",
@@ -348,6 +430,10 @@ export const uiSchema = {
           ],
           id: {
             "ui:widget": "hidden"
+          },
+          "osaamisen-hankkimistapa-koodi-uri": {
+            "ui:field": "typeahead",
+            typeahead: typeaheadProps(options.osaamisenhankkimistapa)
           },
           "hankkijan-edustaja": {
             "ui:order": ["nimi", "oppilaitos-oid", "*"],
@@ -400,11 +486,15 @@ export const uiSchema = {
             "nayttoymparisto",
             "tyoelama-arvioijat",
             "koulutuksen-jarjestaja-arvioijat",
-            "yto-osa-alue-koodi-uri",
+            "osa-alue-koodi-uri",
             "*"
           ],
           id: {
             "ui:widget": "hidden"
+          },
+          "osa-alue-koodi-uri": {
+            "ui:field": "typeahead",
+            typeahead: typeaheadProps(options.ammatillisenoppiaineet)
           },
           jarjestaja: {
             id: {
@@ -431,10 +521,11 @@ export const uiSchema = {
       }
     }
   },
-  "puuttuva-yhteisen-tutkinnon-osat": {
+  "puuttuvat-yhteiset-tutkinnon-osat": {
     items: {
       "ui:order": [
         "tutkinnon-osa-koodi-uri",
+        "tutkinnon-osa-koodi-versio",
         "koulutuksen-jarjestaja-oid",
         "osa-alueet",
         "*"
@@ -442,10 +533,15 @@ export const uiSchema = {
       id: {
         "ui:widget": "hidden"
       },
+      "tutkinnon-osa-koodi-uri": {
+        "ui:field": "typeahead",
+        typeahead: typeaheadProps(options.tutkinnonosat)
+      },
       "osa-alueet": {
         items: {
           "ui:order": [
             "osa-alue-koodi-uri",
+            "osa-alue-koodi-versio",
             "vaatimuksista-tai-tavoitteista-poikkeaminen",
             "osaamisen-hankkimistavat",
             "hankitun-osaamisen-naytto",
@@ -454,10 +550,15 @@ export const uiSchema = {
           id: {
             "ui:widget": "hidden"
           },
+          "osa-alue-koodi-uri": {
+            "ui:field": "typeahead",
+            typeahead: typeaheadProps(options.ammatillisenoppiaineet)
+          },
           "osaamisen-hankkimistavat": {
             items: {
               "ui:order": [
-                "osamisen-hankkimistapa-koodi-uri",
+                "osaamisen-hankkimistapa-koodi-uri",
+                "osaamisen-hankkimistapa-koodi-versio",
                 "alku",
                 "loppu",
                 "ajanjakson-tarkenne",
@@ -469,6 +570,10 @@ export const uiSchema = {
               ],
               id: {
                 "ui:widget": "hidden"
+              },
+              "osaamisen-hankkimistapa-koodi-uri": {
+                "ui:field": "typeahead",
+                typeahead: typeaheadProps(options.osaamisenhankkimistapa)
               },
               "hankkijan-edustaja": {
                 "ui:order": ["nimi", "oppilaitos-oid", "*"],
@@ -522,11 +627,16 @@ export const uiSchema = {
                 "osaamistavoitteet",
                 "tyoelama-arvioijat",
                 "koulutuksen-jarjestaja-arvioijat",
-                "yto-osa-alue-koodi-uri",
+                "osa-alue-koodi-uri",
+                "osa-alue-koodi-versio",
                 "*"
               ],
               id: {
                 "ui:widget": "hidden"
+              },
+              "osa-alue-koodi-uri": {
+                "ui:field": "typeahead",
+                typeahead: typeaheadProps(options.ammatillisenoppiaineet)
               },
               jarjestaja: {
                 id: {
@@ -562,4 +672,4 @@ export const uiSchema = {
       }
     }
   }
-}
+})
