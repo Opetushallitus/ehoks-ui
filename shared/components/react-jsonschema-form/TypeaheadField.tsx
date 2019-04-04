@@ -250,6 +250,9 @@ class BaseTypeaheadField extends Component<
           }
         }, 0)
       }
+    } else {
+      // selection was removed, remove from formData
+      this.props.onChange(undefined)
     }
   }
 
@@ -297,6 +300,21 @@ export class TypeaheadField extends BaseTypeaheadField {
       selected: isValidFormData(formData)
         ? toSelected(formData, schema, typeahead.mapping, typeahead.options)
         : []
+    }
+  }
+
+  componentDidUpdate(prevProps: TypeaheadFieldProps) {
+    const {
+      schema,
+      uiSchema: { typeahead },
+      formData
+    } = this.props
+    if (formData !== prevProps.formData) {
+      this.setState({
+        selected: isValidFormData(formData)
+          ? toSelected(formData, schema, typeahead.mapping, typeahead.options)
+          : []
+      })
     }
   }
 
