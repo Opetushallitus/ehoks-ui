@@ -12,7 +12,7 @@ declare module "react-jsonschema-form/lib/components/AddButton" {
   import * as React from "react"
   const AddButton: React.SFC<{
     className?: string
-    onClick?: () => void
+    onClick?: (event: React.FormEvent<HTMLInputElement>) => void
     disabled?: boolean
   }>
   export default AddButton

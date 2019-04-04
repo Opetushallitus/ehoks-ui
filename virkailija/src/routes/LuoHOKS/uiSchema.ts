@@ -1,4 +1,4 @@
-import { koodistoUrls } from "routes/LuoHOKS"
+import { koodistoUrls, propertiesByStep } from "routes/LuoHOKS"
 
 function typeaheadProps(options: any[]) {
   return {
@@ -22,7 +22,7 @@ function typeaheadProps(options: any[]) {
 
 type UiSchemaOptions = { [key in keyof typeof koodistoUrls]: any[] }
 
-export const uiSchema = (options: UiSchemaOptions) => ({
+const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
   "ui:order": [
     "opiskeluoikeus-oid",
     "oppija-oid",
@@ -59,6 +59,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
     typeahead: typeaheadProps(options.urasuunnitelma)
   },
   "olemassa-olevat-ammatilliset-tutkinnon-osat": {
+    "ui:options": {
+      orderable: false
+    },
     items: {
       "ui:order": [
         "tutkinnon-osa-koodi-uri",
@@ -82,7 +85,10 @@ export const uiSchema = (options: UiSchemaOptions) => ({
         typeahead: typeaheadProps(options.osaamisentodentamisenprosessi)
       },
       "tarkentavat-tiedot-arvioija": {
-        "aiemmin-hankitun-osaamisen-arvioija": {
+        "aiemmin-hankitun-osaamisen-arvioijat": {
+          "ui:options": {
+            orderable: false
+          },
           items: {
             "ui:order": ["nimi", "*"],
             id: {
@@ -92,6 +98,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
         }
       },
       "tarkentavat-tiedot-naytto": {
+        "ui:options": {
+          orderable: false
+        },
         items: {
           "ui:order": [
             "alku",
@@ -111,6 +120,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
             }
           },
           "koulutuksen-jarjestaja-arvioijat": {
+            "ui:options": {
+              orderable: false
+            },
             items: {
               id: {
                 "ui:widget": "hidden"
@@ -118,6 +130,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
             }
           },
           "tyoelama-arvioijat": {
+            "ui:options": {
+              orderable: false
+            },
             items: {
               id: {
                 "ui:widget": "hidden"
@@ -129,6 +144,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
     }
   },
   "olemassa-olevat-paikalliset-tutkinnon-osat": {
+    "ui:options": {
+      orderable: false
+    },
     items: {
       "ui:order": [
         "nimi",
@@ -139,6 +157,8 @@ export const uiSchema = (options: UiSchemaOptions) => ({
         "valittu-todentamisen-prosessi-koodi-versio",
         "tavoitteet-ja-sisallot",
         "vaatimuksista-tai-tavoitteista-poikkeaminen",
+        "tarkentavat-tiedot-arvioija",
+        "tarkentavat-tiedot-naytto",
         "*"
       ],
       id: {
@@ -147,10 +167,70 @@ export const uiSchema = (options: UiSchemaOptions) => ({
       "valittu-todentamisen-prosessi-koodi-uri": {
         "ui:field": "typeahead",
         typeahead: typeaheadProps(options.osaamisentodentamisenprosessi)
+      },
+      "tarkentavat-tiedot-arvioija": {
+        "aiemmin-hankitun-osaamisen-arvioijat": {
+          "ui:options": {
+            orderable: false
+          },
+          items: {
+            "ui:order": ["nimi", "*"],
+            id: {
+              "ui:widget": "hidden"
+            }
+          }
+        }
+      },
+      "tarkentavat-tiedot-naytto": {
+        "ui:options": {
+          orderable: false
+        },
+        items: {
+          "ui:order": [
+            "alku",
+            "loppu",
+            "nayttoymparisto",
+            "jarjestaja",
+            "koulutuksen-jarjestaja-arvioijat",
+            "tyoelama-arvioijat",
+            "*"
+          ],
+          id: {
+            "ui:widget": "hidden"
+          },
+          jarjestaja: {
+            id: {
+              "ui:widget": "hidden"
+            }
+          },
+          "koulutuksen-jarjestaja-arvioijat": {
+            "ui:options": {
+              orderable: false
+            },
+            items: {
+              id: {
+                "ui:widget": "hidden"
+              }
+            }
+          },
+          "tyoelama-arvioijat": {
+            "ui:options": {
+              orderable: false
+            },
+            items: {
+              id: {
+                "ui:widget": "hidden"
+              }
+            }
+          }
+        }
       }
     }
   },
   "olemassa-olevat-yhteiset-tutkinnon-osat": {
+    "ui:options": {
+      orderable: false
+    },
     items: {
       "ui:order": [
         "tutkinnon-osa-koodi-uri",
@@ -175,7 +255,10 @@ export const uiSchema = (options: UiSchemaOptions) => ({
         typeahead: typeaheadProps(options.osaamisentodentamisenprosessi)
       },
       "tarkentavat-tiedot-arvioija": {
-        "aiemmin-hankitun-osaamisen-arvioija": {
+        "aiemmin-hankitun-osaamisen-arvioijat": {
+          "ui:options": {
+            orderable: false
+          },
           items: {
             "ui:order": ["nimi", "*"],
             id: {
@@ -185,6 +268,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
         }
       },
       "tarkentavat-tiedot-naytto": {
+        "ui:options": {
+          orderable: false
+        },
         items: {
           "ui:order": [
             "alku",
@@ -204,6 +290,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
             }
           },
           "koulutuksen-jarjestaja-arvioijat": {
+            "ui:options": {
+              orderable: false
+            },
             items: {
               id: {
                 "ui:widget": "hidden"
@@ -211,6 +300,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
             }
           },
           "tyoelama-arvioijat": {
+            "ui:options": {
+              orderable: false
+            },
             items: {
               id: {
                 "ui:widget": "hidden"
@@ -220,6 +312,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
         }
       },
       "osa-alueet": {
+        "ui:options": {
+          orderable: false
+        },
         items: {
           "ui:order": [
             "valittu-todentamisen-prosessi-koodi-uri",
@@ -235,6 +330,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
             typeahead: typeaheadProps(options.osaamisentodentamisenprosessi)
           },
           "tarkentavat-tiedot": {
+            "ui:options": {
+              orderable: false
+            },
             items: {
               "ui:order": [
                 "alku",
@@ -254,6 +352,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
                 }
               },
               "koulutuksen-jarjestaja-arvioijat": {
+                "ui:options": {
+                  orderable: false
+                },
                 items: {
                   id: {
                     "ui:widget": "hidden"
@@ -261,6 +362,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
                 }
               },
               "tyoelama-arvioijat": {
+                "ui:options": {
+                  orderable: false
+                },
                 items: {
                   id: {
                     "ui:widget": "hidden"
@@ -274,6 +378,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
     }
   },
   "puuttuvat-ammatilliset-tutkinnon-osat": {
+    "ui:options": {
+      orderable: false
+    },
     items: {
       "ui:order": [
         "koulutuksen-jarjestaja-oid",
@@ -292,6 +399,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
         typeahead: typeaheadProps(options.tutkinnonosat)
       },
       "osaamisen-hankkimistavat": {
+        "ui:options": {
+          orderable: false
+        },
         items: {
           "ui:order": [
             "osaamisen-hankkimistapa-koodi-uri",
@@ -338,6 +448,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
               }
             },
             "muut-osallistujat": {
+              "ui:options": {
+                orderable: false
+              },
               items: {
                 "ui:order": ["nimi", "rooli", "organisaatio", "*"],
                 id: {
@@ -355,6 +468,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
         }
       },
       "hankitun-osaamisen-naytto": {
+        "ui:options": {
+          orderable: false
+        },
         items: {
           "ui:order": [
             "alku",
@@ -379,6 +495,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
             }
           },
           "tyoelama-arvioijat": {
+            "ui:options": {
+              orderable: false
+            },
             items: {
               "ui:order": ["nimi", "*"],
               id: {
@@ -387,6 +506,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
             }
           },
           "koulutuksen-jarjestaja-arvioijat": {
+            "ui:options": {
+              orderable: false
+            },
             items: {
               "ui:order": ["nimi", "*"],
               id: {
@@ -399,6 +521,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
     }
   },
   "puuttuvat-paikalliset-tutkinnon-osat": {
+    "ui:options": {
+      orderable: false
+    },
     items: {
       "ui:order": [
         "nimi",
@@ -415,6 +540,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
         "ui:widget": "hidden"
       },
       "osaamisen-hankkimistavat": {
+        "ui:options": {
+          orderable: false
+        },
         items: {
           "ui:order": [
             "osaamisen-hankkimistapa-koodi-uri",
@@ -461,6 +589,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
               }
             },
             "muut-osallistujat": {
+              "ui:options": {
+                orderable: false
+              },
               items: {
                 "ui:order": ["nimi", "rooli", "organisaatio", "*"],
                 id: {
@@ -478,6 +609,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
         }
       },
       "hankitun-osaamisen-naytto": {
+        "ui:options": {
+          orderable: false
+        },
         items: {
           "ui:order": [
             "alku",
@@ -502,6 +636,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
             }
           },
           "tyoelama-arvioijat": {
+            "ui:options": {
+              orderable: false
+            },
             items: {
               "ui:order": ["nimi", "*"],
               id: {
@@ -510,6 +647,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
             }
           },
           "koulutuksen-jarjestaja-arvioijat": {
+            "ui:options": {
+              orderable: false
+            },
             items: {
               "ui:order": ["nimi", "*"],
               id: {
@@ -522,6 +662,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
     }
   },
   "puuttuvat-yhteiset-tutkinnon-osat": {
+    "ui:options": {
+      orderable: false
+    },
     items: {
       "ui:order": [
         "tutkinnon-osa-koodi-uri",
@@ -538,6 +681,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
         typeahead: typeaheadProps(options.tutkinnonosat)
       },
       "osa-alueet": {
+        "ui:options": {
+          orderable: false
+        },
         items: {
           "ui:order": [
             "osa-alue-koodi-uri",
@@ -555,6 +701,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
             typeahead: typeaheadProps(options.ammatillisenoppiaineet)
           },
           "osaamisen-hankkimistavat": {
+            "ui:options": {
+              orderable: false
+            },
             items: {
               "ui:order": [
                 "osaamisen-hankkimistapa-koodi-uri",
@@ -601,6 +750,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
                   }
                 },
                 "muut-osallistujat": {
+                  "ui:options": {
+                    orderable: false
+                  },
                   items: {
                     "ui:order": ["nimi", "rooli", "organisaatio", "*"],
                     id: {
@@ -618,6 +770,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
             }
           },
           "hankitun-osaamisen-naytto": {
+            "ui:options": {
+              orderable: false
+            },
             items: {
               "ui:order": [
                 "alku",
@@ -644,6 +799,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
                 }
               },
               "tyoelama-arvioijat": {
+                "ui:options": {
+                  orderable: false
+                },
                 items: {
                   "ui:order": ["nimi", "*"],
                   id: {
@@ -652,6 +810,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
                 }
               },
               "koulutuksen-jarjestaja-arvioijat": {
+                "ui:options": {
+                  orderable: false
+                },
                 items: {
                   "ui:order": ["nimi", "*"],
                   id: {
@@ -666,6 +827,9 @@ export const uiSchema = (options: UiSchemaOptions) => ({
     }
   },
   "opiskeluvalmiuksia-tukevat-opinnot": {
+    "ui:options": {
+      orderable: false
+    },
     items: {
       id: {
         "ui:widget": "hidden"
@@ -673,3 +837,21 @@ export const uiSchema = (options: UiSchemaOptions) => ({
     }
   }
 })
+
+export const uiSchemaByStep = (
+  options: UiSchemaOptions,
+  currentStep: number
+) => {
+  const ui = fullUiSchema(options)
+  return Object.keys(ui).reduce<{ [key: string]: any }>((uiSchema, key) => {
+    if (propertiesByStep[currentStep].indexOf(key) > -1 && ui[key]) {
+      uiSchema[key] = ui[key]
+    }
+    if (key === "ui:order") {
+      uiSchema["ui:order"] = ui["ui:order"].filter(
+        (k: string) => propertiesByStep[currentStep].indexOf(k) > -1
+      )
+    }
+    return uiSchema
+  }, {})
+}

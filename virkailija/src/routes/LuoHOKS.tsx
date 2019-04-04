@@ -2,11 +2,13 @@ import { Button } from "components/Button"
 import { Heading } from "components/Heading"
 import { LoadingSpinner } from "components/LoadingSpinner"
 import { TypeaheadField } from "components/react-jsonschema-form/TypeaheadField"
-import { JSONSchema6 } from "json-schema"
+import { JSONSchema6, JSONSchema6Definition } from "json-schema"
 import React from "react"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 import { FormattedMessage } from "react-intl"
 import Form, { AjvError, FieldProps, IChangeEvent } from "react-jsonschema-form"
+import { Step } from "routes/LuoHOKS/Step"
+import { Stepper } from "routes/LuoHOKS/Stepper"
 import styled from "styled"
 import { ArrayFieldTemplate } from "./LuoHOKS/ArrayFieldTemplate"
 import { CustomSchemaField } from "./LuoHOKS/CustomSchemaField"
@@ -14,7 +16,7 @@ import { CustomSchemaField } from "./LuoHOKS/CustomSchemaField"
 import ErrorList from "./LuoHOKS/ErrorList"
 import "./LuoHOKS/glyphicons.css"
 import "./LuoHOKS/styles.css"
-import { uiSchema } from "./LuoHOKS/uiSchema"
+import { uiSchemaByStep } from "./LuoHOKS/uiSchema"
 
 const fields = {
   SchemaField: CustomSchemaField,
@@ -22,11 +24,28 @@ const fields = {
 }
 
 const Container = styled("div")`
-  margin: 20px 40px 60px 40px;
+  margin: 0 40px 60px 40px;
+`
+
+const FormContainer = styled("div")`
+  margin: 10px 0 0 0;
 `
 
 const Header = styled(Heading)`
-  margin: 20px 0;
+  margin: 0;
+  padding-right: 10px;
+`
+
+const TopToolbar = styled("div")`
+  position: sticky;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  z-index: 1;
+  padding: 5px 0;
 `
 
 const ButtonsContainer = styled("div")`
@@ -72,20 +91,6 @@ const FailureMessage = styled("div")`
   margin-left: 20px;
   color: ${props => props.theme.colors.brick};
 `
-
-interface LuoHOKSProps {
-  path?: string
-}
-
-interface LuoHOKSState {
-  schema: JSONSchema6
-  formData: { [name: string]: any }
-  errors: AjvError[]
-  isLoading: boolean
-  success: boolean | undefined
-  userEnteredText: boolean
-  uiSchema?: ReturnType<typeof uiSchema>
-}
 
 // Schema formats supported by react-jsonschema-form
 const SUPPORTED_SCHEMA_FORMATS = [
@@ -140,6 +145,37 @@ export const koodistoUrls = {
     "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/ammatillisenoppiaineet/1"
 }
 
+export const propertiesByStep: { [index: number]: string[] } = {
+  0: [
+    "opiskeluoikeus-oid",
+    "oppija-oid",
+    "ensikertainen-hyvaksyminen",
+    "sahkoposti",
+    "urasuunnitelma-koodi-uri",
+    "urasuunnitelma-koodi-versio",
+    "laatija",
+    "paivittaja",
+    "hyvaksyja"
+  ],
+  1: ["olemassa-olevat-ammatilliset-tutkinnon-osat"],
+  2: ["olemassa-olevat-paikalliset-tutkinnon-osat"],
+  3: ["olemassa-olevat-yhteiset-tutkinnon-osat"],
+  4: ["puuttuvat-ammatilliset-tutkinnon-osat"],
+  5: ["puuttuvat-paikalliset-tutkinnon-osat"],
+  6: ["puuttuvat-yhteiset-tutkinnon-osat"],
+  7: ["opiskeluvalmiuksia-tukevat-opinnot"]
+}
+
+function buildKoodiUris() {
+  return Object.keys(koodistoUrls).reduce(
+    (urls, key) => {
+      urls[key] = []
+      return urls
+    },
+    {} as any
+  )
+}
+
 function mapKoodiUri({ koodiUri, metadata }: any) {
   return {
     koodiUri,
@@ -147,15 +183,55 @@ function mapKoodiUri({ koodiUri, metadata }: any) {
   }
 }
 
+function schemaByStep(schema: JSONSchema6, currentStep: number): JSONSchema6 {
+  const properties = schema.properties || {}
+  return {
+    type: "object",
+    // additionalProperties: false,
+    definitions: schema.definitions,
+    required: currentStep === 0 ? schema.required : [],
+    properties: Object.keys(schema.properties || []).reduce<{
+      [key: string]: JSONSchema6Definition
+    }>((props, key) => {
+      if (propertiesByStep[currentStep].indexOf(key) > -1 && properties[key]) {
+        props[key] = properties[key]
+      }
+      return props
+    }, {})
+  }
+}
+
+interface LuoHOKSProps {
+  path?: string
+}
+
+interface LuoHOKSState {
+  schema: JSONSchema6
+  formData: { [name: string]: any }
+  errors: AjvError[]
+  isLoading: boolean
+  success: boolean | undefined
+  userEnteredText: boolean
+  uiSchema?: ReturnType<typeof uiSchemaByStep>
+  rawSchema: JSONSchema6
+  currentStep: number
+  errorsByStep: { [index: string]: AjvError[] }
+  koodiUris: { [key in keyof typeof koodistoUrls]: any[] }
+}
+
 export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
-  state = {
+  state: LuoHOKSState = {
     schema: {},
     formData: {},
     uiSchema: undefined,
     errors: [],
     isLoading: true,
     success: undefined,
-    userEnteredText: false
+    userEnteredText: false,
+    currentStep: 0,
+    rawSchema: {},
+    koodiUris: buildKoodiUris(),
+    errorsByStep: {}
   }
 
   async fetchKoodiUris() {
@@ -170,26 +246,62 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
         koodiUris[koodiUriObj.key] = koodiUriObj.value
         return koodiUris
       },
-      Object.keys(koodistoUrls).reduce(
-        (urls, key) => {
-          urls[key] = []
-          return urls
-        },
-        {} as any
-      )
+      buildKoodiUris()
     )
   }
 
   async componentDidMount() {
     const request = await window.fetch("/ehoks-backend/doc/swagger.json")
     const json = await request.json()
-    const schema = {
+    const rawSchema = {
       definitions: stripUnsupportedFormats(json.definitions),
       ...json.definitions.HOKSLuonti
     }
-    console.log("HOKSLuonti", schema)
-    const options = await this.fetchKoodiUris()
-    this.setState({ schema, uiSchema: uiSchema(options), isLoading: false })
+    console.log("rawSchema", rawSchema)
+    const koodiUris = await this.fetchKoodiUris()
+    const schema = schemaByStep(rawSchema, this.state.currentStep)
+    this.setState({
+      rawSchema,
+      schema,
+      koodiUris,
+      uiSchema: uiSchemaByStep(koodiUris, this.state.currentStep),
+      isLoading: false
+    })
+  }
+
+  nextStep = () => {
+    this.setState(state => {
+      const nextStep = state.currentStep + 1
+      return {
+        ...state,
+        schema: schemaByStep(state.rawSchema, nextStep),
+        uiSchema: uiSchemaByStep(state.koodiUris, nextStep),
+        currentStep: nextStep
+      }
+    })
+  }
+
+  previousStep = () => {
+    this.setState(state => {
+      const previousStep = state.currentStep - 1
+      return {
+        ...state,
+        schema: schemaByStep(state.rawSchema, previousStep),
+        uiSchema: uiSchemaByStep(state.koodiUris, previousStep),
+        currentStep: previousStep
+      }
+    })
+  }
+
+  setStep = (index: number) => {
+    this.setState(state => {
+      return {
+        ...state,
+        schema: schemaByStep(state.rawSchema, index),
+        uiSchema: uiSchemaByStep(state.koodiUris, index),
+        currentStep: index
+      }
+    })
   }
 
   setErrors = (errors: AjvError[]) => {
@@ -198,7 +310,17 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
 
   onChange = (changes: any) => {
     const { formData, errors } = changes
-    this.setState({ formData, errors })
+    this.setState(
+      state => ({
+        ...state,
+        formData,
+        errors,
+        errorsByStep: { ...state.errorsByStep, [state.currentStep]: errors }
+      }),
+      () => {
+        console.log("STATE", this.state.formData, errors)
+      }
+    )
   }
 
   scrollToErrors = (event: React.MouseEvent) => {
@@ -219,7 +341,6 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
 
   create = async (fieldProps: IChangeEvent<FieldProps>) => {
     // TODO: authenticate user
-
     this.setState({ isLoading: true })
     const request = await window.fetch("/ehoks-backend/api/v1/hoks", {
       method: "POST",
@@ -249,61 +370,98 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     this.setState({ isLoading: false })
   }
 
+  completedSteps = () => {
+    return Object.keys(this.state.errorsByStep).reduce<{
+      [index: string]: boolean
+    }>((steps, index) => {
+      steps[index] = this.state.errorsByStep[index].length === 0
+      return steps
+    }, {})
+  }
+
+  formContext = () => {
+    const rootKeys = Object.keys(this.state.rawSchema.properties || {})
+    return { isRoot: (title: string) => rootKeys.indexOf(title) > -1 }
+  }
+
   render() {
     return (
       <Container onKeyUp={this.userHasEnteredText}>
-        <Header>HOKS luonti</Header>
-        <Form
-          fields={fields}
-          schema={this.state.schema}
-          uiSchema={this.state.uiSchema}
-          formData={this.state.formData as any}
-          onChange={this.onChange}
-          onSubmit={this.create}
-          onError={this.setErrors}
-          ErrorList={ErrorList}
-          transformErrors={transformErrors}
-          ArrayFieldTemplate={ArrayFieldTemplate}
-          safeRenderCompletion={true}
-          liveValidate={true}
-        >
-          <BottomToolbar>
-            <ButtonsContainer>
-              <Button type="submit">Luo HOKS</Button>
-              {!!this.state.errors.length &&
-                this.state.success === undefined &&
-                this.state.userEnteredText && (
-                  <ModificationsNeeded onClick={this.scrollToErrors}>
-                    <FormattedMessage
-                      id="luoHoks.muutoksiaTarvitaan"
-                      defaultMessage="Muutoksia tarvitaan"
-                    />
-                  </ModificationsNeeded>
+        <TopToolbar>
+          <Header>Luo HOKS</Header>
+          <Stepper
+            currentStep={this.state.currentStep}
+            updateStep={this.setStep}
+            completed={this.completedSteps}
+          >
+            <Step>Perustiedot</Step>
+            <Step>Olemassa olevat ammatilliset tutkinnon osat</Step>
+            <Step>Olemassa olevat paikalliset tutkinnon osat</Step>
+            <Step>Olemassa olevat yhteiset tutkinnon osat</Step>
+            <Step>Puuttuvat ammatilliset tutkinnon osat</Step>
+            <Step>Puuttuvat paikalliset tutkinnon osat</Step>
+            <Step>Puuttuvat yhteiset tutkinnon osat</Step>
+            <Step>Opiskeluvalmiuksia tukevat opinnot</Step>
+          </Stepper>
+        </TopToolbar>
+        <FormContainer>
+          <Form
+            fields={fields}
+            schema={this.state.schema}
+            uiSchema={this.state.uiSchema}
+            formData={this.state.formData as any}
+            formContext={this.formContext()}
+            onChange={this.onChange}
+            onSubmit={this.create}
+            onError={this.setErrors}
+            ErrorList={ErrorList}
+            transformErrors={transformErrors}
+            ArrayFieldTemplate={ArrayFieldTemplate}
+            safeRenderCompletion={true}
+            liveValidate={true}
+            noHtml5Validate={true}
+          >
+            <BottomToolbar>
+              <ButtonsContainer>
+                <Button type="submit">Luo HOKS</Button>
+                {!!this.state.errors.length &&
+                  this.state.success === undefined &&
+                  this.state.userEnteredText && (
+                    <ModificationsNeeded onClick={this.scrollToErrors}>
+                      <FormattedMessage
+                        id="luoHoks.muutoksiaTarvitaan"
+                        defaultMessage="Muutoksia tarvitaan"
+                      />
+                    </ModificationsNeeded>
+                  )}
+                {this.state.isLoading && (
+                  <SpinnerContainer>
+                    <LoadingSpinner />
+                  </SpinnerContainer>
                 )}
-              {this.state.isLoading && (
-                <SpinnerContainer>
-                  <LoadingSpinner />
-                </SpinnerContainer>
-              )}
-              {this.state.success && (
-                <SuccessMessage onClick={this.hideMessage}>
-                  <FormattedMessage
-                    id="luoHoks.luontiOnnistui"
-                    defaultMessage="HOKS luotiin onnistuneesti"
-                  />
-                </SuccessMessage>
-              )}
-              {this.state.success === false && (
-                <FailureMessage onClick={this.hideMessage}>
-                  <FormattedMessage
-                    id="luoHoks.luontiEpaonnistui"
-                    defaultMessage="HOKSin luonti epäonnistui"
-                  />
-                </FailureMessage>
-              )}
-            </ButtonsContainer>
-          </BottomToolbar>
-        </Form>
+                {this.state.success && (
+                  <SuccessMessage onClick={this.hideMessage}>
+                    <FormattedMessage
+                      id="luoHoks.luontiOnnistui"
+                      defaultMessage="HOKS luotiin onnistuneesti"
+                    />
+                  </SuccessMessage>
+                )}
+                {this.state.success === false && (
+                  <FailureMessage onClick={this.hideMessage}>
+                    <FormattedMessage
+                      id="luoHoks.luontiEpaonnistui"
+                      defaultMessage="HOKSin luonti epäonnistui"
+                    />
+                  </FailureMessage>
+                )}
+
+                <Button onClick={this.previousStep}>Edellinen</Button>
+                <Button onClick={this.nextStep}>Seuraava</Button>
+              </ButtonsContainer>
+            </BottomToolbar>
+          </Form>
+        </FormContainer>
       </Container>
     )
   }

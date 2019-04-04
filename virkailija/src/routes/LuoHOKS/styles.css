@@ -204,10 +204,10 @@ fieldset[disabled] .btn {
   clear: both;
 }
 
-.row {
+/* .row {
   margin-right: -15px;
   margin-left: -15px;
-}
+} */
 
 .col-xs-offset-9 {
   margin-left: 75%;

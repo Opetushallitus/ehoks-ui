@@ -39,6 +39,9 @@ interface ErrorListProps {
 export default function ErrorList(props: ErrorListProps) {
   const { errors } = props
 
+  // TODO: enable after UI refactor
+  return null
+
   return (
     <div id="form-errors">
       <h3>
