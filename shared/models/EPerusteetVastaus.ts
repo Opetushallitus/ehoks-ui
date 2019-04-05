@@ -16,7 +16,7 @@ const OsaamistasonKriteeri = types.model({
 })
 
 const ArvioinninKohde = types.model({
-  otsikko: types.optional(Otsikko, {}),
+  otsikko: types.maybeNull(Otsikko),
   arviointiAsteikko: types.optional(types.string, ""),
   osaamistasonKriteerit: types.array(OsaamistasonKriteeri)
 })
@@ -49,14 +49,10 @@ const EPerusteetNimi = types.model({
 export const EPerusteetVastaus = types.model("EPerusteet", {
   id: types.optional(types.number, 0),
   koodiUri: types.optional(types.string, ""),
-  arviointi: types.optional(EPerusteetArviointi, {}),
-  ammattitaitovaatimukset: types.optional(
-    EPerusteetAmmattitaitovaatimukset,
-    {}
-  ),
-  ammattitaidonOsoittamistavat: types.optional(
-    EPerusteetAmmattitaidonOsoittamistavat,
-    {}
+  arviointi: types.maybeNull(EPerusteetArviointi),
+  ammattitaitovaatimukset: types.maybeNull(EPerusteetAmmattitaitovaatimukset),
+  ammattitaidonOsoittamistavat: types.maybeNull(
+    EPerusteetAmmattitaidonOsoittamistavat
   ),
   nimi: types.optional(EPerusteetNimi, {})
 })

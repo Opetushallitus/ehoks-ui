@@ -5,7 +5,7 @@ export function getOsaamisvaatimukset(
     arvioinninKohdealueet: Array<{
       otsikko: { fi: string; sv: string }
       arvioinninKohteet: Array<{
-        otsikko: { fi: string; sv: string }
+        otsikko: { fi: string; sv: string } | null
         arviointiAsteikko: string
         osaamistasonKriteerit: Array<{
           osaamistaso: string
@@ -13,15 +13,20 @@ export function getOsaamisvaatimukset(
         }>
       }>
     }>
-  },
+  } | null,
   activeLocale: "fi" | "sv"
 ) {
+  if (!arviointi) {
+    return []
+  }
   return arviointi.arvioinninKohdealueet.map(kohdeAlue => {
     return {
       kuvaus: kohdeAlue.otsikko[activeLocale],
       kriteerit: kohdeAlue.arvioinninKohteet.map(arvioinninKohde => {
         return {
-          kuvaus: arvioinninKohde.otsikko[activeLocale],
+          kuvaus: arvioinninKohde.otsikko
+            ? arvioinninKohde.otsikko[activeLocale]
+            : "",
           kriteerit: flattenDeep<string>(
             arvioinninKohde.osaamistasonKriteerit.map(tasoKriteeri => {
               return tasoKriteeri.kriteerit.map(
