@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React from "react"
 import IconButton from "react-jsonschema-form/lib/components/IconButton"
 import styled from "styled"
 
@@ -33,13 +33,10 @@ export function ArrayItem(props: ArrayItemProps) {
     disabled,
     hasMoveDown,
     hasMoveUp,
-    hasRemove,
     hasToolbar,
     index,
-    onDropIndexClick,
     onReorderClick,
-    readonly,
-    setActiveStep
+    readonly
   } = props
   const btnStyle: React.CSSProperties = {
     flex: 1,
@@ -48,39 +45,9 @@ export function ArrayItem(props: ArrayItemProps) {
     fontWeight: "bold"
   }
 
-  const onRemove = useCallback(() => {
-    onDropIndexClick(index)()
-    setActiveStep((i: number) => {
-      if (i > 0) {
-        return i - 1
-      } else {
-        return 0
-      }
-    })
-  }, [onDropIndexClick, index, setActiveStep])
-
-  // TODO: confirm deletion
-
   return (
     <ArrayItemContainer key={index} className={className}>
-      <FlexContainer>
-        {hasToolbar && hasRemove && (
-          <div>
-            Poista
-            <IconButton
-              type="danger"
-              icon="remove"
-              className="array-item-remove"
-              tabIndex={-1}
-              style={btnStyle}
-              disabled={disabled || readonly}
-              onClick={onRemove}
-            />
-          </div>
-        )}
-
-        {children}
-      </FlexContainer>
+      <FlexContainer>{children}</FlexContainer>
 
       {hasToolbar && (
         <div className="array-item-toolbox">

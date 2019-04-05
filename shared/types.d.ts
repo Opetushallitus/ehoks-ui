@@ -27,6 +27,7 @@ declare module "react-jsonschema-form/lib/components/IconButton" {
     className?: string
     disabled?: boolean
     style?: React.CSSProperties
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
   }
 
   const IconButton: React.SFC<IconButtonProps>

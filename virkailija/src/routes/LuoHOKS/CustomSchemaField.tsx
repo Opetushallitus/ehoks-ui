@@ -8,7 +8,9 @@ const ArrayTitle = styled(AccordionTitle)`
 `
 
 const ArrayContainer = styled("div")`
-  border: 1px solid red;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
   margin: 10px;
 `
 
@@ -27,6 +29,21 @@ const disableAccordion = [
  */
 export const CustomSchemaField = (props: any) => {
   const { schema } = props
+
+  // hide "is a required property" error messages,
+  // showing "*" next to label is enough
+  const forwardProps = {
+    ...props,
+    errorSchema: props.errorSchema
+      ? {
+          ...props.errorSchema,
+          __errors: (props.errorSchema.__errors || []).filter(
+            (e: string) => e !== "is a required property"
+          )
+        }
+      : undefined
+  }
+
   return (
     <div>
       {schema.type === "array" &&
@@ -38,11 +55,11 @@ export const CustomSchemaField = (props: any) => {
           childContainer={false}
         >
           <ArrayContainer>
-            <SchemaField {...props} />
+            <SchemaField {...forwardProps} />
           </ArrayContainer>
         </Accordion>
       ) : (
-        <SchemaField {...props} />
+        <SchemaField {...forwardProps} />
       )}
     </div>
   )
