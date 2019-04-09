@@ -29,10 +29,12 @@ const StepContainer = styled("button")`
   font: inherit;
   padding: 0;
   text-align: left;
-  cursor: pointer;
   &::-moz-focus-inner {
     border: 0;
     padding: 0;
+  }
+  &:not(:disabled) {
+    cursor: pointer;
   }
 `
 
@@ -50,6 +52,7 @@ const Description = styled("div")`
 export interface StepProps {
   active?: boolean
   completed?: boolean
+  disabled?: boolean
   index?: number
   onClick?: (index: number) => void
 }
@@ -63,9 +66,15 @@ export class Step extends React.Component<StepProps> {
   }
 
   render() {
-    const { active, children, completed = true, index = 0 } = this.props
+    const {
+      active,
+      children,
+      completed = true,
+      index = 0,
+      disabled
+    } = this.props
     return (
-      <StepContainer onClick={this.setIndex}>
+      <StepContainer onClick={this.setIndex} disabled={disabled}>
         <StatusContainer>
           <Circle active={active}>{index + 1}</Circle>
           {completed ? (

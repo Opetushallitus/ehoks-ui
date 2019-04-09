@@ -142,7 +142,9 @@ export const koodistoUrls = {
   osaamisenhankkimistapa:
     "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/osaamisenhankkimistapa/1",
   ammatillisenoppiaineet:
-    "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/ammatillisenoppiaineet/1"
+    "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/ammatillisenoppiaineet/1",
+  oppimisymparistot:
+    "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/oppimisymparistot/1"
 }
 
 export const propertiesByStep: { [index: number]: string[] } = {
@@ -379,6 +381,13 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     }, {})
   }
 
+  isValid = () => {
+    const completedSteps = this.completedSteps()
+    return Object.keys(completedSteps).every(stepIndex => {
+      return completedSteps[stepIndex]
+    })
+  }
+
   formContext = () => {
     const rootKeys = Object.keys(this.state.rawSchema.properties || {})
     return { isRoot: (title: string) => rootKeys.indexOf(title) > -1 }
@@ -387,12 +396,13 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
   render() {
     return (
       <Container onKeyUp={this.userHasEnteredText}>
-        <TopToolbar>
+        <TopToolbar id="topToolbar">
           <Header>Luo HOKS</Header>
           <Stepper
             currentStep={this.state.currentStep}
             updateStep={this.setStep}
             completed={this.completedSteps}
+            disabled={this.state.isLoading}
           >
             <Step>Perustiedot</Step>
             <Step>Olemassa olevat ammatilliset tutkinnon osat</Step>
@@ -423,17 +433,9 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
           >
             <BottomToolbar>
               <ButtonsContainer>
-                <Button type="submit">Luo HOKS</Button>
-                {!!this.state.errors.length &&
-                  this.state.success === undefined &&
-                  this.state.userEnteredText && (
-                    <ModificationsNeeded onClick={this.scrollToErrors}>
-                      <FormattedMessage
-                        id="luoHoks.muutoksiaTarvitaan"
-                        defaultMessage="Muutoksia tarvitaan"
-                      />
-                    </ModificationsNeeded>
-                  )}
+                <Button type="submit" disabled={!this.isValid()}>
+                  Luo HOKS
+                </Button>
                 {this.state.isLoading && (
                   <SpinnerContainer>
                     <LoadingSpinner />
@@ -456,8 +458,8 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
                   </FailureMessage>
                 )}
 
-                <Button onClick={this.previousStep}>Edellinen</Button>
-                <Button onClick={this.nextStep}>Seuraava</Button>
+                {/* <Button onClick={this.previousStep}>Edellinen</Button>
+                <Button onClick={this.nextStep}>Seuraava</Button> */}
               </ButtonsContainer>
             </BottomToolbar>
           </Form>

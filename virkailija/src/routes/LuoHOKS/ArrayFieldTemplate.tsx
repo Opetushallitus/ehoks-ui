@@ -1,7 +1,6 @@
 import range from "lodash.range"
 import React, { useCallback, useState } from "react"
 import { UiSchema } from "react-jsonschema-form"
-import IconButton from "react-jsonschema-form/lib/components/IconButton"
 import styled from "styled"
 import { ArrayFieldDescription } from "./ArrayFieldDescription"
 import { ArrayItem } from "./ArrayItem"
@@ -30,16 +29,46 @@ const ArrayItemList = styled("div")`
   margin-top: 5px;
 `
 
-const ItemButtonsContainer = styled("div")`
+interface ItemButtonsContainerProps {
+  active: boolean
+}
+const ItemButtonsContainer = styled("div")<ItemButtonsContainerProps>`
   display: flex;
   padding-bottom: 5px;
   margin-bottom: 10px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: ${props => (props.active ? "1px solid #ccc" : "unset")};
 `
 
 const ItemButtons = styled("div")`
   display: flex;
   flex: 1;
+`
+
+const AddButton = styled("button")`
+  display: inline-block;
+  padding: 10px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: #fff;
+  background-color: #1976d2;
+  border-color: #1976d2;
+  min-width: 85px;
+`
+
+const RemoveButton = styled(AddButton)`
+  background-color: #c62828;
+  border-color: #c62828;
 `
 
 interface ItemButtonProps {
@@ -96,19 +125,21 @@ export function ArrayFieldTemplate(props: ArrayFieldTemplateProps) {
     [onAddClick, setActiveStep, items]
   )
   const activeProps = items[activeStep]
-  // TODO: confirm deletion
+
   const onRemove = useCallback(() => {
-    activeProps.onDropIndexClick(activeStep)()
-    setActiveStep((i: number) => {
-      if (i > 0) {
-        return i - 1
-      } else {
-        return 0
-      }
-    })
+    if (window.confirm("Haluatko varmasti poistaa valitut tiedot?")) {
+      activeProps.onDropIndexClick(activeStep)()
+      setActiveStep((i: number) => {
+        if (i > 0) {
+          return i - 1
+        } else {
+          return 0
+        }
+      })
+    }
   }, [activeProps, activeStep])
 
-  console.log("ACC", activeProps)
+  console.log("ACC", props)
 
   return (
     <ArrayField className={className} id={idSchema.$id}>
@@ -125,21 +156,21 @@ export function ArrayFieldTemplate(props: ArrayFieldTemplateProps) {
           </DescriptionContainer>
         )}
         {canAdd && (
-          <IconButton
-            type="info"
-            icon="plus"
-            className="btn-add"
+          <AddButton
+            type="button"
             tabIndex={0}
-            onClick={onAdd}
             disabled={disabled || readonly}
-          />
+            onClick={onAdd}
+          >
+            Lisää <i className={`glyphicon glyphicon-plus`} />
+          </AddButton>
         )}
       </ArrayHeader>
       <ArrayItemList
         className="row array-item-list"
         key={`array-item-list-${idSchema.$id}`}
       >
-        <ItemButtonsContainer>
+        <ItemButtonsContainer active={items.length > 0}>
           <ItemButtons>
             {range(items.length).map(index => {
               return (
@@ -154,14 +185,14 @@ export function ArrayFieldTemplate(props: ArrayFieldTemplateProps) {
             })}
           </ItemButtons>
           {items.length > 0 && (
-            <IconButton
-              type="danger"
-              icon="remove"
-              className="array-item-remove"
+            <RemoveButton
+              type="button"
               tabIndex={-1}
               disabled={disabled || readonly}
               onClick={onRemove}
-            />
+            >
+              Poista <i className={`glyphicon glyphicon-remove`} />
+            </RemoveButton>
           )}
         </ItemButtonsContainer>
         {activeProps && (

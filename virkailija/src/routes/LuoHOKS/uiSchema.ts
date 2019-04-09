@@ -105,14 +105,21 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           "ui:order": [
             "alku",
             "loppu",
+            "osa-alue-koodi-uri",
+            "osa-alue-koodi-versio",
             "nayttoymparisto",
             "jarjestaja",
             "koulutuksen-jarjestaja-arvioijat",
             "tyoelama-arvioijat",
+            "keskeiset-tyotehtavat-naytto",
             "*"
           ],
           id: {
             "ui:widget": "hidden"
+          },
+          "osa-alue-koodi-uri": {
+            "ui:field": "typeahead",
+            typeahead: typeaheadProps(options.ammatillisenoppiaineet)
           },
           jarjestaja: {
             id: {
@@ -138,6 +145,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                 "ui:widget": "hidden"
               }
             }
+          },
+          "keskeiset-tyotehtavat-naytto": {
+            "ui:options": { orderable: false }
           }
         }
       }
@@ -189,14 +199,21 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           "ui:order": [
             "alku",
             "loppu",
+            "osa-alue-koodi-uri",
+            "osa-alue-koodi-versio",
             "nayttoymparisto",
             "jarjestaja",
             "koulutuksen-jarjestaja-arvioijat",
             "tyoelama-arvioijat",
+            "keskeiset-tyotehtavat-naytto",
             "*"
           ],
           id: {
             "ui:widget": "hidden"
+          },
+          "osa-alue-koodi-uri": {
+            "ui:field": "typeahead",
+            typeahead: typeaheadProps(options.ammatillisenoppiaineet)
           },
           jarjestaja: {
             id: {
@@ -222,6 +239,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                 "ui:widget": "hidden"
               }
             }
+          },
+          "keskeiset-tyotehtavat-naytto": {
+            "ui:options": { orderable: false }
           }
         }
       }
@@ -275,14 +295,21 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           "ui:order": [
             "alku",
             "loppu",
+            "osa-alue-koodi-uri",
+            "osa-alue-koodi-versio",
             "nayttoymparisto",
             "jarjestaja",
             "koulutuksen-jarjestaja-arvioijat",
             "tyoelama-arvioijat",
+            "keskeiset-tyotehtavat-naytto",
             "*"
           ],
           id: {
             "ui:widget": "hidden"
+          },
+          "osa-alue-koodi-uri": {
+            "ui:field": "typeahead",
+            typeahead: typeaheadProps(options.ammatillisenoppiaineet)
           },
           jarjestaja: {
             id: {
@@ -308,6 +335,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                 "ui:widget": "hidden"
               }
             }
+          },
+          "keskeiset-tyotehtavat-naytto": {
+            "ui:options": { orderable: false }
           }
         }
       },
@@ -320,6 +350,8 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "valittu-todentamisen-prosessi-koodi-uri",
             "valittu-todentamisen-prosessi-koodi-versio",
             "koulutuksen-jarjestaja-oid",
+            "osa-alue-koodi-uri",
+            "osa-alue-koodi-versio",
             "*"
           ],
           id: {
@@ -329,6 +361,10 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "ui:field": "typeahead",
             typeahead: typeaheadProps(options.osaamisentodentamisenprosessi)
           },
+          "osa-alue-koodi-uri": {
+            "ui:field": "typeahead",
+            typeahead: typeaheadProps(options.ammatillisenoppiaineet)
+          },
           "tarkentavat-tiedot": {
             "ui:options": {
               orderable: false
@@ -337,14 +373,21 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
               "ui:order": [
                 "alku",
                 "loppu",
+                "osa-alue-koodi-uri",
+                "osa-alue-koodi-versio",
                 "nayttoymparisto",
                 "jarjestaja",
                 "koulutuksen-jarjestaja-arvioijat",
                 "tyoelama-arvioijat",
+                "keskeiset-tyotehtavat-naytto",
                 "*"
               ],
               id: {
                 "ui:widget": "hidden"
+              },
+              "osa-alue-koodi-uri": {
+                "ui:field": "typeahead",
+                typeahead: typeaheadProps(options.ammatillisenoppiaineet)
               },
               jarjestaja: {
                 id: {
@@ -370,6 +413,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                     "ui:widget": "hidden"
                   }
                 }
+              },
+              "keskeiset-tyotehtavat-naytto": {
+                "ui:options": { orderable: false }
               }
             }
           }
@@ -457,12 +503,31 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                   "ui:widget": "hidden"
                 }
               }
+            },
+            "keskeiset-tyotehtavat": {
+              "ui:options": { orderable: false }
             }
           },
           "jarjestajan-edustaja": {
             "ui:order": ["nimi", "oppilaitos-oid", "rooli", "*"],
             id: {
               "ui:widget": "hidden"
+            }
+          },
+          "muut-oppimisymparisto": {
+            "ui:options": { orderable: false },
+            items: {
+              "ui:order": [
+                "oppimisymparisto-koodi-uri",
+                "oppimisymparisto-koodi-versio",
+                "selite",
+                "lisatiedot",
+                "*"
+              ],
+              "oppimisymparisto-koodi-uri": {
+                "ui:field": "typeahead",
+                typeahead: typeaheadProps(options.oppimisymparistot)
+              }
             }
           }
         }
@@ -475,11 +540,13 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           "ui:order": [
             "alku",
             "loppu",
+            "osa-alue-koodi-uri",
+            "osa-alue-koodi-versio",
             "jarjestaja",
             "nayttoymparisto",
             "tyoelama-arvioijat",
             "koulutuksen-jarjestaja-arvioijat",
-            "osa-alue-koodi-uri",
+            "keskeiset-tyotehtavat-naytto",
             "*"
           ],
           id: {
@@ -514,6 +581,11 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
               id: {
                 "ui:widget": "hidden"
               }
+            }
+          },
+          "keskeiset-tyotehtavat-naytto": {
+            "ui:options": {
+              orderable: false
             }
           }
         }
@@ -598,12 +670,33 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                   "ui:widget": "hidden"
                 }
               }
+            },
+            "keskeiset-tyotehtavat": {
+              "ui:options": {
+                orderable: false
+              }
             }
           },
           "jarjestajan-edustaja": {
             "ui:order": ["nimi", "oppilaitos-oid", "rooli", "*"],
             id: {
               "ui:widget": "hidden"
+            }
+          },
+          "muut-oppimisymparisto": {
+            "ui:options": { orderable: false },
+            items: {
+              "ui:order": [
+                "oppimisymparisto-koodi-uri",
+                "oppimisymparisto-koodi-versio",
+                "selite",
+                "lisatiedot",
+                "*"
+              ],
+              "oppimisymparisto-koodi-uri": {
+                "ui:field": "typeahead",
+                typeahead: typeaheadProps(options.oppimisymparistot)
+              }
             }
           }
         }
@@ -616,11 +709,13 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           "ui:order": [
             "alku",
             "loppu",
+            "osa-alue-koodi-uri",
+            "osa-alue-koodi-versio",
             "jarjestaja",
             "nayttoymparisto",
             "tyoelama-arvioijat",
             "koulutuksen-jarjestaja-arvioijat",
-            "osa-alue-koodi-uri",
+            "keskeiset-tyotehtavat-naytto",
             "*"
           ],
           id: {
@@ -656,6 +751,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                 "ui:widget": "hidden"
               }
             }
+          },
+          "keskeiset-tyotehtavat-naytto": {
+            "ui:options": { orderable: false }
           }
         }
       }
@@ -759,12 +857,33 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                       "ui:widget": "hidden"
                     }
                   }
+                },
+                "keskeiset-tyotehtavat": {
+                  "ui:options": {
+                    orderable: false
+                  }
                 }
               },
               "jarjestajan-edustaja": {
                 "ui:order": ["nimi", "oppilaitos-oid", "rooli", "*"],
                 id: {
                   "ui:widget": "hidden"
+                }
+              },
+              "muut-oppimisymparisto": {
+                "ui:options": { orderable: false },
+                items: {
+                  "ui:order": [
+                    "oppimisymparisto-koodi-uri",
+                    "oppimisymparisto-koodi-versio",
+                    "selite",
+                    "lisatiedot",
+                    "*"
+                  ],
+                  "oppimisymparisto-koodi-uri": {
+                    "ui:field": "typeahead",
+                    typeahead: typeaheadProps(options.oppimisymparistot)
+                  }
                 }
               }
             }
@@ -777,13 +896,13 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
               "ui:order": [
                 "alku",
                 "loppu",
+                "osa-alue-koodi-uri",
+                "osa-alue-koodi-versio",
                 "jarjestaja",
                 "nayttoymparisto",
                 "osaamistavoitteet",
                 "tyoelama-arvioijat",
                 "koulutuksen-jarjestaja-arvioijat",
-                "osa-alue-koodi-uri",
-                "osa-alue-koodi-versio",
                 "*"
               ],
               id: {
@@ -797,6 +916,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                 id: {
                   "ui:widget": "hidden"
                 }
+              },
+              osaamistavoitteet: {
+                "ui:options": { orderable: false }
               },
               "tyoelama-arvioijat": {
                 "ui:options": {
@@ -819,6 +941,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                     "ui:widget": "hidden"
                   }
                 }
+              },
+              "keskeiset-tyotehtavat-naytto": {
+                "ui:options": { orderable: false }
               }
             }
           }

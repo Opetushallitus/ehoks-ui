@@ -9,9 +9,9 @@ const ArrayTitle = styled(AccordionTitle)`
 
 const ArrayContainer = styled("div")`
   border: 1px solid #ccc;
-  padding: 5px;
+  padding: 10px;
   border-radius: 5px;
-  margin: 10px;
+  margin: 10px 0px 0px 0px;
 `
 
 const disableAccordion = [
@@ -30,7 +30,7 @@ const disableAccordion = [
 export const CustomSchemaField = (props: any) => {
   const { schema } = props
 
-  // hide "is a required property" error messages,
+  // hide "pakollinen kenttä" error messages,
   // showing "*" next to label is enough
   const forwardProps = {
     ...props,
@@ -38,7 +38,7 @@ export const CustomSchemaField = (props: any) => {
       ? {
           ...props.errorSchema,
           __errors: (props.errorSchema.__errors || []).filter(
-            (e: string) => e !== "is a required property"
+            (e: string) => e !== "pakollinen kenttä"
           )
         }
       : undefined

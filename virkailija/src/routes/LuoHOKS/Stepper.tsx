@@ -12,11 +12,18 @@ interface StepperProps {
   updateStep: (index: number) => void
   completed: () => { [index: string]: boolean }
   children?: Array<React.ReactElement<Step>>
+  disabled?: boolean
 }
 
 export class Stepper extends React.Component<StepperProps> {
   render() {
-    const { children, completed, currentStep, updateStep } = this.props
+    const {
+      children,
+      completed,
+      currentStep,
+      disabled,
+      updateStep
+    } = this.props
     return (
       <Container>
         {Children.map(
@@ -25,6 +32,7 @@ export class Stepper extends React.Component<StepperProps> {
             cloneElement(child, {
               active: currentStep === index,
               completed: completed()[index],
+              disabled,
               index,
               onClick: updateStep
             })
