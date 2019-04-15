@@ -9,6 +9,7 @@ import { LocaleRoot } from "models/helpers/LocaleRoot"
 import { getOsaamispisteet } from "models/helpers/getOsaamispisteet"
 import { EnrichTutkinnonOsa } from "models/EnrichTutkinnonOsa"
 import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
+import { KoodistoVastaus } from "models/KoodistoVastaus"
 
 const Model = types.model({
   id: types.optional(types.number, 0),
@@ -17,6 +18,7 @@ const Model = types.model({
   tutkinnonOsaViitteet: types.array(TutkinnonOsaViite),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
   valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
+  valittuTodentamisenProsessi: types.optional(KoodistoVastaus, {}),
   tarkentavatTiedotNaytto: types.array(HankitunOsaamisenNaytto),
   tarkentavatTiedotArvioija: types.optional(TodennettuArviointiLisatiedot, {})
 })
