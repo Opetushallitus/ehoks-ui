@@ -1,4 +1,5 @@
-import { koodistoUrls, propertiesByStep } from "routes/LuoHOKS"
+import { koodistoUrls } from "./koodistoUrls"
+import { propertiesByStep } from "./propertiesByStep"
 
 function typeaheadProps(options: any[]) {
   return {

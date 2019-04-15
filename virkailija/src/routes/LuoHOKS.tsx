@@ -2,7 +2,7 @@ import { Button } from "components/Button"
 import { Heading } from "components/Heading"
 import { LoadingSpinner } from "components/LoadingSpinner"
 import { TypeaheadField } from "components/react-jsonschema-form/TypeaheadField"
-import { JSONSchema6, JSONSchema6Definition } from "json-schema"
+import { JSONSchema6 } from "json-schema"
 import React from "react"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 import { FormattedMessage } from "react-intl"
@@ -15,6 +15,14 @@ import { CustomSchemaField } from "./LuoHOKS/CustomSchemaField"
 // import "./LuoHOKS/bootstrap.min.css"
 import ErrorList from "./LuoHOKS/ErrorList"
 import "./LuoHOKS/glyphicons.css"
+import {
+  buildKoodiUris,
+  mapKoodiUri,
+  schemaByStep,
+  stripUnsupportedFormats,
+  transformErrors
+} from "./LuoHOKS/helpers"
+import { koodistoUrls } from "./LuoHOKS/koodistoUrls"
 import "./LuoHOKS/styles.css"
 import { uiSchemaByStep } from "./LuoHOKS/uiSchema"
 
@@ -78,117 +86,6 @@ const FailureMessage = styled("div")`
   margin-left: 20px;
   color: ${props => props.theme.colors.brick};
 `
-
-// Schema formats supported by react-jsonschema-form
-const SUPPORTED_SCHEMA_FORMATS = [
-  "data-url",
-  "date",
-  "date-time",
-  "email",
-  "hostname",
-  "ipv4",
-  "ipv6",
-  "uri"
-]
-
-const stripUnsupportedFormat = (schema: any) => {
-  if (schema.format && SUPPORTED_SCHEMA_FORMATS.indexOf(schema.format) === -1) {
-    delete schema.format
-  }
-  if (schema.properties) {
-    Object.keys(schema.properties).forEach(property => {
-      stripUnsupportedFormat(schema.properties[property])
-    })
-  }
-  return schema
-}
-
-const stripUnsupportedFormats = (definitions: any) => {
-  return Object.keys(definitions).reduce((defs: any, def) => {
-    defs[def] = stripUnsupportedFormat(definitions[def])
-    return defs
-  }, {})
-}
-
-function transformErrors(errors: AjvError[]) {
-  return errors.map(error => {
-    if (error.name === "required") {
-      error.message = "pakollinen kenttä"
-    }
-    return error
-  })
-}
-
-export const koodistoUrls = {
-  urasuunnitelma:
-    "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/urasuunnitelma/1",
-  tutkinnonosat:
-    "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/tutkinnonosat/2",
-  osaamisentodentamisenprosessi:
-    "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/osaamisentodentamisenprosessi/1",
-  osaamisenhankkimistapa:
-    "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/osaamisenhankkimistapa/1",
-  ammatillisenoppiaineet:
-    "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/ammatillisenoppiaineet/1",
-  oppimisymparistot:
-    "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/oppimisymparistot/1"
-}
-
-export const propertiesByStep: { [index: number]: string[] } = {
-  0: [
-    "opiskeluoikeus-oid",
-    "oppija-oid",
-    "ensikertainen-hyvaksyminen",
-    "sahkoposti",
-    "urasuunnitelma-koodi-uri",
-    "urasuunnitelma-koodi-versio",
-    "laatija",
-    "paivittaja",
-    "hyvaksyja"
-  ],
-  1: ["olemassa-olevat-ammatilliset-tutkinnon-osat"],
-  2: ["olemassa-olevat-paikalliset-tutkinnon-osat"],
-  3: ["olemassa-olevat-yhteiset-tutkinnon-osat"],
-  4: ["puuttuvat-ammatilliset-tutkinnon-osat"],
-  5: ["puuttuvat-paikalliset-tutkinnon-osat"],
-  6: ["puuttuvat-yhteiset-tutkinnon-osat"],
-  7: ["opiskeluvalmiuksia-tukevat-opinnot"]
-}
-
-function buildKoodiUris() {
-  return Object.keys(koodistoUrls).reduce(
-    (urls, key) => {
-      urls[key] = []
-      return urls
-    },
-    {} as any
-  )
-}
-
-function mapKoodiUri({ koodiUri, metadata }: any) {
-  return {
-    koodiUri,
-    nimi: metadata[0].nimi
-  }
-}
-
-function schemaByStep(schema: JSONSchema6, currentStep: number): JSONSchema6 {
-  const properties = schema.properties || {}
-  return {
-    type: "object",
-    // additionalProperties: false,
-    definitions: schema.definitions,
-    required: currentStep === 0 ? schema.required : [],
-    properties: Object.keys(schema.properties || []).reduce<{
-      [key: string]: JSONSchema6Definition
-    }>((props, key) => {
-      if (propertiesByStep[currentStep].indexOf(key) > -1 && properties[key]) {
-        props[key] = properties[key]
-      }
-      return props
-    }, {})
-  }
-}
 
 interface LuoHOKSProps {
   path?: string
