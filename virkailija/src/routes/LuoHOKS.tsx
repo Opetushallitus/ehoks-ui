@@ -65,19 +65,6 @@ const BottomToolbar = styled("div")`
   border-top: 1px solid #ccc;
 `
 
-const ModificationsNeeded = styled("button")`
-  margin-left: 20px;
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  color: ${props => props.theme.colors.waterBlue};
-  &:hover {
-    color: ${props => props.theme.colors.flatBlue};
-  }
-`
-
 const SpinnerContainer = styled("div")`
   width: 100px;
 `

@@ -67,8 +67,8 @@ const AddButton = styled("button")`
 `
 
 const RemoveButton = styled(AddButton)`
-  background-color: #c62828;
-  border-color: #c62828;
+  background-color: ${props => props.theme.colors.battleshipGrey};
+  border-color: ${props => props.theme.colors.battleshipGrey};
 `
 
 interface ItemButtonProps {
