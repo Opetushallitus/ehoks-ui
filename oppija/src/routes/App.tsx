@@ -10,8 +10,6 @@ import { AppHeader } from "routes/App/AppHeader"
 import { GlobalStyles } from "routes/App/globalStyles"
 import { Etusivu } from "routes/Etusivu"
 import { Henkilokohtaistaminen } from "routes/Henkilokohtaistaminen"
-import { KoulutuksenJarjestaja } from "routes/KoulutuksenJarjestaja"
-import { Opiskelija } from "routes/KoulutuksenJarjestaja/Opiskelija"
 import { Suunnittelu } from "routes/Suunnittelu"
 import { TyopaikanToimija } from "routes/TyopaikanToimija"
 import { IRootStore } from "stores/RootStore"
@@ -62,8 +60,6 @@ export class App extends React.Component<AppProps> {
                 <TyopaikanToimija path="tyopaikantoimija" />
                 <Henkilokohtaistaminen path="henkilokohtaistaminen" />
                 <Ammatillinentutkinto path="ammatillinentutkinto" />
-                <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />
-                <Opiskelija path="koulutuksenjarjestaja/:id/*" />
               </Router>
             </Main>
             <AppFooter />

@@ -159,16 +159,6 @@ export class Etusivu extends React.Component<EtusivuProps> {
     window.location.href = this.props.store!.environment.opintopolkuLoginUrl
   }
 
-  loginInstructor = (event: React.MouseEvent) => {
-    event.preventDefault()
-    navigate("/ehoks/tyopaikantoimija")
-  }
-
-  loginEducationProvider = (event: React.MouseEvent) => {
-    event.preventDefault()
-    navigate("/ehoks/koulutuksenjarjestaja")
-  }
-
   render() {
     return (
       <Container>
@@ -222,7 +212,7 @@ export class Etusivu extends React.Component<EtusivuProps> {
                   defaultMessage="Kirjautumalla siirryt ohjattavien opiskelijoiden suunnitelmiin."
                 />
               </p>
-              <LoginButton onClick={this.loginInstructor}>
+              <LoginButton>
                 <FormattedMessage
                   id="etusivu.oppilaitoksenEdustajaKirjauduButtonLabel"
                   defaultMessage="Kirjaudu oppilaitoksen edustajana"
