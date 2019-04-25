@@ -36,6 +36,19 @@ const qualifications = [
   "Liiketoiminnan perustutkinto"
 ]
 
+const competenceAreas = [
+  "Ikääntyvien hoidon ja kuntoutumisen osaamisala",
+  "Jalkojenhoidon osaamisala",
+  "Suunhoidon osaamisala",
+  "Autokorinkorjauksen osaamisala",
+  "Autotekniikan osaamisala",
+  "Asiakaspalvelun osaamisala",
+  "Ruokapalvelun osaamisala",
+  "Musiikin osaamisala",
+  "Pianonvirityksen osaamisala",
+  "Ohjelmistotuotannon osaamisala"
+]
+
 const startRange = [1451606400000, 1514764800000]
 
 export const mockStudents: MockStudent[] = Array.from(Array(100).keys()).map(
@@ -60,9 +73,11 @@ export const mockStudents: MockStudent[] = Array.from(Array(100).keys()).map(
       }`,
       tutkinto:
         qualifications[Math.floor(Math.random() * qualifications.length)],
-      aloitus: format(startingDate, "yyyy-MM-dd"),
+      osaamisala:
+        competenceAreas[Math.floor(Math.random() * competenceAreas.length)],
       hyvaksytty: format(acceptedDate, "yyyy-MM-dd"),
-      paivitetty: format(updateDate, "yyyy-MM-dd")
+      paivitetty: format(updateDate, "yyyy-MM-dd"),
+      lukumaara: 1
     }
   }
 )

@@ -97,7 +97,7 @@ export const HOKS = types
           // TODO: uncomment for real API,
           // opiskeluoikeusOid does not match for mock data
           // (oo: any) => oo.oid === self.opiskeluoikeusOid
-          (oo: any) => oo.oid === "1.2.246.562.15.10359275566"
+          (oo: any) => oo.tyyppi.koodiarvo === "ammatillinenkoulutus"
         )
         if (opiskeluOikeus !== undefined) {
           self.opiskeluOikeus = opiskeluOikeus
@@ -190,6 +190,9 @@ export const HOKS = types
       get keskeytysPvm() {
         // TODO: where do we get this value?
         return ""
+      },
+      get paattymispaiva() {
+        return self.opiskeluOikeus.paattymispaiva
       }
     }
   })

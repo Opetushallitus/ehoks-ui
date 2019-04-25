@@ -3,9 +3,11 @@ import { HOKS } from "models/HOKS"
 
 export const suunnitelmat: Array<SnapshotOrInstance<typeof HOKS>> = [
   {
+    eid: "123",
     opiskeluoikeusOid: "1.2.246.562.15.76811932037",
     oppijaOid: "1.2.246.562.24.44651722625",
     urasuunnitelmaKoodiUri: "urasuunnitelma_0003",
+    ensikertainenHyvaksyminen: "2019-01-01",
     puuttuvatAmmatillisetTutkinnonOsat: [
       {
         tutkinnonOsaKoodiUri: "tutkinnonosat_106228",
@@ -56,9 +58,11 @@ export const suunnitelmat: Array<SnapshotOrInstance<typeof HOKS>> = [
     ]
   },
   {
+    eid: "456",
     opiskeluoikeusOid: "1.2.246.562.15.76811932037",
     oppijaOid: "1.2.246.562.24.44651722625",
     urasuunnitelmaKoodiUri: "urasuunnitelma_0001",
+    ensikertainenHyvaksyminen: "2019-01-01",
     puuttuvatAmmatillisetTutkinnonOsat: [
       {
         tutkinnonOsaKoodiUri: "tutkinnonosat_106228",
@@ -109,9 +113,11 @@ export const suunnitelmat: Array<SnapshotOrInstance<typeof HOKS>> = [
     ]
   },
   {
+    eid: "789",
     opiskeluoikeusOid: "1.2.246.562.15.76811932037",
     oppijaOid: "1.2.246.562.24.44651722625",
     urasuunnitelmaKoodiUri: "urasuunnitelma_0002",
+    ensikertainenHyvaksyminen: "2019-01-01",
     puuttuvatAmmatillisetTutkinnonOsat: [
       {
         tutkinnonOsaKoodiUri: "tutkinnonosat_300204",

@@ -3,8 +3,9 @@ import { suunnitelmat } from "mocks/mockSuunnitelmat"
 import { HOKS } from "models/HOKS"
 
 const mockFetchHOKS = (_: string) => {
-  // we only need the first HOKS mock here
-  return Promise.resolve([suunnitelmat[0]])
+  // randomize 1-3 HOKSes for every student
+  const amount = Math.floor(Math.random() * suunnitelmat.length) + 1
+  return Promise.resolve(suunnitelmat.slice(0, amount))
 }
 
 const HOKSStoreModel = {

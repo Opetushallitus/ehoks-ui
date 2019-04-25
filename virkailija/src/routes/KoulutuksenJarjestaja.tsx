@@ -1,5 +1,5 @@
 import { Link } from "@reach/router"
-import { Checkbox } from "components/Checkbox"
+// import { Checkbox } from "components/Checkbox"
 import { Container, PaddedContent } from "components/Container"
 import { ContentArea } from "components/ContentArea"
 import { Heading } from "components/Heading"
@@ -32,9 +32,9 @@ const TopHeading = styled(Heading)`
   flex: 1;
 `
 
-const SelectionContainer = styled("div")`
-  flex: 1;
-`
+// const SelectionContainer = styled("div")`
+//   flex: 1;
+// `
 
 const SearchContainer = styled("div")`
   flex: 1;
@@ -115,13 +115,13 @@ export class KoulutuksenJarjestaja extends React.Component<
     const { koulutuksenJarjestaja } = this.props.store!
     const {
       activePage,
-      approvedOnly,
+      // approvedOnly,
       perPage,
       sortBy,
       sortDirection,
       sortedResults,
       results,
-      toggleApprovedOnly,
+      // toggleApprovedOnly,
       isLoading,
       searchText
     } = koulutuksenJarjestaja.search
@@ -139,7 +139,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                 />
               </TopHeading>
 
-              <SelectionContainer>
+              {/* <SelectionContainer>
                 <Checkbox
                   id="showApprovedOnly"
                   checked={approvedOnly}
@@ -150,7 +150,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                     defaultMessage="Näytä vain opiskelijat, joiden HOKSin olen hyväksynyt"
                   />
                 </Checkbox>
-              </SelectionContainer>
+              </SelectionContainer> */}
 
               <SearchContainer>
                 <SearchField
@@ -183,31 +183,37 @@ export class KoulutuksenJarjestaja extends React.Component<
                     <TableHeader sortName="nimi">
                       <FormattedMessage
                         id="koulutuksenJarjestaja.opiskelijaTitle"
-                        defaultMessage="Opiskelija"
+                        defaultMessage="Opiskelijan nimi"
                       />
                     </TableHeader>
                     <TableHeader sortName="tutkinto">
                       <FormattedMessage
                         id="koulutuksenJarjestaja.tutkintoTitle"
-                        defaultMessage="Tutkinnon tai koulutuksen nimi"
+                        defaultMessage="Tutkinto tai koulutus"
                       />
                     </TableHeader>
-                    <TableHeader sortName="aloitus">
+                    <TableHeader sortName="osaamisala">
                       <FormattedMessage
-                        id="koulutuksenJarjestaja.aloitusTitle"
-                        defaultMessage="Aloitus"
+                        id="koulutuksenJarjestaja.osaamisalaTitle"
+                        defaultMessage="Osaamisala"
                       />
                     </TableHeader>
                     <TableHeader sortName="hyvaksytty">
                       <FormattedMessage
                         id="koulutuksenJarjestaja.hyvaksyttyTitle"
-                        defaultMessage="Ens. hyväks."
+                        defaultMessage="Ens. hyv."
                       />
                     </TableHeader>
                     <TableHeader sortName="paivitetty">
                       <FormattedMessage
                         id="koulutuksenJarjestaja.paivitettyTitle"
                         defaultMessage="Päivitetty"
+                      />
+                    </TableHeader>
+                    <TableHeader sortName="lukumaara">
+                      <FormattedMessage
+                        id="koulutuksenJarjestaja.lkmTitle"
+                        defaultMessage="Lkm"
                       />
                     </TableHeader>
                   </TableRow>
@@ -220,15 +226,14 @@ export class KoulutuksenJarjestaja extends React.Component<
                           <Link to={`${student.id}`}>{student.nimi}</Link>
                         </TableCell>
                         <TableCell>{student.tutkinto}</TableCell>
-                        <TableCell>
-                          {format(parseISO(student.aloitus), "d.M.yyyy")}
-                        </TableCell>
+                        <TableCell>{student.osaamisala}</TableCell>
                         <TableCell>
                           {format(parseISO(student.hyvaksytty), "d.M.yyyy")}
                         </TableCell>
                         <TableCell>
                           {format(parseISO(student.paivitetty), "d.M.yyyy")}
                         </TableCell>
+                        <TableCell>{student.lukumaara}</TableCell>
                       </TableRow>
                     )
                   })}
