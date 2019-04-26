@@ -139,8 +139,6 @@ export function ArrayFieldTemplate(props: ArrayFieldTemplateProps) {
     }
   }, [activeProps, activeStep])
 
-  console.log("ACC", props)
-
   return (
     <ArrayField className={className} id={idSchema.$id}>
       <ArrayHeader>
