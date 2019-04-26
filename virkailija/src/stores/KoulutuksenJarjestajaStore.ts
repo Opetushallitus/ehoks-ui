@@ -34,7 +34,7 @@ const Search = types
       ]),
       "nimi"
     ),
-    sortDirection: "desc",
+    sortDirection: "asc",
     perPage: 10
   })
   .actions(self => {

@@ -68,8 +68,8 @@ export const mockStudents: MockStudent[] = Array.from(Array(100).keys()).map(
     )
     return {
       id: key,
-      nimi: `${firstNames[Math.floor(Math.random() * firstNames.length)]} ${
-        lastNames[Math.floor(Math.random() * firstNames.length)]
+      nimi: `${lastNames[Math.floor(Math.random() * lastNames.length)]} ${
+        firstNames[Math.floor(Math.random() * firstNames.length)]
       }`,
       tutkinto:
         qualifications[Math.floor(Math.random() * qualifications.length)],
