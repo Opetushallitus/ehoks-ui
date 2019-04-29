@@ -2,10 +2,12 @@ import React from "react"
 import styled from "styled"
 import { Competences } from "./StudyInfo/Competences"
 import { Details } from "./StudyInfo/Details"
-import { Instance, SnapshotOrInstance } from "mobx-state-tree"
-import { Harjoittelujakso } from "models/Harjoittelujakso"
-import { Osaamisvaatimus } from "models/Osaamisvaatimus"
-import { Naytto } from "models/Naytto"
+import {
+  Osaamisvaatimus,
+  Naytto,
+  Harjoittelujakso,
+  TodentamisenProsessi
+} from "models/helpers/TutkinnonOsa"
 
 interface ContainerProps {
   accentColor?: string
@@ -62,22 +64,21 @@ export interface StudyInfoProps {
    * List of competence requirements
    * @default []
    */
-  competenceRequirements?: Array<Instance<typeof Osaamisvaatimus>>
+  competenceRequirements?: Array<Osaamisvaatimus>
   /** List of competence demonstrations */
-  demonstrations?: Array<SnapshotOrInstance<typeof Naytto>>
+  demonstrations?: Array<Naytto>
   /** Color of additional info container */
   fadedColor?: string
   /**
    * List of learning periods
    * @default []
    */
-  learningPeriods?: Array<SnapshotOrInstance<typeof Harjoittelujakso>>
+  learningPeriods?: Array<Harjoittelujakso>
   /**
-   * List of locations
-   * @default []
+   * Verification process details
    */
-  locations?: string[]
-  /** Title of the accordion, always visible */
+  verificationProcess?: TodentamisenProsessi
+  /** Title of the study, always visible */
   title?: React.ReactNode
   /**
    * Width of the element for desktop resolutions
@@ -140,8 +141,8 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       competenceRequirements = [],
       demonstrations = [],
       fadedColor,
-      locations = [],
       learningPeriods = [],
+      verificationProcess,
       title,
       width = "25%"
     } = this.props
@@ -149,7 +150,8 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
 
     const hasDetails =
       (learningPeriods && learningPeriods.length > 0) ||
-      demonstrations.length > 0
+      demonstrations.length > 0 ||
+      verificationProcess
 
     return (
       <Container
@@ -158,14 +160,14 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
         width={width}
       >
         <InnerContainer>
-          <Title>{title}</Title>
+          <Title data-testid="Title">{title}</Title>
           {hasDetails && (
             <Details
-              accentColor={accentColor}
+              fadedColor={fadedColor}
               demonstrations={demonstrations}
               expanded={expanded.details}
               learningPeriods={learningPeriods}
-              locations={locations}
+              verificationProcess={verificationProcess}
               toggle={this.toggle}
             />
           )}
@@ -176,7 +178,6 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
             expandCompetence={this.expandCompetence}
             expanded={expanded.competences}
             expandedCompetences={expandedCompetences}
-            fadedColor={fadedColor}
             toggle={this.toggle}
           />
         </InnerContainer>

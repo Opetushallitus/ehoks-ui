@@ -4,49 +4,63 @@ import { FormattedMessage } from "react-intl"
 import MediaQuery from "react-responsive"
 import styled from "styled"
 import { breakpoints } from "theme"
-import { DemonstrationDates } from "./DemonstrationDates"
 import { Container, InfoContainer, Table, TBody, TD, TH, Title } from "./Shared"
-import { SnapshotOrInstance } from "mobx-state-tree"
-import { Naytto } from "models/Naytto"
+import { Naytto, TodentamisenProsessi } from "models/helpers/TutkinnonOsa"
+import { LearningEvent } from "components/StudyInfo/LearningEvent"
+import { VerificationProcess } from "types/VerificationProcess"
 
 const DemonstrationTitle = styled(Title)`
-  padding-left: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 `
 
 const DemonstrationTable = styled(Table)`
   margin-left: 20px;
 `
 
+const DemonstrationTasks = styled(InfoContainer)`
+  margin: 10px 20px 20px 10px;
+`
+
 const CustomSlider = styled(MobileSlider)`
-  margin: 10px 0 0 0;
-  border-left: 0;
-  border-right: 0;
+  margin: 10px 20px 20px 10px;
 `
 
 interface DemonstrationProps {
-  accentColor?: string
-  demonstration: SnapshotOrInstance<typeof Naytto>
+  demonstration: Naytto
+  verificationProcess?: TodentamisenProsessi
 }
 
 export class Demonstration extends React.Component<DemonstrationProps> {
   render() {
-    const { accentColor, demonstration } = this.props
+    const { demonstration, verificationProcess } = this.props
+    const title =
+      verificationProcess &&
+      verificationProcess.koodiUri === VerificationProcess.OHJAUS_NAYTTOON ? (
+        <FormattedMessage
+          id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
+          defaultMessage="Osaaminen osoitetaan näytössä"
+        />
+      ) : (
+        <FormattedMessage
+          id="opiskelusuunnitelma.nayttoTitle"
+          defaultMessage="Näyttö"
+        />
+      )
     return (
-      <Container>
-        <DemonstrationTitle accentColor={accentColor}>
-          <DemonstrationDates demonstration={demonstration} />
+      <Container data-testid="StudyInfo.Demonstration">
+        <DemonstrationTitle>
+          <LearningEvent
+            title={title}
+            type={demonstration.tyyppi}
+            description={demonstration.organisaatio}
+            startDate={demonstration.alku}
+            endDate={demonstration.loppu}
+            size="large"
+          />
         </DemonstrationTitle>
         <DemonstrationTable>
           <TBody>
-            <tr>
-              <TH>
-                <FormattedMessage
-                  id="opiskelusuunnitelma.nayttopaikkaTitle"
-                  defaultMessage="Näyttöpaikka"
-                />
-              </TH>
-              <TD>{demonstration.organisaatio}</TD>
-            </tr>
             <tr>
               <TH>
                 <FormattedMessage
@@ -65,8 +79,21 @@ export class Demonstration extends React.Component<DemonstrationProps> {
               </TH>
               <TD>
                 {demonstration &&
-                  demonstration.arvioijat &&
-                  demonstration.arvioijat.join(", ")}
+                  demonstration.koulutuksenJarjestajaArvioijat &&
+                  demonstration.koulutuksenJarjestajaArvioijat.map(
+                    (arvioija, i) => (
+                      <span key={i}>
+                        {arvioija} <br />
+                      </span>
+                    )
+                  )}
+                {demonstration &&
+                  demonstration.tyoelamaArvioijat &&
+                  demonstration.tyoelamaArvioijat.map((arvioija, i) => (
+                    <span key={i}>
+                      {arvioija} <br />
+                    </span>
+                  ))}
               </TD>
             </tr>
           </TBody>
@@ -85,13 +112,13 @@ export class Demonstration extends React.Component<DemonstrationProps> {
               )
             } else {
               return (
-                <InfoContainer>
+                <DemonstrationTasks>
                   {demonstration &&
                     demonstration.tyotehtavat &&
                     demonstration.tyotehtavat.map((tyotehtava, i) => {
                       return <li key={i}>{tyotehtava}</li>
                     })}
-                </InfoContainer>
+                </DemonstrationTasks>
               )
             }
           }}

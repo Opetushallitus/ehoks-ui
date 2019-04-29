@@ -1,7 +1,8 @@
 import React from "react"
-import { createRendererWithContext } from "testUtils"
+import { renderWithContext } from "testUtils"
 import { CompetenceRequirement } from "../CompetenceRequirement"
 import { Osaamisvaatimus } from "models/Osaamisvaatimus"
+import { fireEvent } from "react-testing-library"
 
 const competenceRequirement = Osaamisvaatimus.create({
   kuvaus: "ammattitaitovaatimuksen kuvaus",
@@ -31,44 +32,43 @@ const competenceRequirement = Osaamisvaatimus.create({
 
 test("expanded=false renders only title", () => {
   const mockExpand = jest.fn()
-  const tree = createRendererWithContext(
+  const { getByTestId, queryByTestId } = renderWithContext(
     <CompetenceRequirement
       competenceRequirement={competenceRequirement}
       expanded={false}
       expand={mockExpand}
     />
   )
-  const toggleButton = tree.findByTestId("ToggleAssessment")
-  const assessmentItems = tree.findAllByTestId("Assessment")
-  expect(tree.getTextContent(toggleButton)).toBe("Näytä arviointikriteerit")
-  expect(assessmentItems.length).toBe(0)
+  expect(getByTestId("ToggleAssessment").textContent).toBe(
+    "Näytä arviointikriteerit"
+  )
+  expect(queryByTestId("Assessment")).not.toBeInTheDocument()
 })
 
 test("expanded=true renders title and assessment items", () => {
   const mockExpand = jest.fn()
-  const tree = createRendererWithContext(
+  const { getByTestId } = renderWithContext(
     <CompetenceRequirement
       competenceRequirement={competenceRequirement}
       expanded={true}
       expand={mockExpand}
     />
   )
-  const toggleButton = tree.findByTestId("ToggleAssessment")
-  const assessment = tree.findByTestId("Assessment")
-  expect(tree.getTextContent(toggleButton)).toBe("Piilota arviointikriteerit")
-  expect(assessment).toBeDefined()
+  expect(getByTestId("ToggleAssessment").textContent).toBe(
+    "Piilota arviointikriteerit"
+  )
+  expect(getByTestId("Assessment")).toBeInTheDocument()
 })
 
 test("click toggle assessment button calls expand callback", () => {
   const mockExpand = jest.fn()
-  const tree = createRendererWithContext(
+  const { getByTestId } = renderWithContext(
     <CompetenceRequirement
       competenceRequirement={competenceRequirement}
       expanded={false}
       expand={mockExpand}
     />
   )
-  const toggleButton = tree.findByTestId("ToggleAssessment")
-  toggleButton.props.onClick()
+  fireEvent.click(getByTestId("ToggleAssessment"))
   expect(mockExpand).toHaveBeenCalledTimes(1)
 })

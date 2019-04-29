@@ -10,10 +10,12 @@ import { StudiesContainer } from "components/StudiesContainer"
 import { StudyInfo } from "components/StudyInfo"
 import { observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
-import { Suunnitelma } from "models/Suunnitelma"
+import { HOKS } from "models/HOKS"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
+import { theme } from "theme"
+const { colors } = theme
 
 const ProgressTitle = styled("h2")`
   font-weight: 600;
@@ -23,7 +25,7 @@ const ProgressTitle = styled("h2")`
 
 export interface OpiskelusuunnitelmaProps {
   children?: React.ReactChildren
-  plan: Instance<typeof Suunnitelma>
+  plan: Instance<typeof HOKS>
   titles?: {
     heading?: React.ReactNode
     goals?: React.ReactNode
@@ -228,7 +230,7 @@ export class Opiskelusuunnitelma extends React.Component<
               percentage={Math.round(
                 (suunnitellutOpinnot.length / totalStudiesLength) * 100
               )}
-              stroke="#FF5000"
+              stroke={colors.planned}
               title={
                 <FormattedMessage
                   id="opiskelusuunnitelma.suunniteltunaTitle"
@@ -241,7 +243,7 @@ export class Opiskelusuunnitelma extends React.Component<
               percentage={Math.round(
                 (aikataulutetutOpinnot.length / totalStudiesLength) * 100
               )}
-              stroke="#FFD900"
+              stroke={colors.scheduled}
               title={
                 <FormattedMessage
                   id="opiskelusuunnitelma.aikataulutettunaTitle"
@@ -254,7 +256,7 @@ export class Opiskelusuunnitelma extends React.Component<
               percentage={Math.round(
                 (valmiitOpinnot.length / totalStudiesLength) * 100
               )}
-              stroke="#5BCA16"
+              stroke={colors.ready}
               title={
                 <FormattedMessage
                   id="opiskelusuunnitelma.valmiinaTitle"
@@ -302,14 +304,11 @@ export class Opiskelusuunnitelma extends React.Component<
               {suunnitellutOpinnot.map((study, i) => {
                 const renderExtraItem = (i + 1) % 4 === 0
                 return (
-                  <React.Fragment key={study.id}>
+                  <React.Fragment key={`${study.id}_${i}`}>
                     <StudyInfo
-                      accentColor="#EB6F02"
+                      accentColor={colors.planned}
                       fadedColor="#FDF1E6"
-                      title={`${study.otsikko} ${
-                        study.osaamispisteet
-                      } ${competencePointsTitle}`}
-                      locations={study.sijainnit}
+                      title={study.opintoOtsikko(competencePointsTitle)}
                       learningPeriods={study.harjoittelujaksot}
                       competenceRequirements={study.osaamisvaatimukset}
                       demonstrations={study.naytot}
@@ -350,14 +349,11 @@ export class Opiskelusuunnitelma extends React.Component<
               {aikataulutetutOpinnot.map((study, i) => {
                 const renderExtraItem = (i + 1) % 4 === 0
                 return (
-                  <React.Fragment key={study.id}>
+                  <React.Fragment key={`${study.id}_${i}`}>
                     <StudyInfo
-                      accentColor="#E2A626"
+                      accentColor={colors.scheduled}
                       fadedColor="#FDF6E9"
-                      title={`${study.otsikko} ${
-                        study.osaamispisteet
-                      } ${competencePointsTitle}`}
-                      locations={study.sijainnit}
+                      title={study.opintoOtsikko(competencePointsTitle)}
                       learningPeriods={study.harjoittelujaksot}
                       competenceRequirements={study.osaamisvaatimukset}
                       demonstrations={study.naytot}
@@ -398,14 +394,11 @@ export class Opiskelusuunnitelma extends React.Component<
               {valmiitOpinnot.map((study, i) => {
                 const renderExtraItem = (i + 1) % 4 === 0
                 return (
-                  <React.Fragment key={study.id}>
+                  <React.Fragment key={`${study.id}_${i}`}>
                     <StudyInfo
-                      accentColor="#43A047"
+                      accentColor={colors.ready}
                       fadedColor="#ECF6ED"
-                      title={`${study.otsikko} ${
-                        study.osaamispisteet
-                      } ${competencePointsTitle}`}
-                      locations={study.sijainnit}
+                      title={study.opintoOtsikko(competencePointsTitle)}
                       learningPeriods={study.harjoittelujaksot}
                       competenceRequirements={study.osaamisvaatimukset}
                       demonstrations={study.naytot}

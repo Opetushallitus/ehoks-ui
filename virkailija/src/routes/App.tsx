@@ -45,7 +45,7 @@ export class App extends React.Component<AppProps> {
               <Etusivu path="/" />
               <LuoHOKS path="hoks/uusi" />
               <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />
-              <Opiskelija path="koulutuksenjarjestaja/:id/*" />
+              <Opiskelija path="koulutuksenjarjestaja/:studentId/*" />
             </Router>
             <GlobalStyles />
           </Container>

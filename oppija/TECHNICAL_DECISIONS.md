@@ -36,3 +36,11 @@ You can get the TypeScript typings for your model / store using `Instance<typeof
 ### Styles
 
 Styles are defined within React components using [styled-components](https://www.styled-components.com/). Global styles can be added to `src/components/App/globalStyles.ts`, but try to keep all component specific styles away from global styles.
+
+## Tests
+
+This project uses [Jest](https://jestjs.io/) testing framework with [react-testing-library](https://github.com/kentcdodds/react-testing-library).
+
+- Try to write tests that use your components like a real user would use them.
+- Try to use `data-testid`s as your element identifiers as much as possible instead of matching by `classNames` or by text strings.
+- Try to test your component's main functionality, not implementation details. Your tests should still work after you change styles, button texts or rearrange the DOM elements.

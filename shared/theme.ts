@@ -21,7 +21,10 @@ const themeColors = {
   pinkishGrey: "#cecece",
   pumpkin: "#eb6f02",
   yellowOchre: "#de9a06",
-  waterBlue: "#1976d2"
+  waterBlue: "#1976d2",
+  planned: "#FF5000",
+  scheduled: "#FFCC33",
+  ready: "#5BAC13"
 }
 
 export const theme = {

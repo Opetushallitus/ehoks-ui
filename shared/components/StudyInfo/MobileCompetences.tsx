@@ -3,7 +3,7 @@ import React from "react"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
 import { ToggleLink } from "./ToggleLink"
-import { Instance } from "mobx-state-tree"
+import { SnapshotOrInstance } from "mobx-state-tree"
 import { Osaamisvaatimus } from "models/Osaamisvaatimus"
 
 const SliderContainer = styled("div")`
@@ -28,7 +28,7 @@ const MobileSliderToggle = styled("div")`
 `
 
 interface MobileCompetencesProps {
-  competenceRequirements: Array<Instance<typeof Osaamisvaatimus>>
+  competenceRequirements: Array<SnapshotOrInstance<typeof Osaamisvaatimus>>
 }
 
 interface MobileCompetencesState {
@@ -59,6 +59,8 @@ export class MobileCompetences extends React.Component<
   render() {
     const { competenceRequirements } = this.props
     const { showAssessment } = this.state
+    const kriteerit =
+      competenceRequirements[this.state.activeSlide].kriteerit || []
     return (
       <SliderContainer>
         <MobileSlider
@@ -95,18 +97,16 @@ export class MobileCompetences extends React.Component<
           })}
         </MobileSlider>
         {showAssessment &&
-          competenceRequirements[this.state.activeSlide].kriteerit.map(
-            (arviointikriteeri, ai) => {
-              return (
-                <AssessmentItem key={ai}>
-                  <h2>{arviointikriteeri.kuvaus}</h2>
-                  {arviointikriteeri.kriteerit.map((kriteeri, ki) => {
-                    return <p key={ki}>{kriteeri}</p>
-                  })}
-                </AssessmentItem>
-              )
-            }
-          )}
+          kriteerit.map((arviointikriteeri, ai) => {
+            return (
+              <AssessmentItem key={ai}>
+                <h2>{arviointikriteeri.kuvaus}</h2>
+                {(arviointikriteeri.kriteerit || []).map((kriteeri, ki) => {
+                  return <p key={ki}>{kriteeri}</p>
+                })}
+              </AssessmentItem>
+            )
+          })}
       </SliderContainer>
     )
   }

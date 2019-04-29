@@ -1,4 +1,3 @@
-// import { apiUrl } from "config"
 import drop from "lodash.drop"
 import take from "lodash.take"
 import { types } from "mobx-state-tree"
@@ -6,13 +5,14 @@ import { MockStudent } from "mocks/MockStudent"
 import { mockStudents } from "mocks/mockStudents"
 // import { IStoreEnvironment } from "utils"
 
-const SearchResult = types.model("SearchResult", {
+export const SearchResult = types.model("SearchResult", {
   id: types.number,
   nimi: types.string,
   tutkinto: types.string,
-  aloitus: types.string,
+  osaamisala: types.string,
   hyvaksytty: types.string,
-  paivitetty: types.string
+  paivitetty: types.string,
+  lukumaara: types.number
 })
 
 const Search = types
@@ -27,13 +27,14 @@ const Search = types
         "id",
         "nimi",
         "tutkinto",
-        "aloitus",
+        "osaamisala",
         "hyvaksytty",
-        "paivitetty"
+        "paivitetty",
+        "lukumaara"
       ]),
       "nimi"
     ),
-    sortDirection: "desc",
+    sortDirection: "asc",
     perPage: 10
   })
   .actions(self => {

@@ -1,4 +1,4 @@
-import { RouteComponentProps, Router } from "@reach/router"
+import { navigate, RouteComponentProps, Router } from "@reach/router"
 import { autorun, IReactionDisposer } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
@@ -19,13 +19,23 @@ export class Suunnittelu extends React.Component<
   componentDidMount() {
     const { store } = this.props
     const session = store!.session
-    this.disposeLoginReaction = autorun(() => {
+    this.disposeLoginReaction = autorun(async () => {
       // navigate to Opintopolku logout url after logging out
       if (!session.isLoggedIn) {
-        window.location.href = this.props.store!.environment.opintopolkuLogoutUrl
+        // check that user did actually logout or there was an error (no session)
+        if (session.userDidLogout || session.error) {
+          window.location.href = store!.environment.opintopolkuLogoutUrl
+        }
+      } else {
+        await store!.hoks.haeSuunnitelmat(session.user!.oid)
+        const suunnitelmat = store!.hoks.suunnitelmat
+        // navigate directly to HOKS if there's only one of them
+        if (suunnitelmat.length === 1) {
+          navigate(`/ehoks/suunnittelu/${suunnitelmat[0].eid}`)
+        }
       }
     })
-    store!.hoks.haeSuunnitelmat()
+    //
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
     })

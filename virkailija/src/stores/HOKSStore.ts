@@ -1,17 +1,16 @@
 import { flow, types } from "mobx-state-tree"
 import { suunnitelmat } from "mocks/mockSuunnitelmat"
-import { Suunnitelma } from "models/Suunnitelma"
+import { HOKS } from "models/HOKS"
 
-const mockFetchHOKS = (eid: string) => {
-  return Promise.resolve({
-    eid,
-    ...suunnitelmat[0]
-  })
+const mockFetchHOKS = (_: string) => {
+  // randomize 1-3 HOKSes for every student
+  const amount = Math.floor(Math.random() * suunnitelmat.length) + 1
+  return Promise.resolve(suunnitelmat.slice(0, amount))
 }
 
 const HOKSStoreModel = {
   isLoading: false,
-  suunnitelma: types.optional(Suunnitelma, {})
+  suunnitelmat: types.array(HOKS)
 }
 
 export const HOKSStore = types
@@ -19,11 +18,12 @@ export const HOKSStore = types
   .actions(self => {
     // const { fetchCollection, errors } = getEnv<StoreEnvironment>(self)
 
-    const haeSuunnitelma = flow(function*(eid: string) {
+    // fetch HOKSes using student oid
+    const haeSuunnitelmat = flow(function*(oid: string) {
       self.isLoading = true
-      self.suunnitelma = yield mockFetchHOKS(eid)
+      self.suunnitelmat = yield mockFetchHOKS(oid)
       self.isLoading = false
     })
 
-    return { haeSuunnitelma }
+    return { haeSuunnitelmat }
   })

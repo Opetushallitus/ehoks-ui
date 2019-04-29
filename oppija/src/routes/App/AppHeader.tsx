@@ -3,9 +3,9 @@ import { inject, observer } from "mobx-react"
 import React from "react"
 import { MdMenu } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
-import { ISessionStore } from "stores/SessionStore"
+import { MobileMenu } from "routes/App/MobileMenu"
+import { IRootStore } from "stores/RootStore"
 import styled from "styled"
-import { injectSession } from "utils"
 
 interface TopLinkProps {
   active?: boolean
@@ -83,9 +83,9 @@ const TitleContainer = styled("div")`
   align-items: center;
 `
 
-const MobileMenu = styled("div")`
+const MobileMenuToggle = styled("div")`
   display: none;
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     display: block;
     margin: 0 20px;
 
@@ -134,20 +134,38 @@ const LogoutLink = styled(Link)`
   color: #fff;
 `
 
-export interface AppHeaderProps {
-  session?: ISessionStore
+interface AppHeaderProps {
+  store?: IRootStore
 }
 
-@inject(injectSession)
+interface AppHeaderState {
+  showMenu: boolean
+}
+
+@inject("store")
 @observer
-export class AppHeader extends React.Component<AppHeaderProps> {
+export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
+  state = {
+    showMenu: false
+  }
   logout = (event: React.MouseEvent) => {
     event.preventDefault()
-    this.props.session!.logout()
+    this.props.store!.session!.logout()
+  }
+
+  changeLocale = (locale: "fi" | "sv") => (event: React.MouseEvent) => {
+    event.preventDefault()
+    this.props.store!.translations.setActiveLocale(locale)
+  }
+
+  toggleMenu = () => {
+    this.setState(state => ({ ...state, showMenu: !state.showMenu }))
   }
 
   render() {
-    const { session } = this.props
+    const { store } = this.props
+    const { session } = store!
+    const { activeLocale } = store!.translations
     return (
       <HeaderContainer>
         <TopLinksContainer>
@@ -182,7 +200,7 @@ export class AppHeader extends React.Component<AppHeaderProps> {
           </TopLinks>
         </TopLinksContainer>
         <TitleContainer>
-          <MobileMenu>
+          <MobileMenuToggle onClick={this.toggleMenu}>
             <MdMenu size="40" />
             <h3>
               <FormattedMessage
@@ -190,7 +208,7 @@ export class AppHeader extends React.Component<AppHeaderProps> {
                 defaultMessage="Valikko"
               />
             </h3>
-          </MobileMenu>
+          </MobileMenuToggle>
           <Title>eHOKS</Title>
           {session!.isLoggedIn && (
             <LogoutContainer>
@@ -204,6 +222,15 @@ export class AppHeader extends React.Component<AppHeaderProps> {
             </LogoutContainer>
           )}
         </TitleContainer>
+        {this.state.showMenu && (
+          <MobileMenu
+            activeLocale={activeLocale}
+            changeLocale={this.changeLocale}
+            toggleMenu={this.toggleMenu}
+            logout={this.logout}
+            session={session!}
+          />
+        )}
       </HeaderContainer>
     )
   }

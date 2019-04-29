@@ -2,11 +2,12 @@
 import { getEnv, Instance, types } from "mobx-state-tree"
 import { EnvironmentStore } from "stores/EnvironmentStore"
 import { HOKSStore } from "stores/HOKSStore"
+// TODO: remove KoulutuksenJarjestajaStore when LuoHOKS route is removed
+import { KoulutuksenJarjestajaStore } from "stores/KoulutuksenJarjestajaStore"
 import { OppilasStore } from "stores/OppilasStore"
 import { SessionStore } from "stores/SessionStore"
 import { TranslationStore } from "stores/TranslationStore"
 import { TyopaikanToimijaStore } from "stores/TyopaikanToimijaStore"
-import { KoulutuksenJarjestajaStore } from "./KoulutuksenJarjestajaStore"
 
 export interface InjectedStores {
   store: IRootStore

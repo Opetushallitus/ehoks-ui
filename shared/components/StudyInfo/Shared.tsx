@@ -2,7 +2,7 @@ import styled from "styled"
 import { Period } from "./Period"
 
 export const Container = styled("div")`
-  margin: 0 0 30px 0;
+  margin: 0;
 
   &:last-of-type {
     margin-bottom: 0;
@@ -33,6 +33,7 @@ export const TBody = styled("tbody")`
 
 export const TH = styled("th")`
   text-align: left;
+  vertical-align: top;
   padding: 5px 30px 5px 0;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
@@ -57,10 +58,8 @@ export const InfoContainer = styled("ul")`
   margin: 10px 0 0 0;
   background: #fff;
   color: #2b2b2b;
-  border-radius: 2px;
+  border-radius: 3px;
   border: 1px solid #999;
-  border-left: 0;
-  border-right: 0;
   list-style: none;
 
   li {

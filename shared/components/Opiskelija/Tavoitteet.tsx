@@ -5,14 +5,16 @@ import { HelpPopup } from "components/HelpPopup"
 import { InfoTable } from "components/InfoTable"
 import { LabeledColumn } from "components/LabeledColumn"
 import { observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
+import { Instance, SnapshotOrInstance } from "mobx-state-tree"
 import { SessionUser } from "models/SessionUser"
 import React from "react"
 import { FormattedMessage } from "react-intl"
+import { HOKS } from "models/HOKS"
 
 export interface TavoitteetProps {
   children?: React.ReactChildren
   student: Instance<typeof SessionUser> | null
+  hoks: SnapshotOrInstance<typeof HOKS>
   titles?: {
     heading?: React.ReactNode
     goals?: React.ReactNode
@@ -51,7 +53,7 @@ export class Tavoitteet extends React.Component<
   }
 
   render() {
-    const { student, titles: customTitles = {} } = this.props
+    const { student, hoks, titles: customTitles = {} } = this.props
     if (!student) {
       return null
     }
@@ -122,7 +124,7 @@ export class Tavoitteet extends React.Component<
               </tr>
               <tr>
                 <LabeledColumn id="tavoitteet.suunnitelmaJatkoOpintoihinTitle">
-                  Työelämään siirtyminen
+                  {hoks.urasuunnitelma && hoks.urasuunnitelma.nimi}
                 </LabeledColumn>
                 <td />
                 <td />

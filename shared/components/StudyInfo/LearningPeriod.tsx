@@ -4,7 +4,6 @@ import { FormattedMessage } from "react-intl"
 import MediaQuery from "react-responsive"
 import styled from "styled"
 import { breakpoints } from "theme"
-import { LearningPeriodDates } from "./LearningPeriodDates"
 import {
   Container,
   EmptyTD,
@@ -15,82 +14,116 @@ import {
   TH,
   Title
 } from "./Shared"
-import { SnapshotOrInstance } from "mobx-state-tree"
-import { Harjoittelujakso } from "models/Harjoittelujakso"
+import { Harjoittelujakso } from "models/helpers/TutkinnonOsa"
+import { LearningEvent } from "components/StudyInfo/LearningEvent"
 
 const LearningPeriodTitle = styled(Title)`
-  padding-left: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 `
 
 const LearningPeriodTable = styled(Table)`
   margin-left: 20px;
 `
 
+const LearningPeriodTasks = styled(InfoContainer)`
+  margin: 10px 20px 20px 10px;
+`
+
 const CustomSlider = styled(MobileSlider)`
-  margin: 10px 0 0 0;
-  border-left: 0;
-  border-right: 0;
+  margin: 10px 20px 20px 10px;
 `
 
 interface LearningPeriodProps {
-  accentColor?: string
-  learningPeriod: SnapshotOrInstance<typeof Harjoittelujakso>
+  learningPeriod: Harjoittelujakso
 }
 
 export class LearningPeriod extends React.Component<LearningPeriodProps> {
   render() {
-    const { accentColor, learningPeriod } = this.props
-    const { tyotehtavat = [], ajankohta } = learningPeriod
+    const { learningPeriod } = this.props
+    const {
+      tyotehtavat = [],
+      alku,
+      loppu,
+      nimi,
+      tyyppi,
+      ohjaaja,
+      selite
+    } = learningPeriod
     return (
-      <Container>
-        {ajankohta && (ajankohta.alku || ajankohta.loppu) && (
-          <LearningPeriodTitle accentColor={accentColor}>
-            <LearningPeriodDates learningPeriod={learningPeriod} />
+      <Container data-testid="StudyInfo.LearningPeriod">
+        {(alku || loppu) && (
+          <LearningPeriodTitle>
+            <LearningEvent
+              title={
+                tyyppi === "OTHER" ? (
+                  nimi
+                ) : (
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.tyossaoppiminenTitle"
+                    defaultMessage="Työpaikalla oppiminen"
+                  />
+                )
+              }
+              type={tyyppi}
+              description={selite}
+              startDate={alku}
+              endDate={loppu}
+              size="large"
+            />
           </LearningPeriodTitle>
         )}
         <LearningPeriodTable>
           <TBody>
-            <tr>
-              <TH>
-                <FormattedMessage
-                  id="opiskelusuunnitelma.tyopaikkaohjaajaTitle"
-                  defaultMessage="Työpaikkaohjaaja"
-                />
-              </TH>
-              <TD>{learningPeriod.ohjaaja}</TD>
-            </tr>
-            <tr>
-              <TH>
-                <FormattedMessage
-                  id="opiskelusuunnitelma.keskeisetTyotehtavatTitle"
-                  defaultMessage="Keskeiset työtehtävät"
-                />
-              </TH>
-              <EmptyTD />
-            </tr>
+            {ohjaaja && (
+              <tr>
+                <TH>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.tyopaikkaohjaajaTitle"
+                    defaultMessage="Työpaikkaohjaaja"
+                  />
+                </TH>
+                <TD>
+                  {ohjaaja}, {selite}
+                </TD>
+              </tr>
+            )}
+            {tyotehtavat.length > 0 && (
+              <tr>
+                <TH>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.keskeisetTyotehtavatTitle"
+                    defaultMessage="Keskeiset työtehtävät"
+                  />
+                </TH>
+                <EmptyTD />
+              </tr>
+            )}
           </TBody>
         </LearningPeriodTable>
-        <MediaQuery maxWidth={breakpoints.Tablet}>
-          {matches => {
-            if (matches) {
-              return (
-                <CustomSlider>
-                  {tyotehtavat.map((tyotehtava, i) => {
-                    return <Slide key={i}>{tyotehtava}</Slide>
-                  })}
-                </CustomSlider>
-              )
-            } else {
-              return (
-                <InfoContainer>
-                  {tyotehtavat.map((tyotehtava, i) => {
-                    return <li key={i}>{tyotehtava}</li>
-                  })}
-                </InfoContainer>
-              )
-            }
-          }}
-        </MediaQuery>
+        {tyotehtavat.length > 0 && (
+          <MediaQuery maxWidth={breakpoints.Tablet}>
+            {matches => {
+              if (matches) {
+                return (
+                  <CustomSlider>
+                    {tyotehtavat.map((tyotehtava, i) => {
+                      return <Slide key={i}>{tyotehtava}</Slide>
+                    })}
+                  </CustomSlider>
+                )
+              } else {
+                return (
+                  <LearningPeriodTasks>
+                    {tyotehtavat.map((tyotehtava, i) => {
+                      return <li key={i}>{tyotehtava}</li>
+                    })}
+                  </LearningPeriodTasks>
+                )
+              }
+            }}
+          </MediaQuery>
+        )}
       </Container>
     )
   }

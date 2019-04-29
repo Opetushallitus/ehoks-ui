@@ -25,9 +25,18 @@ function scrollToError(error: AjvError) {
     const element: any = document.querySelector(
       `#${generateFieldId(error.property)}`
     )
+    const topToolbar: any = document.getElementById("topToolbar")
     if (element) {
-      element.scrollIntoView()
-      element.focus()
+      window.scroll(0, element.offsetTop - topToolbar ? topToolbar.height : 0)
+
+      const focusElement =
+        element.tagName === "INPUT"
+          ? element
+          : document.querySelectorAll(
+              `#${generateFieldId(error.property)} input:first-child`
+            )[0]
+
+      focusElement.focus()
     }
   }
 }
@@ -43,16 +52,19 @@ export default function ErrorList(props: ErrorListProps) {
     <div id="form-errors">
       <h3>
         <FormattedMessage
-          id="luoHoks.tarvittavatMuutokset"
-          defaultMessage="Tarvittavat muutokset"
+          id="luoHoks.vaaditutKentat"
+          defaultMessage="Vaaditut kentät"
         />
       </h3>
 
       <ul>
         {errors.map((error: AjvError, i: number) => {
+          const property = error.property
+            .replace(/\[|\]|'/gi, "")
+            .replace(/\d/gi, (match: string) => ` ${Number(match) + 1} `)
           return (
             <ErrorMessage key={i} onClick={scrollToError(error)} role="button">
-              {error.property} on {error.message}
+              {property} on {error.message}
             </ErrorMessage>
           )
         })}

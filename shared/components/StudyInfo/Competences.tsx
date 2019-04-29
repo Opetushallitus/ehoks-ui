@@ -11,20 +11,16 @@ import { IconContainer } from "./IconContainer"
 import { MobileCompetences } from "./MobileCompetences"
 import { ToggleLink } from "./ToggleLink"
 import { Osaamisvaatimus } from "models/Osaamisvaatimus"
-import { Instance } from "mobx-state-tree"
+import { SnapshotOrInstance } from "mobx-state-tree"
 
 const Container = styled("div")`
   background: #fff;
 `
 
-interface ExpandContainerProps {
-  fadedColor: string
-}
 const ExpandContainer = styled("div")`
   display: flex;
   align-items: center;
   padding: 10px 10px 10px 20px;
-  background: ${(props: ExpandContainerProps) => props.fadedColor};
   border-top: 1px solid #c9cdcf;
 `
 
@@ -37,8 +33,9 @@ const ToggleAllTitle = styled(ToggleLink)`
   }
 `
 
-const ExpandTitle = styled(ToggleLink)`
+const ExpandTitle = styled("div")`
   flex: 1;
+  cursor: pointer;
 `
 
 const CollapseHeaderContainer = styled("div")`
@@ -104,12 +101,11 @@ const Prefix = styled("div")`
 
 interface CompetencesProps {
   collapseAll: () => void
-  competenceRequirements?: Array<Instance<typeof Osaamisvaatimus>>
+  competenceRequirements?: Array<SnapshotOrInstance<typeof Osaamisvaatimus>>
   expandAll: () => void
   expandCompetence: (index: number) => () => void
   expanded?: boolean
   expandedCompetences: number[]
-  fadedColor?: string
   toggle: (name: "competences" | "details") => () => void
 }
 
@@ -125,18 +121,21 @@ export class Competences extends React.Component<CompetencesProps> {
       expandCompetence,
       expanded,
       expandedCompetences,
-      fadedColor = "",
       toggle
     } = this.props
     const { intl } = this.context
     const allExpanded =
       expandedCompetences.length === competenceRequirements.length
 
+    if (!competenceRequirements.length) {
+      return <Container data-testid="StudyInfo.Competences" />
+    }
+
     return (
-      <Container>
+      <Container data-testid="StudyInfo.Competences">
         {expanded ? (
           <React.Fragment>
-            <CollapseContainer>
+            <CollapseContainer data-testid="StudyInfo.Competences.CollapseContainer">
               <CollapseHeaderContainer>
                 <CollapseHeader>
                   <FormattedMessage
@@ -164,6 +163,7 @@ export class Competences extends React.Component<CompetencesProps> {
                   id:
                     "opiskelusuunnitelma.piilotaAmmattitaitovaatimuksetAriaLabel"
                 })}
+                data-testid="StudyInfo.Competences.CollapseCompetences"
               >
                 <Collapse size={40} />
               </IconContainer>
@@ -171,7 +171,7 @@ export class Competences extends React.Component<CompetencesProps> {
             <Line height="2px" backgroundColor="#000" />
           </React.Fragment>
         ) : (
-          <ExpandContainer fadedColor={fadedColor}>
+          <ExpandContainer>
             <ExpandTitle onClick={toggle("competences")}>
               <FormattedMessage
                 id="opiskelusuunnitelma.naytaAmmattitaitovaatimuksetLink"
@@ -183,6 +183,7 @@ export class Competences extends React.Component<CompetencesProps> {
               aria-label={intl.formatMessage({
                 id: "opiskelusuunnitelma.naytaAmmattitaitovaatimuksetAriaLabel"
               })}
+              data-testid="StudyInfo.Competences.ExpandCompetences"
             >
               <Expand size={40} />
             </IconContainer>
@@ -208,7 +209,7 @@ export class Competences extends React.Component<CompetencesProps> {
                       />
                     </Prefix>
 
-                    <InfoContainer>
+                    <InfoContainer data-testid="StudyInfo.Competences.CompetenceRequirements">
                       {competenceRequirements.map(
                         (competenceRequirement, i) => {
                           return (

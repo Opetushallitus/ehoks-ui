@@ -1,4 +1,4 @@
-import { Osaamisvaatimus } from "../../shared/models/Osaamisvaatimus"
+import { Osaamisvaatimus } from "models/Osaamisvaatimus"
 import { SnapshotOrInstance } from "mobx-state-tree"
 
 export const osaamisvaatimukset: Array<

@@ -11,18 +11,6 @@ Object {
   },
   "hoks": Object {
     "isLoading": false,
-    "suunnitelma": Object {
-      "aiemmatOpinnot": Array [],
-      "aloitusPvm": "",
-      "eid": "",
-      "keskeytysPvm": "",
-      "opinnot": Array [],
-      "oppilaitos": "",
-      "osaamisala": "",
-      "osaamispisteet": 0,
-      "tutkinnonNimi": "",
-      "tutkintonimike": "",
-    },
     "suunnitelmat": Array [],
   },
   "isLoading": false,
@@ -35,7 +23,7 @@ Object {
       "results": Array [],
       "searchText": "",
       "sortBy": "nimi",
-      "sortDirection": "desc",
+      "sortDirection": "asc",
     },
   },
   "oppilas": Object {
@@ -46,6 +34,7 @@ Object {
     "error": "",
     "isLoading": false,
     "user": null,
+    "userDidLogout": false,
   },
   "translations": Object {
     "activeLocale": "fi",

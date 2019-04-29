@@ -5,15 +5,19 @@ import { HeadingContainer, HelpHeading } from "components/Heading"
 import { HelpPopup } from "components/HelpPopup"
 import { StudiesContainer } from "components/StudiesContainer"
 import { StudyInfo } from "components/StudyInfo"
-import { Instance } from "mobx-state-tree"
-import { Opinto } from "models/Opinto"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
+import { TutkinnonOsa } from "models/helpers/TutkinnonOsa"
+import styled from "styled"
+
+const Container = styled(StudiesContainer)`
+  margin-top: 0;
+`
 
 export interface AiempiOsaaminenProps {
   children?: React.ReactChildren
   heading?: React.ReactNode
-  studies: Array<Instance<typeof Opinto>>
+  studies: Array<TutkinnonOsa>
 }
 
 export interface AiempiOsaaminenState {
@@ -68,7 +72,7 @@ export class AiempiOsaaminen extends React.Component<
         </HeadingContainer>
 
         <ContentArea>
-          <StudiesContainer>
+          <Container>
             {studies.map((study, i) => {
               const renderExtraItem = (i + 1) % 4 === 0
               return (
@@ -76,19 +80,26 @@ export class AiempiOsaaminen extends React.Component<
                   <StudyInfo
                     accentColor="#43A047"
                     fadedColor="#ECF6ED"
-                    title={`${study.otsikko} ${
-                      study.osaamispisteet
-                    } ${competencePointsTitle}`}
-                    locations={study.sijainnit}
+                    title={study.opintoOtsikko(competencePointsTitle)}
                     learningPeriods={study.harjoittelujaksot}
                     competenceRequirements={study.osaamisvaatimukset}
                     demonstrations={study.naytot}
+                    verificationProcess={study.todentamisenProsessi}
                   />
                   {renderExtraItem && <EmptyItem />}
                 </React.Fragment>
               )
             })}
-          </StudiesContainer>
+            {!studies.length && (
+              <div>
+                <FormattedMessage
+                  id="aiempiOsaaminen.eiAiempaaOsaamista"
+                  defaultMessage="Ei aiempia opintoja"
+                />
+                .
+              </div>
+            )}
+          </Container>
         </ContentArea>
       </React.Fragment>
     )

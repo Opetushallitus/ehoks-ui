@@ -15,7 +15,7 @@ import { RootStore } from "./stores/RootStore"
 addLocaleData([...fi, ...sv])
 
 // pass fetch utils to RootStore using MST's environment context, so we can easily mock it in tests
-const store = RootStore.create({}, createEnvironment(fetch))
+const store = RootStore.create({}, createEnvironment(fetch, apiUrl))
 store.environment.getEnvironment()
 store.translations.haeLokalisoinnit(apiUrl)
 

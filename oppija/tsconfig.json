@@ -18,9 +18,9 @@
     "lib": ["es5", "es6", "dom"],
     "baseUrl": "./src",
     "paths": {
-      "*": ["*", "../../shared/*"]
+      "*": ["*", "../../shared/*", "../../virkailija/src/*"]
     }
   },
-  "include": ["./**/*", "../shared/**/*"],
+  "include": ["./**/*", "../shared/**/*", "../virkailija/src/**/*"],
   "exclude": ["node_modules"]
 }

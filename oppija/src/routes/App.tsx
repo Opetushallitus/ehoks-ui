@@ -10,8 +10,7 @@ import { AppHeader } from "routes/App/AppHeader"
 import { GlobalStyles } from "routes/App/globalStyles"
 import { Etusivu } from "routes/Etusivu"
 import { Henkilokohtaistaminen } from "routes/Henkilokohtaistaminen"
-import { KoulutuksenJarjestaja } from "routes/KoulutuksenJarjestaja"
-import { Opiskelija } from "routes/KoulutuksenJarjestaja/Opiskelija"
+import { LuoHOKS } from "routes/LuoHOKS"
 import { Suunnittelu } from "routes/Suunnittelu"
 import { TyopaikanToimija } from "routes/TyopaikanToimija"
 import { IRootStore } from "stores/RootStore"
@@ -22,6 +21,33 @@ const Container = styled("div")`
 `
 
 const Main = styled("main")``
+
+const MainApp = (_: { path: string }) => {
+  return (
+    <Container>
+      <AppHeader />
+      <AppErrors />
+      <Main id="main" role="main">
+        <Router basepath="/ehoks">
+          <Etusivu path="/" />
+          <Suunnittelu path="suunnittelu/*" />
+          <TyopaikanToimija path="tyopaikantoimija" />
+          <Henkilokohtaistaminen path="henkilokohtaistaminen" />
+          <Ammatillinentutkinto path="ammatillinentutkinto" />
+        </Router>
+      </Main>
+      <AppFooter />
+      <GlobalStyles />
+    </Container>
+  )
+}
+
+const LuoHOKSWrapper = (_: { path: string }) => (
+  <React.Fragment>
+    <LuoHOKS />
+    <GlobalStyles />
+  </React.Fragment>
+)
 
 export interface AppProps {
   store?: IRootStore
@@ -52,23 +78,10 @@ export class App extends React.Component<AppProps> {
           messages={messages}
           textComponent={React.Fragment}
         >
-          <Container>
-            <AppHeader />
-            <AppErrors />
-            <Main id="main" role="main">
-              <Router basepath="/ehoks">
-                <Etusivu path="/" />
-                <Suunnittelu path="suunnittelu/*" />
-                <TyopaikanToimija path="tyopaikantoimija" />
-                <Henkilokohtaistaminen path="henkilokohtaistaminen" />
-                <Ammatillinentutkinto path="ammatillinentutkinto" />
-                <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />
-                <Opiskelija path="koulutuksenjarjestaja/:id/*" />
-              </Router>
-            </Main>
-            <AppFooter />
-            <GlobalStyles />
-          </Container>
+          <Router basepath="/ehoks">
+            <LuoHOKSWrapper path="luohoks" />
+            <MainApp path="*" />
+          </Router>
         </IntlProvider>
       </ThemeWrapper>
     )

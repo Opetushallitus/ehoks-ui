@@ -1,4 +1,10 @@
-import { Link, Location, navigate, Router } from "@reach/router"
+import {
+  Link,
+  Location,
+  navigate,
+  RouteComponentProps,
+  Router
+} from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import Flag from "components/icons/Flag"
 import { NavigationContainer } from "components/NavigationContainer"
@@ -10,6 +16,7 @@ import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
+import find from "lodash.find"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
@@ -17,35 +24,12 @@ import { FormattedMessage } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 
-const LinkContainer = styled("div")`
-  flex: 1;
-  text-align: center;
-`
-
-const LeftLink = styled(LinkContainer)`
-  text-align: left;
-`
-
-const RightLink = styled(LinkContainer)`
-  text-align: right;
-`
-
-const BackLink = styled(Link)`
-  color: ${props => props.theme.colors.waterBlue};
-`
-
-const StudentLink = styled(BackLink)`
-  font-size: 20px;
-  font-weight: 400;
+const StudentName = styled("h2")`
+  margin-top: 0;
 `
 
 const NaviContainer = styled(ProgressPies)`
   justify-content: flex-start;
-`
-
-const TopContainer = styled("div")`
-  display: flex;
-  justify-content: space-between;
 `
 
 const StudentDetails = styled("div")`
@@ -55,6 +39,12 @@ const StudentDetails = styled("div")`
     font-weight: 400;
     font-size: 28px;
   }
+`
+
+const StudentLink = styled(Link)`
+  color: ${props => props.theme.colors.waterBlue};
+  font-size: 18px;
+  font-weight: 400;
 `
 
 const SectionItems = styled("div")`
@@ -67,45 +57,39 @@ const Timestamp = styled("div")`
   margin-bottom: 10px;
 `
 
-export interface OpiskelijaProps {
+export interface HOKSProps {
+  hoksId?: string
+  studentId?: string
   store?: IRootStore
-  path?: string
-  id?: string
 }
 
 @inject("store")
 @observer
-export class Opiskelija extends React.Component<OpiskelijaProps> {
+export class KoulutuksenJarjestajaHOKS extends React.Component<
+  HOKSProps & RouteComponentProps
+> {
   // TODO: redirect to root after logout, check implementation in src/routes/OmienOpintojenSuunnittelu.tsx
-  componentDidMount() {
-    if (this.props.id) {
-      this.props.store!.hoks.haeSuunnitelma(this.props.id)
-    }
-  }
-
-  componentDidUpdate(prevProps: OpiskelijaProps) {
-    if (this.props.id && this.props.id !== prevProps.id) {
-      this.props.store!.hoks.haeSuunnitelma(this.props.id)
-    }
-  }
-
   setActiveTab = (route: string) => () => {
     navigate(route)
   }
 
   render() {
-    const { id, store } = this.props
-    if (!id) {
+    const { hoksId, studentId, store } = this.props
+    if (!studentId || !hoksId) {
       return null
     }
     const { koulutuksenJarjestaja, hoks } = store!
     const results = koulutuksenJarjestaja.search.sortedResults
-    const searchResult = results.find(u => u.id.toString() === id)
-    const student = koulutuksenJarjestaja.search.studentById(id)
-    const studentIndex = searchResult ? results.indexOf(searchResult) : -1
-    const previous = studentIndex > 0 ? results[studentIndex - 1] : null
-    const next =
-      studentIndex < results.length ? results[studentIndex + 1] : null
+    const searchResult = results.find(u => u.id.toString() === studentId)
+    const student = koulutuksenJarjestaja.search.studentById(studentId)
+
+    const suunnitelma = find(hoks.suunnitelmat, h => {
+      return h.eid === hoksId
+    })
+
+    if (!suunnitelma) {
+      return null
+    }
 
     return (
       <Location>
@@ -115,47 +99,30 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
               <NavigationContainer>
                 <Container>
                   <PaddedContent>
-                    <TopContainer>
-                      <LeftLink>
-                        {previous && (
-                          <StudentLink
-                            to={`/ehoks/koulutuksenjarjestaja/${previous.id}`}
-                          >
-                            &lt;&lt; {previous.nimi}
-                          </StudentLink>
-                        )}
-                      </LeftLink>
-                      <LinkContainer>
-                        <BackLink to="/ehoks/koulutuksenjarjestaja">
-                          <FormattedMessage
-                            id="koulutuksenJarjestaja.opiskelija.takaisinLink"
-                            defaultMessage="Takaisin opiskelijalistaukseen"
-                          />
-                        </BackLink>
-                      </LinkContainer>
-                      <RightLink>
-                        {next && (
-                          <StudentLink
-                            to={`/ehoks/koulutuksenjarjestaja/${next.id}`}
-                          >
-                            {next.nimi} &gt;&gt;
-                          </StudentLink>
-                        )}
-                      </RightLink>
-                    </TopContainer>
-
                     <NaviContainer>
                       <StudentDetails>
-                        <h2>{searchResult && searchResult.nimi}</h2>
+                        <StudentName>
+                          {searchResult && searchResult.nimi}
+                        </StudentName>
 
                         <Timestamp>
                           <FormattedMessage
-                            id="koulutuksenJarjestaja.opiskelija.laadittuTitle"
-                            defaultMessage="Laadittu"
+                            id="koulutuksenJarjestaja.opiskelija.hoksPaivamaaratTitle"
+                            defaultMessage="HOKS päivämäärät"
+                          />
+                          :
+                        </Timestamp>
+                        <Timestamp>
+                          <FormattedMessage
+                            id="koulutuksenJarjestaja.opiskelija.hyvaksyttyTitle"
+                            defaultMessage="Ens. hyväksytty"
                           />
                           &nbsp;{" "}
                           {searchResult &&
-                            format(parseISO(searchResult.aloitus), "d.M.yyyy")}
+                            format(
+                              parseISO(searchResult.hyvaksytty),
+                              "d.M.yyyy"
+                            )}
                         </Timestamp>
                         <Timestamp>
                           <FormattedMessage
@@ -169,15 +136,27 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
                               "d.M.yyyy"
                             )}
                         </Timestamp>
+                        {hoks.suunnitelmat.length > 1 && (
+                          <Timestamp>
+                            <StudentLink
+                              to={`/koulutuksenjarjestaja/${studentId}`}
+                            >
+                              <FormattedMessage
+                                id="koulutuksenJarjestaja.opiskelija.naytaKaikkiLink"
+                                defaultMessage="Näytä kaikki tämän opiskelijan suunnitelmat"
+                              />
+                            </StudentLink>
+                          </Timestamp>
+                        )}
                       </StudentDetails>
                       <SectionItems>
                         <SectionItem
                           selected={
                             location.pathname ===
-                            `/ehoks/koulutuksenjarjestaja/${id}`
+                            `/koulutuksenjarjestaja/${studentId}/${hoksId}`
                           }
                           onClick={this.setActiveTab(
-                            `/ehoks/koulutuksenjarjestaja/${id}`
+                            `/koulutuksenjarjestaja/${studentId}/${hoksId}`
                           )}
                           title={
                             <FormattedMessage
@@ -191,10 +170,10 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
                         <SectionItem
                           selected={
                             location.pathname ===
-                            `/ehoks/koulutuksenjarjestaja/${id}/osaaminen`
+                            `/koulutuksenjarjestaja/${studentId}/${hoksId}/osaaminen`
                           }
                           onClick={this.setActiveTab(
-                            `/ehoks/koulutuksenjarjestaja/${id}/osaaminen`
+                            `/koulutuksenjarjestaja/${studentId}/${hoksId}/osaaminen`
                           )}
                           title={
                             <FormattedMessage
@@ -208,10 +187,10 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
                         <SectionItem
                           selected={
                             location.pathname ===
-                            `/ehoks/koulutuksenjarjestaja/${id}/opiskelusuunnitelma`
+                            `/koulutuksenjarjestaja/${studentId}/${hoksId}/opiskelusuunnitelma`
                           }
                           onClick={this.setActiveTab(
-                            `/ehoks/koulutuksenjarjestaja/${id}/opiskelusuunnitelma`
+                            `/koulutuksenjarjestaja/${studentId}/${hoksId}/opiskelusuunnitelma`
                           )}
                           title={
                             <FormattedMessage
@@ -231,10 +210,13 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
               <BackgroundContainer>
                 <Container>
                   <PaddedContent>
-                    <Router basepath={`/ehoks/koulutuksenjarjestaja/${id}`}>
+                    <Router
+                      basepath={`/koulutuksenjarjestaja/${studentId}/${hoksId}`}
+                    >
                       <Tavoitteet
                         path="/"
                         student={student}
+                        hoks={suunnitelma}
                         titles={{
                           heading: (
                             <FormattedMessage
@@ -259,8 +241,8 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
                       <AiempiOsaaminen
                         path="osaaminen"
                         studies={
-                          hoks.suunnitelma
-                            ? hoks.suunnitelma.aiemmatOpinnot
+                          suunnitelma
+                            ? suunnitelma.olemassaOlevatTutkinnonOsat
                             : []
                         }
                         heading={
@@ -272,7 +254,7 @@ export class Opiskelija extends React.Component<OpiskelijaProps> {
                       />
                       <Opiskelusuunnitelma
                         path="opiskelusuunnitelma"
-                        plan={hoks.suunnitelma}
+                        plan={suunnitelma}
                         titles={{
                           heading: (
                             <FormattedMessage
