@@ -94,10 +94,7 @@ export const HOKS = types
         const opiskeluOikeudet = response.data || []
         const opiskeluOikeus = find(
           opiskeluOikeudet,
-          // TODO: uncomment for real API,
-          // opiskeluoikeusOid does not match for mock data
-          // (oo: any) => oo.oid === self.opiskeluoikeusOid
-          (oo: any) => oo.tyyppi.koodiarvo === "ammatillinenkoulutus"
+          (oo: any) => oo.oid === self.opiskeluoikeusOid
         )
         if (opiskeluOikeus !== undefined) {
           self.opiskeluOikeus = opiskeluOikeus
