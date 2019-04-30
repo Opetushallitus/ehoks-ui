@@ -67,7 +67,7 @@ export class Opiskelija extends React.Component<
     // navigate directly to HOKS if there's only one of them
     if (store!.hoks.suunnitelmat.length === 1) {
       const hoks = store!.hoks.suunnitelmat[0]
-      navigate(`/koulutuksenjarjestaja/${studentId}/${hoks.eid}`)
+      navigate(`/ehoks-ui/koulutuksenjarjestaja/${studentId}/${hoks.eid}`)
     }
   }
 
@@ -93,13 +93,15 @@ export class Opiskelija extends React.Component<
         <TopContainer>
           <LeftLink>
             {previous && (
-              <StudentLink to={`/koulutuksenjarjestaja/${previous.id}`}>
+              <StudentLink
+                to={`/ehoks-ui/koulutuksenjarjestaja/${previous.id}`}
+              >
                 &lt;&lt; {previous.nimi}
               </StudentLink>
             )}
           </LeftLink>
           <LinkContainer>
-            <StudentLink to="/koulutuksenjarjestaja">
+            <StudentLink to="/ehoks-ui/koulutuksenjarjestaja">
               <FormattedMessage
                 id="koulutuksenJarjestaja.opiskelija.takaisinLink"
                 defaultMessage="Palaa listalle"
@@ -108,13 +110,13 @@ export class Opiskelija extends React.Component<
           </LinkContainer>
           <RightLink>
             {next && (
-              <StudentLink to={`/koulutuksenjarjestaja/${next.id}`}>
+              <StudentLink to={`/ehoks-ui/koulutuksenjarjestaja/${next.id}`}>
                 {next.nimi} &gt;&gt;
               </StudentLink>
             )}
           </RightLink>
         </TopContainer>
-        <Router basepath={`/koulutuksenjarjestaja/${studentId}`}>
+        <Router basepath={`/ehoks-ui/koulutuksenjarjestaja/${studentId}`}>
           <ValitseHOKS
             path="/"
             opiskelijaId={studentId}

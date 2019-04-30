@@ -41,7 +41,7 @@ export class App extends React.Component<AppProps> {
           textComponent={React.Fragment}
         >
           <Container>
-            <Router>
+            <Router basepath="/ehoks-ui">
               <Etusivu path="/" />
               <LuoHOKS path="hoks/uusi" />
               <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />

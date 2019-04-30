@@ -223,7 +223,11 @@ export class KoulutuksenJarjestaja extends React.Component<
                     return (
                       <TableRow key={student.id}>
                         <TableCell>
-                          <Link to={`${student.id}`}>{student.nimi}</Link>
+                          <Link
+                            to={`/ehoks-ui/koulutuksenjarjestaja/${student.id}`}
+                          >
+                            {student.nimi}
+                          </Link>
                         </TableCell>
                         <TableCell>{student.tutkinto}</TableCell>
                         <TableCell>{student.osaamisala}</TableCell>

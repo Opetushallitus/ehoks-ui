@@ -1,4 +1,15 @@
 import { types } from "mobx-state-tree"
+import find from "lodash.find"
+
+const Suoritustapa = types
+  .model("Suoritustapa", {
+    koodiarvo: types.optional(types.string, "")
+  })
+  .views(self => ({
+    get isAmmatillinenPerustutkinto() {
+      return self.koodiarvo === "ops"
+    }
+  }))
 
 const Nimi = types.model("Nimi", {
   fi: types.optional(types.string, ""),
@@ -32,7 +43,8 @@ const Suoritus = types.model("Suoritus", {
   vahvistus: types.optional(Vahvistus, {}),
   osaamisala: types.array(Osaamisala),
   koulutusmoduuli: types.optional(Koulutusmoduuli, {}),
-  tutkintonimike: types.array(Tutkintonimike)
+  tutkintonimike: types.array(Tutkintonimike),
+  suoritustapa: types.optional(Suoritustapa, {})
 })
 
 const Oppilaitos = types.model("Oppilaitos", {
@@ -40,12 +52,20 @@ const Oppilaitos = types.model("Oppilaitos", {
   nimi: types.optional(Nimi, {})
 })
 
-export const Opiskeluoikeus = types.model("Opiskeluoikeus", {
-  oid: types.optional(types.string, ""),
-  oppilaitos: types.optional(Oppilaitos, {}),
-  suoritukset: types.array(Suoritus),
-  aikaleima: types.optional(types.string, ""),
-  alkamispaiva: types.optional(types.string, ""),
-  paattymispaiva: types.optional(types.string, ""),
-  arvioituPaattymispaiva: types.optional(types.string, "")
-})
+export const Opiskeluoikeus = types
+  .model("Opiskeluoikeus", {
+    oid: types.optional(types.string, ""),
+    oppilaitos: types.optional(Oppilaitos, {}),
+    suoritukset: types.array(Suoritus),
+    aikaleima: types.optional(types.string, ""),
+    alkamispaiva: types.optional(types.string, ""),
+    paattymispaiva: types.optional(types.string, ""),
+    arvioituPaattymispaiva: types.optional(types.string, "")
+  })
+  .views(self => ({
+    get perustutkinto() {
+      return find(self.suoritukset, suoritus => {
+        return suoritus.suoritustapa.isAmmatillinenPerustutkinto
+      })
+    }
+  }))
