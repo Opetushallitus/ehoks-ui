@@ -5,12 +5,22 @@ interface TableContextProps {
   sortBy?: string
   sortDirection: string
   sortTitle: string
+  searchTexts: { [name: string]: string }
   onSort: (sortName: string) => void
+  onUpdateSearchText: (
+    field: string
+  ) => (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 export const TableContext = React.createContext<TableContextProps>({
   sortDirection: "asc",
   sortTitle: "Sort",
+  searchTexts: {},
   onSort: () => {
+    return
+  },
+  onUpdateSearchText: (_: string) => (
+    _: React.ChangeEvent<HTMLInputElement>
+  ) => {
     return
   }
 })
@@ -21,20 +31,41 @@ const Container = styled("table")`
 `
 
 export interface TableProps {
+  className?: string
   sortBy: string
   sortDirection: string
   sortTitle: string
+  searchTexts: { [name: string]: string }
   onSort: (sortName: string) => void
+  onUpdateSearchText: (
+    field: string
+  ) => (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export class Table extends React.PureComponent<TableProps> {
   render() {
-    const { children, sortBy, sortDirection, sortTitle, onSort } = this.props
+    const {
+      children,
+      className,
+      sortBy,
+      sortDirection,
+      sortTitle,
+      searchTexts,
+      onSort,
+      onUpdateSearchText
+    } = this.props
     return (
       <TableContext.Provider
-        value={{ sortBy, sortDirection, sortTitle, onSort }}
+        value={{
+          sortBy,
+          sortDirection,
+          sortTitle,
+          searchTexts,
+          onSort,
+          onUpdateSearchText
+        }}
       >
-        <Container>{children}</Container>
+        <Container className={className}>{children}</Container>
       </TableContext.Provider>
     )
   }
