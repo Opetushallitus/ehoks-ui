@@ -13,6 +13,11 @@ import { LuoHOKS } from "./LuoHOKS"
 
 const Container = styled("div")`
   margin: 0;
+  height: 100%;
+`
+
+const StyledRouter = styled(Router)`
+  height: 100%;
 `
 
 export interface AppProps {
@@ -41,12 +46,12 @@ export class App extends React.Component<AppProps> {
           textComponent={React.Fragment}
         >
           <Container>
-            <Router>
+            <StyledRouter basepath="/ehoks-ui">
               <Etusivu path="/" />
               <LuoHOKS path="hoks/uusi" />
               <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />
               <Opiskelija path="koulutuksenjarjestaja/:studentId/*" />
-            </Router>
+            </StyledRouter>
             <GlobalStyles />
           </Container>
         </IntlProvider>

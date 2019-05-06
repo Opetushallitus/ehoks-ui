@@ -16,6 +16,11 @@
   },
   {
     "locale": "fi",
+    "key": "table.haePlaceholder",
+    "value": "Hae"
+  },
+  {
+    "locale": "fi",
     "key": "errors.piilotaVirheAriaLabel",
     "value": "Piilota virhe"
   },

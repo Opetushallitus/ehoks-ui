@@ -21,7 +21,6 @@ Object {
       "isLoading": false,
       "perPage": 10,
       "results": Array [],
-      "searchText": "",
       "sortBy": "nimi",
       "sortDirection": "asc",
     },

@@ -139,7 +139,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                         {hoks.suunnitelmat.length > 1 && (
                           <Timestamp>
                             <StudentLink
-                              to={`/koulutuksenjarjestaja/${studentId}`}
+                              to={`/ehoks-ui/koulutuksenjarjestaja/${studentId}`}
                             >
                               <FormattedMessage
                                 id="koulutuksenJarjestaja.opiskelija.naytaKaikkiLink"
@@ -153,10 +153,10 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                         <SectionItem
                           selected={
                             location.pathname ===
-                            `/koulutuksenjarjestaja/${studentId}/${hoksId}`
+                            `/ehoks-ui/koulutuksenjarjestaja/${studentId}/${hoksId}`
                           }
                           onClick={this.setActiveTab(
-                            `/koulutuksenjarjestaja/${studentId}/${hoksId}`
+                            `/ehoks-ui/koulutuksenjarjestaja/${studentId}/${hoksId}`
                           )}
                           title={
                             <FormattedMessage
@@ -170,10 +170,10 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                         <SectionItem
                           selected={
                             location.pathname ===
-                            `/koulutuksenjarjestaja/${studentId}/${hoksId}/osaaminen`
+                            `/ehoks-ui/koulutuksenjarjestaja/${studentId}/${hoksId}/osaaminen`
                           }
                           onClick={this.setActiveTab(
-                            `/koulutuksenjarjestaja/${studentId}/${hoksId}/osaaminen`
+                            `/ehoks-ui/koulutuksenjarjestaja/${studentId}/${hoksId}/osaaminen`
                           )}
                           title={
                             <FormattedMessage
@@ -187,10 +187,10 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                         <SectionItem
                           selected={
                             location.pathname ===
-                            `/koulutuksenjarjestaja/${studentId}/${hoksId}/opiskelusuunnitelma`
+                            `/ehoks-ui/koulutuksenjarjestaja/${studentId}/${hoksId}/opiskelusuunnitelma`
                           }
                           onClick={this.setActiveTab(
-                            `/koulutuksenjarjestaja/${studentId}/${hoksId}/opiskelusuunnitelma`
+                            `/ehoks-ui/koulutuksenjarjestaja/${studentId}/${hoksId}/opiskelusuunnitelma`
                           )}
                           title={
                             <FormattedMessage
@@ -211,7 +211,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                 <Container>
                   <PaddedContent>
                     <Router
-                      basepath={`/koulutuksenjarjestaja/${studentId}/${hoksId}`}
+                      basepath={`/ehoks-ui/koulutuksenjarjestaja/${studentId}/${hoksId}`}
                     >
                       <Tavoitteet
                         path="/"

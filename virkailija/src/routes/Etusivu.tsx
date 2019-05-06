@@ -12,10 +12,10 @@ export class Etusivu extends React.Component<EtusivuProps> {
         <h1>Etusivu</h1>
         <ul>
           <li>
-            <Link to="/hoks/uusi">Luo uusi HOKS</Link>
+            <Link to="/ehoks-ui/hoks/uusi">Luo uusi HOKS</Link>
           </li>
           <li>
-            <Link to="/koulutuksenjarjestaja">
+            <Link to="/ehoks-ui/koulutuksenjarjestaja">
               Kirjaudu koulutuksen järjestäjänä
             </Link>
           </li>

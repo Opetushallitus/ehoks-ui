@@ -1,17 +1,14 @@
 import { Link } from "@reach/router"
-// import { Checkbox } from "components/Checkbox"
 import { Container, PaddedContent } from "components/Container"
 import { ContentArea } from "components/ContentArea"
 import { Heading } from "components/Heading"
-import { LoadingSpinner } from "components/LoadingSpinner"
+// import { LoadingSpinner } from "components/LoadingSpinner"
 import { Page } from "components/Page"
-import { SearchField } from "components/SearchField"
-import { BackgroundContainer } from "components/SectionContainer"
 import { Table } from "components/Table"
+import { SearchableHeader } from "components/Table/SearchableHeader"
 import { TableBody } from "components/Table/TableBody"
 import { TableCell } from "components/Table/TableCell"
 import { TableHead } from "components/Table/TableHead"
-import { TableHeader } from "components/Table/TableHeader"
 import { TableRow } from "components/Table/TableRow"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
@@ -20,8 +17,14 @@ import { inject, observer } from "mobx-react"
 import { MockStudent } from "mocks/MockStudent"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
+import { SearchSortKey } from "stores/KoulutuksenJarjestajaStore"
 import { IRootStore } from "stores/RootStore"
-import styled, { css } from "styled"
+import styled from "styled"
+
+export const BackgroundContainer = styled("div")`
+  background: #f8f8f8;
+  height: 100%;
+`
 
 const TopContainer = styled("div")`
   display: flex;
@@ -32,24 +35,14 @@ const TopHeading = styled(Heading)`
   flex: 1;
 `
 
-// const SelectionContainer = styled("div")`
-//   flex: 1;
+const SearchableTable = styled(Table)<{ children: React.ReactNode }>`
+  table-layout: fixed;
+`
+
+// const Spinner = styled(LoadingSpinner)`
+//   position: absolute;
+//   right: 0px;
 // `
-
-const SearchContainer = styled("div")`
-  flex: 1;
-  justify-content: flex-end;
-  position: relative;
-`
-
-const searchHeaderStyles = css`
-  justify-content: flex-end;
-`
-
-const Spinner = styled(LoadingSpinner)`
-  position: absolute;
-  right: 0px;
-`
 
 const PagingContainer = styled("nav")`
   margin: 40px 0 20px 40px;
@@ -87,9 +80,11 @@ export class KoulutuksenJarjestaja extends React.Component<
     event.preventDefault()
   }
 
-  updateSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
+  updateSearchText = (field: SearchSortKey) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const { koulutuksenJarjestaja } = this.props.store!
-    koulutuksenJarjestaja.search.changeSearchText(event.target.value)
+    koulutuksenJarjestaja.search.changeSearchText(field, event.target.value)
     koulutuksenJarjestaja.search.fetchStudents()
   }
 
@@ -115,15 +110,13 @@ export class KoulutuksenJarjestaja extends React.Component<
     const { koulutuksenJarjestaja } = this.props.store!
     const {
       activePage,
-      // approvedOnly,
       perPage,
       sortBy,
       sortDirection,
       sortedResults,
       results,
-      // toggleApprovedOnly,
-      isLoading,
-      searchText
+      // isLoading,
+      searchTexts
     } = koulutuksenJarjestaja.search
     const totalPages = Math.ceil(results.length / perPage)
 
@@ -138,92 +131,76 @@ export class KoulutuksenJarjestaja extends React.Component<
                   defaultMessage="Opiskelijat"
                 />
               </TopHeading>
-
-              {/* <SelectionContainer>
-                <Checkbox
-                  id="showApprovedOnly"
-                  checked={approvedOnly}
-                  onToggle={toggleApprovedOnly}
-                >
-                  <FormattedMessage
-                    id="koulutuksenJarjestaja.naytaOpiskelijatButton"
-                    defaultMessage="Näytä vain opiskelijat, joiden HOKSin olen hyväksynyt"
-                  />
-                </Checkbox>
-              </SelectionContainer> */}
-
-              <SearchContainer>
-                <SearchField
-                  isLoading={isLoading}
-                  onSubmit={this.formSubmit}
-                  onTextChange={this.updateSearchText}
-                  placeholder={intl.formatMessage({
-                    id: "koulutuksenJarjestaja.hakuPlaceholder"
-                  })}
-                  ariaLabel={intl.formatMessage({
-                    id: "koulutuksenJarjestaja.hakuAriaLabel"
-                  })}
-                  loadingSpinner={<Spinner />}
-                  headerStyles={searchHeaderStyles}
-                  value={searchText}
-                />
-              </SearchContainer>
             </TopContainer>
             <ContentArea>
-              <Table
+              <SearchableTable
                 sortBy={sortBy}
                 sortDirection={sortDirection}
+                searchTexts={searchTexts}
                 onSort={this.changeSort}
+                onUpdateSearchText={this.updateSearchText}
                 sortTitle={intl.formatMessage({
                   id: "koulutuksenJarjestaja.jarjestaTitle"
                 })}
               >
                 <TableHead>
                   <TableRow>
-                    <TableHeader sortName="nimi">
+                    <SearchableHeader sortName="nimi">
                       <FormattedMessage
                         id="koulutuksenJarjestaja.opiskelijaTitle"
                         defaultMessage="Opiskelijan nimi"
                       />
-                    </TableHeader>
-                    <TableHeader sortName="tutkinto">
+                    </SearchableHeader>
+                    <SearchableHeader sortName="tutkinto">
                       <FormattedMessage
                         id="koulutuksenJarjestaja.tutkintoTitle"
                         defaultMessage="Tutkinto tai koulutus"
                       />
-                    </TableHeader>
-                    <TableHeader sortName="osaamisala">
+                    </SearchableHeader>
+                    <SearchableHeader sortName="osaamisala">
                       <FormattedMessage
                         id="koulutuksenJarjestaja.osaamisalaTitle"
                         defaultMessage="Osaamisala"
                       />
-                    </TableHeader>
-                    <TableHeader sortName="hyvaksytty">
+                    </SearchableHeader>
+                    <SearchableHeader sortName="hyvaksytty">
                       <FormattedMessage
                         id="koulutuksenJarjestaja.hyvaksyttyTitle"
                         defaultMessage="Ens. hyv."
                       />
-                    </TableHeader>
-                    <TableHeader sortName="paivitetty">
+                    </SearchableHeader>
+                    <SearchableHeader sortName="paivitetty">
                       <FormattedMessage
                         id="koulutuksenJarjestaja.paivitettyTitle"
                         defaultMessage="Päivitetty"
                       />
-                    </TableHeader>
-                    <TableHeader sortName="lukumaara">
+                    </SearchableHeader>
+                    <SearchableHeader sortName="lukumaara">
                       <FormattedMessage
                         id="koulutuksenJarjestaja.lkmTitle"
                         defaultMessage="Lkm"
                       />
-                    </TableHeader>
+                    </SearchableHeader>
                   </TableRow>
                 </TableHead>
+                <colgroup>
+                  <col style={{ width: "20%" }} />
+                  <col style={{ width: "25%" }} />
+                  <col style={{ width: "25%" }} />
+                  <col style={{ width: "10%" }} />
+                  <col style={{ width: "10%" }} />
+                  <col style={{ width: "10%" }} />
+                </colgroup>
                 <TableBody>
                   {sortedResults.map(student => {
                     return (
                       <TableRow key={student.id}>
                         <TableCell>
-                          <Link to={`${student.id}`}>{student.nimi}</Link>
+                          <Link
+                            to={`/ehoks-ui/koulutuksenjarjestaja/${student.id}`}
+                          >
+                            {student.nimi}
+                          </Link>
                         </TableCell>
                         <TableCell>{student.tutkinto}</TableCell>
                         <TableCell>{student.osaamisala}</TableCell>
@@ -238,7 +215,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                     )
                   })}
                 </TableBody>
-              </Table>
+              </SearchableTable>
 
               {totalPages > 1 && sortedResults.length > 0 && (
                 <PagingContainer

@@ -1,9 +1,23 @@
+import format from "date-fns/format"
+import parseISO from "date-fns/parseISO"
 import drop from "lodash.drop"
 import take from "lodash.take"
 import { types } from "mobx-state-tree"
 import { MockStudent } from "mocks/MockStudent"
 import { mockStudents } from "mocks/mockStudents"
 // import { IStoreEnvironment } from "utils"
+
+const sortKeys = [
+  "id",
+  "nimi",
+  "tutkinto",
+  "osaamisala",
+  "hyvaksytty",
+  "paivitetty",
+  "lukumaara"
+] as const
+
+export type SearchSortKey = typeof sortKeys[number]
 
 export const SearchResult = types.model("SearchResult", {
   id: types.number,
@@ -15,28 +29,33 @@ export const SearchResult = types.model("SearchResult", {
   lukumaara: types.number
 })
 
+const SortBy = types.enumeration("sortBy", [...sortKeys])
+
 const Search = types
   .model("Search", {
     activePage: 0,
     approvedOnly: false,
-    searchText: "",
     results: types.array(SearchResult),
     isLoading: false,
-    sortBy: types.optional(
-      types.enumeration("sortBy", [
-        "id",
-        "nimi",
-        "tutkinto",
-        "osaamisala",
-        "hyvaksytty",
-        "paivitetty",
-        "lukumaara"
-      ]),
-      "nimi"
-    ),
+    sortBy: types.optional(SortBy, "nimi"),
     sortDirection: "asc",
     perPage: 10
   })
+  .volatile(
+    (_): { searchTexts: { [key in SearchSortKey]: string } } => {
+      return {
+        searchTexts: {
+          id: "",
+          nimi: "",
+          tutkinto: "",
+          osaamisala: "",
+          hyvaksytty: "",
+          paivitetty: "",
+          lukumaara: ""
+        }
+      }
+    }
+  )
   .actions(self => {
     // const { fetchSingle } = getEnv<IStoreEnvironment>(self)
 
@@ -44,18 +63,35 @@ const Search = types
       self.approvedOnly = !self.approvedOnly
     }
 
-    const changeSearchText = (searchText: string = "") => {
+    const changeSearchText = (
+      field: SearchSortKey,
+      searchText: string = ""
+    ) => {
       self.activePage = 0
-      self.searchText = searchText
+      // create new object ref as volatile data is not mobx observable
+      self.searchTexts = { ...self.searchTexts, [field]: searchText }
     }
 
     // TODO: real implementation
     const fetchStudents = () => {
       self.isLoading = true
+      const keysWithText = Object.keys(self.searchTexts).filter(
+        (key: SearchSortKey) => self.searchTexts[key].length > 0
+      )
       self.results.replace(
-        self.searchText.length > 0
+        keysWithText.length
           ? mockStudents.filter(student => {
-              return !!student.nimi.toLowerCase().match(self.searchText)
+              return keysWithText.every((key: SearchSortKey) => {
+                if (key === "hyvaksytty" || key === "paivitetty") {
+                  return !!format(parseISO(student[key]), "d.M.yyyy")
+                    .toLowerCase()
+                    .match(self.searchTexts[key].toLowerCase())
+                } else {
+                  return !!String(student[key])
+                    .toLowerCase()
+                    .match(self.searchTexts[key].toLowerCase())
+                }
+              })
             })
           : mockStudents
       )
