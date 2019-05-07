@@ -45,7 +45,7 @@ const SearchableTable = styled(Table)<{ children: React.ReactNode }>`
 // `
 
 const PagingContainer = styled("nav")`
-  margin: 40px 0 20px 40px;
+  margin: 40px 0 20px 20px;
 `
 
 interface KoulutuksenJarjestajaProps {

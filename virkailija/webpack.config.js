@@ -24,7 +24,9 @@ module.exports = {
     inline: true,
     proxy: {
       "/auth-dev": "http://localhost:3000",
+      "/cas": "http://localhost:3000",
       "/ehoks-oppija-backend": "http://localhost:3000",
+      "/ehoks-virkailija-backend": "http://localhost:3000",
       "/virkailija-raamit": {
         target: "https://virkailija.testiopintopolku.fi",
         secure: false,
