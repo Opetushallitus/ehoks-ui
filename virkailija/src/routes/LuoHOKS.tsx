@@ -137,7 +137,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
   }
 
   async componentDidMount() {
-    const request = await window.fetch("/ehoks-backend/doc/swagger.json")
+    const request = await window.fetch("/ehoks-oppija-backend/doc/swagger.json")
     const json = await request.json()
     const rawSchema = {
       definitions: stripUnsupportedFormats(json.definitions),
@@ -228,7 +228,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
   create = async (fieldProps: IChangeEvent<FieldProps>) => {
     // TODO: authenticate user
     this.setState({ isLoading: true })
-    const request = await window.fetch("/ehoks-backend/api/v1/hoks", {
+    const request = await window.fetch("/ehoks-oppija-backend/api/v1/hoks", {
       method: "POST",
       credentials: "include",
       headers: {
