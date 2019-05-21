@@ -76,7 +76,7 @@ const Search = types
       self.isLoading = true
 
       // TODO: query params, paging
-      const response = yield fetchSingle(apiUrl("hoksit"))
+      const response = yield fetchSingle(apiUrl("virkailija/hoksit"))
       self.results = response.data
       self.isLoading = false
     })
