@@ -27,11 +27,8 @@ export interface AppProps {
 @inject("store")
 @observer
 export class App extends React.Component<AppProps> {
-  async componentDidMount() {
-    const { store } = this.props
-    await store!.environment.getEnvironment()
-    // TODO: we're missing API to check if we're already logged in
-    // navigate(store!.environment.virkailijaLoginUrl)
+  componentDidMount() {
+    this.props.store!.environment.getEnvironment()
   }
 
   render() {
@@ -54,6 +51,9 @@ export class App extends React.Component<AppProps> {
         >
           <Container>
             <Header />
+            <a href={store!.environment.virkailijaLoginUrl} target="_blank">
+              dev login
+            </a>
             <StyledRouter basepath="/ehoks-ui">
               <Redirect
                 from="/"

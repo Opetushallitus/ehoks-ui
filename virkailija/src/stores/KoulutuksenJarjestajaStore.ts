@@ -2,10 +2,10 @@ import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import drop from "lodash.drop"
 import take from "lodash.take"
-import { types } from "mobx-state-tree"
+import { flow, getEnv, types } from "mobx-state-tree"
 import { MockStudent } from "mocks/MockStudent"
 import { mockStudents } from "mocks/mockStudents"
-// import { IStoreEnvironment } from "utils"
+import { StoreEnvironment } from "types/StoreEnvironment"
 
 const sortKeys = [
   "id",
@@ -57,7 +57,7 @@ const Search = types
     }
   )
   .actions(self => {
-    // const { fetchSingle } = getEnv<IStoreEnvironment>(self)
+    const { fetchSingle, apiUrl } = getEnv<StoreEnvironment>(self)
 
     const toggleApprovedOnly = () => {
       self.approvedOnly = !self.approvedOnly
@@ -72,8 +72,17 @@ const Search = types
       self.searchTexts = { ...self.searchTexts, [field]: searchText }
     }
 
+    const fetchStudents = flow(function*() {
+      self.isLoading = true
+
+      // TODO: query params, paging
+      const response = yield fetchSingle(apiUrl("hoksit"))
+      self.results = response.data
+      self.isLoading = false
+    })
+
     // TODO: real implementation
-    const fetchStudents = () => {
+    const mockFetchStudents = () => {
       self.isLoading = true
       const keysWithText = Object.keys(self.searchTexts).filter(
         (key: SearchSortKey) => self.searchTexts[key].length > 0
@@ -117,11 +126,14 @@ const Search = types
       changeSort,
       changeSearchText,
       fetchStudents,
+      mockFetchStudents,
       toggleApprovedOnly
     }
   })
   .views(self => {
     return {
+      // TODO: this should be handled in
+      // the backend in the real implementation
       get sortedResults() {
         return take(
           drop(
@@ -141,6 +153,7 @@ const Search = types
         )
       },
       // TODO: real implementation
+      // TODO: fetch using backend API for given oid(?)
       studentById(id: string) {
         const student = self.results.find(result => {
           return result.id.toString() === id

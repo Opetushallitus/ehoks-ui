@@ -73,7 +73,7 @@ export class Header extends React.Component<HeaderProps> {
         <TopLink to="/ehoks-ui/luohoks">
           <FormattedMessage
             id="header.tietojenTallennusLink"
-            defaultMessage="Tietojen tallennus"
+            defaultMessage="Uusi HOKS"
           />
           <ActiveIndicator />
         </TopLink>
