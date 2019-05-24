@@ -59,7 +59,7 @@ export const HOKS = types
     osaamispisteet: 0
   }))
   .actions(self => {
-    const { apiUrl, errors, fetchCollection, fetchSingle } = getEnv<
+    const { apiUrl, apiPrefix, errors, fetchCollection, fetchSingle } = getEnv<
       StoreEnvironment
     >(self)
 
@@ -68,7 +68,7 @@ export const HOKS = types
         self.opiskeluOikeus.suoritukset[0].koulutusmoduuli.perusteenDiaarinumero
       const response = yield fetchSingle(
         apiUrl(
-          `oppija/external/eperusteet/tutkinnot?diaarinumero=${diaarinumero}`
+          `${apiPrefix}/external/eperusteet/tutkinnot?diaarinumero=${diaarinumero}`
         )
       )
       return response.data
@@ -77,7 +77,7 @@ export const HOKS = types
     const fetchRakenne = flow(function*(id: string) {
       const response = yield fetchSingle(
         apiUrl(
-          `oppija/external/eperusteet/tutkinnot/${id}/suoritustavat/reformi/rakenne`
+          `${apiPrefix}/external/eperusteet/tutkinnot/${id}/suoritustavat/reformi/rakenne`
         )
       )
       return response.data
@@ -89,7 +89,7 @@ export const HOKS = types
       }
       try {
         const response = yield fetchCollection(
-          apiUrl(`oppija/oppijat/${self.oppijaOid}/opiskeluoikeudet`)
+          apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/opiskeluoikeudet`)
         )
         const opiskeluOikeudet = response.data || []
         const opiskeluOikeus = find(
@@ -193,3 +193,5 @@ export const HOKS = types
       }
     }
   })
+
+export interface IHOKS extends Instance<typeof HOKS> {}

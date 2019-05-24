@@ -6,14 +6,14 @@ import { Suunnitelma } from "components/Opiskelija/Suunnitelma"
 import { BackgroundContainer } from "components/SectionContainer"
 import partition from "lodash.partition"
 import { observer } from "mobx-react"
+import { IHOKS } from "models/HOKS"
 import React from "react"
 import { FormattedMessage } from "react-intl"
-import { IRootStore } from "stores/RootStore"
 
 interface ValitseHOKSProps {
   nimi: string
-  opiskelijaId: string
-  suunnitelmat: IRootStore["hoks"]["suunnitelmat"]
+  oppijaId: string
+  suunnitelmat: IHOKS[]
 }
 
 @observer
@@ -21,7 +21,7 @@ export class ValitseHOKS extends React.Component<
   ValitseHOKSProps & RouteComponentProps
 > {
   render() {
-    const { nimi, suunnitelmat, opiskelijaId } = this.props
+    const { nimi, suunnitelmat, oppijaId } = this.props
     const [paattyneet, voimassaOlevat] = partition(
       suunnitelmat,
       suunnitelma => !!suunnitelma.paattymispaiva
@@ -51,7 +51,7 @@ export class ValitseHOKS extends React.Component<
                 {voimassaOlevat.map((suunnitelma, i) => {
                   return (
                     <Suunnitelma
-                      hoksPath={`/ehoks-ui/koulutuksenjarjestaja/${opiskelijaId}/`}
+                      hoksPath={`/ehoks-ui/koulutuksenjarjestaja/${oppijaId}/`}
                       suunnitelma={suunnitelma}
                       key={i}
                     />
@@ -71,7 +71,7 @@ export class ValitseHOKS extends React.Component<
                 {paattyneet.map((suunnitelma, i) => {
                   return (
                     <Suunnitelma
-                      hoksPath={`/ehoks-ui/koulutuksenjarjestaja/${opiskelijaId}/`}
+                      hoksPath={`/ehoks-ui/koulutuksenjarjestaja/${oppijaId}/`}
                       suunnitelma={suunnitelma}
                       key={i}
                     />

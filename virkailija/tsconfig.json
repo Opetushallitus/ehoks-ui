@@ -16,6 +16,7 @@
     "target": "es5",
     "jsx": "react",
     "lib": ["es5", "es6", "dom"],
+    "types": ["jest", "node", "webpack-env"],
     "baseUrl": "./src",
     "paths": {
       "*": ["*", "../../shared/*"]

@@ -19,12 +19,16 @@ export const EnrichTutkinnonOsa = (
       }
     )
     .actions(self => {
-      const { apiUrl, errors, fetchCollection } = getEnv<StoreEnvironment>(self)
+      const { apiUrl, apiPrefix, errors, fetchCollection } = getEnv<
+        StoreEnvironment
+      >(self)
 
       const fetchTutkinnonOsaViitteet = flow(function*(id: number) {
         try {
           const response = yield fetchCollection(
-            apiUrl(`oppija/external/eperusteet/tutkinnonosat/${id}/viitteet`)
+            apiUrl(
+              `${apiPrefix}/external/eperusteet/tutkinnonosat/${id}/viitteet`
+            )
           )
           if (Object.keys(self).indexOf(fieldName) !== -1) {
             self[fieldName] = response.data

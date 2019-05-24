@@ -19,7 +19,7 @@ export const SessionStore = types
     const checkSession = flow(function*() {
       self.isLoading = true
       try {
-        const response = yield fetchSingle(apiUrl("session"))
+        const response = yield fetchSingle(apiUrl("oppija/session"))
         self.user = response.data
       } catch (error) {
         self.error = error.message
@@ -29,7 +29,7 @@ export const SessionStore = types
       // we don't need to deal with 'oid' in UI, this is just needed to obtain valid session cookie
       if (self.user) {
         try {
-          yield fetchSingle(apiUrl("session/update-user-info"), {
+          yield fetchSingle(apiUrl("oppija/session/update-user-info"), {
             method: "POST"
           })
           yield getUserInfo()
@@ -43,7 +43,7 @@ export const SessionStore = types
     const getUserInfo = flow(function*() {
       self.isLoading = true
       try {
-        const response = yield fetchSingle(apiUrl("session/user-info"))
+        const response = yield fetchSingle(apiUrl("oppija/session/user-info"))
         self.user = response.data
       } catch (error) {
         errors.logError("SessionStore.getUserInfo", error.message)
@@ -54,7 +54,7 @@ export const SessionStore = types
     const logout = flow(function*() {
       self.isLoading = true
       try {
-        yield deleteResource(apiUrl("session"))
+        yield deleteResource(apiUrl("oppija/session"))
         self.user = null
         self.isLoading = false
         self.userDidLogout = true

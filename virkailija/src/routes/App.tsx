@@ -1,4 +1,4 @@
-import { Router } from "@reach/router"
+import { Redirect, Router } from "@reach/router"
 import { ThemeWrapper } from "components/ThemeWrapper"
 import { inject, observer } from "mobx-react"
 import React from "react"
@@ -6,7 +6,7 @@ import { IntlProvider } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 import { GlobalStyles } from "./App/globalStyles"
-import { Etusivu } from "./Etusivu"
+import { Header } from "./Header"
 import { KoulutuksenJarjestaja } from "./KoulutuksenJarjestaja"
 import { Opiskelija } from "./KoulutuksenJarjestaja/Opiskelija"
 import { LuoHOKS } from "./LuoHOKS"
@@ -27,6 +27,10 @@ export interface AppProps {
 @inject("store")
 @observer
 export class App extends React.Component<AppProps> {
+  componentDidMount() {
+    this.props.store!.environment.getEnvironment()
+  }
+
   render() {
     const { store } = this.props
     const activeLocale = store!.translations.activeLocale
@@ -46,9 +50,17 @@ export class App extends React.Component<AppProps> {
           textComponent={React.Fragment}
         >
           <Container>
+            <Header />
+            <a href={store!.environment.virkailijaLoginUrl} target="_blank">
+              dev login
+            </a>
             <StyledRouter basepath="/ehoks-ui">
-              <Etusivu path="/" />
-              <LuoHOKS path="hoks/uusi" />
+              <Redirect
+                from="/"
+                to="/ehoks-ui/koulutuksenjarjestaja"
+                noThrow={true}
+              />
+              <LuoHOKS path="luohoks" />
               <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />
               <Opiskelija path="koulutuksenjarjestaja/:studentId/*" />
             </StyledRouter>
