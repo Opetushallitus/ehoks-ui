@@ -8,7 +8,7 @@ describe("SessionStore", () => {
   test("checkSession without login", () => {
     const store = SessionStore.create(
       {},
-      createEnvironment(mockFetch(apiUrl), apiUrl)
+      createEnvironment(mockFetch(apiUrl), apiUrl, "")
     )
 
     expect(store.isLoading).toBe(false)
@@ -28,7 +28,7 @@ describe("SessionStore", () => {
   test("checkSession with login", done => {
     const store = SessionStore.create(
       {},
-      createEnvironment(mockFetch(apiUrl, 1), apiUrl)
+      createEnvironment(mockFetch(apiUrl, 1), apiUrl, "")
     )
 
     expect(store.isLoading).toBe(false)
@@ -71,7 +71,7 @@ describe("SessionStore", () => {
           surname: "Testaaja"
         }
       },
-      createEnvironment(mockFetch(apiUrl, 2), apiUrl)
+      createEnvironment(mockFetch(apiUrl, 2), apiUrl, "")
     )
     expect(store.user).toEqual({
       commonName: "Teuvo",

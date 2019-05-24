@@ -12,7 +12,8 @@ const EnvironmentStoreModel = {
   error: types.optional(types.string, ""),
   isLoading: false,
   opintopolkuLoginUrl: types.optional(types.string, ""),
-  opintopolkuLogoutUrl: types.optional(types.string, "")
+  opintopolkuLogoutUrl: types.optional(types.string, ""),
+  virkailijaLoginUrl: types.optional(types.string, "") // TODO: remove when HOKS form is removed from oppija
 }
 
 export const EnvironmentStore = types

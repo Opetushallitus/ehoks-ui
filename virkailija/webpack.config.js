@@ -17,7 +17,9 @@ module.exports = {
     compress: true,
     contentBase: path.join(__dirname, "public"),
     disableHostCheck: true,
-    historyApiFallback: true,
+    historyApiFallback: {
+      disableDotRule: true
+    },
     host: "0.0.0.0",
     port: 4000,
     hot: true,

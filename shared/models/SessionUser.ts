@@ -1,4 +1,4 @@
-import { types } from "mobx-state-tree"
+import { types, Instance } from "mobx-state-tree"
 
 enum ContactFields {
   YHTEYSTIETO_KUNTA = "kunta",
@@ -45,3 +45,5 @@ export const SessionUser = types
       }
     }
   })
+
+export interface ISessionUser extends Instance<typeof SessionUser> {}

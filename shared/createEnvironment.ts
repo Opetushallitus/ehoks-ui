@@ -4,11 +4,13 @@ import { StoreEnvironment } from "types/StoreEnvironment"
 
 export function createEnvironment(
   fetchFn: GlobalFetch["fetch"],
-  apiUrl: (path: string) => string
+  apiUrl: (path: string) => string,
+  apiPrefix: string
 ): StoreEnvironment {
   return {
     ...fetchUtils(fetchFn),
     errors: ErrorStore.create({}),
-    apiUrl
+    apiUrl,
+    apiPrefix
   }
 }

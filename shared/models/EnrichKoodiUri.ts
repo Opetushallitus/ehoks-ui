@@ -11,10 +11,12 @@ const cachedResponses: DynamicObject = {}
 export const EnrichKoodiUri = types
   .model({})
   // we need this typing to avoid 'missing index signature' error
-  // when assingning to self[dynamicKey]
+  // when assigning to self[dynamicKey]
   .volatile((_): DynamicObject => ({}))
   .actions(self => {
-    const { apiUrl, errors, fetchSingle } = getEnv<StoreEnvironment>(self)
+    const { apiUrl, apiPrefix, errors, fetchSingle } = getEnv<StoreEnvironment>(
+      self
+    )
 
     const fetchEPerusteet = flow(function*(key: string, code: string) {
       try {
@@ -22,7 +24,7 @@ export const EnrichKoodiUri = types
         // check our global cache first
         cachedResponses[code] =
           cachedResponses[code] ||
-          fetchSingle(apiUrl(`oppija/external/eperusteet/${code}`))
+          fetchSingle(apiUrl(`${apiPrefix}/external/eperusteet/${code}`))
         const response = yield cachedResponses[code]
         if (Object.keys(self).indexOf(dynamicKey) > -1) {
           self[dynamicKey] = response.data
@@ -42,7 +44,7 @@ export const EnrichKoodiUri = types
         // check our global cache first
         cachedResponses[code] =
           cachedResponses[code] ||
-          fetchSingle(apiUrl(`oppija/external/koodisto/${code}`))
+          fetchSingle(apiUrl(`${apiPrefix}/external/koodisto/${code}`))
         const { data } = yield cachedResponses[code]
         // we currently only need nimi from KoodistoKoodi
         if (Object.keys(self).indexOf(dynamicKey) > -1) {

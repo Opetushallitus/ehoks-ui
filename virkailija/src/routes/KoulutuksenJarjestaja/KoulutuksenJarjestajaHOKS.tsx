@@ -1,9 +1,9 @@
 import {
   Link,
-  Location,
   navigate,
   RouteComponentProps,
-  Router
+  Router,
+  WindowLocation
 } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import Flag from "components/icons/Flag"
@@ -17,11 +17,12 @@ import { SectionItem } from "components/SectionItem"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import find from "lodash.find"
-import { inject, observer } from "mobx-react"
+import { observer } from "mobx-react"
+import { IHOKS } from "models/HOKS"
 import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
-import { IRootStore } from "stores/RootStore"
+import { IOppija } from "stores/KoulutuksenJarjestajaStore"
 import styled from "styled"
 
 const StudentName = styled("h2")`
@@ -58,12 +59,12 @@ const Timestamp = styled("div")`
 `
 
 export interface HOKSProps {
+  suunnitelmat: IHOKS[]
+  oppija?: IOppija
+  location?: WindowLocation
   hoksId?: string
-  studentId?: string
-  store?: IRootStore
 }
 
-@inject("store")
 @observer
 export class KoulutuksenJarjestajaHOKS extends React.Component<
   HOKSProps & RouteComponentProps
@@ -74,210 +75,203 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
   }
 
   render() {
-    const { hoksId, studentId, store } = this.props
-    if (!studentId || !hoksId) {
-      return null
-    }
-    const { koulutuksenJarjestaja, hoks } = store!
-    const results = koulutuksenJarjestaja.search.sortedResults
-    const searchResult = results.find(u => u.id.toString() === studentId)
-    const student = koulutuksenJarjestaja.search.studentById(studentId)
+    const { hoksId, location, suunnitelmat, oppija } = this.props
 
-    const suunnitelma = find(hoks.suunnitelmat, h => {
+    const suunnitelma = find(suunnitelmat, h => {
       return h.eid === hoksId
     })
 
-    if (!suunnitelma) {
+    if (!oppija || !suunnitelma) {
       return null
     }
 
     return (
-      <Location>
-        {({ location }) => {
-          return (
-            <React.Fragment>
-              <NavigationContainer>
-                <Container>
-                  <PaddedContent>
-                    <NaviContainer>
-                      <StudentDetails>
-                        <StudentName>
-                          {searchResult && searchResult.nimi}
-                        </StudentName>
+      <React.Fragment>
+        <NavigationContainer>
+          <Container>
+            <PaddedContent>
+              <NaviContainer>
+                <StudentDetails>
+                  <StudentName>{oppija && oppija.nimi}</StudentName>
 
-                        <Timestamp>
-                          <FormattedMessage
-                            id="koulutuksenJarjestaja.opiskelija.hoksPaivamaaratTitle"
-                            defaultMessage="HOKS päivämäärät"
-                          />
-                          :
-                        </Timestamp>
-                        <Timestamp>
-                          <FormattedMessage
-                            id="koulutuksenJarjestaja.opiskelija.hyvaksyttyTitle"
-                            defaultMessage="Ens. hyväksytty"
-                          />
-                          &nbsp;{" "}
-                          {searchResult &&
-                            format(
-                              parseISO(searchResult.hyvaksytty),
-                              "d.M.yyyy"
-                            )}
-                        </Timestamp>
-                        <Timestamp>
-                          <FormattedMessage
-                            id="koulutuksenJarjestaja.opiskelija.paivitettyTitle"
-                            defaultMessage="Päivitetty"
-                          />
-                          &nbsp;{" "}
-                          {searchResult &&
-                            format(
-                              parseISO(searchResult.paivitetty),
-                              "d.M.yyyy"
-                            )}
-                        </Timestamp>
-                        {hoks.suunnitelmat.length > 1 && (
-                          <Timestamp>
-                            <StudentLink
-                              to={`/ehoks-ui/koulutuksenjarjestaja/${studentId}`}
-                            >
-                              <FormattedMessage
-                                id="koulutuksenJarjestaja.opiskelija.naytaKaikkiLink"
-                                defaultMessage="Näytä kaikki tämän opiskelijan suunnitelmat"
-                              />
-                            </StudentLink>
-                          </Timestamp>
-                        )}
-                      </StudentDetails>
-                      <SectionItems>
-                        <SectionItem
-                          selected={
-                            location.pathname ===
-                            `/ehoks-ui/koulutuksenjarjestaja/${studentId}/${hoksId}`
-                          }
-                          onClick={this.setActiveTab(
-                            `/ehoks-ui/koulutuksenjarjestaja/${studentId}/${hoksId}`
-                          )}
-                          title={
-                            <FormattedMessage
-                              id="koulutuksenJarjestaja.opiskelija.tavoiteTitle"
-                              defaultMessage="Opiskelijan tavoite ja perustiedot"
-                            />
-                          }
-                        >
-                          <Flag />
-                        </SectionItem>
-                        <SectionItem
-                          selected={
-                            location.pathname ===
-                            `/ehoks-ui/koulutuksenjarjestaja/${studentId}/${hoksId}/osaaminen`
-                          }
-                          onClick={this.setActiveTab(
-                            `/ehoks-ui/koulutuksenjarjestaja/${studentId}/${hoksId}/osaaminen`
-                          )}
-                          title={
-                            <FormattedMessage
-                              id="koulutuksenJarjestaja.opiskelija.aiempiOsaaminenTitle"
-                              defaultMessage="Aiempi osaaminen"
-                            />
-                          }
-                        >
-                          <MdExtension />
-                        </SectionItem>
-                        <SectionItem
-                          selected={
-                            location.pathname ===
-                            `/ehoks-ui/koulutuksenjarjestaja/${studentId}/${hoksId}/opiskelusuunnitelma`
-                          }
-                          onClick={this.setActiveTab(
-                            `/ehoks-ui/koulutuksenjarjestaja/${studentId}/${hoksId}/opiskelusuunnitelma`
-                          )}
-                          title={
-                            <FormattedMessage
-                              id="koulutuksenJarjestaja.opiskelija.opiskelusuunnitelmaTitle"
-                              defaultMessage="Opiskelu&shy;suunnitelma"
-                            />
-                          }
-                        >
-                          <MdEventNote />
-                        </SectionItem>
-                      </SectionItems>
-                    </NaviContainer>
-                  </PaddedContent>
-                </Container>
-              </NavigationContainer>
+                  <Timestamp>
+                    <FormattedMessage
+                      id="koulutuksenJarjestaja.opiskelija.hoksPaivamaaratTitle"
+                      defaultMessage="HOKS päivämäärät"
+                    />
+                    :
+                  </Timestamp>
+                  <Timestamp>
+                    <FormattedMessage
+                      id="koulutuksenJarjestaja.opiskelija.hyvaksyttyTitle"
+                      defaultMessage="Ens. hyväksytty"
+                    />
+                    &nbsp;{" "}
+                    {oppija.hyvaksytty
+                      ? format(parseISO(oppija.hyvaksytty), "d.M.yyyy")
+                      : "-"}
+                  </Timestamp>
+                  <Timestamp>
+                    <FormattedMessage
+                      id="koulutuksenJarjestaja.opiskelija.paivitettyTitle"
+                      defaultMessage="Päivitetty"
+                    />
+                    &nbsp;{" "}
+                    {oppija.paivitetty
+                      ? format(parseISO(oppija.paivitetty), "d.M.yyyy")
+                      : "-"}
+                  </Timestamp>
+                  {suunnitelmat.length > 1 && (
+                    <Timestamp>
+                      <StudentLink
+                        to={`/ehoks-ui/koulutuksenjarjestaja/${oppija.oid}`}
+                      >
+                        <FormattedMessage
+                          id="koulutuksenJarjestaja.opiskelija.naytaKaikkiLink"
+                          defaultMessage="Näytä kaikki tämän opiskelijan suunnitelmat"
+                        />
+                      </StudentLink>
+                    </Timestamp>
+                  )}
+                </StudentDetails>
+                <SectionItems>
+                  <SectionItem
+                    selected={
+                      location!.pathname ===
+                      `/ehoks-ui/koulutuksenjarjestaja/${oppija.oid}/${
+                        suunnitelma.eid
+                      }`
+                    }
+                    onClick={this.setActiveTab(
+                      `/ehoks-ui/koulutuksenjarjestaja/${oppija.oid}/${
+                        suunnitelma.eid
+                      }`
+                    )}
+                    title={
+                      <FormattedMessage
+                        id="koulutuksenJarjestaja.opiskelija.tavoiteTitle"
+                        defaultMessage="Opiskelijan tavoite ja perustiedot"
+                      />
+                    }
+                  >
+                    <Flag />
+                  </SectionItem>
+                  <SectionItem
+                    selected={
+                      location!.pathname ===
+                      `/ehoks-ui/koulutuksenjarjestaja/${oppija.oid}/${
+                        suunnitelma.eid
+                      }/osaaminen`
+                    }
+                    onClick={this.setActiveTab(
+                      `/ehoks-ui/koulutuksenjarjestaja/${oppija.oid}/${
+                        suunnitelma.eid
+                      }/osaaminen`
+                    )}
+                    title={
+                      <FormattedMessage
+                        id="koulutuksenJarjestaja.opiskelija.aiempiOsaaminenTitle"
+                        defaultMessage="Aiempi osaaminen"
+                      />
+                    }
+                  >
+                    <MdExtension />
+                  </SectionItem>
+                  <SectionItem
+                    selected={
+                      location!.pathname ===
+                      `/ehoks-ui/koulutuksenjarjestaja/${oppija.oid}/${
+                        suunnitelma.eid
+                      }/opiskelusuunnitelma`
+                    }
+                    onClick={this.setActiveTab(
+                      `/ehoks-ui/koulutuksenjarjestaja/${oppija.oid}/${
+                        suunnitelma.eid
+                      }/opiskelusuunnitelma`
+                    )}
+                    title={
+                      <FormattedMessage
+                        id="koulutuksenJarjestaja.opiskelija.opiskelusuunnitelmaTitle"
+                        defaultMessage="Opiskelu&shy;suunnitelma"
+                      />
+                    }
+                  >
+                    <MdEventNote />
+                  </SectionItem>
+                </SectionItems>
+              </NaviContainer>
+            </PaddedContent>
+          </Container>
+        </NavigationContainer>
 
-              <BackgroundContainer>
-                <Container>
-                  <PaddedContent>
-                    <Router
-                      basepath={`/ehoks-ui/koulutuksenjarjestaja/${studentId}/${hoksId}`}
-                    >
-                      <Tavoitteet
-                        path="/"
-                        student={student}
-                        hoks={suunnitelma}
-                        titles={{
-                          heading: (
-                            <FormattedMessage
-                              id="koulutuksenJarjestaja.tavoite.title"
-                              defaultMessage="Opiskelijan tavoite ja perustiedot"
-                            />
-                          ),
-                          goals: (
-                            <FormattedMessage
-                              id="koulutuksenJarjestaja.tavoite.opiskelijanTavoitteetTitle"
-                              defaultMessage="Opiskelijan tavoitteet"
-                            />
-                          ),
-                          personalDetails: (
-                            <FormattedMessage
-                              id="koulutuksenJarjestaja.tavoite.henkilotiedotTitle"
-                              defaultMessage="Henkilötiedot"
-                            />
-                          )
-                        }}
+        <BackgroundContainer>
+          <Container>
+            <PaddedContent>
+              <Router
+                basepath={`/ehoks-ui/koulutuksenjarjestaja/${oppija.oid}/${
+                  suunnitelma.eid
+                }`}
+              >
+                <Tavoitteet
+                  path="/"
+                  student={oppija.henkilotiedot}
+                  hoks={suunnitelma}
+                  titles={{
+                    heading: (
+                      <FormattedMessage
+                        id="koulutuksenJarjestaja.tavoite.title"
+                        defaultMessage="Opiskelijan tavoite ja perustiedot"
                       />
-                      <AiempiOsaaminen
-                        path="osaaminen"
-                        studies={
-                          suunnitelma
-                            ? suunnitelma.olemassaOlevatTutkinnonOsat
-                            : []
-                        }
-                        heading={
-                          <FormattedMessage
-                            id="koulutuksenJarjestaja.aiempiOsaaminen.title"
-                            defaultMessage="Aiempi osaaminen"
-                          />
-                        }
+                    ),
+                    goals: (
+                      <FormattedMessage
+                        id="koulutuksenJarjestaja.tavoite.opiskelijanTavoitteetTitle"
+                        defaultMessage="Opiskelijan tavoitteet"
                       />
-                      <Opiskelusuunnitelma
-                        path="opiskelusuunnitelma"
-                        plan={suunnitelma}
-                        titles={{
-                          heading: (
-                            <FormattedMessage
-                              id="koulutuksenJarjestaja.opiskelusuunnitelma.title"
-                              defaultMessage="Opiskelusuunnitelma"
-                            />
-                          ),
-                          goals: (
-                            <FormattedMessage
-                              id="koulutuksenJarjestaja.opiskelusuunnitelma.tavoitteetTitle"
-                              defaultMessage="Opiskelijan tavoitteet ja opintojen eteneminen"
-                            />
-                          )
-                        }}
+                    ),
+                    personalDetails: (
+                      <FormattedMessage
+                        id="koulutuksenJarjestaja.tavoite.henkilotiedotTitle"
+                        defaultMessage="Henkilötiedot"
                       />
-                    </Router>
-                  </PaddedContent>
-                </Container>
-              </BackgroundContainer>
-            </React.Fragment>
-          )
-        }}
-      </Location>
+                    )
+                  }}
+                />
+                <AiempiOsaaminen
+                  path="osaaminen"
+                  studies={
+                    suunnitelma ? suunnitelma.olemassaOlevatTutkinnonOsat : []
+                  }
+                  heading={
+                    <FormattedMessage
+                      id="koulutuksenJarjestaja.aiempiOsaaminen.title"
+                      defaultMessage="Aiempi osaaminen"
+                    />
+                  }
+                />
+                <Opiskelusuunnitelma
+                  path="opiskelusuunnitelma"
+                  plan={suunnitelma}
+                  titles={{
+                    heading: (
+                      <FormattedMessage
+                        id="koulutuksenJarjestaja.opiskelusuunnitelma.title"
+                        defaultMessage="Opiskelusuunnitelma"
+                      />
+                    ),
+                    goals: (
+                      <FormattedMessage
+                        id="koulutuksenJarjestaja.opiskelusuunnitelma.tavoitteetTitle"
+                        defaultMessage="Opiskelijan tavoitteet ja opintojen eteneminen"
+                      />
+                    )
+                  }}
+                />
+              </Router>
+            </PaddedContent>
+          </Container>
+        </BackgroundContainer>
+      </React.Fragment>
     )
   }
 }

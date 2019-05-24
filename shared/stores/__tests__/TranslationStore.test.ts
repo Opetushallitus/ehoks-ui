@@ -11,7 +11,7 @@ describe("TranslationStore", () => {
   test("haeLokalisoinnit fetches both defaultMessages and API translations", () => {
     const store = TranslationStore.create(
       {},
-      createEnvironment(mockFetch(apiUrl), apiUrl)
+      createEnvironment(mockFetch(apiUrl), apiUrl, "")
     )
 
     expect(store.isLoading).toBe(false)
@@ -34,7 +34,7 @@ describe("TranslationStore", () => {
   test("messages view returns translations in a format suitable for react-intl", () => {
     const store = TranslationStore.create(
       {},
-      createEnvironment(mockFetch(apiUrl), apiUrl)
+      createEnvironment(mockFetch(apiUrl), apiUrl, "")
     )
     store.haeLokalisoinnit(apiUrl)
     when(

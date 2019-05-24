@@ -1,11 +1,16 @@
 import "whatwg-fetch" // polyfill window.fetch for IE 11
 import camelCase from "lodash.camelcase"
 import mapObj from "map-obj"
+import queryString from "query-string"
 
 function camelCaseDeep(model: any) {
   return mapObj(model, (key: string, value: any) => [camelCase(key), value], {
     deep: true
   })
+}
+
+export function withQueryString(url: string, queryParams: any) {
+  return `${url}?${queryString.stringify(queryParams)}`
 }
 
 export function fetchUtils(fetchImplementation: GlobalFetch["fetch"]) {

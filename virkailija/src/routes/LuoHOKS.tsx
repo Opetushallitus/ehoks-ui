@@ -237,7 +237,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
           Accept: "application/json; charset=utf-8",
           "Caller-Id": "ehoks", // TODO: replace for real authentication
           "Content-Type": "application/json",
-          ticket: "testi" // TODO: replace for real authentication
+          ticket: "ST-6777-aBcDeFgHiJkLmN123456-cas.1234567890ac" // TODO: replace for real authentication
         },
         body: JSON.stringify(fieldProps.formData)
       }
