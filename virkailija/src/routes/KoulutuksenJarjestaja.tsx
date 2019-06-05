@@ -2,7 +2,7 @@ import { Link } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import { ContentArea } from "components/ContentArea"
 import { Heading } from "components/Heading"
-// import { LoadingSpinner } from "components/LoadingSpinner"
+import { LoadingSpinner } from "components/LoadingSpinner"
 import { Page } from "components/Page"
 import { Table } from "components/Table"
 import { SearchableHeader } from "components/Table/SearchableHeader"
@@ -12,9 +12,9 @@ import { TableHead } from "components/Table/TableHead"
 import { TableRow } from "components/Table/TableRow"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
+import debounce from "lodash.debounce"
 import range from "lodash.range"
 import { inject, observer } from "mobx-react"
-import { MockStudent } from "mocks/MockStudent"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import { SearchSortKey } from "stores/KoulutuksenJarjestajaStore"
@@ -29,23 +29,31 @@ export const BackgroundContainer = styled("div")`
 const TopContainer = styled("div")`
   display: flex;
   align-items: center;
+  position: relative;
 `
 
 const TopHeading = styled(Heading)`
   flex: 1;
 `
 
+const TableHeader = styled("th")`
+  border-bottom: 1px solid ${props => props.theme.colors.table.cellBorder};
+  padding: 25px 0 15px 0;
+  vertical-align: top;
+  text-align: left;
+`
+
 const SearchableTable = styled(Table)<{ children: React.ReactNode }>`
   table-layout: fixed;
 `
 
-// const Spinner = styled(LoadingSpinner)`
-//   position: absolute;
-//   right: 0px;
-// `
+const Spinner = styled(LoadingSpinner)`
+  position: absolute;
+  right: 0px;
+`
 
 const PagingContainer = styled("nav")`
-  margin: 40px 0 20px 40px;
+  margin: 40px 0 20px 20px;
 `
 
 interface KoulutuksenJarjestajaProps {
@@ -62,18 +70,18 @@ export class KoulutuksenJarjestaja extends React.Component<
     intl: intlShape
   }
 
+  debouncedFetchResults = debounce(() => {
+    const { koulutuksenJarjestaja } = this.props.store!
+    koulutuksenJarjestaja.search.haeOppijat()
+  }, 500)
+
   componentDidMount() {
     const { store } = this.props
-    store!.koulutuksenJarjestaja.search.fetchStudents()
+    store!.koulutuksenJarjestaja.search.haeOppijat()
 
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
     })
-  }
-
-  toggleApprovedOnly = () => {
-    const { koulutuksenJarjestaja } = this.props.store!
-    koulutuksenJarjestaja.search.toggleApprovedOnly()
   }
 
   formSubmit = (event: React.FormEvent) => {
@@ -85,10 +93,10 @@ export class KoulutuksenJarjestaja extends React.Component<
   ) => {
     const { koulutuksenJarjestaja } = this.props.store!
     koulutuksenJarjestaja.search.changeSearchText(field, event.target.value)
-    koulutuksenJarjestaja.search.fetchStudents()
+    this.debouncedFetchResults()
   }
 
-  changeSort = (sortName: keyof MockStudent) => {
+  changeSort = (sortName: SearchSortKey) => {
     const { koulutuksenJarjestaja } = this.props.store!
     koulutuksenJarjestaja.search.changeSort(sortName)
   }
@@ -113,12 +121,12 @@ export class KoulutuksenJarjestaja extends React.Component<
       perPage,
       sortBy,
       sortDirection,
-      sortedResults,
       results,
-      // isLoading,
+      totalResultsCount,
+      isLoading,
       searchTexts
     } = koulutuksenJarjestaja.search
-    const totalPages = Math.ceil(results.length / perPage)
+    const totalPages = Math.ceil(totalResultsCount / perPage)
 
     return (
       <BackgroundContainer>
@@ -131,6 +139,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                   defaultMessage="Opiskelijat"
                 />
               </TopHeading>
+              {isLoading && <Spinner />}
             </TopContainer>
             <ContentArea>
               <SearchableTable
@@ -163,24 +172,24 @@ export class KoulutuksenJarjestaja extends React.Component<
                         defaultMessage="Osaamisala"
                       />
                     </SearchableHeader>
-                    <SearchableHeader sortName="hyvaksytty">
+                    <TableHeader>
                       <FormattedMessage
                         id="koulutuksenJarjestaja.hyvaksyttyTitle"
                         defaultMessage="Ens. hyv."
                       />
-                    </SearchableHeader>
-                    <SearchableHeader sortName="paivitetty">
+                    </TableHeader>
+                    <TableHeader>
                       <FormattedMessage
                         id="koulutuksenJarjestaja.paivitettyTitle"
                         defaultMessage="Päivitetty"
                       />
-                    </SearchableHeader>
-                    <SearchableHeader sortName="lukumaara">
+                    </TableHeader>
+                    <TableHeader>
                       <FormattedMessage
                         id="koulutuksenJarjestaja.lkmTitle"
                         defaultMessage="Lkm"
                       />
-                    </SearchableHeader>
+                    </TableHeader>
                   </TableRow>
                 </TableHead>
                 <colgroup>
@@ -192,12 +201,14 @@ export class KoulutuksenJarjestaja extends React.Component<
                   <col style={{ width: "10%" }} />
                 </colgroup>
                 <TableBody>
-                  {sortedResults.map(student => {
+                  {results.map(student => {
                     return (
-                      <TableRow key={student.id}>
+                      <TableRow key={student.oid}>
                         <TableCell>
                           <Link
-                            to={`/ehoks-ui/koulutuksenjarjestaja/${student.id}`}
+                            to={`/ehoks-ui/koulutuksenjarjestaja/${
+                              student.oid
+                            }`}
                           >
                             {student.nimi}
                           </Link>
@@ -205,10 +216,14 @@ export class KoulutuksenJarjestaja extends React.Component<
                         <TableCell>{student.tutkinto}</TableCell>
                         <TableCell>{student.osaamisala}</TableCell>
                         <TableCell>
-                          {format(parseISO(student.hyvaksytty), "d.M.yyyy")}
+                          {student.hyvaksytty
+                            ? format(parseISO(student.hyvaksytty), "d.M.yyyy")
+                            : "-"}
                         </TableCell>
                         <TableCell>
-                          {format(parseISO(student.paivitetty), "d.M.yyyy")}
+                          {student.paivitetty
+                            ? format(parseISO(student.paivitetty), "d.M.yyyy")
+                            : "-"}
                         </TableCell>
                         <TableCell>{student.lukumaara}</TableCell>
                       </TableRow>
@@ -217,7 +232,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                 </TableBody>
               </SearchableTable>
 
-              {totalPages > 1 && sortedResults.length > 0 && (
+              {totalPages > 1 && results.length > 0 && (
                 <PagingContainer
                   aria-label={intl.formatMessage({
                     id: "koulutuksenJarjestaja.haunSivutuksenAriaLabel"

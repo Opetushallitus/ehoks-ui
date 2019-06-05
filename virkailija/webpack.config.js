@@ -17,14 +17,18 @@ module.exports = {
     compress: true,
     contentBase: path.join(__dirname, "public"),
     disableHostCheck: true,
-    historyApiFallback: true,
+    historyApiFallback: {
+      disableDotRule: true
+    },
     host: "0.0.0.0",
     port: 4000,
     hot: true,
     inline: true,
     proxy: {
       "/auth-dev": "http://localhost:3000",
-      "/ehoks-oppija-backend": "http://localhost:3000",
+      "/cas": "http://localhost:3000",
+      "/ehoks-backend": "http://localhost:3000",
+      "/ehoks-virkailija-backend": "http://localhost:3000",
       "/virkailija-raamit": {
         target: "https://virkailija.testiopintopolku.fi",
         secure: false,

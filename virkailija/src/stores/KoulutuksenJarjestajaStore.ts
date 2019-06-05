@@ -1,41 +1,77 @@
-import format from "date-fns/format"
-import parseISO from "date-fns/parseISO"
-import drop from "lodash.drop"
-import take from "lodash.take"
-import { types } from "mobx-state-tree"
-import { MockStudent } from "mocks/MockStudent"
-import { mockStudents } from "mocks/mockStudents"
-// import { IStoreEnvironment } from "utils"
+import { withQueryString } from "fetchUtils"
+import max from "lodash.max"
+import min from "lodash.min"
+import { flow, getEnv, Instance, types } from "mobx-state-tree"
+import { HOKS } from "models/HOKS"
+import { SessionUser } from "models/SessionUser"
+import { StoreEnvironment } from "types/StoreEnvironment"
 
-const sortKeys = [
-  "id",
-  "nimi",
-  "tutkinto",
-  "osaamisala",
-  "hyvaksytty",
-  "paivitetty",
-  "lukumaara"
-] as const
+const sortKeys = ["nimi", "tutkinto", "osaamisala"] as const
 
 export type SearchSortKey = typeof sortKeys[number]
 
-export const SearchResult = types.model("SearchResult", {
-  id: types.number,
-  nimi: types.string,
-  tutkinto: types.string,
-  osaamisala: types.string,
-  hyvaksytty: types.string,
-  paivitetty: types.string,
-  lukumaara: types.number
-})
+export const Oppija = types
+  .model("Oppija", {
+    oid: types.string,
+    nimi: types.string,
+    tutkinto: types.string,
+    osaamisala: types.string,
+    suunnitelmat: types.array(HOKS),
+    henkilotiedot: types.optional(SessionUser, { commonName: "", surname: "" })
+  })
+  .actions(self => {
+    const { fetchCollection, fetchSingle, apiUrl } = getEnv<StoreEnvironment>(
+      self
+    )
+
+    const haeSuunnitelmat = flow(function*() {
+      const response = yield fetchCollection(
+        apiUrl(`virkailija/oppijat/${self.oid}/hoksit`)
+      )
+      self.suunnitelmat = response.data
+    })
+
+    const haeHenkilotiedot = flow(function*() {
+      const response = yield fetchSingle(
+        apiUrl(`virkailija/oppijat/${self.oid}`)
+      )
+      self.henkilotiedot = response.data
+    })
+
+    return { haeSuunnitelmat, haeHenkilotiedot }
+  })
+  .actions(self => {
+    const afterCreate = () => {
+      self.haeSuunnitelmat()
+      self.haeHenkilotiedot()
+    }
+    return { afterCreate }
+  })
+  .views(self => ({
+    get hyvaksytty() {
+      return self.suunnitelmat.length
+        ? min(self.suunnitelmat.map(s => s.ensikertainenHyvaksyminen))
+        : null
+    },
+    get paivitetty() {
+      return self.suunnitelmat.length
+        ? max(self.suunnitelmat.map(s => s.paivitetty))
+        : null
+    },
+    get lukumaara() {
+      return self.suunnitelmat.length
+    }
+  }))
+
+export interface IOppija extends Instance<typeof Oppija> {}
 
 const SortBy = types.enumeration("sortBy", [...sortKeys])
 
 const Search = types
   .model("Search", {
     activePage: 0,
-    approvedOnly: false,
-    results: types.array(SearchResult),
+    totalResultsCount: 0,
+    results: types.array(Oppija),
     isLoading: false,
     sortBy: types.optional(SortBy, "nimi"),
     sortDirection: "asc",
@@ -45,24 +81,51 @@ const Search = types
     (_): { searchTexts: { [key in SearchSortKey]: string } } => {
       return {
         searchTexts: {
-          id: "",
           nimi: "",
           tutkinto: "",
-          osaamisala: "",
-          hyvaksytty: "",
-          paivitetty: "",
-          lukumaara: ""
+          osaamisala: ""
         }
       }
     }
   )
   .actions(self => {
-    // const { fetchSingle } = getEnv<IStoreEnvironment>(self)
+    const { fetchCollection, apiUrl } = getEnv<StoreEnvironment>(self)
 
-    const toggleApprovedOnly = () => {
-      self.approvedOnly = !self.approvedOnly
-    }
+    const haeOppijat = flow(function*() {
+      self.isLoading = true
 
+      const queryParams = {
+        "order-by": self.sortBy,
+        desc: self.sortDirection === "desc",
+        "item-count": self.perPage,
+        page: self.activePage
+      }
+
+      const textQueries = Object.keys(self.searchTexts).reduce<{
+        [key: string]: string
+      }>((texts, key: "nimi" | "tutkinto" | "osaamisala") => {
+        if (self.searchTexts[key].length) {
+          texts[key] = self.searchTexts[key]
+        }
+        return texts
+      }, {})
+
+      const response = yield fetchCollection(
+        withQueryString(apiUrl("virkailija/oppijat"), {
+          ...queryParams,
+          ...textQueries
+        })
+      )
+      self.results = response.data
+      if (response.meta["total-count"]) {
+        self.totalResultsCount = response.meta["total-count"]
+      }
+      self.isLoading = false
+    })
+
+    return { haeOppijat }
+  })
+  .actions(self => {
     const changeSearchText = (
       field: SearchSortKey,
       searchText: string = ""
@@ -72,33 +135,7 @@ const Search = types
       self.searchTexts = { ...self.searchTexts, [field]: searchText }
     }
 
-    // TODO: real implementation
-    const fetchStudents = () => {
-      self.isLoading = true
-      const keysWithText = Object.keys(self.searchTexts).filter(
-        (key: SearchSortKey) => self.searchTexts[key].length > 0
-      )
-      self.results.replace(
-        keysWithText.length
-          ? mockStudents.filter(student => {
-              return keysWithText.every((key: SearchSortKey) => {
-                if (key === "hyvaksytty" || key === "paivitetty") {
-                  return !!format(parseISO(student[key]), "d.M.yyyy")
-                    .toLowerCase()
-                    .match(self.searchTexts[key].toLowerCase())
-                } else {
-                  return !!String(student[key])
-                    .toLowerCase()
-                    .match(self.searchTexts[key].toLowerCase())
-                }
-              })
-            })
-          : mockStudents
-      )
-      self.isLoading = false
-    }
-
-    const changeSort = (sortName: keyof MockStudent) => {
+    const changeSort = (sortName: "nimi" | "tutkinto" | "osaamisala") => {
       const changeDirection = self.sortBy === sortName
       self.sortBy = sortName
       self.sortDirection = changeDirection
@@ -106,62 +143,26 @@ const Search = types
           ? "desc"
           : "asc"
         : self.sortDirection
+      self.haeOppijat()
     }
 
     const changeActivePage = (page: number) => {
       self.activePage = page
+      self.haeOppijat()
     }
 
     return {
       changeActivePage,
       changeSort,
-      changeSearchText,
-      fetchStudents,
-      toggleApprovedOnly
+      changeSearchText
     }
   })
   .views(self => {
     return {
-      get sortedResults() {
-        return take(
-          drop(
-            self.results.slice().sort((a, b) => {
-              const reverse = self.sortDirection === "desc"
-              if (a[self.sortBy] > b[self.sortBy]) {
-                return reverse ? -1 : 1
-              } else if (a[self.sortBy] < b[self.sortBy]) {
-                return reverse ? 1 : -1
-              } else {
-                return 0
-              }
-            }),
-            self.activePage * self.perPage
-          ),
-          self.perPage
-        )
-      },
-      // TODO: real implementation
-      studentById(id: string) {
-        const student = self.results.find(result => {
-          return result.id.toString() === id
+      oppija(oid: string) {
+        return self.results.find(result => {
+          return result.oid === oid
         })
-        const [firstName, surname] = student
-          ? student.nimi.split(" ")
-          : ["Mock", "User"]
-        return {
-          firstName,
-          surname,
-          oid: id,
-          commonName: firstName,
-          contactValuesGroup: [] as any,
-          yhteystiedot: {
-            sahkoposti: "mock@user.dev",
-            katuosoite: "Esimerkkikatu 123",
-            postinumero: "12345",
-            kunta: "Kunta",
-            puhelinnumero: "000000000"
-          }
-        }
       }
     }
   })

@@ -25,3 +25,4 @@ if (/\bdebug=1\b/.test(window.location.search)) {
 const backendUrl = config.backendUrl
 
 export const apiUrl = (path: string) => `${backendUrl}/${path}`
+export const apiPrefix = "oppija"

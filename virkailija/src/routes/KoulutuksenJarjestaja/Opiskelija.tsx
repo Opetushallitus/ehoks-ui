@@ -48,16 +48,18 @@ export class Opiskelija extends React.Component<
   // TODO: redirect to root after logout, check implementation in src/routes/OmienOpintojenSuunnittelu.tsx
   async componentDidMount() {
     const { studentId, store } = this.props
+    const { search } = store!.koulutuksenJarjestaja
+    if (!search.results.length) {
+      await search.haeOppijat()
+    }
     if (studentId) {
-      await store!.hoks.haeSuunnitelmat(studentId)
       this.redirectToOnlyHOKS()
     }
   }
 
   async componentDidUpdate(prevProps: OpiskelijaProps) {
-    const { studentId, store } = this.props
+    const { studentId } = this.props
     if (studentId && studentId !== prevProps.studentId) {
-      await store!.hoks.haeSuunnitelmat(studentId)
       this.redirectToOnlyHOKS()
     }
   }
@@ -65,8 +67,10 @@ export class Opiskelija extends React.Component<
   redirectToOnlyHOKS = () => {
     const { studentId, store } = this.props
     // navigate directly to HOKS if there's only one of them
-    if (store!.hoks.suunnitelmat.length === 1) {
-      const hoks = store!.hoks.suunnitelmat[0]
+    const { search } = store!.koulutuksenJarjestaja
+    const oppija = search.oppija(studentId!)
+    if (oppija && oppija.suunnitelmat.length === 1) {
+      const hoks = oppija.suunnitelmat[0]
       navigate(`/ehoks-ui/koulutuksenjarjestaja/${studentId}/${hoks.eid}`)
     }
   }
@@ -81,9 +85,10 @@ export class Opiskelija extends React.Component<
       return null
     }
     const { koulutuksenJarjestaja } = store!
-    const results = koulutuksenJarjestaja.search.sortedResults
-    const searchResult = results.find(u => u.id.toString() === studentId)
-    const studentIndex = searchResult ? results.indexOf(searchResult) : -1
+    const results = koulutuksenJarjestaja.search.results
+    const oppija = koulutuksenJarjestaja.search.oppija(studentId)
+    const suunnitelmat = oppija ? oppija.suunnitelmat : []
+    const studentIndex = oppija ? results.indexOf(oppija) : -1
     const previous = studentIndex > 0 ? results[studentIndex - 1] : null
     const next =
       studentIndex < results.length ? results[studentIndex + 1] : null
@@ -94,7 +99,7 @@ export class Opiskelija extends React.Component<
           <LeftLink>
             {previous && (
               <StudentLink
-                to={`/ehoks-ui/koulutuksenjarjestaja/${previous.id}`}
+                to={`/ehoks-ui/koulutuksenjarjestaja/${previous.oid}`}
               >
                 &lt;&lt; {previous.nimi}
               </StudentLink>
@@ -110,7 +115,7 @@ export class Opiskelija extends React.Component<
           </LinkContainer>
           <RightLink>
             {next && (
-              <StudentLink to={`/ehoks-ui/koulutuksenjarjestaja/${next.id}`}>
+              <StudentLink to={`/ehoks-ui/koulutuksenjarjestaja/${next.oid}`}>
                 {next.nimi} &gt;&gt;
               </StudentLink>
             )}
@@ -119,11 +124,15 @@ export class Opiskelija extends React.Component<
         <Router basepath={`/ehoks-ui/koulutuksenjarjestaja/${studentId}`}>
           <ValitseHOKS
             path="/"
-            opiskelijaId={studentId}
-            nimi={searchResult ? searchResult.nimi : ""}
-            suunnitelmat={store!.hoks.suunnitelmat}
+            oppijaId={studentId}
+            nimi={oppija ? oppija.nimi : ""}
+            suunnitelmat={suunnitelmat}
           />
-          <KoulutuksenJarjestajaHOKS path=":hoksId/*" studentId={studentId} />
+          <KoulutuksenJarjestajaHOKS
+            path=":hoksId/*"
+            suunnitelmat={suunnitelmat}
+            oppija={oppija}
+          />
         </Router>
       </React.Fragment>
     )
