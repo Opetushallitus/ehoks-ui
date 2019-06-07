@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "@reach/router"
+import { RouteComponentProps, WindowLocation, navigate } from "@reach/router"
 import { Accordion, AccordionTitle } from "components/Accordion"
 import { EmptyItem } from "components/EmptyItem"
 import { Heading } from "components/Heading"
@@ -16,7 +16,27 @@ import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
 import { theme } from "theme"
 import { HelpPopup } from "components/HelpPopup"
+import queryString from "query-string"
+import find from "lodash.find"
+import { ShareType } from "stores/NotificationStore"
 const { colors } = theme
+
+function parseShareParams(
+  location: WindowLocation | undefined
+): {
+  share: string
+  type: ShareType | ""
+} {
+  const qs = queryString.parse(location ? location.search : "")
+  return {
+    share: typeof qs.share === "string" ? qs.share : "",
+    type:
+      typeof qs.type === "string" &&
+      (qs.type === "naytto" || qs.type === "tyossaoppiminen")
+        ? qs.type
+        : ""
+  }
+}
 
 const ProgressTitle = styled("h2")`
   font-weight: 600;
@@ -32,7 +52,7 @@ const HelpButton = styled(HelpPopup)`
   margin: 0 0 0 20px;
 `
 
-export interface OpiskelusuunnitelmaProps {
+export type OpiskelusuunnitelmaProps = {
   children?: React.ReactChildren
   plan: Instance<typeof HOKS>
   elements?: {
@@ -40,23 +60,34 @@ export interface OpiskelusuunnitelmaProps {
     goals?: React.ReactNode
     essentialFactor?: React.ReactNode
   }
-}
+} & RouteComponentProps
 
 export interface OpiskelusuunnitelmaState {
   activeAccordions: {
-    [accordionName: string]: boolean | { [subAccordionName: string]: boolean }
+    suunnitelma: boolean
+    suunnitelmat: {
+      aikataulutetut: boolean
+      suunnitellut: boolean
+      valmiit: boolean
+    }
+    tavoitteet: boolean
+    tukevatOpinnot: boolean
+  }
+  share: {
+    koodiUri: string
+    type: ShareType | ""
   }
 }
 
 @observer
 export class Opiskelusuunnitelma extends React.Component<
-  OpiskelusuunnitelmaProps & RouteComponentProps,
+  OpiskelusuunnitelmaProps,
   OpiskelusuunnitelmaState
 > {
   static contextTypes = {
     intl: intlShape
   }
-  state = {
+  state: OpiskelusuunnitelmaState = {
     activeAccordions: {
       suunnitelma: false,
       suunnitelmat: {
@@ -66,16 +97,75 @@ export class Opiskelusuunnitelma extends React.Component<
       },
       tavoitteet: false,
       tukevatOpinnot: false
+    },
+    share: {
+      koodiUri: "",
+      type: ""
     }
   }
 
   componentDidMount() {
+    const { location } = this.props
+
+    const { share, type } = parseShareParams(location)
+    this.showShareDialog(share, type)
+
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
     })
   }
 
-  showPlanSubAccordion = (subAccordion: string) => () => {
+  componentDidUpdate(prevProps: OpiskelusuunnitelmaProps) {
+    if (this.props.location !== prevProps.location) {
+      // TODO: set proper share state when opening another dialog
+      // previous dialog should close and new dialog should open
+      const { share, type } = parseShareParams(this.props.location)
+      this.showShareDialog(share, type)
+    }
+  }
+
+  isShareActive = () => {
+    const { share } = this.state
+    return share.koodiUri !== "" && share.type !== ""
+  }
+
+  hasActiveShare = (type: "aikataulutetut" | "suunnitellut" | "valmiit") => {
+    const {
+      aikataulutetutOpinnot,
+      suunnitellutOpinnot,
+      valmiitOpinnot
+    } = this.props.plan
+    const { share } = this.state
+    const studies = {
+      aikataulutetut: aikataulutetutOpinnot,
+      suunnitellut: suunnitellutOpinnot,
+      valmiit: valmiitOpinnot
+    }
+    return !!find(studies[type], s =>
+      s.hasNayttoOrHarjoittelujakso(share.koodiUri, share.type)
+    )
+  }
+
+  showShareDialog = (share: string, type: ShareType | "") => {
+    this.setState(state => ({
+      ...state,
+      share: { koodiUri: share, type },
+      activeAccordions: {
+        ...state.activeAccordions,
+        suunnitelma: Boolean(share && type)
+      }
+    }))
+  }
+
+  hideShareDialog = () => {
+    if (this.props.location) {
+      navigate(this.props.location.pathname)
+    }
+  }
+
+  showPlanSubAccordion = (
+    subAccordion: keyof OpiskelusuunnitelmaState["activeAccordions"]["suunnitelmat"]
+  ) => () => {
     this.setState(
       state => ({
         ...state,
@@ -83,9 +173,7 @@ export class Opiskelusuunnitelma extends React.Component<
           ...state.activeAccordions,
           suunnitelma: true,
           suunnitelmat: {
-            ...(state.activeAccordions.suunnitelmat as {
-              [subAccordionName: string]: boolean
-            }),
+            ...state.activeAccordions.suunnitelmat,
             [subAccordion]: true
           }
         }
@@ -96,7 +184,20 @@ export class Opiskelusuunnitelma extends React.Component<
     )
   }
 
-  toggleAccordion = (accordion: string, subAccordion?: string) => () => {
+  toggleAccordion = (
+    accordion: keyof OpiskelusuunnitelmaState["activeAccordions"],
+    subAccordion?: keyof OpiskelusuunnitelmaState["activeAccordions"]["suunnitelmat"]
+  ) => () => {
+    // const matchingSubAccordion =
+    //   !subAccordion || this.hasActiveShare(subAccordion)
+    // if (
+    //   this.isShareActive() &&
+    //   this.state.activeAccordions[accordion] &&
+    //   matchingSubAccordion
+    // ) {
+    //   this.hideShareDialog()
+    // }
+
     this.setState(state => ({
       ...state,
       activeAccordions: {
@@ -134,7 +235,8 @@ export class Opiskelusuunnitelma extends React.Component<
     const competencePointsTitle = intl.formatMessage({
       id: "opiskelusuunnitelma.osaamispisteLyhenne"
     })
-
+    const isShareActive = this.isShareActive()
+    const hasActiveShare = this.hasActiveShare
     const elements = {
       heading: customElements.heading || (
         <FormattedMessage
@@ -301,7 +403,7 @@ export class Opiskelusuunnitelma extends React.Component<
 
         <Accordion
           id="suunnitelma"
-          open={activeAccordions.suunnitelma}
+          open={activeAccordions.suunnitelma || isShareActive}
           title={
             <AccordionTitle>
               <FormattedMessage
@@ -322,7 +424,10 @@ export class Opiskelusuunnitelma extends React.Component<
         >
           <Accordion
             id="suunnitelma.suunnitellut"
-            open={activeAccordions.suunnitelmat.suunnitellut}
+            open={
+              activeAccordions.suunnitelmat.suunnitellut ||
+              hasActiveShare("suunnitellut")
+            }
             onToggle={this.toggleAccordion("suunnitelmat", "suunnitellut")}
             title={
               <AccordionTitle>
@@ -370,7 +475,10 @@ export class Opiskelusuunnitelma extends React.Component<
 
           <Accordion
             id="suunnitelma.aikataulutetut"
-            open={activeAccordions.suunnitelmat.aikataulutetut}
+            open={
+              activeAccordions.suunnitelmat.aikataulutetut ||
+              hasActiveShare("aikataulutetut")
+            }
             onToggle={this.toggleAccordion("suunnitelmat", "aikataulutetut")}
             title={
               <AccordionTitle>
@@ -418,7 +526,9 @@ export class Opiskelusuunnitelma extends React.Component<
 
           <Accordion
             id="suunnitelma.valmiit"
-            open={activeAccordions.suunnitelmat.valmiit}
+            open={
+              activeAccordions.suunnitelmat.valmiit || hasActiveShare("valmiit")
+            }
             onToggle={this.toggleAccordion("suunnitelmat", "valmiit")}
             title={
               <AccordionTitle>

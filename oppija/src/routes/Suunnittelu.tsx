@@ -8,6 +8,7 @@ import { IRootStore } from "stores/RootStore"
 
 interface ValitseHOKSProps {
   store?: IRootStore
+  "*"?: string
 }
 
 @inject("store")
@@ -17,7 +18,7 @@ export class Suunnittelu extends React.Component<
 > {
   disposeLoginReaction: IReactionDisposer
   componentDidMount() {
-    const { store } = this.props
+    const { store, uri } = this.props
     const session = store!.session
     this.disposeLoginReaction = autorun(async () => {
       // navigate to Opintopolku logout url after logging out
@@ -31,8 +32,14 @@ export class Suunnittelu extends React.Component<
         await store!.hoks.haeSuunnitelmat(session.user!.oid)
         const suunnitelmat = store!.hoks.suunnitelmat
         // navigate directly to HOKS if there's only one of them
-        if (suunnitelmat.length === 1) {
-          navigate(`/ehoks/suunnittelu/${suunnitelmat[0].eid}`)
+        if (
+          suunnitelmat.length === 1 &&
+          uri === "/ehoks/suunnittelu" &&
+          this.props["*"] === ""
+        ) {
+          navigate(`/ehoks/suunnittelu/${suunnitelmat[0].eid}`, {
+            replace: true
+          })
         }
       }
     })

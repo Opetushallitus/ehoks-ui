@@ -17,6 +17,7 @@ export function getHarjoittelujaksot(
 ) {
   return osaamisenHankkimistavat.map<Harjoittelujakso>(tapa => {
     const tyyppi = tapa.muutOppimisymparistot.length > 0 ? "OTHER" : "WORKPLACE"
+
     return {
       alku: tapa.alku,
       loppu: tapa.loppu,

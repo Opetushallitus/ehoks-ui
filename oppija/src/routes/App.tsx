@@ -4,9 +4,9 @@ import { inject, observer } from "mobx-react"
 import React from "react"
 import { IntlProvider } from "react-intl"
 import { Ammatillinentutkinto } from "routes/Ammatillinentutkinto"
-import { AppErrors } from "routes/App/AppErrors"
 import { AppFooter } from "routes/App/AppFooter"
 import { AppHeader } from "routes/App/AppHeader"
+import { AppNotifications } from "routes/App/AppNotifications"
 import { GlobalStyles } from "routes/App/globalStyles"
 import { Etusivu } from "routes/Etusivu"
 import { Henkilokohtaistaminen } from "routes/Henkilokohtaistaminen"
@@ -25,7 +25,7 @@ const MainApp = (_: { path: string }) => {
   return (
     <Container>
       <AppHeader />
-      <AppErrors />
+      <AppNotifications />
       <Main id="main" role="main">
         <Router basepath="/ehoks">
           <Etusivu path="/" />

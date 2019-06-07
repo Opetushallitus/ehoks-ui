@@ -36,7 +36,7 @@ it("App renders correctly", async () => {
     createEnvironment(mockFetch(apiUrl), apiUrl, "")
   )
   // fetch default translations
-  await store.translations.haeLokalisoinnit()
+  await store.translations.fetchLocales()
 
   const { container } = renderWithRouter(
     <Provider store={store}>

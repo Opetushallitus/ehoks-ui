@@ -15,6 +15,10 @@ Object {
     "suunnitelmat": Array [],
   },
   "isLoading": false,
+  "notifications": Object {
+    "isLoading": false,
+    "notifications": Array [],
+  },
   "oppilas": Object {
     "isLoading": false,
     "perusteet": Array [],

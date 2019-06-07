@@ -3,7 +3,7 @@ import { YhteisenTutkinnonOsanOsaAlue } from "./YhteisenTutkinnonOsanOsaAlue"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 
-const Model = types.model({
+export const PuuttuvaYhteinenTutkinnonOsaModel = types.model({
   tutkinnonOsaKoodiUri: types.optional(types.string, ""),
   tutkinnonOsa: types.optional(EPerusteetVastaus, {}),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
@@ -13,5 +13,5 @@ const Model = types.model({
 export const HankittavaYhteinenTutkinnonOsa = types.compose(
   "HankittavaYhteinenTutkinnonOsa",
   EnrichKoodiUri,
-  Model
+  PuuttuvaYhteinenTutkinnonOsaModel
 )

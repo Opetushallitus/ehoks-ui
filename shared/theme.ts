@@ -41,10 +41,12 @@ export const theme = {
       disabled: themeColors.pinkishGrey
     },
     notification: {
+      alertBorder: themeColors.yellowOchre,
       errorBorder: themeColors.brick,
       questionBorder: themeColors.waterBlue,
       successBorder: themeColors.midGreen,
       warningBorder: themeColors.yellowOchre,
+      alertBg: "rgba(247, 180, 34, 0.05)",
       errorBg: "rgba(198, 40, 40, 0.05)",
       questionBg: "rgba(0, 153, 250, 0.1)",
       successBg: "rgba(86, 189, 91, 0.05)",

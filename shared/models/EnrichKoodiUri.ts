@@ -1,4 +1,4 @@
-import { types, getEnv, flow } from "mobx-state-tree"
+import { types, getEnv, flow, getPropertyMembers } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { APIResponse } from "types/APIResponse"
 
@@ -30,8 +30,9 @@ export const EnrichKoodiUri = types
         if (Object.keys(self).indexOf(dynamicKey) > -1) {
           self[dynamicKey] = response.data
         } else {
+          const { name } = getPropertyMembers(self)
           throw new Error(
-            `Your mobx-state-tree model is missing definition for '${dynamicKey}'`
+            `Your mobx-state-tree model '${name}' is missing definition for '${dynamicKey}'`
           )
         }
       } catch (error) {
@@ -54,8 +55,9 @@ export const EnrichKoodiUri = types
             return result
           }, {})
         } else {
+          const { name } = getPropertyMembers(self)
           throw new Error(
-            `Your mobx-state-tree model is missing definition for '${dynamicKey}'`
+            `Your mobx-state-tree model '${name}' is missing definition for '${dynamicKey}'`
           )
         }
       } catch (error) {

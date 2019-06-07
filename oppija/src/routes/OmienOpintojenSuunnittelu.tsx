@@ -11,6 +11,7 @@ import { Tavoitteet } from "components/Opiskelija/Tavoitteet"
 import { ProgressPies } from "components/ProgressPies"
 import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
+import find from "lodash.find"
 import { observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
@@ -61,7 +62,7 @@ export class OmienOpintojenSuunnittelu extends React.Component<
 
   render() {
     const { id, student, suunnitelmat } = this.props
-    const suunnitelma = suunnitelmat.find(s => s.eid === id)
+    const suunnitelma = find(suunnitelmat, s => s.eid === id)
 
     if (!suunnitelma) {
       return null

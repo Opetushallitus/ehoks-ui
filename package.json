@@ -29,7 +29,7 @@
     "@types/react-responsive": "^3.0.2",
     "@types/react-swipeable-views": "^0.12.2",
     "@types/react-test-renderer": "^16.8.0",
-    "@types/styled-components": "^4.1.14",
+    "@types/styled-components": "^4.1.15",
     "@types/webpack-env": "^1.14.0",
     "css-loader": "^2.1.0",
     "file-loader": "^3.0.1",
