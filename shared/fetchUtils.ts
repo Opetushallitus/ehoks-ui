@@ -60,7 +60,7 @@ export const mockFetch = (apiUrl: (path: string) => string, version = 0) => (
   url: string,
   _init?: RequestInit
 ): Promise<Response> => {
-  const [, path] = url.split(apiUrl(""))
+  const path = url.replace(apiUrl(""), "")
   const mockResponse = {
     arrayBuffer: () => Promise.resolve(new ArrayBuffer(0)),
     formData: () => Promise.resolve(new FormData()),

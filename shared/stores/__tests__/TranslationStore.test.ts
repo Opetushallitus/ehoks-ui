@@ -1,7 +1,7 @@
 import { mockFetch } from "fetchUtils"
 import { when } from "mobx"
 import { TranslationStore } from "../TranslationStore"
-import lokalisointi from "../mocks/lokalisointi0.json"
+import lokalisointi from "../mocks/_external_lokalisointi0.json"
 import defaultMessages from "../TranslationStore/defaultMessages.json"
 import { createEnvironment } from "createEnvironment"
 
@@ -18,7 +18,7 @@ describe("TranslationStore", () => {
     expect(store.translations).toEqual([])
     expect(store.activeLocale).toEqual("fi")
 
-    store.haeLokalisoinnit(apiUrl)
+    store.haeLokalisoinnit()
     expect(store.isLoading).toBe(true)
 
     when(
@@ -36,7 +36,7 @@ describe("TranslationStore", () => {
       {},
       createEnvironment(mockFetch(apiUrl), apiUrl, "")
     )
-    store.haeLokalisoinnit(apiUrl)
+    store.haeLokalisoinnit()
     when(
       () => !store.isLoading,
       () => {

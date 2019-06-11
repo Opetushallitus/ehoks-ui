@@ -38,18 +38,22 @@ const TranslationStoreModel = {
 export const TranslationStore = types
   .model("TranslationStore", TranslationStoreModel)
   .actions(self => {
-    const { fetchCollection, errors } = getEnv<StoreEnvironment>(self)
+    const { apiUrl, apiPrefix, fetchCollection, errors } = getEnv<
+      StoreEnvironment
+    >(self)
 
     const setActiveLocale = (locale: "fi" | "sv") => {
       self.activeLocale = locale
     }
 
-    const haeLokalisoinnit = flow(function*(apiUrl: (path: string) => string) {
+    const haeLokalisoinnit = flow(function*() {
       self.isLoading = true
       // insert defaultMessages for context.intl.formatMessage calls
       self.translations.replace(defaultMessages as ApiTranslation[])
       try {
-        const response = yield fetchCollection(apiUrl("lokalisointi"))
+        const response = yield fetchCollection(
+          apiUrl(`${apiPrefix}/external/lokalisointi`)
+        )
         // add custom translations from API
         self.translations.replace([
           ...self.translations,
