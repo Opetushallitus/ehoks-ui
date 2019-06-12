@@ -47,6 +47,7 @@ export interface TutkinnonOsa {
   tila?: string
   todentamisenProsessi?: TodentamisenProsessi
   olennainenSeikka?: boolean
+  tutkinnonOsaKoodiUri?: string
   opintoOtsikko: (ospLyhenne: string) => string
 }
 

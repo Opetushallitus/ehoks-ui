@@ -15,6 +15,8 @@ import { LearningEvent } from "./LearningEvent"
 import { VerificationProcess } from "types/VerificationProcess"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
+import { ShareType } from "stores/NotificationStore"
+import { ShareDialog } from "components/ShareDialog"
 
 interface ColorProps {
   fadedColor: string
@@ -69,9 +71,11 @@ interface DetailsProps {
   demonstrations?: Array<Naytto>
   extraContent?: React.ReactNode
   expanded?: boolean
+  koodiUri?: string
   learningPeriods?: Array<Harjoittelujakso>
-  verificationProcess?: TodentamisenProsessi
+  share?: { koodiUri: string; type: ShareType | "" }
   toggle: (name: "competences" | "details") => () => void
+  verificationProcess?: TodentamisenProsessi
 }
 
 export class Details extends React.Component<DetailsProps> {
@@ -80,13 +84,15 @@ export class Details extends React.Component<DetailsProps> {
   }
   render() {
     const {
-      fadedColor = "",
       demonstrations = [],
       extraContent = null,
       expanded,
+      fadedColor = "",
+      koodiUri,
       learningPeriods = [],
-      verificationProcess,
-      toggle
+      share,
+      toggle,
+      verificationProcess
     } = this.props
     const { intl } = this.context
 
@@ -96,6 +102,9 @@ export class Details extends React.Component<DetailsProps> {
       demonstrations.length ||
       learningPeriods.length ||
       verification === OHJAUS_NAYTTOON
+    const hasActiveShare =
+      typeof share !== "undefined" && koodiUri === share.koodiUri
+    const shareType = typeof share !== "undefined" ? share.type : undefined
 
     return expanded ? (
       <DetailsExpanded
@@ -103,26 +112,46 @@ export class Details extends React.Component<DetailsProps> {
         data-testid="StudyInfo.DetailsExpanded"
       >
         <DetailsContent>
-          <LocationsContainerExpanded>
-            <IconContainer
-              onClick={toggle("details")}
-              aria-label={intl.formatMessage({
-                id: "opiskelusuunnitelma.piilotaTyossaOppiminenAriaLabel"
-              })}
-            >
-              <Collapse size={40} />
-            </IconContainer>
-          </LocationsContainerExpanded>
-          {learningPeriods.map((period, i) => {
-            return <LearningPeriod key={i} learningPeriod={period} />
-          })}
+          {!hasActiveShare && (
+            <LocationsContainerExpanded>
+              <IconContainer
+                onClick={toggle("details")}
+                aria-label={intl.formatMessage({
+                  id: "opiskelusuunnitelma.piilotaTyossaOppiminenAriaLabel"
+                })}
+              >
+                <Collapse size={40} />
+              </IconContainer>
+            </LocationsContainerExpanded>
+          )}
+
+          <ShareDialog
+            active={hasActiveShare && shareType === "tyossaoppiminen"}
+            background={fadedColor}
+            koodiUri={koodiUri || ""}
+            type="tyossaoppiminen"
+          >
+            {learningPeriods.map((period, i) => {
+              return <LearningPeriod key={i} learningPeriod={period} />
+            })}
+          </ShareDialog>
+
           {demonstrations.map((demonstration, i) => {
             return (
-              <Demonstration
+              <ShareDialog
+                active={hasActiveShare && shareType === "naytto"}
+                background={fadedColor}
+                koodiUri={koodiUri || ""}
+                type="naytto"
                 key={i}
-                demonstration={demonstration}
-                verificationProcess={verificationProcess}
-              />
+              >
+                <Demonstration
+                  demonstration={demonstration}
+                  verificationProcess={verificationProcess}
+                  koodiUri={koodiUri}
+                  hasActiveShare={hasActiveShare && shareType === "naytto"}
+                />
+              </ShareDialog>
             )
           })}
           {extraContent}

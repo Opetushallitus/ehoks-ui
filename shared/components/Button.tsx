@@ -1,8 +1,14 @@
 import React from "react"
 import styled from "styled"
 
-const ButtonContainer = styled("button")`
-  background: ${props => props.theme.colors.waterBlue};
+interface ButtonContainerProps {
+  secondary: boolean
+}
+const ButtonContainer = styled("button")<ButtonContainerProps>`
+  background: ${props =>
+    props.secondary
+      ? props.theme.colors.battleshipGrey
+      : props.theme.colors.waterBlue};
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 600;
   color: #fff;
@@ -25,6 +31,8 @@ export interface ButtonProps {
   disabled?: boolean
   /** Event handler to execute when clicked */
   onClick?: (event: React.MouseEvent) => void
+  /** Use secondary styles */
+  secondary?: boolean
   /** Button type */
   type?: string
 }
@@ -39,6 +47,7 @@ export class Button extends React.Component<ButtonProps> {
       className,
       disabled = false,
       type = "button",
+      secondary = false,
       onClick
     } = this.props
     return (
@@ -47,6 +56,7 @@ export class Button extends React.Component<ButtonProps> {
         disabled={disabled}
         onClick={onClick}
         type={type}
+        secondary={secondary}
       >
         {children}
       </ButtonContainer>

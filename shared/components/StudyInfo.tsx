@@ -8,6 +8,12 @@ import {
   Harjoittelujakso,
   TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
+import { ShareType } from "stores/NotificationStore"
+import { MdShare } from "react-icons/md"
+import { HeroButton } from "components/Button"
+import { FormattedMessage } from "react-intl"
+import { navigate } from "@reach/router"
+import { stringifyShareParams } from "utils/shareParams"
 
 interface ContainerProps {
   accentColor?: string
@@ -49,12 +55,29 @@ const InnerContainer = styled("div")`
   justify-content: space-between;
 `
 
+const TitleContainer = styled("div")`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 70px 10px 10px;
+  min-height: 74px;
+`
+
 const Title = styled("h2")`
+  flex: 1;
   color: #000;
   font-weight: 600;
   font-size: 20px;
   display: block;
   margin: 10px 20px;
+`
+
+const ShareIcon = styled(MdShare)`
+  margin-left: 6px;
+`
+
+const Button = styled(HeroButton)`
+  display: inline-flex;
 `
 
 export interface StudyInfoProps {
@@ -72,16 +95,24 @@ export interface StudyInfoProps {
   /** Color of additional info container */
   fadedColor?: string
   /**
+   * KoodiURI for this study
+   */
+  koodiUri?: string
+  /**
    * List of learning periods
    * @default []
    */
   learningPeriods?: Array<Harjoittelujakso>
   /**
+   * Current share state from url
+   */
+  share?: { koodiUri: string; type: ShareType | "" }
+  /** Title of the study, always visible */
+  title?: React.ReactNode
+  /**
    * Verification process details
    */
   verificationProcess?: TodentamisenProsessi
-  /** Title of the study, always visible */
-  title?: React.ReactNode
   /**
    * Width of the element for desktop resolutions
    * @default 25%
@@ -107,6 +138,19 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       details: false
     },
     expandedCompetences: []
+  }
+
+  componentDidMount() {
+    const { koodiUri, share } = this.props
+    if (typeof share !== "undefined" && koodiUri === share.koodiUri) {
+      this.setState(state => ({
+        ...state,
+        expanded: {
+          ...state.expanded,
+          details: true
+        }
+      }))
+    }
   }
 
   toggle = (name: "competences" | "details") => () => {
@@ -137,6 +181,18 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     this.setState({ expandedCompetences: [] })
   }
 
+  share = () => {
+    const { koodiUri } = this.props
+    if (koodiUri) {
+      navigate(
+        `${window.location.pathname}?${stringifyShareParams({
+          share: koodiUri,
+          type: "tyossaoppiminen"
+        })}`
+      )
+    }
+  }
+
   render() {
     const {
       accentColor,
@@ -145,33 +201,53 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       extraContent = null,
       fadedColor,
       learningPeriods = [],
-      verificationProcess,
+      koodiUri,
+      share,
       title,
+      verificationProcess,
       width = "25%"
     } = this.props
     const { expandedCompetences, expanded } = this.state
-
+    const hasLearningPeriods = learningPeriods && learningPeriods.length > 0
     const hasDetails =
-      (learningPeriods && learningPeriods.length > 0) ||
-      demonstrations.length > 0 ||
-      verificationProcess
+      hasLearningPeriods || demonstrations.length > 0 || verificationProcess
+    const hasActiveShare =
+      typeof share !== "undefined" &&
+      koodiUri === share.koodiUri &&
+      share.type === "tyossaoppiminen"
+    const detailsExpanded = expanded.details || hasActiveShare
+    const showShareButton =
+      expanded.details && hasLearningPeriods && !hasActiveShare
 
     return (
       <Container
         accentColor={accentColor}
-        expanded={expanded.competences || expanded.details}
+        expanded={expanded.competences || detailsExpanded}
         width={width}
       >
         <InnerContainer>
-          <Title data-testid="Title">{title}</Title>
+          <TitleContainer>
+            <Title data-testid="Title">{title}</Title>
+            {showShareButton && (
+              <Button onClick={this.share}>
+                <FormattedMessage
+                  id="jakaminen.jaaTutkinnonosanTiedotButtonTitle"
+                  defaultMessage="Tutkinnonosan tietojen jakaminen"
+                />
+                <ShareIcon size={24} />
+              </Button>
+            )}
+          </TitleContainer>
           {hasDetails && (
             <Details
               fadedColor={fadedColor}
               demonstrations={demonstrations}
               extraContent={extraContent}
-              expanded={expanded.details}
+              expanded={detailsExpanded}
               learningPeriods={learningPeriods}
               verificationProcess={verificationProcess}
+              koodiUri={koodiUri}
+              share={share}
               toggle={this.toggle}
             />
           )}

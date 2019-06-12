@@ -1,10 +1,19 @@
 import { navigate, RouteComponentProps, Router } from "@reach/router"
+import { LoadingSpinner } from "components/LoadingSpinner"
 import { autorun, IReactionDisposer } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { OmienOpintojenSuunnittelu } from "routes/OmienOpintojenSuunnittelu"
 import { ValitseHOKS } from "routes/Suunnittelu/ValitseHOKS"
 import { IRootStore } from "stores/RootStore"
+import styled from "styled"
+
+const LoadingContainer = styled("div")`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+`
 
 interface ValitseHOKSProps {
   store?: IRootStore
@@ -43,10 +52,6 @@ export class Suunnittelu extends React.Component<
         }
       }
     })
-    //
-    window.requestAnimationFrame(() => {
-      window.scrollTo(0, 0)
-    })
   }
 
   componentWillUnmount() {
@@ -55,6 +60,14 @@ export class Suunnittelu extends React.Component<
 
   render() {
     const store = this.props.store!
+
+    if (store!.hoks.isLoading) {
+      return (
+        <LoadingContainer>
+          <LoadingSpinner />
+        </LoadingContainer>
+      )
+    }
 
     return (
       <Router basepath={`/ehoks/suunnittelu`}>
