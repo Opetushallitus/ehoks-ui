@@ -5,6 +5,7 @@ import { HOKSStore } from "stores/HOKSStore"
 import { NotificationStore } from "stores/NotificationStore"
 import { OppilasStore } from "stores/OppilasStore"
 import { SessionStore } from "stores/SessionStore"
+import { ShareLinkStore } from "stores/ShareLinkStore"
 import { TranslationStore } from "stores/TranslationStore"
 import { TyopaikanToimijaStore } from "stores/TyopaikanToimijaStore"
 
@@ -19,6 +20,7 @@ const RootStoreModel = {
   notifications: types.optional(NotificationStore, {}),
   oppilas: types.optional(OppilasStore, {}),
   session: types.optional(SessionStore, {}),
+  shareLinks: types.optional(ShareLinkStore, {}),
   translations: types.optional(TranslationStore, {}),
   tyopaikanToimija: types.optional(TyopaikanToimijaStore, {})
 }

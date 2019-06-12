@@ -17,6 +17,7 @@ import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import { ShareType } from "stores/NotificationStore"
 import { ShareDialog } from "components/ShareDialog"
+import { FetchShareLinks } from "stores/ShareLinkStore"
 
 interface ColorProps {
   fadedColor: string
@@ -76,6 +77,7 @@ interface DetailsProps {
   share?: { koodiUri: string; type: ShareType | "" }
   toggle: (name: "competences" | "details") => () => void
   verificationProcess?: TodentamisenProsessi
+  fetchShareLinks: FetchShareLinks
 }
 
 export class Details extends React.Component<DetailsProps> {
@@ -88,6 +90,7 @@ export class Details extends React.Component<DetailsProps> {
       extraContent = null,
       expanded,
       fadedColor = "",
+      fetchShareLinks,
       koodiUri,
       learningPeriods = [],
       share,
@@ -130,6 +133,7 @@ export class Details extends React.Component<DetailsProps> {
             background={fadedColor}
             koodiUri={koodiUri || ""}
             type="tyossaoppiminen"
+            fetchLinks={fetchShareLinks}
           >
             {learningPeriods.map((period, i) => {
               return <LearningPeriod key={i} learningPeriod={period} />
@@ -143,6 +147,7 @@ export class Details extends React.Component<DetailsProps> {
                 background={fadedColor}
                 koodiUri={koodiUri || ""}
                 type="naytto"
+                fetchLinks={fetchShareLinks}
                 key={i}
               >
                 <Demonstration

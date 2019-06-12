@@ -19,6 +19,7 @@ import { SessionUser } from "models/SessionUser"
 import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
+import { FetchShareLinks } from "stores/ShareLinkStore"
 import styled from "styled"
 
 const Section = styled("div")`
@@ -42,6 +43,7 @@ const SectionItems = styled(ProgressPies)`
 export interface OmienOpintojenSuunnitteluProps {
   student: Instance<typeof SessionUser> | null
   suunnitelmat: Array<Instance<typeof HOKS>>
+  fetchShareLinks: FetchShareLinks
   path?: string
   id?: string
 }
@@ -61,7 +63,7 @@ export class OmienOpintojenSuunnittelu extends React.Component<
   }
 
   render() {
-    const { id, student, suunnitelmat } = this.props
+    const { id, student, suunnitelmat, fetchShareLinks } = this.props
     const suunnitelma = find(suunnitelmat, s => s.eid === id)
 
     if (!suunnitelma) {
@@ -176,10 +178,12 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                             ? suunnitelma.aiemminHankitutTutkinnonOsat
                             : []
                         }
+                        fetchShareLinks={fetchShareLinks}
                       />
                       <Opiskelusuunnitelma
                         path="opiskelusuunnitelmani"
                         plan={suunnitelma}
+                        fetchShareLinks={fetchShareLinks}
                       />
                     </Router>
                   </PaddedContent>

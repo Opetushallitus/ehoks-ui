@@ -21,6 +21,8 @@ const Container = styled("div")`
 
 const Main = styled("main")``
 
+const ModalContainer = styled("div")``
+
 const MainApp = (_: { path: string }) => {
   return (
     <Container>
@@ -37,6 +39,7 @@ const MainApp = (_: { path: string }) => {
       </Main>
       <AppFooter />
       <GlobalStyles />
+      <ModalContainer id="modal-root" />
     </Container>
   )
 }

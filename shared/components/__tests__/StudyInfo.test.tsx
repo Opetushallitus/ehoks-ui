@@ -2,6 +2,10 @@ import React from "react"
 import { render, fireEvent } from "react-testing-library"
 import { StudyInfo } from "../StudyInfo"
 import { renderWithContext } from "testUtils"
+import { FetchShareLinks } from "stores/ShareLinkStore"
+
+const fetchShareLinks: FetchShareLinks = (_koodiUri: string, _type: string) =>
+  Promise.resolve([])
 
 const osaamisvaatimukset = [
   {
@@ -20,19 +24,27 @@ const osaamisvaatimukset = [
 ]
 
 test("render without params", () => {
-  const { getByTestId } = render(<StudyInfo />)
+  const { getByTestId } = render(
+    <StudyInfo fetchShareLinks={fetchShareLinks} />
+  )
   expect(getByTestId("Title")).toBeEmpty()
   expect(getByTestId("StudyInfo.Competences")).toBeEmpty()
 })
 
 test("render title", () => {
-  const { getByTestId } = render(<StudyInfo title="Test" />)
+  const { getByTestId } = render(
+    <StudyInfo title="Test" fetchShareLinks={fetchShareLinks} />
+  )
   expect(getByTestId("Title").textContent).toBe("Test")
 })
 
 test("render competence requirements", () => {
   const { getByTestId, queryByTestId } = renderWithContext(
-    <StudyInfo title="Test" competenceRequirements={osaamisvaatimukset} />
+    <StudyInfo
+      title="Test"
+      competenceRequirements={osaamisvaatimukset}
+      fetchShareLinks={fetchShareLinks}
+    />
   )
 
   const expandCompetences = getByTestId(
@@ -87,6 +99,7 @@ test("render demonstrations", () => {
           tyyppi: "DEMONSTRATION"
         }
       ]}
+      fetchShareLinks={fetchShareLinks}
     />
   )
   expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
@@ -128,6 +141,7 @@ test("render demonstrations", () => {
           tyyppi: "DEMONSTRATION"
         }
       ]}
+      fetchShareLinks={fetchShareLinks}
     />
   )
 
@@ -158,6 +172,7 @@ test("render learning periods", () => {
           tyyppi: "OTHER"
         }
       ]}
+      fetchShareLinks={fetchShareLinks}
     />
   )
   expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
@@ -187,6 +202,7 @@ test("render learning periods", () => {
           tyyppi: "OTHER"
         }
       ]}
+      fetchShareLinks={fetchShareLinks}
     />
   )
 
@@ -206,6 +222,7 @@ test("render verification processes", () => {
       verificationProcess={{
         koodiUri: "osaamisentodentamisenprosessi_0001"
       }}
+      fetchShareLinks={fetchShareLinks}
     />
   )
 
@@ -219,6 +236,7 @@ test("render verification processes", () => {
         koodiUri: "osaamisentodentamisenprosessi_0002",
         lahetettyArvioitavaksi: "2019-04-15"
       }}
+      fetchShareLinks={fetchShareLinks}
     />
   )
 
@@ -249,6 +267,7 @@ test("render verification processes", () => {
       verificationProcess={{
         koodiUri: "osaamisentodentamisenprosessi_0003"
       }}
+      fetchShareLinks={fetchShareLinks}
     />
   )
 

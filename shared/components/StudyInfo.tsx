@@ -14,6 +14,7 @@ import { HeroButton } from "components/Button"
 import { FormattedMessage } from "react-intl"
 import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
+import { FetchShareLinks } from "stores/ShareLinkStore"
 
 interface ContainerProps {
   accentColor?: string
@@ -94,6 +95,8 @@ export interface StudyInfoProps {
   extraContent?: React.ReactNode
   /** Color of additional info container */
   fadedColor?: string
+  /** Method that fetches shared links from backend */
+  fetchShareLinks: FetchShareLinks
   /**
    * KoodiURI for this study
    */
@@ -200,6 +203,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       demonstrations = [],
       extraContent = null,
       fadedColor,
+      fetchShareLinks,
       learningPeriods = [],
       koodiUri,
       share,
@@ -241,6 +245,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
           {hasDetails && (
             <Details
               fadedColor={fadedColor}
+              fetchShareLinks={fetchShareLinks}
               demonstrations={demonstrations}
               extraContent={extraContent}
               expanded={detailsExpanded}
