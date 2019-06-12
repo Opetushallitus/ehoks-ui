@@ -9,10 +9,14 @@ export function getHarjoittelujaksot(
       keskeisetTyotehtavat: string[]
       vastuullinenOhjaaja: { nimi: string }
     }
-    muutOppimisymparisto: { oppimisymparisto: { nimi: string; selite: string } }
+    muutOppimisymparisto: Array<{
+      oppimisymparisto: { nimi: string }
+      selite: string
+    }>
   }>
 ) {
   return osaamisenHankkimistavat.map<Harjoittelujakso>(tapa => {
+    const tyyppi = tapa.muutOppimisymparisto.length > 0 ? "OTHER" : "WORKPLACE"
     return {
       alku: tapa.alku,
       loppu: tapa.loppu,
@@ -23,14 +27,15 @@ export function getHarjoittelujaksot(
         ? tapa.tyopaikallaHankittavaOsaaminen.keskeisetTyotehtavat
         : [],
       nimi:
-        tapa.muutOppimisymparisto && tapa.muutOppimisymparisto.oppimisymparisto
-          ? tapa.muutOppimisymparisto.oppimisymparisto.nimi
+        tapa.muutOppimisymparisto.length > 0 &&
+        tapa.muutOppimisymparisto[0].oppimisymparisto
+          ? tapa.muutOppimisymparisto[0].oppimisymparisto.nimi
           : "",
       selite:
-        tapa.muutOppimisymparisto && tapa.muutOppimisymparisto.oppimisymparisto
-          ? tapa.muutOppimisymparisto.oppimisymparisto.selite
+        tapa.muutOppimisymparisto.length > 0
+          ? tapa.muutOppimisymparisto[0].selite
           : tapa.tyopaikallaHankittavaOsaaminen.tyopaikanNimi,
-      tyyppi: tapa.muutOppimisymparisto ? "WORKPLACE" : "OTHER"
+      tyyppi
     }
   })
 }
