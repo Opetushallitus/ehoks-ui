@@ -45,6 +45,15 @@ export function fetchUtils(fetchImplementation: GlobalFetch["fetch"]) {
       return model
     },
 
+    fetch: async (url: string, init?: RequestInit) => {
+      const response = await fetchImplementation(url, init)
+      if (!response.ok) {
+        throw new Error(response.statusText)
+      }
+      const json = await response.json()
+      return json
+    },
+
     deleteResource: async (url: string, init?: RequestInit) => {
       const response = await fetchImplementation(url, {
         ...init,
