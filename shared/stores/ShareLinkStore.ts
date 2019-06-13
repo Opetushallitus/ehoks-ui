@@ -10,11 +10,6 @@ export const ShareLink = types.model("ShareLink", {
 
 export interface IShareLink extends Instance<typeof ShareLink> {}
 
-export type FetchShareLinks = (
-  koodiUri: string,
-  type: string
-) => Promise<Array<IShareLink>>
-
 export const ShareLinkStore = types
   .model("ShareLinkStore", {})
   .actions(_self => {

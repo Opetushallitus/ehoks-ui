@@ -76,7 +76,6 @@ export class Suunnittelu extends React.Component<
           path=":id/*"
           student={store.session.user}
           suunnitelmat={store.hoks.suunnitelmat}
-          fetchShareLinks={store.shareLinks.fetchLinks}
         />
       </Router>
     )

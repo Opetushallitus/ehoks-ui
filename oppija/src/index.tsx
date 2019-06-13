@@ -1,3 +1,4 @@
+import { APIConfigContext } from "components/APIConfigContext"
 import { apiPrefix, apiUrl } from "config"
 import { createEnvironment } from "createEnvironment"
 import { fetch } from "fetchUtils"
@@ -20,12 +21,16 @@ store.environment.getEnvironment()
 store.translations.fetchLocales()
 store.notifications.fetchNotifications()
 
+const apiConfig = { apiUrl, apiPrefix }
+
 // initial render to app container
 const appContainer = document.getElementById("app")
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <APIConfigContext.Provider value={apiConfig}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </APIConfigContext.Provider>,
   appContainer
 )
 
@@ -34,9 +39,11 @@ if (module.hot) {
   module.hot.accept("./routes/App", () => {
     const NextApp = require("./routes/App").App
     ReactDOM.render(
-      <Provider store={store}>
-        <NextApp />
-      </Provider>,
+      <APIConfigContext.Provider value={apiConfig}>
+        <Provider store={store}>
+          <NextApp />
+        </Provider>
+      </APIConfigContext.Provider>,
       appContainer
     )
   })

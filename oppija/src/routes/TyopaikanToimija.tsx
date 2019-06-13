@@ -48,7 +48,6 @@ export class TyopaikanToimija extends React.Component<TyopaikanToimijaProps> {
 
   render() {
     const { oppijat } = this.props.store!.tyopaikanToimija
-    const { fetchLinks } = this.props.store!.shareLinks
     const { intl } = this.context
     const competencePointsTitle = intl.formatMessage({
       id: "opiskelusuunnitelma.osaamispisteLyhenne"
@@ -94,7 +93,6 @@ export class TyopaikanToimija extends React.Component<TyopaikanToimijaProps> {
                             <StudyInfo
                               accentColor="#EB6F02"
                               fadedColor="#FDF1E6"
-                              fetchShareLinks={fetchLinks}
                               title={tutkinnonOsa.opintoOtsikko(
                                 competencePointsTitle
                               )}

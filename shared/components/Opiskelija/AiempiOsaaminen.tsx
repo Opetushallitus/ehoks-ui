@@ -9,7 +9,6 @@ import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import { TutkinnonOsa } from "models/helpers/TutkinnonOsa"
 import styled from "styled"
-import { FetchShareLinks } from "stores/ShareLinkStore"
 
 const Container = styled(StudiesContainer)`
   margin-top: 0;
@@ -19,7 +18,6 @@ export interface AiempiOsaaminenProps {
   children?: React.ReactChildren
   heading?: React.ReactNode
   studies: Array<TutkinnonOsa>
-  fetchShareLinks: FetchShareLinks
 }
 
 export interface AiempiOsaaminenState {
@@ -53,7 +51,6 @@ export class AiempiOsaaminen extends React.Component<
 
   render() {
     const {
-      fetchShareLinks,
       studies,
       heading = (
         <FormattedMessage
@@ -90,7 +87,6 @@ export class AiempiOsaaminen extends React.Component<
                   <StudyInfo
                     accentColor="#43A047"
                     fadedColor="#ECF6ED"
-                    fetchShareLinks={fetchShareLinks}
                     title={study.opintoOtsikko(competencePointsTitle)}
                     learningPeriods={study.harjoittelujaksot}
                     competenceRequirements={study.osaamisvaatimukset}

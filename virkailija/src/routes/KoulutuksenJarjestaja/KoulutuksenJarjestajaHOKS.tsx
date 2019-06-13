@@ -23,7 +23,6 @@ import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import { IOppija } from "stores/KoulutuksenJarjestajaStore"
-import { IShareLink } from "stores/ShareLinkStore"
 import styled from "styled"
 
 const NaviContainer = styled(ProgressPies)`
@@ -77,12 +76,6 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
   // TODO: redirect to root after logout, check implementation in src/routes/OmienOpintojenSuunnittelu.tsx
   setActiveTab = (route: string) => () => {
     navigate(route)
-  }
-
-  // TODO: to be implemented
-  fetchShareLinks = (koodiUri: string, type: string) => {
-    console.log("fetching", koodiUri, type)
-    return Promise.resolve([]) as Promise<IShareLink[]>
   }
 
   render() {
@@ -231,12 +224,10 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                       defaultMessage="Aiempi osaaminen"
                     />
                   }
-                  fetchShareLinks={this.fetchShareLinks}
                 />
                 <Opiskelusuunnitelma
                   path="opiskelusuunnitelma"
                   plan={suunnitelma}
-                  fetchShareLinks={this.fetchShareLinks}
                   elements={{
                     heading: (
                       <FormattedMessage

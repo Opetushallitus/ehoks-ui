@@ -19,7 +19,6 @@ import { HelpPopup } from "components/HelpPopup"
 import find from "lodash.find"
 import { ShareType } from "stores/NotificationStore"
 import { parseShareParams } from "utils/shareParams"
-import { FetchShareLinks } from "stores/ShareLinkStore"
 const { colors } = theme
 
 const ProgressTitle = styled("h2")`
@@ -39,7 +38,6 @@ const HelpButton = styled(HelpPopup)`
 export type OpiskelusuunnitelmaProps = {
   children?: React.ReactChildren
   plan: Instance<typeof HOKS>
-  fetchShareLinks: FetchShareLinks
   elements?: {
     heading?: React.ReactNode
     goals?: React.ReactNode
@@ -219,7 +217,7 @@ export class Opiskelusuunnitelma extends React.Component<
   render() {
     const { intl } = this.context
     const { activeAccordions, share } = this.state
-    const { plan, fetchShareLinks, elements: customElements = {} } = this.props
+    const { plan, elements: customElements = {} } = this.props
     const { suunnitellutOpinnot, aikataulutetutOpinnot, valmiitOpinnot } = plan
     const competencePointsTitle = intl.formatMessage({
       id: "opiskelusuunnitelma.osaamispisteLyhenne"
@@ -443,7 +441,6 @@ export class Opiskelusuunnitelma extends React.Component<
                         study.olennainenSeikka ? elements.essentialFactor : null
                       }
                       fadedColor="#FDF1E6"
-                      fetchShareLinks={fetchShareLinks}
                       koodiUri={study.tutkinnonOsaKoodiUri}
                       learningPeriods={study.harjoittelujaksot}
                       share={share}
@@ -497,7 +494,6 @@ export class Opiskelusuunnitelma extends React.Component<
                         study.olennainenSeikka ? elements.essentialFactor : null
                       }
                       fadedColor="#FDF6E9"
-                      fetchShareLinks={fetchShareLinks}
                       koodiUri={study.tutkinnonOsaKoodiUri}
                       learningPeriods={study.harjoittelujaksot}
                       share={share}
@@ -550,7 +546,6 @@ export class Opiskelusuunnitelma extends React.Component<
                         study.olennainenSeikka ? elements.essentialFactor : null
                       }
                       fadedColor="#ECF6ED"
-                      fetchShareLinks={fetchShareLinks}
                       koodiUri={study.tutkinnonOsaKoodiUri}
                       learningPeriods={study.harjoittelujaksot}
                       share={share}

@@ -1,12 +1,12 @@
-import React from "react"
+import React, { useState, useRef, useEffect, useContext } from "react"
 import { navigate } from "@reach/router"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
 import { ShareType } from "stores/NotificationStore"
 import { HeroButton } from "components/Button"
 import { ModalWithBackground } from "components/Modal"
-import { observer } from "mobx-react"
-import { IShareLink } from "stores/ShareLinkStore"
+import { fetchLinks, ShareLink } from "components/ShareDialog/fetchLinks"
+import { APIConfigContext } from "components/APIConfigContext"
 
 interface ColorProps {
   background: string
@@ -78,126 +78,130 @@ const Button = styled(HeroButton)`
 interface ShareDialogProps {
   active: boolean
   background: string
+  children: any // TODO: fix
   koodiUri: string
   type: ShareType
-  fetchLinks: (koodiUri: string, type: string) => Promise<Array<IShareLink>>
 }
 
-interface ShareDialogState {
-  sharedLinks: Array<IShareLink>
-}
+export function ShareDialog(props: ShareDialogProps) {
+  const { active, background, children, koodiUri, type } = props
+  const ref = useRef<HTMLDivElement>(null)
+  const [sharedLinks, setSharedLinks] = useState<Array<ShareLink>>([])
+  const apiConfig = useContext(APIConfigContext)
 
-@observer
-export class ShareDialog extends React.Component<
-  ShareDialogProps,
-  ShareDialogState
-> {
-  ref = React.createRef<HTMLDivElement>()
-  state: ShareDialogState = {
-    sharedLinks: []
-  }
-
-  async componentDidMount() {
-    const { fetchLinks, koodiUri, type } = this.props
+  useEffect(() => {
     window.requestAnimationFrame(() => {
-      if (this.ref && this.ref.current) {
+      if (ref && ref.current) {
         // ensures that share dialog is visible
-        this.ref.current.scrollIntoView({ block: "end", behavior: "smooth" })
+        ref.current.scrollIntoView({ block: "end", behavior: "smooth" })
       }
     })
-    const links = await fetchLinks(koodiUri, type)
-    this.setState(state => ({ ...state, sharedLinks: links }))
-  }
 
-  close = () => {
+    const fetchData = async () => {
+      const links = await fetchLinks(koodiUri, type, apiConfig)
+      setSharedLinks(links)
+    }
+    fetchData()
+  }, [])
+
+  const close = () => {
     // as query params are the master data for sharing,
     // closing the dialog is achieved by clearing them
     navigate(window.location.pathname)
   }
 
-  render() {
-    const { active, background, children, type } = this.props
-    const { sharedLinks } = this.state
-
-    return (
-      <React.Fragment>
-        {active ? (
-          <ShareContainer ref={this.ref}>
-            <ModalWithBackground />
-            <ShareHeaderContainer>
-              <ShareHeader>
-                <ShareTitle>
-                  {type === "naytto" ? (
-                    <FormattedMessage
-                      id="jakaminen.naytonTietojenJakaminenTitle "
-                      defaultMessage="Näytön tietojen jakaminen"
-                    />
-                  ) : (
-                    <FormattedMessage
-                      id="jakaminen.tutkinnonosanTietojenJakaminenTitle "
-                      defaultMessage="Tutkinnonosan tietojen jakaminen"
-                    />
-                  )}
-                </ShareTitle>
-
-                <ShareDescription>
-                  {type === "naytto" ? (
-                    <FormattedMessage
-                      id="jakaminen.naytonJakoDescription"
-                      defaultMessage="Olet jakamassa näitä näytön tietoja"
-                    />
-                  ) : (
-                    <FormattedMessage
-                      id="jakaminen.tutkinnonosanJakoDescription"
-                      defaultMessage="Olet jakamassa näitä tutkinnonosan tietoja"
-                    />
-                  )}
-                </ShareDescription>
-              </ShareHeader>
-              <div>
-                <Button onClick={this.close} secondary={true}>
-                  <FormattedMessage
-                    id="jakaminen.suljeButtonTitle"
-                    defaultMessage="Sulje"
-                  />
-                </Button>
-              </div>
-            </ShareHeaderContainer>
-            <ChildContainer background={background}>{children}</ChildContainer>
-            <ShareDescription>
-              {type === "naytto" ? (
-                <FormattedMessage
-                  id="jakaminen.aiemmatNaytonJaotDescription"
-                  defaultMessage="Aiemmin tekemäsi näytön jakolinkit"
-                />
-              ) : (
-                <FormattedMessage
-                  id="jakaminen.aiemmatTutkinnonosanJaotDescription"
-                  defaultMessage="Aiemmin tekemäsi tutkinnonosan jakolinkit"
-                />
-              )}
-            </ShareDescription>
-            <SharedLinks>
-              {sharedLinks.map((link, i) => {
-                return (
-                  <SharedLink key={i}>
-                    <LinkItem>
-                      Linkki luotu {link.createdAt}, voimassa {link.validFrom} -{" "}
-                      {link.validTo}
-                    </LinkItem>
-                    <LinkItem>{link.url}</LinkItem>
-                    <LinkAnchor>
-                      <a href="">Poista linkki</a>
-                    </LinkAnchor>
-                  </SharedLink>
-                )
-              })}
-            </SharedLinks>
-          </ShareContainer>
-        ) : (
-          children
-        )}
-      </React.Fragment>
-    )
+  // TODO: to be implemented
+  const remove = (event: React.MouseEvent, id: number) => {
+    event.preventDefault()
+    console.log("clicked remove for", id)
+    confirm("Haluatko varmasti poistaa valitun jakolinkin?")
   }
+
+  return (
+    <React.Fragment>
+      {active ? (
+        <ShareContainer ref={ref}>
+          <ModalWithBackground />
+          <ShareHeaderContainer>
+            <ShareHeader>
+              <ShareTitle>
+                {type === "naytto" ? (
+                  <FormattedMessage
+                    id="jakaminen.naytonTietojenJakaminenTitle "
+                    defaultMessage="Näytön tietojen jakaminen"
+                  />
+                ) : (
+                  <FormattedMessage
+                    id="jakaminen.tutkinnonosanTietojenJakaminenTitle "
+                    defaultMessage="Tutkinnonosan tietojen jakaminen"
+                  />
+                )}
+              </ShareTitle>
+
+              <ShareDescription>
+                {type === "naytto" ? (
+                  <FormattedMessage
+                    id="jakaminen.naytonJakoDescription"
+                    defaultMessage="Olet jakamassa näitä näytön tietoja"
+                  />
+                ) : (
+                  <FormattedMessage
+                    id="jakaminen.tutkinnonosanJakoDescription"
+                    defaultMessage="Olet jakamassa näitä tutkinnonosan tietoja"
+                  />
+                )}
+              </ShareDescription>
+            </ShareHeader>
+            <div>
+              <Button onClick={close} secondary={true}>
+                <FormattedMessage
+                  id="jakaminen.suljeButtonTitle"
+                  defaultMessage="Sulje"
+                />
+              </Button>
+            </div>
+          </ShareHeaderContainer>
+          <ChildContainer background={background}>{children}</ChildContainer>
+          <ShareDescription>
+            {type === "naytto" ? (
+              <FormattedMessage
+                id="jakaminen.aiemmatNaytonJaotDescription"
+                defaultMessage="Aiemmin tekemäsi näytön jakolinkit"
+              />
+            ) : (
+              <FormattedMessage
+                id="jakaminen.aiemmatTutkinnonosanJaotDescription"
+                defaultMessage="Aiemmin tekemäsi tutkinnonosan jakolinkit"
+              />
+            )}
+          </ShareDescription>
+          <SharedLinks>
+            {sharedLinks.map((link, i) => {
+              return (
+                <SharedLink key={i}>
+                  <LinkItem>
+                    Linkki luotu {link.createdAt}, voimassa {link.validFrom} -{" "}
+                    {link.validTo}
+                  </LinkItem>
+                  <LinkItem>{link.url}</LinkItem>
+                  <LinkAnchor>
+                    <a
+                      href=""
+                      onClick={(event: React.MouseEvent) =>
+                        remove(event, link.id)
+                      }
+                    >
+                      Poista linkki
+                    </a>
+                  </LinkAnchor>
+                </SharedLink>
+              )
+            })}
+          </SharedLinks>
+        </ShareContainer>
+      ) : (
+        children
+      )}
+    </React.Fragment>
+  )
 }

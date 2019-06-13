@@ -41,7 +41,7 @@
     "react-docgen-typescript": "1.12.3",
     "react-styleguidist": "^8.0.6",
     "react-test-renderer": "^16.8.1",
-    "react-testing-library": "^6.0.0",
+    "react-testing-library": "^6.1.1",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
     "ts-jest": "^24.0.0",
