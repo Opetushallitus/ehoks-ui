@@ -1,16 +1,16 @@
 export function getSijainnit(
-  hankitunOsaamisenNaytto: Array<{
+  osaamisenOsoittaminen: Array<{
     nayttoymparisto: { nimi: string }
   }>,
   osaamisenHankkimistavat: Array<{
-    tyopaikallaHankittavaOsaaminen: { tyopaikanNimi: string }
+    tyopaikallaJarjestettavaKoulutus: { tyopaikanNimi: string }
   }>
 ) {
   return [
-    ...hankitunOsaamisenNaytto.map(naytto => naytto.nayttoymparisto.nimi),
+    ...osaamisenOsoittaminen.map(naytto => naytto.nayttoymparisto.nimi),
     ...osaamisenHankkimistavat.map(
       hankkimistapa =>
-        hankkimistapa.tyopaikallaHankittavaOsaaminen.tyopaikanNimi
+        hankkimistapa.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi
     )
   ]
 }

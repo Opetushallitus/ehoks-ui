@@ -1,16 +1,17 @@
 import { types } from "mobx-state-tree"
-import { HankitunOsaamisenNaytto } from "./HankitunOsaamisenNaytto"
+import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 
-export const OlemassaOlevanYTOOsaAlue = types.model(
-  "OlemassaOlevanYTOOsaAlue",
+export const AiemminHankitunYTOOsaAlue = types.model(
+  "AiemminHankitunYTOOsaAlue",
   {
     id: types.optional(types.number, 0),
+    olennainenSeikka: types.optional(types.boolean, false),
     osaAlueKoodiUri: types.optional(types.string, ""),
     koulutuksenJarjestajaOid: types.optional(types.string, ""),
     vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
     valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
-    tarkentavatTiedotNaytto: types.array(HankitunOsaamisenNaytto),
+    tarkentavatTiedotNaytto: types.array(OsaamisenOsoittaminen),
     tarkentavatTiedotArvioija: types.optional(TodennettuArviointiLisatiedot, {})
   }
 )

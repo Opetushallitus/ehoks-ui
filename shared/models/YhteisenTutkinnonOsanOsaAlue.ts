@@ -1,20 +1,21 @@
 import { types } from "mobx-state-tree"
 import { OsaamisenHankkimistapa } from "./OsaamisenHankkimistapa"
-import { HankitunYTOOsaamisenNaytto } from "./HankitunYTOOsaamisenNaytto"
+import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { TutkinnonOsaViews } from "./helpers/TutkinnonOsaViews"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 
-const Model = types.model("OppijaYhteisenTutkinnonOsanOsaAlue", {
+const Model = types.model("YhteisenTutkinnonOsanOsaAlue", {
   id: types.optional(types.number, 0),
   osaAlueKoodiUri: types.optional(types.string, ""),
   osaAlue: types.optional(KoodistoVastaus, {}),
   osaamisenHankkimistavat: types.array(OsaamisenHankkimistapa),
   vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
-  hankitunOsaamisenNaytto: types.array(HankitunYTOOsaamisenNaytto)
+  osaamisenOsoittaminen: types.array(OsaamisenOsoittaminen),
+  olennainenSeikka: types.optional(types.boolean, false)
 })
 
-export const OppijaYhteisenTutkinnonOsanOsaAlue = types
+export const YhteisenTutkinnonOsanOsaAlue = types
   .compose(
     EnrichKoodiUri,
     Model,

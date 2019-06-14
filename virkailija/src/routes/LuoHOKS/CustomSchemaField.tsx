@@ -15,12 +15,12 @@ const ArrayContainer = styled("div")`
 `
 
 const disableAccordion = [
-  "#/definitions/OlemassaOlevaAmmatillinenTutkinnonOsa",
-  "#/definitions/OlemassaOlevaPaikallinenTutkinnonOsa",
-  "#/definitions/OlemassaOlevaYhteinenTutkinnonOsa",
-  "#/definitions/PuuttuvaAmmatillinenOsaaminen",
-  "#/definitions/PuuttuvaPaikallinenTutkinnonOsa",
-  "#/definitions/PuuttuvaYTO",
+  "#/definitions/AiemminHankittuAmmatillinenTutkinnonOsa",
+  "#/definitions/AiemminHankittuPaikallinenTutkinnonOsa",
+  "#/definitions/AiemminHankittuYhteinenTutkinnonOsa",
+  "#/definitions/HankittavaAmmatillinenTutkinnonOsa",
+  "#/definitions/HankittavaPaikallinenTutkinnonOsa",
+  "#/definitions/HankittavaYTO",
   "#/definitions/OpiskeluvalmiuksiaTukevatOpinnot"
 ]
 
