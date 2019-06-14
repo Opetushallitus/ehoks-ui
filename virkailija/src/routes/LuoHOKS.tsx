@@ -230,18 +230,19 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
   }
 
   create = async (fieldProps: IChangeEvent<FieldProps>) => {
-    // TODO: authenticate user
     this.setState({ isLoading: true })
     const request = await window.fetch(
-      "/ehoks-virkailija-backend/api/v1/hoks",
+      `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${
+        fieldProps.formData["oppija-oid"]
+      }/hoksit`,
       {
         method: "POST",
         credentials: "include",
         headers: {
           Accept: "application/json; charset=utf-8",
-          "Caller-Id": "ehoks", // TODO: replace for real authentication
-          "Content-Type": "application/json",
-          ticket: "ST-6777-aBcDeFgHiJkLmN123456-cas.1234567890ac" // TODO: replace for real authentication
+          // "Caller-Id": ""
+          "Content-Type": "application/json"
+          // ticket: """
         },
         body: JSON.stringify(fieldProps.formData)
       }
