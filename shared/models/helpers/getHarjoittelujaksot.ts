@@ -4,37 +4,38 @@ export function getHarjoittelujaksot(
   osaamisenHankkimistavat: Array<{
     alku: string
     loppu: string
-    tyopaikallaHankittavaOsaaminen: {
+    tyopaikallaJarjestettavaKoulutus: {
       tyopaikanNimi: string
       keskeisetTyotehtavat: string[]
-      vastuullinenOhjaaja: { nimi: string }
+      vastuullinenTyopaikkaOhjaaja: { nimi: string }
     }
-    muutOppimisymparisto: Array<{
+    muutOppimisymparistot: Array<{
       oppimisymparisto: { nimi: string }
       selite: string
     }>
   }>
 ) {
   return osaamisenHankkimistavat.map<Harjoittelujakso>(tapa => {
-    const tyyppi = tapa.muutOppimisymparisto.length > 0 ? "OTHER" : "WORKPLACE"
+    const tyyppi = tapa.muutOppimisymparistot.length > 0 ? "OTHER" : "WORKPLACE"
     return {
       alku: tapa.alku,
       loppu: tapa.loppu,
-      ohjaaja: tapa.tyopaikallaHankittavaOsaaminen
-        ? tapa.tyopaikallaHankittavaOsaaminen.vastuullinenOhjaaja.nimi
+      ohjaaja: tapa.tyopaikallaJarjestettavaKoulutus
+        ? tapa.tyopaikallaJarjestettavaKoulutus.vastuullinenTyopaikkaOhjaaja
+            .nimi
         : "",
-      tyotehtavat: tapa.tyopaikallaHankittavaOsaaminen
-        ? tapa.tyopaikallaHankittavaOsaaminen.keskeisetTyotehtavat
+      tyotehtavat: tapa.tyopaikallaJarjestettavaKoulutus
+        ? tapa.tyopaikallaJarjestettavaKoulutus.keskeisetTyotehtavat
         : [],
       nimi:
-        tapa.muutOppimisymparisto.length > 0 &&
-        tapa.muutOppimisymparisto[0].oppimisymparisto
-          ? tapa.muutOppimisymparisto[0].oppimisymparisto.nimi
+        tapa.muutOppimisymparistot.length > 0 &&
+        tapa.muutOppimisymparistot[0].oppimisymparisto
+          ? tapa.muutOppimisymparistot[0].oppimisymparisto.nimi
           : "",
       selite:
-        tapa.muutOppimisymparisto.length > 0
-          ? tapa.muutOppimisymparisto[0].selite
-          : tapa.tyopaikallaHankittavaOsaaminen.tyopaikanNimi,
+        tapa.muutOppimisymparistot.length > 0
+          ? tapa.muutOppimisymparistot[0].selite
+          : tapa.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi,
       tyyppi
     }
   })

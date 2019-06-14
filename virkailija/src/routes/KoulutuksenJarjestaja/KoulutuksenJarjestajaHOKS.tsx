@@ -240,7 +240,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                 <AiempiOsaaminen
                   path="osaaminen"
                   studies={
-                    suunnitelma ? suunnitelma.olemassaOlevatTutkinnonOsat : []
+                    suunnitelma ? suunnitelma.aiemminHankitutTutkinnonOsat : []
                   }
                   heading={
                     <FormattedMessage

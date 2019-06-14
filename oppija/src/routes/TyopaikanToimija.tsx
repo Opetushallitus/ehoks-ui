@@ -86,7 +86,7 @@ export class TyopaikanToimija extends React.Component<TyopaikanToimijaProps> {
                     inline={true}
                     childContainer={false}
                   >
-                    {oppija.hoks.puuttuvatTutkinnonOsat.map(
+                    {oppija.hoks.hankittavatTutkinnonOsat.map(
                       (tutkinnonOsa: TutkinnonOsa, toi: number) => {
                         return (
                           <ContentContainer key={toi}>

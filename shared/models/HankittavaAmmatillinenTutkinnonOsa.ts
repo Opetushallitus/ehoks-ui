@@ -1,5 +1,5 @@
 import { types, getRoot } from "mobx-state-tree"
-import { HankitunOsaamisenNaytto } from "./HankitunOsaamisenNaytto"
+import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { OsaamisenHankkimistapa } from "./OsaamisenHankkimistapa"
 import { TutkinnonOsaViews } from "./helpers/TutkinnonOsaViews"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
@@ -14,14 +14,15 @@ const Model = types.model({
   tutkinnonOsa: types.optional(EPerusteetVastaus, {}),
   tutkinnonOsaViitteet: types.array(TutkinnonOsaViite),
   vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
-  hankitunOsaamisenNaytto: types.array(HankitunOsaamisenNaytto),
+  osaamisenOsoittaminen: types.array(OsaamisenOsoittaminen),
   osaamisenHankkimistavat: types.array(OsaamisenHankkimistapa),
-  koulutuksenJarjestajaOid: types.optional(types.string, "")
+  koulutuksenJarjestajaOid: types.optional(types.string, ""),
+  olennainenSeikka: types.optional(types.boolean, false)
 })
 
-export const PuuttuvaAmmatillinenTutkinnonOsa = types
+export const HankittavaAmmatillinenTutkinnonOsa = types
   .compose(
-    "PuuttuvaAmmatillinenTutkinnonOsa",
+    "HankittavaAmmatillinenTutkinnonOsa",
     EnrichKoodiUri,
     EnrichTutkinnonOsa("tutkinnonOsaViitteet"),
     Model,

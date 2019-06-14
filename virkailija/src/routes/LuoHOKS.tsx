@@ -296,12 +296,12 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
             disabled={this.state.isLoading}
           >
             <Step>Perustiedot</Step>
-            <Step>Olemassa olevat ammatilliset tutkinnon osat</Step>
-            <Step>Olemassa olevat paikalliset tutkinnon osat</Step>
-            <Step>Olemassa olevat yhteiset tutkinnon osat</Step>
-            <Step>Puuttuvat ammatilliset tutkinnon osat</Step>
-            <Step>Puuttuvat paikalliset tutkinnon osat</Step>
-            <Step>Puuttuvat yhteiset tutkinnon osat</Step>
+            <Step>Aiemmin hankitut ammatilliset tutkinnon osat</Step>
+            <Step>Aiemmin hankitut paikalliset tutkinnon osat</Step>
+            <Step>Aiemmin hankitut yhteiset tutkinnon osat</Step>
+            <Step>Hankittavat ammatilliset tutkinnon osat</Step>
+            <Step>Hankittavat paikalliset tutkinnon osat</Step>
+            <Step>Hankittavat yhteiset tutkinnon osat</Step>
             <Step>Opiskeluvalmiuksia tukevat opinnot</Step>
           </Stepper>
         </TopToolbar>

@@ -1,14 +1,13 @@
 import { types, Instance, getEnv, flow, getRoot } from "mobx-state-tree"
-import { Henkilo } from "models/Henkilo"
-import { OlemassaOlevaAmmatillinenTutkinnonOsa } from "models/OlemassaOlevaAmmatillinenTutkinnonOsa"
-import { OlemassaOlevaPaikallinenTutkinnonOsa } from "models/OlemassaOlevaPaikallinenTutkinnonOsa"
-import { OlemassaOlevaYhteinenTutkinnonOsa } from "models/OlemassaOlevaYhteinenTutkinnonOsa"
-import { PuuttuvaAmmatillinenTutkinnonOsa } from "models/PuuttuvaAmmatillinenTutkinnonOsa"
-import { PuuttuvaPaikallinenTutkinnonOsa } from "models/PuuttuvaPaikallinenTutkinnonOsa"
-import { PuuttuvaYhteinenTutkinnonOsa } from "models/PuuttuvaYhteinenTutkinnonOsa"
+import { AiemminHankittuAmmatillinenTutkinnonOsa } from "models/AiemminHankittuAmmatillinenTutkinnonOsa"
+import { AiemminHankittuPaikallinenTutkinnonOsa } from "models/AiemminHankittuPaikallinenTutkinnonOsa"
+import { AiemminHankittuYhteinenTutkinnonOsa } from "models/AiemminHankittuYhteinenTutkinnonOsa"
+import { HankittavaAmmatillinenTutkinnonOsa } from "models/HankittavaAmmatillinenTutkinnonOsa"
+import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenTutkinnonOsa"
+import { HankittavaYhteinenTutkinnonOsa } from "models/HankittavaYhteinenTutkinnonOsa"
 import { TutkinnonOsa } from "./helpers/TutkinnonOsa"
 import flattenDeep from "lodash.flattendeep"
-import { OppijaYhteisenTutkinnonOsanOsaAlue } from "models/OppijaYhteisenTutkinnonOsanOsaAlue"
+import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { StoreEnvironment } from "types/StoreEnvironment"
@@ -19,31 +18,29 @@ import find from "lodash.find"
 const Model = types.model("HOKSModel", {
   eid: types.optional(types.string, ""),
   ensikertainenHyvaksyminen: types.optional(types.string, ""),
-  hyvaksyja: types.optional(Henkilo, {}),
   hyvaksytty: types.optional(types.string, ""),
-  laatija: types.optional(Henkilo, {}),
   luotu: types.optional(types.string, ""),
-  olemassaOlevatAmmatillisetTutkinnonOsat: types.array(
-    OlemassaOlevaAmmatillinenTutkinnonOsa
+  aiemminHankitutAmmatTutkinnonOsat: types.array(
+    AiemminHankittuAmmatillinenTutkinnonOsa
   ),
-  olemassaOlevatPaikallisetTutkinnonOsat: types.array(
-    OlemassaOlevaPaikallinenTutkinnonOsa
+  aiemminHankitutPaikallisetTutkinnonOsat: types.array(
+    AiemminHankittuPaikallinenTutkinnonOsa
   ),
-  olemassaOlevatYhteisetTutkinnonOsat: types.array(
-    OlemassaOlevaYhteinenTutkinnonOsa
+  aiemminHankitutYhteisetTutkinnonOsat: types.array(
+    AiemminHankittuYhteinenTutkinnonOsa
   ),
   opiskeluoikeusOid: types.optional(types.string, ""),
   opiskeluOikeus: types.optional(Opiskeluoikeus, {}),
   oppijaOid: types.optional(types.string, ""),
+  osaamisenHankkimisenTarve: types.optional(types.boolean, false),
   paivitetty: types.optional(types.string, ""),
-  paivittaja: types.optional(Henkilo, {}),
-  puuttuvatAmmatillisetTutkinnonOsat: types.array(
-    PuuttuvaAmmatillinenTutkinnonOsa
+  hankittavatAmmatTutkinnonOsat: types.array(
+    HankittavaAmmatillinenTutkinnonOsa
   ),
-  puuttuvatPaikallisetTutkinnonOsat: types.array(
-    PuuttuvaPaikallinenTutkinnonOsa
+  hankittavatPaikallisetTutkinnonOsat: types.array(
+    HankittavaPaikallinenTutkinnonOsa
   ),
-  puuttuvatYhteisetTutkinnonOsat: types.array(PuuttuvaYhteinenTutkinnonOsa),
+  hankittavatYhteisetTutkinnonOsat: types.array(HankittavaYhteinenTutkinnonOsa),
   urasuunnitelmaKoodiUri: types.optional(types.string, ""),
   urasuunnitelma: types.optional(KoodistoVastaus, {}),
   versio: types.optional(types.number, 0)
@@ -120,36 +117,36 @@ export const HOKS = types
   .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {
-      get puuttuvatTutkinnonOsat(): TutkinnonOsa[] {
+      get hankittavatTutkinnonOsat(): TutkinnonOsa[] {
         const osaAlueet = flattenDeep<
-          Instance<typeof OppijaYhteisenTutkinnonOsanOsaAlue>
-        >(self.puuttuvatYhteisetTutkinnonOsat.map(to => to.osaAlueet))
+          Instance<typeof YhteisenTutkinnonOsanOsaAlue>
+        >(self.hankittavatYhteisetTutkinnonOsat.map((to: any) => to.osaAlueet))
         return [
-          ...self.puuttuvatAmmatillisetTutkinnonOsat,
-          ...self.puuttuvatPaikallisetTutkinnonOsat,
-          // treat osaAlue as tutkinnonOsa for puuttuvatYhteisetTutkinnonOsat
+          ...self.hankittavatAmmatTutkinnonOsat,
+          ...self.hankittavatPaikallisetTutkinnonOsat,
+          // treat osaAlue as tutkinnonOsa for hankittavatYhteisetTutkinnonOsat
           ...osaAlueet
         ]
       },
-      get olemassaOlevatTutkinnonOsat(): TutkinnonOsa[] {
+      get aiemminHankitutTutkinnonOsat(): TutkinnonOsa[] {
         return [
-          ...self.olemassaOlevatAmmatillisetTutkinnonOsat,
-          ...self.olemassaOlevatPaikallisetTutkinnonOsat,
-          ...self.olemassaOlevatYhteisetTutkinnonOsat
+          ...self.aiemminHankitutAmmatTutkinnonOsat,
+          ...self.aiemminHankitutPaikallisetTutkinnonOsat,
+          ...self.aiemminHankitutYhteisetTutkinnonOsat
         ]
       },
       get suunnitellutOpinnot() {
-        return this.puuttuvatTutkinnonOsat.filter(
+        return this.hankittavatTutkinnonOsat.filter(
           to => to.tila === "suunniteltu"
         )
       },
       get aikataulutetutOpinnot() {
-        return this.puuttuvatTutkinnonOsat.filter(
+        return this.hankittavatTutkinnonOsat.filter(
           to => to.tila === "aikataulutettu"
         )
       },
       get valmiitOpinnot() {
-        return this.puuttuvatTutkinnonOsat.filter(to => to.tila === "valmis")
+        return this.hankittavatTutkinnonOsat.filter(to => to.tila === "valmis")
       },
       get aloitusPvm() {
         return self.ensikertainenHyvaksyminen
