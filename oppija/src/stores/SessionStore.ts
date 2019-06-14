@@ -63,11 +63,16 @@ export const SessionStore = types
       }
     })
 
+    // remove this when LuoHOKS is removed from oppija bundle
+    const login = (url: string) => {
+      console.log("URL", url)
+    }
+
     const resetUserDidLogout = () => {
       self.userDidLogout = false
     }
 
-    return { checkSession, getUserInfo, logout, resetUserDidLogout }
+    return { checkSession, getUserInfo, login, logout, resetUserDidLogout }
   })
   .views(self => {
     return {

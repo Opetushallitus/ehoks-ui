@@ -27,8 +27,20 @@ export interface AppProps {
 @inject("store")
 @observer
 export class App extends React.Component<AppProps> {
-  componentDidMount() {
-    this.props.store!.environment.getEnvironment()
+  async componentDidMount() {
+    // automatically login user with CAS login
+    await this.props.store!.environment.getEnvironment()
+    try {
+      await this.props.store!.session.checkSession()
+    } finally {
+      if (!this.props.store!.session.isLoggedIn) {
+        await this.props.store!.session.login(
+          this.props.store!.environment.virkailijaLoginUrl
+        )
+
+        this.props.store!.session.checkSession()
+      }
+    }
   }
 
   render() {
@@ -51,9 +63,6 @@ export class App extends React.Component<AppProps> {
         >
           <Container>
             <Header />
-            <a href={store!.environment.virkailijaLoginUrl} target="_blank">
-              dev login
-            </a>
             <StyledRouter basepath="/ehoks-ui">
               <Redirect
                 from="/"
