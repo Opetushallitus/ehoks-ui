@@ -231,13 +231,6 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     this.setState({ userEnteredText: true })
   }
 
-  indexOppija = () => {
-    this.setState({ isLoading: true })
-
-    console.log("RESPONSE STATUS", request.status)
-    this.setState({ isLoading: false })
-  }
-
   create = async (fieldProps: IChangeEvent<FieldProps>) => {
     this.setState({ isLoading: true })
 
