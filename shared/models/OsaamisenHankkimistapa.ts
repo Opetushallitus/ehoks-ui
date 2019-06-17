@@ -1,6 +1,6 @@
 import { types } from "mobx-state-tree"
 import { Oppilaitoshenkilo } from "./Oppilaitoshenkilo"
-import { TyopaikallaHankittavaOsaaminen } from "./TyopaikallaHankittavaOsaaminen"
+import { TyopaikallaJarjestettavaKoulutus } from "./TyopaikallaJarjestettavaKoulutus"
 import { MuuOppimisymparisto } from "./MuuOppimisymparisto"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
@@ -8,8 +8,8 @@ import { KoodistoVastaus } from "models/KoodistoVastaus"
 const Model = types.model("OsaamisenHankkimistapaModel", {
   id: types.optional(types.number, 0),
   hankkijanEdustaja: types.optional(Oppilaitoshenkilo, {}),
-  tyopaikallaHankittavaOsaaminen: types.optional(
-    TyopaikallaHankittavaOsaaminen,
+  tyopaikallaJarjestettavaKoulutus: types.optional(
+    TyopaikallaJarjestettavaKoulutus,
     {}
   ),
   osaamisenHankkimistapaKoodiUri: types.optional(types.string, ""),
@@ -17,7 +17,7 @@ const Model = types.model("OsaamisenHankkimistapaModel", {
   jarjestajanEdustaja: types.optional(Oppilaitoshenkilo, {}),
   ajanjaksonTarkenne: types.optional(types.string, ""),
   alku: types.optional(types.string, ""),
-  muutOppimisymparisto: types.array(MuuOppimisymparisto),
+  muutOppimisymparistot: types.array(MuuOppimisymparisto),
   loppu: types.optional(types.string, "")
 })
 

@@ -2,7 +2,7 @@ import { types } from "mobx-state-tree"
 import { NaytonJarjestaja } from "./NaytonJarjestaja"
 import { Nayttoymparisto } from "./Nayttoymparisto"
 import { KoulutuksenJarjestajaArvioija } from "./KoulutuksenJarjestajaArvioija"
-import { TyoelamaArvioija } from "./TyoelamaArvioija"
+import { TyoelamaOsaamisenArvioija } from "./TyoelamaOsaamisenArvioija"
 import { KoodistoKoodi } from "./KoodistoKoodi"
 
 export const HankitunPaikallisenOsaamisenNaytto = types.model(
@@ -15,7 +15,7 @@ export const HankitunPaikallisenOsaamisenNaytto = types.model(
     alku: types.optional(types.string, ""),
     loppu: types.optional(types.string, ""),
     koulutuksenJarjestajaArvioijat: types.array(KoulutuksenJarjestajaArvioija),
-    tyoelamaArvioijat: types.array(TyoelamaArvioija),
+    tyoelamaArvioijat: types.array(TyoelamaOsaamisenArvioija),
     keskeisetTyotehtavatNaytto: types.array(types.string)
   }
 )

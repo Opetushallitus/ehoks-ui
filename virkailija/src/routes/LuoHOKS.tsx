@@ -3,12 +3,14 @@ import { Heading } from "components/Heading"
 import { LoadingSpinner } from "components/LoadingSpinner"
 import { TypeaheadField } from "components/react-jsonschema-form/TypeaheadField"
 import { JSONSchema6 } from "json-schema"
+import { inject, observer } from "mobx-react"
 import React from "react"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 import { FormattedMessage } from "react-intl"
 import Form, { AjvError, FieldProps, IChangeEvent } from "react-jsonschema-form"
 import { Step } from "routes/LuoHOKS/Step"
 import { Stepper } from "routes/LuoHOKS/Stepper"
+import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 import { ArrayFieldTemplate } from "./LuoHOKS/ArrayFieldTemplate"
 import { CustomSchemaField } from "./LuoHOKS/CustomSchemaField"
@@ -89,6 +91,7 @@ const FailureMessage = styled("div")`
 
 interface LuoHOKSProps {
   path?: string
+  store?: IRootStore
 }
 
 interface LuoHOKSState {
@@ -105,6 +108,8 @@ interface LuoHOKSState {
   koodiUris: { [key in keyof typeof koodistoUrls]: any[] }
 }
 
+@inject("store")
+@observer
 export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
   state: LuoHOKSState = {
     schema: {},
@@ -137,8 +142,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
   }
 
   async componentDidMount() {
-    const request = await window.fetch("/ehoks-backend/doc/swagger.json")
-    const json = await request.json()
+    const json: any = await this.props.store!.environment.fetchSwaggerJSON()
     const rawSchema = {
       definitions: stripUnsupportedFormats(json.definitions),
       ...json.definitions.HOKSLuonti
@@ -226,18 +230,19 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
   }
 
   create = async (fieldProps: IChangeEvent<FieldProps>) => {
-    // TODO: authenticate user
     this.setState({ isLoading: true })
     const request = await window.fetch(
-      "/ehoks-virkailija-backend/api/v1/hoks",
+      `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${
+        fieldProps.formData["oppija-oid"]
+      }/hoksit`,
       {
         method: "POST",
         credentials: "include",
         headers: {
           Accept: "application/json; charset=utf-8",
-          "Caller-Id": "ehoks", // TODO: replace for real authentication
-          "Content-Type": "application/json",
-          ticket: "ST-6777-aBcDeFgHiJkLmN123456-cas.1234567890ac" // TODO: replace for real authentication
+          // "Caller-Id": ""
+          "Content-Type": "application/json"
+          // ticket: """
         },
         body: JSON.stringify(fieldProps.formData)
       }
@@ -292,12 +297,12 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
             disabled={this.state.isLoading}
           >
             <Step>Perustiedot</Step>
-            <Step>Olemassa olevat ammatilliset tutkinnon osat</Step>
-            <Step>Olemassa olevat paikalliset tutkinnon osat</Step>
-            <Step>Olemassa olevat yhteiset tutkinnon osat</Step>
-            <Step>Puuttuvat ammatilliset tutkinnon osat</Step>
-            <Step>Puuttuvat paikalliset tutkinnon osat</Step>
-            <Step>Puuttuvat yhteiset tutkinnon osat</Step>
+            <Step>Aiemmin hankitut ammatilliset tutkinnon osat</Step>
+            <Step>Aiemmin hankitut paikalliset tutkinnon osat</Step>
+            <Step>Aiemmin hankitut yhteiset tutkinnon osat</Step>
+            <Step>Hankittavat ammatilliset tutkinnon osat</Step>
+            <Step>Hankittavat paikalliset tutkinnon osat</Step>
+            <Step>Hankittavat yhteiset tutkinnon osat</Step>
             <Step>Opiskeluvalmiuksia tukevat opinnot</Step>
           </Stepper>
         </TopToolbar>

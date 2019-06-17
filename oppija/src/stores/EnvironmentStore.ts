@@ -19,7 +19,9 @@ const EnvironmentStoreModel = {
 export const EnvironmentStore = types
   .model("EnvironmentStore", EnvironmentStoreModel)
   .actions(self => {
-    const { apiUrl, fetchSingle, errors } = getEnv<StoreEnvironment>(self)
+    const { apiUrl, fetchSingle, fetch, errors } = getEnv<StoreEnvironment>(
+      self
+    )
 
     const getEnvironment = flow(function*() {
       self.isLoading = true
@@ -39,7 +41,12 @@ export const EnvironmentStore = types
       self.isLoading = false
     })
 
-    return { getEnvironment }
+    const fetchSwaggerJSON = flow(function*() {
+      const response = yield fetch("/ehoks-oppija-backend/doc/swagger.json")
+      return response
+    })
+
+    return { getEnvironment, fetchSwaggerJSON }
   })
 
 export interface IEnvironmentStore extends Instance<typeof EnvironmentStore> {}

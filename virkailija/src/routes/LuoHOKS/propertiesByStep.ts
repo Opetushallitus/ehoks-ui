@@ -5,16 +5,13 @@ export const propertiesByStep: { [index: number]: string[] } = {
     "ensikertainen-hyvaksyminen",
     "sahkoposti",
     "urasuunnitelma-koodi-uri",
-    "urasuunnitelma-koodi-versio",
-    "laatija",
-    "paivittaja",
-    "hyvaksyja"
+    "urasuunnitelma-koodi-versio"
   ],
-  1: ["olemassa-olevat-ammatilliset-tutkinnon-osat"],
-  2: ["olemassa-olevat-paikalliset-tutkinnon-osat"],
-  3: ["olemassa-olevat-yhteiset-tutkinnon-osat"],
-  4: ["puuttuvat-ammatilliset-tutkinnon-osat"],
-  5: ["puuttuvat-paikalliset-tutkinnon-osat"],
-  6: ["puuttuvat-yhteiset-tutkinnon-osat"],
+  1: ["aiemmin-hankitut-ammat-tutkinnon-osat"],
+  2: ["aiemmin-hankitut-paikalliset-tutkinnon-osat"],
+  3: ["aiemmin-hankitut-yhteiset-tutkinnon-osat"],
+  4: ["hankittavat-ammat-tutkinnon-osat"],
+  5: ["hankittavat-paikalliset-tutkinnon-osat"],
+  6: ["hankittavat-yhteiset-tutkinnon-osat"],
   7: ["opiskeluvalmiuksia-tukevat-opinnot"]
 }

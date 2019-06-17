@@ -23,7 +23,7 @@ describe("fetchUtils", () => {
     // uses lokalisointi0.json mock
     const { fetchCollection } = fetchUtils(mockFetch(apiUrl))
 
-    const result = await fetchCollection(apiUrl("lokalisointi"))
+    const result = await fetchCollection(apiUrl("/external/lokalisointi"))
     expect(result).toEqual({
       data: [
         {

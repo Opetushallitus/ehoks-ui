@@ -2,15 +2,15 @@ import min from "lodash.min"
 import max from "lodash.max"
 
 export function getTila(
-  hankitunOsaamisenNaytto: any[],
+  osaamisenOsoittaminen: any[],
   osaamisenHankkimistavat: any[]
 ) {
   const startDates: Date[] = []
   const endDates: Date[] = []
 
-  hankitunOsaamisenNaytto.forEach(hon => {
-    startDates.push(new Date(hon.alku))
-    endDates.push(new Date(hon.loppu))
+  osaamisenOsoittaminen.forEach(oo => {
+    startDates.push(new Date(oo.alku))
+    endDates.push(new Date(oo.loppu))
   })
   osaamisenHankkimistavat.forEach(oht => {
     startDates.push(new Date(oht.alku))

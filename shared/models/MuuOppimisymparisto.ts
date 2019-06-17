@@ -5,8 +5,8 @@ import { KoodistoVastaus } from "models/KoodistoVastaus"
 const Model = types.model("MuuOppimisymparistoModel", {
   oppimisymparistoKoodiUri: types.optional(types.string, ""),
   oppimisymparisto: types.optional(KoodistoVastaus, {}),
-  selite: types.optional(types.string, ""),
-  lisatiedot: types.optional(types.boolean, false)
+  alku: types.optional(types.string, ""),
+  loppu: types.optional(types.string, "")
 })
 
 export const MuuOppimisymparisto = types.compose(

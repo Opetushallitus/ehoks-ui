@@ -160,7 +160,7 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                         path="osaamiseni"
                         studies={
                           suunnitelma
-                            ? suunnitelma.olemassaOlevatTutkinnonOsat
+                            ? suunnitelma.aiemminHankitutTutkinnonOsat
                             : []
                         }
                       />

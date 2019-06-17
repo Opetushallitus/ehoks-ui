@@ -12,10 +12,10 @@ export const TutkinnonOsaViews = types.model({}).views((self: any) => {
   const root: LocaleRoot = getRoot(self)
   return {
     get tila() {
-      return getTila(self.hankitunOsaamisenNaytto, self.osaamisenHankkimistavat)
+      return getTila(self.osaamisenOsoittaminen, self.osaamisenHankkimistavat)
     },
     get naytot() {
-      return getNaytot(self.hankitunOsaamisenNaytto)
+      return getNaytot(self.osaamisenOsoittaminen)
     },
     get harjoittelujaksot() {
       return getHarjoittelujaksot(self.osaamisenHankkimistavat)

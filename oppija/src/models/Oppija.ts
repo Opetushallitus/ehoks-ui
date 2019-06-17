@@ -12,10 +12,10 @@ export const Oppija = types
   .views(self => {
     return {
       get harjoittelujakso(): Harjoittelujakso {
-        const { puuttuvatTutkinnonOsat } = self.hoks
-        return puuttuvatTutkinnonOsat.length &&
-          puuttuvatTutkinnonOsat[0].harjoittelujaksot.length
-          ? self.hoks.puuttuvatTutkinnonOsat[0].harjoittelujaksot[0]
+        const { hankittavatTutkinnonOsat } = self.hoks
+        return hankittavatTutkinnonOsat.length &&
+          hankittavatTutkinnonOsat[0].harjoittelujaksot.length
+          ? self.hoks.hankittavatTutkinnonOsat[0].harjoittelujaksot[0]
           : {}
       },
       get ajankohta() {

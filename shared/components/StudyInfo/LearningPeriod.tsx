@@ -75,7 +75,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
         )}
         <LearningPeriodTable>
           <TBody>
-            {ohjaaja && (
+            {tyyppi === "WORKPLACE" && ohjaaja && (
               <tr>
                 <TH>
                   <FormattedMessage
