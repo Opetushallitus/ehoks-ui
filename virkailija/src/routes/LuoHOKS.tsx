@@ -106,6 +106,7 @@ interface LuoHOKSState {
   currentStep: number
   errorsByStep: { [index: string]: AjvError[] }
   koodiUris: { [key in keyof typeof koodistoUrls]: any[] }
+  message?: string
 }
 
 @inject("store")
@@ -122,7 +123,8 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     currentStep: 0,
     rawSchema: {},
     koodiUris: buildKoodiUris(),
-    errorsByStep: {}
+    errorsByStep: {},
+    message: undefined
   }
 
   async fetchKoodiUris() {
@@ -345,7 +347,9 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
                   <FailureMessage onClick={this.hideMessage}>
                     <FormattedMessage
                       id="luoHoks.luontiEpaonnistui"
-                      defaultMessage="HOKSin luonti epäonnistui"
+                      defaultMessage={
+                        this.state.message ?
+                          this.state.message : "HOKSin luonti epäonnistui" }
                     />
                   </FailureMessage>
                 )}
