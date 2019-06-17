@@ -231,39 +231,67 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     this.setState({ userEnteredText: true })
   }
 
+  indexOppija = () => {
+    this.setState({ isLoading: true })
+
+    console.log("RESPONSE STATUS", request.status)
+    this.setState({ isLoading: false })
+  }
+
   create = async (fieldProps: IChangeEvent<FieldProps>) => {
     this.setState({ isLoading: true })
-    const request = await window.fetch(
+
+    const indexRequest = await window.fetch(
       `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${
-        fieldProps.formData["oppija-oid"]
-      }/hoksit`,
+      fieldProps.formData["oppija-oid"]
+      }/index`,
       {
         method: "POST",
         credentials: "include",
         headers: {
           Accept: "application/json; charset=utf-8",
-          // "Caller-Id": ""
           "Content-Type": "application/json"
-          // ticket: """
-        },
-        body: JSON.stringify(fieldProps.formData)
+        }
       }
     )
-    const json = await request.json()
 
-    if (request.status === 200) {
-      this.setState({
-        formData: {},
-        errors: [],
-        success: true,
-        userEnteredText: false
-      })
+    if (indexRequest.status === 200) {
+      const request = await window.fetch(
+        `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${
+        fieldProps.formData["oppija-oid"]
+        }/hoksit`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            Accept: "application/json; charset=utf-8",
+            // "Caller-Id": ""
+            "Content-Type": "application/json"
+            // ticket: """
+          },
+          body: JSON.stringify(fieldProps.formData)
+        }
+      )
+      const json = await request.json()
+
+      if (request.status === 200) {
+        this.setState({
+          formData: {},
+          errors: [],
+          success: true,
+          userEnteredText: false
+        })
+      } else {
+        this.setState({ success: false })
+      }
+      console.log("RESPONSE STATUS", request.status)
+      console.log("RESPONSE JSON", json)
+      this.setState({ isLoading: false })
+
     } else {
-      this.setState({ success: false })
+      this.setState({
+        success: false, message: "Oppijan indeksointi epäonnistui"})
     }
-    console.log("RESPONSE STATUS", request.status)
-    console.log("RESPONSE JSON", json)
-    this.setState({ isLoading: false })
   }
 
   completedSteps = () => {
