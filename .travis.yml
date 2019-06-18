@@ -30,8 +30,7 @@ script:
   - export BASE_IMAGE=baseimage-fatjar:master
   - ../ci-tools/common/pull-image.sh
   - ./scripts/ci/build.sh ehoks-ui
-  - cd virkailija
-  - npm run lint
+  - cd ../virkailija
   - npm test
   - npm run build
   - export BASE_IMAGE=baseimage-fatjar:master
