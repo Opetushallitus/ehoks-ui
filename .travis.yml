@@ -40,11 +40,9 @@ script:
 
 deploy:
   provider: script
-  script: ../ci-tools/build/upload-image.sh ehoks-ui
-  on:
-    all_branches: true
-  provider: script
-  script: ../ci-tools/build/upload-image.sh ehoks-ui-virkailija
+  script: >-
+    ../ci-tools/build/upload-image.sh ehoks-ui &&
+    ../ci-tools/build/upload-image.sh ehoks-ui-virkailija
   on:
     all_branches: true
 
