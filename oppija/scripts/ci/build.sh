@@ -16,6 +16,8 @@ cp -r \
    scripts/ci/run.sh \
    "$DOCKER_BUILD_DIR/"
 
+cp -r ../virkailija/public "$DOCKER_BUILD_DIR/public/ehoks-ui"
+
 cat > "$DOCKER_BUILD_DIR/public/ehoks/buildversion.txt" <<END
 artifactId=$ARTIFACT_NAME
 buildNumber=$BUILD_ID
