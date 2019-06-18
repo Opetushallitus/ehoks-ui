@@ -34,11 +34,7 @@ export class App extends React.Component<AppProps> {
       await this.props.store!.session.checkSession()
     } finally {
       if (!this.props.store!.session.isLoggedIn) {
-        await this.props.store!.session.login(
-          this.props.store!.environment.virkailijaLoginUrl
-        )
-
-        this.props.store!.session.checkSession()
+        window.location.href = this.props.store!.environment.virkailijaLoginUrl
       }
     }
   }
