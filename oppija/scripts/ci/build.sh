@@ -16,7 +16,8 @@ cp -r \
    scripts/ci/run.sh \
    "$DOCKER_BUILD_DIR/"
 
-cp -r ../virkailija/public "$DOCKER_BUILD_DIR/public/ehoks-ui"
+cp -r ../virkailija/public/ehoks-ui "$DOCKER_BUILD_DIR/public/"
+cp ../virkailija/public/index.html "$DOCKER_BUILD_DIR/public/ehoks-ui"
 
 cat > "$DOCKER_BUILD_DIR/public/ehoks/buildversion.txt" <<END
 artifactId=$ARTIFACT_NAME
