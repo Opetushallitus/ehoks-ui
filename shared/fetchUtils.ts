@@ -70,6 +70,10 @@ export const mockFetch = (apiUrl: (path: string) => string, version = 0) => (
   _init?: RequestInit
 ): Promise<Response> => {
   const path = url.replace(apiUrl(""), "")
+  const mockPath = `stores/mocks/${path.replace(
+    /\/|\-/g,
+    "_"
+  )}${version}.json`
   const mockResponse = {
     arrayBuffer: () => Promise.resolve(new ArrayBuffer(0)),
     formData: () => Promise.resolve(new FormData()),
@@ -85,10 +89,7 @@ export const mockFetch = (apiUrl: (path: string) => string, version = 0) => (
     bodyUsed: false,
     clone: () => mockResponse,
     json: () => {
-      return import(`stores/mocks/${path.replace(
-        /\/|\-/g,
-        "_"
-      )}${version}.json`)
+      return import(mockPath)
     },
     ok: true,
     statusText: "Error"
