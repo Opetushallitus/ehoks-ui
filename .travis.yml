@@ -35,7 +35,7 @@ script:
   - npm run build
   - export BASE_IMAGE=baseimage-fatjar:master
   - ../ci-tools/common/pull-image.sh
-  - ../oppija/scripts/ci/build.sh ehoks-ui-virkailija
+  - ./scripts/ci/build.sh ehoks-ui-virkailija
 
 deploy:
   provider: script
