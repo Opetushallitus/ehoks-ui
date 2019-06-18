@@ -10,8 +10,8 @@ module.exports = {
   output: {
     filename: "[name].bundle.js",
     chunkFilename: "[name].bundle.js",
-    publicPath: "/dist/",
-    path: path.resolve(__dirname, "public/dist")
+    publicPath: "/ehoks-ui/dist/",
+    path: path.resolve(__dirname, "public/ehoks-ui/dist")
   },
   devServer: {
     compress: true,
