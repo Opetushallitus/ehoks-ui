@@ -17,3 +17,5 @@ There are two frontend apps included in the repository:
 `virkailija` directory includes eHOKS views for education providers, it will be visible in Opintopolku's `virkailija` UI, e.g. `https://virkailija.testiopintopolku.fi`
 
 Running `npm install` in repository's root level will install dependencies for both `oppija` and `virkailija` apps. There's also `shared` directory that includes styled-components theme and UI components that are used by both apps.
+
+To build virkailija do cd virkailija and npm run build
