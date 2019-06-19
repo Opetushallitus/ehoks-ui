@@ -135,6 +135,11 @@ export class KoulutuksenJarjestaja extends React.Component<
     koulutuksenJarjestaja.search.changeOppilaitosOid(oppilaitosOid)
   }
 
+  generateOppilaitosOptions = (oids: string[]) =>
+    [<option key={-1} value="">Ei valittu</option>].concat(
+      oids.map(o => <option key={o} value={o}>{o}</option>)
+    )
+
   render() {
     const { intl } = this.context
     const { koulutuksenJarjestaja } = this.props.store!
