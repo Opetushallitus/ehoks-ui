@@ -159,6 +159,11 @@ export class Etusivu extends React.Component<EtusivuProps> {
     window.location.href = this.props.store!.environment.opintopolkuLoginUrl
   }
 
+  loginVirkailija = (event: React.MouseEvent) => {
+    event.preventDefault()
+    window.location.href = this.props.store!.environment.virkailijaLoginUrl
+  }
+
   render() {
     return (
       <Container>
@@ -212,7 +217,7 @@ export class Etusivu extends React.Component<EtusivuProps> {
                   defaultMessage="Kirjautumalla siirryt ohjattavien opiskelijoiden suunnitelmiin."
                 />
               </p>
-              <LoginButton>
+              <LoginButton onClick={this.loginVirkailija}>
                 <FormattedMessage
                   id="etusivu.oppilaitoksenEdustajaKirjauduButtonLabel"
                   defaultMessage="Kirjaudu oppilaitoksen edustajana"
