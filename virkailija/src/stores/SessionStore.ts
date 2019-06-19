@@ -41,7 +41,13 @@ export const SessionStore = types
       self.isLoading = true
       try {
         const response = yield fetchSingle(apiUrl("virkailija/session"))
-        self.user = response.data
+
+        self.user = {
+          oidHenkilo: response.data.oidHenkilo,
+          organisationPrivileges: response.data.organisationPrivileges.filter(
+            (o: any) => o.privileges.length > 0
+          )
+        }
       } catch (error) {
         self.error = error.message
       }
