@@ -51,7 +51,7 @@ export class ValitseHOKS extends React.Component<
                 {voimassaOlevat.map((suunnitelma, i) => {
                   return (
                     <Suunnitelma
-                      hoksPath={`/ehoks-ui/koulutuksenjarjestaja/${oppijaId}/`}
+                      hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
                       suunnitelma={suunnitelma}
                       key={i}
                     />
@@ -71,7 +71,7 @@ export class ValitseHOKS extends React.Component<
                 {paattyneet.map((suunnitelma, i) => {
                   return (
                     <Suunnitelma
-                      hoksPath={`/ehoks-ui/koulutuksenjarjestaja/${oppijaId}/`}
+                      hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
                       suunnitelma={suunnitelma}
                       key={i}
                     />

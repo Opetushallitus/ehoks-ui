@@ -63,10 +63,10 @@ export class App extends React.Component<AppProps> {
         >
           <Container>
             <Header />
-            <StyledRouter basepath="/ehoks-ui">
+            <StyledRouter basepath="/ehoks-virkailija-ui">
               <Redirect
                 from="/"
-                to="/ehoks-ui/koulutuksenjarjestaja"
+                to="/ehoks-virkailija-ui/koulutuksenjarjestaja"
                 noThrow={true}
               />
               <LuoHOKS path="luohoks" />

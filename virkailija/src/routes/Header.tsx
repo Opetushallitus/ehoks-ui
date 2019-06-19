@@ -63,28 +63,28 @@ export class Header extends React.Component<HeaderProps> {
   render() {
     return (
       <HeaderContainer>
-        <TopLink to="/ehoks-ui/koulutuksenjarjestaja">
+        <TopLink to="/ehoks-virkailija-ui/koulutuksenjarjestaja">
           <FormattedMessage
             id="header.opiskelijatLink"
             defaultMessage="Opiskelijat"
           />
           <ActiveIndicator />
         </TopLink>
-        <TopLink to="/ehoks-ui/luohoks">
+        <TopLink to="/ehoks-virkailija-ui/luohoks">
           <FormattedMessage
             id="header.tietojenTallennusLink"
             defaultMessage="Uusi HOKS"
           />
           <ActiveIndicator />
         </TopLink>
-        <TopLink to="/ehoks-ui/raportit">
+        <TopLink to="/ehoks-virkailija-ui/raportit">
           <FormattedMessage
             id="header.raportitLink"
             defaultMessage="Raportit"
           />
           <ActiveIndicator />
         </TopLink>
-        <TopLink to="/ehoks-ui/dokumentaatio">
+        <TopLink to="/ehoks-virkailija-ui/dokumentaatio">
           <FormattedMessage
             id="header.dokumentaatioLink"
             defaultMessage="Dokumentaatio"
