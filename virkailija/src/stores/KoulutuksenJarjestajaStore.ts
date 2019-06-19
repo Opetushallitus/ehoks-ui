@@ -75,7 +75,8 @@ const Search = types
     isLoading: false,
     sortBy: types.optional(SortBy, "nimi"),
     sortDirection: "asc",
-    perPage: 10
+    perPage: 10,
+    oppilaitosOid: ""
   })
   .volatile(
     (_): { searchTexts: { [key in SearchSortKey]: string } } => {
@@ -92,13 +93,18 @@ const Search = types
     const { fetchCollection, apiUrl } = getEnv<StoreEnvironment>(self)
 
     const haeOppijat = flow(function*() {
+      if (!self.oppilaitosOid) {
+        return
+      }
+
       self.isLoading = true
 
       const queryParams = {
         "order-by": self.sortBy,
         desc: self.sortDirection === "desc",
         "item-count": self.perPage,
-        page: self.activePage
+        page: self.activePage,
+        "oppilaitos-oid": self.oppilaitosOid
       }
 
       const textQueries = Object.keys(self.searchTexts).reduce<{
@@ -151,10 +157,16 @@ const Search = types
       self.haeOppijat()
     }
 
+    const changeOppilaitosOid = (oid: string) => {
+      self.oppilaitosOid = oid
+      self.haeOppijat()
+    }
+
     return {
       changeActivePage,
       changeSort,
-      changeSearchText
+      changeSearchText,
+      changeOppilaitosOid
     }
   })
   .views(self => {
