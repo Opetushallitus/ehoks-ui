@@ -15,12 +15,12 @@ while IFS= read -r -d '' tpl_file; do
 done < <(find /root -name '*.template' -print0)
 unset tpl_file target
 
-echo "Insert app boot config for this env into /root/public/ehoks-virkailija-ui/index.html …"
+echo "Insert app boot config for this env into /root/public/index.html …"
 config_json=$(python /root/escape-html.py < /root/config.json)
 sed -f <(cat <<EOF
 s|APP-BOOT-CONFIG-DEFAULT|${config_json//&/\\&}|
 EOF
-) -i /root/public/ehoks-virkailija-ui/index.html
+) -i /root/public/index.html
 unset config_json
 
 echo "Starting Prometheus node_exporter…"
