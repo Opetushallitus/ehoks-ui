@@ -56,6 +56,22 @@ const PagingContainer = styled("nav")`
   margin: 40px 0 20px 20px;
 `
 
+const OppilaitosTitle = styled("span")`
+  font-weight: bold;
+`
+
+const OppilaitosSelect = styled("select")`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 0;
+  margin: 10px 0;
+  background: #fff;
+  color: #2b2b2b;
+  border-radius: 2px;
+  border: 1px solid #999;
+`
+
 interface KoulutuksenJarjestajaProps {
   store?: IRootStore
   path?: string
