@@ -142,7 +142,7 @@ export class KoulutuksenJarjestaja extends React.Component<
 
   render() {
     const { intl } = this.context
-    const { koulutuksenJarjestaja } = this.props.store!
+    const { koulutuksenJarjestaja, session } = this.props.store!
     const {
       activePage,
       perPage,
@@ -154,11 +154,26 @@ export class KoulutuksenJarjestaja extends React.Component<
       searchTexts
     } = koulutuksenJarjestaja.search
     const totalPages = Math.ceil(totalResultsCount / perPage)
+    const oppilaitosOid = koulutuksenJarjestaja.search.oppilaitosOid
+    const oppilaitosOids = session.user! ?
+      session.user!.organisationPrivileges.map(p => p.oid) : []
 
     return (
       <BackgroundContainer>
         <Container>
           <PaddedContent>
+            {/* Change to proper component instead of Select */}
+            <OppilaitosTitle>
+              <FormattedMessage
+                id="koulutuksenJarjestaja.oppilaitosTitle"
+                defaultMessage="Oppilaitos"
+              />
+            </OppilaitosTitle>
+            <OppilaitosSelect
+              value={oppilaitosOid}
+              onChange={this.onOppilaitosChange}>
+              { this.generateOppilaitosOptions(oppilaitosOids) }
+            </OppilaitosSelect>
             <TopContainer>
               <TopHeading>
                 <FormattedMessage
