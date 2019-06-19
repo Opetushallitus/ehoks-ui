@@ -129,6 +129,12 @@ export class KoulutuksenJarjestaja extends React.Component<
     }
   }
 
+  onOppilaitosChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { koulutuksenJarjestaja } = this.props.store!
+    const oppilaitosOid = e.target.value
+    koulutuksenJarjestaja.search.changeOppilaitosOid(oppilaitosOid)
+  }
+
   render() {
     const { intl } = this.context
     const { koulutuksenJarjestaja } = this.props.store!
