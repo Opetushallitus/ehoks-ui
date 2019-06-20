@@ -33,6 +33,7 @@ Object {
   "session": Object {
     "error": "",
     "isLoading": false,
+    "selectedOrganisationOid": "",
     "user": null,
     "userDidLogout": false,
   },
