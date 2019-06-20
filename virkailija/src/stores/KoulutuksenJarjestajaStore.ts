@@ -5,7 +5,6 @@ import { flow, getEnv, Instance, types, getRoot } from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
 import { SessionUser } from "models/SessionUser"
 import { StoreEnvironment } from "types/StoreEnvironment"
-import { SessionStoreModel } from "stores/SessionStore"
 
 const sortKeys = ["nimi", "tutkinto", "osaamisala"] as const
 
