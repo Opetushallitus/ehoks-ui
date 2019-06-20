@@ -71,12 +71,12 @@ export class KoulutuksenJarjestaja extends React.Component<
   }
 
   debouncedFetchResults = debounce(() => {
-    const { koulutuksenJarjestaja, session } = this.props.store!
+    const { koulutuksenJarjestaja } = this.props.store!
     koulutuksenJarjestaja.search.haeOppijat()
   }, 500)
 
   componentDidMount() {
-    const { koulutuksenJarjestaja, session } = this.props.store!
+    const { koulutuksenJarjestaja} = this.props.store!
     koulutuksenJarjestaja.search.haeOppijat()
 
     window.requestAnimationFrame(() => {
