@@ -1,9 +1,10 @@
 import { withQueryString } from "fetchUtils"
 import max from "lodash.max"
 import min from "lodash.min"
-import { flow, getEnv, Instance, types } from "mobx-state-tree"
+import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
 import { SessionUser } from "models/SessionUser"
+import { IRootStore } from "stores/RootStore"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
 const sortKeys = ["nimi", "tutkinto", "osaamisala"] as const
@@ -75,8 +76,7 @@ const Search = types
     isLoading: false,
     sortBy: types.optional(SortBy, "nimi"),
     sortDirection: "asc",
-    perPage: 10,
-    oppilaitosOid: ""
+    perPage: 10
   })
   .volatile(
     (_): { searchTexts: { [key in SearchSortKey]: string } } => {
@@ -93,7 +93,10 @@ const Search = types
     const { fetchCollection, apiUrl } = getEnv<StoreEnvironment>(self)
 
     const haeOppijat = flow(function*() {
-      if (!self.oppilaitosOid) {
+      // TODO fix cross reference of stores?
+      const rootStore: IRootStore = getRoot<IRootStore>(self)
+      const oppilaitosOid: string = rootStore.session.selectedOrganisationOid
+      if (oppilaitosOid === "") {
         return
       }
 
@@ -104,7 +107,7 @@ const Search = types
         desc: self.sortDirection === "desc",
         "item-count": self.perPage,
         page: self.activePage,
-        "oppilaitos-oid": self.oppilaitosOid
+        "oppilaitos-oid": oppilaitosOid
       }
 
       const textQueries = Object.keys(self.searchTexts).reduce<{
@@ -157,16 +160,10 @@ const Search = types
       self.haeOppijat()
     }
 
-    const changeOppilaitosOid = (oid: string) => {
-      self.oppilaitosOid = oid
-      self.haeOppijat()
-    }
-
     return {
       changeActivePage,
       changeSort,
-      changeSearchText,
-      changeOppilaitosOid
+      changeSearchText
     }
   })
   .views(self => {

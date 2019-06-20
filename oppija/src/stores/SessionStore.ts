@@ -6,7 +6,8 @@ const SessionStoreModel = {
   error: types.optional(types.string, ""),
   isLoading: false,
   userDidLogout: false,
-  user: types.optional(types.union(SessionUser, types.null), null)
+  user: types.optional(types.union(SessionUser, types.null), null),
+  selectedOrganisationOid: ""
 }
 
 export const SessionStore = types

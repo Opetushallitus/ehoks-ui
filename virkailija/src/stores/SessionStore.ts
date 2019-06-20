@@ -1,4 +1,5 @@
-import { flow, getEnv, Instance, types } from "mobx-state-tree"
+import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
+import { IRootStore } from "stores/RootStore"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
 export const OrganisationPrivilege = types.model("OrganisationPrivilege", {
@@ -16,7 +17,8 @@ const SessionStoreModel = {
   error: types.optional(types.string, ""),
   isLoading: false,
   userDidLogout: false,
-  user: types.optional(types.union(VirkailijaUser, types.null), null)
+  user: types.optional(types.union(VirkailijaUser, types.null), null),
+  selectedOrganisationOid: types.optional(types.string, "")
 }
 
 export const SessionStore = types
@@ -48,6 +50,11 @@ export const SessionStore = types
             (o: any) => o.privileges.length > 0
           )
         }
+        if (self.user!.organisationPrivileges.length > 0) {
+          changeSelectedOrganisationOid(
+            self.user!.organisationPrivileges[0].oid
+          )
+        }
       } catch (error) {
         self.error = error.message
       }
@@ -70,7 +77,19 @@ export const SessionStore = types
       self.userDidLogout = false
     }
 
-    return { checkSession, login, logout, resetUserDidLogout }
+    const changeSelectedOrganisationOid = (oid: string) => {
+      self.selectedOrganisationOid = oid
+      // TODO fix cross reference of stores?
+      getRoot<IRootStore>(self).koulutuksenJarjestaja.search.haeOppijat()
+    }
+
+    return {
+      checkSession,
+      login,
+      logout,
+      resetUserDidLogout,
+      changeSelectedOrganisationOid
+    }
   })
   .views(self => {
     return {

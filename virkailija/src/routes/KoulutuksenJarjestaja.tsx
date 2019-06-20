@@ -56,22 +56,6 @@ const PagingContainer = styled("nav")`
   margin: 40px 0 20px 20px;
 `
 
-const OppilaitosTitle = styled("span")`
-  font-weight: bold;
-`
-
-const OppilaitosSelect = styled("select")`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  padding: 0;
-  margin: 10px 0;
-  background: #fff;
-  color: #2b2b2b;
-  border-radius: 2px;
-  border: 1px solid #999;
-`
-
 interface KoulutuksenJarjestajaProps {
   store?: IRootStore
   path?: string
@@ -92,8 +76,8 @@ export class KoulutuksenJarjestaja extends React.Component<
   }, 500)
 
   componentDidMount() {
-    const { store } = this.props
-    store!.koulutuksenJarjestaja.search.haeOppijat()
+    const { koulutuksenJarjestaja } = this.props.store!
+    koulutuksenJarjestaja.search.haeOppijat()
 
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
@@ -129,20 +113,9 @@ export class KoulutuksenJarjestaja extends React.Component<
     }
   }
 
-  onOppilaitosChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { koulutuksenJarjestaja } = this.props.store!
-    const oppilaitosOid = e.target.value
-    koulutuksenJarjestaja.search.changeOppilaitosOid(oppilaitosOid)
-  }
-
-  generateOppilaitosOptions = (oids: string[]) =>
-    [<option key={-1} value="">Ei valittu</option>].concat(
-      oids.map(o => <option key={o} value={o}>{o}</option>)
-    )
-
   render() {
     const { intl } = this.context
-    const { koulutuksenJarjestaja, session } = this.props.store!
+    const { koulutuksenJarjestaja } = this.props.store!
     const {
       activePage,
       perPage,
@@ -154,26 +127,11 @@ export class KoulutuksenJarjestaja extends React.Component<
       searchTexts
     } = koulutuksenJarjestaja.search
     const totalPages = Math.ceil(totalResultsCount / perPage)
-    const oppilaitosOid = koulutuksenJarjestaja.search.oppilaitosOid
-    const oppilaitosOids = session.user! ?
-      session.user!.organisationPrivileges.map(p => p.oid) : []
 
     return (
       <BackgroundContainer>
         <Container>
           <PaddedContent>
-            {/* Change to proper component instead of Select */}
-            <OppilaitosTitle>
-              <FormattedMessage
-                id="koulutuksenJarjestaja.oppilaitosTitle"
-                defaultMessage="Oppilaitos"
-              />
-            </OppilaitosTitle>
-            <OppilaitosSelect
-              value={oppilaitosOid}
-              onChange={this.onOppilaitosChange}>
-              { this.generateOppilaitosOptions(oppilaitosOids) }
-            </OppilaitosSelect>
             <TopContainer>
               <TopHeading>
                 <FormattedMessage
@@ -243,9 +201,9 @@ export class KoulutuksenJarjestaja extends React.Component<
                   <col style={{ width: "10%" }} />
                 </colgroup>
                 <TableBody>
-                  {results.map(student => {
+                  {results.map((student, i) => {
                     return (
-                      <TableRow key={student.oid}>
+                      <TableRow key={i}>
                         <TableCell>
                           <Link
                             to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${

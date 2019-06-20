@@ -19,7 +19,6 @@ Object {
     "search": Object {
       "activePage": 0,
       "isLoading": false,
-      "oppilaitosOid": "",
       "perPage": 10,
       "results": Array [],
       "sortBy": "nimi",
@@ -34,6 +33,7 @@ Object {
   "session": Object {
     "error": "",
     "isLoading": false,
+    "selectedOrganisationOid": "",
     "user": null,
     "userDidLogout": false,
   },

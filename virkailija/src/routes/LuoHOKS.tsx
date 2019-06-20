@@ -236,7 +236,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
 
     const indexRequest = await window.fetch(
       `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${
-      fieldProps.formData["oppija-oid"]
+        fieldProps.formData["oppija-oid"]
       }/index`,
       {
         method: "POST",
@@ -251,7 +251,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     if (indexRequest.status === 200) {
       const request = await window.fetch(
         `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${
-        fieldProps.formData["oppija-oid"]
+          fieldProps.formData["oppija-oid"]
         }/hoksit`,
         {
           method: "POST",
@@ -280,10 +280,11 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       console.log("RESPONSE STATUS", request.status)
       console.log("RESPONSE JSON", json)
       this.setState({ isLoading: false })
-
     } else {
       this.setState({
-        success: false, message: "Oppijan indeksointi epäonnistui"})
+        success: false,
+        message: "Oppijan indeksointi epäonnistui"
+      })
     }
   }
 
@@ -369,8 +370,10 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
                     <FormattedMessage
                       id="luoHoks.luontiEpaonnistui"
                       defaultMessage={
-                        this.state.message ?
-                          this.state.message : "HOKSin luonti epäonnistui" }
+                        this.state.message
+                          ? this.state.message
+                          : "HOKSin luonti epäonnistui"
+                      }
                     />
                   </FailureMessage>
                 )}
