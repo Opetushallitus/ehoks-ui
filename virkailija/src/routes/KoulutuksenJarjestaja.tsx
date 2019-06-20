@@ -206,7 +206,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                       <TableRow key={i}>
                         <TableCell>
                           <Link
-                            to={`/ehoks-ui/koulutuksenjarjestaja/${
+                            to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${
                               student.oid
                             }`}
                           >

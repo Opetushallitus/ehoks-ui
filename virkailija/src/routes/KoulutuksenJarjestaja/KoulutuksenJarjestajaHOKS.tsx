@@ -124,7 +124,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                   {suunnitelmat.length > 1 && (
                     <Timestamp>
                       <StudentLink
-                        to={`/ehoks-ui/koulutuksenjarjestaja/${oppija.oid}`}
+                        to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}`}
                       >
                         <FormattedMessage
                           id="koulutuksenJarjestaja.opiskelija.naytaKaikkiLink"
@@ -138,12 +138,12 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                   <SectionItem
                     selected={
                       location!.pathname ===
-                      `/ehoks-ui/koulutuksenjarjestaja/${oppija.oid}/${
+                      `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${
                         suunnitelma.eid
                       }`
                     }
                     onClick={this.setActiveTab(
-                      `/ehoks-ui/koulutuksenjarjestaja/${oppija.oid}/${
+                      `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${
                         suunnitelma.eid
                       }`
                     )}
@@ -159,12 +159,12 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                   <SectionItem
                     selected={
                       location!.pathname ===
-                      `/ehoks-ui/koulutuksenjarjestaja/${oppija.oid}/${
+                      `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${
                         suunnitelma.eid
                       }/osaaminen`
                     }
                     onClick={this.setActiveTab(
-                      `/ehoks-ui/koulutuksenjarjestaja/${oppija.oid}/${
+                      `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${
                         suunnitelma.eid
                       }/osaaminen`
                     )}
@@ -180,12 +180,12 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                   <SectionItem
                     selected={
                       location!.pathname ===
-                      `/ehoks-ui/koulutuksenjarjestaja/${oppija.oid}/${
+                      `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${
                         suunnitelma.eid
                       }/opiskelusuunnitelma`
                     }
                     onClick={this.setActiveTab(
-                      `/ehoks-ui/koulutuksenjarjestaja/${oppija.oid}/${
+                      `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${
                         suunnitelma.eid
                       }/opiskelusuunnitelma`
                     )}
@@ -208,7 +208,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
           <Container>
             <PaddedContent>
               <Router
-                basepath={`/ehoks-ui/koulutuksenjarjestaja/${oppija.oid}/${
+                basepath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${
                   suunnitelma.eid
                 }`}
               >
