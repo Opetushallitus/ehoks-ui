@@ -201,9 +201,9 @@ export class KoulutuksenJarjestaja extends React.Component<
                   <col style={{ width: "10%" }} />
                 </colgroup>
                 <TableBody>
-                  {results.map(student => {
+                  {results.map((student, i) => {
                     return (
-                      <TableRow key={student.oid}>
+                      <TableRow key={i}>
                         <TableCell>
                           <Link
                             to={`/ehoks-ui/koulutuksenjarjestaja/${
