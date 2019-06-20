@@ -93,7 +93,7 @@ const Search = types
     const { fetchCollection, apiUrl } = getEnv<StoreEnvironment>(self)
 
     const haeOppijat = flow(function*() {
-      if (!self.oppilaitosOid) {
+      if (self.oppilaitosOid === "") {
         return
       }
 

@@ -53,6 +53,18 @@ const TopLink = styled(Link)<TopLinkProps>`
   }
 `
 
+const OppilaitosSelect = styled("select")`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 0;
+  margin: 10px 0;
+  background: #fff;
+  color: #2b2b2b;
+  border-radius: 2px;
+  border: 1px solid #999;
+`
+
 interface HeaderProps {
   store?: IRootStore
 }
@@ -60,12 +72,34 @@ interface HeaderProps {
 @inject("store")
 @observer
 export class Header extends React.Component<HeaderProps> {
+
+  onOrganisationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { session } = this.props.store!
+    const oppilaitosOid = e.target.value
+    session.changeOrganisationOid(oppilaitosOid)
+  }
+
   render() {
     const { session } = this.props.store!
-    const hasWritePrivilege = session.selectedOrganisation &&
-      session.selectedOrganisation.privileges.indexOf("write") > -1
+    const selectedOrganisation =  session.user! &&
+      session.user!.organisationPrivileges.find(
+        o => o.oid === session.selectedOrganisationOid)
+    const hasWritePrivilege = selectedOrganisation &&
+      selectedOrganisation.privileges.indexOf("write") > -1
     return (
       <HeaderContainer>
+        {/* Change to proper component instead of Select */}
+        {
+          session!.user && session!.user.organisationPrivileges ?
+            <OppilaitosSelect
+              value={session.selectedOrganisationOid}
+              onChange={this.onOrganisationChange}>
+              {
+                session!.user.organisationPrivileges.map(
+                  p => <option key={p.oid} value={p.oid}>{p.oid}</option>)
+              }
+            </OppilaitosSelect> : null
+        }
         <TopLink to="/ehoks-ui/koulutuksenjarjestaja">
           <FormattedMessage
             id="header.opiskelijatLink"
