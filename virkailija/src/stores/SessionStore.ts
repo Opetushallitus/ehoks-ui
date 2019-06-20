@@ -74,7 +74,7 @@ export const SessionStore = types
       self.userDidLogout = false
     }
 
-    const changeOrganisationOid = (oid: string) => {
+    const changeSelectedOrganisationOid = (oid: string) => {
       self.selectedOrganisationOid = oid
     }
 

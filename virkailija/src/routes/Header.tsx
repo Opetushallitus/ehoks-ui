@@ -76,7 +76,7 @@ export class Header extends React.Component<HeaderProps> {
   onOrganisationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { session } = this.props.store!
     const oppilaitosOid = e.target.value
-    session.changeOrganisationOid(oppilaitosOid)
+    session.changeSelectedOrganisationOid(oppilaitosOid)
   }
 
   render() {
