@@ -61,6 +61,9 @@ interface HeaderProps {
 @observer
 export class Header extends React.Component<HeaderProps> {
   render() {
+    const { session } = this.props.store!
+    const hasWritePrivilege = session.selectedOrganisation &&
+      session.selectedOrganisation.privileges.indexOf("write") > -1
     return (
       <HeaderContainer>
         <TopLink to="/ehoks-ui/koulutuksenjarjestaja">
@@ -70,13 +73,16 @@ export class Header extends React.Component<HeaderProps> {
           />
           <ActiveIndicator />
         </TopLink>
-        <TopLink to="/ehoks-ui/luohoks">
-          <FormattedMessage
-            id="header.tietojenTallennusLink"
-            defaultMessage="Uusi HOKS"
-          />
-          <ActiveIndicator />
-        </TopLink>
+        {
+          hasWritePrivilege ?
+            <TopLink to="/ehoks-ui/luohoks">
+              <FormattedMessage
+                id="header.tietojenTallennusLink"
+                defaultMessage="Uusi HOKS"
+              />
+              <ActiveIndicator />
+            </TopLink> : null
+        }
         <TopLink to="/ehoks-ui/raportit">
           <FormattedMessage
             id="header.raportitLink"
