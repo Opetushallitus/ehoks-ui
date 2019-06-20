@@ -1,6 +1,6 @@
 import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
-import { StoreEnvironment } from "types/StoreEnvironment"
 import { IRootStore } from "stores/RootStore"
+import { StoreEnvironment } from "types/StoreEnvironment"
 
 export const OrganisationPrivilege = types.model("OrganisationPrivilege", {
   oid: types.string,
