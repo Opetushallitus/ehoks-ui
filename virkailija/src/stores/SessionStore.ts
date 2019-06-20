@@ -1,5 +1,6 @@
 import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
+import { IRootStore } from "stores/RootStore"
 
 export const OrganisationPrivilege = types.model("OrganisationPrivilege", {
   oid: types.string,
@@ -79,7 +80,7 @@ export const SessionStore = types
     const changeSelectedOrganisationOid = (oid: string) => {
       self.selectedOrganisationOid = oid
       // TODO fix cross reference of stores?
-      getRoot(self).koulutuksenJarjestaja.search.haeOppijat()
+      getRoot<IRootStore>(self).koulutuksenJarjestaja.search.haeOppijat()
     }
 
     return {
