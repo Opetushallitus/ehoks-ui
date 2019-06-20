@@ -5,7 +5,6 @@ import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
 import { SessionUser } from "models/SessionUser"
 import { IRootStore } from "stores/RootStore"
-import { ISessionStore } from "stores/SessionStore"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
 const sortKeys = ["nimi", "tutkinto", "osaamisala"] as const
@@ -96,9 +95,7 @@ const Search = types
     const haeOppijat = flow(function*() {
       // TODO fix cross reference of stores?
       const rootStore: IRootStore = getRoot<IRootStore>(self)
-      const session: ISessionStore | null = rootStore ? rootStore.session : null
-      const oppilaitosOid: string =
-        rootStore && session ? session.selectedOrganisationOid : ""
+      const oppilaitosOid: string = rootStore.session.selectedOrganisationOid
       if (oppilaitosOid === "") {
         return
       }
