@@ -72,7 +72,6 @@ interface HeaderProps {
 @inject("store")
 @observer
 export class Header extends React.Component<HeaderProps> {
-
   onOrganisationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { session } = this.props.store!
     const oppilaitosOid = e.target.value
@@ -81,25 +80,33 @@ export class Header extends React.Component<HeaderProps> {
 
   render() {
     const { session } = this.props.store!
-    const selectedOrganisation =  session.user! &&
+    const selectedOrganisation =
+      session.user! &&
       session.user!.organisationPrivileges.find(
-        o => o.oid === session.selectedOrganisationOid)
-    const hasWritePrivilege = selectedOrganisation &&
+        o => o.oid === session.selectedOrganisationOid
+      )
+    const hasWritePrivilege =
+      selectedOrganisation &&
       selectedOrganisation.privileges.indexOf("write") > -1
     return (
       <HeaderContainer>
         {/* Change to proper component instead of Select */}
-        {
-          session!.user && session!.user.organisationPrivileges ?
-            <OppilaitosSelect
-              value={session.selectedOrganisationOid}
-              onChange={this.onOrganisationChange}>
-              {
-                session!.user.organisationPrivileges.map(
-                  p => <option key={p.oid} value={p.oid}>{p.oid}</option>)
-              }
-            </OppilaitosSelect> : null
-        }
+        {session!.user && session!.user.organisationPrivileges ? (
+          <OppilaitosSelect
+            value={session.selectedOrganisationOid}
+            onChange={this.onOrganisationChange}
+          >
+            {session!.user.organisationPrivileges.map(p => (
+              <option
+                key={p.oid}
+                value={p.oid}
+                aria-selected={p.oid === session.selectedOrganisationOid}
+              >
+                {p.oid}
+              </option>
+            ))}
+          </OppilaitosSelect>
+        ) : null}
         <TopLink to="/ehoks-ui/koulutuksenjarjestaja">
           <FormattedMessage
             id="header.opiskelijatLink"
@@ -107,16 +114,15 @@ export class Header extends React.Component<HeaderProps> {
           />
           <ActiveIndicator />
         </TopLink>
-        {
-          hasWritePrivilege ?
-            <TopLink to="/ehoks-ui/luohoks">
-              <FormattedMessage
-                id="header.tietojenTallennusLink"
-                defaultMessage="Uusi HOKS"
-              />
-              <ActiveIndicator />
-            </TopLink> : null
-        }
+        {hasWritePrivilege ? (
+          <TopLink to="/ehoks-ui/luohoks">
+            <FormattedMessage
+              id="header.tietojenTallennusLink"
+              defaultMessage="Uusi HOKS"
+            />
+            <ActiveIndicator />
+          </TopLink>
+        ) : null}
         <TopLink to="/ehoks-ui/raportit">
           <FormattedMessage
             id="header.raportitLink"

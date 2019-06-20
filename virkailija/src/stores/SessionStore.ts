@@ -1,4 +1,4 @@
-import { flow, getEnv, Instance, types, getRoot } from "mobx-state-tree"
+import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
 export const OrganisationPrivilege = types.model("OrganisationPrivilege", {
@@ -51,7 +51,8 @@ export const SessionStore = types
         }
         if (self.user!.organisationPrivileges.length > 0) {
           changeSelectedOrganisationOid(
-            self.user!.organisationPrivileges[0].oid)
+            self.user!.organisationPrivileges[0].oid
+          )
         }
       } catch (error) {
         self.error = error.message
@@ -82,7 +83,11 @@ export const SessionStore = types
     }
 
     return {
-      checkSession, login, logout, resetUserDidLogout, changeSelectedOrganisationOid
+      checkSession,
+      login,
+      logout,
+      resetUserDidLogout,
+      changeSelectedOrganisationOid
     }
   })
   .views(self => {
