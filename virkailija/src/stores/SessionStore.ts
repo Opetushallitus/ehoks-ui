@@ -44,12 +44,7 @@ export const SessionStore = types
       try {
         const response = yield fetchSingle(apiUrl("virkailija/session"))
 
-        self.user = {
-          oidHenkilo: response.data.oidHenkilo,
-          organisationPrivileges: response.data.organisationPrivileges.filter(
-            (o: any) => o.privileges.length > 0
-          )
-        }
+        self.user = response.data
         if (self.user!.organisationPrivileges.length > 0) {
           changeSelectedOrganisationOid(
             self.user!.organisationPrivileges[0].oid

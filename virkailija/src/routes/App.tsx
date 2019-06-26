@@ -10,6 +10,7 @@ import { Header } from "./Header"
 import { KoulutuksenJarjestaja } from "./KoulutuksenJarjestaja"
 import { Opiskelija } from "./KoulutuksenJarjestaja/Opiskelija"
 import { LuoHOKS } from "./LuoHOKS"
+import { Yllapito } from "./Yllapito"
 
 const Container = styled("div")`
   margin: 0;
@@ -67,6 +68,7 @@ export class App extends React.Component<AppProps> {
               />
               <LuoHOKS path="luohoks" />
               <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />
+              <Yllapito path="yllapito" />
               <Opiskelija path="koulutuksenjarjestaja/:studentId/*" />
             </StyledRouter>
             <GlobalStyles />

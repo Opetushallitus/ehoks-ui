@@ -88,6 +88,9 @@ export class Header extends React.Component<HeaderProps> {
     const hasWritePrivilege =
       selectedOrganisation &&
       selectedOrganisation.privileges.indexOf("write") > -1
+    const hasSuperUserPrivilege =
+      selectedOrganisation &&
+      selectedOrganisation.roles.indexOf("oph-super-user") > -1
     return (
       <HeaderContainer>
         {/* Change to proper component instead of Select */}
@@ -137,6 +140,15 @@ export class Header extends React.Component<HeaderProps> {
           />
           <ActiveIndicator />
         </TopLink>
+        {hasSuperUserPrivilege ? (
+          <TopLink to="/ehoks-virkailija-ui/yllapito">
+            <FormattedMessage
+              id="header.yllapitoLink"
+              defaultMessage="Ylläpito"
+            />
+            <ActiveIndicator />
+          </TopLink>
+        ) : null}
       </HeaderContainer>
     )
   }
