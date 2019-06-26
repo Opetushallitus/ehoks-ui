@@ -10,7 +10,7 @@ module.exports = {
   output: {
     filename: "[name].bundle.js",
     chunkFilename: "[name].bundle.js",
-    publicPath: "/ehoks-virkailja-ui/dist/",
+    publicPath: "/ehoks-virkailija-ui/dist/",
     path: path.resolve(__dirname, "public/ehoks-virkailija-ui/dist")
   },
   devServer: {
