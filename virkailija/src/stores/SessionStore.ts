@@ -1,5 +1,7 @@
+import { withQueryString } from "fetchUtils"
 import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
 import { IRootStore } from "stores/RootStore"
+import { IOrganisation, OrganisationModel } from "types/Organisation"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
 export const OrganisationPrivilege = types.model("OrganisationPrivilege", {
@@ -18,15 +20,21 @@ const SessionStoreModel = {
   isLoading: false,
   userDidLogout: false,
   user: types.optional(types.union(VirkailijaUser, types.null), null),
-  selectedOrganisationOid: types.optional(types.string, "")
+  selectedOrganisationOid: types.optional(types.string, ""),
+  organisations: types.array(OrganisationModel)
 }
 
 export const SessionStore = types
   .model("SessionStore", SessionStoreModel)
   .actions(self => {
-    const { apiUrl, fetchSingle, fetch, deleteResource, errors } = getEnv<
-      StoreEnvironment
-    >(self)
+    const {
+      apiUrl,
+      fetchSingle,
+      fetchCollection,
+      fetch,
+      deleteResource,
+      errors
+    } = getEnv<StoreEnvironment>(self)
 
     const login = flow(function*(url: string) {
       self.isLoading = true
@@ -50,6 +58,20 @@ export const SessionStore = types
             self.user!.organisationPrivileges[0].oid
           )
         }
+        const queryParams = {
+          oids: self.user!.organisationPrivileges.map(o => o.oid)
+        }
+        const organisationsData = yield fetchCollection(
+          withQueryString(apiUrl("virkailija/external/organisaatio/find"), {
+            ...queryParams
+          })
+        )
+        self.organisations = organisationsData.data.map((o: IOrganisation) => {
+          return {
+            nimi: o.nimi,
+            oid: o.oid
+          }
+        })
       } catch (error) {
         self.error = error.message
       }
