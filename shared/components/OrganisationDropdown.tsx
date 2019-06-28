@@ -1,9 +1,11 @@
 import React from "react"
 import styled from "styled"
+import { IOrganisation } from "types/Organisation"
 
 export interface OrganisationDropdownProps {
-  oids: string[]
+  organisations: IOrganisation[]
   value: string
+  lang?: string
   onChange: (oid: string) => void
 }
 
@@ -22,26 +24,28 @@ const OppilaitosSelect = styled("select")`
 /**
  * OrganisationDropdown
  */
-export class OrganisationDropdown extends React.Component<OrganisationDropdownProps> {
+export class OrganisationDropdown
+  extends React.Component<OrganisationDropdownProps> {
 
   handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     this.props.onChange(e.target.value)
   }
 
   render() {
-    const { oids, value } = this.props
+    const { organisations, value} = this.props
+    const lang = this.props.lang || "fi"
     return (
       <OppilaitosSelect
             value={value}
             onChange={this.handleOnChange}
           >
-            {oids.map(o => (
+            {organisations.map(o => (
               <option
-                key={o}
-                value={o}
-                aria-selected={o === value}
+                key={o.oid}
+                value={o.oid}
+                aria-selected={o.oid === value}
               >
-                {o}
+                {o.nimi.get(lang)}
               </option>
             ))}
           </OppilaitosSelect>
