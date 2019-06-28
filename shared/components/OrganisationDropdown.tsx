@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled"
 import { IOrganisation } from "types/Organisation"
+import { observer } from "mobx-react"
 
 export interface OrganisationDropdownProps {
   organisations: IOrganisation[]
@@ -24,6 +25,7 @@ const OppilaitosSelect = styled("select")`
 /**
  * OrganisationDropdown
  */
+@observer
 export class OrganisationDropdown
   extends React.Component<OrganisationDropdownProps> {
 
