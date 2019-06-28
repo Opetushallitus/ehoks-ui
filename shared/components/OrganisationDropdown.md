@@ -3,7 +3,7 @@
 ```js
 const { OrganisationDropdown } = require("components/OrganisationDropdown")
 ;<OrganisationDropdown
-   oids={["123", "234"]}
+   organisations={[{oid: "123", nimi: {:fi "Test"}}]}
    onChange={console.log}
    value={"123"}
  />
@@ -14,9 +14,9 @@ const { OrganisationDropdown } = require("components/OrganisationDropdown")
 ```js
 const { OrganisationDropdown } = require("components/OrganisationDropdown")
 ;<OrganisationDropdown
-   oids={["123", "234"]}
+   organisations={[{oid: "123", nimi: {:sv "De här test"}}]}
    onChange={console.log}
    value={"123"}
-   lang="fi"
+   lang="sv"
  />
 ```
