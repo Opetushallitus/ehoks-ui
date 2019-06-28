@@ -81,11 +81,12 @@ export class Header extends React.Component<HeaderProps> {
       selectedOrganisation.roles.indexOf("oph-super-user") > -1
     return (
       <HeaderContainer>
-        {session!.user && session!.user.organisationPrivileges ? (
+        {session!.organisations ? (
           <OrganisationDropdown
-            oids={session.user.organisationPrivileges.map(x => x.oid)}
+            organisations={session!.organisations}
             onChange={this.handleOnOrganisationChange}
             value={session.selectedOrganisationOid}
+            lang="fi"
           />
         ) : null}
         <TopLink to="/ehoks-virkailija-ui/koulutuksenjarjestaja">
