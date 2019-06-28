@@ -1,4 +1,5 @@
 import { Link } from "@reach/router"
+import { OrganisationDropdown } from "components/OrganisationDropdown"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage } from "react-intl"
@@ -53,18 +54,6 @@ const TopLink = styled(Link)<TopLinkProps>`
   }
 `
 
-const OppilaitosSelect = styled("select")`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  padding: 0;
-  margin: 10px 0;
-  background: #fff;
-  color: #2b2b2b;
-  border-radius: 2px;
-  border: 1px solid #999;
-`
-
 interface HeaderProps {
   store?: IRootStore
 }
@@ -72,10 +61,9 @@ interface HeaderProps {
 @inject("store")
 @observer
 export class Header extends React.Component<HeaderProps> {
-  onOrganisationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  handleOnOrganisationChange = (oid: string) => {
     const { session } = this.props.store!
-    const oppilaitosOid = e.target.value
-    session.changeSelectedOrganisationOid(oppilaitosOid)
+    session.changeSelectedOrganisationOid(oid)
   }
 
   render() {
@@ -93,22 +81,12 @@ export class Header extends React.Component<HeaderProps> {
       selectedOrganisation.roles.indexOf("oph-super-user") > -1
     return (
       <HeaderContainer>
-        {/* Change to proper component instead of Select */}
         {session!.user && session!.user.organisationPrivileges ? (
-          <OppilaitosSelect
+          <OrganisationDropdown
+            oids={session.user.organisationPrivileges.map(x => x.oid)}
+            onChange={this.handleOnOrganisationChange}
             value={session.selectedOrganisationOid}
-            onChange={this.onOrganisationChange}
-          >
-            {session!.user.organisationPrivileges.map(p => (
-              <option
-                key={p.oid}
-                value={p.oid}
-                aria-selected={p.oid === session.selectedOrganisationOid}
-              >
-                {p.oid}
-              </option>
-            ))}
-          </OppilaitosSelect>
+          />
         ) : null}
         <TopLink to="/ehoks-virkailija-ui/koulutuksenjarjestaja">
           <FormattedMessage
