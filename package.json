@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "styleguide": "styleguidist server --config shared/styleguide/styleguide.config.js"
+    "styleguide": "styleguidist server --config shared/styleguide/styleguide.config.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "private": true,
   "license": "",
@@ -96,6 +98,8 @@
     "reactjs-popup": "^1.3.2",
     "styled-components": "^4.1.3",
     "use-onclickoutside": "^0.3.0",
-    "whatwg-fetch": "^3.0.0"
-  }
+    "whatwg-fetch": "^3.0.0",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
