@@ -7,7 +7,8 @@ import { StoreEnvironment } from "types/StoreEnvironment"
 export const OrganisationPrivilege = types.model("OrganisationPrivilege", {
   oid: types.string,
   privileges: types.array(types.string),
-  roles: types.array(types.string)
+  roles: types.array(types.string),
+  childOrganisations: types.array(types.string)
 })
 
 export const VirkailijaUser = types.model("VirkailijaUser", {
@@ -59,7 +60,14 @@ export const SessionStore = types
           )
         }
         const queryParams = {
-          oids: self.user!.organisationPrivileges.map(o => o.oid)
+          oids: Array.from(
+            new Set(
+              self.user!.organisationPrivileges.reduce(
+                (a, o) => [...a, ...o.childOrganisations, o.oid],
+                []
+              )
+            )
+          )
         }
         const organisationsData = yield fetchCollection(
           withQueryString(apiUrl("virkailija/external/organisaatio/find"), {
