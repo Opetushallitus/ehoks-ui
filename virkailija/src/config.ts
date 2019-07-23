@@ -1,5 +1,5 @@
 const defaultConfig = () => ({
-    backendUrl: `/ehoks-virkailija-backend/api/v1/`
+    backendUrl: `/ehoks-virkailija-backend/api/v1`
 })
 
 const config = (() => {
