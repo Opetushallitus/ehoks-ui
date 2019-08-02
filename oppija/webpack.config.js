@@ -63,19 +63,6 @@ module.exports = {
       },
       // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
       { test: /\.js$/, enforce: "pre", use: "source-map-loader" },
-      // TODO: style-loader, css-loader and url-loader are only required for LuoHOKS form
-      // TODO: remove when LuoHOKS route is removed
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"]
-      },
-      {
-        test: /\.(eot|ttf|woff|woff2)$/,
-        loader: "url-loader",
-        options: {
-          limit: 10000
-        }
-      },
       // Load images with 'file-loader'.
       {
         test: /\.(png|jpg|gif|svg)$/,

@@ -10,7 +10,6 @@ import { AppHeader } from "routes/App/AppHeader"
 import { GlobalStyles } from "routes/App/globalStyles"
 import { Etusivu } from "routes/Etusivu"
 import { Henkilokohtaistaminen } from "routes/Henkilokohtaistaminen"
-import { LuoHOKS } from "routes/LuoHOKS"
 import { Suunnittelu } from "routes/Suunnittelu"
 import { TyopaikanToimija } from "routes/TyopaikanToimija"
 import { IRootStore } from "stores/RootStore"
@@ -42,13 +41,6 @@ const MainApp = (_: { path: string }) => {
   )
 }
 
-const LuoHOKSWrapper = (_: { path: string }) => (
-  <React.Fragment>
-    <LuoHOKS />
-    <GlobalStyles />
-  </React.Fragment>
-)
-
 export interface AppProps {
   store?: IRootStore
 }
@@ -79,7 +71,6 @@ export class App extends React.Component<AppProps> {
           textComponent={React.Fragment}
         >
           <Router basepath="/ehoks">
-            <LuoHOKSWrapper path="luohoks" />
             <MainApp path="*" />
           </Router>
         </IntlProvider>

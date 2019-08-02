@@ -19,9 +19,9 @@
     "types": ["jest", "node", "webpack-env"],
     "baseUrl": "./src",
     "paths": {
-      "*": ["*", "../../shared/*", "../../virkailija/src/*"]
+      "*": ["*", "../../shared/*"]
     }
   },
-  "include": ["./**/*", "../shared/**/*", "../virkailija/src/**/*"],
+  "include": ["./**/*", "../shared/**/*"],
   "exclude": ["node_modules"]
 }

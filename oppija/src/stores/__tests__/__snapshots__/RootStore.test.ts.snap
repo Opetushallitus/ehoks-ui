@@ -15,17 +15,6 @@ Object {
     "suunnitelmat": Array [],
   },
   "isLoading": false,
-  "koulutuksenJarjestaja": Object {
-    "search": Object {
-      "activePage": 0,
-      "isLoading": false,
-      "perPage": 10,
-      "results": Array [],
-      "sortBy": "nimi",
-      "sortDirection": "asc",
-      "totalResultsCount": 0,
-    },
-  },
   "oppilas": Object {
     "isLoading": false,
     "perusteet": Array [],
