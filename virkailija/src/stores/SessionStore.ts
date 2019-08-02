@@ -1,6 +1,5 @@
 import { withQueryString } from "fetchUtils"
-import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
-import { IRootStore } from "stores/RootStore"
+import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { IOrganisation, OrganisationModel } from "types/Organisation"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
@@ -104,8 +103,6 @@ export const SessionStore = types
 
     const changeSelectedOrganisationOid = (oid: string) => {
       self.selectedOrganisationOid = oid
-      // TODO fix cross reference of stores?
-      getRoot<IRootStore>(self).koulutuksenJarjestaja.search.haeOppijat()
     }
 
     return {

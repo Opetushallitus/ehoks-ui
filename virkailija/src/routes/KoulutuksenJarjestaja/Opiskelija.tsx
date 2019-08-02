@@ -71,7 +71,9 @@ export class Opiskelija extends React.Component<
     const oppija = search.oppija(studentId!)
     if (oppija && oppija.suunnitelmat.length === 1) {
       const hoks = oppija.suunnitelmat[0]
-      navigate(`/ehoks-virkailija-ui/koulutuksenjarjestaja/${studentId}/${hoks.eid}`)
+      navigate(
+        `/ehoks-virkailija-ui/koulutuksenjarjestaja/${studentId}/${hoks.eid}`
+      )
     }
   }
 
@@ -99,7 +101,9 @@ export class Opiskelija extends React.Component<
           <LeftLink>
             {previous && (
               <StudentLink
-                to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${previous.oid}`}
+                to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${
+                  previous.oid
+                }`}
               >
                 &lt;&lt; {previous.nimi}
               </StudentLink>
@@ -115,13 +119,17 @@ export class Opiskelija extends React.Component<
           </LinkContainer>
           <RightLink>
             {next && (
-              <StudentLink to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${next.oid}`}>
+              <StudentLink
+                to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${next.oid}`}
+              >
                 {next.nimi} &gt;&gt;
               </StudentLink>
             )}
           </RightLink>
         </TopContainer>
-        <Router basepath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${studentId}`}>
+        <Router
+          basepath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${studentId}`}
+        >
           <ValitseHOKS
             path="/"
             oppijaId={studentId}

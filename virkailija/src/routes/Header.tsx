@@ -62,8 +62,9 @@ interface HeaderProps {
 @observer
 export class Header extends React.Component<HeaderProps> {
   handleOnOrganisationChange = (oid: string) => {
-    const { session } = this.props.store!
+    const { session, koulutuksenJarjestaja } = this.props.store!
     session.changeSelectedOrganisationOid(oid)
+    koulutuksenJarjestaja.search.haeOppijat()
   }
 
   render() {
