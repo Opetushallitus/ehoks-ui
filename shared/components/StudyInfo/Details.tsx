@@ -105,6 +105,25 @@ export class Details extends React.Component<DetailsProps> {
     const hasActiveShare =
       typeof share !== "undefined" && koodiUri === share.koodiUri
     const shareType = typeof share !== "undefined" ? share.type : undefined
+    const firstLearningPeriod =
+      shareType === "tyossaoppiminen" && learningPeriods[0]
+        ? learningPeriods[0]
+        : undefined
+
+    const instructor = firstLearningPeriod
+      ? {
+          name: firstLearningPeriod.ohjaaja
+            ? firstLearningPeriod.ohjaaja.nimi || ""
+            : "",
+          email: firstLearningPeriod.ohjaaja
+            ? firstLearningPeriod.ohjaaja.sahkoposti || ""
+            : "",
+          organisation: firstLearningPeriod.selite
+        }
+      : undefined
+    const defaultPeriod = firstLearningPeriod
+      ? { start: firstLearningPeriod.alku, end: firstLearningPeriod.loppu }
+      : undefined
 
     return expanded ? (
       <DetailsExpanded
@@ -130,6 +149,8 @@ export class Details extends React.Component<DetailsProps> {
             background={fadedColor}
             koodiUri={koodiUri || ""}
             type="tyossaoppiminen"
+            instructor={instructor}
+            defaultPeriod={defaultPeriod}
           >
             {learningPeriods.map((period, i) => {
               return <LearningPeriod key={i} learningPeriod={period} />
@@ -143,6 +164,10 @@ export class Details extends React.Component<DetailsProps> {
                 background={fadedColor}
                 koodiUri={koodiUri || ""}
                 type="naytto"
+                defaultPeriod={{
+                  start: demonstration.alku,
+                  end: demonstration.loppu
+                }}
                 key={i}
               >
                 <Demonstration

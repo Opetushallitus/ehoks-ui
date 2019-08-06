@@ -171,7 +171,7 @@ test("render learning periods", () => {
         {
           alku: "2019-09-13",
           loppu: "2019-09-30",
-          ohjaaja: "John McAfee",
+          ohjaaja: { nimi: "John McAfee", sahkoposti: "john@mock.dev" },
           tyotehtavat: [
             "Elintarvikkeiden valmistus",
             "Elintarvikkeiden säilytys"

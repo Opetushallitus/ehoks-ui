@@ -7,6 +7,9 @@ import { HeroButton } from "components/Button"
 import { ModalWithBackground } from "components/Modal"
 import { fetchLinks, ShareLink } from "components/ShareDialog/fetchLinks"
 import { APIConfigContext } from "components/APIConfigContext"
+import CopyToClipboard from "react-copy-to-clipboard"
+import format from "date-fns/format"
+import find from "lodash.find"
 
 interface ColorProps {
   background: string
@@ -37,6 +40,37 @@ const ShareTitle = styled("h1")`
 const ShareDescription = styled("strong")`
   display: block;
   font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`
+
+const ShareColumns = styled("div")`
+  display: flex;
+  align-items: center;
+`
+
+const ShareColumn = styled("div")`
+  flex: 1;
+`
+
+const TitleColumn = styled("div")`
+  padding-right: 20px;
+`
+
+const ButtonsContainer = styled(ShareColumn)`
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
+    flex-direction: column;
+  }
+`
+
+const Subtitle = styled("strong")`
+  display: block;
+  font-size: 16px;
   margin-top: 10px;
   margin-bottom: 10px;
 `
@@ -75,18 +109,50 @@ const Button = styled(HeroButton)`
   margin-right: 40px;
 `
 
+const ShareButton = styled(Button)`
+  width: 260px;
+  padding: 15px;
+  justify-content: center;
+`
+
+const DateInput = styled("input")`
+  border: 1px solid #999;
+  height: 34px;
+  padding: 10px;
+  font-size: 14px;
+`
+
 interface ShareDialogProps {
   active: boolean
   background: string
   children: any // TODO: fix
   koodiUri: string
   type: ShareType
+  defaultPeriod?: { start?: string; end?: string }
+  instructor?: { name: string; organisation?: string; email: string }
 }
 
 export function ShareDialog(props: ShareDialogProps) {
-  const { active, background, children, koodiUri, type } = props
+  const {
+    active,
+    background,
+    children,
+    defaultPeriod,
+    instructor,
+    koodiUri,
+    type
+  } = props
   const ref = useRef<HTMLDivElement>(null)
   const [sharedLinks, setSharedLinks] = useState<Array<ShareLink>>([])
+  const [startDate, setStartDate] = useState(
+    defaultPeriod ? defaultPeriod.start || "" : ""
+  )
+  const [endDate, setEndDate] = useState(
+    defaultPeriod ? defaultPeriod.end || "" : ""
+  )
+  const [createdUrl, setCreatedUrl] = useState("")
+  const [linkCopied, setLinkCopied] = useState(false)
+  const [instructorCopied, setInstructorCopied] = useState(false)
   const apiConfig = useContext(APIConfigContext)
 
   useEffect(() => {
@@ -104,17 +170,57 @@ export function ShareDialog(props: ShareDialogProps) {
     fetchData()
   }, [])
 
+  // TODO: actual API call, remove mock code
+  const addLink = () => {
+    const nextId = sharedLinks.length + 1
+    const nextLinks = [
+      ...sharedLinks,
+      {
+        id: nextId,
+        createdAt: format(new Date(), "yyyy-MM-dd"),
+        validFrom: startDate,
+        validTo: endDate,
+        url: `https://ehoks.dev/share/${nextId}`
+      }
+    ]
+    setSharedLinks(nextLinks)
+    setCreatedUrl(`https://ehoks.dev/share/${nextId}`)
+  }
+
   const close = () => {
     // as query params are the master data for sharing,
     // closing the dialog is achieved by clearing them
     navigate(window.location.pathname)
   }
 
-  // TODO: to be implemented
+  // TODO: actual API call, remove mock code
   const remove = (event: React.MouseEvent, id: number) => {
     event.preventDefault()
     console.log("clicked remove for", id)
-    confirm("Haluatko varmasti poistaa valitun jakolinkin?")
+    // TODO: use i18n
+    if (confirm("Haluatko varmasti poistaa valitun jakolinkin?")) {
+      // if removed link is equal to createdUrl, set createdUrl to empty string
+      const linkToBeRemoved = find(sharedLinks, link => link.id === id)
+      if (linkToBeRemoved && linkToBeRemoved.url === createdUrl) {
+        setCreatedUrl("")
+      }
+      const nextLinks = sharedLinks.filter(link => link !== linkToBeRemoved)
+      setSharedLinks(nextLinks)
+    }
+  }
+
+  const copyLinkNotification = () => {
+    setLinkCopied(true)
+    setTimeout(() => {
+      setLinkCopied(false)
+    }, 3000)
+  }
+
+  const copyInstructorNotification = () => {
+    setInstructorCopied(true)
+    setTimeout(() => {
+      setInstructorCopied(false)
+    }, 3000)
   }
 
   return (
@@ -180,8 +286,16 @@ export function ShareDialog(props: ShareDialogProps) {
               return (
                 <SharedLink key={i}>
                   <LinkItem>
-                    Linkki luotu {link.createdAt}, voimassa {link.validFrom} -{" "}
-                    {link.validTo}
+                    <FormattedMessage
+                      id="jakaminen.linkkiLuotu"
+                      defaultMessage="Linkki luotu"
+                    />{" "}
+                    {link.createdAt},{" "}
+                    <FormattedMessage
+                      id="jakaminen.voimassa"
+                      defaultMessage="voimassa"
+                    />{" "}
+                    {link.validFrom} - {link.validTo}
                   </LinkItem>
                   <LinkItem>{link.url}</LinkItem>
                   <LinkAnchor>
@@ -191,13 +305,139 @@ export function ShareDialog(props: ShareDialogProps) {
                         remove(event, link.id)
                       }
                     >
-                      Poista linkki
+                      <FormattedMessage
+                        id="jakaminen.poistaLinkki"
+                        defaultMessage="Poista linkki"
+                      />
                     </a>
                   </LinkAnchor>
                 </SharedLink>
               )
             })}
           </SharedLinks>
+          <div>
+            <div>
+              <ShareColumns>
+                <ShareColumn>
+                  {createdUrl && (
+                    <ShareColumns>
+                      <ShareColumn>
+                        <Subtitle>
+                          {type === "naytto" ? (
+                            <FormattedMessage
+                              id="jakaminen.linkkiNaytonTietoihin"
+                              defaultMessage="Linkki näytön tietoihin"
+                            />
+                          ) : (
+                            <FormattedMessage
+                              id="jakaminen.linkkiTutkinnonosanTietoihin"
+                              defaultMessage="Linkki tutkinnonosan tietoihin"
+                            />
+                          )}
+                        </Subtitle>
+                      </ShareColumn>
+                      <ShareColumn>{createdUrl}</ShareColumn>
+                    </ShareColumns>
+                  )}
+                  <ShareColumns>
+                    <TitleColumn>
+                      <Subtitle>
+                        <FormattedMessage
+                          id="jakaminen.linkinVoimassaolo"
+                          defaultMessage="Linkin voimassaolo"
+                        />
+                      </Subtitle>
+                    </TitleColumn>
+                    <ShareColumn>
+                      <DateInput
+                        type="date"
+                        value={startDate}
+                        onChange={e => setStartDate(e.target.value)}
+                      />{" "}
+                      -{" "}
+                      <DateInput
+                        type="date"
+                        value={endDate}
+                        onChange={e => setEndDate(e.target.value)}
+                      />
+                    </ShareColumn>
+                  </ShareColumns>
+                </ShareColumn>
+                <ButtonsContainer>
+                  <ShareButton onClick={addLink}>
+                    <FormattedMessage
+                      id="jakaminen.luoUusiLinkki"
+                      defaultMessage="Luo uusi linkki"
+                    />
+                  </ShareButton>
+                  {createdUrl && !linkCopied && (
+                    <CopyToClipboard
+                      text={createdUrl}
+                      onCopy={copyLinkNotification}
+                    >
+                      <ShareButton>
+                        <FormattedMessage
+                          id="jakaminen.kopioiJaettavaLinkki"
+                          defaultMessage="Kopioi jaettava linkki"
+                        />
+                      </ShareButton>
+                    </CopyToClipboard>
+                  )}
+                  {createdUrl && linkCopied && (
+                    <ShareButton disabled={true}>
+                      <FormattedMessage
+                        id="jakaminen.linkkiKopioitiin"
+                        defaultMessage="Linkki kopioitiin leikepöydälle"
+                      />
+                    </ShareButton>
+                  )}
+                </ButtonsContainer>
+              </ShareColumns>
+            </div>
+            {instructor && instructor.email && (
+              <ShareColumns>
+                <ShareColumn>
+                  <ShareColumns>
+                    <TitleColumn>
+                      <Subtitle>
+                        <FormattedMessage
+                          id="jakaminen.tyopaikkaohjaaja"
+                          defaultMessage="Työpaikkaohjaaja"
+                        />
+                      </Subtitle>
+                    </TitleColumn>
+                    <ShareColumn>
+                      {instructor.name}, {instructor.organisation}{" "}
+                      {instructor.email}
+                    </ShareColumn>
+                  </ShareColumns>
+                </ShareColumn>
+                <ButtonsContainer>
+                  {instructor.email && !instructorCopied && (
+                    <CopyToClipboard
+                      text={instructor.email}
+                      onCopy={copyInstructorNotification}
+                    >
+                      <ShareButton>
+                        <FormattedMessage
+                          id="jakaminen.kopioiOhjaajanSahkoposti"
+                          defaultMessage="Kopioi sähköpostiosoite"
+                        />
+                      </ShareButton>
+                    </CopyToClipboard>
+                  )}
+                  {instructor.email && instructorCopied && (
+                    <ShareButton disabled={true}>
+                      <FormattedMessage
+                        id="jakaminen.sahkopostiKopioitiin"
+                        defaultMessage="Sähköpostiosoite kopioitiin leikepöydälle"
+                      />
+                    </ShareButton>
+                  )}
+                </ButtonsContainer>
+              </ShareColumns>
+            )}
+          </div>
         </ShareContainer>
       ) : (
         children

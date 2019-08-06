@@ -7,7 +7,7 @@ export function getHarjoittelujaksot(
     tyopaikallaJarjestettavaKoulutus: {
       tyopaikanNimi: string
       keskeisetTyotehtavat: string[]
-      vastuullinenTyopaikkaOhjaaja: { nimi: string }
+      vastuullinenTyopaikkaOhjaaja: { nimi: string; sahkoposti: string }
     }
     muutOppimisymparistot: Array<{
       oppimisymparisto: { nimi: string }
@@ -23,8 +23,7 @@ export function getHarjoittelujaksot(
       loppu: tapa.loppu,
       ohjaaja: tapa.tyopaikallaJarjestettavaKoulutus
         ? tapa.tyopaikallaJarjestettavaKoulutus.vastuullinenTyopaikkaOhjaaja
-            .nimi
-        : "",
+        : undefined,
       tyotehtavat: tapa.tyopaikallaJarjestettavaKoulutus
         ? tapa.tyopaikallaJarjestettavaKoulutus.keskeisetTyotehtavat
         : [],

@@ -29,7 +29,7 @@ export interface Naytto {
 export interface Harjoittelujakso {
   alku?: string
   loppu?: string
-  ohjaaja?: string
+  ohjaaja?: { nimi: string; sahkoposti: string }
   tyotehtavat?: string[]
   nimi?: string
   selite?: string
