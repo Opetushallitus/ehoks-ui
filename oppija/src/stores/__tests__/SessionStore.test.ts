@@ -54,6 +54,7 @@ describe("SessionStore", () => {
             }
           ],
           firstName: "Teuvo Taavetti",
+          fullName: "",
           oid: "1.1.111.111.11.111111111",
           surname: "Testaaja"
         })
@@ -77,6 +78,7 @@ describe("SessionStore", () => {
       commonName: "Teuvo",
       contactValuesGroup: [],
       firstName: "Teuvo Taavetti",
+      fullName: "",
       oid: "",
       surname: "Testaaja"
     })

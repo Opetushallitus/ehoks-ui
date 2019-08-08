@@ -44,7 +44,8 @@ const Model = types.model("HOKSModel", {
   hankittavatYhteisetTutkinnonOsat: types.array(HankittavaYhteinenTutkinnonOsa),
   urasuunnitelmaKoodiUri: types.optional(types.string, ""),
   urasuunnitelma: types.optional(KoodistoVastaus, {}),
-  versio: types.optional(types.number, 0)
+  versio: types.optional(types.number, 0),
+  sahkoposti: types.optional(types.string, "")
 })
 
 export const HOKS = types
