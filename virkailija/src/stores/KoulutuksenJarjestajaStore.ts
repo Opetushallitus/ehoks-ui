@@ -25,6 +25,7 @@ export const Oppija = types
       self
     )
 
+    // fetches HOKSes with basic info (root level only)
     const haeSuunnitelmat = flow(function*() {
       const response = yield fetchCollection(
         apiUrl(`virkailija/oppijat/${self.oid}/hoksit`)
