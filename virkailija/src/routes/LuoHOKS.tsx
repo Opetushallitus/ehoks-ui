@@ -1,6 +1,7 @@
 import { Button } from "components/Button"
 import { Heading } from "components/Heading"
 import { LoadingSpinner } from "components/LoadingSpinner"
+import { ModalDialog } from "components/ModalDialog"
 import { TypeaheadField } from "components/react-jsonschema-form/TypeaheadField"
 import { JSONSchema6 } from "json-schema"
 import { inject, observer } from "mobx-react"
@@ -89,6 +90,11 @@ const FailureMessage = styled("div")`
   color: ${props => props.theme.colors.brick};
 `
 
+const ClearButton = styled(Button)`
+  background: transparent;
+  color: #000;
+`
+
 interface LuoHOKSProps {
   path?: string
   store?: IRootStore
@@ -107,6 +113,7 @@ interface LuoHOKSState {
   errorsByStep: { [index: string]: AjvError[] }
   koodiUris: { [key in keyof typeof koodistoUrls]: any[] }
   message?: string
+  clearModalOpen: boolean
 }
 
 @inject("store")
@@ -124,7 +131,8 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     rawSchema: {},
     koodiUris: buildKoodiUris(),
     errorsByStep: {},
-    message: undefined
+    message: undefined,
+    clearModalOpen: false
   }
 
   async fetchKoodiUris() {
@@ -152,7 +160,17 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     console.log("rawSchema", rawSchema)
     const koodiUris = await this.fetchKoodiUris()
     const schema = schemaByStep(rawSchema, this.state.currentStep)
+    const {
+      formData = {},
+      errors = [],
+      errorsByStep = {}
+    } = window.localStorage.getItem("hoks")
+      ? JSON.parse(window.localStorage.getItem("hoks") || "")
+      : {}
     this.setState({
+      formData,
+      errors,
+      errorsByStep,
       rawSchema,
       schema,
       koodiUris,
@@ -211,6 +229,11 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       }),
       () => {
         console.log("STATE", this.state.formData, errors)
+        const { errorsByStep } = this.state
+        window.localStorage.setItem(
+          "hoks",
+          JSON.stringify({ formData, errors, errorsByStep })
+        )
       }
     )
   }
@@ -256,9 +279,11 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       this.setState({
         formData: {},
         errors: [],
+        errorsByStep: {},
         success: true,
         userEnteredText: false
       })
+      window.localStorage.removeItem("hoks")
     } else {
       this.setState({ success: false })
     }
@@ -288,7 +313,29 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     return { isRoot: (title: string) => rootKeys.indexOf(title) > -1 }
   }
 
+  openClearModal = () => {
+    this.setState({ clearModalOpen: true })
+  }
+
+  closeClearModal = () => {
+    this.setState({ clearModalOpen: false })
+  }
+
+  resetForm = () => {
+    this.setState({
+      formData: {},
+      errors: [],
+      success: undefined,
+      userEnteredText: false,
+      currentStep: 0,
+      errorsByStep: {},
+      message: undefined,
+      clearModalOpen: false
+    })
+  }
+
   render() {
+    const { clearModalOpen } = this.state
     return (
       <Container onKeyUp={this.userHasEnteredText}>
         <TopToolbar id="topToolbar">
@@ -331,6 +378,20 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
                 <Button type="submit" disabled={!this.isValid()}>
                   Luo HOKS
                 </Button>
+                <ClearButton onClick={this.openClearModal}>
+                  Tyhjennä
+                </ClearButton>
+                <ModalDialog
+                  open={clearModalOpen}
+                  closeModal={this.closeClearModal}
+                  label="Haluatko varmasti tyhjentää lomakkeen?"
+                >
+                  <p>Haluatko varmasti tyhjentää lomakkeen?</p>
+                  <Button onClick={this.resetForm}>Tyhjennä</Button>
+                  <ClearButton onClick={this.closeClearModal}>
+                    Peruuta
+                  </ClearButton>
+                </ModalDialog>
                 {this.state.isLoading && (
                   <SpinnerContainer>
                     <LoadingSpinner />
