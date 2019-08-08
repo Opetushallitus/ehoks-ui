@@ -17,6 +17,7 @@ import find from "lodash.find"
 
 const Model = types.model("HOKSModel", {
   eid: types.optional(types.string, ""),
+  id: types.optional(types.number, 0),
   ensikertainenHyvaksyminen: types.optional(types.string, ""),
   hyvaksytty: types.optional(types.string, ""),
   luotu: types.optional(types.string, ""),
@@ -59,6 +60,17 @@ export const HOKS = types
     const { apiUrl, apiPrefix, errors, fetchCollection, fetchSingle } = getEnv<
       StoreEnvironment
     >(self)
+
+    // fetches detailed HOKS, only needed in virkailija app
+    const fetchDetails = flow(function*() {
+      const response = yield fetchSingle(
+        apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}`)
+      )
+      const keys = Object.keys(response.data)
+      keys.forEach(key => {
+        self[key] = response.data[key]
+      })
+    })
 
     const fetchTutkinto = flow(function*() {
       const diaarinumero =
@@ -107,7 +119,7 @@ export const HOKS = types
       }
     })
 
-    return { fetchOpiskeluoikeudet }
+    return { fetchDetails, fetchOpiskeluoikeudet }
   })
   .actions(self => ({
     afterCreate() {
