@@ -37,7 +37,9 @@ export const Oppija = types
       const response = yield fetchSingle(
         apiUrl(`virkailija/oppijat/${self.oid}`)
       )
-      self.henkilotiedot = response.data
+      const { oid, nimi } = response.data
+      self.henkilotiedot.oid = oid
+      self.henkilotiedot.fullName = nimi
     })
 
     return { haeSuunnitelmat, haeHenkilotiedot }
