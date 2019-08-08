@@ -234,58 +234,37 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
   create = async (fieldProps: IChangeEvent<FieldProps>) => {
     this.setState({ isLoading: true })
 
-    const indexRequest = await window.fetch(
+    const request = await window.fetch(
       `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${
         fieldProps.formData["oppija-oid"]
-      }/index`,
+      }/hoksit`,
       {
         method: "POST",
         credentials: "include",
         headers: {
           Accept: "application/json; charset=utf-8",
+          // "Caller-Id": ""
           "Content-Type": "application/json"
-        }
+          // ticket: """
+        },
+        body: JSON.stringify(fieldProps.formData)
       }
     )
+    const json = await request.json()
 
-    if (indexRequest.status === 200) {
-      const request = await window.fetch(
-        `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${
-          fieldProps.formData["oppija-oid"]
-        }/hoksit`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            Accept: "application/json; charset=utf-8",
-            // "Caller-Id": ""
-            "Content-Type": "application/json"
-            // ticket: """
-          },
-          body: JSON.stringify(fieldProps.formData)
-        }
-      )
-      const json = await request.json()
-
-      if (request.status === 200) {
-        this.setState({
-          formData: {},
-          errors: [],
-          success: true,
-          userEnteredText: false
-        })
-      } else {
-        this.setState({ success: false })
-      }
-      console.log("RESPONSE STATUS", request.status)
-      console.log("RESPONSE JSON", json)
-      this.setState({ isLoading: false })
-    } else {
+    if (request.status === 200) {
       this.setState({
-        success: false,
-        message: "Oppijan indeksointi epäonnistui"
+        formData: {},
+        errors: [],
+        success: true,
+        userEnteredText: false
       })
+    } else {
+      this.setState({ success: false })
     }
+    console.log("RESPONSE STATUS", request.status)
+    console.log("RESPONSE JSON", json)
+    this.setState({ isLoading: false })
   }
 
   completedSteps = () => {
