@@ -27,7 +27,8 @@ export const SessionUser = types
     contactValuesGroup: types.optional(types.array(ContactValue), []),
     firstName: types.optional(types.string, ""),
     oid: types.optional(types.string, ""),
-    surname: types.string
+    surname: types.string,
+    fullName: types.optional(types.string, "")
   })
   .views(self => {
     return {
