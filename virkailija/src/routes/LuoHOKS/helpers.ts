@@ -1,4 +1,5 @@
 import { JSONSchema6, JSONSchema6Definition } from "json-schema"
+import find from "lodash.find"
 import { AjvError } from "react-jsonschema-form"
 import { koodistoUrls } from "./koodistoUrls"
 import { propertiesByStep } from "./propertiesByStep"
@@ -53,10 +54,12 @@ export function buildKoodiUris() {
   )
 }
 
-export function mapKoodiUri({ koodiUri, metadata }: any) {
+export function mapKoodiUri({ koodiUri, versio, metadata }: any) {
+  const meta = find(metadata, md => md.kieli === "FI")
   return {
     koodiUri,
-    nimi: metadata[0].nimi
+    nimi: meta ? meta.nimi : "",
+    versio
   }
 }
 
