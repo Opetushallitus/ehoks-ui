@@ -29,6 +29,72 @@ import { koodistoUrls } from "./LuoHOKS/koodistoUrls"
 import "./LuoHOKS/styles.css"
 import { uiSchemaByStep } from "./LuoHOKS/uiSchema"
 
+const codeCategoriesForPaths = {
+  "urasuunnitelma-koodi-versio": "urasuunnitelma",
+  "tutkinnon-osa-koodi-versio": "tutkinnonosat",
+  "valittu-todentamisen-prosessi-koodi-versio": "osaamisentodentamisenprosessi",
+  "koodi-versio": "ammatillisenoppiaineet",
+  "osa-alue-koodi-versio": "ammatillisenoppiaineet",
+  "osaamisen-hankkimistapa-koodi-versio": "osaamisenhankkimistapa",
+  "oppimisymparisto-koodi-versio": "oppimisymparistot"
+}
+
+const codeVersionByPath = (
+  path: keyof typeof codeCategoriesForPaths,
+  koodiUris: any
+) => {
+  const codeCategory = codeCategoriesForPaths[path]
+  if (koodiUris[codeCategory]) {
+    // all koodiUris have the same version in this scenario
+    return koodiUris[codeCategory][0].versio
+  } else {
+    return 1
+  }
+}
+
+function isRoot(rootKeys: string[]) {
+  return (title: string) => {
+    return rootKeys.indexOf(title) > -1
+  }
+}
+
+function idToPathArray(id: string) {
+  return id.replace("root_", "").split("_")
+}
+
+// creates (React state compatible) immutable state for formData
+function updateValue(data: any, pathArray: string[], value: any): any {
+  const [firstPath, ...rest] = pathArray
+  if (!rest.length) {
+    return { ...data, [firstPath]: value }
+  } else if (!isNaN(Number(firstPath))) {
+    const arrCopy = [...data]
+    arrCopy[Number(firstPath)] = updateValue(data[firstPath], rest, value)
+    return arrCopy
+  } else {
+    return { ...data, [firstPath]: updateValue(data[firstPath], rest, value) }
+  }
+}
+
+// updates related code version value when code uri is selected or unselected
+function updateCodeVersionAt(
+  path: string,
+  selected: boolean,
+  formData: any,
+  koodiUris: any
+) {
+  const pathArray = idToPathArray(path.replace("koodi-uri", "koodi-versio"))
+  const lastPath: keyof typeof codeCategoriesForPaths = pathArray[
+    pathArray.length - 1
+  ] as keyof typeof codeCategoriesForPaths
+
+  return updateValue(
+    formData,
+    pathArray,
+    selected ? codeVersionByPath(lastPath, koodiUris) : undefined
+  )
+}
+
 const fields = {
   SchemaField: CustomSchemaField,
   typeahead: TypeaheadField
@@ -228,7 +294,6 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
         errorsByStep: { ...state.errorsByStep, [state.currentStep]: errors }
       }),
       () => {
-        console.log("STATE", this.state.formData, errors)
         const { errorsByStep } = this.state
         window.localStorage.setItem(
           "hoks",
@@ -310,7 +375,31 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
 
   formContext = () => {
     const rootKeys = Object.keys(this.state.rawSchema.properties || {})
-    return { isRoot: (title: string) => rootKeys.indexOf(title) > -1 }
+    return {
+      isRoot: isRoot(rootKeys),
+      koodiUriSelected: (path: string, selected: boolean) => {
+        this.setState(
+          state => {
+            return {
+              ...state,
+              formData: updateCodeVersionAt(
+                path,
+                selected,
+                state.formData,
+                state.koodiUris
+              )
+            }
+          },
+          () => {
+            const { formData, errors, errorsByStep } = this.state
+            window.localStorage.setItem(
+              "hoks",
+              JSON.stringify({ formData, errors, errorsByStep })
+            )
+          }
+        )
+      }
+    }
   }
 
   openClearModal = () => {

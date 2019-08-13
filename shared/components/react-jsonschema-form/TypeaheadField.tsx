@@ -234,7 +234,7 @@ class BaseTypeaheadField extends Component<
   }
   handleSelectionChange = (conf: any) => (events: any) => {
     let { mapping, cleanAfterSelection = false } = conf
-    let { schema } = this.props
+    let { schema, idSchema, formContext } = this.props
 
     this.setState({
       selected: events
@@ -243,6 +243,11 @@ class BaseTypeaheadField extends Component<
     if (events.length > 0) {
       let schemaEvents = mapToSchema(events, schema, mapping)
       this.props.onChange(schemaEvents)
+      // NOTE: this setTimeout hack is needed because onChange does not return a Promise
+      // and we would lose the root form's state update without it
+      setTimeout(() => {
+        formContext.koodiUriSelected(idSchema.$id, true)
+      }, 0)
       if (cleanAfterSelection) {
         setTimeout(() => {
           if (this.refs.typeahead) {
@@ -253,6 +258,11 @@ class BaseTypeaheadField extends Component<
     } else {
       // selection was removed, remove from formData
       this.props.onChange(undefined)
+      // NOTE: this setTimeout hack is needed because onChange does not return a Promise
+      // and we would lose the root form's state update without it
+      setTimeout(() => {
+        formContext.koodiUriSelected(idSchema.$id, false)
+      }, 0)
     }
   }
 
