@@ -19,7 +19,6 @@ addLocaleData([...fi, ...sv])
 const store = RootStore.create({}, createEnvironment(fetch, apiUrl, apiPrefix))
 store.environment.getEnvironment()
 store.translations.fetchLocales()
-store.notifications.fetchNotifications()
 
 const apiConfig = { apiUrl, apiPrefix }
 

@@ -51,9 +51,14 @@ export interface AppProps {
 @inject("store")
 @observer
 export class App extends React.Component<AppProps> {
-  componentDidMount() {
+  async componentDidMount() {
+    const { store } = this.props
     // load user session info from backend
-    this.props.store!.session.checkSession()
+    await store!.session.checkSession()
+    // load unacknowledged notifications after login
+    if (store!.session.isLoggedIn) {
+      store!.notifications.fetchNotifications()
+    }
   }
 
   render() {
