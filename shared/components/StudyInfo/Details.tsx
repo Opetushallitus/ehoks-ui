@@ -67,6 +67,7 @@ const VerificationTitle = styled("strong")`
 interface DetailsProps {
   fadedColor?: string
   demonstrations?: Array<Naytto>
+  extraContent?: React.ReactNode
   expanded?: boolean
   learningPeriods?: Array<Harjoittelujakso>
   verificationProcess?: TodentamisenProsessi
@@ -81,6 +82,7 @@ export class Details extends React.Component<DetailsProps> {
     const {
       fadedColor = "",
       demonstrations = [],
+      extraContent = null,
       expanded,
       learningPeriods = [],
       verificationProcess,
@@ -123,6 +125,7 @@ export class Details extends React.Component<DetailsProps> {
               />
             )
           })}
+          {extraContent}
         </DetailsContent>
       </DetailsExpanded>
     ) : (

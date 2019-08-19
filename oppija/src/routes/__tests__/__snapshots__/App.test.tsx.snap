@@ -1,7 +1,1089 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App renders correctly 1`] = `
-"<div style=\\"outline: none;\\" tabindex=\\"-1\\" role=\\"group\\"><div class=\\"sc-drMfKT lfaFcN\\"><header class=\\"sc-cJSrbW cSLwFR\\"><div class=\\"sc-ksYbfQ fDdURH\\"><nav class=\\"sc-hmzhuo gKmAox\\"><a href=\\"#main\\" class=\\"sc-frDJqD bQzOmX\\">Siirry pääsisältöön</a><a href=\\"https://opintopolku.fi/\\" class=\\"sc-kvZOFW bqxDAf\\">Opintopolku.fi</a><a href=\\"https://opintopolku.fi/oma-opintopolku/\\" class=\\"sc-kvZOFW bqxDAf\\">Oma Opintopolku</a><a href=\\"https://eperusteet.opintopolku.fi/\\" class=\\"sc-kvZOFW bqxDAf\\">ePerusteet</a><a href=\\"/\\" class=\\"sc-kvZOFW biNcmn\\">eHOKS</a></nav></div><div class=\\"sc-hqyNC kpZYRz\\"><div class=\\"sc-jbKcbu jtPQOD\\"><svg stroke=\\"currentColor\\" fill=\\"currentColor\\" stroke-width=\\"0\\" viewBox=\\"0 0 24 24\\" size=\\"40\\" height=\\"40\\" width=\\"40\\"><path d=\\"M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z\\"></path></svg><h3>Valikko</h3></div><div class=\\"sc-dNLxif glJfC\\">eHOKS</div></div></header><div class=\\"sc-bdVaJa ipaUJG\\"></div><main id=\\"main\\" role=\\"main\\" class=\\"sc-fgfRvd ivvGnR\\"><div style=\\"outline: none;\\" tabindex=\\"-1\\" role=\\"group\\"><div class=\\"sc-bdVaJa ipaUJG\\"><h1 class=\\"sc-btzYZH icrdOw\\">Opiskelun henkilökohtainen suunnittelu</h1><div class=\\"sc-cmTdod cETCFX\\"><div role=\\"banner\\" class=\\"sc-jwKygS gatoqX\\"><div class=\\"sc-bYSBpT iCwVIi\\"><div class=\\"sc-kTUwUJ iwrqHC\\"><h2>Opiskelija</h2><button aria-label=\\"Näytä ohjeteksti\\" class=\\"sc-dqBHgY gDBeNi sc-tilXH kNvNtz\\"><svg stroke=\\"currentColor\\" fill=\\"currentColor\\" stroke-width=\\"0\\" viewBox=\\"0 0 24 24\\" size=\\"28\\" color=\\"#027fa9\\" class=\\"sc-fYxtnH hSLfWw\\" style=\\"color: rgb(2, 127, 169);\\" height=\\"28\\" width=\\"28\\"><path d=\\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z\\"></path></svg></button></div><p>Kirjautumalla siirryt oman henkilö­kohtaiseen opintojen suunnitteluun.</p><button class=\\"sc-jnlKLf sc-elJkPf ijoJuS sc-gGBfsJ hlagwm\\" type=\\"button\\">Kirjaudu omaan suunnitelmaan</button></div><div class=\\"sc-bYSBpT iCwVIi\\"><div class=\\"sc-kTUwUJ iwrqHC\\"><h2>Ohjaaja</h2><button aria-label=\\"Näytä ohjeteksti\\" class=\\"sc-dqBHgY gDBeNi sc-tilXH kNvNtz\\"><svg stroke=\\"currentColor\\" fill=\\"currentColor\\" stroke-width=\\"0\\" viewBox=\\"0 0 24 24\\" size=\\"28\\" color=\\"#027fa9\\" class=\\"sc-fYxtnH hSLfWw\\" style=\\"color: rgb(2, 127, 169);\\" height=\\"28\\" width=\\"28\\"><path d=\\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z\\"></path></svg></button></div><p>Kirjautumalla siirryt ohjattavien opiskelijoiden suunnitelmiin.</p><button class=\\"sc-jnlKLf sc-elJkPf ijoJuS sc-gGBfsJ hlagwm\\" type=\\"button\\">Kirjaudu oppilaitoksen edustajana</button></div><div class=\\"sc-bYSBpT iCwVIi\\"><div class=\\"sc-kTUwUJ iwrqHC\\"><h2>Työelämän toimija</h2><button aria-label=\\"Näytä ohjeteksti\\" class=\\"sc-dqBHgY gDBeNi sc-tilXH kNvNtz\\"><svg stroke=\\"currentColor\\" fill=\\"currentColor\\" stroke-width=\\"0\\" viewBox=\\"0 0 24 24\\" size=\\"28\\" color=\\"#027fa9\\" class=\\"sc-fYxtnH hSLfWw\\" style=\\"color: rgb(2, 127, 169);\\" height=\\"28\\" width=\\"28\\"><path d=\\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z\\"></path></svg></button></div><p>Kirjaudu palveluun saamasi sähköpostilinkin kautta.</p></div></div><main class=\\"sc-lhVmIH jMkRqM\\"><a class=\\"sc-iELTvK bFCSfu\\" href=\\"/ehoks/henkilokohtaistaminen\\"><div class=\\"sc-jtRfpW bLXFJN sc-hEsumM hIpGcE\\"><div class=\\"sc-ktHwxA fwnSGd\\"><div class=\\"sc-kafWEX bImKeU\\">Mitä henkilökohtaista­minen tarkoittaa?</div></div><div role=\\"img\\" class=\\"sc-cIShpX jbRWuK\\"></div></div></a><a class=\\"sc-iELTvK bFCSfu\\" href=\\"/ehoks/ammatillinentutkinto\\"><div class=\\"sc-jtRfpW bLXFJN sc-hEsumM hIpGcE\\"><div class=\\"sc-ktHwxA fwnSGd\\"><div class=\\"sc-kafWEX bImKeU\\">Mitä ammatilliset tutkinnot sisältävät?</div></div><div role=\\"img\\" class=\\"sc-cIShpX jbRWuK\\"></div></div></a></main></div></div></div></main><footer class=\\"sc-cMljjf fpGonB\\"><div class=\\"sc-jAaTju dqFWoa\\"><div class=\\"sc-jDwBTQ sc-gPEVay kDQVIx\\"><div class=\\"sc-Rmtcm epsSyF\\"><img src=\\"\\" alt=\\"Opintopolku logo\\" class=\\"sc-bRBYWo iPtExF\\"><div class=\\"sc-fMiknA kXVVwZ\\"><a><img src=\\"\\" alt=\\"Twitter\\" class=\\"sc-brqgnP iZJjvC\\"></a><a><img src=\\"\\" alt=\\"Facebook\\" class=\\"sc-brqgnP iZJjvC\\"></a><a><img src=\\"\\" alt=\\"Instagram\\" class=\\"sc-brqgnP iZJjvC\\"></a></div></div><ul class=\\"sc-iRbamj cgWICn\\"><li>ePerusteet</li><li>Mikä on opintopolku</li><li>Tietoturvaseloste</li><li>Anna palautetta</li></ul></div><div class=\\"sc-jlyJG jhoVdt\\"><div class=\\"sc-jDwBTQ sc-gipzik MtcxI\\"><img src=\\"\\" alt=\\"Opetus- ja kulttuuriministeriö logo\\" class=\\"sc-jWBwVP dsaxld\\"><img src=\\"\\" alt=\\"Opetushallitus logo\\" class=\\"sc-jWBwVP dsaxld\\"></div><div class=\\"sc-jDwBTQ sc-csuQGl cNPkXg\\"><p>Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja
+.c10 {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.c37 {
+  height: 50px;
+}
+
+.c37:first-of-type {
+  margin-right: 20px;
+}
+
+.c33 {
+  margin-left: 20px;
+  width: 30px;
+}
+
+.c27 {
+  width: 100%;
+  background-color: #f8f8f8;
+  border-top: 1px solid #c8cdcf;
+}
+
+.c28 {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  padding: 20px 50px 30px 40px;
+}
+
+.c29 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-self: flex-start;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c34 {
+  list-style: none;
+  margin: 10px 0 0 0;
+  padding-left: 0;
+}
+
+.c34 li {
+  line-height: 30px;
+  color: #4a4a4a;
+}
+
+.c35 {
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  background: transparent;
+}
+
+.c36 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+}
+
+.c38 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  -webkit-flex: 4;
+  -ms-flex: 4;
+  flex: 4;
+}
+
+.c38 p {
+  font-size: 14px;
+  line-height: 24px;
+  text-align: right;
+  color: #626769;
+  margin-bottom: 30px;
+}
+
+.c30 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c31 {
+  width: 200px;
+}
+
+.c39 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.c40 a {
+  margin-right: 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.c41 {
+  color: #cfd5d7;
+}
+
+.c32 {
+  display: none;
+}
+
+.c42 {
+  display: block;
+}
+
+.c1 {
+  width: 100%;
+  color: #fff;
+  background-color: #149ecb;
+  line-height: 16px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.c2 {
+  width: 100%;
+  background-color: #06526b;
+  font-size: 16px;
+  padding-left: 20px;
+}
+
+.c3 {
+  line-height: 20px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.c4 {
+  left: -999px;
+  position: absolute;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: -999;
+}
+
+.c4:focus,
+.c4:active {
+  position: unset;
+  color: #fff;
+  width: auto;
+  height: auto;
+  padding: 5px 20px 5px 20px;
+  line-height: 20px;
+  z-index: 999;
+}
+
+.c5 {
+  display: inline-block;
+  padding: 5px 20px 5px 20px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #fff;
+  line-height: 20px;
+  background: transparent;
+}
+
+.c5:focus {
+  outline: 2px solid #1976d2;
+}
+
+.c6 {
+  display: inline-block;
+  padding: 5px 20px 5px 20px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #fff;
+  line-height: 20px;
+  background: #149ecb;
+}
+
+.c6:focus {
+  outline: 2px solid #1976d2;
+}
+
+.c7 {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c8 {
+  display: none;
+}
+
+.c9 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  font-size: 32px;
+  line-height: 100%;
+  font-weight: 400;
+  margin: 25px 5px 25px 40px;
+}
+
+.c19 {
+  background: #1976d2;
+  font-family: "Source Sans Pro",sans-serif;
+  font-weight: 600;
+  color: #fff;
+  padding: 10px;
+  border: 0;
+  border-radius: 2px;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.c19:not(:disabled) {
+  cursor: pointer;
+  opacity: unset;
+}
+
+.c17 {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  height: 28px;
+  font: inherit;
+  color: inherit;
+}
+
+.c17::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+.c23 {
+  background-color: #00AC3D;
+  border: 1px solid #979797;
+  margin: 0 0 20px 0;
+  min-height: 320px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c24 {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 10px;
+  min-height: 90px;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c26 {
+  background-image: url();
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c25 {
+  font-size: 25px;
+  font-weight: 300;
+}
+
+.c21 {
+  display: block;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #fff;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 30px 50px 50px 40px;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-align-content: flex-start;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+  margin-right: 30px;
+}
+
+.c11 {
+  margin: 30px 50px 30px 40px;
+  font-weight: 400;
+  color: #4a4a4a;
+}
+
+.c20 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 0;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin-right: 20px;
+}
+
+.c14 {
+  margin: 0 20px 10px 0;
+  padding: 10px;
+  border: 1px solid #6e6e7e;
+  width: calc(50% - 20px);
+}
+
+.c14 p {
+  color: #6e6e7e;
+}
+
+.c18 {
+  padding: 15px 60px;
+  font-size: 16px;
+  font-weight: 400;
+  width: 100%;
+  padding: 15px 0;
+}
+
+.c22 {
+  min-height: 400px;
+  margin-right: 20px;
+}
+
+.c15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c15 h2 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  color: #000;
+  font-weight: 400;
+  margin: 0;
+  font-size: 34px;
+}
+
+.c16 {
+  margin-top: 7px;
+}
+
+.c0 {
+  margin: 0;
+}
+
+@media screen and (max-width:900px) {
+  .c33 {
+    margin-top: 15px;
+    margin-left: 10px;
+  }
+
+  a:first-of-type .c33 {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c27 {
+    background-color: #fff;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c28 {
+    display: block;
+    padding: 0;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c29 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    padding: 20px 50px 30px 20px;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c35 {
+    background: #f8f8f8;
+    border-top: 1px solid #979797;
+    -webkit-flex-direction: column-reverse;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c36 {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin: 20px 0;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c38 {
+    padding: 0 20px;
+  }
+
+  .c38 p {
+    margin-bottom: 0;
+    text-align: left;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c31 {
+    width: 150px;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c39 {
+    display: none;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c32 {
+    display: block;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c42 {
+    display: none;
+  }
+}
+
+@media screen and (max-width:720px) {
+  .c2 {
+    display: none;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c2 {
+    padding-left: 0;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c8 {
+    display: block;
+    margin: 0 20px;
+  }
+
+  .c8 h3 {
+    margin: -5px 0 0 0;
+    font-size: 12px;
+    font-weight: 300;
+    text-transform: uppercase;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c9 {
+    margin: 25px 5px 25px 20px;
+  }
+}
+
+@media screen and (max-width:1160px) {
+  .c26 {
+    background-position: top;
+  }
+}
+
+@media screen and (max-width:600px) {
+  .c21 {
+    -webkit-flex: auto;
+    -ms-flex: auto;
+    flex: auto;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c12 {
+    display: block;
+    margin: 30px 50px 0 20px;
+  }
+}
+
+@media screen and (max-width:1160px) {
+  .c12 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width:1160px) {
+  .c13 {
+    margin-right: 0;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c11 {
+    margin: 30px 50px 0 20px;
+  }
+}
+
+@media screen and (max-width:1160px) {
+  .c20 {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width:1160px) {
+  .c14 {
+    width: calc(100% - 20px);
+    margin: 0 0 10px 0;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c14 {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width:720px) {
+  .c18 {
+    padding: 15px 0;
+  }
+}
+
+@media screen and (max-width:600px) {
+  .c22 {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width:900px) {
+  a:last-child .c22 {
+    margin-right: 0;
+  }
+}
+
+<div>
+  <div
+    role="group"
+    style="outline: none;"
+    tabindex="-1"
+  >
+    <div
+      class="c0"
+    >
+      <header
+        class="c1"
+      >
+        <div
+          class="c2"
+        >
+          <nav
+            class="c3"
+          >
+            <a
+              class="c4"
+              href="#main"
+            >
+              Siirry pääsisältöön
+            </a>
+            <a
+              class="c5"
+              href="https://opintopolku.fi/"
+            >
+              Opintopolku.fi
+            </a>
+            <a
+              class="c5"
+              href="https://opintopolku.fi/oma-opintopolku/"
+            >
+              Oma Opintopolku
+            </a>
+            <a
+              class="c5"
+              href="https://eperusteet.opintopolku.fi/"
+            >
+              ePerusteet
+            </a>
+            <a
+              class="c6"
+              href="/"
+            >
+              eHOKS
+            </a>
+          </nav>
+        </div>
+        <div
+          class="c7"
+        >
+          <div
+            class="c8"
+          >
+            <svg
+              fill="currentColor"
+              height="40"
+              size="40"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="40"
+            >
+              <path
+                d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+              />
+            </svg>
+            <h3>
+              Valikko
+            </h3>
+          </div>
+          <div
+            class="c9"
+          >
+            eHOKS
+          </div>
+        </div>
+      </header>
+      <div
+        class="c10"
+      />
+      <main
+        class=""
+        id="main"
+        role="main"
+      >
+        <div
+          role="group"
+          style="outline: none;"
+          tabindex="-1"
+        >
+          <div
+            class="c10"
+          >
+            <h1
+              class="c11"
+            >
+              Opiskelun henkilökohtainen suunnittelu
+            </h1>
+            <div
+              class="c12"
+            >
+              <div
+                class="c13"
+                role="banner"
+              >
+                <div
+                  class="c14"
+                >
+                  <div
+                    class="c15"
+                  >
+                    <h2>
+                      Opiskelija
+                    </h2>
+                    <button
+                      aria-label="Näytä ohjeteksti"
+                      class="c16 c17"
+                    >
+                      <svg
+                        class=""
+                        color="#027fa9"
+                        fill="currentColor"
+                        height="28"
+                        size="28"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        style="color: rgb(2, 127, 169);"
+                        viewBox="0 0 24 24"
+                        width="28"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <p>
+                    Kirjautumalla siirryt oman henkilö­kohtaiseen opintojen suunnitteluun.
+                  </p>
+                  <button
+                    class="c18 c19"
+                    type="button"
+                  >
+                    Kirjaudu omaan suunnitelmaan
+                  </button>
+                </div>
+                <div
+                  class="c14"
+                >
+                  <div
+                    class="c15"
+                  >
+                    <h2>
+                      Ohjaaja
+                    </h2>
+                    <button
+                      aria-label="Näytä ohjeteksti"
+                      class="c16 c17"
+                    >
+                      <svg
+                        class=""
+                        color="#027fa9"
+                        fill="currentColor"
+                        height="28"
+                        size="28"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        style="color: rgb(2, 127, 169);"
+                        viewBox="0 0 24 24"
+                        width="28"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <p>
+                    Kirjautumalla siirryt ohjattavien opiskelijoiden suunnitelmiin.
+                  </p>
+                  <button
+                    class="c18 c19"
+                    type="button"
+                  >
+                    Kirjaudu oppilaitoksen edustajana
+                  </button>
+                </div>
+                <div
+                  class="c14"
+                >
+                  <div
+                    class="c15"
+                  >
+                    <h2>
+                      Työelämän toimija
+                    </h2>
+                    <button
+                      aria-label="Näytä ohjeteksti"
+                      class="c16 c17"
+                    >
+                      <svg
+                        class=""
+                        color="#027fa9"
+                        fill="currentColor"
+                        height="28"
+                        size="28"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        style="color: rgb(2, 127, 169);"
+                        viewBox="0 0 24 24"
+                        width="28"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <p>
+                    Kirjaudu palveluun saamasi sähköpostilinkin kautta.
+                  </p>
+                </div>
+              </div>
+              <main
+                class="c20"
+              >
+                <a
+                  class="c21"
+                  href="/ehoks/henkilokohtaistaminen"
+                >
+                  <div
+                    class="c22 c23"
+                  >
+                    <div
+                      class="c24"
+                    >
+                      <div
+                        class="c25"
+                      >
+                        Mitä henkilökohtaista­minen tarkoittaa?
+                      </div>
+                    </div>
+                    <div
+                      class="c26"
+                      role="img"
+                    />
+                  </div>
+                </a>
+                <a
+                  class="c21"
+                  href="/ehoks/ammatillinentutkinto"
+                >
+                  <div
+                    class="c22 c23"
+                  >
+                    <div
+                      class="c24"
+                    >
+                      <div
+                        class="c25"
+                      >
+                        Mitä ammatilliset tutkinnot sisältävät?
+                      </div>
+                    </div>
+                    <div
+                      class="c26"
+                      role="img"
+                    />
+                  </div>
+                </a>
+              </main>
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer
+        class="c27"
+      >
+        <div
+          class="c28"
+        >
+          <div
+            class="c29"
+          >
+            <div
+              class="c30"
+            >
+              <img
+                alt="Opintopolku logo"
+                class="c31"
+                src=""
+              />
+              <div
+                class="c32"
+              >
+                <a>
+                  <img
+                    alt="Twitter"
+                    class="c33"
+                    src=""
+                  />
+                </a>
+                <a>
+                  <img
+                    alt="Facebook"
+                    class="c33"
+                    src=""
+                  />
+                </a>
+                <a>
+                  <img
+                    alt="Instagram"
+                    class="c33"
+                    src=""
+                  />
+                </a>
+              </div>
+            </div>
+            <ul
+              class="c34"
+            >
+              <li>
+                ePerusteet
+              </li>
+              <li>
+                Mikä on opintopolku
+              </li>
+              <li>
+                Tietoturvaseloste
+              </li>
+              <li>
+                Anna palautetta
+              </li>
+            </ul>
+          </div>
+          <div
+            class="c35"
+          >
+            <div
+              class="c36"
+            >
+              <img
+                alt="Opetus- ja kulttuuriministeriö logo"
+                class="c37"
+                src=""
+              />
+              <img
+                alt="Opetushallitus logo"
+                class="c37"
+                src=""
+              />
+            </div>
+            <div
+              class="c38"
+            >
+              <p>
+                Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja
               koulutuksistaan Opintopolku.fi-palvelussa. Tietojen oikeellisuuden
-              voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.</p><div class=\\"sc-hzDkRC kJbaRy\\"><div class=\\"sc-jhAzac cTrpiQ\\"><a role=\\"button\\">Suomeksi</a><a role=\\"button\\">På svenska</a></div><div class=\\"sc-fBuWsC cdNcpG\\">|</div><div class=\\"sc-fMiknA gpdVKA\\"><a><img src=\\"\\" alt=\\"Twitter\\" class=\\"sc-brqgnP iZJjvC\\"></a><a><img src=\\"\\" alt=\\"Facebook\\" class=\\"sc-brqgnP iZJjvC\\"></a><a><img src=\\"\\" alt=\\"Instagram\\" class=\\"sc-brqgnP iZJjvC\\"></a></div></div></div></div></div></footer></div></div>"
+              voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.
+              </p>
+              <div
+                class="c39"
+              >
+                <div
+                  class="c40"
+                >
+                  <a
+                    role="button"
+                  >
+                    Suomeksi
+                  </a>
+                  <a
+                    role="button"
+                  >
+                    På svenska
+                  </a>
+                </div>
+                <div
+                  class="c41"
+                >
+                  |
+                </div>
+                <div
+                  class="c42"
+                >
+                  <a>
+                    <img
+                      alt="Twitter"
+                      class="c33"
+                      src=""
+                    />
+                  </a>
+                  <a>
+                    <img
+                      alt="Facebook"
+                      class="c33"
+                      src=""
+                    />
+                  </a>
+                  <a>
+                    <img
+                      alt="Instagram"
+                      class="c33"
+                      src=""
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>
 `;

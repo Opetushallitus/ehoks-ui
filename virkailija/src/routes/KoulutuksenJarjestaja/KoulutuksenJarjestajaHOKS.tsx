@@ -6,6 +6,7 @@ import {
   WindowLocation
 } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
+import { HelpPopup } from "components/HelpPopup"
 import Flag from "components/icons/Flag"
 import { NavigationContainer } from "components/NavigationContainer"
 import { AiempiOsaaminen } from "components/Opiskelija/AiempiOsaaminen"
@@ -56,6 +57,14 @@ const SectionItems = styled("div")`
 const Timestamp = styled("div")`
   font-size: 20px;
   margin-bottom: 10px;
+`
+
+const EssentialFactorContainer = styled("div")`
+  margin: 10px 20px 20px 20px;
+`
+
+const HelpButton = styled(HelpPopup)`
+  margin: 0 0 0 20px;
 `
 
 export interface HOKSProps {
@@ -263,7 +272,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                 <Opiskelusuunnitelma
                   path="opiskelusuunnitelma"
                   plan={suunnitelma}
-                  titles={{
+                  elements={{
                     heading: (
                       <FormattedMessage
                         id="koulutuksenJarjestaja.opiskelusuunnitelma.title"
@@ -275,6 +284,22 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                         id="koulutuksenJarjestaja.opiskelusuunnitelma.tavoitteetTitle"
                         defaultMessage="Opiskelijan tavoitteet ja opintojen eteneminen"
                       />
+                    ),
+                    essentialFactor: (
+                      <EssentialFactorContainer>
+                        <FormattedMessage
+                          id="koulutuksenJarjestaja.opiskelusuunnitelma.olennainenSeikkaDescription"
+                          defaultMessage="Tämän tutkinnon osan toteutukseen liittyy olennaista tietoa."
+                        />
+                        <HelpButton
+                          helpContent={
+                            <FormattedMessage
+                              id="koulutuksenJarjestaja.opiskelusuunnitelma.olennainenSeikkaHelpLabel"
+                              defaultMessage="Olennainen seikka aputeksti virkailija"
+                            />
+                          }
+                        />
+                      </EssentialFactorContainer>
                     )
                   }}
                 />

@@ -44,6 +44,5 @@ it("App renders correctly", async () => {
     </Provider>,
     { route: "/ehoks" }
   )
-
-  expect(container.innerHTML).toMatchSnapshot()
+  expect(container).toMatchSnapshot()
 })
