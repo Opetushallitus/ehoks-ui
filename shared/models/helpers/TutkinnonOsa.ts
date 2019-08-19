@@ -44,5 +44,6 @@ export interface TutkinnonOsa {
   harjoittelujaksot?: Harjoittelujakso[]
   tila?: string
   todentamisenProsessi?: TodentamisenProsessi
+  olennainenSeikka?: boolean
   opintoOtsikko: (ospLyhenne: string) => string
 }

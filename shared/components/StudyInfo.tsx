@@ -67,6 +67,8 @@ export interface StudyInfoProps {
   competenceRequirements?: Array<Osaamisvaatimus>
   /** List of competence demonstrations */
   demonstrations?: Array<Naytto>
+  /** extraContent is passed through to Details component */
+  extraContent?: React.ReactNode
   /** Color of additional info container */
   fadedColor?: string
   /**
@@ -140,6 +142,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       accentColor,
       competenceRequirements = [],
       demonstrations = [],
+      extraContent = null,
       fadedColor,
       learningPeriods = [],
       verificationProcess,
@@ -165,6 +168,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
             <Details
               fadedColor={fadedColor}
               demonstrations={demonstrations}
+              extraContent={extraContent}
               expanded={expanded.details}
               learningPeriods={learningPeriods}
               verificationProcess={verificationProcess}

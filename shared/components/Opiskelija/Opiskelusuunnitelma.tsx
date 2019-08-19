@@ -15,6 +15,7 @@ import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
 import { theme } from "theme"
+import { HelpPopup } from "components/HelpPopup"
 const { colors } = theme
 
 const ProgressTitle = styled("h2")`
@@ -23,12 +24,21 @@ const ProgressTitle = styled("h2")`
   margin-left: 4px;
 `
 
+const EssentialFactorContainer = styled("div")`
+  margin: 10px 20px 20px 20px;
+`
+
+const HelpButton = styled(HelpPopup)`
+  margin: 0 0 0 20px;
+`
+
 export interface OpiskelusuunnitelmaProps {
   children?: React.ReactChildren
   plan: Instance<typeof HOKS>
-  titles?: {
+  elements?: {
     heading?: React.ReactNode
     goals?: React.ReactNode
+    essentialFactor?: React.ReactNode
   }
 }
 
@@ -119,14 +129,14 @@ export class Opiskelusuunnitelma extends React.Component<
   render() {
     const { intl } = this.context
     const { activeAccordions } = this.state
-    const { plan, titles: customTitles = {} } = this.props
+    const { plan, elements: customElements = {} } = this.props
     const { suunnitellutOpinnot, aikataulutetutOpinnot, valmiitOpinnot } = plan
     const competencePointsTitle = intl.formatMessage({
       id: "opiskelusuunnitelma.osaamispisteLyhenne"
     })
 
-    const titles = {
-      heading: customTitles.heading || (
+    const elements = {
+      heading: customElements.heading || (
         <FormattedMessage
           id="opiskelusuunnitelma.title"
           defaultMessage="Opiskelusuunnitelmani"
@@ -134,13 +144,29 @@ export class Opiskelusuunnitelma extends React.Component<
       ),
       goals: (
         <AccordionTitle>
-          {customTitles.goals || (
+          {customElements.goals || (
             <FormattedMessage
               id="opiskelusuunnitelma.tavoitteetTitle"
               defaultMessage="Tavoitteeni ja opintojen eteneminen"
             />
           )}
         </AccordionTitle>
+      ),
+      essentialFactor: customElements.essentialFactor || (
+        <EssentialFactorContainer>
+          <FormattedMessage
+            id="opiskelusuunnitelma.olennainenSeikkaDescription"
+            defaultMessage="Tämän tutkinnon osan toteutukseen liittyy olennaista tietoa, jonka sisällön voit tarkistaa oppilaitoksestasi."
+          />
+          <HelpButton
+            helpContent={
+              <FormattedMessage
+                id="opiskelusuunnitelma.olennainenSeikkaHelpLabel"
+                defaultMessage="Olennainen seikka aputeksti"
+              />
+            }
+          />
+        </EssentialFactorContainer>
       )
     }
 
@@ -151,12 +177,12 @@ export class Opiskelusuunnitelma extends React.Component<
 
     return (
       <React.Fragment>
-        <Heading>{titles.heading}</Heading>
+        <Heading>{elements.heading}</Heading>
 
         <Accordion
           id="tavoitteet"
           open={activeAccordions.tavoitteet}
-          title={titles.goals}
+          title={elements.goals}
           onToggle={this.toggleAccordion("tavoitteet")}
           helpIcon={true}
           helpContent={"Testi"}
@@ -312,6 +338,9 @@ export class Opiskelusuunnitelma extends React.Component<
                       learningPeriods={study.harjoittelujaksot}
                       competenceRequirements={study.osaamisvaatimukset}
                       demonstrations={study.naytot}
+                      extraContent={
+                        study.olennainenSeikka ? elements.essentialFactor : null
+                      }
                     />
                     {renderExtraItem && <EmptyItem />}
                   </React.Fragment>
@@ -357,6 +386,9 @@ export class Opiskelusuunnitelma extends React.Component<
                       learningPeriods={study.harjoittelujaksot}
                       competenceRequirements={study.osaamisvaatimukset}
                       demonstrations={study.naytot}
+                      extraContent={
+                        study.olennainenSeikka ? elements.essentialFactor : null
+                      }
                     />
                     {renderExtraItem && <EmptyItem />}
                   </React.Fragment>
@@ -402,6 +434,9 @@ export class Opiskelusuunnitelma extends React.Component<
                       learningPeriods={study.harjoittelujaksot}
                       competenceRequirements={study.osaamisvaatimukset}
                       demonstrations={study.naytot}
+                      extraContent={
+                        study.olennainenSeikka ? elements.essentialFactor : null
+                      }
                     />
                     {renderExtraItem && <EmptyItem />}
                   </React.Fragment>

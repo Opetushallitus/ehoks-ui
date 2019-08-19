@@ -19,7 +19,7 @@ const DemonstrationTable = styled(Table)`
 `
 
 const DemonstrationTasks = styled(InfoContainer)`
-  margin: 10px 20px 20px 10px;
+  margin: 10px 20px 20px 20px;
 `
 
 const CustomSlider = styled(MobileSlider)`
