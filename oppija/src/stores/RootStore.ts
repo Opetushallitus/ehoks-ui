@@ -1,4 +1,3 @@
-// import kebabCase from "lodash.kebabcase"
 import { getEnv, Instance, types } from "mobx-state-tree"
 import { EnvironmentStore } from "stores/EnvironmentStore"
 import { HOKSStore } from "stores/HOKSStore"
