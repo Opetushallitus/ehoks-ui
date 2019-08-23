@@ -8,7 +8,7 @@ import {
 
 const REQUIRED_FIELD_SYMBOL = "*"
 
-function Label(props: any) {
+export function Label(props: any) {
   const { label, required, id } = props
   if (!label) {
     // See #312: Ensure compatibility with old versions of React.
@@ -29,9 +29,10 @@ export function DefaultLabel({
   required,
   id,
   name,
-  fields = {},
-  formContext
+  formContext,
+  registry
 }: any) {
+  const { fields = {} } = registry
   const uiOptions = getUiOptions(uiSchema)
   let { label: displayLabel = true, forceLabelDisplay } = uiOptions
   if (schema.type === "array") {

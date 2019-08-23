@@ -334,7 +334,6 @@ export class TypeaheadField extends BaseTypeaheadField {
       idSchema: { $id = undefined } = {},
       schema
     } = this.props
-
     let labelKey = mapLabelKey(typeahead.labelKey)
     // if something is already selected and is a string - removing the label key so that the labelKey function can be ignored.
     labelKey = transformLabelKey(labelKey, schema, this.state.selected)
@@ -349,7 +348,7 @@ export class TypeaheadField extends BaseTypeaheadField {
 
     return (
       <div id={$id}>
-        <DefaultLabel {...this.props} />
+        <DefaultLabel {...this.props} id={$id} />
         <Typeahead {...typeConf} />
       </div>
     )
@@ -450,7 +449,7 @@ export class AsyncTypeaheadField extends BaseTypeaheadField {
 
     return (
       <div id={$id}>
-        <DefaultLabel {...this.props} />
+        <DefaultLabel {...this.props} id={$id} />
         <AsyncTypeahead {...typeConf} />
       </div>
     )

@@ -14,6 +14,8 @@ import { Stepper } from "routes/LuoHOKS/Stepper"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 import { ArrayFieldTemplate } from "./LuoHOKS/ArrayFieldTemplate"
+import { CustomCheckboxWidget } from "./LuoHOKS/CustomCheckboxWidget"
+import { CustomDescriptionField } from "./LuoHOKS/CustomDescriptionField"
 import { CustomSchemaField } from "./LuoHOKS/CustomSchemaField"
 // import "./LuoHOKS/bootstrap.min.css"
 import ErrorList from "./LuoHOKS/ErrorList"
@@ -25,6 +27,7 @@ import {
   stripUnsupportedFormats,
   transformErrors
 } from "./LuoHOKS/helpers"
+import { idToPathArray } from "./LuoHOKS/idToPathArray"
 import { koodistoUrls } from "./LuoHOKS/koodistoUrls"
 import "./LuoHOKS/styles.css"
 import { uiSchemaByStep } from "./LuoHOKS/uiSchema"
@@ -56,10 +59,6 @@ function isRoot(rootKeys: string[]) {
   return (title: string) => {
     return rootKeys.indexOf(title) > -1
   }
-}
-
-function idToPathArray(id: string) {
-  return id.replace("root_", "").split("_")
 }
 
 // creates (React state compatible) immutable state for formData
@@ -97,7 +96,12 @@ function updateCodeVersionAt(
 
 const fields = {
   SchemaField: CustomSchemaField,
-  typeahead: TypeaheadField
+  typeahead: TypeaheadField,
+  DescriptionField: CustomDescriptionField
+}
+
+const widgets = {
+  CheckboxWidget: CustomCheckboxWidget
 }
 
 const Container = styled("div")`
@@ -223,7 +227,6 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       definitions: stripUnsupportedFormats(json.definitions),
       ...json.definitions.HOKSLuonti
     }
-    console.log("rawSchema", rawSchema)
     const koodiUris = await this.fetchKoodiUris()
     const schema = schemaByStep(rawSchema, this.state.currentStep)
     const {
@@ -448,6 +451,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
         <FormContainer>
           <Form
             fields={fields}
+            widgets={widgets}
             schema={this.state.schema}
             uiSchema={this.state.uiSchema}
             formData={this.state.formData as any}
