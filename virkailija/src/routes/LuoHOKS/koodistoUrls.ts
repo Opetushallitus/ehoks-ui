@@ -1,14 +1,14 @@
 export const koodistoUrls = {
   urasuunnitelma:
-    "https://virkailija.opintopolku.fi/koodisto-service/rest/json/urasuunnitelma/koodi",
+    "/ehoks-virkailija-backend/api/v1/virkailija/external/koodisto/urasuunnitelma/koodi",
   tutkinnonosat:
-    "https://virkailija.opintopolku.fi/koodisto-service/rest/codeelement/codes/tutkinnonosat/2",
+    "/ehoks-virkailija-backend/api/v1/virkailija/external/koodisto/tutkinnonosat/koodi",
   osaamisentodentamisenprosessi:
-    "https://virkailija.opintopolku.fi/koodisto-service/rest/json/osaamisentodentamisenprosessi/koodi",
+    "/ehoks-virkailija-backend/api/v1/virkailija/external/koodisto/osaamisentodentamisenprosessi/koodi",
   osaamisenhankkimistapa:
-    "https://virkailija.opintopolku.fi/koodisto-service/rest/json/osaamisenhankkimistapa/koodi",
+    "/ehoks-virkailija-backend/api/v1/virkailija/external/koodisto/osaamisenhankkimistapa/koodi",
   ammatillisenoppiaineet:
-    "https://virkailija.opintopolku.fi/koodisto-service/rest/json/ammatillisenoppiaineet/koodi",
+    "/ehoks-virkailija-backend/api/v1/virkailija/external/koodisto/ammatillisenoppiaineet/koodi",
   oppimisymparistot:
-    "https://virkailija.opintopolku.fi/koodisto-service/rest/json/oppimisymparistot/koodi"
+    "/ehoks-virkailija-backend/api/v1/virkailija/external/koodisto/oppimisymparistot/koodi"
 }
