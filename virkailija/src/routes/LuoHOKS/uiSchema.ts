@@ -180,13 +180,13 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       "ui:order": [
         "nimi",
         "laajuus",
-        "olennainen-seikka",
-        "koulutuksen-jarjestaja-oid",
         "amosaa-tunniste",
         "valittu-todentamisen-prosessi-koodi-uri",
         "valittu-todentamisen-prosessi-koodi-versio",
         "tavoitteet-ja-sisallot",
         "vaatimuksista-tai-tavoitteista-poikkeaminen",
+        "koulutuksen-jarjestaja-oid",
+        "olennainen-seikka",
         "tarkentavat-tiedot-osaamisen-arvioija",
         "tarkentavat-tiedot-naytto",
         "*"
@@ -400,8 +400,8 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "osa-alue-koodi-versio",
             "valittu-todentamisen-prosessi-koodi-uri",
             "valittu-todentamisen-prosessi-koodi-versio",
-            "koulutuksen-jarjestaja-oid",
             "vaatimuksista-tai-tavoitteista-poikkeaminen",
+            "koulutuksen-jarjestaja-oid",
             "olennainen-seikka",
             "*"
           ],
@@ -495,10 +495,10 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
     },
     items: {
       "ui:order": [
-        "koulutuksen-jarjestaja-oid",
-        "vaatimuksista-tai-tavoitteista-poikkeaminen",
         "tutkinnon-osa-koodi-uri",
         "tutkinnon-osa-koodi-versio",
+        "vaatimuksista-tai-tavoitteista-poikkeaminen",
+        "koulutuksen-jarjestaja-oid",
         "olennainen-seikka",
         "osaamisen-hankkimistavat",
         "osaamisen-osoittaminen",
@@ -671,11 +671,11 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       "ui:order": [
         "nimi",
         "laajuus",
-        "olennainen-seikka",
-        "koulutuksen-jarjestaja-oid",
         "amosaa-tunniste",
         "tavoitteet-ja-sisallot",
         "vaatimuksista-tai-tavoitteista-poikkeaminen",
+        "koulutuksen-jarjestaja-oid",
+        "olennainen-seikka",
         "osaamisen-hankkimistavat",
         "osaamisen-osoittaminen",
         "*"
