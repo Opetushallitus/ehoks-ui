@@ -184,7 +184,14 @@ export class Etusivu extends React.Component<EtusivuProps> {
                     defaultMessage="Opiskelija"
                   />
                 </h2>
-                <HelpButton helpContent="Lisätietoa" />
+                <HelpButton
+                  helpContent={
+                    <FormattedMessage
+                      id="etusivu.omaSuunnitelmaTitleHelpLabel"
+                      defaultMessage="Tietoa kirjautumisesta omaan suunnitelmaan"
+                    />
+                  }
+                />
               </LoginTitle>
               <p>
                 <FormattedMessage
@@ -209,7 +216,14 @@ export class Etusivu extends React.Component<EtusivuProps> {
                     defaultMessage="Ohjaaja"
                   />
                 </h2>
-                <HelpButton helpContent="Lisätietoa" />
+                <HelpButton
+                  helpContent={
+                    <FormattedMessage
+                      id="etusivu.oppilaitoksenEdustajaTitleHelpLabel"
+                      defaultMessage="Tietoa kirjautumisesta oppilaitoksen edustajana"
+                    />
+                  }
+                />
               </LoginTitle>
               <p>
                 <FormattedMessage
@@ -232,7 +246,14 @@ export class Etusivu extends React.Component<EtusivuProps> {
                     defaultMessage="Työelämän toimija"
                   />
                 </h2>
-                <HelpButton helpContent="Lisätietoa" />
+                <HelpButton
+                  helpContent={
+                    <FormattedMessage
+                      id="etusivu.tyoelamanToimijaTitleHelpLabel"
+                      defaultMessage="Tietoa kirjautumisesta työelämän toimijana"
+                    />
+                  }
+                />
               </LoginTitle>
               <p>
                 <FormattedMessage

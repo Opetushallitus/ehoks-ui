@@ -68,7 +68,14 @@ export class AiempiOsaaminen extends React.Component<
       <React.Fragment>
         <HeadingContainer>
           <HelpHeading>{heading}</HelpHeading>
-          <HelpPopup helpContent={"Test"} />
+          <HelpPopup
+            helpContent={
+              <FormattedMessage
+                id="aiempiOsaaminen.titleHelpLabel"
+                defaultMessage="Tietoa aiemmasta osaamisesta"
+              />
+            }
+          />
         </HeadingContainer>
 
         <ContentArea>
