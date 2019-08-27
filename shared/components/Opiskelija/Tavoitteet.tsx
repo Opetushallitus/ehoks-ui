@@ -101,7 +101,14 @@ export class Tavoitteet extends React.Component<
       <React.Fragment>
         <HeadingContainer>
           <HelpHeading>{titles.heading}</HelpHeading>
-          <HelpPopup helpContent={"Test"} />
+          <HelpPopup
+            helpContent={
+              <FormattedMessage
+                id="tavoitteet.titleHelpLabel"
+                defaultMessage="Tietoa tavoitteista ja perustiedoista"
+              />
+            }
+          />
         </HeadingContainer>
 
         <Accordion

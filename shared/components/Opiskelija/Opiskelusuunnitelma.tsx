@@ -162,7 +162,7 @@ export class Opiskelusuunnitelma extends React.Component<
             helpContent={
               <FormattedMessage
                 id="opiskelusuunnitelma.olennainenSeikkaHelpLabel"
-                defaultMessage="Olennainen seikka aputeksti"
+                defaultMessage="Tietoa olennaisesta seikasta"
               />
             }
           />
@@ -185,7 +185,12 @@ export class Opiskelusuunnitelma extends React.Component<
           title={elements.goals}
           onToggle={this.toggleAccordion("tavoitteet")}
           helpIcon={true}
-          helpContent={"Testi"}
+          helpContent={
+            <FormattedMessage
+              id="opiskelusuunnitelma.tavoitteetHelpLabel"
+              defaultMessage="Tietoa tavoitteista ja opintojen etenemisestä"
+            />
+          }
         >
           <InfoTable>
             <tbody>
@@ -307,7 +312,12 @@ export class Opiskelusuunnitelma extends React.Component<
           }
           onToggle={this.toggleAccordion("suunnitelma")}
           helpIcon={true}
-          helpContent="Testiaputeksti"
+          helpContent={
+            <FormattedMessage
+              id="opiskelusuunnitelma.suunnitelmaHelpLabel"
+              defaultMessage="Tietoa tutkinnonosista"
+            />
+          }
           childContainer={false}
         >
           <Accordion
@@ -468,6 +478,12 @@ export class Opiskelusuunnitelma extends React.Component<
           }
           onToggle={this.toggleAccordion("tukevatOpinnot")}
           helpIcon={true}
+          helpContent={
+            <FormattedMessage
+              id="opiskelusuunnitelma.tukevatOpinnotHelpLabel"
+              defaultMessage="Tietoa opiskeluvalmiuksia tukevista opinnoista"
+            />
+          }
         >
           opiskeluvalmiuksia tukevat opinnot
         </Accordion>
