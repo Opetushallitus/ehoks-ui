@@ -153,6 +153,24 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     }
   }
 
+  static getDerivedStateFromProps(
+    nextProps: StudyInfoProps,
+    prevState: StudyInfoState
+  ) {
+    const { koodiUri, share } = nextProps
+    if (typeof share !== "undefined" && koodiUri === share.koodiUri) {
+      return {
+        ...prevState,
+        expanded: {
+          ...prevState.expanded,
+          details: true
+        }
+      }
+    } else {
+      return null
+    }
+  }
+
   toggle = (name: "competences" | "details") => () => {
     this.setState(state => ({
       ...state,

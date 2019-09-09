@@ -55,10 +55,7 @@ export class App extends React.Component<AppProps> {
     const { store } = this.props
     // load user session info from backend
     await store!.session.checkSession()
-    // load unacknowledged notifications after login
-    if (store!.session.isLoggedIn) {
-      store!.notifications.fetchNotifications()
-    }
+    await store!.session.fetchSettings()
   }
 
   render() {

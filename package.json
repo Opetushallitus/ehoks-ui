@@ -67,7 +67,7 @@
     "@types/lodash.partition": "^4.6.6",
     "@types/react-modal": "^3.8.2",
     "@types/react-copy-to-clipboard": "^4.2.6",
-    "date-fns": "^2.0.0-alpha.27",
+    "date-fns": "^2.0.1",
     "lodash.camelcase": "^4.3.0",
     "lodash.debounce": "^4.0.8",
     "lodash.drop": "^4.1.1",

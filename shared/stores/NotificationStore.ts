@@ -1,23 +1,27 @@
-import { Instance, types, getRoot } from "mobx-state-tree"
+import { Instance, types, getRoot, SnapshotOrInstance } from "mobx-state-tree"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
+import parseISO from "date-fns/parseISO"
+import subMonths from "date-fns/subMonths"
+import isWithinInterval from "date-fns/isWithinInterval"
+import { ISettings } from "models/Settings"
+import find from "lodash.find"
 
 export type ShareType = "naytto" | "tyossaoppiminen"
 
-const NotificationModel = types.model("NotificationModel", {
-  id: types.optional(types.number, 0),
+export const NotificationModel = types.model("NotificationModel", {
   hoksId: types.optional(types.string, ""),
   tutkinnonOsaKoodiUri: types.optional(types.string, ""),
   tutkinnonOsa: types.optional(EPerusteetVastaus, {}),
-  tyyppi: types.enumeration("tyyppi", ["naytto", "tyossaoppiminen"]),
+  tyyppi: types.optional(types.string, ""), // naytto, tyossaoppiminen
   alku: types.optional(types.string, ""),
   loppu: types.optional(types.string, ""),
   paikka: types.optional(types.string, ""),
   visible: types.optional(types.boolean, true)
 })
 
-const Notification = types
+export const Notification = types
   .compose(
     "Notification",
     EnrichKoodiUri,
@@ -28,7 +32,6 @@ const Notification = types
     return {
       get message() {
         return {
-          id: self.id,
           hoksId: self.hoksId,
           koodiUri: self.tutkinnonOsaKoodiUri,
           title: self.tutkinnonOsa.nimi[root.translations.activeLocale],
@@ -41,9 +44,16 @@ const Notification = types
     }
   })
   .actions(self => {
+    const root: {
+      session: { settings: ISettings; saveSettings: any }
+    } = getRoot(self)
+
     const ackNotification = function() {
-      // TODO: call API to mark notification as acknowledged
-      console.log("Notification acknowledged")
+      root.session.settings.hiddenNotifications.hide(
+        self.hoksId,
+        self.tutkinnonOsaKoodiUri,
+        self.tyyppi
+      )
     }
 
     const hide = () => {
@@ -58,39 +68,54 @@ export const NotificationStore = types
     notifications: types.array(Notification)
   })
   .actions(self => {
-    // const { apiUrl, fetchCollection, errors } = getEnv<StoreEnvironment>(self)
-
-    //const haeMuistutukset = flow(function*(apiUrl: (path: string) => string) {
-    const fetchNotifications = function() {
-      self.isLoading = true
-
-      // TODO: mock data, replace with real API call
+    const addNotifications = (
+      notifications: Array<SnapshotOrInstance<typeof Notification>>
+    ) => {
       self.notifications.replace([
-        {
-          id: 1,
-          hoksId: "712fd599-5985-45d6-9787-aa782ea4e553",
-          tutkinnonOsaKoodiUri: "tutkinnonosat_103590",
-          tyyppi: "naytto",
-          alku: "2019-08-01",
-          loppu: "2019-08-04",
-          paikka: "Koivikkola"
-        } as Instance<typeof Notification>
-      ])
-      // try {
-      //   const response = yield fetchCollection(apiUrl("muistutukset"))
-      //   self.notifications.replace(response.data)
-      // } catch (error) {
-      //   errors.logError("NotificationStore.haeMuistutukset", error.message)
-      // }
-      self.isLoading = false
+        ...self.notifications,
+        ...notifications
+      ] as any)
     }
 
-    return { fetchNotifications }
+    return { addNotifications }
+  })
+  .views(self => {
+    const {
+      session: { settings }
+    }: { session: { settings: ISettings } } = getRoot(self)
+    return {
+      get retainedNotifications() {
+        return self.notifications.filter(notification => {
+          // NOTE: investigate why settings.hiddenNotifications.exists
+          // is not reactive here (does not trigger re-render)
+          return !find(
+            settings.hiddenNotifications.notifications,
+            hiddenNotification => {
+              return (
+                hiddenNotification.hoksId === notification.hoksId &&
+                hiddenNotification.tutkinnonOsaKoodiUri ===
+                  notification.tutkinnonOsaKoodiUri &&
+                hiddenNotification.tyyppi === notification.tyyppi
+              )
+            }
+          )
+        })
+      }
+    }
   })
   .views(self => {
     return {
-      get visible(): Array<Instance<typeof Notification>> {
-        return self.notifications.filter(notification => notification.visible)
+      get visible() {
+        return self.retainedNotifications.filter(notification => {
+          const notificationInterval = {
+            start: subMonths(parseISO(notification.alku), 1),
+            end: parseISO(notification.loppu)
+          }
+          return (
+            notification.visible &&
+            isWithinInterval(new Date(), notificationInterval)
+          )
+        })
       }
     }
   })
