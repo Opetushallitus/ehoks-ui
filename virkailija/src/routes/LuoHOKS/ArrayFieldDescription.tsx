@@ -1,4 +1,6 @@
 import React from "react"
+import { FormattedMessage } from "react-intl"
+import { idToTranslationKey } from "./idToTranslationKey"
 
 function RootDescriptionField({
   id,
@@ -9,7 +11,10 @@ function RootDescriptionField({
 }) {
   return (
     <h3 id={id} className="field-description">
-      {description}
+      <FormattedMessage
+        id={idToTranslationKey(id)}
+        defaultMessage={description}
+      />
     </h3>
   )
 }
