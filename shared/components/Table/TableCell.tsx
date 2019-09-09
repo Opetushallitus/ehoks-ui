@@ -11,9 +11,13 @@ const Container = styled("td")`
   }
 `
 
-export class TableCell extends React.Component {
+interface TableCellProps {
+  colSpan?: number
+}
+
+export class TableCell extends React.Component<TableCellProps> {
   render() {
-    const { children } = this.props
-    return <Container>{children}</Container>
+    const { children, colSpan } = this.props
+    return <Container colSpan={colSpan}>{children}</Container>
   }
 }

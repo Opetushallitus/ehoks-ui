@@ -19,6 +19,11 @@ export const HOKSStore = types
           apiUrl(`oppija/oppijat/${oid}/hoks`)
         )
         self.suunnitelmat = response.data
+        yield Promise.all(
+          self.suunnitelmat.map(suunnitelma => {
+            return suunnitelma.fetchOpiskeluoikeudet()
+          })
+        )
         self.isLoading = false
       } catch (error) {
         errors.logError("HOKSStore.haeSuunnitelmat", error.message)

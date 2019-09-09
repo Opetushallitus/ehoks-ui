@@ -78,12 +78,13 @@ export interface HOKSProps {
 export class KoulutuksenJarjestajaHOKS extends React.Component<
   HOKSProps & RouteComponentProps
 > {
-  componentDidMount() {
+  async componentDidMount() {
     const suunnitelma = find(this.props.suunnitelmat, h => {
       return h.eid === this.props.hoksId
     })
     if (suunnitelma) {
-      suunnitelma.fetchDetails()
+      await suunnitelma.fetchDetails()
+      await suunnitelma.fetchOpiskeluoikeudet()
     }
   }
 

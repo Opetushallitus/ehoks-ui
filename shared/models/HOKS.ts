@@ -122,11 +122,6 @@ export const HOKS = types
 
     return { fetchDetails, fetchOpiskeluoikeudet }
   })
-  .actions(self => ({
-    afterCreate() {
-      self.fetchOpiskeluoikeudet()
-    }
-  }))
   .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {
