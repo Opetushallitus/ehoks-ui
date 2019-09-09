@@ -14,6 +14,7 @@ import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import debounce from "lodash.debounce"
 import range from "lodash.range"
+import { IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
@@ -69,6 +70,7 @@ export class KoulutuksenJarjestaja extends React.Component<
   static contextTypes = {
     intl: intlShape
   }
+  disposeLoginReaction: IReactionDisposer
 
   debouncedFetchResults = debounce(() => {
     const { koulutuksenJarjestaja } = this.props.store!
@@ -76,12 +78,25 @@ export class KoulutuksenJarjestaja extends React.Component<
   }, 500)
 
   componentDidMount() {
-    const { koulutuksenJarjestaja } = this.props.store!
-    koulutuksenJarjestaja.search.haeOppijat()
+    const { koulutuksenJarjestaja, session } = this.props.store!
 
-    window.requestAnimationFrame(() => {
-      window.scrollTo(0, 0)
-    })
+    this.disposeLoginReaction = reaction(
+      () => {
+        return session.isLoggedIn && session.organisations.length
+      },
+      async hasLoggedIn => {
+        if (hasLoggedIn) {
+          await koulutuksenJarjestaja.search.haeOppijat()
+          window.requestAnimationFrame(() => {
+            window.scrollTo(0, 0)
+          })
+        }
+      }
+    )
+  }
+
+  componentWillUnmount() {
+    this.disposeLoginReaction()
   }
 
   formSubmit = (event: React.FormEvent) => {
@@ -229,6 +244,16 @@ export class KoulutuksenJarjestaja extends React.Component<
                       </TableRow>
                     )
                   })}
+                  {!results.length && (
+                    <TableRow>
+                      <TableCell colSpan={6}>
+                        <FormattedMessage
+                          id="koulutuksenJarjestaja.eiOpiskelijoitaLabel"
+                          defaultMessage="Valitulle organisaatiolle ei löytynyt yhtään opiskelijaa."
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </TableBody>
               </SearchableTable>
 

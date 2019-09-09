@@ -26,31 +26,35 @@ const OppilaitosSelect = styled("select")`
  * OrganisationDropdown
  */
 @observer
-export class OrganisationDropdown
-  extends React.Component<OrganisationDropdownProps> {
-
+export class OrganisationDropdown extends React.Component<
+  OrganisationDropdownProps
+> {
   handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     this.props.onChange(e.target.value)
   }
 
   render() {
-    const { organisations, value} = this.props
+    const { organisations, value } = this.props
     const lang = this.props.lang || "fi"
     return (
-      <OppilaitosSelect
-            value={value}
-            onChange={this.handleOnChange}
-          >
-            {organisations.map(o => (
-              <option
-                key={o.oid}
-                value={o.oid}
-                aria-selected={o.oid === value}
-              >
-                {o.nimi.get(lang)}
-              </option>
-            ))}
-          </OppilaitosSelect>
+      <OppilaitosSelect value={value} onChange={this.handleOnChange}>
+        {organisations
+          .slice()
+          .sort((a, b) => {
+            if (a.nimi < b.nimi) {
+              return 1
+            }
+            if (a.nimi > b.nimi) {
+              return -1
+            }
+            return 0
+          })
+          .map(o => (
+            <option key={o.oid} value={o.oid} aria-selected={o.oid === value}>
+              {o.nimi.get(lang)}
+            </option>
+          ))}
+      </OppilaitosSelect>
     )
   }
 }
