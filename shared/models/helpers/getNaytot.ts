@@ -12,7 +12,7 @@ export function getNaytot(
     }>
     koulutuksenJarjestajaOsaamisenArvioijat: Array<{
       nimi: string
-      organisaatio: { oppilaitosOid: string }
+      organisaatio: { oppilaitosOid: string; oppilaitosNimi: string }
     }>
     sisallonKuvaus: string[]
   }>
@@ -23,9 +23,7 @@ export function getNaytot(
     organisaatio: naytto.nayttoymparisto.nimi,
     ymparisto: naytto.nayttoymparisto.kuvaus,
     koulutuksenJarjestajaArvioijat: naytto.koulutuksenJarjestajaOsaamisenArvioijat.map(
-      a =>
-        // TODO: fetch oppilaitos using oppilaitosOid
-        [a.nimi, a.organisaatio.oppilaitosOid].filter(Boolean).join(", ")
+      a => [a.nimi, a.organisaatio.oppilaitosNimi].filter(Boolean).join(", ")
     ),
     tyoelamaArvioijat: naytto.tyoelamaOsaamisenArvioijat.map(a =>
       [a.nimi, a.organisaatio.nimi].filter(Boolean).join(", ")
