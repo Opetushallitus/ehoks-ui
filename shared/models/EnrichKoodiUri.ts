@@ -48,7 +48,10 @@ export const EnrichKoodiUri = types
         const { data } = yield cachedResponses[code]
         // we currently only need nimi from KoodistoKoodi
         if (Object.keys(self).indexOf(dynamicKey) > -1) {
-          self[dynamicKey] = { nimi: data.metadata[0].nimi }
+          self[dynamicKey] = data.metadata.reduce((result: any, meta: any) => {
+            result[meta.kieli.toLowerCase()] = meta
+            return result
+          }, {})
         } else {
           throw new Error(
             `Your mobx-state-tree model is missing definition for '${dynamicKey}'`
