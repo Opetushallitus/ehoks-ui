@@ -27,6 +27,11 @@ Object {
     "error": "",
     "isLoading": false,
     "selectedOrganisationOid": "",
+    "settings": Object {
+      "hiddenNotifications": Object {
+        "notifications": Array [],
+      },
+    },
     "user": null,
     "userDidLogout": false,
   },
