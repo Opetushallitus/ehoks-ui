@@ -1,5 +1,6 @@
 import { types, getEnv, flow } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
+import { APIResponse } from "types/APIResponse"
 
 interface DynamicObject {
   [name: string]: any
@@ -18,14 +19,14 @@ export const EnrichKoodiUri = types
       self
     )
 
-    const fetchEPerusteet = flow(function*(key: string, code: string) {
+    const fetchEPerusteet = flow(function*(key: string, code: string): any {
       try {
         const [dynamicKey] = key.split("KoodiUri") // key without KoodiUri
         // check our global cache first
         cachedResponses[code] =
           cachedResponses[code] ||
           fetchSingle(apiUrl(`${apiPrefix}/external/eperusteet/${code}`))
-        const response = yield cachedResponses[code]
+        const response: APIResponse = yield cachedResponses[code]
         if (Object.keys(self).indexOf(dynamicKey) > -1) {
           self[dynamicKey] = response.data
         } else {
@@ -38,14 +39,14 @@ export const EnrichKoodiUri = types
       }
     })
 
-    const fetchKoodisto = flow(function*(key: string, code: string) {
+    const fetchKoodisto = flow(function*(key: string, code: string): any {
       try {
         const [dynamicKey] = key.split("KoodiUri") // key without KoodiUri
         // check our global cache first
         cachedResponses[code] =
           cachedResponses[code] ||
           fetchSingle(apiUrl(`${apiPrefix}/external/koodisto/${code}`))
-        const { data } = yield cachedResponses[code]
+        const { data }: APIResponse = yield cachedResponses[code]
         // we currently only need nimi from KoodistoKoodi
         if (Object.keys(self).indexOf(dynamicKey) > -1) {
           self[dynamicKey] = data.metadata.reduce((result: any, meta: any) => {

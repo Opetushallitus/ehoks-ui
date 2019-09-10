@@ -27,7 +27,7 @@ export class Suunnittelu extends React.Component<
           window.location.href = store!.environment.opintopolkuLogoutUrl
         }
         // ensure that SessionStore's checkSession call has finished
-      } else if (!session.isLoading) {
+      } else if (!session.isLoading && session.user!.oid) {
         await store!.hoks.haeSuunnitelmat(session.user!.oid)
         const suunnitelmat = store!.hoks.suunnitelmat
         // navigate directly to HOKS if there's only one of them

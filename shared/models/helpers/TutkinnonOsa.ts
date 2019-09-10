@@ -21,7 +21,7 @@ export interface Naytto {
   koulutuksenJarjestajaArvioijat?: string[]
   tyoelamaArvioijat?: string[]
   tyotehtavat?: string[]
-  tyyppi: "DEMONSTRATION"
+  tyyppi?: "DEMONSTRATION"
 }
 
 export interface Harjoittelujakso {
@@ -31,7 +31,7 @@ export interface Harjoittelujakso {
   tyotehtavat?: string[]
   nimi?: string
   selite?: string
-  tyyppi: "WORKPLACE" | "OTHER"
+  tyyppi?: "WORKPLACE" | "OTHER"
 }
 
 export interface TutkinnonOsa {

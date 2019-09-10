@@ -1,5 +1,6 @@
 import { withQueryString } from "fetchUtils"
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
+import { APIResponse } from "types/APIResponse"
 import { IOrganisation, OrganisationModel } from "types/Organisation"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
@@ -36,10 +37,10 @@ export const SessionStore = types
       errors
     } = getEnv<StoreEnvironment>(self)
 
-    const login = flow(function*(url: string) {
+    const login = flow(function*(url: string): any {
       self.isLoading = true
       try {
-        const response = yield fetch(url, { mode: "no-cors" })
+        const response: APIResponse = yield fetch(url, { mode: "no-cors" })
         self.user = response.data
       } catch (error) {
         self.error = error.message
@@ -47,13 +48,17 @@ export const SessionStore = types
       self.isLoading = false
     })
 
-    const checkSession = flow(function*() {
+    const checkSession = flow(function*(): any {
       self.isLoading = true
       try {
         const response = yield fetchSingle(apiUrl("virkailija/session"))
 
         self.user = response.data
-        if (self.user!.organisationPrivileges.length > 0) {
+        if (
+          self.user &&
+          self.user.organisationPrivileges &&
+          self.user.organisationPrivileges.length > 0
+        ) {
           changeSelectedOrganisationOid(
             self.user!.organisationPrivileges[0].oid
           )
@@ -61,8 +66,8 @@ export const SessionStore = types
         const queryParams = {
           oids: Array.from(
             new Set(
-              self.user!.organisationPrivileges.reduce(
-                (a, o) => [...a, ...o.childOrganisations, o.oid],
+              self.user!.organisationPrivileges!.reduce(
+                (a, o) => [...a, ...o.childOrganisations!, o.oid],
                 []
               )
             )

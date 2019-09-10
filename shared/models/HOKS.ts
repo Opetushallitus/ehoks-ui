@@ -14,6 +14,7 @@ import { StoreEnvironment } from "types/StoreEnvironment"
 import { Opiskeluoikeus } from "models/Opiskeluoikeus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import find from "lodash.find"
+import { APIResponse } from "types/APIResponse"
 
 const Model = types.model("HOKSModel", {
   eid: types.optional(types.string, ""),
@@ -63,8 +64,8 @@ export const HOKS = types
     >(self)
 
     // fetches detailed HOKS, only needed in virkailija app
-    const fetchDetails = flow(function*() {
-      const response = yield fetchSingle(
+    const fetchDetails = flow(function*(): any {
+      const response: APIResponse = yield fetchSingle(
         apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}`)
       )
       const keys = Object.keys(response.data)
@@ -73,27 +74,45 @@ export const HOKS = types
       })
     })
 
-    const fetchTutkinto = flow(function*() {
+    const fetchTutkinto = flow(function*(): any {
       const diaarinumero =
         self.opiskeluOikeus.suoritukset[0].koulutusmoduuli.perusteenDiaarinumero
-      const response = yield fetchSingle(
+      const response: APIResponse = yield fetchSingle(
         apiUrl(
           `${apiPrefix}/external/eperusteet/tutkinnot?diaarinumero=${diaarinumero}`
         )
       )
-      return response.data
+      const { id, suoritustavat } = response.data
+      const suoritustapa = suoritustavat.reduce(
+        (
+          result: "ops" | "reformi" | "",
+          tapa: { suoritustapakoodi: "ops" | "reformi" }
+        ) => {
+          if (tapa.suoritustapakoodi === "ops") {
+            result = "ops"
+          } else if (tapa.suoritustapakoodi === "reformi") {
+            result = "reformi"
+          }
+          return result
+        },
+        ""
+      )
+      return { id, suoritustapa }
     })
 
-    const fetchRakenne = flow(function*(id: string) {
-      const response = yield fetchSingle(
+    const fetchRakenne = flow(function*(
+      id: string,
+      suoritustapa: string = "reformi"
+    ): any {
+      const response: APIResponse = yield fetchSingle(
         apiUrl(
-          `${apiPrefix}/external/eperusteet/tutkinnot/${id}/suoritustavat/reformi/rakenne`
+          `${apiPrefix}/external/eperusteet/tutkinnot/${id}/suoritustavat/${suoritustapa}/rakenne`
         )
       )
       return response.data
     })
 
-    const fetchOpiskeluoikeudet = flow(function*() {
+    const fetchOpiskeluoikeudet = flow(function*(): any {
       if (!self.oppijaOid) {
         return
       }
@@ -101,15 +120,16 @@ export const HOKS = types
         const response = yield fetchCollection(
           apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/opiskeluoikeudet`)
         )
-        const opiskeluOikeudet = response.data || []
+        const opiskeluOikeudet: APIResponse = response.data || []
         const opiskeluOikeus = find(
           opiskeluOikeudet,
           (oo: any) => oo.oid === self.opiskeluoikeusOid
         )
+
         if (opiskeluOikeus !== undefined) {
           self.opiskeluOikeus = opiskeluOikeus
           const tutkinto = yield fetchTutkinto()
-          const rakenne = yield fetchRakenne(tutkinto.id)
+          const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
           self.osaamispisteet = rakenne.osat.reduce((osp: number, osa: any) => {
             osp += osa.muodostumisSaanto.laajuus.minimi
             return osp

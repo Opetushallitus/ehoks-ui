@@ -1,5 +1,5 @@
 import React, { Children, cloneElement } from "react"
-import { Step, StepProps } from "routes/LuoHOKS/Step"
+import { StepProps } from "routes/LuoHOKS/Step"
 import styled from "styled"
 
 const Container = styled("div")`
@@ -11,7 +11,7 @@ interface StepperProps {
   currentStep: number
   updateStep: (index: number) => void
   completed: () => { [index: string]: boolean }
-  children?: Array<React.ReactElement<Step>>
+  children?: Array<React.ReactElement<StepProps>>
   disabled?: boolean
 }
 

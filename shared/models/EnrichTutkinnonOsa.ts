@@ -1,6 +1,7 @@
 import { types, getEnv, flow } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { IReactionDisposer, reaction } from "mobx"
+import { APIResponse } from "types/APIResponse"
 
 interface DynamicObject {
   [name: string]: any
@@ -23,9 +24,9 @@ export const EnrichTutkinnonOsa = (
         StoreEnvironment
       >(self)
 
-      const fetchTutkinnonOsaViitteet = flow(function*(id: number) {
+      const fetchTutkinnonOsaViitteet = flow(function*(id: number): any {
         try {
-          const response = yield fetchCollection(
+          const response: APIResponse = yield fetchCollection(
             apiUrl(
               `${apiPrefix}/external/eperusteet/tutkinnonosat/${id}/viitteet`
             )

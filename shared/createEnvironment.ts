@@ -3,7 +3,7 @@ import { fetchUtils } from "fetchUtils"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
 export function createEnvironment(
-  fetchFn: GlobalFetch["fetch"],
+  fetchFn: WindowOrWorkerGlobalScope["fetch"],
   apiUrl: (path: string) => string,
   apiPrefix: string
 ): StoreEnvironment {

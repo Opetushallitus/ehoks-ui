@@ -1,2 +1,2 @@
 import styled from "styled"
-;(global as any).styled = styled
+;(globalThis as any).styled = styled

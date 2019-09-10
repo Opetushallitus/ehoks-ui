@@ -1,4 +1,5 @@
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
+import { APIResponse } from "types/APIResponse"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
 // this allows us to proxy http://localhost:3000/auth-dev/ calls
@@ -23,10 +24,12 @@ export const EnvironmentStore = types
       self
     )
 
-    const getEnvironment = flow(function*() {
+    const getEnvironment = flow(function*(): any {
       self.isLoading = true
       try {
-        const response = yield fetchSingle(apiUrl("misc/environment"))
+        const response: APIResponse = yield fetchSingle(
+          apiUrl("misc/environment")
+        )
         const {
           eperusteetPerusteUrl,
           opintopolkuLoginUrl,

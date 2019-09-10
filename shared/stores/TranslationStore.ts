@@ -1,6 +1,7 @@
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import defaultMessages from "./TranslationStore/defaultMessages.json"
+import { APIResponse } from "types/APIResponse"
 
 export interface ApiTranslation {
   key: string
@@ -46,12 +47,12 @@ export const TranslationStore = types
       self.activeLocale = locale
     }
 
-    const haeLokalisoinnit = flow(function*() {
+    const haeLokalisoinnit = flow(function*(): any {
       self.isLoading = true
       // insert defaultMessages for context.intl.formatMessage calls
       self.translations.replace(defaultMessages as ApiTranslation[])
       try {
-        const response = yield fetchCollection(
+        const response: APIResponse = yield fetchCollection(
           apiUrl(`${apiPrefix}/external/lokalisointi`)
         )
         // add custom translations from API

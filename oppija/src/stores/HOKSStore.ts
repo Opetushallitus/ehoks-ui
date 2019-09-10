@@ -1,5 +1,6 @@
 import { flow, getEnv, types } from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
+import { APIResponse } from "types/APIResponse"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
 const HOKSStoreModel = {
@@ -12,10 +13,10 @@ export const HOKSStore = types
   .actions(self => {
     const { apiUrl, fetchCollection, errors } = getEnv<StoreEnvironment>(self)
 
-    const haeSuunnitelmat = flow(function*(oid: string) {
+    const haeSuunnitelmat = flow(function*(oid: string): any {
       self.isLoading = true
       try {
-        const response = yield fetchCollection(
+        const response: APIResponse = yield fetchCollection(
           apiUrl(`oppija/oppijat/${oid}/hoks`)
         )
         self.suunnitelmat = response.data

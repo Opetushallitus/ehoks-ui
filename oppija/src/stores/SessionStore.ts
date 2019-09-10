@@ -1,12 +1,13 @@
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { SessionUser } from "models/SessionUser"
+import { APIResponse } from "types/APIResponse"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
 const SessionStoreModel = {
   error: types.optional(types.string, ""),
   isLoading: false,
   userDidLogout: false,
-  user: types.optional(types.union(SessionUser, types.null), null),
+  user: types.maybeNull(SessionUser),
   selectedOrganisationOid: ""
 }
 
@@ -17,10 +18,12 @@ export const SessionStore = types
       StoreEnvironment
     >(self)
 
-    const checkSession = flow(function*() {
+    const checkSession = flow(function*(): any {
       self.isLoading = true
       try {
-        const response = yield fetchSingle(apiUrl("oppija/session"))
+        const response: APIResponse = yield fetchSingle(
+          apiUrl("oppija/session")
+        )
         self.user = response.data
       } catch (error) {
         self.error = error.message
@@ -41,7 +44,7 @@ export const SessionStore = types
       self.isLoading = false
     })
 
-    const getUserInfo = flow(function*() {
+    const getUserInfo = flow(function*(): any {
       self.isLoading = true
       try {
         const response = yield fetchSingle(apiUrl("oppija/session/user-info"))

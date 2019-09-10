@@ -14,8 +14,9 @@ export const Oppija = types
       get harjoittelujakso(): Harjoittelujakso {
         const { hankittavatTutkinnonOsat } = self.hoks
         return hankittavatTutkinnonOsat.length &&
+          hankittavatTutkinnonOsat[0].harjoittelujaksot &&
           hankittavatTutkinnonOsat[0].harjoittelujaksot.length
-          ? self.hoks.hankittavatTutkinnonOsat[0].harjoittelujaksot[0]
+          ? hankittavatTutkinnonOsat[0].harjoittelujaksot[0]
           : {}
       },
       get ajankohta() {

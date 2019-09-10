@@ -2,6 +2,7 @@ import "whatwg-fetch" // polyfill window.fetch for IE 11
 import camelCase from "lodash.camelcase"
 import mapObj from "map-obj"
 import queryString from "query-string"
+import { APIResponse } from "types/APIResponse"
 
 function camelCaseDeep(model: any) {
   return mapObj(model, (key: string, value: any) => [camelCase(key), value], {
@@ -13,7 +14,25 @@ export function withQueryString(url: string, queryParams: any) {
   return `${url}?${queryString.stringify(queryParams)}`
 }
 
-export function fetchUtils(fetchImplementation: GlobalFetch["fetch"]) {
+export function fetchUtils(
+  fetchImplementation: WindowOrWorkerGlobalScope["fetch"]
+) {
+  async function fetchCollection<D = any, M = any>(
+    url: string,
+    init?: RequestInit
+  ): Promise<APIResponse<D, M>> {
+    const response = await fetchImplementation(url, init)
+    if (!response.ok) {
+      throw new Error(response.statusText)
+    }
+    const json = await response.json()
+    const model = {
+      data: (json.data ? json.data : []).map(camelCaseDeep),
+      meta: json.meta || {}
+    }
+    return model
+  }
+
   return {
     fetchSingle: async (url: string, init?: RequestInit) => {
       const response = await fetchImplementation(url, init)
@@ -32,18 +51,7 @@ export function fetchUtils(fetchImplementation: GlobalFetch["fetch"]) {
       return camelCaseDeep(model)
     },
 
-    fetchCollection: async (url: string, init?: RequestInit) => {
-      const response = await fetchImplementation(url, init)
-      if (!response.ok) {
-        throw new Error(response.statusText)
-      }
-      const json = await response.json()
-      const model = {
-        data: (json.data ? json.data : []).map(camelCaseDeep),
-        meta: json.meta || {}
-      }
-      return model
-    },
+    fetchCollection,
 
     fetch: async (url: string, init?: RequestInit) => {
       const response = await fetchImplementation(url, init)

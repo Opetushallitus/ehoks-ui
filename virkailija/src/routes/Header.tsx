@@ -70,16 +70,18 @@ export class Header extends React.Component<HeaderProps> {
   render() {
     const { session } = this.props.store!
     const selectedOrganisation =
-      session.user! &&
-      session.user!.organisationPrivileges.find(
+      session.user &&
+      session.user.organisationPrivileges &&
+      session.user.organisationPrivileges.find(
         o => o.oid === session.selectedOrganisationOid
       )
     const hasWritePrivilege =
       selectedOrganisation &&
+      selectedOrganisation.privileges &&
       selectedOrganisation.privileges.indexOf("write") > -1
     const hasSuperUserPrivilege =
       selectedOrganisation &&
-      selectedOrganisation.roles.indexOf("oph-super-user") > -1
+      selectedOrganisation.roles!.indexOf("oph-super-user") > -1
     return (
       <HeaderContainer>
         {session!.organisations ? (

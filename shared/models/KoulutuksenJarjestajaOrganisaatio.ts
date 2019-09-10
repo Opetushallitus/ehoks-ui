@@ -1,6 +1,7 @@
 import { types, getEnv, flow, getRoot } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
+import { APIResponse } from "types/APIResponse"
 
 const Organisaatio = types.model("Organisaatio", {
   oid: types.optional(types.string, ""),
@@ -24,9 +25,9 @@ export const KoulutuksenJarjestajaOrganisaatio = types
       self
     )
 
-    const fetchOrganisation = flow(function*() {
+    const fetchOrganisation = flow(function*(): any {
       try {
-        const response = yield fetchSingle(
+        const response: APIResponse = yield fetchSingle(
           apiUrl(`${apiPrefix}/external/organisaatio/${self.oppilaitosOid}`)
         )
         self.oppilaitos = response.data

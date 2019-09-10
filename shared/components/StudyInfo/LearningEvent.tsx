@@ -45,7 +45,7 @@ const Title = styled("strong")<SizeProps>`
 
 interface LearningEventProps {
   title?: React.ReactNode
-  type: "WORKPLACE" | "OTHER" | "DEMONSTRATION"
+  type: "WORKPLACE" | "OTHER" | "DEMONSTRATION" | undefined
   size?: "small" | "large"
   description?: string
   startDate?: string

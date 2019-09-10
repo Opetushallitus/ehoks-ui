@@ -51,9 +51,11 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
           lahetettyArvioitavaksi:
             self.tarkentavatTiedotArvioija.lahetettyArvioitavaksi
         }
-      },
-      opintoOtsikko(ospLyhenne: string): string {
-        return getOtsikko(this, ospLyhenne)
       }
     }
   })
+  .views(self => ({
+    opintoOtsikko(ospLyhenne: string): string {
+      return getOtsikko(self, ospLyhenne)
+    }
+  }))

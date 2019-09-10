@@ -5,6 +5,7 @@ import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
 import { SessionUser } from "models/SessionUser"
 import { IRootStore } from "stores/RootStore"
+import { APIResponse } from "types/APIResponse"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
 const sortKeys = ["nimi", "tutkinto", "osaamisala"] as const
@@ -26,15 +27,15 @@ export const Oppija = types
     )
 
     // fetches HOKSes with basic info (root level only)
-    const haeSuunnitelmat = flow(function*() {
-      const response = yield fetchCollection(
+    const haeSuunnitelmat = flow(function*(): any {
+      const response: APIResponse = yield fetchCollection(
         apiUrl(`virkailija/oppijat/${self.oid}/hoksit`)
       )
       self.suunnitelmat = response.data
     })
 
-    const haeHenkilotiedot = flow(function*() {
-      const response = yield fetchSingle(
+    const haeHenkilotiedot = flow(function*(): any {
+      const response: APIResponse = yield fetchSingle(
         apiUrl(`virkailija/oppijat/${self.oid}`)
       )
       const { oid, nimi } = response.data
@@ -95,7 +96,7 @@ const Search = types
   .actions(self => {
     const { fetchCollection, apiUrl } = getEnv<StoreEnvironment>(self)
 
-    const haeOppijat = flow(function*() {
+    const haeOppijat = flow(function*(): any {
       // TODO fix cross reference of stores?
       const rootStore: IRootStore = getRoot<IRootStore>(self)
       const oppilaitosOid: string = rootStore.session.selectedOrganisationOid
@@ -122,7 +123,7 @@ const Search = types
         return texts
       }, {})
 
-      const response = yield fetchCollection(
+      const response: APIResponse = yield fetchCollection(
         withQueryString(apiUrl("virkailija/oppijat"), {
           ...queryParams,
           ...textQueries
