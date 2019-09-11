@@ -140,6 +140,19 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                       ? format(parseISO(oppija.paivitetty), "d.M.yyyy")
                       : "-"}
                   </Timestamp>
+                  <Timestamp>
+                    {suunnitelma.osaamisenHankkimisenTarve ? (
+                      <FormattedMessage
+                        id="koulutuksenJarjestaja.opiskelija.osaamisenHankkimisenTarveTrueTitle"
+                        defaultMessage="Opiskelijalla on osaamisen hankkimisen tarve"
+                      />
+                    ) : (
+                      <FormattedMessage
+                        id="koulutuksenJarjestaja.opiskelija.osaamisenHankkimisenTarveFalseTitle"
+                        defaultMessage="Opiskelijalla ei ole osaamisen hankkimisen tarvetta"
+                      />
+                    )}
+                  </Timestamp>
                   {suunnitelmat.length > 1 && (
                     <Timestamp>
                       <StudentLink
