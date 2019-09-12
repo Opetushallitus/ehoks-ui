@@ -2,6 +2,7 @@ import { Location, navigate, Router } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import { MainHeading } from "components/Heading"
 import { HOKSButton } from "components/HOKSButton"
+import { HoksInfo } from "components/HoksInfo"
 import Flag from "components/icons/Flag"
 import { NavigationContainer } from "components/NavigationContainer"
 import { AiempiOsaaminen } from "components/Opiskelija/AiempiOsaaminen"
@@ -81,7 +82,18 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                       />
                     </MainHeading>
                     <Section>
-                      <SectionContainer />
+                      <SectionContainer>
+                        <HoksInfo
+                          suunnitelma={suunnitelma}
+                          oppija={{
+                            nimi: student
+                              ? `${student.commonName} ${student.surname}`
+                              : "",
+                            hyvaksytty: suunnitelma.ensikertainenHyvaksyminen,
+                            paivitetty: suunnitelma.paivitetty
+                          }}
+                        />
+                      </SectionContainer>
                       <SectionItems>
                         <SectionItem
                           selected={
