@@ -12,6 +12,7 @@ import { HeroButton } from "components/Button"
 import { MdShare } from "react-icons/md"
 import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
+import { AppContext } from "components/AppContext"
 
 const DemonstrationTitle = styled(Title)`
   display: flex;
@@ -56,6 +57,8 @@ interface DemonstrationProps {
 }
 
 export class Demonstration extends React.Component<DemonstrationProps> {
+  static contextType = AppContext
+
   share = () => {
     const { koodiUri } = this.props
     if (koodiUri) {
@@ -74,6 +77,7 @@ export class Demonstration extends React.Component<DemonstrationProps> {
       hasActiveShare = false,
       verificationProcess
     } = this.props
+    const app = this.context
 
     const title =
       verificationProcess &&
@@ -88,6 +92,10 @@ export class Demonstration extends React.Component<DemonstrationProps> {
           defaultMessage="Näyttö"
         />
       )
+
+    // NOTE: Share functionality is enabled only in oppija app for now
+    const showShareButton = !hasActiveShare && app === "oppija"
+
     return (
       <Container data-testid="StudyInfo.Demonstration">
         <DemonstrationTitle>
@@ -99,7 +107,7 @@ export class Demonstration extends React.Component<DemonstrationProps> {
             endDate={demonstration.loppu}
             size="large"
           />
-          {!hasActiveShare && (
+          {showShareButton && (
             <ButtonContainer>
               <Button onClick={this.share}>
                 <FormattedMessage

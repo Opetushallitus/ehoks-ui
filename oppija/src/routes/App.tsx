@@ -55,7 +55,6 @@ export class App extends React.Component<AppProps> {
     const { store } = this.props
     // load user session info from backend
     await store!.session.checkSession()
-    await store!.session.fetchSettings()
   }
 
   render() {

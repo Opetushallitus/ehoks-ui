@@ -14,6 +14,7 @@ import { HeroButton } from "components/Button"
 import { FormattedMessage } from "react-intl"
 import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
+import { AppContext } from "components/AppContext"
 
 interface ContainerProps {
   accentColor?: string
@@ -132,6 +133,8 @@ export interface StudyInfoState {
  * Shows information about single study
  */
 export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
+  static contextType = AppContext
+
   state: StudyInfoState = {
     expanded: {
       competences: false,
@@ -225,6 +228,8 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       verificationProcess,
       width = "25%"
     } = this.props
+    const app = this.context
+
     const { expandedCompetences, expanded } = this.state
     const hasLearningPeriods = learningPeriods && learningPeriods.length > 0
     const hasDetails =
@@ -234,8 +239,13 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       koodiUri === share.koodiUri &&
       share.type === "tyossaoppiminen"
     const detailsExpanded = expanded.details || hasActiveShare
+
+    // NOTE: Share functionality is enabled only in oppija app for now
     const showShareButton =
-      expanded.details && hasLearningPeriods && !hasActiveShare
+      expanded.details &&
+      hasLearningPeriods &&
+      !hasActiveShare &&
+      app === "oppija"
 
     return (
       <Container

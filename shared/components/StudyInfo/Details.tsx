@@ -16,7 +16,7 @@ import { VerificationProcess } from "types/VerificationProcess"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import { ShareType } from "stores/NotificationStore"
-import { ShareDialog } from "components/ShareDialog"
+import ShareDialog from "components/ShareDialog"
 
 interface ColorProps {
   fadedColor: string

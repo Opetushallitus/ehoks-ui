@@ -79,7 +79,7 @@ export function fetchUtils(
   }
 }
 
-// // mocked fetch using local json files
+// mocked fetch using local JSON files
 export const mockFetch = (apiUrl: (path: string) => string, version = 0) => (
   url: string,
   _init?: RequestInit

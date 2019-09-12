@@ -1,15 +1,28 @@
-import React, { useState, useRef, useEffect, useContext } from "react"
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useContext,
+  useLayoutEffect
+} from "react"
 import { navigate } from "@reach/router"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, injectIntl, InjectedIntl } from "react-intl"
 import styled from "styled"
 import { ShareType } from "stores/NotificationStore"
 import { HeroButton } from "components/Button"
 import { ModalWithBackground } from "components/Modal"
-import { fetchLinks, ShareLink } from "components/ShareDialog/fetchLinks"
+import {
+  fetchLinks,
+  createLink,
+  ShareLink,
+  removeLink
+} from "./ShareDialog/API"
 import { APIConfigContext } from "components/APIConfigContext"
 import CopyToClipboard from "react-copy-to-clipboard"
 import format from "date-fns/format"
-import find from "lodash.find"
+import parseISO from "date-fns/parseISO"
+import { HOKSEidContext } from "components/HOKSEidContext"
+import { AppContext } from "components/AppContext"
 
 interface ColorProps {
   background: string
@@ -130,6 +143,7 @@ interface ShareDialogProps {
   type: ShareType
   defaultPeriod?: { start?: string; end?: string }
   instructor?: { name: string; organisation?: string; email: string }
+  intl?: InjectedIntl
 }
 
 export function ShareDialog(props: ShareDialogProps) {
@@ -140,8 +154,16 @@ export function ShareDialog(props: ShareDialogProps) {
     defaultPeriod,
     instructor,
     koodiUri,
-    type
+    type,
+    intl
   } = props
+
+  const app = useContext(AppContext)
+  // NOTE: ShareDialog is disabled for other apps than "oppija" for now
+  if (app !== "oppija") {
+    return children
+  }
+
   const ref = useRef<HTMLDivElement>(null)
   const [sharedLinks, setSharedLinks] = useState<Array<ShareLink>>([])
   const [startDate, setStartDate] = useState(
@@ -155,36 +177,37 @@ export function ShareDialog(props: ShareDialogProps) {
   const [instructorCopied, setInstructorCopied] = useState(false)
   const apiConfig = useContext(APIConfigContext)
 
-  useEffect(() => {
+  // NOTE: we use HOKSEidContext to prevent passing `eid` prop all the way
+  // from OmienOpintojenSuunnittelu -> OpiskeluSuunnitelma -> StudyInfo -> Details -> ShareDialog
+  const eid = useContext(HOKSEidContext) || ""
+
+  useLayoutEffect(() => {
     window.requestAnimationFrame(() => {
       if (ref && ref.current) {
         // ensures that share dialog is visible
         ref.current.scrollIntoView({ block: "end", behavior: "smooth" })
       }
     })
+  }, [])
 
+  useEffect(() => {
     const fetchData = async () => {
-      const links = await fetchLinks(koodiUri, type, apiConfig)
-      setSharedLinks(links)
+      setSharedLinks(await fetchLinks(eid, koodiUri, type, apiConfig))
     }
     fetchData()
   }, [])
 
-  // TODO: actual API call, remove mock code
-  const addLink = () => {
-    const nextId = sharedLinks.length + 1
-    const nextLinks = [
-      ...sharedLinks,
-      {
-        id: nextId,
-        createdAt: format(new Date(), "yyyy-MM-dd"),
-        validFrom: startDate,
-        validTo: endDate,
-        url: `https://ehoks.dev/share/${nextId}`
-      }
-    ]
-    setSharedLinks(nextLinks)
-    setCreatedUrl(`https://ehoks.dev/share/${nextId}`)
+  const addLink = async () => {
+    const createdUuid = await createLink({
+      eid,
+      koodiUri,
+      startDate,
+      endDate,
+      type,
+      apiConfig
+    })
+    setSharedLinks(await fetchLinks(eid, koodiUri, type, apiConfig))
+    setCreatedUrl(`https://not.implemented.yet/jako/${createdUuid}`)
   }
 
   const close = () => {
@@ -193,19 +216,23 @@ export function ShareDialog(props: ShareDialogProps) {
     navigate(window.location.pathname)
   }
 
-  // TODO: actual API call, remove mock code
-  const remove = (event: React.MouseEvent, id: number) => {
+  const remove = async (event: React.MouseEvent, uuid: string) => {
     event.preventDefault()
-    console.log("clicked remove for", id)
-    // TODO: use i18n
-    if (confirm("Haluatko varmasti poistaa valitun jakolinkin?")) {
-      // if removed link is equal to createdUrl, set createdUrl to empty string
-      const linkToBeRemoved = find(sharedLinks, link => link.id === id)
-      if (linkToBeRemoved && linkToBeRemoved.url === createdUrl) {
-        setCreatedUrl("")
-      }
-      const nextLinks = sharedLinks.filter(link => link !== linkToBeRemoved)
-      setSharedLinks(nextLinks)
+    if (
+      confirm(
+        intl!.formatMessage({
+          id: "jakaminen.haluatkoPoistaaConfirm"
+        })
+      )
+    ) {
+      await removeLink({
+        eid,
+        koodiUri,
+        uuid,
+        apiConfig
+      })
+      setSharedLinks(await fetchLinks(eid, koodiUri, type, apiConfig))
+      setCreatedUrl("")
     }
   }
 
@@ -287,22 +314,22 @@ export function ShareDialog(props: ShareDialogProps) {
                 <SharedLink key={i}>
                   <LinkItem>
                     <FormattedMessage
-                      id="jakaminen.linkkiLuotu"
-                      defaultMessage="Linkki luotu"
+                      id="jakaminen.linkki"
+                      defaultMessage="Linkki"
                     />{" "}
-                    {link.createdAt},{" "}
                     <FormattedMessage
                       id="jakaminen.voimassa"
                       defaultMessage="voimassa"
                     />{" "}
-                    {link.validFrom} - {link.validTo}
+                    {format(parseISO(link.validFrom), "dd.MM.yyyy")} -{" "}
+                    {format(parseISO(link.validTo), "dd.MM.yyyy")}
                   </LinkItem>
-                  <LinkItem>{link.url}</LinkItem>
+                  <LinkItem>{link.uuid}</LinkItem>
                   <LinkAnchor>
                     <a
                       href=""
                       onClick={(event: React.MouseEvent) =>
-                        remove(event, link.id)
+                        remove(event, link.uuid)
                       }
                     >
                       <FormattedMessage
@@ -445,3 +472,5 @@ export function ShareDialog(props: ShareDialogProps) {
     </React.Fragment>
   )
 }
+
+export default injectIntl(ShareDialog)

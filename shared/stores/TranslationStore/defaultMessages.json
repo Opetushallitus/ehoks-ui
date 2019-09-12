@@ -303,5 +303,10 @@
     "locale": "fi",
     "key": "koulutuksenJarjestaja.tavoite.puhelinnumeroTitle",
     "value": "Puhelinnumero"
+  },
+  {
+    "locale": "fi",
+    "key": "jakaminen.haluatkoPoistaaConfirm",
+    "value": "Haluatko varmasti poistaa valitun jakolinkin?"
   }
 ]

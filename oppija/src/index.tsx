@@ -1,4 +1,5 @@
 import { APIConfigContext } from "components/APIConfigContext"
+import { AppContext } from "components/AppContext"
 import { apiPrefix, apiUrl } from "config"
 import { createEnvironment } from "createEnvironment"
 import { fetch } from "fetchUtils"
@@ -26,9 +27,11 @@ const apiConfig = { apiUrl, apiPrefix }
 const appContainer = document.getElementById("app")
 ReactDOM.render(
   <APIConfigContext.Provider value={apiConfig}>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <AppContext.Provider value="oppija">
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </AppContext.Provider>
   </APIConfigContext.Provider>,
   appContainer
 )
@@ -39,9 +42,11 @@ if (module.hot) {
     const NextApp = require("./routes/App").App
     ReactDOM.render(
       <APIConfigContext.Provider value={apiConfig}>
-        <Provider store={store}>
-          <NextApp />
-        </Provider>
+        <AppContext.Provider value="oppija">
+          <Provider store={store}>
+            <NextApp />
+          </Provider>
+        </AppContext.Provider>
       </APIConfigContext.Provider>,
       appContainer
     )
