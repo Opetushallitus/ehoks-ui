@@ -106,7 +106,9 @@ export const HOKS = types
     ): any {
       const response: APIResponse = yield fetchSingle(
         apiUrl(
-          `${apiPrefix}/external/eperusteet/tutkinnot/${id}/suoritustavat/${suoritustapa}/rakenne`
+          `${apiPrefix}/external/eperusteet/tutkinnot/${id}/suoritustavat/${suoritustapa}/${
+            suoritustapa === "reformi" ? "rakenne" : "tutkinnonosat"
+          }`
         )
       )
       return response.data
