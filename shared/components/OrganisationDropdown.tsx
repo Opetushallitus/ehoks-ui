@@ -50,14 +50,8 @@ export class OrganisationDropdown extends React.Component<
       <OppilaitosSelect value={value} onChange={this.handleOnChange}>
         {organisations
           .slice()
-          .sort((a, b) => {
-            if (a.nimi < b.nimi) {
-              return 1
-            }
-            if (a.nimi > b.nimi) {
-              return -1
-            }
-            return 0
+          .sort((a: IOrganisation, b: IOrganisation) => {
+            return strcmp(a.nimi.get(lang) || "", b.nimi.get(lang) || "")
           })
           .map(o => (
             <option key={o.oid} value={o.oid} aria-selected={o.oid === value}>
