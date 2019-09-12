@@ -5,7 +5,7 @@ import { AiemminHankittuYhteinenTutkinnonOsa } from "models/AiemminHankittuYhtei
 import { HankittavaAmmatillinenTutkinnonOsa } from "models/HankittavaAmmatillinenTutkinnonOsa"
 import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenTutkinnonOsa"
 import { HankittavaYhteinenTutkinnonOsa } from "models/HankittavaYhteinenTutkinnonOsa"
-import { TutkinnonOsa } from "./helpers/TutkinnonOsa"
+import { TutkinnonOsa, HankittavaTutkinnonOsa } from "./helpers/TutkinnonOsa"
 import flattenDeep from "lodash.flattendeep"
 import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
@@ -145,7 +145,7 @@ export const HOKS = types
   .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {
-      get hankittavatTutkinnonOsat(): TutkinnonOsa[] {
+      get hankittavatTutkinnonOsat(): HankittavaTutkinnonOsa[] {
         const osaAlueet = flattenDeep<
           Instance<typeof YhteisenTutkinnonOsanOsaAlue>
         >(self.hankittavatYhteisetTutkinnonOsat.map((to: any) => to.osaAlueet))

@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "@reach/router"
+import { RouteComponentProps, navigate } from "@reach/router"
 import { Accordion, AccordionTitle } from "components/Accordion"
 import { EmptyItem } from "components/EmptyItem"
 import { Heading } from "components/Heading"
@@ -16,6 +16,9 @@ import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
 import { theme } from "theme"
 import { HelpPopup } from "components/HelpPopup"
+import find from "lodash.find"
+import { ShareType } from "stores/NotificationStore"
+import { parseShareParams } from "utils/shareParams"
 const { colors } = theme
 
 const ProgressTitle = styled("h2")`
@@ -32,7 +35,7 @@ const HelpButton = styled(HelpPopup)`
   margin: 0 0 0 20px;
 `
 
-export interface OpiskelusuunnitelmaProps {
+export type OpiskelusuunnitelmaProps = {
   children?: React.ReactChildren
   plan: Instance<typeof HOKS>
   elements?: {
@@ -40,23 +43,34 @@ export interface OpiskelusuunnitelmaProps {
     goals?: React.ReactNode
     essentialFactor?: React.ReactNode
   }
-}
+} & RouteComponentProps
 
 export interface OpiskelusuunnitelmaState {
   activeAccordions: {
-    [accordionName: string]: boolean | { [subAccordionName: string]: boolean }
+    suunnitelma: boolean
+    suunnitelmat: {
+      aikataulutetut: boolean
+      suunnitellut: boolean
+      valmiit: boolean
+    }
+    tavoitteet: boolean
+    tukevatOpinnot: boolean
+  }
+  share: {
+    koodiUri: string
+    type: ShareType | ""
   }
 }
 
 @observer
 export class Opiskelusuunnitelma extends React.Component<
-  OpiskelusuunnitelmaProps & RouteComponentProps,
+  OpiskelusuunnitelmaProps,
   OpiskelusuunnitelmaState
 > {
   static contextTypes = {
     intl: intlShape
   }
-  state = {
+  state: OpiskelusuunnitelmaState = {
     activeAccordions: {
       suunnitelma: false,
       suunnitelmat: {
@@ -66,16 +80,89 @@ export class Opiskelusuunnitelma extends React.Component<
       },
       tavoitteet: false,
       tukevatOpinnot: false
+    },
+    share: {
+      koodiUri: "",
+      type: ""
     }
   }
 
-  componentDidMount() {
-    window.requestAnimationFrame(() => {
-      window.scrollTo(0, 0)
+  async componentDidMount() {
+    const { location } = this.props
+    const { share, type } = parseShareParams(location)
+    await this.showShareDialog(share, type)
+    this.setInitialExpanded(share, type)
+  }
+
+  componentDidUpdate(prevProps: OpiskelusuunnitelmaProps) {
+    if (this.props.location !== prevProps.location) {
+      // TODO: set proper share state when opening another dialog
+      // previous dialog should close and new dialog should open
+      const { share, type } = parseShareParams(this.props.location)
+      this.showShareDialog(share, type)
+    }
+  }
+
+  isShareActive = () => {
+    const { share } = this.state
+    return share.koodiUri !== "" && share.type !== ""
+  }
+
+  hasActiveShare = (type: "aikataulutetut" | "suunnitellut" | "valmiit") => {
+    const {
+      aikataulutetutOpinnot,
+      suunnitellutOpinnot,
+      valmiitOpinnot
+    } = this.props.plan
+    const { share } = this.state
+    const studies = {
+      aikataulutetut: aikataulutetutOpinnot,
+      suunnitellut: suunnitellutOpinnot,
+      valmiit: valmiitOpinnot
+    }
+    return !!find(studies[type], s =>
+      s.hasNayttoOrHarjoittelujakso(share.koodiUri, share.type)
+    )
+  }
+
+  showShareDialog = (share: string, type: ShareType | "") => {
+    return new Promise(resolve => {
+      this.setState(
+        state => ({
+          ...state,
+          share: { koodiUri: share, type }
+        }),
+        () => {
+          resolve()
+        }
+      )
     })
   }
 
-  showPlanSubAccordion = (subAccordion: string) => () => {
+  setInitialExpanded = (share: string, type: ShareType | "") => {
+    this.setState(state => ({
+      ...state,
+      activeAccordions: {
+        ...state.activeAccordions,
+        suunnitelma: Boolean(share && type),
+        suunnitelmat: {
+          aikataulutetut: this.hasActiveShare("aikataulutetut"),
+          suunnitellut: this.hasActiveShare("suunnitellut"),
+          valmiit: this.hasActiveShare("valmiit")
+        }
+      }
+    }))
+  }
+
+  hideShareDialog = () => {
+    if (this.props.location) {
+      navigate(this.props.location.pathname)
+    }
+  }
+
+  showPlanSubAccordion = (
+    subAccordion: keyof OpiskelusuunnitelmaState["activeAccordions"]["suunnitelmat"]
+  ) => () => {
     this.setState(
       state => ({
         ...state,
@@ -83,9 +170,7 @@ export class Opiskelusuunnitelma extends React.Component<
           ...state.activeAccordions,
           suunnitelma: true,
           suunnitelmat: {
-            ...(state.activeAccordions.suunnitelmat as {
-              [subAccordionName: string]: boolean
-            }),
+            ...state.activeAccordions.suunnitelmat,
             [subAccordion]: true
           }
         }
@@ -96,7 +181,10 @@ export class Opiskelusuunnitelma extends React.Component<
     )
   }
 
-  toggleAccordion = (accordion: string, subAccordion?: string) => () => {
+  toggleAccordion = (
+    accordion: keyof OpiskelusuunnitelmaState["activeAccordions"],
+    subAccordion?: keyof OpiskelusuunnitelmaState["activeAccordions"]["suunnitelmat"]
+  ) => () => {
     this.setState(state => ({
       ...state,
       activeAccordions: {
@@ -128,13 +216,14 @@ export class Opiskelusuunnitelma extends React.Component<
 
   render() {
     const { intl } = this.context
-    const { activeAccordions } = this.state
+    const { activeAccordions, share } = this.state
     const { plan, elements: customElements = {} } = this.props
     const { suunnitellutOpinnot, aikataulutetutOpinnot, valmiitOpinnot } = plan
     const competencePointsTitle = intl.formatMessage({
       id: "opiskelusuunnitelma.osaamispisteLyhenne"
     })
-
+    const isShareActive = this.isShareActive()
+    const hasActiveShare = this.hasActiveShare
     const elements = {
       heading: customElements.heading || (
         <FormattedMessage
@@ -301,7 +390,7 @@ export class Opiskelusuunnitelma extends React.Component<
 
         <Accordion
           id="suunnitelma"
-          open={activeAccordions.suunnitelma}
+          open={activeAccordions.suunnitelma || isShareActive}
           title={
             <AccordionTitle>
               <FormattedMessage
@@ -322,7 +411,10 @@ export class Opiskelusuunnitelma extends React.Component<
         >
           <Accordion
             id="suunnitelma.suunnitellut"
-            open={activeAccordions.suunnitelmat.suunnitellut}
+            open={
+              activeAccordions.suunnitelmat.suunnitellut ||
+              hasActiveShare("suunnitellut")
+            }
             onToggle={this.toggleAccordion("suunnitelmat", "suunnitellut")}
             title={
               <AccordionTitle>
@@ -343,14 +435,16 @@ export class Opiskelusuunnitelma extends React.Component<
                   <React.Fragment key={`${study.id}_${i}`}>
                     <StudyInfo
                       accentColor={colors.planned}
-                      fadedColor="#FDF1E6"
-                      title={study.opintoOtsikko(competencePointsTitle)}
-                      learningPeriods={study.harjoittelujaksot}
                       competenceRequirements={study.osaamisvaatimukset}
                       demonstrations={study.naytot}
                       extraContent={
                         study.olennainenSeikka ? elements.essentialFactor : null
                       }
+                      fadedColor="#FDF1E6"
+                      koodiUri={study.tutkinnonOsaKoodiUri}
+                      learningPeriods={study.harjoittelujaksot}
+                      share={share}
+                      title={study.opintoOtsikko(competencePointsTitle)}
                     />
                     {renderExtraItem && <EmptyItem />}
                   </React.Fragment>
@@ -370,7 +464,10 @@ export class Opiskelusuunnitelma extends React.Component<
 
           <Accordion
             id="suunnitelma.aikataulutetut"
-            open={activeAccordions.suunnitelmat.aikataulutetut}
+            open={
+              activeAccordions.suunnitelmat.aikataulutetut ||
+              hasActiveShare("aikataulutetut")
+            }
             onToggle={this.toggleAccordion("suunnitelmat", "aikataulutetut")}
             title={
               <AccordionTitle>
@@ -391,14 +488,16 @@ export class Opiskelusuunnitelma extends React.Component<
                   <React.Fragment key={`${study.id}_${i}`}>
                     <StudyInfo
                       accentColor={colors.scheduled}
-                      fadedColor="#FDF6E9"
-                      title={study.opintoOtsikko(competencePointsTitle)}
-                      learningPeriods={study.harjoittelujaksot}
                       competenceRequirements={study.osaamisvaatimukset}
                       demonstrations={study.naytot}
                       extraContent={
                         study.olennainenSeikka ? elements.essentialFactor : null
                       }
+                      fadedColor="#FDF6E9"
+                      koodiUri={study.tutkinnonOsaKoodiUri}
+                      learningPeriods={study.harjoittelujaksot}
+                      share={share}
+                      title={study.opintoOtsikko(competencePointsTitle)}
                     />
                     {renderExtraItem && <EmptyItem />}
                   </React.Fragment>
@@ -418,7 +517,9 @@ export class Opiskelusuunnitelma extends React.Component<
 
           <Accordion
             id="suunnitelma.valmiit"
-            open={activeAccordions.suunnitelmat.valmiit}
+            open={
+              activeAccordions.suunnitelmat.valmiit || hasActiveShare("valmiit")
+            }
             onToggle={this.toggleAccordion("suunnitelmat", "valmiit")}
             title={
               <AccordionTitle>
@@ -439,14 +540,16 @@ export class Opiskelusuunnitelma extends React.Component<
                   <React.Fragment key={`${study.id}_${i}`}>
                     <StudyInfo
                       accentColor={colors.ready}
-                      fadedColor="#ECF6ED"
-                      title={study.opintoOtsikko(competencePointsTitle)}
-                      learningPeriods={study.harjoittelujaksot}
                       competenceRequirements={study.osaamisvaatimukset}
                       demonstrations={study.naytot}
                       extraContent={
                         study.olennainenSeikka ? elements.essentialFactor : null
                       }
+                      fadedColor="#ECF6ED"
+                      koodiUri={study.tutkinnonOsaKoodiUri}
+                      learningPeriods={study.harjoittelujaksot}
+                      share={share}
+                      title={study.opintoOtsikko(competencePointsTitle)}
                     />
                     {renderExtraItem && <EmptyItem />}
                   </React.Fragment>

@@ -8,10 +8,21 @@ import { Container, InfoContainer, Table, TBody, TD, TH, Title } from "./Shared"
 import { Naytto, TodentamisenProsessi } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
 import { VerificationProcess } from "types/VerificationProcess"
+import { HeroButton } from "components/Button"
+import { MdShare } from "react-icons/md"
+import { navigate } from "@reach/router"
+import { stringifyShareParams } from "utils/shareParams"
+import { AppContext } from "components/AppContext"
 
 const DemonstrationTitle = styled(Title)`
+  display: flex;
+  align-items: center;
   margin-left: 20px;
   margin-right: 20px;
+`
+
+const FlexLearningEvent = styled(LearningEvent)`
+  flex: 1;
 `
 
 const DemonstrationTable = styled(Table)`
@@ -26,14 +37,48 @@ const CustomSlider = styled(MobileSlider)`
   margin: 10px 20px 20px 10px;
 `
 
+const ButtonContainer = styled("div")`
+  margin-right: 50px;
+`
+
+const Button = styled(HeroButton)`
+  display: inline-flex;
+`
+
+const ShareIcon = styled(MdShare)`
+  margin-left: 6px;
+`
+
 interface DemonstrationProps {
   demonstration: Naytto
   verificationProcess?: TodentamisenProsessi
+  koodiUri?: string
+  hasActiveShare?: boolean
 }
 
 export class Demonstration extends React.Component<DemonstrationProps> {
+  static contextType = AppContext
+
+  share = () => {
+    const { koodiUri } = this.props
+    if (koodiUri) {
+      navigate(
+        `${window.location.pathname}?${stringifyShareParams({
+          share: koodiUri,
+          type: "naytto"
+        })}`
+      )
+    }
+  }
+
   render() {
-    const { demonstration, verificationProcess } = this.props
+    const {
+      demonstration,
+      hasActiveShare = false,
+      verificationProcess
+    } = this.props
+    const app = this.context
+
     const title =
       verificationProcess &&
       verificationProcess.koodiUri === VerificationProcess.OHJAUS_NAYTTOON ? (
@@ -47,10 +92,14 @@ export class Demonstration extends React.Component<DemonstrationProps> {
           defaultMessage="Näyttö"
         />
       )
+
+    // NOTE: Share functionality is enabled only in oppija app for now
+    const showShareButton = !hasActiveShare && app === "oppija"
+
     return (
       <Container data-testid="StudyInfo.Demonstration">
         <DemonstrationTitle>
-          <LearningEvent
+          <FlexLearningEvent
             title={title}
             type={demonstration.tyyppi}
             description={demonstration.organisaatio}
@@ -58,6 +107,17 @@ export class Demonstration extends React.Component<DemonstrationProps> {
             endDate={demonstration.loppu}
             size="large"
           />
+          {showShareButton && (
+            <ButtonContainer>
+              <Button onClick={this.share}>
+                <FormattedMessage
+                  id="jakaminen.jaaNaytonTiedotButtonTitle"
+                  defaultMessage="Näytön tietojen jakaminen"
+                />
+                <ShareIcon size={24} />
+              </Button>
+            </ButtonContainer>
+          )}
         </DemonstrationTitle>
         <DemonstrationTable>
           <TBody>

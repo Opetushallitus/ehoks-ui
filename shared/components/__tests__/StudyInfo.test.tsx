@@ -1,7 +1,9 @@
 import React from "react"
-import { render, fireEvent } from "react-testing-library"
+import { render, fireEvent, wait } from "@testing-library/react"
 import { StudyInfo } from "../StudyInfo"
 import { renderWithContext } from "testUtils"
+import { Naytto, Harjoittelujakso } from "models/helpers/TutkinnonOsa"
+import { mockFetch } from "fetchUtils"
 
 const osaamisvaatimukset = [
   {
@@ -19,241 +21,236 @@ const osaamisvaatimukset = [
   }
 ]
 
-test("render without params", () => {
-  const { getByTestId } = render(<StudyInfo />)
-  expect(getByTestId("Title")).toBeEmpty()
-  expect(getByTestId("StudyInfo.Competences")).toBeEmpty()
-})
+const naytot1 = [
+  {
+    alku: "2017-10-25",
+    loppu: "2017-10-26",
+    organisaatio: "Näyttöpaikka",
+    ymparisto: "Näyttöympäristö",
+    koulutuksenJarjestajaArvioijat: [
+      "Koulu Järjestäjä, koulutuksen järjestäjä"
+    ],
+    tyoelamaArvioijat: ["Työ Arvioija, työelämä"],
+    tyotehtavat: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"],
+    tyyppi: "DEMONSTRATION" as Naytto["tyyppi"]
+  }
+]
 
-test("render title", () => {
-  const { getByTestId } = render(<StudyInfo title="Test" />)
-  expect(getByTestId("Title").textContent).toBe("Test")
-})
+const naytot2 = [
+  {
+    alku: "2017-10-25",
+    loppu: "2017-10-26",
+    organisaatio: "Näyttöpaikka",
+    ymparisto: "Näyttöympäristö",
+    koulutuksenJarjestajaArvioijat: [
+      "Koulu Järjestäjä, koulutuksen järjestäjä"
+    ],
+    tyoelamaArvioijat: ["Työ Arvioija, työelämä"],
+    tyotehtavat: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"],
+    tyyppi: "DEMONSTRATION" as Naytto["tyyppi"]
+  },
+  {
+    alku: "2017-10-25",
+    loppu: "2017-10-26",
+    organisaatio: "Näyttöpaikka",
+    ymparisto: "Näyttöympäristö",
+    koulutuksenJarjestajaArvioijat: [
+      "Koulu Järjestäjä, koulutuksen järjestäjä"
+    ],
+    tyoelamaArvioijat: ["Työ Arvioija, työelämä"],
+    tyotehtavat: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"],
+    tyyppi: "DEMONSTRATION" as Naytto["tyyppi"]
+  }
+]
 
-test("render competence requirements", () => {
-  const { getByTestId, queryByTestId } = renderWithContext(
-    <StudyInfo title="Test" competenceRequirements={osaamisvaatimukset} />
-  )
+const naytot3 = [
+  {
+    alku: "2019-08-01",
+    loppu: "2019-08-01",
+    organisaatio: "Näyttöpaikka",
+    ymparisto: "Näyttöympäristö",
+    koulutuksenJarjestajaArvioijat: [
+      "Olli Opettaja, koulutuksen järjestäjä",
+      "Oona Opettaja, koulutuksen järjestäjä"
+    ],
+    tyoelamaArvioijat: ["Teuvo Työpaikka, työelämä"],
+    tyotehtavat: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"],
+    tyyppi: "DEMONSTRATION" as Naytto["tyyppi"]
+  }
+]
 
-  const expandCompetences = getByTestId(
-    "StudyInfo.Competences.ExpandCompetences"
-  )
-  expect(
-    queryByTestId("StudyInfo.Competences.CollapseCompetences")
-  ).not.toBeInTheDocument()
-  expect(expandCompetences).toBeInTheDocument()
-  fireEvent.click(expandCompetences)
+const harjoittelujaksot1 = [
+  {
+    alku: "2019-05-24",
+    loppu: "2019-07-31",
+    nimi: "Verkko-oppiminen",
+    selite: "Moodle-kurssi, viestintä",
+    tyyppi: "OTHER" as Harjoittelujakso["tyyppi"]
+  }
+]
 
-  expect(
-    getByTestId("StudyInfo.Competences.CompetenceRequirements").children.length
-  ).toBe(1)
+const harjoittelujaksot2 = [
+  {
+    alku: "2019-09-13",
+    loppu: "2019-09-30",
+    ohjaaja: { nimi: "John McAfee", sahkoposti: "john@mock.dev" },
+    tyotehtavat: ["Elintarvikkeiden valmistus", "Elintarvikkeiden säilytys"],
+    selite: "Palvelutalo Koivikkola",
+    tyyppi: "WORKPLACE" as Harjoittelujakso["tyyppi"]
+  },
+  {
+    alku: "2019-10-01",
+    loppu: "2019-10-15",
+    nimi: "Verkko-oppiminen",
+    selite: "Moodle-kurssi, Ikääntyminen",
+    tyyppi: "OTHER" as Harjoittelujakso["tyyppi"]
+  }
+]
 
-  const collapseCompetences = getByTestId(
-    "StudyInfo.Competences.CollapseCompetences"
-  )
-  expect(collapseCompetences).toBeInTheDocument()
-  expect(expandCompetences).not.toBeInTheDocument()
+describe("StudyInfo", () => {
+  beforeEach(() => {
+    // mockFetch will load JSONs from shared/stores/mocks/*.json
+    window.fetch = mockFetch((path: string) => `/${path}`)
+  })
 
-  fireEvent.click(collapseCompetences)
+  test("render without params", () => {
+    const { getByTestId } = render(<StudyInfo />)
+    expect(getByTestId("Title")).toBeEmpty()
+    expect(getByTestId("StudyInfo.Competences")).toBeEmpty()
+  })
 
-  expect(
-    queryByTestId("StudyInfo.Competences.CompetenceRequirements")
-  ).not.toBeInTheDocument()
-})
+  test("render title", () => {
+    const { getByTestId } = render(<StudyInfo title="Test" />)
+    expect(getByTestId("Title").textContent).toBe("Test")
+  })
 
-test("render demonstrations", () => {
-  const {
-    getByTestId,
-    getAllByTestId,
-    queryByTestId,
-    rerender
-  } = renderWithContext(
-    <StudyInfo
-      title="Test"
-      demonstrations={[
-        {
-          alku: "2017-10-25",
-          loppu: "2017-10-26",
-          organisaatio: "Näyttöpaikka",
-          ymparisto: "Näyttöympäristö",
-          koulutuksenJarjestajaArvioijat: [
-            "Koulu Järjestäjä, koulutuksen järjestäjä"
-          ],
-          tyoelamaArvioijat: ["Työ Arvioija, työelämä"],
-          tyotehtavat: [
-            "Elintarvikkeiden valmistus",
-            "Elintarvikkeiden pakkaus"
-          ],
-          tyyppi: "DEMONSTRATION"
-        }
-      ]}
-    />
-  )
-  expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
-  expect(queryByTestId("StudyInfo.DetailsExpanded")).not.toBeInTheDocument()
-  expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
+  test("render competence requirements", async () => {
+    const { getByTestId, queryByTestId } = renderWithContext(
+      <StudyInfo title="Test" competenceRequirements={osaamisvaatimukset} />
+    )
 
-  rerender(
-    <StudyInfo
-      title="Test"
-      demonstrations={[
-        {
-          alku: "2017-10-25",
-          loppu: "2017-10-26",
-          organisaatio: "Näyttöpaikka",
-          ymparisto: "Näyttöympäristö",
-          koulutuksenJarjestajaArvioijat: [
-            "Koulu Järjestäjä, koulutuksen järjestäjä"
-          ],
-          tyoelamaArvioijat: ["Työ Arvioija, työelämä"],
-          tyotehtavat: [
-            "Elintarvikkeiden valmistus",
-            "Elintarvikkeiden pakkaus"
-          ],
-          tyyppi: "DEMONSTRATION"
-        },
-        {
-          alku: "2017-10-25",
-          loppu: "2017-10-26",
-          organisaatio: "Näyttöpaikka",
-          ymparisto: "Näyttöympäristö",
-          koulutuksenJarjestajaArvioijat: [
-            "Koulu Järjestäjä, koulutuksen järjestäjä"
-          ],
-          tyoelamaArvioijat: ["Työ Arvioija, työelämä"],
-          tyotehtavat: [
-            "Elintarvikkeiden valmistus",
-            "Elintarvikkeiden pakkaus"
-          ],
-          tyyppi: "DEMONSTRATION"
-        }
-      ]}
-    />
-  )
+    const expandCompetences = getByTestId(
+      "StudyInfo.Competences.ExpandCompetences"
+    )
 
-  expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
+    expect(
+      queryByTestId("StudyInfo.Competences.CollapseCompetences")
+    ).not.toBeInTheDocument()
+    expect(expandCompetences).toBeInTheDocument()
 
-  fireEvent.click(getByTestId("StudyInfo.ExpandDetails"))
+    fireEvent.click(expandCompetences)
 
-  expect(queryByTestId("StudyInfo.DetailsCollapsed")).not.toBeInTheDocument()
-  expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
-  expect(getAllByTestId("StudyInfo.Demonstration").length).toBe(2)
-})
+    expect(
+      getByTestId("StudyInfo.Competences.CompetenceRequirements").children
+        .length
+    ).toBe(1)
 
-test("render learning periods", () => {
-  const {
-    getByTestId,
-    getAllByTestId,
-    queryByTestId,
-    rerender
-  } = renderWithContext(
-    <StudyInfo
-      title="Test"
-      learningPeriods={[
-        {
-          alku: "2019-05-24",
-          loppu: "2019-07-31",
-          nimi: "Verkko-oppiminen",
-          selite: "Moodle-kurssi, viestintä",
-          tyyppi: "OTHER"
-        }
-      ]}
-    />
-  )
-  expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
-  expect(queryByTestId("StudyInfo.DetailsExpanded")).not.toBeInTheDocument()
-  expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
+    const collapseCompetences = getByTestId(
+      "StudyInfo.Competences.CollapseCompetences"
+    )
+    expect(collapseCompetences).toBeInTheDocument()
+    expect(expandCompetences).not.toBeInTheDocument()
 
-  rerender(
-    <StudyInfo
-      title="Test"
-      learningPeriods={[
-        {
-          alku: "2019-09-13",
-          loppu: "2019-09-30",
-          ohjaaja: "John McAfee",
-          tyotehtavat: [
-            "Elintarvikkeiden valmistus",
-            "Elintarvikkeiden säilytys"
-          ],
-          selite: "Palvelutalo Koivikkola",
-          tyyppi: "WORKPLACE"
-        },
-        {
-          alku: "2019-10-01",
-          loppu: "2019-10-15",
-          nimi: "Verkko-oppiminen",
-          selite: "Moodle-kurssi, Ikääntyminen",
-          tyyppi: "OTHER"
-        }
-      ]}
-    />
-  )
+    fireEvent.click(collapseCompetences)
 
-  expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
+    expect(
+      queryByTestId("StudyInfo.Competences.CompetenceRequirements")
+    ).not.toBeInTheDocument()
+  })
 
-  fireEvent.click(getByTestId("StudyInfo.ExpandDetails"))
+  test("render demonstrations", async () => {
+    const {
+      getByTestId,
+      getAllByTestId,
+      queryByTestId,
+      rerender
+    } = renderWithContext(<StudyInfo title="Test" demonstrations={naytot1} />)
 
-  expect(queryByTestId("StudyInfo.DetailsCollapsed")).not.toBeInTheDocument()
-  expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
-  expect(getAllByTestId("StudyInfo.LearningPeriod").length).toBe(2)
-})
+    expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
+    expect(queryByTestId("StudyInfo.DetailsExpanded")).not.toBeInTheDocument()
+    expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
 
-test("render verification processes", () => {
-  const { queryByTestId, queryAllByTestId, rerender } = renderWithContext(
-    <StudyInfo
-      title="Title"
-      verificationProcess={{
-        koodiUri: "osaamisentodentamisenprosessi_0001"
-      }}
-    />
-  )
+    rerender(<StudyInfo title="Test" demonstrations={naytot2} />)
 
-  expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
-  expect(queryByTestId("StudyInfo.DirectVerification")).toBeInTheDocument()
+    await wait(() => {
+      expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
+      fireEvent.click(getByTestId("StudyInfo.ExpandDetails"))
+      expect(
+        queryByTestId("StudyInfo.DetailsCollapsed")
+      ).not.toBeInTheDocument()
+      expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
+      expect(getAllByTestId("StudyInfo.Demonstration").length).toBe(2)
+    })
+  })
 
-  rerender(
-    <StudyInfo
-      title="Title"
-      verificationProcess={{
-        koodiUri: "osaamisentodentamisenprosessi_0002",
-        lahetettyArvioitavaksi: "2019-04-15"
-      }}
-    />
-  )
+  test("render learning periods", async () => {
+    const {
+      getByTestId,
+      getAllByTestId,
+      queryByTestId,
+      rerender
+    } = renderWithContext(
+      <StudyInfo title="Test" learningPeriods={harjoittelujaksot1} />
+    )
 
-  expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
-  expect(queryByTestId("StudyInfo.AssessmentVerification")).toBeInTheDocument()
+    expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
+    expect(queryByTestId("StudyInfo.DetailsExpanded")).not.toBeInTheDocument()
+    expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
 
-  rerender(
-    <StudyInfo
-      title="Title"
-      demonstrations={[
-        {
-          alku: "2019-08-01",
-          loppu: "2019-08-01",
-          organisaatio: "Näyttöpaikka",
-          ymparisto: "Näyttöympäristö",
-          koulutuksenJarjestajaArvioijat: [
-            "Olli Opettaja, koulutuksen järjestäjä",
-            "Oona Opettaja, koulutuksen järjestäjä"
-          ],
-          tyoelamaArvioijat: ["Teuvo Työpaikka, työelämä"],
-          tyotehtavat: [
-            "Elintarvikkeiden valmistus",
-            "Elintarvikkeiden pakkaus"
-          ],
-          tyyppi: "DEMONSTRATION"
-        }
-      ]}
-      verificationProcess={{
-        koodiUri: "osaamisentodentamisenprosessi_0003"
-      }}
-    />
-  )
+    rerender(<StudyInfo title="Test" learningPeriods={harjoittelujaksot2} />)
 
-  expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
-  expect(
-    queryByTestId("StudyInfo.DemonstrationVerification")
-  ).toBeInTheDocument()
+    await wait(() => {
+      expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
+      fireEvent.click(getByTestId("StudyInfo.ExpandDetails"))
+      expect(
+        queryByTestId("StudyInfo.DetailsCollapsed")
+      ).not.toBeInTheDocument()
+      expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
+      expect(getAllByTestId("StudyInfo.LearningPeriod").length).toBe(2)
+    })
+  })
+
+  test("render verification processes", () => {
+    const { queryByTestId, queryAllByTestId, rerender } = renderWithContext(
+      <StudyInfo
+        title="Title"
+        verificationProcess={{
+          koodiUri: "osaamisentodentamisenprosessi_0001"
+        }}
+      />
+    )
+
+    expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
+    expect(queryByTestId("StudyInfo.DirectVerification")).toBeInTheDocument()
+
+    rerender(
+      <StudyInfo
+        title="Title"
+        verificationProcess={{
+          koodiUri: "osaamisentodentamisenprosessi_0002",
+          lahetettyArvioitavaksi: "2019-04-15"
+        }}
+      />
+    )
+
+    expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
+    expect(
+      queryByTestId("StudyInfo.AssessmentVerification")
+    ).toBeInTheDocument()
+
+    rerender(
+      <StudyInfo
+        title="Title"
+        demonstrations={naytot3}
+        verificationProcess={{
+          koodiUri: "osaamisentodentamisenprosessi_0003"
+        }}
+      />
+    )
+
+    expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
+    expect(
+      queryByTestId("StudyInfo.DemonstrationVerification")
+    ).toBeInTheDocument()
+  })
 })

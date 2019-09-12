@@ -1,3 +1,5 @@
+import { ShareType } from "stores/NotificationStore"
+
 interface Arviointikriteeri {
   kuvaus?: string
   kriteerit?: string[]
@@ -27,7 +29,7 @@ export interface Naytto {
 export interface Harjoittelujakso {
   alku?: string
   loppu?: string
-  ohjaaja?: string
+  ohjaaja?: { nimi: string; sahkoposti: string }
   tyotehtavat?: string[]
   nimi?: string
   selite?: string
@@ -45,5 +47,10 @@ export interface TutkinnonOsa {
   tila?: string
   todentamisenProsessi?: TodentamisenProsessi
   olennainenSeikka?: boolean
+  tutkinnonOsaKoodiUri?: string
   opintoOtsikko: (ospLyhenne: string) => string
+}
+
+export interface HankittavaTutkinnonOsa extends TutkinnonOsa {
+  hasNayttoOrHarjoittelujakso(koodiUri: string, type: ShareType | ""): boolean
 }

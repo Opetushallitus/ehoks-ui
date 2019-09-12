@@ -4,9 +4,9 @@ import { inject, observer } from "mobx-react"
 import React from "react"
 import { IntlProvider } from "react-intl"
 import { Ammatillinentutkinto } from "routes/Ammatillinentutkinto"
-import { AppErrors } from "routes/App/AppErrors"
 import { AppFooter } from "routes/App/AppFooter"
 import { AppHeader } from "routes/App/AppHeader"
+import { AppNotifications } from "routes/App/AppNotifications"
 import { GlobalStyles } from "routes/App/globalStyles"
 import { Etusivu } from "routes/Etusivu"
 import { Henkilokohtaistaminen } from "routes/Henkilokohtaistaminen"
@@ -21,11 +21,13 @@ const Container = styled("div")`
 
 const Main = styled("main")``
 
+const ModalContainer = styled("div")``
+
 const MainApp = (_: { path: string }) => {
   return (
     <Container>
       <AppHeader />
-      <AppErrors />
+      <AppNotifications />
       <Main id="main" role="main">
         <Router basepath="/ehoks">
           <Etusivu path="/" />
@@ -37,6 +39,7 @@ const MainApp = (_: { path: string }) => {
       </Main>
       <AppFooter />
       <GlobalStyles />
+      <ModalContainer id="modal-root" />
     </Container>
   )
 }
@@ -48,9 +51,10 @@ export interface AppProps {
 @inject("store")
 @observer
 export class App extends React.Component<AppProps> {
-  componentDidMount() {
+  async componentDidMount() {
+    const { store } = this.props
     // load user session info from backend
-    this.props.store!.session.checkSession()
+    await store!.session.checkSession()
   }
 
   render() {

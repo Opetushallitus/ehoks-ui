@@ -8,7 +8,7 @@ import { LocaleRoot } from "models/helpers/LocaleRoot"
 import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
 import { EnrichTutkinnonOsa } from "models/EnrichTutkinnonOsa"
 
-const Model = types.model({
+export const Model = types.model({
   id: types.optional(types.number, 0),
   tutkinnonOsaKoodiUri: types.optional(types.string, ""),
   tutkinnonOsa: types.optional(EPerusteetVastaus, {}),

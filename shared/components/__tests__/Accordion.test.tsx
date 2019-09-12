@@ -1,7 +1,7 @@
 import React from "react"
 import { renderWithContext } from "testUtils"
 import { Accordion } from "../Accordion"
-import { fireEvent } from "react-testing-library"
+import { fireEvent } from "@testing-library/react"
 
 test("open=true renders collapse icon and child content", () => {
   const { getByTestId } = renderWithContext(

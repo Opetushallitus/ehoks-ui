@@ -20,7 +20,7 @@
     "errors.SessionStore.checkSession": "Kirjautumistietojen tarkastus epäonnistui",
     "errors.SessionStore.getUserInfo": "Käyttäjätietojen haku epäonnistui",
     "errors.SessionStore.logout": "Uloskirjautuminen epäonnistui",
-    "errors.TranslationStore.haeLokalisoinnit": "Käännösten haku epäonnistui",
+    "errors.TranslationStore.fetchLocales": "Käännösten haku epäonnistui",
     "errors.piilotaVirheAriaLabel": "Piilota virhe",
     "etusivu.ammatillisetTutkinnotKuvanAriaLabel": "Näppäimistön näppäin jossa lukee 'Education'",
     "etusivu.ammatillisetTutkinnotKuvaus": "Jokaiselle tutkinnon osalle on ammattitaitovaatimukset...",

@@ -6,6 +6,8 @@ import { getTila } from "./getTila"
 import { types, getRoot } from "mobx-state-tree"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import { getOsaamispisteet } from "./getOsaamispisteet"
+import { ShareType } from "stores/NotificationStore"
+import find from "lodash.find"
 
 // TODO: type tutkinnonOsa
 export const TutkinnonOsaViews = types.model({}).views((self: any) => {
@@ -34,6 +36,17 @@ export const TutkinnonOsaViews = types.model({}).views((self: any) => {
     },
     opintoOtsikko(ospLyhenne: string): string {
       return getOtsikko(self, ospLyhenne)
+    },
+    hasNayttoOrHarjoittelujakso(koodiUri: string, type: ShareType | "") {
+      if (koodiUri === "" && type === "") {
+        return false
+      }
+      const koodiUriMatch = self.tutkinnonOsaKoodiUri === koodiUri
+      const typeMatch =
+        type === "naytto"
+          ? this.naytot.length > 0
+          : !!find(this.harjoittelujaksot, hj => hj.tyyppi === "WORKPLACE")
+      return koodiUriMatch && typeMatch
     }
   }
 })

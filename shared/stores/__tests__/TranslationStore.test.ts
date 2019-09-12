@@ -8,7 +8,7 @@ import { createEnvironment } from "createEnvironment"
 const apiUrl = (path: string) => `/${path}`
 
 describe("TranslationStore", () => {
-  test("haeLokalisoinnit fetches both defaultMessages and API translations", () => {
+  test("fetchLocales fetches both defaultMessages and API translations", () => {
     const store = TranslationStore.create(
       {},
       createEnvironment(mockFetch(apiUrl), apiUrl, "")
@@ -18,7 +18,8 @@ describe("TranslationStore", () => {
     expect(store.translations).toEqual([])
     expect(store.activeLocale).toEqual("fi")
 
-    store.haeLokalisoinnit()
+    store.fetchLocales()
+
     expect(store.isLoading).toBe(true)
 
     when(
@@ -36,7 +37,9 @@ describe("TranslationStore", () => {
       {},
       createEnvironment(mockFetch(apiUrl), apiUrl, "")
     )
-    store.haeLokalisoinnit()
+
+    store.fetchLocales()
+
     when(
       () => !store.isLoading,
       () => {

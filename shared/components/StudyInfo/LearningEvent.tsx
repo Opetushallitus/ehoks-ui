@@ -44,6 +44,7 @@ const Title = styled("strong")<SizeProps>`
 `
 
 interface LearningEventProps {
+  className?: string
   title?: React.ReactNode
   type: "WORKPLACE" | "OTHER" | "DEMONSTRATION" | undefined
   size?: "small" | "large"
@@ -55,6 +56,7 @@ interface LearningEventProps {
 export class LearningEvent extends React.Component<LearningEventProps> {
   render() {
     const {
+      className,
       title,
       size = "small",
       description,
@@ -64,7 +66,7 @@ export class LearningEvent extends React.Component<LearningEventProps> {
     } = this.props
     const iconSize = size === "small" ? 24 : 32
     return (
-      <Container data-testid="StudyInfo.LearningEvent">
+      <Container className={className} data-testid="StudyInfo.LearningEvent">
         <Title size={size}>{title}</Title>
         <ContentContainer>
           <Icon isDemonstration={type === "DEMONSTRATION"}>

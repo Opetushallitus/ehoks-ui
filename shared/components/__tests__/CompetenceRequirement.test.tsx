@@ -2,7 +2,7 @@ import React from "react"
 import { renderWithContext } from "testUtils"
 import { CompetenceRequirement } from "../CompetenceRequirement"
 import { Osaamisvaatimus } from "models/Osaamisvaatimus"
-import { fireEvent } from "react-testing-library"
+import { fireEvent } from "@testing-library/react"
 
 const competenceRequirement = Osaamisvaatimus.create({
   kuvaus: "ammattitaitovaatimuksen kuvaus",

@@ -1,3 +1,5 @@
+import { APIConfigContext } from "components/APIConfigContext"
+import { AppContext } from "components/AppContext"
 import { apiPrefix, apiUrl } from "config"
 import { createEnvironment } from "createEnvironment"
 import { fetch } from "fetchUtils"
@@ -17,14 +19,20 @@ addLocaleData([...fi, ...sv])
 // pass fetch utils to RootStore using MST's environment context, so we can easily mock it in tests
 const store = RootStore.create({}, createEnvironment(fetch, apiUrl, apiPrefix))
 store.environment.getEnvironment()
-store.translations.haeLokalisoinnit()
+store.translations.fetchLocales()
+
+const apiConfig = { apiUrl, apiPrefix }
 
 // initial render to app container
 const appContainer = document.getElementById("app")
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <APIConfigContext.Provider value={apiConfig}>
+    <AppContext.Provider value="oppija">
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </AppContext.Provider>
+  </APIConfigContext.Provider>,
   appContainer
 )
 
@@ -33,9 +41,13 @@ if (module.hot) {
   module.hot.accept("./routes/App", () => {
     const NextApp = require("./routes/App").App
     ReactDOM.render(
-      <Provider store={store}>
-        <NextApp />
-      </Provider>,
+      <APIConfigContext.Provider value={apiConfig}>
+        <AppContext.Provider value="oppija">
+          <Provider store={store}>
+            <NextApp />
+          </Provider>
+        </AppContext.Provider>
+      </APIConfigContext.Provider>,
       appContainer
     )
   })
