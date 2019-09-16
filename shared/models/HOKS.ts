@@ -133,7 +133,13 @@ export const HOKS = types
           const tutkinto = yield fetchTutkinto()
           const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
           self.osaamispisteet = rakenne.osat.reduce((osp: number, osa: any) => {
-            osp += osa.muodostumisSaanto.laajuus.minimi
+            if (
+              osa.muodostumisSaanto &&
+              osa.muodostumisSaanto.laajuus &&
+              osa.muodostumisSaanto.laajuus.minimi
+            ) {
+              osp += osa.muodostumisSaanto.laajuus.minimi
+            }
             return osp
           }, 0)
         }
