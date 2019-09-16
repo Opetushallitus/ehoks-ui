@@ -74,7 +74,7 @@ export class KoulutuksenJarjestaja extends React.Component<
 
   debouncedFetchResults = debounce(() => {
     const { koulutuksenJarjestaja } = this.props.store!
-    koulutuksenJarjestaja.search.haeOppijat()
+    koulutuksenJarjestaja.search.fetchOppijat()
   }, 500)
 
   componentDidMount() {
@@ -86,7 +86,7 @@ export class KoulutuksenJarjestaja extends React.Component<
       },
       async hasLoggedIn => {
         if (hasLoggedIn) {
-          await koulutuksenJarjestaja.search.haeOppijat()
+          await koulutuksenJarjestaja.search.fetchOppijat()
           window.requestAnimationFrame(() => {
             window.scrollTo(0, 0)
           })

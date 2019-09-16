@@ -27,14 +27,14 @@ export const Oppija = types
     )
 
     // fetches HOKSes with basic info (root level only)
-    const haeSuunnitelmat = flow(function*(): any {
+    const fetchSuunnitelmat = flow(function*(): any {
       const response: APIResponse = yield fetchCollection(
         apiUrl(`virkailija/oppijat/${self.oid}/hoksit`)
       )
       self.suunnitelmat = response.data
     })
 
-    const haeHenkilotiedot = flow(function*(): any {
+    const fetchHenkilotiedot = flow(function*(): any {
       const response: APIResponse = yield fetchSingle(
         apiUrl(`virkailija/oppijat/${self.oid}`)
       )
@@ -43,12 +43,20 @@ export const Oppija = types
       self.henkilotiedot.fullName = nimi
     })
 
-    return { haeSuunnitelmat, haeHenkilotiedot }
+    const fetchOpiskeluoikeudet = flow(function*(): any {
+      return Promise.all(
+        self.suunnitelmat.map(suunnitelma => {
+          return suunnitelma.fetchOpiskeluoikeudet()
+        })
+      )
+    })
+
+    return { fetchSuunnitelmat, fetchHenkilotiedot, fetchOpiskeluoikeudet }
   })
   .actions(self => {
     const afterCreate = () => {
-      self.haeSuunnitelmat()
-      self.haeHenkilotiedot()
+      self.fetchSuunnitelmat()
+      self.fetchHenkilotiedot()
     }
     return { afterCreate }
   })
@@ -96,7 +104,7 @@ const Search = types
   .actions(self => {
     const { fetchCollection, apiUrl } = getEnv<StoreEnvironment>(self)
 
-    const haeOppijat = flow(function*(): any {
+    const fetchOppijat = flow(function*(): any {
       // TODO fix cross reference of stores?
       const rootStore: IRootStore = getRoot<IRootStore>(self)
       const oppilaitosOid: string = rootStore.session.selectedOrganisationOid
@@ -136,7 +144,7 @@ const Search = types
       self.isLoading = false
     })
 
-    return { haeOppijat }
+    return { fetchOppijat }
   })
   .actions(self => {
     const changeSearchText = (
@@ -156,12 +164,12 @@ const Search = types
           ? "desc"
           : "asc"
         : self.sortDirection
-      self.haeOppijat()
+      self.fetchOppijat()
     }
 
     const changeActivePage = (page: number) => {
       self.activePage = page
-      self.haeOppijat()
+      self.fetchOppijat()
     }
 
     return {
