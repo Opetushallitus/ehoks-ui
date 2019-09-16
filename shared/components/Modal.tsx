@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import styled from "styled"
 
-export const ModalBackground = styled("div")`
+const ModalBackground = styled("div")`
   background: #000;
   opacity: 0.1;
   position: fixed;

@@ -2,21 +2,31 @@
 
 ```js
 const { OrganisationDropdown } = require("components/OrganisationDropdown")
+const { OrganisationModel } = require("types/Organisation")
+const model = OrganisationModel.create({
+  oid: "123",
+  nimi: { fi: "Test" }
+})
 ;<OrganisationDropdown
-   organisations={[{oid: "123", nimi: {:fi "Test"}}]}
-   onChange={console.log}
-   value={"123"}
- />
+  organisations={[model]}
+  onChange={console.log}
+  value={"123"}
+/>
 ```
 
 ### OrganisationDropdown with custom language
 
 ```js
 const { OrganisationDropdown } = require("components/OrganisationDropdown")
+const { OrganisationModel } = require("types/Organisation")
+const model = OrganisationModel.create({
+  oid: "123",
+  nimi: { sv: "De här test" }
+})
 ;<OrganisationDropdown
-   organisations={[{oid: "123", nimi: {:sv "De här test"}}]}
-   onChange={console.log}
-   value={"123"}
-   lang="sv"
- />
+  organisations={[model]}
+  onChange={console.log}
+  value={"123"}
+  lang="sv"
+/>
 ```

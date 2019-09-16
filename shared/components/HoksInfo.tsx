@@ -6,26 +6,26 @@ import { FormattedMessage } from "react-intl"
 import styled from "styled"
 
 const StudentName = styled("h2")`
-margin-top: 0;
+  margin-top: 0;
 `
 
 const StudentDetails = styled("div")`
-flex: 1;
+  flex: 1;
 
-h2 {
-  font-weight: 400;
-  font-size: 28px;
-}
+  h2 {
+    font-weight: 400;
+    font-size: 28px;
+  }
 `
 
 const Timestamp = styled("div")`
-font-size: 20px;
-margin-bottom: 10px;
+  font-size: 20px;
+  margin-bottom: 10px;
 `
 
 interface Oppija {
-  nimi: string,
-  hyvaksytty: string | null | undefined,
+  nimi: string
+  hyvaksytty: string | null | undefined
   paivitetty: string | null | undefined
 }
 
@@ -47,7 +47,7 @@ export class HoksInfo extends React.Component<HOKSInfoProps> {
             defaultMessage="HOKS päivämäärät"
           />
           :
-                  </Timestamp>
+        </Timestamp>
         <Timestamp>
           <FormattedMessage
             id="koulutuksenJarjestaja.opiskelija.hyvaksyttyTitle"
@@ -75,11 +75,11 @@ export class HoksInfo extends React.Component<HOKSInfoProps> {
               defaultMessage="Opiskelijalla on osaamisen hankkimisen tarve"
             />
           ) : (
-              <FormattedMessage
-                id="koulutuksenJarjestaja.opiskelija.osaamisenHankkimisenTarveFalseTitle"
-                defaultMessage="Opiskelijalla ei ole osaamisen hankkimisen tarvetta"
-              />
-            )}
+            <FormattedMessage
+              id="koulutuksenJarjestaja.opiskelija.osaamisenHankkimisenTarveFalseTitle"
+              defaultMessage="Opiskelijalla ei ole osaamisen hankkimisen tarvetta"
+            />
+          )}
         </Timestamp>
       </StudentDetails>
     )

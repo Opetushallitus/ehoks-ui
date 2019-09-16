@@ -1,4 +1,5 @@
-import { Accordion, AccordionTitle } from "components/Accordion"
+import { Accordion } from "components/Accordion"
+import { AccordionTitle } from "components/AccordionTitle"
 import { Container, PaddedContent } from "components/Container"
 import { Heading } from "components/Heading"
 import { InfoTable } from "components/InfoTable"

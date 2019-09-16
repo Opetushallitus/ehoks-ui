@@ -1,9 +1,9 @@
 import React from "react"
 import { MdExpandLess, MdExpandMore } from "react-icons/md"
-
 import styled from "styled"
 import { ChildContentArea, ContentArea } from "./ContentArea"
 import { HelpPopup } from "./HelpPopup"
+import { AccordionTitle } from "components/AccordionTitle"
 
 const AccordionContainer = styled("div")`
   padding: 20px 0 10px 0;
@@ -34,14 +34,6 @@ const TitleRow = styled("button")`
   width: 100%;
   padding: 0;
   text-align: left;
-`
-
-export const AccordionTitle = styled("h2")`
-  flex: 1;
-  margin: 0 20px 0 20px;
-  font-size: 20px;
-  font-weight: 400;
-  cursor: pointer;
 `
 
 const AccordionInlineTitle = styled(AccordionTitle)`

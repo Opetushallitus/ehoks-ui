@@ -1,5 +1,6 @@
 import { RouteComponentProps, navigate } from "@reach/router"
-import { Accordion, AccordionTitle } from "components/Accordion"
+import { Accordion } from "components/Accordion"
+import { AccordionTitle } from "components/AccordionTitle"
 import { EmptyItem } from "components/EmptyItem"
 import { Heading } from "components/Heading"
 import { InfoTable } from "components/InfoTable"
