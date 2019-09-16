@@ -1,6 +1,6 @@
 import { navigate, RouteComponentProps, Router } from "@reach/router"
 import { LoadingSpinner } from "components/LoadingSpinner"
-import { IReactionDisposer, reaction } from "mobx"
+import { comparer, IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { OmienOpintojenSuunnittelu } from "routes/OmienOpintojenSuunnittelu"
@@ -32,13 +32,17 @@ export class Suunnittelu extends React.Component<
 
     this.disposeLoginReaction = reaction(
       () => {
-        return session.isLoggedIn
+        return {
+          isLoggedIn: session.isLoggedIn,
+          userDidLogout: session.userDidLogout,
+          error: session.error
+        }
       },
-      async isLoggedIn => {
+      async ({ isLoggedIn, userDidLogout, error }) => {
         // navigate to Opintopolku logout url after logging out
         if (!isLoggedIn) {
           // check that user did actually logout or there was an error (no session)
-          if (session.userDidLogout || session.error) {
+          if (userDidLogout || error) {
             window.location.href = store!.environment.opintopolkuLogoutUrl
           }
           // ensure that SessionStore's checkSession call has finished
@@ -58,7 +62,7 @@ export class Suunnittelu extends React.Component<
           }
         }
       },
-      { fireImmediately: true }
+      { fireImmediately: true, equals: comparer.structural }
     )
   }
 
