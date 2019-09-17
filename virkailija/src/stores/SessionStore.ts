@@ -59,8 +59,15 @@ export const SessionStore = types
           self.user.organisationPrivileges &&
           self.user.organisationPrivileges.length > 0
         ) {
+          const storedOid =
+            localStorage.getItem("selectedOrganisationOid") || ""
+          const hasPrivilege =
+            self
+              .user!.organisationPrivileges.map(p => p.oid)
+              .indexOf(storedOid) > -1
+
           changeSelectedOrganisationOid(
-            self.user!.organisationPrivileges[0].oid
+            hasPrivilege ? storedOid : self.user!.organisationPrivileges[0].oid
           )
         }
         const queryParams = {

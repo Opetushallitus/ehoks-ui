@@ -65,6 +65,7 @@ export class Header extends React.Component<HeaderProps> {
     const { session, koulutuksenJarjestaja } = this.props.store!
     session.changeSelectedOrganisationOid(oid)
     koulutuksenJarjestaja.search.fetchOppijat()
+    localStorage.setItem("selectedOrganisationOid", oid)
   }
 
   render() {
