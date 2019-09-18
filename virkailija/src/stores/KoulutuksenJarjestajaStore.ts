@@ -23,7 +23,6 @@ export const Oppija = types
     oid: types.string,
     nimi: types.string,
     tutkintoNimi: Translation,
-    osaamisala: types.string,
     osaamisalaNimi: Translation,
     suunnitelmat: types.array(HOKS),
     henkilotiedot: types.optional(SessionUser, { commonName: "", surname: "" })
@@ -81,6 +80,16 @@ export const Oppija = types
           return self.tutkintoNimi.fi
         case Locale.SV:
           return self.tutkintoNimi.sv
+      }
+    },
+    get osaamisala(): string {
+      const activeLocale: Locale = getRoot<IRootStore>(self).translations
+        .activeLocale
+      switch (activeLocale) {
+        case Locale.FI:
+          return self.osaamisalaNimi.fi
+        case Locale.SV:
+          return self.osaamisalaNimi.sv
       }
     }
   }))
