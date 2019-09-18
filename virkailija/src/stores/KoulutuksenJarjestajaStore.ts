@@ -5,6 +5,7 @@ import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
 import { SessionUser } from "models/SessionUser"
 import { IRootStore } from "stores/RootStore"
+import { Locale } from "stores/TranslationStore"
 import { APIResponse } from "types/APIResponse"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
@@ -12,12 +13,18 @@ const sortKeys = ["nimi", "tutkinto", "osaamisala"] as const
 
 export type SearchSortKey = typeof sortKeys[number]
 
+export const Translation = types.model("Translation", {
+  fi: types.optional(types.string, ""),
+  sv: types.optional(types.string, "")
+})
+
 export const Oppija = types
   .model("Oppija", {
     oid: types.string,
     nimi: types.string,
-    tutkinto: types.string,
+    tutkintoNimi: Translation,
     osaamisala: types.string,
+    osaamisalaNimi: Translation,
     suunnitelmat: types.array(HOKS),
     henkilotiedot: types.optional(SessionUser, { commonName: "", surname: "" })
   })
@@ -65,6 +72,16 @@ export const Oppija = types
     },
     get lukumaara() {
       return self.suunnitelmat.length
+    },
+    get tutkinto(): string {
+      const activeLocale: Locale = getRoot<IRootStore>(self).translations
+        .activeLocale
+      switch (activeLocale) {
+        case Locale.FI:
+          return self.tutkintoNimi.fi
+        case Locale.SV:
+          return self.tutkintoNimi.sv
+      }
     }
   }))
 
