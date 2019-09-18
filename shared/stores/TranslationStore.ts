@@ -15,6 +15,11 @@ export interface Translations {
   }
 }
 
+export enum Locale {
+  FI = "fi",
+  SV = "sv"
+}
+
 function mapTranslations(translations: ApiTranslation[]) {
   return translations.map(({ key, locale, value }) => {
     return { key, locale, value }
@@ -29,9 +34,8 @@ const Lokalisaatio = types.model("LokalisaatioModel", {
 
 const TranslationStoreModel = {
   activeLocale: types.optional(
-    types.union(types.literal("fi"), types.literal("sv")),
-    "fi"
-  ),
+      types.enumeration("ActiveLocale", [Locale.FI, Locale.SV]),
+      Locale.FI),
   isLoading: false,
   translations: types.array(Lokalisaatio)
 }
@@ -39,11 +43,9 @@ const TranslationStoreModel = {
 export const TranslationStore = types
   .model("TranslationStore", TranslationStoreModel)
   .actions(self => {
-    const { apiUrl, apiPrefix, fetchCollection, errors } = getEnv<
-      StoreEnvironment
-    >(self)
+    const { apiUrl, apiPrefix, fetchCollection, errors } = getEnv<StoreEnvironment>(self)
 
-    const setActiveLocale = (locale: "fi" | "sv") => {
+    const setActiveLocale = (locale: Locale) => {
       self.activeLocale = locale
     }
 

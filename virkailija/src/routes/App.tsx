@@ -4,6 +4,7 @@ import { inject, observer } from "mobx-react"
 import React from "react"
 import { IntlProvider } from "react-intl"
 import { IRootStore } from "stores/RootStore"
+import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 import { GlobalStyles } from "./App/globalStyles"
 import { Header } from "./Header"
@@ -42,10 +43,10 @@ export class App extends React.Component<AppProps> {
 
   render() {
     const { store } = this.props
-    const activeLocale = store!.translations.activeLocale
+    const activeLocale: Locale = store!.translations.activeLocale
     const translations = store!.translations.messages[activeLocale]
     const messages =
-      activeLocale === "fi"
+      activeLocale === Locale.FI
         ? translations
         : // use finnish translations as fallback, merge provided translations
           { ...store!.translations.messages.fi, ...translations }
@@ -53,7 +54,7 @@ export class App extends React.Component<AppProps> {
     return (
       <ThemeWrapper>
         <IntlProvider
-          defaultLocale="fi"
+          defaultLocale={Locale.FI}
           locale={activeLocale}
           messages={messages}
           textComponent={React.Fragment}

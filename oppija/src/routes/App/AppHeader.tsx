@@ -5,6 +5,7 @@ import { MdMenu } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import { MobileMenu } from "routes/App/MobileMenu"
 import { IRootStore } from "stores/RootStore"
+import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 
 interface TopLinkProps {
@@ -153,7 +154,7 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
     this.props.store!.session!.logout()
   }
 
-  changeLocale = (locale: "fi" | "sv") => (event: React.MouseEvent) => {
+  changeLocale = (locale: Locale) => (event: React.MouseEvent) => {
     event.preventDefault()
     this.props.store!.translations.setActiveLocale(locale)
   }
