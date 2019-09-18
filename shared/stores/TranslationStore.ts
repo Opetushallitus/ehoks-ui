@@ -5,7 +5,7 @@ import { APIResponse } from "types/APIResponse"
 
 export interface ApiTranslation {
   key: string
-  locale: "fi" | "sv"
+  locale: Locale.FI | Locale.SV
   value: string
 }
 
@@ -28,7 +28,7 @@ function mapTranslations(translations: ApiTranslation[]) {
 
 const Lokalisaatio = types.model("LokalisaatioModel", {
   key: types.string,
-  locale: types.union(types.literal("fi"), types.literal("sv")),
+  locale: types.union(types.literal(Locale.FI), types.literal(Locale.SV)),
   value: types.string
 })
 

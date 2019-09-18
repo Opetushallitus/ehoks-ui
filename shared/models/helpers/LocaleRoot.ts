@@ -1,5 +1,7 @@
+import { Locale } from "../../stores/TranslationStore";
+
 export interface LocaleRoot {
   translations: {
-    activeLocale: "fi" | "sv"
+    activeLocale: Locale.FI | Locale.SV
   }
 }

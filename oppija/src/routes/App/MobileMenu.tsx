@@ -4,6 +4,7 @@ import React from "react"
 import { MdClose } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import { SessionStore } from "stores/SessionStore"
+import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 import useOnClickOutside from "use-onclickoutside"
 
@@ -70,8 +71,8 @@ const UserInfo = styled("div")`
 `
 
 interface MobileMenuProps {
-  activeLocale: "fi" | "sv"
-  changeLocale: (locale: string) => (event: React.MouseEvent) => void
+  activeLocale: Locale.FI | Locale.SV
+  changeLocale: (locale: Locale) => (event: React.MouseEvent) => void
   toggleMenu: () => void
   logout: (event: React.MouseEvent) => void
   session: Instance<typeof SessionStore>
@@ -99,9 +100,9 @@ export const MobileMenu: React.FunctionComponent<MobileMenuProps> = ({
       </TitleBar>
       <Languages>
         <Language
-          onClick={changeLocale("fi")}
+          onClick={changeLocale(Locale.FI)}
           role="button"
-          selected={activeLocale === "fi"}
+          selected={activeLocale === Locale.FI}
         >
           <FormattedMessage
             id="mobileMenu.finnishLocaleLink"
@@ -109,9 +110,9 @@ export const MobileMenu: React.FunctionComponent<MobileMenuProps> = ({
           />
         </Language>{" "}
         <Language
-          onClick={changeLocale("sv")}
+          onClick={changeLocale(Locale.SV)}
           role="button"
-          selected={activeLocale === "sv"}
+          selected={activeLocale === Locale.SV}
         >
           <FormattedMessage
             id="mobileMenu.swedishLocaleLink"

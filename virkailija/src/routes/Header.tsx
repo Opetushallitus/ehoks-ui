@@ -4,6 +4,7 @@ import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import { IRootStore } from "stores/RootStore"
+import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 
 interface TopLinkProps {
@@ -89,7 +90,7 @@ export class Header extends React.Component<HeaderProps> {
             organisations={session!.organisations}
             onChange={this.handleOnOrganisationChange}
             value={session.selectedOrganisationOid}
-            lang="fi"
+            lang={Locale.FI}
           />
         ) : null}
         <TopLink to="/ehoks-virkailija-ui/koulutuksenjarjestaja">
