@@ -1,4 +1,4 @@
-import { types, getEnv, flow } from "mobx-state-tree"
+import { types, getEnv, flow, getPropertyMembers } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { IReactionDisposer, reaction } from "mobx"
 import { APIResponse } from "types/APIResponse"
@@ -34,8 +34,9 @@ export const EnrichTutkinnonOsa = (
           if (Object.keys(self).indexOf(fieldName) !== -1) {
             self[fieldName] = response.data
           } else {
+            const { name } = getPropertyMembers(self)
             throw new Error(
-              `Your mobx-state-tree model is missing definition for '${fieldName}'`
+              `Your mobx-state-tree model '${name}' is missing definition for '${fieldName}'`
             )
           }
         } catch (error) {

@@ -1,5 +1,5 @@
 import React from "react"
-import { MdCheck, MdHelp, MdWarning } from "react-icons/md"
+import { MdCheck, MdHelp, MdWarning, MdNotificationsNone } from "react-icons/md"
 import styled from "styled"
 
 type BorderType =
@@ -7,7 +7,13 @@ type BorderType =
   | "questionBorder"
   | "errorBorder"
   | "warningBorder"
-type BackgroundType = "successBg" | "questionBg" | "errorBg" | "warningBg"
+  | "alertBorder"
+type BackgroundType =
+  | "successBg"
+  | "questionBg"
+  | "errorBg"
+  | "warningBg"
+  | "alertBg"
 
 interface InputProps {
   type: NotificationType
@@ -25,7 +31,7 @@ const Container = styled("div").attrs((props: InputProps) => ({
 }))<FinalProps>`
   display: flex;
   align-items: center;
-  border-radius: 4px;
+  /* border-radius: 4px; */
   border-width: 1px;
   border-style: solid;
   border-color: ${props => props.theme.colors.notification[props.borderType]};
@@ -53,8 +59,16 @@ const Content = styled("div")`
   color: #313541;
 `
 
-const Icon = ({ type }: { type: string }) => {
-  const props = { color: "#fff", size: 18 }
+const Icon = ({
+  type,
+  color = "#fff",
+  size = 18
+}: {
+  type: string
+  color?: string
+  size?: number
+}) => {
+  const props = { color, size }
   switch (type) {
     case "success":
       return <MdCheck {...props} />
@@ -64,21 +78,32 @@ const Icon = ({ type }: { type: string }) => {
       return <MdWarning {...props} />
     case "warning":
       return <MdWarning {...props} />
+    case "alert":
+      return <MdNotificationsNone {...props} />
     default:
       return null
   }
 }
 
-export type NotificationType = "success" | "question" | "error" | "warning"
+export type NotificationType =
+  | "success"
+  | "question"
+  | "error"
+  | "warning"
+  | "alert"
 
 export interface NotificationProps {
   /** Custom CSS class name for container */
   className?: string
   /**
-   * Type of notfication (success, question, error, warning)
+   * Type of notfication (success, question, error, warning, alert)
    * @default success
    */
   type?: NotificationType
+  /** Icon color, defaults to #fff */
+  iconColor?: string
+  /** Icon size, defaults to 18 */
+  iconSize?: number
   children?: React.ReactNode
 }
 
@@ -87,11 +112,17 @@ export interface NotificationProps {
  */
 export class Notification extends React.Component<NotificationProps> {
   render() {
-    const { children, className, type = "success" } = this.props
+    const {
+      children,
+      className,
+      iconColor = "#fff",
+      iconSize = 18,
+      type = "success"
+    } = this.props
     return (
       <Container className={className} type={type} role="alert">
         <IconContainer type={type}>
-          <Icon type={type} />
+          <Icon type={type} color={iconColor} size={iconSize} />
         </IconContainer>
         <Content>{children}</Content>
       </Container>

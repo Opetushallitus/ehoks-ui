@@ -1,7 +1,7 @@
 import ThemeWrapper from "components/ThemeWrapper"
 import React from "react"
 import { IntlProvider } from "react-intl"
-import { render } from "react-testing-library"
+import { render } from "@testing-library/react"
 import defaultMessages from "stores/TranslationStore/defaultMessages.json"
 
 const messages = defaultMessages.reduce<{

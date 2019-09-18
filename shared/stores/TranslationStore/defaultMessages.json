@@ -31,8 +31,13 @@
   },
   {
     "locale": "fi",
-    "key": "errors.TranslationStore.haeLokalisoinnit",
+    "key": "errors.TranslationStore.fetchLocales",
     "value": "Käännösten haku epäonnistui"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.NotificationStore.haeMuistutukset",
+    "value": "Muistutusten haku epäonnistui"
   },
   {
     "locale": "fi",
@@ -298,5 +303,10 @@
     "locale": "fi",
     "key": "koulutuksenJarjestaja.tavoite.puhelinnumeroTitle",
     "value": "Puhelinnumero"
+  },
+  {
+    "locale": "fi",
+    "key": "jakaminen.haluatkoPoistaaConfirm",
+    "value": "Haluatko varmasti poistaa valitun jakolinkin?"
   }
 ]

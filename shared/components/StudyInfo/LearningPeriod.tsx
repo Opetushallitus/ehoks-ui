@@ -84,7 +84,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                   />
                 </TH>
                 <TD>
-                  {ohjaaja}, {selite}
+                  {ohjaaja.nimi}, {selite}
                 </TD>
               </tr>
             )}

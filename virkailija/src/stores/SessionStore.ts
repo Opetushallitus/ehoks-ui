@@ -54,15 +54,6 @@ export const SessionStore = types
         const response = yield fetchSingle(apiUrl("virkailija/session"))
 
         self.user = response.data
-        if (
-          self.user &&
-          self.user.organisationPrivileges &&
-          self.user.organisationPrivileges.length > 0
-        ) {
-          changeSelectedOrganisationOid(
-            self.user!.organisationPrivileges[0].oid
-          )
-        }
         const queryParams = {
           oids: Array.from(
             new Set(
@@ -84,6 +75,18 @@ export const SessionStore = types
             oid: o.oid
           }
         })
+        if (self.user && self.organisations.length > 0) {
+          const storedOid = localStorage.getItem("selectedOrganisationOid")
+
+          if (
+            storedOid &&
+            self.organisations.findIndex(p => p.oid === storedOid) > -1
+          ) {
+            changeSelectedOrganisationOid(storedOid)
+          } else if (self.organisations.length > 0) {
+            changeSelectedOrganisationOid(self.organisations[0].oid)
+          }
+        }
       } catch (error) {
         self.error = error.message
       }

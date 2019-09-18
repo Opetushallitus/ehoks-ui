@@ -5,7 +5,7 @@ import { AiemminHankittuYhteinenTutkinnonOsa } from "models/AiemminHankittuYhtei
 import { HankittavaAmmatillinenTutkinnonOsa } from "models/HankittavaAmmatillinenTutkinnonOsa"
 import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenTutkinnonOsa"
 import { HankittavaYhteinenTutkinnonOsa } from "models/HankittavaYhteinenTutkinnonOsa"
-import { TutkinnonOsa } from "./helpers/TutkinnonOsa"
+import { TutkinnonOsa, HankittavaTutkinnonOsa } from "./helpers/TutkinnonOsa"
 import flattenDeep from "lodash.flattendeep"
 import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
@@ -106,7 +106,9 @@ export const HOKS = types
     ): any {
       const response: APIResponse = yield fetchSingle(
         apiUrl(
-          `${apiPrefix}/external/eperusteet/tutkinnot/${id}/suoritustavat/${suoritustapa}/rakenne`
+          `${apiPrefix}/external/eperusteet/tutkinnot/${id}/suoritustavat/${suoritustapa}/${
+            suoritustapa === "reformi" ? "rakenne" : "tutkinnonosat"
+          }`
         )
       )
       return response.data
@@ -131,7 +133,13 @@ export const HOKS = types
           const tutkinto = yield fetchTutkinto()
           const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
           self.osaamispisteet = rakenne.osat.reduce((osp: number, osa: any) => {
-            osp += osa.muodostumisSaanto.laajuus.minimi
+            if (
+              osa.muodostumisSaanto &&
+              osa.muodostumisSaanto.laajuus &&
+              osa.muodostumisSaanto.laajuus.minimi
+            ) {
+              osp += osa.muodostumisSaanto.laajuus.minimi
+            }
             return osp
           }, 0)
         }
@@ -145,7 +153,7 @@ export const HOKS = types
   .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {
-      get hankittavatTutkinnonOsat(): TutkinnonOsa[] {
+      get hankittavatTutkinnonOsat(): HankittavaTutkinnonOsa[] {
         const osaAlueet = flattenDeep<
           Instance<typeof YhteisenTutkinnonOsanOsaAlue>
         >(self.hankittavatYhteisetTutkinnonOsat.map((to: any) => to.osaAlueet))

@@ -3,6 +3,7 @@ import {
   createMemorySource,
   LocationProvider
 } from "@reach/router"
+import { cleanup, render } from "@testing-library/react"
 import { apiUrl } from "config"
 import { createEnvironment } from "createEnvironment"
 import { mockFetch } from "fetchUtils"
@@ -10,7 +11,6 @@ import "jest-dom/extend-expect"
 import "jest-styled-components"
 import { Provider } from "mobx-react"
 import React from "react"
-import { cleanup, render } from "react-testing-library"
 import { RootStore } from "stores/RootStore"
 import { App } from "../App"
 
@@ -36,7 +36,7 @@ it("App renders correctly", async () => {
     createEnvironment(mockFetch(apiUrl), apiUrl, "")
   )
   // fetch default translations
-  await store.translations.haeLokalisoinnit()
+  await store.translations.fetchLocales()
 
   const { container } = renderWithRouter(
     <Provider store={store}>

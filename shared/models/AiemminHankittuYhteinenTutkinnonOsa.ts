@@ -61,7 +61,7 @@ export const AiemminHankittuYhteinenTutkinnonOsa = types
         return {
           koodiUri: self.valittuTodentamisenProsessiKoodiUri,
           lahetettyArvioitavaksi:
-            self.tarkentavatTiedotArvioija.lahetettyArvioitavaksi
+            self.tarkentavatTiedotOsaamisenArvioija.lahetettyArvioitavaksi
         }
       },
       opintoOtsikko(ospLyhenne: string): string {

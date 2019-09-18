@@ -1,13 +1,23 @@
 import { navigate, RouteComponentProps, Router } from "@reach/router"
-import { autorun, IReactionDisposer } from "mobx"
+import { LoadingSpinner } from "components/LoadingSpinner"
+import { comparer, IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { OmienOpintojenSuunnittelu } from "routes/OmienOpintojenSuunnittelu"
 import { ValitseHOKS } from "routes/Suunnittelu/ValitseHOKS"
 import { IRootStore } from "stores/RootStore"
+import styled from "styled"
+
+const LoadingContainer = styled("div")`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+`
 
 interface ValitseHOKSProps {
   store?: IRootStore
+  "*"?: string
 }
 
 @inject("store")
@@ -17,29 +27,43 @@ export class Suunnittelu extends React.Component<
 > {
   disposeLoginReaction: IReactionDisposer
   componentDidMount() {
-    const { store } = this.props
+    const { store, uri } = this.props
     const session = store!.session
-    this.disposeLoginReaction = autorun(async () => {
-      // navigate to Opintopolku logout url after logging out
-      if (!session.isLoggedIn) {
-        // check that user did actually logout or there was an error (no session)
-        if (session.userDidLogout || session.error) {
-          window.location.href = store!.environment.opintopolkuLogoutUrl
+
+    this.disposeLoginReaction = reaction(
+      () => {
+        return {
+          isLoggedIn: session.isLoggedIn,
+          userDidLogout: session.userDidLogout,
+          error: session.error
         }
-        // ensure that SessionStore's checkSession call has finished
-      } else if (!session.isLoading && session.user!.oid) {
-        await store!.hoks.haeSuunnitelmat(session.user!.oid)
-        const suunnitelmat = store!.hoks.suunnitelmat
-        // navigate directly to HOKS if there's only one of them
-        if (suunnitelmat.length === 1) {
-          navigate(`/ehoks/suunnittelu/${suunnitelmat[0].eid}`)
+      },
+      async ({ isLoggedIn, userDidLogout, error }) => {
+        // navigate to Opintopolku logout url after logging out
+        if (!isLoggedIn) {
+          // check that user did actually logout or there was an error (no session)
+          if (userDidLogout || error) {
+            window.location.href = store!.environment.opintopolkuLogoutUrl
+          }
+          // ensure that SessionStore's checkSession call has finished
+        } else {
+          await store!.session.fetchSettings()
+          await store!.hoks.haeSuunnitelmat(session.user!.oid)
+          const suunnitelmat = store!.hoks.suunnitelmat
+          // navigate directly to HOKS if there's only one of them
+          if (
+            suunnitelmat.length === 1 &&
+            uri === "/ehoks/suunnittelu" &&
+            this.props["*"] === ""
+          ) {
+            navigate(`/ehoks/suunnittelu/${suunnitelmat[0].eid}`, {
+              replace: true
+            })
+          }
         }
-      }
-    })
-    //
-    window.requestAnimationFrame(() => {
-      window.scrollTo(0, 0)
-    })
+      },
+      { fireImmediately: true, equals: comparer.structural }
+    )
   }
 
   componentWillUnmount() {
@@ -48,6 +72,14 @@ export class Suunnittelu extends React.Component<
 
   render() {
     const store = this.props.store!
+
+    if (store!.hoks.isLoading) {
+      return (
+        <LoadingContainer>
+          <LoadingSpinner />
+        </LoadingContainer>
+      )
+    }
 
     return (
       <Router basepath={`/ehoks/suunnittelu`}>

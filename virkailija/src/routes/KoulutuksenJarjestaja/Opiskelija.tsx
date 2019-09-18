@@ -49,10 +49,16 @@ export class Opiskelija extends React.Component<
   async componentDidMount() {
     const { studentId, store } = this.props
     const { search } = store!.koulutuksenJarjestaja
+
     if (!search.results.length) {
-      await search.haeOppijat()
+      await search.fetchOppijat()
     }
+
     if (studentId) {
+      const oppija = search.oppija(studentId)
+      if (oppija) {
+        await oppija.fetchOpiskeluoikeudet()
+      }
       this.redirectToOnlyHOKS()
     }
   }

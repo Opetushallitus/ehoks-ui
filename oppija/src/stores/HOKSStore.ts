@@ -1,5 +1,8 @@
-import { flow, getEnv, types } from "mobx-state-tree"
+import flattenDeep from "lodash.flattendeep"
+import { flow, getEnv, getRoot, SnapshotIn, types } from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
+import { Notification } from "stores/NotificationStore"
+import { IRootStore } from "stores/RootStore"
 import { APIResponse } from "types/APIResponse"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
@@ -10,7 +13,45 @@ const HOKSStoreModel = {
 
 export const HOKSStore = types
   .model("HOKSStore", HOKSStoreModel)
+  .views(self => {
+    return {
+      // shown as notification banners about current and upcoming demonstrations/learning periods
+      get notifications() {
+        return flattenDeep<SnapshotIn<typeof Notification>>(
+          self.suunnitelmat.map(s => {
+            return s.hankittavatTutkinnonOsat
+              .filter(t => t.tutkinnonOsaKoodiUri)
+              .map(to => {
+                return [
+                  ...(to.naytot || []).map(naytto => {
+                    return {
+                      hoksId: s.eid,
+                      tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
+                      tyyppi: "naytto",
+                      alku: naytto.alku,
+                      loppu: naytto.loppu,
+                      paikka: naytto.ymparisto
+                    }
+                  }),
+                  ...(to.harjoittelujaksot || []).map(hj => {
+                    return {
+                      hoksId: s.eid,
+                      tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
+                      tyyppi: "tyossaoppiminen",
+                      alku: hj.alku,
+                      loppu: hj.loppu,
+                      paikka: hj.selite
+                    }
+                  })
+                ]
+              })
+          })
+        )
+      }
+    }
+  })
   .actions(self => {
+    const root: IRootStore = getRoot(self)
     const { apiUrl, fetchCollection, errors } = getEnv<StoreEnvironment>(self)
 
     const haeSuunnitelmat = flow(function*(oid: string): any {
@@ -20,11 +61,16 @@ export const HOKSStore = types
           apiUrl(`oppija/oppijat/${oid}/hoks`)
         )
         self.suunnitelmat = response.data
+
         yield Promise.all(
           self.suunnitelmat.map(suunnitelma => {
             return suunnitelma.fetchOpiskeluoikeudet()
           })
         )
+
+        // add computed notifications to notifications store
+        root.notifications.addNotifications(self.notifications)
+
         self.isLoading = false
       } catch (error) {
         errors.logError("HOKSStore.haeSuunnitelmat", error.message)

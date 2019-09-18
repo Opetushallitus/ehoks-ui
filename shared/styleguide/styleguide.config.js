@@ -3,6 +3,8 @@ const glob = require("glob")
 
 module.exports = {
   ignore: [
+    "**/shared/components/APIConfigContext.tsx",
+    "**/shared/components/AppContext.tsx",
     "**/shared/components/ChartArrow.tsx",
     "**/shared/components/ChartContainer.tsx",
     "**/shared/components/ChartContent.tsx",
@@ -14,9 +16,12 @@ module.exports = {
     "**/shared/components/Header.tsx",
     "**/shared/components/Heading.tsx",
     "**/shared/components/HelpPopup.tsx",
+    "**/shared/components/HOKSEidContext.tsx",
+    "**/shared/components/HoksInfo.tsx",
     "**/shared/components/HomeLink.tsx",
     "**/shared/components/HomeOrb.tsx",
     "**/shared/components/icons/*.tsx",
+    "**/shared/components/LabeledColumn.tsx",
     "**/shared/components/LinkPanelContainer.tsx",
     "**/shared/components/ListColumnHeaders.tsx",
     "**/shared/components/ListContainer.tsx",
@@ -34,7 +39,10 @@ module.exports = {
     "**/shared/components/Table.tsx",
     "**/shared/components/Table/*.tsx",
     "**/shared/components/ThemeWrapper.tsx",
-    "**/shared/components/TitleContainer.tsx"
+    "**/shared/components/TitleContainer.tsx",
+    "**/shared/components/Opiskelija/*.tsx",
+    "**/shared/components/react-jsonschema-form/Label.tsx",
+    "**/shared/components/react-jsonschema-form/TypeaheadField.tsx"
   ],
   title: "eHOKS styleguide",
   components: function() {
@@ -76,6 +84,7 @@ module.exports = {
   usageMode: "expand",
   exampleMode: "expand",
   pagePerSection: true,
+  mountPointId: "app",
   theme: {
     fontFamily: {
       base: '"Source Sans Pro", sans-serif'

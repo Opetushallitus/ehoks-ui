@@ -1,4 +1,5 @@
-import { Accordion, AccordionTitle } from "components/Accordion"
+import { Accordion } from "components/Accordion"
+import { AccordionTitle } from "components/AccordionTitle"
 import React from "react"
 import SchemaField from "react-jsonschema-form/lib/components/fields/SchemaField"
 import styled from "styled"

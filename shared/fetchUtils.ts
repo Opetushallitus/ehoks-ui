@@ -35,20 +35,27 @@ export function fetchUtils(
 
   return {
     fetchSingle: async (url: string, init?: RequestInit) => {
+      const { method = "GET" } = init ? init : {}
       const response = await fetchImplementation(url, init)
+
       if (!response.ok) {
         throw new Error(response.statusText)
       }
-      const json = await response.json()
-      const model = {
-        // supports:
-        // 1) array with one object in json.data
-        // 2) object in json.data
-        data: Array.isArray(json.data) ? json.data[0] : json.data,
-        meta: json.meta || {}
+
+      if (method === "GET") {
+        const json = await response.json()
+        const model = {
+          // supports:
+          // 1) array with one object in json.data
+          // 2) object in json.data
+          data: Array.isArray(json.data) ? json.data[0] : json.data,
+          meta: json.meta || {}
+        }
+        // camelCase kebab-cased object keys recursively so we can use dot syntax for accessing values
+        return camelCaseDeep(model)
+      } else {
+        return response
       }
-      // camelCase kebab-cased object keys recursively so we can use dot syntax for accessing values
-      return camelCaseDeep(model)
     },
 
     fetchCollection,
@@ -72,7 +79,7 @@ export function fetchUtils(
   }
 }
 
-// // mocked fetch using local json files
+// mocked fetch using local JSON files
 export const mockFetch = (apiUrl: (path: string) => string, version = 0) => (
   url: string,
   _init?: RequestInit
