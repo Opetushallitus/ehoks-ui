@@ -2,7 +2,7 @@
 
 ## Getting started
 
-`npm start` starts the development server in [localhost:8080](http://localhost:8080/)
+`npm start` starts the development server in [localhost:8080/ehoks](http://localhost:8080/ehoks)
 
 `npm test` runs the Jest test suite
 
