@@ -8,7 +8,7 @@ import { inject, observer } from "mobx-react"
 import React from "react"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 import { FormattedMessage } from "react-intl"
-import Form, { AjvError, FieldProps, IChangeEvent } from "react-jsonschema-form"
+import { AjvError, FieldProps, IChangeEvent } from "react-jsonschema-form"
 import { Step } from "routes/LuoHOKS/Step"
 import { Stepper } from "routes/LuoHOKS/Stepper"
 import { IRootStore } from "stores/RootStore"
@@ -29,7 +29,9 @@ import {
 } from "./LuoHOKS/helpers"
 import { idToPathArray } from "./LuoHOKS/idToPathArray"
 import { koodistoUrls } from "./LuoHOKS/koodistoUrls"
+import { ReactJSONSchemaForm } from "./LuoHOKS/ReactJSONSchemaForm"
 import "./LuoHOKS/styles.css"
+import { trimEmptyValues } from "./LuoHOKS/trimFormData"
 import { uiSchemaByStep } from "./LuoHOKS/uiSchema"
 
 const codeCategoriesForPaths = {
@@ -343,7 +345,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
           "Content-Type": "application/json"
           // ticket: """
         },
-        body: JSON.stringify(fieldProps.formData)
+        body: JSON.stringify(trimEmptyValues(fieldProps.formData))
       }
     )
     const json = await request.json()
@@ -419,16 +421,24 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
   }
 
   resetForm = () => {
-    this.setState({
-      formData: {},
-      errors: [],
-      success: undefined,
-      userEnteredText: false,
-      currentStep: 0,
-      errorsByStep: {},
-      message: undefined,
-      clearModalOpen: false
-    })
+    this.setState(
+      {
+        formData: {},
+        errors: [],
+        success: undefined,
+        userEnteredText: false,
+        currentStep: 0,
+        errorsByStep: {},
+        message: undefined,
+        clearModalOpen: false
+      },
+      () => {
+        window.localStorage.setItem(
+          "hoks",
+          JSON.stringify({ formData: {}, errors: [], errorsByStep: {} })
+        )
+      }
+    )
   }
 
   render() {
@@ -454,7 +464,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
           </Stepper>
         </TopToolbar>
         <FormContainer>
-          <Form
+          <ReactJSONSchemaForm
             fields={fields}
             widgets={widgets}
             schema={this.state.schema}
@@ -520,7 +530,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
                 <Button onClick={this.nextStep}>Seuraava</Button> */}
               </ButtonsContainer>
             </BottomToolbar>
-          </Form>
+          </ReactJSONSchemaForm>
         </FormContainer>
       </Container>
     )

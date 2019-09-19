@@ -13,6 +13,7 @@ import { Henkilokohtaistaminen } from "routes/Henkilokohtaistaminen"
 import { Suunnittelu } from "routes/Suunnittelu"
 import { TyopaikanToimija } from "routes/TyopaikanToimija"
 import { IRootStore } from "stores/RootStore"
+import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 
 const Container = styled("div")`
@@ -62,14 +63,14 @@ export class App extends React.Component<AppProps> {
     const activeLocale = store!.translations.activeLocale
     const translations = store!.translations.messages[activeLocale]
     const messages =
-      activeLocale === "fi"
+      activeLocale === Locale.FI
         ? translations
         : // use finnish translations as fallback, merge provided translations
           { ...store!.translations.messages.fi, ...translations }
     return (
       <ThemeWrapper>
         <IntlProvider
-          defaultLocale="fi"
+          defaultLocale={Locale.FI}
           locale={activeLocale}
           messages={messages}
           textComponent={React.Fragment}
