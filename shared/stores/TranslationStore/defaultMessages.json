@@ -26,8 +26,13 @@
   },
   {
     "locale": "fi",
+    "key": "errors.HOKSStore.haeSuunnitelmat",
+    "value": "Suunnitelmien haku epäonnistui"
+  },
+  {
+    "locale": "fi",
     "key": "errors.HOKSStore.haeSuunnitelmat.notfound",
-    "value": "Ei suunnitelmia"
+    "value": "Suunnitelmia ei löytynyt"
   },
   {
     "locale": "fi",

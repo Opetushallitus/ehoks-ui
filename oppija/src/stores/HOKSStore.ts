@@ -74,6 +74,7 @@ export const HOKSStore = types
         self.isLoading = false
       } catch (error) {
         errors.logError(
+          "HOKSStore.haeSuunnitelmat",
           `HOKSStore.haeSuunnitelmat.${error.message
             .replace(" ", "")
             .toLowerCase()}`
