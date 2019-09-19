@@ -1,4 +1,5 @@
 import flattenDeep from "lodash.flattendeep"
+import { Locale } from "../../stores/TranslationStore";
 
 export function getOsaamisvaatimukset(
   arviointi: {
@@ -14,7 +15,7 @@ export function getOsaamisvaatimukset(
       }>
     }>
   } | null,
-  activeLocale: "fi" | "sv"
+  activeLocale: Locale.FI | Locale.SV
 ) {
   if (!arviointi) {
     return []

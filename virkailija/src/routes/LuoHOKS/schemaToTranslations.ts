@@ -1,4 +1,5 @@
 import flattenDeep from "lodash.flattendeep"
+import { Locale } from "stores/TranslationStore"
 import { idToTranslationKey } from "./idToTranslationKey"
 
 // Iterates through all the descriptions
@@ -31,7 +32,7 @@ export function schemaToTranslations(
       if (property.description || schema.description) {
         arr.push({
           category: "ehoks",
-          locale: "fi",
+          locale: Locale.FI,
           key: idToTranslationKey(`${prevPath}_${key}`) + ".description",
           value: property.description || schema.description
         })

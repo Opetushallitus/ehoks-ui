@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled"
 import { IOrganisation } from "types/Organisation"
 import { observer } from "mobx-react"
+import { Locale } from "../stores/TranslationStore";
 
 export interface OrganisationDropdownProps {
   organisations: IOrganisation[]
@@ -45,7 +46,7 @@ export class OrganisationDropdown extends React.Component<
 
   render() {
     const { organisations, value } = this.props
-    const lang = this.props.lang || "fi"
+    const lang = this.props.lang || Locale.FI
     return (
       <OppilaitosSelect value={value} onChange={this.handleOnChange}>
         {organisations

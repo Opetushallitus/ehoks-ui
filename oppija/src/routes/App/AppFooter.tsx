@@ -2,6 +2,7 @@ import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
+import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 import facebookLogo from "./facebook.svg"
 import instagramLogo from "./instagram.svg"
@@ -210,7 +211,7 @@ export class AppFooter extends React.Component<AppFooterProps> {
     intl: intlShape
   }
 
-  changeLocale = (locale: "fi" | "sv") => (event: React.MouseEvent) => {
+  changeLocale = (locale: Locale) => (event: React.MouseEvent) => {
     event.preventDefault()
     this.props.store!.translations.setActiveLocale(locale)
   }
@@ -283,7 +284,7 @@ export class AppFooter extends React.Component<AppFooterProps> {
               </p>
               <DisclaimerLinks>
                 <LanguageVersions>
-                  <a onClick={this.changeLocale("fi")} role="button">
+                  <a onClick={this.changeLocale(Locale.FI)} role="button">
                     <FormattedMessage
                       id="footer.finnishLocaleLink"
                       defaultMessage="Suomeksi"
@@ -295,7 +296,7 @@ export class AppFooter extends React.Component<AppFooterProps> {
                       defaultMessage="In English"
                     />
                   </a> */}
-                  <a onClick={this.changeLocale("sv")} role="button">
+                  <a onClick={this.changeLocale(Locale.SV)} role="button">
                     <FormattedMessage
                       id="footer.swedishLocaleLink"
                       defaultMessage="På svenska"
