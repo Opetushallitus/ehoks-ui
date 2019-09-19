@@ -26,6 +26,11 @@
   },
   {
     "locale": "fi",
+    "key": "errors.HOKSStore.haeSuunnitelmat.notfound",
+    "value": "Ei suunnitelmia"
+  },
+  {
+    "locale": "fi",
     "key": "errors.EnvironmentStore.getEnvironment",
     "value": "Ympäristömuuttujien haku epäonnistui"
   },
