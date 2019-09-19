@@ -3,7 +3,7 @@ import { Instance, types } from "mobx-state-tree"
 export const AppError = types
   .model("AppError", {
     id: types.string,
-    errorText: types.string,
+    errorText: types.optional(types.string, ""),
     handled: types.boolean
   })
   .actions(self => {
@@ -20,7 +20,7 @@ const ErrorStoreModel = {
 export const ErrorStore = types
   .model("ErrorStore", ErrorStoreModel)
   .actions(self => {
-    const logError = (id: string, errorText: string) => {
+    const logError = (id: string, errorText?: string) => {
       const error = { errorText, id, handled: false }
       self.errors.push(error as any) // https://github.com/mobxjs/mobx-state-tree/issues/501
     }
