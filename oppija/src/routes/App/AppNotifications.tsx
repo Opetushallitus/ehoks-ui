@@ -89,7 +89,10 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
               <Content>
                 <Text>
                   <FormattedMessage id={`errors.${error.id}`} />:{" "}
-                  {error.errorText}
+                  <FormattedMessage
+                    id={`errors.${error.errorText}`}
+                    defaultMessage={error.errorText}
+                  />
                 </Text>
                 <IconContainer
                   onClick={error.handle}
