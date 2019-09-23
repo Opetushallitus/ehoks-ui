@@ -80,6 +80,16 @@ export const Oppija = types
     },
     get lukumaara() {
       return self.suunnitelmat.length
+    },
+    get editLink(): string {
+      const manualPlans = self.suunnitelmat.filter(suunnitelma => {
+        return suunnitelma.manuaalisyotto
+      })
+      return manualPlans.length
+        ? manualPlans.length > 1
+          ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${self.oid}`
+          : `/ehoks-virkailija-ui/hoks/${self.oid}/${manualPlans[0].id}`
+        : ""
     }
     // get tutkinto(): string {
     //   const activeLocale: Locale = getRoot<IRootStore>(self).translations

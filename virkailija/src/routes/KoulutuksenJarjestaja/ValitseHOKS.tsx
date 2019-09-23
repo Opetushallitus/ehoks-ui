@@ -53,6 +53,7 @@ export class ValitseHOKS extends React.Component<
                     <Suunnitelma
                       hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
                       suunnitelma={suunnitelma}
+                      oppijaId={oppijaId}
                       key={i}
                     />
                   )
@@ -73,6 +74,7 @@ export class ValitseHOKS extends React.Component<
                     <Suunnitelma
                       hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
                       suunnitelma={suunnitelma}
+                      oppijaId={oppijaId}
                       key={i}
                     />
                   )

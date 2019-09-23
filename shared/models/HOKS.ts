@@ -46,7 +46,8 @@ const Model = types.model("HOKSModel", {
   urasuunnitelmaKoodiUri: types.optional(types.string, ""),
   urasuunnitelma: types.optional(KoodistoVastaus, {}),
   versio: types.optional(types.number, 0),
-  sahkoposti: types.optional(types.string, "")
+  sahkoposti: types.optional(types.string, ""),
+  manuaalisyotto: types.optional(types.boolean, false)
 })
 
 export const HOKS = types

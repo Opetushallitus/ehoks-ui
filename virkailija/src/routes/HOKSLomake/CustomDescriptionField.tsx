@@ -1,6 +1,6 @@
 import React from "react"
 import { FormattedMessage } from "react-intl"
-import { idToTranslationKey } from "./idToTranslationKey"
+import { idToTranslationKey } from "./helpers/idToTranslationKey"
 
 export function CustomDescriptionField(props: {
   id?: string

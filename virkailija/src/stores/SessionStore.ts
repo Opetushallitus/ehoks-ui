@@ -50,6 +50,10 @@ export const SessionStore = types
 
     const checkSession = flow(function*(): any {
       self.isLoading = true
+      const storedOid = localStorage.getItem("selectedOrganisationOid")
+      if (storedOid) {
+        changeSelectedOrganisationOid(storedOid)
+      }
       try {
         const response = yield fetchSingle(apiUrl("virkailija/session"))
 
@@ -76,14 +80,7 @@ export const SessionStore = types
           }
         })
         if (self.user && self.organisations.length > 0) {
-          const storedOid = localStorage.getItem("selectedOrganisationOid")
-
-          if (
-            storedOid &&
-            self.organisations.findIndex(p => p.oid === storedOid) > -1
-          ) {
-            changeSelectedOrganisationOid(storedOid)
-          } else if (self.organisations.length > 0) {
+          if (self.organisations.findIndex(p => p.oid === storedOid) === -1) {
             changeSelectedOrganisationOid(self.organisations[0].oid)
           }
         }
