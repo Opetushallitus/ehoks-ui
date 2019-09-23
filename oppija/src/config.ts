@@ -26,3 +26,4 @@ const backendUrl = config.backendUrl
 
 export const apiUrl = (path: string) => `${backendUrl}/${path}`
 export const apiPrefix = "oppija"
+export const callerId = "1.2.246.562.10.00000000001.ehoks.ehoks-ui.oppija"
