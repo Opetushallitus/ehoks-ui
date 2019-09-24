@@ -1,5 +1,5 @@
 import React, { Children, cloneElement } from "react"
-import { StepProps } from "routes/LuoHOKS/Step"
+import { StepProps } from "routes/HOKSLomake/Step"
 import styled from "styled"
 
 const Container = styled("div")`

@@ -1,4 +1,5 @@
 import { Link, navigate, RouteComponentProps, Router } from "@reach/router"
+import { IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage } from "react-intl"
@@ -45,22 +46,38 @@ export interface OpiskelijaProps {
 export class Opiskelija extends React.Component<
   OpiskelijaProps & RouteComponentProps
 > {
+  disposeLoginReaction: IReactionDisposer
   // TODO: redirect to root after logout, check implementation in src/routes/OmienOpintojenSuunnittelu.tsx
   async componentDidMount() {
     const { studentId, store } = this.props
-    const { search } = store!.koulutuksenJarjestaja
+    const { koulutuksenJarjestaja, session } = store!
+    const { search } = koulutuksenJarjestaja
 
-    if (!search.results.length) {
-      await search.fetchOppijat()
-    }
+    this.disposeLoginReaction = reaction(
+      () => {
+        return session.isLoggedIn && session.organisations.length
+      },
+      async hasLoggedIn => {
+        if (hasLoggedIn) {
+          if (!search.results.length) {
+            await search.fetchOppijat()
+          }
 
-    if (studentId) {
-      const oppija = search.oppija(studentId)
-      if (oppija) {
-        await oppija.fetchOpiskeluoikeudet()
-      }
-      this.redirectToOnlyHOKS()
-    }
+          if (studentId) {
+            const oppija = search.oppija(studentId)
+            if (oppija) {
+              await oppija.fetchOpiskeluoikeudet()
+            }
+            this.redirectToOnlyHOKS()
+          }
+        }
+      },
+      { fireImmediately: true }
+    )
+  }
+
+  componentWillUnmount() {
+    this.disposeLoginReaction()
   }
 
   async componentDidUpdate(prevProps: OpiskelijaProps) {

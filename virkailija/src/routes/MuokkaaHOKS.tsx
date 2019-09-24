@@ -1,6 +1,5 @@
 import { Button } from "components/Button"
 import { LoadingSpinner } from "components/LoadingSpinner"
-import { ModalDialog } from "components/ModalDialog"
 import { JSONSchema6 } from "json-schema"
 import { inject, observer } from "mobx-react"
 import React from "react"
@@ -11,7 +10,6 @@ import { IRootStore } from "stores/RootStore"
 import { ArrayFieldTemplate } from "./HOKSLomake/ArrayFieldTemplate"
 import { BottomToolbar } from "./HOKSLomake/BottomToolbar"
 import { ButtonsContainer } from "./HOKSLomake/ButtonsContainer"
-import { ClearButton } from "./HOKSLomake/ClearButton"
 import ErrorList from "./HOKSLomake/ErrorList"
 import { FailureMessage } from "./HOKSLomake/FailureMessage"
 import { fetchKoodiUris } from "./HOKSLomake/fetchKoodiUris"
@@ -36,14 +34,30 @@ import { Stepper } from "./HOKSLomake/Stepper"
 import "./HOKSLomake/styles.css"
 import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
-import { propertiesByStep, uiSchemaByStep } from "./LuoHOKS/uiSchema"
+import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
 
-interface LuoHOKSProps {
-  path?: string
-  store?: IRootStore
+const disallowedKeys = ["eid", "manuaalisyotto"]
+
+function trimDisallowedKeys(formData: any) {
+  return Object.keys(formData).reduce(
+    (result, key) => {
+      if (disallowedKeys.indexOf(key) === -1) {
+        result[key] = formData[key]
+      }
+      return result
+    },
+    {} as any
+  )
 }
 
-interface LuoHOKSState {
+interface MuokkaaHOKSProps {
+  path?: string
+  store?: IRootStore
+  oppijaOid?: string
+  hoksId?: string
+}
+
+interface MuokkaaHOKSState {
   schema: JSONSchema6
   formData: { [name: string]: any }
   errors: AjvError[]
@@ -61,8 +75,11 @@ interface LuoHOKSState {
 
 @inject("store")
 @observer
-export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
-  state: LuoHOKSState = {
+export class MuokkaaHOKS extends React.Component<
+  MuokkaaHOKSProps,
+  MuokkaaHOKSState
+> {
+  state: MuokkaaHOKSState = {
     schema: {},
     formData: {},
     uiSchema: undefined,
@@ -80,9 +97,10 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
 
   async componentDidMount() {
     const json: any = await this.props.store!.environment.fetchSwaggerJSON()
+    const hoks = await this.fetchHOKS()
     const rawSchema = {
       definitions: stripUnsupportedFormats(json.definitions),
-      ...json.definitions.HOKSLuonti
+      ...json.definitions.HOKS
     }
     const koodiUris = await fetchKoodiUris()
     const schema = schemaByStep(
@@ -90,23 +108,32 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       propertiesByStep,
       this.state.currentStep
     )
-    const {
-      formData = {},
-      errors = [],
-      errorsByStep = {}
-    } = window.localStorage.getItem("hoks")
-      ? JSON.parse(window.localStorage.getItem("hoks") || "")
-      : {}
     this.setState({
-      formData,
-      errors,
-      errorsByStep,
+      formData: hoks,
+      errors: [],
+      errorsByStep: {},
       rawSchema,
       schema,
       koodiUris,
       uiSchema: uiSchemaByStep(koodiUris, this.state.currentStep),
       isLoading: false
     })
+  }
+
+  async fetchHOKS() {
+    const { oppijaOid, hoksId } = this.props
+    const request = await window.fetch(
+      `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksId}`,
+      {
+        credentials: "include",
+        headers: {
+          Accept: "application/json; charset=utf-8",
+          "Content-Type": "application/json"
+        }
+      }
+    )
+    const json = await request.json()
+    return json.data
   }
 
   nextStep = () => {
@@ -150,21 +177,12 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
 
   onChange = (changes: any) => {
     const { formData, errors } = changes
-    this.setState(
-      state => ({
-        ...state,
-        formData,
-        errors,
-        errorsByStep: { ...state.errorsByStep, [state.currentStep]: errors }
-      }),
-      () => {
-        const { errorsByStep } = this.state
-        window.localStorage.setItem(
-          "hoks",
-          JSON.stringify({ formData, errors, errorsByStep })
-        )
-      }
-    )
+    this.setState(state => ({
+      ...state,
+      formData,
+      errors,
+      errorsByStep: { ...state.errorsByStep, [state.currentStep]: errors }
+    }))
   }
 
   scrollToErrors = (event: React.MouseEvent) => {
@@ -183,42 +201,31 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     this.setState({ userEnteredText: true })
   }
 
-  create = async (fieldProps: IChangeEvent<FieldProps>) => {
+  save = async (fieldProps: IChangeEvent<FieldProps>) => {
     this.setState({ isLoading: true })
-
+    const { oppijaOid, hoksId } = this.props
     const request = await window.fetch(
-      `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${
-        fieldProps.formData["oppija-oid"]
-      }/hoksit`,
+      `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksId}`,
       {
-        method: "POST",
+        method: "PUT",
         credentials: "include",
         headers: {
           Accept: "application/json; charset=utf-8",
-          // "Caller-Id": ""
           "Content-Type": "application/json"
-          // ticket: """
         },
-        body: JSON.stringify(trimEmptyValues(fieldProps.formData))
+        body: JSON.stringify(
+          trimDisallowedKeys(trimEmptyValues(fieldProps.formData))
+        )
       }
     )
-    const json = await request.json()
-
-    if (request.status === 200) {
+    if (request.status === 204) {
       this.setState({
-        formData: {},
-        errors: [],
-        errorsByStep: {},
         success: true,
-        userEnteredText: false
+        isLoading: false
       })
-      window.localStorage.removeItem("hoks")
     } else {
-      this.setState({ success: false })
+      this.setState({ success: false, isLoading: false })
     }
-    console.log("RESPONSE STATUS", request.status)
-    console.log("RESPONSE JSON", json)
-    this.setState({ isLoading: false })
   }
 
   completedSteps = () => {
@@ -241,13 +248,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     const rootKeys = Object.keys(this.state.rawSchema.properties || {})
     return {
       isRoot: isRoot(rootKeys),
-      koodiUriSelected: koodiUriSelected(this, () => {
-        const { formData, errors, errorsByStep } = this.state
-        window.localStorage.setItem(
-          "hoks",
-          JSON.stringify({ formData, errors, errorsByStep })
-        )
-      })
+      koodiUriSelected: koodiUriSelected(this)
     }
   }
 
@@ -260,32 +261,23 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
   }
 
   resetForm = () => {
-    this.setState(
-      {
-        formData: {},
-        errors: [],
-        success: undefined,
-        userEnteredText: false,
-        currentStep: 0,
-        errorsByStep: {},
-        message: undefined,
-        clearModalOpen: false
-      },
-      () => {
-        window.localStorage.setItem(
-          "hoks",
-          JSON.stringify({ formData: {}, errors: [], errorsByStep: {} })
-        )
-      }
-    )
+    this.setState({
+      formData: {},
+      errors: [],
+      success: undefined,
+      userEnteredText: false,
+      currentStep: 0,
+      errorsByStep: {},
+      message: undefined,
+      clearModalOpen: false
+    })
   }
 
   render() {
-    const { clearModalOpen } = this.state
     return (
       <HOKSFormContainer onKeyUp={this.userHasEnteredText}>
         <TopToolbar id="topToolbar">
-          <Header>Luo HOKS</Header>
+          <Header>Muokkaa HOKSia</Header>
           <Stepper
             currentStep={this.state.currentStep}
             updateStep={this.setStep}
@@ -311,7 +303,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
             formData={this.state.formData as any}
             formContext={this.formContext()}
             onChange={this.onChange}
-            onSubmit={this.create}
+            onSubmit={this.save}
             onError={this.setErrors}
             ErrorList={ErrorList}
             transformErrors={transformErrors}
@@ -323,22 +315,8 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
             <BottomToolbar>
               <ButtonsContainer>
                 <Button type="submit" disabled={!this.isValid()}>
-                  Luo HOKS
+                  Tallenna HOKS
                 </Button>
-                <ClearButton onClick={this.openClearModal}>
-                  Tyhjennä
-                </ClearButton>
-                <ModalDialog
-                  open={clearModalOpen}
-                  closeModal={this.closeClearModal}
-                  label="Haluatko varmasti tyhjentää lomakkeen?"
-                >
-                  <p>Haluatko varmasti tyhjentää lomakkeen?</p>
-                  <Button onClick={this.resetForm}>Tyhjennä</Button>
-                  <ClearButton onClick={this.closeClearModal}>
-                    Peruuta
-                  </ClearButton>
-                </ModalDialog>
                 {this.state.isLoading && (
                   <SpinnerContainer>
                     <LoadingSpinner />
@@ -347,19 +325,19 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
                 {this.state.success && (
                   <SuccessMessage onClick={this.hideMessage}>
                     <FormattedMessage
-                      id="luoHoks.luontiOnnistui"
-                      defaultMessage="HOKS luotiin onnistuneesti"
+                      id="muokkaaHoks.tallennusOnnistui"
+                      defaultMessage="HOKS tallennettiin onnistuneesti"
                     />
                   </SuccessMessage>
                 )}
                 {this.state.success === false && (
                   <FailureMessage onClick={this.hideMessage}>
                     <FormattedMessage
-                      id="luoHoks.luontiEpaonnistui"
+                      id="muokkaaHoks.tallennusEpaonnistui"
                       defaultMessage={
                         this.state.message
                           ? this.state.message
-                          : "HOKSin luonti epäonnistui"
+                          : "HOKSin tallennus epäonnistui"
                       }
                     />
                   </FailureMessage>
