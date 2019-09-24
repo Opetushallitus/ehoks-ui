@@ -36,6 +36,20 @@ import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
 
+const disallowedKeys = ["eid", "manuaalisyotto"]
+
+function trimDisallowedKeys(formData: any) {
+  return Object.keys(formData).reduce(
+    (result, key) => {
+      if (disallowedKeys.indexOf(key) === -1) {
+        result[key] = formData[key]
+      }
+      return result
+    },
+    {} as any
+  )
+}
+
 interface MuokkaaHOKSProps {
   path?: string
   store?: IRootStore
@@ -193,27 +207,25 @@ export class MuokkaaHOKS extends React.Component<
     const request = await window.fetch(
       `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksId}`,
       {
-        method: "PATCH",
+        method: "PUT",
         credentials: "include",
         headers: {
           Accept: "application/json; charset=utf-8",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(trimEmptyValues(fieldProps.formData))
+        body: JSON.stringify(
+          trimDisallowedKeys(trimEmptyValues(fieldProps.formData))
+        )
       }
     )
-    const json = await request.json()
-
-    if (request.status === 200) {
+    if (request.status === 204) {
       this.setState({
-        success: true
+        success: true,
+        isLoading: false
       })
     } else {
-      this.setState({ success: false })
+      this.setState({ success: false, isLoading: false })
     }
-    console.log("RESPONSE STATUS", request.status)
-    console.log("RESPONSE JSON", json)
-    this.setState({ isLoading: false })
   }
 
   completedSteps = () => {
@@ -314,7 +326,7 @@ export class MuokkaaHOKS extends React.Component<
                   <SuccessMessage onClick={this.hideMessage}>
                     <FormattedMessage
                       id="muokkaaHoks.tallennusOnnistui"
-                      defaultMessage="HOKS luotiin onnistuneesti"
+                      defaultMessage="HOKS tallennettiin onnistuneesti"
                     />
                   </SuccessMessage>
                 )}
