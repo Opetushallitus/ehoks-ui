@@ -6,7 +6,7 @@ export function createEnvironment(
   fetchFn: WindowOrWorkerGlobalScope["fetch"],
   apiUrl: (path: string) => string,
   apiPrefix: string,
-  callerId: string
+  callerId: (headers?: Headers) => Headers
 ): StoreEnvironment {
   return {
     ...fetchUtils(fetchFn),
