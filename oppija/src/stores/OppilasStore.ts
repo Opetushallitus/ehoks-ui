@@ -11,7 +11,7 @@ const OppilasStoreModel = {
 export const OppilasStore = types
   .model("OppilasStore", OppilasStoreModel)
   .actions(self => {
-    const { apiUrl, fetchCollection, errors } = getEnv<StoreEnvironment>(self)
+    const { apiUrl, fetchCollection, errors, callerId } = getEnv<StoreEnvironment>(self)
     // tracks the most recent fetch by user
     let newestPromise = null
 
@@ -19,7 +19,8 @@ export const OppilasStore = types
       self.isLoading = true
       try {
         const fetchPromise: Promise<APIResponse> = fetchCollection(
-          apiUrl(`external/eperusteet/?nimi=${name}`)
+          apiUrl(`external/eperusteet/?nimi=${name}`),
+          { headers: callerId() }
         )
         newestPromise = fetchPromise
         const response = yield fetchPromise

@@ -16,7 +16,7 @@ const SessionStoreModel = {
 export const SessionStore = types
   .model("SessionStore", SessionStoreModel)
   .actions(self => {
-    const { apiUrl, fetchSingle, deleteResource, errors } = getEnv<
+    const { apiUrl, fetchSingle, deleteResource, errors, callerId } = getEnv<
       StoreEnvironment
     >(self)
 
@@ -24,7 +24,8 @@ export const SessionStore = types
       self.isLoading = true
       try {
         const response: APIResponse = yield fetchSingle(
-          apiUrl("oppija/session")
+          apiUrl("oppija/session"),
+          { headers: callerId() }
         )
         self.user = response.data
       } catch (error) {
@@ -36,7 +37,8 @@ export const SessionStore = types
       if (self.user) {
         try {
           yield fetchSingle(apiUrl("oppija/session/update-user-info"), {
-            method: "POST"
+            method: "POST",
+            headers: callerId()
           })
           yield fetchUserInfo()
         } catch (error) {
@@ -50,7 +52,8 @@ export const SessionStore = types
       self.isLoading = true
       try {
         const response: APIResponse = yield fetchSingle(
-          apiUrl("oppija/session/user-info")
+          apiUrl("oppija/session/user-info"),
+          { headers: callerId() }
         )
         self.user = response.data
       } catch (error) {
@@ -63,7 +66,8 @@ export const SessionStore = types
       self.isLoading = true
       try {
         const response: APIResponse = yield fetchSingle(
-          apiUrl("oppija/session/settings")
+          apiUrl("oppija/session/settings"),
+          { headers: callerId() }
         )
         self.settings = response.data
       } catch (error) {
@@ -78,9 +82,7 @@ export const SessionStore = types
         yield fetchSingle(apiUrl("oppija/session/settings"), {
           method: "put",
           body: JSON.stringify(getSnapshot(self.settings)),
-          headers: {
-            "Content-Type": "application/json"
-          }
+          headers: callerId(new Headers({ "Content-Type": "application/json" }))
         })
       } catch (error) {
         errors.logError("SessionStore.saveSettings", error.message)
@@ -91,7 +93,7 @@ export const SessionStore = types
     const logout = flow(function*() {
       self.isLoading = true
       try {
-        yield deleteResource(apiUrl("oppija/session"))
+        yield deleteResource(apiUrl("oppija/session"), { headers: callerId() })
         self.user = null
         self.isLoading = false
         self.userDidLogout = true

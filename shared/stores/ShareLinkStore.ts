@@ -13,7 +13,7 @@ export interface IShareLink extends Instance<typeof ShareLink> {}
 export const ShareLinkStore = types
   .model("ShareLinkStore", {})
   .actions(_self => {
-    // const { fetchCollection, errors } = getEnv<StoreEnvironment>(self)
+    // const { fetchCollection, errors, callerId } = getEnv<StoreEnvironment>(self)
 
     //const fetchLinks = flow(koodiUri: string, type: string) {
     const fetchLinks = function(koodiUri: string, type: string) {
@@ -44,7 +44,7 @@ export const ShareLinkStore = types
         }
       ]) as Promise<Instance<typeof ShareLink>[]>
       // try {
-      //   const response = yield fetchCollection(apiUrl("shareLinks"))
+      //   const response = yield fetchCollection(apiUrl("shareLinks"),{ headers: callerId() })
       //   return response.data
       // } catch (error) {
       //   errors.logError("ShareLinkStore.fetchLinks", error.message)

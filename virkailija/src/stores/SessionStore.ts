@@ -34,13 +34,17 @@ export const SessionStore = types
       fetchCollection,
       fetch,
       deleteResource,
-      errors
+      errors,
+      callerId
     } = getEnv<StoreEnvironment>(self)
 
     const login = flow(function*(url: string): any {
       self.isLoading = true
       try {
-        const response: APIResponse = yield fetch(url, { mode: "no-cors" })
+        const response: APIResponse = yield fetch(url, {
+          mode: "no-cors",
+          headers: callerId()
+        })
         self.user = response.data
       } catch (error) {
         self.error = error.message
@@ -55,7 +59,9 @@ export const SessionStore = types
         changeSelectedOrganisationOid(storedOid)
       }
       try {
-        const response = yield fetchSingle(apiUrl("virkailija/session"))
+        const response = yield fetchSingle(apiUrl("virkailija/session"), {
+          headers: callerId()
+        })
 
         self.user = response.data
         const queryParams = {
@@ -71,7 +77,8 @@ export const SessionStore = types
         const organisationsData = yield fetchCollection(
           withQueryString(apiUrl("virkailija/external/organisaatio/find"), {
             ...queryParams
-          })
+          }),
+          { headers: callerId() }
         )
         self.organisations = organisationsData.data.map((o: IOrganisation) => {
           return {
@@ -93,7 +100,9 @@ export const SessionStore = types
     const logout = flow(function*() {
       self.isLoading = true
       try {
-        yield deleteResource(apiUrl("virkailija/session"))
+        yield deleteResource(apiUrl("virkailija/session"), {
+          headers: callerId()
+        })
         self.user = null
         self.isLoading = false
         self.userDidLogout = true
