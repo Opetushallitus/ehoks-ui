@@ -55,7 +55,7 @@ export class Opiskelija extends React.Component<
 
     this.disposeLoginReaction = reaction(
       () => {
-        return session.isLoggedIn && session.organisations.length
+        return session.isLoggedIn && session.organisations.length > 0
       },
       async hasLoggedIn => {
         if (hasLoggedIn) {

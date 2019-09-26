@@ -60,13 +60,6 @@ export const Oppija = types
 
     return { fetchSuunnitelmat, fetchHenkilotiedot, fetchOpiskeluoikeudet }
   })
-  .actions(self => {
-    const afterCreate = () => {
-      self.fetchSuunnitelmat()
-      self.fetchHenkilotiedot()
-    }
-    return { afterCreate }
-  })
   .views(self => ({
     get hyvaksytty() {
       return self.suunnitelmat.length
@@ -178,6 +171,15 @@ const Search = types
       if (response.meta["total-count"]) {
         self.totalResultsCount = response.meta["total-count"]
       }
+
+      // side effects, fetch plans & personal info for all students
+      yield Promise.all(
+        self.results.map(async oppija => {
+          await oppija.fetchSuunnitelmat()
+          await oppija.fetchHenkilotiedot()
+        })
+      )
+
       self.isLoading = false
     })
 
