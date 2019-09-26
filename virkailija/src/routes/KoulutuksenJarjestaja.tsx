@@ -17,6 +17,7 @@ import range from "lodash.range"
 import { IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
+import { MdEdit } from "react-icons/md"
 import { FormattedMessage, intlShape } from "react-intl"
 import { SearchSortKey } from "stores/KoulutuksenJarjestajaStore"
 import { IRootStore } from "stores/RootStore"
@@ -82,7 +83,7 @@ export class KoulutuksenJarjestaja extends React.Component<
 
     this.disposeLoginReaction = reaction(
       () => {
-        return session.isLoggedIn && session.organisations.length
+        return session.isLoggedIn && session.organisations.length > 0
       },
       async hasLoggedIn => {
         if (hasLoggedIn) {
@@ -91,7 +92,8 @@ export class KoulutuksenJarjestaja extends React.Component<
             window.scrollTo(0, 0)
           })
         }
-      }
+      },
+      { fireImmediately: true }
     )
   }
 
@@ -205,15 +207,17 @@ export class KoulutuksenJarjestaja extends React.Component<
                         defaultMessage="Lkm"
                       />
                     </TableHeader>
+                    <TableHeader />
                   </TableRow>
                 </TableHead>
                 <colgroup>
+                  <col style={{ width: "25%" }} />
                   <col style={{ width: "20%" }} />
-                  <col style={{ width: "25%" }} />
-                  <col style={{ width: "25%" }} />
+                  <col style={{ width: "20%" }} />
                   <col style={{ width: "10%" }} />
                   <col style={{ width: "10%" }} />
                   <col style={{ width: "10%" }} />
+                  <col style={{ width: "5%" }} />
                 </colgroup>
                 <TableBody>
                   {results.map((student, i) => {
@@ -241,6 +245,13 @@ export class KoulutuksenJarjestaja extends React.Component<
                             : "-"}
                         </TableCell>
                         <TableCell>{student.lukumaara}</TableCell>
+                        <TableCell>
+                          {student.editLink && (
+                            <Link to={student.editLink}>
+                              <MdEdit size={24} color="#000" />
+                            </Link>
+                          )}
+                        </TableCell>
                       </TableRow>
                     )
                   })}

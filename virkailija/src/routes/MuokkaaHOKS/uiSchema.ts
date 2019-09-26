@@ -3,9 +3,12 @@ import { UiSchemaOptions } from "../HOKSLomake/formConfig"
 
 export const propertiesByStep: { [index: number]: string[] } = {
   0: [
+    "id",
     "opiskeluoikeus-oid",
     "oppija-oid",
     "ensikertainen-hyvaksyminen",
+    "hyvaksytty",
+    "paivitetty",
     "sahkoposti",
     "urasuunnitelma-koodi-uri",
     "urasuunnitelma-koodi-versio",
@@ -22,9 +25,12 @@ export const propertiesByStep: { [index: number]: string[] } = {
 
 const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
   "ui:order": [
+    "id",
     "opiskeluoikeus-oid",
     "oppija-oid",
     "ensikertainen-hyvaksyminen",
+    "hyvaksytty",
+    "paivitetty",
     "sahkoposti",
     "urasuunnitelma-koodi-uri",
     "urasuunnitelma-koodi-versio",
@@ -38,6 +44,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
     "opiskeluvalmiuksia-tukevat-opinnot",
     "*"
   ],
+  id: {
+    "ui:readonly": true
+  },
   luotu: {
     "ui:widget": "hidden"
   },
@@ -1042,16 +1051,19 @@ export const uiSchemaByStep = (
   options: UiSchemaOptions,
   currentStep: number
 ) => {
-  const ui = fullUiSchema(options)
-  return Object.keys(ui).reduce<{ [key: string]: any }>((uiSchema, key) => {
-    if (propertiesByStep[currentStep].indexOf(key) > -1 && ui[key]) {
-      uiSchema[key] = ui[key]
-    }
-    if (key === "ui:order") {
-      uiSchema["ui:order"] = ui["ui:order"].filter(
-        (k: string) => propertiesByStep[currentStep].indexOf(k) > -1
-      )
-    }
-    return uiSchema
-  }, {})
+  const fullSchema = fullUiSchema(options)
+  return Object.keys(fullSchema).reduce<{ [key: string]: any }>(
+    (uiSchema, key) => {
+      if (propertiesByStep[currentStep].indexOf(key) > -1 && fullSchema[key]) {
+        uiSchema[key] = fullSchema[key]
+      }
+      if (key === "ui:order") {
+        uiSchema["ui:order"] = fullSchema["ui:order"].filter(
+          (k: string) => propertiesByStep[currentStep].indexOf(k) > -1
+        )
+      }
+      return uiSchema
+    },
+    {}
+  )
 }

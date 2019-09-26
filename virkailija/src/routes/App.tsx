@@ -11,6 +11,7 @@ import { Header } from "./Header"
 import { KoulutuksenJarjestaja } from "./KoulutuksenJarjestaja"
 import { Opiskelija } from "./KoulutuksenJarjestaja/Opiskelija"
 import { LuoHOKS } from "./LuoHOKS"
+import { MuokkaaHOKS } from "./MuokkaaHOKS"
 import { Yllapito } from "./Yllapito"
 
 const Container = styled("div")`
@@ -68,6 +69,7 @@ export class App extends React.Component<AppProps> {
                 noThrow={true}
               />
               <LuoHOKS path="luohoks" />
+              <MuokkaaHOKS path="hoks/:oppijaOid/:hoksId" />
               <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />
               <Yllapito path="yllapito" />
               <Opiskelija path="koulutuksenjarjestaja/:studentId/*" />

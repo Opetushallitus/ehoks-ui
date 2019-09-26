@@ -232,7 +232,7 @@ class BaseTypeaheadField extends Component<
   refs: {
     typeahead: any
   }
-  handleSelectionChange = (conf: any) => (events: any) => {
+  handleSelectionChange = (conf: any) => async (events: any) => {
     let { mapping, cleanAfterSelection = false } = conf
     let { schema, idSchema, formContext } = this.props
 
@@ -242,12 +242,8 @@ class BaseTypeaheadField extends Component<
 
     if (events.length > 0) {
       let schemaEvents = mapToSchema(events, schema, mapping)
+      await formContext.koodiUriSelected(idSchema.$id, true)
       this.props.onChange(schemaEvents)
-      // NOTE: this setTimeout hack is needed because onChange does not return a Promise
-      // and we would lose the root form's state update without it
-      setTimeout(() => {
-        formContext.koodiUriSelected(idSchema.$id, true)
-      }, 0)
       if (cleanAfterSelection) {
         setTimeout(() => {
           if (this.refs.typeahead) {
@@ -256,13 +252,9 @@ class BaseTypeaheadField extends Component<
         }, 0)
       }
     } else {
+      await formContext.koodiUriSelected(idSchema.$id, false)
       // selection was removed, remove from formData
       this.props.onChange(undefined)
-      // NOTE: this setTimeout hack is needed because onChange does not return a Promise
-      // and we would lose the root form's state update without it
-      setTimeout(() => {
-        formContext.koodiUriSelected(idSchema.$id, false)
-      }, 0)
     }
   }
 
