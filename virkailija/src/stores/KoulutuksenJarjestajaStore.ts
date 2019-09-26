@@ -5,6 +5,7 @@ import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
 import { SessionUser } from "models/SessionUser"
 import { IRootStore } from "stores/RootStore"
+import { Locale } from "stores/TranslationStore"
 import { APIResponse } from "types/APIResponse"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
@@ -21,10 +22,8 @@ export const Oppija = types
   .model("Oppija", {
     oid: types.string,
     nimi: types.string,
-    tutkinto: types.string,
-    osaamisala: types.string,
-    // tutkintoNimi: Translation,
-    // osaamisalaNimi: Translation,
+    tutkintoNimi: types.optional(Translation, {}),
+    osaamisalaNimi: types.optional(Translation, {}),
     suunnitelmat: types.array(HOKS),
     henkilotiedot: types.optional(SessionUser, { commonName: "", surname: "" })
   })
@@ -80,27 +79,27 @@ export const Oppija = types
     },
     get lukumaara() {
       return self.suunnitelmat.length
+    },
+    get tutkinto(): string {
+      const activeLocale: Locale = getRoot<IRootStore>(self).translations
+        .activeLocale
+      switch (activeLocale) {
+        case Locale.FI:
+          return self.tutkintoNimi.fi
+        case Locale.SV:
+          return self.tutkintoNimi.sv
+      }
+    },
+    get osaamisala(): string {
+      const activeLocale: Locale = getRoot<IRootStore>(self).translations
+        .activeLocale
+      switch (activeLocale) {
+        case Locale.FI:
+          return self.osaamisalaNimi.fi
+        case Locale.SV:
+          return self.osaamisalaNimi.sv
+      }
     }
-    // get tutkinto(): string {
-    //   const activeLocale: Locale = getRoot<IRootStore>(self).translations
-    //     .activeLocale
-    //   switch (activeLocale) {
-    //     case Locale.FI:
-    //       return self.tutkintoNimi.fi
-    //     case Locale.SV:
-    //       return self.tutkintoNimi.sv
-    //   }
-    // },
-    // get osaamisala(): string {
-    //   const activeLocale: Locale = getRoot<IRootStore>(self).translations
-    //     .activeLocale
-    //   switch (activeLocale) {
-    //     case Locale.FI:
-    //       return self.osaamisalaNimi.fi
-    //     case Locale.SV:
-    //       return self.osaamisalaNimi.sv
-    //   }
-    // }
   }))
 
 export interface IOppija extends Instance<typeof Oppija> {}
@@ -138,15 +137,18 @@ const Search = types
       if (oppilaitosOid === "") {
         return
       }
+      const activeLocale: Locale = getRoot<IRootStore>(self).translations
+        .activeLocale
 
       self.isLoading = true
 
       const queryParams = {
-        "order-by": self.sortBy,
+        "order-by-column": self.sortBy,
         desc: self.sortDirection === "desc",
         "item-count": self.perPage,
         page: self.activePage,
-        "oppilaitos-oid": oppilaitosOid
+        "oppilaitos-oid": oppilaitosOid,
+        locale: activeLocale
       }
 
       const textQueries = Object.keys(self.searchTexts).reduce<{
