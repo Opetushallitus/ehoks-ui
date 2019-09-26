@@ -1,7 +1,14 @@
 import { withQueryString } from "fetchUtils"
 import max from "lodash.max"
 import min from "lodash.min"
-import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
+import {
+  flow,
+  getEnv,
+  getRoot,
+  Instance,
+  isAlive,
+  types
+} from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
 import { SessionUser } from "models/SessionUser"
 import { IRootStore } from "stores/RootStore"
@@ -38,7 +45,15 @@ export const Oppija = types
       const response: APIResponse = yield fetchCollection(
         apiUrl(`virkailija/oppijat/${self.oid}/hoksit`)
       )
-      self.suunnitelmat = response.data
+
+      // This node might get detached (destroyed) if user navigates
+      // to another view during async operation, as fetchOppijat
+      // overwrites previous students. We should only
+      // set plans when node is still attached (alive)
+      // TODO: reimplement when MST flow cancellation PR (#691) gets merged
+      if (isAlive(self)) {
+        self.suunnitelmat = response.data
+      }
     })
 
     const fetchHenkilotiedot = flow(function*(): any {
@@ -46,8 +61,15 @@ export const Oppija = types
         apiUrl(`virkailija/oppijat/${self.oid}`)
       )
       const { oid, nimi } = response.data
-      self.henkilotiedot.oid = oid
-      self.henkilotiedot.fullName = nimi
+      // This node might get detached (destroyed) if user navigates
+      // to another view during async operation, as fetchOppijat
+      // overwrites previous students. We should only
+      // set personal info when node is still attached (alive)
+      // TODO: reimplement when MST flow cancellation PR (#691) gets merged
+      if (isAlive(self) && isAlive(self.henkilotiedot)) {
+        self.henkilotiedot.oid = oid
+        self.henkilotiedot.fullName = nimi
+      }
     })
 
     const fetchOpiskeluoikeudet = flow(function*(): any {
@@ -167,6 +189,7 @@ const Search = types
           ...textQueries
         })
       )
+      self.results.clear()
       self.results = response.data
       if (response.meta["total-count"]) {
         self.totalResultsCount = response.meta["total-count"]
@@ -174,10 +197,12 @@ const Search = types
 
       // side effects, fetch plans & personal info for all students
       yield Promise.all(
-        self.results.map(async oppija => {
-          await oppija.fetchSuunnitelmat()
-          await oppija.fetchHenkilotiedot()
-        })
+        self.results.map(
+          flow(function*(oppija): any {
+            yield oppija.fetchSuunnitelmat()
+            yield oppija.fetchHenkilotiedot()
+          })
+        )
       )
 
       self.isLoading = false
