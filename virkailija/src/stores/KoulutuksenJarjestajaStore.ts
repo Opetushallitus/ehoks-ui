@@ -1,6 +1,4 @@
 import { withQueryString } from "fetchUtils"
-import max from "lodash.max"
-import min from "lodash.min"
 import {
   flow,
   getEnv,
