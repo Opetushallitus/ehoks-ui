@@ -1,6 +1,4 @@
 import { withQueryString } from "fetchUtils"
-import max from "lodash.max"
-import min from "lodash.min"
 import {
   flow,
   getEnv,
@@ -30,9 +28,11 @@ export const Oppija = types
     nimi: types.string,
     tutkinto: types.string,
     osaamisala: types.string,
+    opiskeluoikeusOid: types.string,
     // tutkintoNimi: Translation,
     // osaamisalaNimi: Translation,
     suunnitelmat: types.array(HOKS),
+    suunnitelmaIndex: types.optional(types.integer, -1),
     henkilotiedot: types.optional(SessionUser, { commonName: "", surname: "" })
   })
   .actions(self => {
@@ -54,6 +54,9 @@ export const Oppija = types
       // TODO: reimplement when MST flow cancellation PR (#691) gets merged
       if (isAlive(self)) {
         self.suunnitelmat = response.data
+        self.suunnitelmaIndex = self.suunnitelmat.findIndex(
+          s => s.opiskeluoikeusOid === self.opiskeluoikeusOid
+        )
       }
     })
 
@@ -86,13 +89,13 @@ export const Oppija = types
   })
   .views(self => ({
     get hyvaksytty() {
-      return self.suunnitelmat.length
-        ? min(self.suunnitelmat.map(s => s.ensikertainenHyvaksyminen))
+      return self.suunnitelmaIndex > -1
+        ? self.suunnitelmat[self.suunnitelmaIndex].ensikertainenHyvaksyminen
         : null
     },
     get paivitetty() {
-      return self.suunnitelmat.length
-        ? max(self.suunnitelmat.map(s => s.paivitetty))
+      return self.suunnitelmaIndex > -1
+        ? self.suunnitelmat[self.suunnitelmaIndex].paivitetty
         : null
     },
     get lukumaara() {
