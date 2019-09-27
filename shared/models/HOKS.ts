@@ -186,7 +186,7 @@ export const HOKS = types
         return this.hankittavatTutkinnonOsat.filter(to => to.tila === "valmis")
       },
       get aloitusPvm() {
-        return self.ensikertainenHyvaksyminen
+        return self.opiskeluOikeus.alkamispaiva
       },
       get oppilaitos() {
         return self.opiskeluOikeus.oppilaitos
