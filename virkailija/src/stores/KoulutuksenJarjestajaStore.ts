@@ -30,9 +30,11 @@ export const Oppija = types
     nimi: types.string,
     tutkinto: types.string,
     osaamisala: types.string,
+    opiskeluoikeusOid: types.string,
     // tutkintoNimi: Translation,
     // osaamisalaNimi: Translation,
     suunnitelmat: types.array(HOKS),
+    suunnitelmaIndex: types.optional(types.integer, -1),
     henkilotiedot: types.optional(SessionUser, { commonName: "", surname: "" })
   })
   .actions(self => {
@@ -54,6 +56,9 @@ export const Oppija = types
       // TODO: reimplement when MST flow cancellation PR (#691) gets merged
       if (isAlive(self)) {
         self.suunnitelmat = response.data
+        self.suunnitelmaIndex = self.suunnitelmat.findIndex(
+          s => s.opiskeluoikeusOid === self.opiskeluoikeusOid
+        )
       }
     })
 
