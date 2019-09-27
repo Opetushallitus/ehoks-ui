@@ -1,7 +1,12 @@
 import { withQueryString } from "fetchUtils"
-import max from "lodash.max"
-import min from "lodash.min"
-import { flow, getEnv, getRoot, Instance, types } from "mobx-state-tree"
+import {
+  flow,
+  getEnv,
+  getRoot,
+  Instance,
+  isAlive,
+  types
+} from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
 import { SessionUser } from "models/SessionUser"
 import { IRootStore } from "stores/RootStore"
@@ -24,29 +29,51 @@ export const Oppija = types
     nimi: types.string,
     tutkintoNimi: types.optional(Translation, {}),
     osaamisalaNimi: types.optional(Translation, {}),
+    opiskeluoikeusOid: types.string,
     suunnitelmat: types.array(HOKS),
+    suunnitelmaIndex: types.optional(types.integer, -1),
     henkilotiedot: types.optional(SessionUser, { commonName: "", surname: "" })
   })
   .actions(self => {
-    const { fetchCollection, fetchSingle, apiUrl } = getEnv<StoreEnvironment>(
-      self
-    )
+    const { fetchCollection, fetchSingle, apiUrl, callerId } = getEnv<
+      StoreEnvironment
+    >(self)
 
     // fetches HOKSes with basic info (root level only)
     const fetchSuunnitelmat = flow(function*(): any {
       const response: APIResponse = yield fetchCollection(
-        apiUrl(`virkailija/oppijat/${self.oid}/hoksit`)
+        apiUrl(`virkailija/oppijat/${self.oid}/hoksit`),
+        { headers: callerId() }
       )
-      self.suunnitelmat = response.data
+
+      // This node might get detached (destroyed) if user navigates
+      // to another view during async operation, as fetchOppijat
+      // overwrites previous students. We should only
+      // set plans when node is still attached (alive)
+      // TODO: reimplement when MST flow cancellation PR (#691) gets merged
+      if (isAlive(self)) {
+        self.suunnitelmat = response.data
+        self.suunnitelmaIndex = self.suunnitelmat.findIndex(
+          s => s.opiskeluoikeusOid === self.opiskeluoikeusOid
+        )
+      }
     })
 
     const fetchHenkilotiedot = flow(function*(): any {
       const response: APIResponse = yield fetchSingle(
-        apiUrl(`virkailija/oppijat/${self.oid}`)
+        apiUrl(`virkailija/oppijat/${self.oid}`),
+        { headers: callerId() }
       )
       const { oid, nimi } = response.data
-      self.henkilotiedot.oid = oid
-      self.henkilotiedot.fullName = nimi
+      // This node might get detached (destroyed) if user navigates
+      // to another view during async operation, as fetchOppijat
+      // overwrites previous students. We should only
+      // set personal info when node is still attached (alive)
+      // TODO: reimplement when MST flow cancellation PR (#691) gets merged
+      if (isAlive(self) && isAlive(self.henkilotiedot)) {
+        self.henkilotiedot.oid = oid
+        self.henkilotiedot.fullName = nimi
+      }
     })
 
     const fetchOpiskeluoikeudet = flow(function*(): any {
@@ -61,13 +88,13 @@ export const Oppija = types
   })
   .views(self => ({
     get hyvaksytty() {
-      return self.suunnitelmat.length
-        ? min(self.suunnitelmat.map(s => s.ensikertainenHyvaksyminen))
+      return self.suunnitelmaIndex > -1
+        ? self.suunnitelmat[self.suunnitelmaIndex].ensikertainenHyvaksyminen
         : null
     },
     get paivitetty() {
-      return self.suunnitelmat.length
-        ? max(self.suunnitelmat.map(s => s.paivitetty))
+      return self.suunnitelmaIndex > -1
+        ? self.suunnitelmat[self.suunnitelmaIndex].paivitetty
         : null
     },
     get lukumaara() {
@@ -131,7 +158,7 @@ const Search = types
     }
   )
   .actions(self => {
-    const { fetchCollection, apiUrl } = getEnv<StoreEnvironment>(self)
+    const { fetchCollection, apiUrl, callerId } = getEnv<StoreEnvironment>(self)
 
     const fetchOppijat = flow(function*(): any {
       // TODO fix cross reference of stores?
@@ -167,8 +194,10 @@ const Search = types
         withQueryString(apiUrl("virkailija/oppijat"), {
           ...queryParams,
           ...textQueries
-        })
+        }),
+        { headers: callerId() }
       )
+      self.results.clear()
       self.results = response.data
       if (response.meta["total-count"]) {
         self.totalResultsCount = response.meta["total-count"]
@@ -176,10 +205,12 @@ const Search = types
 
       // side effects, fetch plans & personal info for all students
       yield Promise.all(
-        self.results.map(async oppija => {
-          await oppija.fetchSuunnitelmat()
-          await oppija.fetchHenkilotiedot()
-        })
+        self.results.map(
+          flow(function*(oppija): any {
+            yield oppija.fetchSuunnitelmat()
+            yield oppija.fetchHenkilotiedot()
+          })
+        )
       )
 
       self.isLoading = false

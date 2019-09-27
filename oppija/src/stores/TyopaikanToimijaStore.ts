@@ -18,7 +18,7 @@ export const TyopaikanToimijaStore = types
       self.isLoading = true
       try {
         // TODO: replace with real API call
-        // const response = yield root.fetchCollection(apiUrl("oppijat"))
+        // const response = yield root.fetchCollection(apiUrl("oppijat"),{ headers: callerId() })
         // self.oppijat.replace(response.data)
         self.oppijat.replace(oppijat as any)
       } catch (error) {

@@ -14,12 +14,13 @@ const EducationProviderModel = {
 export const EducationProviderStore = types
   .model("EducationProviderStore", EducationProviderModel)
   .actions(self => {
-    const { fetchSingle, apiUrl } = getEnv<StoreEnvironment>(self)
+    const { fetchSingle, apiUrl, callerId } = getEnv<StoreEnvironment>(self)
 
     const fetchInfo = flow(function*(): any {
       self.isLoading = true
       const response: APIResponse<IEducationProviderInfo> = yield fetchSingle(
-        apiUrl("education/info/")
+        apiUrl("education/info/"),
+        { headers: callerId() }
       )
       self.info = response.data
       self.isLoading = false

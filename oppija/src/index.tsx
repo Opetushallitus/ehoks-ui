@@ -1,6 +1,6 @@
 import { APIConfigContext } from "components/APIConfigContext"
 import { AppContext } from "components/AppContext"
-import { apiPrefix, apiUrl } from "config"
+import { apiPrefix, apiUrl, callerId } from "config"
 import { createEnvironment } from "createEnvironment"
 import { fetch } from "fetchUtils"
 import { Provider } from "mobx-react"
@@ -17,7 +17,10 @@ import { RootStore } from "./stores/RootStore"
 addLocaleData([...fi, ...sv])
 
 // pass fetch utils to RootStore using MST's environment context, so we can easily mock it in tests
-const store = RootStore.create({}, createEnvironment(fetch, apiUrl, apiPrefix))
+const store = RootStore.create(
+  {},
+  createEnvironment(fetch, apiUrl, apiPrefix, callerId)
+)
 store.environment.getEnvironment()
 store.translations.fetchLocales()
 

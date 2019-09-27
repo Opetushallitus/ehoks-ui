@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled"
 import { IOrganisation } from "types/Organisation"
 import { observer } from "mobx-react"
-import { Locale } from "../stores/TranslationStore";
+import { Locale } from "../stores/TranslationStore"
 
 export interface OrganisationDropdownProps {
   organisations: IOrganisation[]
@@ -24,10 +24,10 @@ const OppilaitosSelect = styled("select")`
 `
 
 function strcmp(a: string, b: string) {
-  if (a > b) {
+  if (a.toLowerCase() > b.toLowerCase()) {
     return 1
   }
-  if (a < b) {
+  if (a.toLowerCase() < b.toLowerCase()) {
     return -1
   }
   return 0
@@ -47,16 +47,20 @@ export class OrganisationDropdown extends React.Component<
   render() {
     const { organisations, value } = this.props
     const lang = this.props.lang || Locale.FI
+    const langFallback = lang === "fi" ? Locale.SV : Locale.FI
     return (
       <OppilaitosSelect value={value} onChange={this.handleOnChange}>
         {organisations
           .slice()
           .sort((a: IOrganisation, b: IOrganisation) => {
-            return strcmp(a.nimi.get(lang) || "", b.nimi.get(lang) || "")
+            return strcmp(
+              a.nimi.get(lang) || a.nimi.get(langFallback) || "",
+              b.nimi.get(lang) || b.nimi.get(langFallback) || ""
+            )
           })
           .map(o => (
             <option key={o.oid} value={o.oid} aria-selected={o.oid === value}>
-              {o.nimi.get(lang)}
+              {o.nimi.get(lang) || o.nimi.get(langFallback)}
             </option>
           ))}
       </OppilaitosSelect>

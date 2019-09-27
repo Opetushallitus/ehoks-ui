@@ -44,7 +44,7 @@ const TranslationStoreModel = {
 export const TranslationStore = types
   .model("TranslationStore", TranslationStoreModel)
   .actions(self => {
-    const { apiUrl, apiPrefix, fetchCollection, errors } = getEnv<
+    const { apiUrl, apiPrefix, fetchCollection, errors, callerId } = getEnv<
       StoreEnvironment
     >(self)
 
@@ -58,7 +58,7 @@ export const TranslationStore = types
       self.translations.replace(defaultMessages as ApiTranslation[])
       try {
         const response: APIResponse = yield fetchCollection(
-          apiUrl(`${apiPrefix}/external/lokalisointi`)
+          apiUrl(`${apiPrefix}/external/lokalisointi`), { headers: callerId() }
         )
         // add custom translations from API
         self.translations.replace([

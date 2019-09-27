@@ -57,7 +57,7 @@ export const Suunnitelma = observer(function Suunnitelma(
             />{" "}
             {format(parseISO(suunnitelma.paattymispaiva), "d.M.yyyy")}
           </span>
-        ) : (
+        ) : suunnitelma.aloitusPvm ? (
           <span>
             <FormattedMessage
               id="suunnitelma.aloitettuTitle"
@@ -65,7 +65,7 @@ export const Suunnitelma = observer(function Suunnitelma(
             />{" "}
             {format(parseISO(suunnitelma.aloitusPvm), "d.M.yyyy")}
           </span>
-        )}
+        ) : null}
         .
       </Text>
 

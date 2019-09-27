@@ -116,7 +116,9 @@ export class Opiskelija extends React.Component<
     const studentIndex = oppija ? results.indexOf(oppija) : -1
     const previous = studentIndex > 0 ? results[studentIndex - 1] : null
     const next =
-      studentIndex < results.length ? results[studentIndex + 1] : null
+      results.length && studentIndex !== -1 && studentIndex < results.length
+        ? results[studentIndex + 1]
+        : null
 
     return (
       <React.Fragment>

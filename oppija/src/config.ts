@@ -26,3 +26,12 @@ const backendUrl = config.backendUrl
 
 export const apiUrl = (path: string) => `${backendUrl}/${path}`
 export const apiPrefix = "oppija"
+export const callerId = (headers?: Headers) =>
+  headers
+    ? headers.append(
+        "Caller-Id",
+        "1.2.246.562.10.00000000001.ehoks.ehoks-ui.oppija"
+      )
+    : new Headers({
+        "Caller-Id": "1.2.246.562.10.00000000001.ehoks.ehoks-ui.oppija"
+      })
