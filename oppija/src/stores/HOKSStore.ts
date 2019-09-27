@@ -52,13 +52,14 @@ export const HOKSStore = types
   })
   .actions(self => {
     const root: IRootStore = getRoot(self)
-    const { apiUrl, fetchCollection, errors } = getEnv<StoreEnvironment>(self)
+    const { apiUrl, fetchCollection, errors, callerId } = getEnv<StoreEnvironment>(self)
 
     const haeSuunnitelmat = flow(function*(oid: string): any {
       self.isLoading = true
       try {
         const response: APIResponse = yield fetchCollection(
-          apiUrl(`oppija/oppijat/${oid}/hoks`)
+          apiUrl(`oppija/oppijat/${oid}/hoks`),
+          { headers: callerId() }
         )
         self.suunnitelmat = response.data
 

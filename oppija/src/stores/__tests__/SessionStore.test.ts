@@ -4,11 +4,13 @@ import { mockFetch } from "fetchUtils"
 import { when } from "mobx"
 import { SessionStore } from "stores/SessionStore"
 
+const callerId = (headers?: Headers) => (headers ? headers : new Headers())
+
 describe("SessionStore", () => {
   test("checkSession without login", () => {
     const store = SessionStore.create(
       {},
-      createEnvironment(mockFetch(apiUrl), apiUrl, "")
+      createEnvironment(mockFetch(apiUrl), apiUrl, "", callerId)
     )
 
     expect(store.isLoading).toBe(false)
@@ -28,7 +30,7 @@ describe("SessionStore", () => {
   test("checkSession with login", done => {
     const store = SessionStore.create(
       {},
-      createEnvironment(mockFetch(apiUrl, 1), apiUrl, "")
+      createEnvironment(mockFetch(apiUrl, 1), apiUrl, "", callerId)
     )
 
     expect(store.isLoading).toBe(false)
@@ -72,7 +74,7 @@ describe("SessionStore", () => {
           surname: "Testaaja"
         }
       },
-      createEnvironment(mockFetch(apiUrl, 2), apiUrl, "")
+      createEnvironment(mockFetch(apiUrl, 2), apiUrl, "", callerId)
     )
     expect(store.user).toEqual({
       commonName: "Teuvo",

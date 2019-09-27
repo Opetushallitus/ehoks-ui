@@ -6,12 +6,13 @@ import defaultMessages from "../TranslationStore/defaultMessages.json"
 import { createEnvironment } from "createEnvironment"
 
 const apiUrl = (path: string) => `/${path}`
+const callerId = (headers?: Headers) => (headers ? headers : new Headers())
 
 describe("TranslationStore", () => {
   test("fetchLocales fetches both defaultMessages and API translations", () => {
     const store = TranslationStore.create(
       {},
-      createEnvironment(mockFetch(apiUrl), apiUrl, "")
+      createEnvironment(mockFetch(apiUrl), apiUrl, "", callerId)
     )
 
     expect(store.isLoading).toBe(false)
@@ -35,7 +36,7 @@ describe("TranslationStore", () => {
   test("messages view returns translations in a format suitable for react-intl", () => {
     const store = TranslationStore.create(
       {},
-      createEnvironment(mockFetch(apiUrl), apiUrl, "")
+      createEnvironment(mockFetch(apiUrl), apiUrl, "", callerId)
     )
 
     store.fetchLocales()

@@ -5,4 +5,5 @@ export type StoreEnvironment = ReturnType<typeof fetchUtils> & {
   errors: IErrorStore
   apiUrl: (path: string) => string
   apiPrefix: string
+  callerId: (headers?: Headers) => Headers
 }
