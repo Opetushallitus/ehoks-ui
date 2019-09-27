@@ -91,13 +91,13 @@ export const Oppija = types
   })
   .views(self => ({
     get hyvaksytty() {
-      return self.suunnitelmat.length
-        ? min(self.suunnitelmat.map(s => s.ensikertainenHyvaksyminen))
+      return self.suunnitelmaIndex > -1
+        ? self.suunnitelmat[self.suunnitelmaIndex].ensikertainenHyvaksyminen
         : null
     },
     get paivitetty() {
-      return self.suunnitelmat.length
-        ? max(self.suunnitelmat.map(s => s.paivitetty))
+      return self.suunnitelmaIndex > -1
+        ? self.suunnitelmat[self.suunnitelmaIndex].paivitetty
         : null
     },
     get lukumaara() {
