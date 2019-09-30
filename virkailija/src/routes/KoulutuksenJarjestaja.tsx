@@ -3,7 +3,6 @@ import { Container, PaddedContent } from "components/Container"
 import { ContentArea } from "components/ContentArea"
 import { Heading } from "components/Heading"
 import { LoadingSpinner } from "components/LoadingSpinner"
-import { Page } from "components/Page"
 import { Table } from "components/Table"
 import { SearchableHeader } from "components/Table/SearchableHeader"
 import { TableBody } from "components/Table/TableBody"
@@ -13,12 +12,12 @@ import { TableRow } from "components/Table/TableRow"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import debounce from "lodash.debounce"
-import range from "lodash.range"
 import { IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { MdEdit } from "react-icons/md"
 import { FormattedMessage, intlShape } from "react-intl"
+import Paging from "routes/KoulutuksenJarjestaja/Paging"
 import { SearchSortKey } from "stores/KoulutuksenJarjestajaStore"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
@@ -52,10 +51,6 @@ const SearchableTable = styled(Table)<{ children: React.ReactNode }>`
 const Spinner = styled(LoadingSpinner)`
   position: absolute;
   right: 0px;
-`
-
-const PagingContainer = styled("nav")`
-  margin: 40px 0 20px 20px;
 `
 
 interface KoulutuksenJarjestajaProps {
@@ -143,7 +138,6 @@ export class KoulutuksenJarjestaja extends React.Component<
       isLoading,
       searchTexts
     } = koulutuksenJarjestaja.search
-    const totalPages = Math.ceil(totalResultsCount / perPage)
 
     return (
       <BackgroundContainer>
@@ -268,34 +262,14 @@ export class KoulutuksenJarjestaja extends React.Component<
                 </TableBody>
               </SearchableTable>
 
-              {totalPages > 1 && results.length > 0 && (
-                <PagingContainer
-                  aria-label={intl.formatMessage({
-                    id: "koulutuksenJarjestaja.haunSivutuksenAriaLabel"
-                  })}
-                >
-                  {range(totalPages).map(index => {
-                    return (
-                      <Page
-                        key={index}
-                        active={activePage === index}
-                        aria-current={activePage === index}
-                        onClick={this.goToPage(index)}
-                        onKeyPress={this.onPaginationResultEnter(index)}
-                        tabIndex={0}
-                        aria-label={intl.formatMessage(
-                          {
-                            id:
-                              "koulutuksenJarjestaja.meneHakutuloksienSivulleAriaLabel"
-                          },
-                          { page: index + 1 }
-                        )}
-                      >
-                        {index + 1}
-                      </Page>
-                    )
-                  })}
-                </PagingContainer>
+              {totalResultsCount > perPage && results.length > 0 && (
+                <Paging
+                  activePage={activePage}
+                  totalResultsCount={totalResultsCount}
+                  perPage={perPage}
+                  goToPage={this.goToPage}
+                  onPaginationResultEnter={this.onPaginationResultEnter}
+                />
               )}
             </ContentArea>
           </PaddedContent>
