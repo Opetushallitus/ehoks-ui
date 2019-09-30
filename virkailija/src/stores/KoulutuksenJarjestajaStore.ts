@@ -10,6 +10,7 @@ import {
 import { HOKS } from "models/HOKS"
 import { SessionUser } from "models/SessionUser"
 import { IRootStore } from "stores/RootStore"
+import { Locale } from "stores/TranslationStore"
 import { APIResponse } from "types/APIResponse"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
@@ -26,11 +27,9 @@ export const Oppija = types
   .model("Oppija", {
     oid: types.string,
     nimi: types.string,
-    tutkinto: types.string,
-    osaamisala: types.string,
+    tutkintoNimi: types.optional(Translation, {}),
+    osaamisalaNimi: types.optional(Translation, {}),
     opiskeluoikeusOid: types.string,
-    // tutkintoNimi: Translation,
-    // osaamisalaNimi: Translation,
     suunnitelmat: types.array(HOKS),
     suunnitelmaIndex: types.optional(types.integer, -1),
     henkilotiedot: types.optional(SessionUser, { commonName: "", surname: "" })
@@ -110,27 +109,27 @@ export const Oppija = types
           ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${self.oid}`
           : `/ehoks-virkailija-ui/hoks/${self.oid}/${manualPlans[0].id}`
         : ""
+    },
+    get tutkinto(): string {
+      const activeLocale: Locale = getRoot<IRootStore>(self).translations
+        .activeLocale
+      switch (activeLocale) {
+        case Locale.FI:
+          return self.tutkintoNimi.fi
+        case Locale.SV:
+          return self.tutkintoNimi.sv
+      }
+    },
+    get osaamisala(): string {
+      const activeLocale: Locale = getRoot<IRootStore>(self).translations
+        .activeLocale
+      switch (activeLocale) {
+        case Locale.FI:
+          return self.osaamisalaNimi.fi
+        case Locale.SV:
+          return self.osaamisalaNimi.sv
+      }
     }
-    // get tutkinto(): string {
-    //   const activeLocale: Locale = getRoot<IRootStore>(self).translations
-    //     .activeLocale
-    //   switch (activeLocale) {
-    //     case Locale.FI:
-    //       return self.tutkintoNimi.fi
-    //     case Locale.SV:
-    //       return self.tutkintoNimi.sv
-    //   }
-    // },
-    // get osaamisala(): string {
-    //   const activeLocale: Locale = getRoot<IRootStore>(self).translations
-    //     .activeLocale
-    //   switch (activeLocale) {
-    //     case Locale.FI:
-    //       return self.osaamisalaNimi.fi
-    //     case Locale.SV:
-    //       return self.osaamisalaNimi.sv
-    //   }
-    // }
   }))
 
 export interface IOppija extends Instance<typeof Oppija> {}
@@ -168,15 +167,18 @@ const Search = types
       if (oppilaitosOid === "") {
         return
       }
+      const activeLocale: Locale = getRoot<IRootStore>(self).translations
+        .activeLocale
 
       self.isLoading = true
 
       const queryParams = {
-        "order-by": self.sortBy,
+        "order-by-column": self.sortBy,
         desc: self.sortDirection === "desc",
         "item-count": self.perPage,
         page: self.activePage,
-        "oppilaitos-oid": oppilaitosOid
+        "oppilaitos-oid": oppilaitosOid,
+        locale: activeLocale
       }
 
       const textQueries = Object.keys(self.searchTexts).reduce<{
