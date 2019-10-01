@@ -10,7 +10,7 @@ import { FormattedMessage, injectIntl, InjectedIntl } from "react-intl"
 import styled from "styled"
 import { ShareType } from "stores/NotificationStore"
 import { HeroButton } from "components/Button"
-import { ModalWithBackground } from "components/Modal"
+import { ModalWithBackground } from "components/ModalDialogs/Modal"
 import {
   fetchLinks,
   createLink,
