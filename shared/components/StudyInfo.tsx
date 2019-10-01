@@ -60,8 +60,6 @@ const TitleContainer = styled("div")`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 10px 70px 10px 10px;
-  min-height: 74px;
 `
 
 const Title = styled("h2")`
@@ -79,6 +77,10 @@ const ShareIcon = styled(MdShare)`
 
 const Button = styled(HeroButton)`
   display: inline-flex;
+`
+
+const ShareButton = styled("div")`
+  padding: 10px 70px 10px 0;
 `
 
 export interface StudyInfoProps {
@@ -257,13 +259,15 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
           <TitleContainer>
             <Title data-testid="Title">{title}</Title>
             {showShareButton && (
-              <Button onClick={this.share}>
-                <FormattedMessage
-                  id="jakaminen.jaaTutkinnonosanTiedotButtonTitle"
-                  defaultMessage="Tutkinnonosan tietojen jakaminen"
-                />
-                <ShareIcon size={24} />
-              </Button>
+              <ShareButton>
+                <Button onClick={this.share}>
+                  <FormattedMessage
+                    id="jakaminen.jaaTutkinnonosanTiedotButtonTitle"
+                    defaultMessage="Tutkinnonosan tietojen jakaminen"
+                  />
+                  <ShareIcon size={24} />
+                </Button>
+              </ShareButton>
             )}
           </TitleContainer>
           {hasDetails && (
