@@ -34,7 +34,7 @@ export interface HOKSInfoProps {
   oppija: Oppija
 }
 
-export class HoksInfo extends React.Component<HOKSInfoProps> {
+export class HOKSInfo extends React.Component<HOKSInfoProps> {
   render() {
     const { suunnitelma, oppija } = this.props
     return (
