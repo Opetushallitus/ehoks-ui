@@ -216,7 +216,11 @@ const Search = types
       self.isLoading = false
     })
 
-    return { fetchOppijat }
+    const resetActivePage = () => {
+      self.activePage = 0
+    }
+
+    return { fetchOppijat, resetActivePage }
   })
   .actions(self => {
     const changeSearchText = (
