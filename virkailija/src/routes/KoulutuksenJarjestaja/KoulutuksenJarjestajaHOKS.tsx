@@ -7,7 +7,7 @@ import {
 } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import { HelpPopup } from "components/HelpPopup"
-import { HoksInfo } from "components/HoksInfo"
+import { HOKSInfo } from "components/HOKSInfo"
 import Flag from "components/icons/Flag"
 import { NavigationContainer } from "components/NavigationContainer"
 import { AiempiOsaaminen } from "components/Opiskelija/AiempiOsaaminen"
@@ -17,6 +17,7 @@ import { ProgressPies } from "components/ProgressPies"
 import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
 import find from "lodash.find"
+import { IReactionDisposer, reaction } from "mobx"
 import { observer } from "mobx-react"
 import { IHOKS } from "models/HOKS"
 import React from "react"
@@ -63,13 +64,28 @@ export interface HOKSProps {
 export class KoulutuksenJarjestajaHOKS extends React.Component<
   HOKSProps & RouteComponentProps
 > {
-  async componentDidMount() {
-    const suunnitelma = find(this.props.suunnitelmat, h => {
-      return h.eid === this.props.hoksId
-    })
-    if (suunnitelma) {
-      await suunnitelma.fetchDetails()
-    }
+  disposeReaction: IReactionDisposer
+  componentDidMount() {
+    this.disposeReaction = reaction(
+      () => {
+        return this.props.suunnitelmat.length > 0
+      },
+      async (hasSuunnitelmat: boolean) => {
+        if (hasSuunnitelmat) {
+          const suunnitelma = find(this.props.suunnitelmat, h => {
+            return h.eid === this.props.hoksId
+          })
+          if (suunnitelma) {
+            await suunnitelma.fetchDetails()
+          }
+        }
+      },
+      { fireImmediately: true }
+    )
+  }
+
+  componentWillUnmount() {
+    this.disposeReaction()
   }
 
   // TODO: redirect to root after logout, check implementation in src/routes/OmienOpintojenSuunnittelu.tsx
@@ -93,22 +109,22 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
         <NavigationContainer>
           <Container>
             <PaddedContent>
+              {suunnitelmat.length > 1 && (
+                <Timestamp>
+                  <StudentLink
+                    to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${
+                      oppija.oid
+                    }`}
+                  >
+                    <FormattedMessage
+                      id="koulutuksenJarjestaja.opiskelija.naytaKaikkiLink"
+                      defaultMessage="Näytä kaikki tämän opiskelijan suunnitelmat"
+                    />
+                  </StudentLink>
+                </Timestamp>
+              )}
               <NaviContainer>
-                <HoksInfo suunnitelma={suunnitelma} oppija={oppija} />
-                {suunnitelmat.length > 1 && (
-                  <Timestamp>
-                    <StudentLink
-                      to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${
-                        oppija.oid
-                      }`}
-                    >
-                      <FormattedMessage
-                        id="koulutuksenJarjestaja.opiskelija.naytaKaikkiLink"
-                        defaultMessage="Näytä kaikki tämän opiskelijan suunnitelmat"
-                      />
-                    </StudentLink>
-                  </Timestamp>
-                )}
+                <HOKSInfo suunnitelma={suunnitelma} oppija={oppija} />
                 <SectionItems>
                   <SectionItem
                     selected={

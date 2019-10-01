@@ -1,5 +1,6 @@
-import { types } from "mobx-state-tree"
+import { types, getRoot } from "mobx-state-tree"
 import find from "lodash.find"
+import { LocaleRoot } from "models/helpers/LocaleRoot"
 
 const Suoritustapa = types
   .model("Suoritustapa", {
@@ -16,10 +17,29 @@ const Nimi = types.model("Nimi", {
   sv: types.optional(types.string, "")
 })
 
-const Koulutusmoduuli = types.model("Koulutusmoduuli", {
-  perusteenNimi: types.optional(Nimi, {}),
-  perusteenDiaarinumero: types.optional(types.string, "")
+const Tunniste = types.model("Tunniste", {
+  nimi: types.optional(Nimi, {})
 })
+
+const Koulutusmoduuli = types
+  .model("Koulutusmoduuli", {
+    perusteenNimi: types.optional(Nimi, {}),
+    tunniste: types.optional(Tunniste, {}),
+    perusteenDiaarinumero: types.optional(types.string, "")
+  })
+  .views(self => {
+    const root: LocaleRoot = getRoot(self)
+
+    return {
+      get nimi() {
+        return (
+          self.perusteenNimi[root.translations.activeLocale] ||
+          self.tunniste.nimi[root.translations.activeLocale] ||
+          ""
+        )
+      }
+    }
+  })
 
 const Tutkintonimike = types.model("Tutkintonimike", {
   nimi: types.optional(Nimi, {})

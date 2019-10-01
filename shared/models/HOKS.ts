@@ -204,9 +204,7 @@ export const HOKS = types
       },
       get tutkinnonNimi() {
         return self.opiskeluOikeus.suoritukset.length
-          ? self.opiskeluOikeus.suoritukset[0].koulutusmoduuli.perusteenNimi[
-              root.translations.activeLocale
-            ]
+          ? self.opiskeluOikeus.suoritukset[0].koulutusmoduuli.nimi
           : ""
       },
       get tutkintonimike() {
