@@ -20,8 +20,7 @@ WORKDIR /root
 COPY public /root/public
 COPY config.json.template escape-html.py /root/
 
-RUN mkdir -p /tmp/scripts
-COPY run run.sh /tmp/scripts/
+COPY run run.sh /usr/local/bin/
 
 RUN chown -R nginx:nginx /root
 
@@ -31,4 +30,4 @@ ENV NAME $name
 
 STOPSIGNAL SIGTERM
 
-CMD ["sh", "/tmp/scripts/run"]
+CMD ["sh", "/usr/local/bin/run"]
