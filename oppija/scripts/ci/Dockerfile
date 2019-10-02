@@ -17,8 +17,8 @@ COPY nginx-server.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /root
 
-COPY public /root/public
-COPY config.json.template escape-html.py /root/
+COPY public /home/oph/public
+COPY config.json.template escape-html.py /home/oph/
 
 COPY run run.sh /usr/local/bin/
 
