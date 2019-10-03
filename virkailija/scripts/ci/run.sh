@@ -30,4 +30,6 @@ echo "Starting Prometheus node_exporter…"
 nohup /usr/local/bin/node_exporter > /root/node_exporter.log 2>&1 &
 
 echo "Starting nginx…"
+mkdir -p /tmp/var/nginx
+mkdir -p /tmp/run/nginx
 exec nginx -g 'daemon off;'

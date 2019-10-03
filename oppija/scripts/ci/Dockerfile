@@ -20,6 +20,10 @@ WORKDIR /root
 COPY public /var/www/html/public
 COPY config.json.template escape-html.py /opt/ehoks/
 RUN ln -s /var/www/html/public/ehoks/index.html /home/oph/index.html
+RUN rm -rf /var/tmp
+RUN rm -rf /run
+RUN ln -s /tmp/var /var/tmp
+RUN ln -s /tmp/run /run
 
 RUN mkdir -p /opt/oph/scripts
 COPY run run.sh /usr/local/bin/
