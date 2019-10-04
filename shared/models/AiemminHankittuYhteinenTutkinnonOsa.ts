@@ -12,6 +12,7 @@ import { Naytto } from "models/helpers/TutkinnonOsa"
 import { EnrichTutkinnonOsa } from "models/EnrichTutkinnonOsa"
 import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
 import { getOsaamispisteet } from "models/helpers/getOsaamispisteet"
+import { KoodistoVastaus } from "models/KoodistoVastaus"
 
 const Model = types.model({
   id: types.optional(types.number, 0),
@@ -21,6 +22,7 @@ const Model = types.model({
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
   osaAlueet: types.array(AiemminHankitunYTOOsaAlue),
   valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
+  valittuTodentamisenProsessi: types.optional(KoodistoVastaus, {}),
   tarkentavatTiedotNaytto: types.array(OsaamisenOsoittaminen),
   tarkentavatTiedotOsaamisenArvioija: types.optional(
     TodennettuArviointiLisatiedot,

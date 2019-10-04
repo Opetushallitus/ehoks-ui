@@ -52,7 +52,9 @@ export const HOKSStore = types
   })
   .actions(self => {
     const root: IRootStore = getRoot(self)
-    const { apiUrl, fetchCollection, errors, callerId } = getEnv<StoreEnvironment>(self)
+    const { apiUrl, fetchCollection, errors, callerId } = getEnv<
+      StoreEnvironment
+    >(self)
 
     const haeSuunnitelmat = flow(function*(oid: string): any {
       self.isLoading = true
