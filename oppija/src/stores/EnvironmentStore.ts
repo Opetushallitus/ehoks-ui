@@ -14,7 +14,7 @@ const EnvironmentStoreModel = {
   isLoading: false,
   opintopolkuLoginUrl: types.optional(types.string, ""),
   opintopolkuLogoutUrl: types.optional(types.string, ""),
-  virkailijaLoginUrl: types.optional(types.string, "") // TODO: remove when HOKS form is removed from oppija
+  virkailijaLoginUrl: types.optional(types.string, "")
 }
 
 export const EnvironmentStore = types
@@ -34,11 +34,13 @@ export const EnvironmentStore = types
         const {
           eperusteetPerusteUrl,
           opintopolkuLoginUrl,
-          opintopolkuLogoutUrl
+          opintopolkuLogoutUrl,
+          virkailijaLoginUrl
         } = response.data
         self.eperusteetPerusteUrl = eperusteetPerusteUrl
         self.opintopolkuLoginUrl = devBackendWithoutHost(opintopolkuLoginUrl)
         self.opintopolkuLogoutUrl = devBackendWithoutHost(opintopolkuLogoutUrl)
+        self.virkailijaLoginUrl = virkailijaLoginUrl
       } catch (error) {
         errors.logError("EnvironmentStore.getEnvironment", error.message)
       }
