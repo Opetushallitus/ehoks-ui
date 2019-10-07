@@ -1,5 +1,6 @@
 import { Router } from "@reach/router"
 import { ThemeWrapper } from "components/ThemeWrapper"
+import { parseLocaleParam } from "localeUtils"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { IntlProvider } from "react-intl"
@@ -60,7 +61,10 @@ export class App extends React.Component<AppProps> {
 
   render() {
     const { store } = this.props
-    const activeLocale = store!.translations.activeLocale
+    const localeParam = parseLocaleParam(window.location.search)
+    const activeLocale = localeParam
+      ? localeParam
+      : store!.translations.activeLocale
     const translations = store!.translations.messages[activeLocale]
     const messages =
       activeLocale === Locale.FI

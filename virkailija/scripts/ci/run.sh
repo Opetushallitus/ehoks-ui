@@ -13,18 +13,23 @@ while IFS= read -r -d '' tpl_file; do
     echo "  $tpl_file -> $target"
     j2 "$tpl_file" /root/oph-configuration/opintopolku.yml > "$target"
 done < <(find /root -name '*.template' -print0)
+j2 "/opt/ehoks/config.json.template" /root/oph-configuration/opintopolku.yml > /home/oph/config.json
 unset tpl_file target
 
+cp /var/www/html/public/ehoks/index.html /home/oph/index.html
+
 echo "Insert app boot config for this env into /root/public/index.html …"
-config_json=$(python /root/escape-html.py < /root/config.json)
+config_json=$(python /opt/ehoks/escape-html.py < /home/oph/config.json)
 sed -f <(cat <<EOF
 s|APP-BOOT-CONFIG-DEFAULT|${config_json//&/\\&}|
 EOF
-) -i /root/public/index.html
+) -i /home/oph/index.html
 unset config_json
 
 echo "Starting Prometheus node_exporter…"
-nohup /root/node_exporter > /root/node_exporter.log 2>&1 &
+nohup /usr/local/bin/node_exporter > /root/node_exporter.log 2>&1 &
 
 echo "Starting nginx…"
+mkdir -p /tmp/var/nginx
+mkdir -p /tmp/run/nginx
 exec nginx -g 'daemon off;'
