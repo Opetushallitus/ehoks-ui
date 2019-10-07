@@ -17,7 +17,8 @@
     "no-submodule-imports": false,
     "object-literal-sort-keys": false,
     "jsx-no-lambda": false,
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "react-a11y-anchors": false
   },
   "jsRules": {}
 }
