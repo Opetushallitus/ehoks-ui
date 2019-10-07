@@ -106,6 +106,16 @@
   },
   {
     "locale": "fi",
+    "key": "footer.ehoksLogoLabel",
+    "value": "eHOKS logo"
+  },
+  {
+    "locale": "fi",
+    "key": "header.ehoksLogoLabel",
+    "value": "eHOKS logo"
+  },
+  {
+    "locale": "fi",
     "key": "opiskelusuunnitelma.piilotaAmmattitaitovaatimuksetAriaLabel",
     "value": "Piilota ammattitaitovaatimukset ja arviointikriteerit"
   },
