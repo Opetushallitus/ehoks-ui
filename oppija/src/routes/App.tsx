@@ -11,6 +11,7 @@ import { AppNotifications } from "routes/App/AppNotifications"
 import { GlobalStyles } from "routes/App/globalStyles"
 import { Etusivu } from "routes/Etusivu"
 import { Henkilokohtaistaminen } from "routes/Henkilokohtaistaminen"
+import { Saavutettavuusseloste } from "routes/Saavutettavuusseloste"
 import { Suunnittelu } from "routes/Suunnittelu"
 import { TyopaikanToimija } from "routes/TyopaikanToimija"
 import { IRootStore } from "stores/RootStore"
@@ -37,6 +38,7 @@ const MainApp = (_: { path: string }) => {
           <TyopaikanToimija path="tyopaikantoimija" />
           <Henkilokohtaistaminen path="henkilokohtaistaminen" />
           <Ammatillinentutkinto path="ammatillinentutkinto" />
+          <Saavutettavuusseloste path="saavutettavuusseloste" />
         </Router>
       </Main>
       <AppFooter />
