@@ -1,5 +1,6 @@
 import { navigate, RouteComponentProps, Router } from "@reach/router"
 import { LoadingSpinner } from "components/LoadingSpinner"
+import { IntroModalDialog } from "components/ModalDialogs/IntroModalDialog"
 import { comparer, IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
@@ -80,16 +81,19 @@ export class Suunnittelu extends React.Component<
         </LoadingContainer>
       )
     }
-
+    //
     return (
-      <Router basepath={`/ehoks/suunnittelu`}>
-        <ValitseHOKS path="/" suunnitelmat={store.hoks.suunnitelmat} />
-        <OmienOpintojenSuunnittelu
-          path=":id/*"
-          student={store.session.user}
-          suunnitelmat={store.hoks.suunnitelmat}
-        />
-      </Router>
+      <>
+        <IntroModalDialog open={true} />
+        <Router basepath={`/ehoks/suunnittelu`}>
+          <ValitseHOKS path="/" suunnitelmat={store.hoks.suunnitelmat} />
+          <OmienOpintojenSuunnittelu
+            path=":id/*"
+            student={store.session.user}
+            suunnitelmat={store.hoks.suunnitelmat}
+          />
+        </Router>
+      </>
     )
   }
 }
