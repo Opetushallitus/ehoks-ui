@@ -11,6 +11,9 @@ import { SessionUser } from "models/SessionUser"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import { HOKS } from "models/HOKS"
+import { AppContext } from "components/AppContext"
+import format from "date-fns/format"
+import parseISO from "date-fns/parseISO"
 
 export interface TavoitteetProps {
   children?: React.ReactChildren
@@ -35,8 +38,10 @@ export class Tavoitteet extends React.Component<
   TavoitteetProps & RouteComponentProps,
   TavoitteetState
 > {
+  static contextType = AppContext
   state = {
     activeAccordions: {
+      hoksDates: false,
       degreeOrEducation: false,
       personalDetails: false,
       personalGoal: false
@@ -55,6 +60,7 @@ export class Tavoitteet extends React.Component<
 
   render() {
     const { student, hoks, titles: customTitles = {} } = this.props
+    const app = this.context
     if (!student) {
       return null
     }
@@ -111,6 +117,65 @@ export class Tavoitteet extends React.Component<
             }
           />
         </HeadingContainer>
+
+        {app === "oppija" && (
+          <Accordion
+            id="hoksDates"
+            open={this.state.activeAccordions.hoksDates}
+            title={
+              <AccordionTitle>
+                <FormattedMessage
+                  id="tavoitteet.hoksPaivamaaratTitle"
+                  defaultMessage="HOKS päivämäärät"
+                />
+              </AccordionTitle>
+            }
+            onToggle={this.toggleAccordion("hoksDates")}
+          >
+            <InfoTable>
+              <tbody>
+                <tr>
+                  <th>
+                    <FormattedMessage
+                      id="tavoitteet.ensikertainenHyvaksyminenTitle"
+                      defaultMessage="Ensikertainen hyväksyminen"
+                    />
+                  </th>
+                  <th>
+                    <FormattedMessage
+                      id="tavoitteet.paivitettyTitle"
+                      defaultMessage="Päivitetty"
+                    />
+                  </th>
+                  <th />
+                </tr>
+                <tr>
+                  <LabeledColumn id="tavoitteet.ensikertainenHyvaksyminenTitle">
+                    {hoks.hyvaksytty ? (
+                      format(parseISO(hoks.hyvaksytty), "d.M.yyyy")
+                    ) : (
+                      <FormattedMessage
+                        id="tavoitteet.eiVielaHyvaksyttyTitle"
+                        defaultMessage="Ei vielä hyväksytty"
+                      />
+                    )}
+                  </LabeledColumn>
+                  <LabeledColumn id="tavoitteet.paivitettyTitle">
+                    {hoks.paivitetty ? (
+                      format(parseISO(hoks.paivitetty), "d.M.yyyy")
+                    ) : (
+                      <FormattedMessage
+                        id="tavoitteet.eiVielaPaivityksiaTitle"
+                        defaultMessage="Ei vielä päivityksiä"
+                      />
+                    )}
+                  </LabeledColumn>
+                  <td />
+                </tr>
+              </tbody>
+            </InfoTable>
+          </Accordion>
+        )}
 
         <Accordion
           id="omaTavoitteeni"

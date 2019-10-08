@@ -196,6 +196,16 @@
   },
   {
     "locale": "fi",
+    "key": "tavoitteet.ensikertainenHyvaksyminenTitle",
+    "value": "Ensikertainen hyväksyminen"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.paivitettyTitle",
+    "value": "Päivitetty"
+  },
+  {
+    "locale": "fi",
     "key": "tavoitteet.suunnitelmaJatkoOpintoihinTitle",
     "value": "Suunnitelma jatko-opintoihin siirtymisestä"
   },
