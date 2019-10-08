@@ -29,7 +29,7 @@ script:
   - npm run build
   - export BASE_IMAGE=baseimage-fatjar:master
   - ../ci-tools/common/pull-image.sh
-  - ./scripts/ci/build.sh ehoks-ui
+  - ./scripts/ci/build.sh ehoks-oppija-ui
   - cd ../virkailija
   - npm test
   - npm run build
@@ -38,7 +38,7 @@ script:
 deploy:
   provider: script
   script: >-
-    ../ci-tools/build/upload-image.sh ehoks-ui &&
+    ../ci-tools/build/upload-image.sh ehoks-oppija-ui &&
     ../ci-tools/build/upload-image.sh ehoks-virkailija-ui
   on:
     all_branches: true
