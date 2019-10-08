@@ -2,6 +2,9 @@ import React from "react"
 import Modal from "react-modal"
 import styled from "../../styled";
 import {Button} from "../Button";
+import {IRootStore} from "../../../oppija/src/stores/RootStore";
+import {inject, observer} from "mobx-react";
+import {Checkbox} from "../Checkbox";
 
 Modal.setAppElement("#app")
 
@@ -26,24 +29,53 @@ const customStyles = {
     }
 }
 
-interface IntroModalDialogProps {
-    open: boolean
+interface IntroModalState {
+    introDialogOpen: boolean
 }
 
-export function IntroModalDialog(props: IntroModalDialogProps) {
-    const { open } = props
-    return (
-        <Modal
-            isOpen={open}
-            style={customStyles}
-        >
-            <p>Tervetuloa käyttämään eHOKSIA!</p>
-            <CloseIntroPageButton>
-                Sulje
-            </CloseIntroPageButton>
-            <NextIntroPageButton>
-                Seuraava
-            </NextIntroPageButton>
-        </Modal>
-    )
+interface IntroModalProps {
+    store?: IRootStore
+}
+
+@inject("store")
+@observer
+export class IntroModalDialog extends React.Component<IntroModalProps, IntroModalState> {
+    state: IntroModalState = {
+        introDialogOpen: true
+    }
+
+    componentDidMount() {
+        const { introDialog } = this.props.store!.session.settings
+
+        introDialog.showIntroDialog ? this.openIntroDialog() : this.closeIntroDialog()
+    }
+
+    openIntroDialog = () => {
+        this.setState({introDialogOpen: true})
+    }
+
+    closeIntroDialog = () => {
+        this.setState({introDialogOpen: false})
+    }
+
+    render(){
+        return (
+            <Modal
+                isOpen={this.state.introDialogOpen}
+                onRequestClose={this.closeIntroDialog}
+                style={customStyles}
+            >
+                <p>Tervetuloa käyttämään eHOKSIA!</p>
+                <CloseIntroPageButton onClick={this.closeIntroDialog}>
+                    Sulje
+                </CloseIntroPageButton>
+                <NextIntroPageButton>
+                    Seuraava
+                </NextIntroPageButton>
+                <Checkbox id={"IntroModal"} checked={false}>
+                    Älä näytä enää
+                </Checkbox>
+            </Modal>
+        )
+    }
 }

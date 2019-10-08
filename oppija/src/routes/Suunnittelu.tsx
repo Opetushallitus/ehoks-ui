@@ -84,7 +84,7 @@ export class Suunnittelu extends React.Component<
     //
     return (
       <>
-        <IntroModalDialog open={true} />
+        <IntroModalDialog />
         <Router basepath={`/ehoks/suunnittelu`}>
           <ValitseHOKS path="/" suunnitelmat={store.hoks.suunnitelmat} />
           <OmienOpintojenSuunnittelu
