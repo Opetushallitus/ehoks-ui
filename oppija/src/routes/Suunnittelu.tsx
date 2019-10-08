@@ -21,11 +21,19 @@ interface ValitseHOKSProps {
   "*"?: string
 }
 
+interface ValitseHOKSState {
+  allLoaded: boolean
+}
+
 @inject("store")
 @observer
 export class Suunnittelu extends React.Component<
-  ValitseHOKSProps & RouteComponentProps
+  ValitseHOKSProps & RouteComponentProps,
+  ValitseHOKSState
 > {
+  state: ValitseHOKSState = {
+    allLoaded: false
+  }
   disposeLoginReaction: IReactionDisposer
   componentDidMount() {
     const { store, uri } = this.props
@@ -50,6 +58,7 @@ export class Suunnittelu extends React.Component<
         } else {
           await store!.session.fetchSettings()
           await store!.hoks.haeSuunnitelmat(session.user!.oid)
+          this.setState({ allLoaded: true })
           const suunnitelmat = store!.hoks.suunnitelmat
           // navigate directly to HOKS if there's only one of them
           if (
@@ -74,14 +83,14 @@ export class Suunnittelu extends React.Component<
   render() {
     const store = this.props.store!
 
-    if (store!.hoks.isLoading) {
+    if (!this.state.allLoaded) {
       return (
         <LoadingContainer>
           <LoadingSpinner />
         </LoadingContainer>
       )
     }
-    //
+
     return (
       <>
         <IntroModalDialog />

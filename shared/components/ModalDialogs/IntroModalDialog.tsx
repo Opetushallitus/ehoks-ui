@@ -5,6 +5,7 @@ import {Button} from "../Button";
 import {IRootStore} from "../../../oppija/src/stores/RootStore";
 import {inject, observer} from "mobx-react";
 import {Checkbox} from "../Checkbox";
+import {reaction} from "mobx";
 
 Modal.setAppElement("#app")
 
@@ -30,7 +31,8 @@ const customStyles = {
 }
 
 interface IntroModalState {
-    introDialogOpen: boolean
+    introDialogOpen: boolean,
+    initialAcknowledged: boolean
 }
 
 interface IntroModalProps {
@@ -40,12 +42,21 @@ interface IntroModalProps {
 @inject("store")
 @observer
 export class IntroModalDialog extends React.Component<IntroModalProps, IntroModalState> {
-    constructor(props: IntroModalProps){
-        super(props)
-        const {introDialog} = this.props.store!.session.settings
-        this.state = {
-            introDialogOpen: !introDialog.userAcknowledgedIntroDialog
-        }
+    state: IntroModalState = {
+        introDialogOpen: false,
+        initialAcknowledged: true
+    }
+
+    componentDidMount() {
+        const {store} = this.props
+        reaction(
+            () => store!.session.settings.introDialog.userAcknowledgedIntroDialog,
+            (acknowledged, reaction) => {
+                this.setState({initialAcknowledged: acknowledged, introDialogOpen: !acknowledged })
+                reaction.dispose()
+            },
+            { fireImmediately: true }
+        )
     }
 
     closeIntroDialog = async () => {
@@ -55,7 +66,9 @@ export class IntroModalDialog extends React.Component<IntroModalProps, IntroModa
     }
 
     render() {
-        const {introDialog} = this.props.store!.session.settings
+        const {settings: {introDialog}} = this.props.store!.session
+        if (this.state.initialAcknowledged)
+            return null
 
         return (
             <Modal
