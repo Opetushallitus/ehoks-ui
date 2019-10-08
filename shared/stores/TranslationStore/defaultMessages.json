@@ -76,6 +76,11 @@
   },
   {
     "locale": "fi",
+    "key": "errors.HOKS.fetchOpiskeluoikeudet.wrongType",
+    "value": "HOKSiin liitetty opiskeluoikeus ei ole ammatillinen tutkinto"
+  },
+  {
+    "locale": "fi",
     "key": "errors.EnrichKoodiUri.fetchEPerusteet",
     "value": "Tutkinnon osien haku ePerusteista epäonnistui"
   },
