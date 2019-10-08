@@ -147,7 +147,12 @@ export class Tavoitteet extends React.Component<
                       defaultMessage="Päivitetty"
                     />
                   </th>
-                  <th />
+                  <th>
+                    <FormattedMessage
+                      id="tavoitteet.osaamisenHankkimisenTarveTitle"
+                      defaultMessage="Osaamisen hankkimisen tarve"
+                    />
+                  </th>
                 </tr>
                 <tr>
                   <LabeledColumn id="tavoitteet.ensikertainenHyvaksyminenTitle">
@@ -170,7 +175,19 @@ export class Tavoitteet extends React.Component<
                       />
                     )}
                   </LabeledColumn>
-                  <td />
+                  <LabeledColumn id="tavoitteet.osaamisenHankkimisenTarveTitle">
+                    {hoks.osaamisenHankkimisenTarve ? (
+                      <FormattedMessage
+                        id="tavoitteet.osaamisenHankkimisenTarveTrueTitle"
+                        defaultMessage="Opiskelijalla on osaamisen hankkimisen tarve"
+                      />
+                    ) : (
+                      <FormattedMessage
+                        id="tavoitteet.osaamisenHankkimisenTarveFalseTitle"
+                        defaultMessage="Opiskelijalla ei ole osaamisen hankkimisen tarvetta"
+                      />
+                    )}
+                  </LabeledColumn>
                 </tr>
               </tbody>
             </InfoTable>

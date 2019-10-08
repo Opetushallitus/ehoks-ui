@@ -206,6 +206,11 @@
   },
   {
     "locale": "fi",
+    "key": "tavoitteet.osaamisenHankkimisenTarveTitle",
+    "value": "Osaamisen hankkimisen tarve"
+  },
+  {
+    "locale": "fi",
     "key": "tavoitteet.suunnitelmaJatkoOpintoihinTitle",
     "value": "Suunnitelma jatko-opintoihin siirtymisestä"
   },
