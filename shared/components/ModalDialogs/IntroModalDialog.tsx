@@ -45,8 +45,7 @@ export class IntroModalDialog extends React.Component<IntroModalProps, IntroModa
     }
 
     componentDidMount() {
-        const { introDialog } = this.props.store!.session.settings
-
+        const {introDialog} = this.props.store!.session.settings
         introDialog.showIntroDialog ? this.openIntroDialog() : this.closeIntroDialog()
     }
 
@@ -58,7 +57,9 @@ export class IntroModalDialog extends React.Component<IntroModalProps, IntroModa
         this.setState({introDialogOpen: false})
     }
 
-    render(){
+    render() {
+        const {introDialog} = this.props.store!.session.settings
+
         return (
             <Modal
                 isOpen={this.state.introDialogOpen}
@@ -71,7 +72,11 @@ export class IntroModalDialog extends React.Component<IntroModalProps, IntroModa
                 <NextIntroPageButton>
                     Seuraava
                 </NextIntroPageButton>
-                <Checkbox id={"IntroModal"} checked={false}>
+                <Checkbox
+                    id={"IntroModal"}
+                    checked={introDialog.userAcknowledgedIntroDialog}
+                    onToggle={introDialog.toggleUserAcknowledgementOfIntro}
+                >
                     Älä näytä enää
                 </Checkbox>
             </Modal>
