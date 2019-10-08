@@ -6,8 +6,10 @@ Object {
     "eperusteetPerusteUrl": "",
     "error": "",
     "isLoading": false,
-    "opintopolkuLoginUrl": "",
-    "opintopolkuLogoutUrl": "",
+    "opintopolkuLoginUrlFi": "",
+    "opintopolkuLoginUrlSv": "",
+    "opintopolkuLogoutUrlFi": "",
+    "opintopolkuLogoutUrlSv": "",
     "virkailijaLoginUrl": "",
   },
   "hoks": Object {

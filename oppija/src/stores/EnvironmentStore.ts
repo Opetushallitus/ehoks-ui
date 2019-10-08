@@ -12,8 +12,10 @@ const EnvironmentStoreModel = {
   eperusteetPerusteUrl: types.optional(types.string, ""),
   error: types.optional(types.string, ""),
   isLoading: false,
-  opintopolkuLoginUrl: types.optional(types.string, ""),
-  opintopolkuLogoutUrl: types.optional(types.string, ""),
+  opintopolkuLoginUrlFi: types.optional(types.string, ""),
+  opintopolkuLoginUrlSv: types.optional(types.string, ""),
+  opintopolkuLogoutUrlFi: types.optional(types.string, ""),
+  opintopolkuLogoutUrlSv: types.optional(types.string, ""),
   virkailijaLoginUrl: types.optional(types.string, "")
 }
 
@@ -33,13 +35,25 @@ export const EnvironmentStore = types
         )
         const {
           eperusteetPerusteUrl,
-          opintopolkuLoginUrl,
-          opintopolkuLogoutUrl,
+          opintopolkuLoginUrlFi,
+          opintopolkuLoginUrlSv,
+          opintopolkuLogoutUrlFi,
+          opintopolkuLogoutUrlSv,
           virkailijaLoginUrl
         } = response.data
         self.eperusteetPerusteUrl = eperusteetPerusteUrl
-        self.opintopolkuLoginUrl = devBackendWithoutHost(opintopolkuLoginUrl)
-        self.opintopolkuLogoutUrl = devBackendWithoutHost(opintopolkuLogoutUrl)
+        self.opintopolkuLoginUrlFi = devBackendWithoutHost(
+          opintopolkuLoginUrlFi
+        )
+        self.opintopolkuLoginUrlSv = devBackendWithoutHost(
+          opintopolkuLoginUrlSv
+        )
+        self.opintopolkuLogoutUrlFi = devBackendWithoutHost(
+          opintopolkuLogoutUrlFi
+        )
+        self.opintopolkuLogoutUrlSv = devBackendWithoutHost(
+          opintopolkuLogoutUrlSv
+        )
         self.virkailijaLoginUrl = virkailijaLoginUrl
       } catch (error) {
         errors.logError("EnvironmentStore.getEnvironment", error.message)
