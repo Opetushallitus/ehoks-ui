@@ -49,14 +49,15 @@ const HiddenNotifications = types
     return { hide }
   })
 
-const IntroDialog = types.model("IntroDialog", {
-  showIntroDialog: types.optional(types.boolean, true),
-  userAcknowledgedIntroDialog: types.optional(types.boolean, false)
-}).actions(self => ({
-    toggleUserAcknowledgementOfIntro() {
-        self.userAcknowledgedIntroDialog = !self.userAcknowledgedIntroDialog
-    }
-}))
+const IntroDialog = types
+    .model("IntroDialog", {
+        userAcknowledgedIntroDialog: types.optional(types.boolean, false)
+    })
+    .actions(self => ({
+        toggleUserAcknowledgementOfIntro() {
+            self.userAcknowledgedIntroDialog = !self.userAcknowledgedIntroDialog
+        }
+    }))
 
 export const Settings = types.model("Settings", {
   hiddenNotifications: types.optional(HiddenNotifications, {}),

@@ -40,20 +40,17 @@ interface IntroModalProps {
 @inject("store")
 @observer
 export class IntroModalDialog extends React.Component<IntroModalProps, IntroModalState> {
-    state: IntroModalState = {
-        introDialogOpen: true
-    }
-
-    componentDidMount() {
+    constructor(props: IntroModalProps){
+        super(props)
         const {introDialog} = this.props.store!.session.settings
-        introDialog.showIntroDialog ? this.openIntroDialog() : this.closeIntroDialog()
+        this.state = {
+            introDialogOpen: !introDialog.userAcknowledgedIntroDialog
+        }
     }
 
-    openIntroDialog = () => {
-        this.setState({introDialogOpen: true})
-    }
-
-    closeIntroDialog = () => {
+    closeIntroDialog = async () => {
+        const {saveSettings} = this.props.store!.session
+        await saveSettings()
         this.setState({introDialogOpen: false})
     }
 
