@@ -62,7 +62,6 @@ export class IntroModalDialog extends React.Component<IntroModalProps, IntroModa
         return (
             <Modal
                 isOpen={this.state.introDialogOpen}
-                onRequestClose={this.closeIntroDialog}
                 style={customStyles}
             >
                 <p>Tervetuloa käyttämään eHOKSIA!</p>
