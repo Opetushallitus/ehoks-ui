@@ -9,6 +9,7 @@ import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import { IRootStore } from "stores/RootStore"
+import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 import ammatillisetTutkinnotImage from "./Etusivu/kampaaja_ehoks.jpg"
 import henkilokohtaistaminenImage from "./Etusivu/talonrakennus_ehoks.jpg"
@@ -142,7 +143,10 @@ export class Etusivu extends React.Component<EtusivuProps> {
   loginStudent = (event: React.MouseEvent) => {
     event.preventDefault()
     this.props.store!.session.resetUserDidLogout()
-    window.location.href = this.props.store!.environment.opintopolkuLoginUrl
+    window.location.href =
+      this.props.store!.translations.activeLocale === Locale.SV
+        ? this.props.store!.environment.opintopolkuLoginUrlSv
+        : this.props.store!.environment.opintopolkuLoginUrlFi
   }
 
   loginVirkailija = (event: React.MouseEvent) => {

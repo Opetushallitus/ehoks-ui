@@ -6,6 +6,7 @@ import React from "react"
 import { OmienOpintojenSuunnittelu } from "routes/OmienOpintojenSuunnittelu"
 import { ValitseHOKS } from "routes/Suunnittelu/ValitseHOKS"
 import { IRootStore } from "stores/RootStore"
+import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 
 const LoadingContainer = styled("div")`
@@ -43,7 +44,10 @@ export class Suunnittelu extends React.Component<
         if (!isLoggedIn) {
           // check that user did actually logout or there was an error (no session)
           if (userDidLogout || error) {
-            window.location.href = store!.environment.opintopolkuLogoutUrl
+            window.location.href =
+              this.props.store!.translations.activeLocale === Locale.SV
+                ? this.props.store!.environment.opintopolkuLogoutUrlSv
+                : this.props.store!.environment.opintopolkuLogoutUrlFi
           }
           // ensure that SessionStore's checkSession call has finished
         } else {
