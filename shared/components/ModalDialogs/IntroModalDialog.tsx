@@ -15,8 +15,9 @@ export const CloseIntroPageButton = styled(Button)`
 `
 
 export const NextIntroPageButton = styled(Button)`
-  background: transparent;
-  color: #000;
+  background: #0076d9;
+  color: #fff;
+  padding: 10px 70px;
 `
 
 const customStyles = {
@@ -26,7 +27,10 @@ const customStyles = {
         right: "auto",
         bottom: "auto",
         marginRight: "-50%",
-        transform: "translate(-50%, -50%)"
+        transform: "translate(-50%, -50%)",
+        color: "#fff",
+        backgroundColor: "#149ecb",
+        textAlign: "center"
     }
 }
 
@@ -76,10 +80,12 @@ export class IntroModalDialog extends React.Component<IntroModalProps, IntroModa
                 isOpen={this.state.introDialogOpen}
                 style={customStyles}
             >
-                <p>Tervetuloa käyttämään eHOKSIA!</p>
-                <CloseIntroPageButton onClick={this.closeIntroDialog}>
-                    Sulje
-                </CloseIntroPageButton>
+                <h3>Tervetuloa käyttämään eHOKSIA!</h3>
+                <p>eHOKS on palvelu, jossa näet oman henkilökohtaisen opintosuunnitelmasi ja tavoitteesi milloin vain.</p>
+                <p>Voit käyttää palvelua tietokoneella tai mobiililaitteella.</p>
+                {/*<CloseIntroPageButton onClick={this.closeIntroDialog}>*/}
+                {/*    Sulje*/}
+                {/*</CloseIntroPageButton>*/}
                 <NextIntroPageButton>
                     Seuraava
                 </NextIntroPageButton>
@@ -88,7 +94,7 @@ export class IntroModalDialog extends React.Component<IntroModalProps, IntroModa
                     checked={introDialog.userAcknowledgedIntroDialog}
                     onToggle={introDialog.toggleUserAcknowledgementOfIntro}
                 >
-                    Älä näytä enää
+                    Älä näytä enää seuraavalla kerralla
                 </Checkbox>
             </Modal>
         )
