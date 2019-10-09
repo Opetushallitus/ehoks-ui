@@ -44,7 +44,7 @@ interface IntroModalProps {
 export class IntroModalDialog extends React.Component<IntroModalProps, IntroModalState> {
     state: IntroModalState = {
         introDialogOpen: false,
-        initialAcknowledged: true
+        initialAcknowledgedStatus: true
     }
 
     componentDidMount() {
@@ -52,7 +52,7 @@ export class IntroModalDialog extends React.Component<IntroModalProps, IntroModa
         reaction(
             () => store!.session.settings.introDialog.userAcknowledgedIntroDialog,
             (acknowledged, reaction) => {
-                this.setState({initialAcknowledged: acknowledged, introDialogOpen: !acknowledged })
+                this.setState({initialAcknowledgedStatus: acknowledged, introDialogOpen: !acknowledged })
                 reaction.dispose()
             },
             { fireImmediately: true }
@@ -66,9 +66,10 @@ export class IntroModalDialog extends React.Component<IntroModalProps, IntroModa
     }
 
     render() {
-        const {settings: {introDialog}} = this.props.store!.session
-        if (this.state.initialAcknowledged)
+        if (this.state.initialAcknowledgedStatus)
             return null
+
+        const {introDialog} = this.props.store!.session.settings
 
         return (
             <Modal
