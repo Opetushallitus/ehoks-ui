@@ -130,6 +130,10 @@ export const HOKS = types
         )
 
         if (opiskeluOikeus !== undefined) {
+          if (opiskeluOikeus.tyyppi.koodiarvo !== "ammatillinenkoulutus") {
+            throw new Error("HOKS.fetchOpiskeluoikeudet.wrongType")
+          }
+
           self.opiskeluOikeus = opiskeluOikeus
           const tutkinto = yield fetchTutkinto()
           const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)

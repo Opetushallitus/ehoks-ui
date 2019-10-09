@@ -76,6 +76,11 @@
   },
   {
     "locale": "fi",
+    "key": "errors.HOKS.fetchOpiskeluoikeudet.wrongType",
+    "value": "HOKSiin liitetty opiskeluoikeus ei ole ammatillinen tutkinto"
+  },
+  {
+    "locale": "fi",
     "key": "errors.EnrichKoodiUri.fetchEPerusteet",
     "value": "Tutkinnon osien haku ePerusteista epäonnistui"
   },
@@ -103,6 +108,16 @@
     "locale": "fi",
     "key": "footer.ophLogoLabel",
     "value": "Opetushallitus logo"
+  },
+  {
+    "locale": "fi",
+    "key": "footer.ehoksLogoLabel",
+    "value": "eHOKS logo"
+  },
+  {
+    "locale": "fi",
+    "key": "header.ehoksLogoLabel",
+    "value": "eHOKS logo"
   },
   {
     "locale": "fi",
@@ -183,6 +198,21 @@
     "locale": "fi",
     "key": "opiskelusuunnitelma.tutkintonimikeTitle",
     "value": "Tutkintonimike"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.ensikertainenHyvaksyminenTitle",
+    "value": "Ensikertainen hyväksyminen"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.paivitettyTitle",
+    "value": "Päivitetty"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.osaamisenHankkimisenTarveTitle",
+    "value": "Osaamisen hankkimisen tarve"
   },
   {
     "locale": "fi",

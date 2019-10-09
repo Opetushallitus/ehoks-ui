@@ -3,7 +3,6 @@ import { Container, PaddedContent } from "components/Container"
 import { MainHeading } from "components/Heading"
 import { HOKSButton } from "components/HOKSButton"
 import { HOKSEidContext } from "components/HOKSEidContext"
-import { HOKSInfo } from "components/HOKSInfo"
 import Flag from "components/icons/Flag"
 import { NavigationContainer } from "components/NavigationContainer"
 import { AiempiOsaaminen } from "components/Opiskelija/AiempiOsaaminen"
@@ -85,18 +84,6 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                         />
                       </MainHeading>
                       <Section>
-                        <SectionContainer>
-                          <HOKSInfo
-                            suunnitelma={suunnitelma}
-                            oppija={{
-                              nimi: student
-                                ? `${student.commonName} ${student.surname}`
-                                : "",
-                              hyvaksytty: suunnitelma.ensikertainenHyvaksyminen,
-                              paivitetty: suunnitelma.paivitetty
-                            }}
-                          />
-                        </SectionContainer>
                         <SectionItems>
                           <SectionItem
                             selected={

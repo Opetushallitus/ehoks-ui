@@ -15,7 +15,8 @@
     "no-console": false,
     "no-unused-expression": [true, "allow-tagged-template"],
     "no-submodule-imports": false,
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "react-a11y-anchors": false
   },
   "jsRules": {}
 }

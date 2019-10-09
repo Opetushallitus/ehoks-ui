@@ -2,11 +2,12 @@ import { Link } from "@reach/router"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { MdMenu } from "react-icons/md"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, intlShape } from "react-intl"
 import { MobileMenu } from "routes/App/MobileMenu"
 import { IRootStore } from "stores/RootStore"
 import { Locale } from "stores/TranslationStore"
 import styled from "styled"
+import ehoksLogo from "./ehoks_logo.png"
 
 interface TopLinkProps {
   active?: boolean
@@ -18,13 +19,13 @@ const HeaderContainer = styled("header")`
   background-color: ${props => props.theme.colors.header.background};
   line-height: 16px;
   font-size: 18px;
-  font-weight: 600;
 `
 
 const TopLinksContainer = styled("div")`
   width: 100%;
   background-color: #06526b;
   font-size: 16px;
+  font-weight: 600;
   padding-left: 20px;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
@@ -100,15 +101,12 @@ const MobileMenuToggle = styled("div")`
   }
 `
 
-const Title = styled("div")`
-  flex: 1;
-  font-size: 32px;
-  line-height: 100%;
-  font-weight: 400;
-  margin: 25px 5px 25px 40px;
+const Logo = styled("img")`
+  height: 64px;
+  margin: 4px 0 4px 40px;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
-    margin: 25px 5px 25px 20px;
+    margin: 4px 0 4px 20px;
   }
 `
 
@@ -135,6 +133,22 @@ const LogoutLink = styled(Link)`
   color: #fff;
 `
 
+const Flex = styled("div")`
+  flex: 1;
+`
+
+interface LanguageSelectorProps {
+  loggedIn: boolean
+}
+const LanguageSelector = styled("div")<LanguageSelectorProps>`
+  margin: ${props => (props.loggedIn ? "0 40px 0 0" : "0 80px 0 0")};
+  a {
+    margin-right: 10px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+`
+
 interface AppHeaderProps {
   store?: IRootStore
 }
@@ -146,6 +160,9 @@ interface AppHeaderState {
 @inject("store")
 @observer
 export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
+  static contextTypes = {
+    intl: intlShape
+  }
   state = {
     showMenu: false
   }
@@ -165,6 +182,7 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
 
   render() {
     const { store } = this.props
+    const { intl } = this.context
     const { session } = store!
     const { activeLocale } = store!.translations
     return (
@@ -210,7 +228,34 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
               />
             </h3>
           </MobileMenuToggle>
-          <Title>eHOKS</Title>
+
+          <Logo
+            src={ehoksLogo}
+            alt={intl.formatMessage({
+              id: "header.ehoksLogoLabel"
+            })}
+          />
+
+          <Flex />
+
+          <LanguageSelector loggedIn={session!.isLoggedIn}>
+            {activeLocale === Locale.FI ? (
+              <a onClick={this.changeLocale(Locale.SV)} role="button">
+                <FormattedMessage
+                  id="header.swedishLocaleLink"
+                  defaultMessage="På svenska"
+                />
+              </a>
+            ) : (
+              <a onClick={this.changeLocale(Locale.FI)} role="button">
+                <FormattedMessage
+                  id="header.finnishLocaleLink"
+                  defaultMessage="Suomeksi"
+                />
+              </a>
+            )}
+          </LanguageSelector>
+
           {session!.isLoggedIn && (
             <LogoutContainer>
               <User>{session!.user!.commonName}</User>

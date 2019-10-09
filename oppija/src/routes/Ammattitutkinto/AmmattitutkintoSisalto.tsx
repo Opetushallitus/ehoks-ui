@@ -2,7 +2,7 @@ import React from "react"
 import { FormattedMessage } from "react-intl"
 import { Section } from "routes/Ammattitutkinto/Section"
 import { SectionTitle } from "routes/Ammattitutkinto/SectionTitle"
-import styled from "styled";
+import styled from "styled"
 
 const OpintopolkuLink = styled("a")`
   display: block;
@@ -36,7 +36,12 @@ export class AmmattitutkintoSisalto extends React.Component<{}> {
             id="ammattitutkinto.kolmasKappale"
             defaultMessage="Lisää tietoa ammatillisesta koulutuksesta"
           />
-          <OpintopolkuLink href="https://opintopolku.fi/wp/ammatillinen-koulutus/" target="_blank">https://opintopolku.fi/wp/ammatillinen-koulutus/</OpintopolkuLink>
+          <OpintopolkuLink
+            href="https://opintopolku.fi/wp/ammatillinen-koulutus/"
+            target="_blank"
+          >
+            https://opintopolku.fi/wp/ammatillinen-koulutus/
+          </OpintopolkuLink>
         </p>
       </Section>
     )
