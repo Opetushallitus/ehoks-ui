@@ -32,7 +32,7 @@ const customStyles = {
 
 interface IntroModalState {
     introDialogOpen: boolean,
-    initialAcknowledged: boolean
+    initialAcknowledgedStatus: boolean
 }
 
 interface IntroModalProps {
