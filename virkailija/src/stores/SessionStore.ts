@@ -131,8 +131,40 @@ export const SessionStore = types
     return {
       get isLoggedIn() {
         return self.user !== null
+      },
+      get selectedOrganisation() {
+        return (
+          self.user &&
+          self.user.organisationPrivileges &&
+          self.user.organisationPrivileges.find(
+            o => o.oid === self.selectedOrganisationOid
+          )
+        )
       }
     }
   })
-
+  .views(self => {
+    return {
+      get hasWritePrivilege() {
+        return (
+          self.selectedOrganisation &&
+          self.selectedOrganisation.privileges &&
+          self.selectedOrganisation.privileges.indexOf("write") > -1
+        )
+      },
+      get hasSuperUserPrivilege() {
+        return (
+          self.selectedOrganisation &&
+          self.selectedOrganisation.roles!.indexOf("oph-super-user") > -1
+        )
+      }
+    }
+  })
+  .views(self => {
+    return {
+      get hasEditPrivilege() {
+        return self.hasWritePrivilege || self.hasSuperUserPrivilege
+      }
+    }
+  })
 export interface ISessionStore extends Instance<typeof SessionStore> {}

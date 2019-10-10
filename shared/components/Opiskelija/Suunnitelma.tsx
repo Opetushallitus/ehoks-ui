@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React from "react"
 import { HOKSButton } from "components/HOKSButton"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
@@ -9,7 +9,6 @@ import { HOKS } from "models/HOKS"
 import { observer } from "mobx-react"
 import { Link } from "@reach/router"
 import { MdEdit } from "react-icons/md"
-import { AppContext } from "components/AppContext"
 
 const SuunnitelmaContainer = styled("div")`
   display: flex;
@@ -38,13 +37,13 @@ interface SuunnitelmaProps {
   suunnitelma: Instance<typeof HOKS>
   hoksPath: string
   oppijaId?: string
+  showEditIcon?: boolean
 }
 
 export const Suunnitelma = observer(function Suunnitelma(
   props: SuunnitelmaProps
 ) {
-  const { hoksPath, suunnitelma, oppijaId } = props
-  const { app } = useContext(AppContext)
+  const { hoksPath, suunnitelma, oppijaId, showEditIcon = false } = props
   return (
     <SuunnitelmaContainer>
       <Text>
@@ -69,15 +68,11 @@ export const Suunnitelma = observer(function Suunnitelma(
         .
       </Text>
 
-      {app === "virkailija" && (
+      {showEditIcon && (
         <EditIconContainer>
-          {oppijaId && suunnitelma.manuaalisyotto && (
-            <Link
-              to={`/ehoks-virkailija-ui/hoks/${oppijaId}/${suunnitelma.id}`}
-            >
-              <MdEdit size={24} color="#000" />
-            </Link>
-          )}
+          <Link to={`/ehoks-virkailija-ui/hoks/${oppijaId}/${suunnitelma.id}`}>
+            <MdEdit size={24} color="#000" />
+          </Link>
         </EditIconContainer>
       )}
 
