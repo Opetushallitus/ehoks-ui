@@ -40,6 +40,10 @@ export const theme = {
       background: "#0076d9",
       color: "#fff"
     },
+    modalDialog: {
+      dot: "#A5ACB0",
+      dotActive: "#fff"
+    },
     links: {
       active: "#0076d9",
       disabled: themeColors.pinkishGrey
