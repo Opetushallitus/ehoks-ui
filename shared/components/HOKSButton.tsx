@@ -2,8 +2,8 @@ import { Link } from "@reach/router"
 import styled from "styled"
 
 export const HOKSButton = styled(Link)`
-  background: #0076d9;
+  background: ${props => props.theme.colors.buttons.background};
   padding: 10px 70px;
-  color: #fff;
+  color: ${props => props.theme.colors.buttons.color};
   text-decoration: none;
 `
