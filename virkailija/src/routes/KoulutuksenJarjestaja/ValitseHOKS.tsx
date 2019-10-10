@@ -1,4 +1,5 @@
 import { RouteComponentProps } from "@reach/router"
+import { AppContext } from "components/AppContext"
 import { Container, PaddedContent } from "components/Container"
 import { Heading } from "components/Heading"
 import { NavigationContainer } from "components/NavigationContainer"
@@ -9,20 +10,25 @@ import { observer } from "mobx-react"
 import { IHOKS } from "models/HOKS"
 import React from "react"
 import { FormattedMessage } from "react-intl"
+import { ISessionStore } from "stores/SessionStore"
 
 interface ValitseHOKSProps {
   nimi: string
   oppijaId: string
   suunnitelmat: IHOKS[]
+  session: ISessionStore
 }
 
 @observer
 export class ValitseHOKS extends React.Component<
   ValitseHOKSProps & RouteComponentProps
 > {
+  static contextType = AppContext
+  context!: React.ContextType<typeof AppContext>
   render() {
-    const { nimi, suunnitelmat, oppijaId } = this.props
-    const [paattyneet, voimassaOlevat] = partition(
+    const { nimi, suunnitelmat, oppijaId, session } = this.props
+    const { app } = this.context
+    const [paattyneet, voimassaOlevat] = partition<IHOKS>(
       suunnitelmat,
       suunnitelma => !!suunnitelma.paattymispaiva
     )
@@ -49,11 +55,17 @@ export class ValitseHOKS extends React.Component<
                 </Heading>
 
                 {voimassaOlevat.map((suunnitelma, i) => {
+                  const showEditIcon: boolean =
+                    app === "virkailija" &&
+                    oppijaId !== "" &&
+                    suunnitelma.manuaalisyotto &&
+                    session.hasEditPrivilege === true
                   return (
                     <Suunnitelma
                       hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
                       suunnitelma={suunnitelma}
                       oppijaId={oppijaId}
+                      showEditIcon={showEditIcon}
                       key={i}
                     />
                   )
