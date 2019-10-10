@@ -80,6 +80,7 @@ const NextIntroPageButton = styled(Button)`
   background: ${props => props.theme.colors.buttons.background};
   color: ${props => props.theme.colors.buttons.color};
   padding: 10px 70px;
+  margin-bottom: 20px;
   font-size: 16px;
 `
 
@@ -106,6 +107,32 @@ const IntroModalContainer = styled("div")`
   max-width: 850px;
   padding: 15px 20px;
 `
+
+const NavigationContainer = styled("div")`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const NavigationCircle = styled("span")`
+  background: ${props => props.theme.colors.battleshipGrey};
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  margin-right: 10px; 
+  margin-left: 10px; 
+`
+
+class IntroPageNavigation extends React.Component {
+    render() {
+        return (
+            <NavigationContainer>
+                <NavigationCircle />
+                <NavigationCircle />
+                <NavigationCircle />
+            </NavigationContainer>)
+    }
+}
 
 interface IntroModalState {
     introDialogOpen: boolean,
@@ -173,6 +200,7 @@ export class IntroModalDialog extends React.Component<IntroModalProps, IntroModa
                     <NextIntroPageButton onClick={this.nextPage}>
                         {this.state.currentIntroPage === IntroPage.Page3 ? "Valmis" : "Seuraava"}
                     </NextIntroPageButton>
+                    <IntroPageNavigation />
                     <Checkbox
                         id={"IntroModal"}
                         checked={introDialog.userAcknowledgedIntroDialog}
