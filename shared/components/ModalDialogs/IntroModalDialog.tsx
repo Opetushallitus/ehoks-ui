@@ -9,36 +9,27 @@ import {reaction} from "mobx";
 
 Modal.setAppElement("#app")
 
-export const NextIntroPageButton = styled(Button)`
-  background: #0076d9;
-  color: #fff;
-  padding: 10px 70px;
+enum IntroPage {Page1, Page2, Page3}
+
+const IntroPageTitle = styled("h1")`
+    margin: 30px 150px 30px;
+    font-weight: 400;
+    font-size: 30px;
 `
 
-const customStyles = {
-    content: {
-        top: "50%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        transform: "translate(-50%, -50%)",
-        color: "#fff",
-        backgroundColor: "#149ecb",
-        textAlign: "center"
-    }
-}
-
-enum IntroPage {Page1, Page2, Page3}
+const IntroPageTextContainer = styled("p")`
+    margin: 0 200px 20px;
+    font-size: 17px;
+`
 
 class IntroPage1 extends React.Component {
     render() {
         return (
             <>
-                <h3>Tervetuloa käyttämään eHOKSIA!</h3>
-                <p>eHOKS on palvelu, jossa näet oman henkilökohtaisen opintosuunnitelmasi ja tavoitteesi milloin
-                    vain.</p>
-                <p>Voit käyttää palvelua tietokoneella tai mobiililaitteella.</p>
+                <IntroPageTitle>Tervetuloa käyttämään eHOKSIA!</IntroPageTitle>
+                <IntroPageTextContainer>eHOKS on palvelu, jossa näet oman henkilökohtaisen opintosuunnitelmasi ja tavoitteesi milloin
+                    vain.</IntroPageTextContainer>
+                <IntroPageTextContainer>Voit käyttää palvelua tietokoneella tai mobiililaitteella.</IntroPageTextContainer>
             </>)
     }
 }
@@ -47,10 +38,10 @@ class IntroPage2 extends React.Component {
     render() {
         return (
             <>
-                <h3>Tietosi ovat eHOKSissa kolmessa osassa:</h3>
-                <p>Oma tavoitteesi</p>
-                <p>Aiempi osaamisesi</p>
-                <p>Opintosuunnitelmasi</p>
+                <IntroPageTitle>Tietosi ovat eHOKSissa kolmessa osassa:</IntroPageTitle>
+                <IntroPageTextContainer>Oma tavoitteesi</IntroPageTextContainer>
+                <IntroPageTextContainer>Aiempi osaamisesi</IntroPageTextContainer>
+                <IntroPageTextContainer>Opintosuunnitelmasi</IntroPageTextContainer>
             </>)
     }
 }
@@ -59,8 +50,8 @@ class IntroPage3 extends React.Component {
     render() {
         return (
             <>
-                <h3>eHOKS-tiedoistasi vastaa oma oppilaitoksesi</h3>
-                <p>Ole yhteydessä omaan opettajaasi, jos tietosi eivät ole ajan tasalla palvelussa.</p>
+                <IntroPageTitle>eHOKS-tiedoistasi vastaa oma oppilaitoksesi</IntroPageTitle>
+                <IntroPageTextContainer>Ole yhteydessä omaan opettajaasi, jos tietosi eivät ole ajan tasalla palvelussa.</IntroPageTextContainer>
             </>)
     }
 }
@@ -85,11 +76,41 @@ class IntroPageContent extends React.Component<IntroPageContentProps> {
     }
 }
 
+const NextIntroPageButton = styled(Button)`
+  background: ${props => props.theme.colors.buttons.background};
+  color: ${props => props.theme.colors.buttons.color};
+  padding: 10px 70px;
+  font-size: 16px;
+`
+
+const StyledModal = styled(Modal)`
+        font-family: 'Source Sans Pro',sans-serif;
+        box-sizing: inherit;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        right: auto;
+        bottom: auto;
+        overflow: auto;
+        border-radius: 4px;
+        outline: none;
+        padding: 20px;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        color: rgb(255, 255, 255);
+        text-align: center;
+`
+
+const IntroModalContainer = styled("div")`
+  background: ${props => props.theme.colors.header.background};
+  max-width: 850px;
+  padding: 15px 20px;
+`
+
 interface IntroModalState {
     introDialogOpen: boolean,
     initialAcknowledgedStatus: boolean,
     currentIntroPage: IntroPage,
-    nextPageButtonText: string
 }
 
 interface IntroModalProps {
@@ -103,7 +124,6 @@ export class IntroModalDialog extends React.Component<IntroModalProps, IntroModa
         introDialogOpen: false,
         initialAcknowledgedStatus: true,
         currentIntroPage: IntroPage.Page1,
-        nextPageButtonText: "Seuraava"
     }
 
     componentDidMount() {
@@ -130,7 +150,7 @@ export class IntroModalDialog extends React.Component<IntroModalProps, IntroModa
                 this.setState({currentIntroPage: IntroPage.Page2})
                 break
             case IntroPage.Page2:
-                this.setState({currentIntroPage: IntroPage.Page3, nextPageButtonText: "Valmis"})
+                this.setState({currentIntroPage: IntroPage.Page3})
                 break
             case IntroPage.Page3:
                 this.closeIntroDialog()
@@ -144,22 +164,24 @@ export class IntroModalDialog extends React.Component<IntroModalProps, IntroModa
         const {introDialog} = this.props.store!.session.settings
 
         return (
-            <Modal
+
+            <StyledModal
                 isOpen={this.state.introDialogOpen}
-                style={customStyles}
             >
-                <IntroPageContent page={this.state.currentIntroPage} />
-                <NextIntroPageButton onClick={this.nextPage}>
-                    {this.state.nextPageButtonText}
-                </NextIntroPageButton>
-                <Checkbox
-                    id={"IntroModal"}
-                    checked={introDialog.userAcknowledgedIntroDialog}
-                    onToggle={introDialog.toggleUserAcknowledgementOfIntro}
-                >
-                    Älä näytä enää seuraavalla kerralla
-                </Checkbox>
-            </Modal>
+                <IntroModalContainer>
+                    <IntroPageContent page={this.state.currentIntroPage}/>
+                    <NextIntroPageButton onClick={this.nextPage}>
+                        {this.state.currentIntroPage === IntroPage.Page3 ? "Valmis" : "Seuraava"}
+                    </NextIntroPageButton>
+                    <Checkbox
+                        id={"IntroModal"}
+                        checked={introDialog.userAcknowledgedIntroDialog}
+                        onToggle={introDialog.toggleUserAcknowledgementOfIntro}
+                    >
+                        Älä näytä enää seuraavalla kerralla
+                    </Checkbox>
+                </IntroModalContainer>
+            </StyledModal>
         )
     }
 }
