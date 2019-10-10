@@ -25,12 +25,16 @@ store.environment.getEnvironment()
 store.translations.fetchLocales()
 
 const apiConfig = { apiUrl, apiPrefix }
+const appContext = {
+  app: "oppija",
+  featureFlags: { shareDialog: false, shareNotifications: false }
+}
 
 // initial render to app container
 const appContainer = document.getElementById("app")
 ReactDOM.render(
   <APIConfigContext.Provider value={apiConfig}>
-    <AppContext.Provider value="oppija">
+    <AppContext.Provider value={appContext}>
       <Provider store={store}>
         <App />
       </Provider>
@@ -45,7 +49,7 @@ if (module.hot) {
     const NextApp = require("./routes/App").App
     ReactDOM.render(
       <APIConfigContext.Provider value={apiConfig}>
-        <AppContext.Provider value="oppija">
+        <AppContext.Provider value={appContext}>
           <Provider store={store}>
             <NextApp />
           </Provider>

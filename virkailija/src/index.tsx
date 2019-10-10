@@ -22,11 +22,15 @@ const store = RootStore.create(
 )
 
 store.translations.fetchLocales()
+const appContext = {
+  app: "virkailija",
+  featureFlags: { shareDialog: false, shareNotifications: false }
+}
 
 // initial render to app container
 const appContainer = document.getElementById("app")
 ReactDOM.render(
-  <AppContext.Provider value="virkailija">
+  <AppContext.Provider value={appContext}>
     <Provider store={store}>
       <App />
     </Provider>
@@ -39,7 +43,7 @@ if (module.hot) {
   module.hot.accept("./routes/App", () => {
     const NextApp = require("./routes/App").App
     ReactDOM.render(
-      <AppContext.Provider value="virkailija">
+      <AppContext.Provider value={appContext}>
         <Provider store={store}>
           <NextApp />
         </Provider>

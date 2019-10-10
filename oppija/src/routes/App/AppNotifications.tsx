@@ -1,4 +1,5 @@
 import { Link } from "@reach/router"
+import { AppContext } from "components/AppContext"
 import { Container } from "components/Container"
 import { Notification } from "components/Notification"
 import format from "date-fns/format"
@@ -7,7 +8,7 @@ import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
 import { MdClose } from "react-icons/md"
-import { FormattedMessage, intlShape } from "react-intl"
+import { FormattedMessage, InjectedIntl, injectIntl } from "react-intl"
 import { AppError } from "stores/ErrorStore"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
@@ -60,14 +61,14 @@ const AlertType = ({ type }: { type: string }) => {
 
 export interface AppNotificationsProps {
   store?: IRootStore
+  intl: InjectedIntl
 }
 
 @inject("store")
 @observer
 export class AppNotifications extends React.Component<AppNotificationsProps> {
-  static contextTypes = {
-    intl: intlShape
-  }
+  static contextType = AppContext
+  context!: React.ContextType<typeof AppContext>
 
   ackNotification = (hide: () => void) => (event: React.MouseEvent) => {
     event.preventDefault()
@@ -75,8 +76,8 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
   }
 
   render() {
-    const { store } = this.props
-    const { intl } = this.context
+    const { store, intl } = this.props
+    const { featureFlags } = this.context
     const {
       errors: { unhandled },
       notifications
@@ -106,64 +107,67 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
             </AppNotification>
           )
         })}
-        {notifications.visible.map((notification, i) => {
-          const message = notification.message
-          return (
-            <AppNotification
-              key={i}
-              type="alert"
-              iconColor="#000"
-              iconSize={32}
-            >
-              <Content>
-                <Text>
-                  <AlertType type={message.type} />, {message.title},{" "}
-                  {message.location}{" "}
-                  {format(parseISO(message.startDate || ""), "d.M.")}-
-                  {format(parseISO(message.endDate || ""), "d.M.yyyy")}{" "}
-                  <FormattedMessage
-                    id="muistutukset.onPianAlkamassa"
-                    defaultMessage="on pian alkamassa"
-                  />
-                  .
-                </Text>
-                <NotificationLink
-                  to={`/ehoks/suunnittelu/${
-                    message.hoksId
-                  }/opiskelusuunnitelmani?share=${message.koodiUri}&type=${
-                    message.type
-                  }`}
-                >
-                  <FormattedMessage
-                    id="muistutukset.jaaTiedotTyopaikkaohjaajalle"
-                    defaultMessage="Jaa tiedot työpaikkaohjaajalle"
-                  />
-                  .
-                </NotificationLink>
-                <NotificationAnchor
-                  role="button"
-                  href="#"
-                  onClick={this.ackNotification(notification.ackNotification)}
-                >
-                  <FormattedMessage
-                    id="muistutukset.poistaMuistutus"
-                    defaultMessage="Poista muistutus"
-                  />
-                  .
-                </NotificationAnchor>
-                <IconContainer
-                  onClick={notification.hide}
-                  aria-label={intl.formatMessage({
-                    id: "errors.piilotaVirheAriaLabel"
-                  })}
-                >
-                  <MdClose size={20} />
-                </IconContainer>
-              </Content>
-            </AppNotification>
-          )
-        })}
+        {featureFlags.shareNotifications &&
+          notifications.visible.map((notification, i) => {
+            const message = notification.message
+            return (
+              <AppNotification
+                key={i}
+                type="alert"
+                iconColor="#000"
+                iconSize={32}
+              >
+                <Content>
+                  <Text>
+                    <AlertType type={message.type} />, {message.title},{" "}
+                    {message.location}{" "}
+                    {format(parseISO(message.startDate || ""), "d.M.")}-
+                    {format(parseISO(message.endDate || ""), "d.M.yyyy")}{" "}
+                    <FormattedMessage
+                      id="muistutukset.onPianAlkamassa"
+                      defaultMessage="on pian alkamassa"
+                    />
+                    .
+                  </Text>
+                  <NotificationLink
+                    to={`/ehoks/suunnittelu/${
+                      message.hoksId
+                    }/opiskelusuunnitelmani?share=${message.koodiUri}&type=${
+                      message.type
+                    }`}
+                  >
+                    <FormattedMessage
+                      id="muistutukset.jaaTiedotTyopaikkaohjaajalle"
+                      defaultMessage="Jaa tiedot työpaikkaohjaajalle"
+                    />
+                    .
+                  </NotificationLink>
+                  <NotificationAnchor
+                    role="button"
+                    href="#"
+                    onClick={this.ackNotification(notification.ackNotification)}
+                  >
+                    <FormattedMessage
+                      id="muistutukset.poistaMuistutus"
+                      defaultMessage="Poista muistutus"
+                    />
+                    .
+                  </NotificationAnchor>
+                  <IconContainer
+                    onClick={notification.hide}
+                    aria-label={intl.formatMessage({
+                      id: "errors.piilotaVirheAriaLabel"
+                    })}
+                  >
+                    <MdClose size={20} />
+                  </IconContainer>
+                </Content>
+              </AppNotification>
+            )
+          })}
       </Container>
     )
   }
 }
+
+export default injectIntl(AppNotifications)

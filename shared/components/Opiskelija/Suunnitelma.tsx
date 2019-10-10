@@ -44,7 +44,7 @@ export const Suunnitelma = observer(function Suunnitelma(
   props: SuunnitelmaProps
 ) {
   const { hoksPath, suunnitelma, oppijaId } = props
-  const app = useContext(AppContext)
+  const { app } = useContext(AppContext)
   return (
     <SuunnitelmaContainer>
       <Text>

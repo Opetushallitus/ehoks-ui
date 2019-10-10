@@ -1,10 +1,36 @@
 import React from "react"
 
-// AppContext can be used as kind of feature flag,
-// e.g. disabling ShareDialog in virkailija app
+interface AppContextShape {
+  app: string
+  featureFlags: { shareDialog: boolean; shareNotifications: boolean }
+}
 
-// Usage:
-// Wrap your <App /> with <AppContext.Provider value="app_name">
-// and in your component you can retrieve the current app using
-// const app = useContext(AppContext) // => "app_name"
-export const AppContext = React.createContext<string>("")
+// AppContext can be used for easily getting the current
+// app name and feature flags deep down the React tree
+
+// Usage
+//
+// Wrap your <App /> with:
+// <AppContext.Provider
+//   value={
+//     {
+//       app: "app_name",
+//       featureFlags: {
+//         shareDialog: false,
+//         shareNotifications: false
+//       }
+//     }
+//   }
+// >
+// and then in your component you can retrieve the current app
+// and feature flags using:
+// const { app, featureFlags } = useContext(AppContext)
+// app => "app_name"
+// featureFlags => { shareDialog: false, shareNotifications: false }
+export const AppContext = React.createContext<AppContextShape>({
+  app: "",
+  featureFlags: {
+    shareDialog: false,
+    shareNotifications: false
+  }
+})
