@@ -127,7 +127,7 @@ export class KoulutuksenJarjestaja extends React.Component<
 
   render() {
     const { intl } = this.context
-    const { koulutuksenJarjestaja } = this.props.store!
+    const { koulutuksenJarjestaja, session } = this.props.store!
     const {
       activePage,
       perPage,
@@ -244,7 +244,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                         </TableCell>
                         <TableCell>{student.lukumaara}</TableCell>
                         <TableCell>
-                          {student.editLink && (
+                          {session.hasEditPrivilege && student.editLink && (
                             <Link to={student.editLink}>
                               <MdEdit size={24} color="#000" />
                             </Link>

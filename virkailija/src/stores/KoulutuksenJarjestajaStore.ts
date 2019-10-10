@@ -46,7 +46,7 @@ export const Oppija = types
         { headers: callerId() }
       )
 
-      // This node might get detached (destroyed) if user navigates
+      // NOTE: This node might get detached (destroyed) if user navigates
       // to another view during async operation, as fetchOppijat
       // overwrites previous students. We should only
       // set plans when node is still attached (alive)
@@ -65,7 +65,7 @@ export const Oppija = types
         { headers: callerId() }
       )
       const { oid, nimi } = response.data
-      // This node might get detached (destroyed) if user navigates
+      // NOTE: This node might get detached (destroyed) if user navigates
       // to another view during async operation, as fetchOppijat
       // overwrites previous students. We should only
       // set personal info when node is still attached (alive)
