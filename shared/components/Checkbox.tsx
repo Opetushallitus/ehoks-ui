@@ -22,8 +22,8 @@ const Box = styled("div")<BoxProps>`
   border: ${props => (props["aria-checked"] ? "unset" : "1px solid #a5acb0")};
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0), inset 0 1px 2px 0 rgba(0, 0, 0, 0.2);
   border-radius: 2px;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
 `
 
 const Check = styled("div")`
