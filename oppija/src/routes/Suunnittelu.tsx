@@ -4,6 +4,7 @@ import { comparer, IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { OmienOpintojenSuunnittelu } from "routes/OmienOpintojenSuunnittelu"
+import { IntroModalDialog } from "routes/Suunnittelu/IntroModalDialog"
 import { ValitseHOKS } from "routes/Suunnittelu/ValitseHOKS"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
@@ -20,11 +21,19 @@ interface ValitseHOKSProps {
   "*"?: string
 }
 
+interface ValitseHOKSState {
+  allLoaded: boolean
+}
+
 @inject("store")
 @observer
 export class Suunnittelu extends React.Component<
-  ValitseHOKSProps & RouteComponentProps
+  ValitseHOKSProps & RouteComponentProps,
+  ValitseHOKSState
 > {
+  state: ValitseHOKSState = {
+    allLoaded: false
+  }
   disposeLoginReaction: IReactionDisposer
   componentDidMount() {
     const { store, uri } = this.props
@@ -49,6 +58,7 @@ export class Suunnittelu extends React.Component<
         } else {
           await store!.session.fetchSettings()
           await store!.hoks.haeSuunnitelmat(session.user!.oid)
+          this.setState({ allLoaded: true })
           const suunnitelmat = store!.hoks.suunnitelmat
           // navigate directly to HOKS if there's only one of them
           if (
@@ -73,7 +83,7 @@ export class Suunnittelu extends React.Component<
   render() {
     const store = this.props.store!
 
-    if (store!.hoks.isLoading) {
+    if (!this.state.allLoaded) {
       return (
         <LoadingContainer>
           <LoadingSpinner />
@@ -82,14 +92,17 @@ export class Suunnittelu extends React.Component<
     }
 
     return (
-      <Router basepath={`/ehoks/suunnittelu`}>
-        <ValitseHOKS path="/" suunnitelmat={store.hoks.suunnitelmat} />
-        <OmienOpintojenSuunnittelu
-          path=":id/*"
-          student={store.session.user}
-          suunnitelmat={store.hoks.suunnitelmat}
-        />
-      </Router>
+      <>
+        <IntroModalDialog />
+        <Router basepath={`/ehoks/suunnittelu`}>
+          <ValitseHOKS path="/" suunnitelmat={store.hoks.suunnitelmat} />
+          <OmienOpintojenSuunnittelu
+            path=":id/*"
+            student={store.session.user}
+            suunnitelmat={store.hoks.suunnitelmat}
+          />
+        </Router>
+      </>
     )
   }
 }

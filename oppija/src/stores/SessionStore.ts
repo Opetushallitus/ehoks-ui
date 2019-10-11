@@ -6,11 +6,11 @@ import { StoreEnvironment } from "types/StoreEnvironment"
 
 const SessionStoreModel = {
   error: types.optional(types.string, ""),
-  isLoading: false,
   settings: types.optional(Settings, {}),
   userDidLogout: false,
   user: types.maybeNull(SessionUser),
-  selectedOrganisationOid: ""
+  selectedOrganisationOid: "",
+  isLoading: types.optional(types.boolean, false)
 }
 
 export const SessionStore = types
@@ -49,7 +49,6 @@ export const SessionStore = types
     })
 
     const fetchUserInfo = flow(function*(): any {
-      self.isLoading = true
       try {
         const response: APIResponse = yield fetchSingle(
           apiUrl("oppija/session/user-info"),
@@ -59,11 +58,9 @@ export const SessionStore = types
       } catch (error) {
         errors.logError("SessionStore.fetchUserInfo", error.message)
       }
-      self.isLoading = false
     })
 
     const fetchSettings = flow(function*(): any {
-      self.isLoading = true
       try {
         const response: APIResponse = yield fetchSingle(
           apiUrl("oppija/session/settings"),
@@ -73,11 +70,9 @@ export const SessionStore = types
       } catch (error) {
         errors.logError("SessionStore.fetchSettings", error.message)
       }
-      self.isLoading = false
     })
 
     const saveSettings = flow(function*() {
-      self.isLoading = true
       try {
         yield fetchSingle(apiUrl("oppija/session/settings"), {
           method: "put",
@@ -87,7 +82,6 @@ export const SessionStore = types
       } catch (error) {
         errors.logError("SessionStore.saveSettings", error.message)
       }
-      self.isLoading = false
     })
 
     const logout = flow(function*() {
@@ -95,8 +89,8 @@ export const SessionStore = types
       try {
         yield deleteResource(apiUrl("oppija/session"), { headers: callerId() })
         self.user = null
-        self.isLoading = false
         self.userDidLogout = true
+        self.isLoading = false
       } catch (error) {
         errors.logError("SessionStore.logout", error.message)
       }

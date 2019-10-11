@@ -1,6 +1,6 @@
 import { Button } from "components/Button"
 import { LoadingSpinner } from "components/LoadingSpinner"
-import { ModalDialog } from "components/ModalDialog"
+import { ModalDialog } from "components/ModalDialogs/ModalDialog"
 import { JSONSchema6 } from "json-schema"
 import { inject, observer } from "mobx-react"
 import React from "react"

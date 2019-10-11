@@ -36,6 +36,14 @@ export const theme = {
     header: {
       background: "#149ecb"
     },
+    buttons: {
+      background: "#0076d9",
+      color: "#fff"
+    },
+    modalDialog: {
+      dot: "#A5ACB0",
+      dotActive: "#fff"
+    },
     links: {
       active: "#0076d9",
       disabled: themeColors.pinkishGrey

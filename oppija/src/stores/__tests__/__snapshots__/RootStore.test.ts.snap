@@ -31,6 +31,9 @@ Object {
       "hiddenNotifications": Object {
         "notifications": Array [],
       },
+      "introDialog": Object {
+        "userAcknowledgedIntroDialog": false,
+      },
     },
     "user": null,
     "userDidLogout": false,

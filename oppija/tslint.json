@@ -16,6 +16,7 @@
     "no-unused-expression": [true, "allow-tagged-template"],
     "no-submodule-imports": false,
     "object-literal-sort-keys": false,
+    "max-classes-per-file": false,
     "react-a11y-anchors": false
   },
   "jsRules": {}
