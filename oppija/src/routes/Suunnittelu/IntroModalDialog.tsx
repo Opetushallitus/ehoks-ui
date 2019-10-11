@@ -11,8 +11,6 @@ import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 import ehoksLogo from "./ehoks_logo.png"
 
-Modal.setAppElement("#app")
-
 enum IntroPage {
   Page1,
   Page2,
@@ -20,11 +18,14 @@ enum IntroPage {
 }
 
 const IntroPageContainer = styled("div")`
-  display: flex;
-  flex-direction: column;
   margin: 0 0 20px 0;
-  min-height: 340px;
-  width: 600px;
+
+  @media screen and (min-width: ${props => props.theme.breakpoints.Tablet}px) {
+    display: flex;
+    flex-direction: column;
+    min-height: 360px;
+    width: 600px;
+  }
 `
 
 const IntroPageTitle = styled("h1")`
@@ -34,8 +35,11 @@ const IntroPageTitle = styled("h1")`
 
 const IntroPageTextContainer = styled("p")`
   font-size: 17px;
-  width: 50%;
   margin: 0 auto 20px auto;
+
+  @media screen and (min-width: ${props => props.theme.breakpoints.Tablet}px) {
+    width: 50%;
+  }
 `
 
 const Logo = styled("img")`
@@ -53,25 +57,30 @@ const NextIntroPageButton = styled(Button)`
 const StyledModal = styled(Modal)`
   font-family: "Source Sans Pro", sans-serif;
   box-sizing: inherit;
-  position: absolute;
-
-  left: 50%;
-  right: auto;
-  bottom: auto;
-  overflow: auto;
-  border-radius: 4px;
-  outline: none;
-  padding: 20px;
-  margin-right: -50%;
-  transform: translate(-50%, 0);
   color: rgb(255, 255, 255);
   text-align: center;
+  border-radius: 4px;
+  outline: none;
+  height: 100%;
+
+  @media screen and (min-width: ${props => props.theme.breakpoints.Tablet}px) {
+    position: absolute;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    overflow: auto;
+    margin-right: -50%;
+    transform: translate(-50%, 0);
+    padding: 20px;
+    height: unset;
+  }
 `
 
 const IntroModalContainer = styled("div")`
   background: ${props => props.theme.colors.header.background};
   max-width: 850px;
   padding: 15px 20px;
+  height: 100%;
 `
 
 const NavigationContainer = styled("div")`
@@ -292,6 +301,7 @@ export class IntroModalDialog extends React.Component<
 
   componentDidMount() {
     const { store } = this.props
+    Modal.setAppElement("#app")
     reaction(
       () => store!.session.settings.introDialog.userAcknowledgedIntroDialog,
       (acknowledged, initialReaction) => {
