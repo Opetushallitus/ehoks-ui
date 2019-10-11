@@ -50,8 +50,8 @@ export const TranslationStore = types
     >(self)
 
     const setActiveLocale = (locale: Locale) => {
-      updateLocaleLocalStorage(locale)
-      self.activeLocale = locale
+      const storedLocale = updateLocaleLocalStorage(locale)
+      self.activeLocale = storedLocale ? storedLocale : locale
     }
 
     const fetchLocales = flow(function*(): any {

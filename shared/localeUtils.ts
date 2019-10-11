@@ -14,10 +14,10 @@ export function parseLocaleParam(search: string) {
     }
 }
 
-export function updateLocaleLocalStorage(locale: Locale | string) {
+export function updateLocaleLocalStorage(locale: Locale | string): Locale {
     if (locale) {
         saveLocaleToLocalStorage(locale)
-        return locale
+        return locale === 'fi' ? Locale.FI : Locale.SV
     } else {
         return readLocaleFromLocalStorage()
     }
@@ -31,8 +31,17 @@ export function saveLocaleToLocalStorage(locale: string) {
 
 export function readLocaleFromLocalStorage() {
     if (window.localStorage) {
-        return localStorage.getItem('ehoks-locale') === null ? '' : localStorage.getItem('ehoks-locale')
+        const storedLocale = localStorage.getItem('ehoks-locale')
+        return storedLocale === 'sv' ? Locale.SV : Locale.FI
     } else {
-        return ''
+        return Locale.FI
+    }
+}
+
+export function cleanLocaleParam() {
+    const uri = window.location.toString()
+    if (uri.indexOf("?") > 0) {
+        const cleanUri = uri.substring(0, uri.indexOf("?lang"));
+        window.history.replaceState({}, document.title, cleanUri);
     }
 }

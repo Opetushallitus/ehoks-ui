@@ -1,6 +1,10 @@
 import { Router } from "@reach/router"
 import { ThemeWrapper } from "components/ThemeWrapper"
-import { parseLocaleParam, updateLocaleLocalStorage } from "localeUtils"
+import {
+  cleanLocaleParam,
+  parseLocaleParam,
+  readLocaleFromLocalStorage
+} from "localeUtils"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { IntlProvider } from "react-intl"
@@ -57,17 +61,23 @@ export interface AppProps {
 export class App extends React.Component<AppProps> {
   async componentDidMount() {
     const { store } = this.props
+    const localeParam = parseLocaleParam(window.location.search)
+    if (localeParam) {
+      store!.translations.setActiveLocale(localeParam)
+      cleanLocaleParam()
+    } else {
+      const localStorageParam = readLocaleFromLocalStorage()
+      if (localStorageParam) {
+        store!.translations.setActiveLocale(localStorageParam)
+      }
+    }
     // load user session info from backend
     await store!.session.checkSession()
   }
 
   render() {
     const { store } = this.props
-    const localeParam = parseLocaleParam(window.location.search)
-    const storedLocale = updateLocaleLocalStorage(localeParam)
-    const activeLocale = storedLocale
-      ? storedLocale
-      : store!.translations.activeLocale
+    const activeLocale = store!.translations.activeLocale
     const translations = store!.translations.messages[activeLocale]
     const messages =
       activeLocale === Locale.FI
