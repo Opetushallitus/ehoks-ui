@@ -109,7 +109,7 @@ export class Opiskelija extends React.Component<
     if (!studentId) {
       return null
     }
-    const { koulutuksenJarjestaja } = store!
+    const { koulutuksenJarjestaja, session } = store!
     const results = koulutuksenJarjestaja.search.results
     const oppija = koulutuksenJarjestaja.search.oppija(studentId)
     const suunnitelmat = oppija ? oppija.suunnitelmat : []
@@ -160,6 +160,7 @@ export class Opiskelija extends React.Component<
             oppijaId={studentId}
             nimi={oppija ? oppija.nimi : ""}
             suunnitelmat={suunnitelmat}
+            session={session}
           />
           <KoulutuksenJarjestajaHOKS
             path=":hoksId/*"

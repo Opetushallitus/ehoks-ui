@@ -158,9 +158,10 @@ export function ShareDialog(props: ShareDialogProps) {
     intl
   } = props
 
-  const app = useContext(AppContext)
-  // NOTE: ShareDialog is disabled for other apps than "oppija" for now
-  if (app !== "oppija") {
+  const { featureFlags } = useContext(AppContext)
+
+  // disable share dialog if feature flag is set to non-truthy value
+  if (!featureFlags.shareDialog) {
     return children
   }
 

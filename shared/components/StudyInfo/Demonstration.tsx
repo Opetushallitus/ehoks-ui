@@ -58,6 +58,7 @@ interface DemonstrationProps {
 
 export class Demonstration extends React.Component<DemonstrationProps> {
   static contextType = AppContext
+  context!: React.ContextType<typeof AppContext>
 
   share = () => {
     const { koodiUri } = this.props
@@ -77,7 +78,7 @@ export class Demonstration extends React.Component<DemonstrationProps> {
       hasActiveShare = false,
       verificationProcess
     } = this.props
-    const app = this.context
+    const { featureFlags } = this.context
 
     const title =
       verificationProcess &&
@@ -93,8 +94,7 @@ export class Demonstration extends React.Component<DemonstrationProps> {
         />
       )
 
-    // NOTE: Share functionality is enabled only in oppija app for now
-    const showShareButton = !hasActiveShare && app === "oppija"
+    const showShareButton = !hasActiveShare && featureFlags.shareDialog
 
     return (
       <Container data-testid="StudyInfo.Demonstration">
