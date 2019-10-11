@@ -20,6 +20,8 @@ enum IntroPage {
 }
 
 const IntroPageContainer = styled("div")`
+  display: flex;
+  flex-direction: column;
   margin: 0 0 20px 0;
   min-height: 340px;
   width: 600px;
@@ -126,9 +128,12 @@ const ListContainer = styled("div")`
   align-items: center;
 `
 
-const VerticallyCenteredText = styled("div")`
+const VerticallyCentered = styled("div")`
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  flex: 1;
 `
 
 class IntroPage1 extends React.Component {
@@ -158,12 +163,14 @@ class IntroPage1 extends React.Component {
             defaultMessage="Voit käyttää palvelua tietokoneella tai mobiililaitteella."
           />
         </IntroPageTextContainer>
-        <Logo
-          src={ehoksLogo}
-          alt={intl.formatMessage({
-            id: "introDialog.page1Logo"
-          })}
-        />
+        <div>
+          <Logo
+            src={ehoksLogo}
+            alt={intl.formatMessage({
+              id: "introDialog.page1Logo"
+            })}
+          />
+        </div>
       </>
     )
   }
@@ -179,37 +186,39 @@ class IntroPage2 extends React.Component {
             defaultMessage="Tietosi ovat eHOKSissa kolmessa osassa:"
           />
         </IntroPageTitle>
-        <ListContainer>
-          <div>
-            <ListItemWithIcon>
-              <IconContainer>
-                <Flag size={24} />
-              </IconContainer>
-              <FormattedMessage
-                id="introDialog.page2item1"
-                defaultMessage="Oma tavoitteesi"
-              />
-            </ListItemWithIcon>
-            <ListItemWithIcon>
-              <IconContainer>
-                <MdExtension size={24} />
-              </IconContainer>
-              <FormattedMessage
-                id="introDialog.page2item2"
-                defaultMessage="Aiempi osaamisesi"
-              />
-            </ListItemWithIcon>
-            <ListItemWithIcon>
-              <IconContainer>
-                <MdEventNote size={24} />
-              </IconContainer>
-              <FormattedMessage
-                id="introDialog.page2item3"
-                defaultMessage="Opintosuunnitelmasi"
-              />
-            </ListItemWithIcon>
-          </div>
-        </ListContainer>
+        <VerticallyCentered>
+          <ListContainer>
+            <div>
+              <ListItemWithIcon>
+                <IconContainer>
+                  <Flag size={24} />
+                </IconContainer>
+                <FormattedMessage
+                  id="introDialog.page2item1"
+                  defaultMessage="Oma tavoitteesi"
+                />
+              </ListItemWithIcon>
+              <ListItemWithIcon>
+                <IconContainer>
+                  <MdExtension size={24} />
+                </IconContainer>
+                <FormattedMessage
+                  id="introDialog.page2item2"
+                  defaultMessage="Aiempi osaamisesi"
+                />
+              </ListItemWithIcon>
+              <ListItemWithIcon>
+                <IconContainer>
+                  <MdEventNote size={24} />
+                </IconContainer>
+                <FormattedMessage
+                  id="introDialog.page2item3"
+                  defaultMessage="Opintosuunnitelmasi"
+                />
+              </ListItemWithIcon>
+            </div>
+          </ListContainer>
+        </VerticallyCentered>
       </>
     )
   }
@@ -225,13 +234,15 @@ class IntroPage3 extends React.Component {
             defaultMessage="eHOKS-tiedoistasi vastaa oma oppilaitoksesi"
           />
         </IntroPageTitle>
-        <VerticallyCenteredText>
-          <FormattedMessage
-            id="introDialog.page3paragraph1"
-            defaultMessage="Ole yhteydessä omaan opettajaasi, jos tietosi eivät ole ajan tasalla
+        <VerticallyCentered>
+          <IntroPageTextContainer>
+            <FormattedMessage
+              id="introDialog.page3paragraph1"
+              defaultMessage="Ole yhteydessä omaan opettajaasi, jos tietosi eivät ole ajan tasalla
                 palvelussa."
-          />
-        </VerticallyCenteredText>
+            />
+          </IntroPageTextContainer>
+        </VerticallyCentered>
       </>
     )
   }
