@@ -9,7 +9,8 @@ const SessionStoreModel = {
   settings: types.optional(Settings, {}),
   userDidLogout: false,
   user: types.maybeNull(SessionUser),
-  selectedOrganisationOid: ""
+  selectedOrganisationOid: "",
+  isLoading: types.optional(types.boolean, false)
 }
 
 export const SessionStore = types
@@ -20,6 +21,7 @@ export const SessionStore = types
     >(self)
 
     const checkSession = flow(function*(): any {
+      self.isLoading = true
       try {
         const response: APIResponse = yield fetchSingle(
           apiUrl("oppija/session"),
@@ -43,6 +45,7 @@ export const SessionStore = types
           errors.logError("SessionStore.checkSession", error.message)
         }
       }
+      self.isLoading = false
     })
 
     const fetchUserInfo = flow(function*(): any {
@@ -82,10 +85,12 @@ export const SessionStore = types
     })
 
     const logout = flow(function*() {
+      self.isLoading = true
       try {
         yield deleteResource(apiUrl("oppija/session"), { headers: callerId() })
         self.user = null
         self.userDidLogout = true
+        self.isLoading = false
       } catch (error) {
         errors.logError("SessionStore.logout", error.message)
       }
