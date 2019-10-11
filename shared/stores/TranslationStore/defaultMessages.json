@@ -348,5 +348,10 @@
     "locale": "fi",
     "key": "jakaminen.haluatkoPoistaaConfirm",
     "value": "Haluatko varmasti poistaa valitun jakolinkin?"
+  },
+  {
+    "locale": "fi",
+    "key": "introDialog.page1Logo",
+    "value": "eHOKS logo"
   }
 ]

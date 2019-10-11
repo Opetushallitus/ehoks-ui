@@ -5,6 +5,7 @@ import { reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
+import { FormattedMessage, intlShape } from "react-intl"
 import Modal from "react-modal"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
@@ -131,18 +132,38 @@ const VerticallyCenteredText = styled("div")`
 `
 
 class IntroPage1 extends React.Component {
+  static contextTypes = {
+    intl: intlShape
+  }
   render() {
+    const { intl } = this.context
     return (
       <>
-        <IntroPageTitle>Tervetuloa käyttämään eHOKSia!</IntroPageTitle>
+        <IntroPageTitle>
+          <FormattedMessage
+            id="introDialog.page1Title"
+            defaultMessage="Tervetuloa käyttämään eHOKSia!"
+          />
+        </IntroPageTitle>
         <IntroPageTextContainer>
-          eHOKS on palvelu, jossa näet oman henkilökohtaisen opintosuunnitelmasi
-          ja tavoitteesi milloin vain.
+          <FormattedMessage
+            id="introDialog.page1Paragraph1"
+            defaultMessage="eHOKS on palvelu, jossa näet oman henkilökohtaisen opintosuunnitelmasi
+            ja tavoitteesi milloin vain."
+          />
         </IntroPageTextContainer>
         <IntroPageTextContainer>
-          Voit käyttää palvelua tietokoneella tai mobiililaitteella.
+          <FormattedMessage
+            id="introDialog.page1Paragraph2"
+            defaultMessage="Voit käyttää palvelua tietokoneella tai mobiililaitteella."
+          />
         </IntroPageTextContainer>
-        <Logo src={ehoksLogo} alt="" />
+        <Logo
+          src={ehoksLogo}
+          alt={intl.formatMessage({
+            id: "introDialog.page1Logo"
+          })}
+        />
       </>
     )
   }
@@ -152,26 +173,40 @@ class IntroPage2 extends React.Component {
   render() {
     return (
       <>
-        <IntroPageTitle>Tietosi ovat eHOKSissa kolmessa osassa:</IntroPageTitle>
+        <IntroPageTitle>
+          <FormattedMessage
+            id="introDialog.page2Title"
+            defaultMessage="Tietosi ovat eHOKSissa kolmessa osassa:"
+          />
+        </IntroPageTitle>
         <ListContainer>
           <div>
             <ListItemWithIcon>
               <IconContainer>
                 <Flag size={24} />
               </IconContainer>
-              Oma tavoitteesi
+              <FormattedMessage
+                id="introDialog.page2item1"
+                defaultMessage="Oma tavoitteesi"
+              />
             </ListItemWithIcon>
             <ListItemWithIcon>
               <IconContainer>
                 <MdExtension size={24} />
               </IconContainer>
-              Aiempi osaamisesi
+              <FormattedMessage
+                id="introDialog.page2item2"
+                defaultMessage="Aiempi osaamisesi"
+              />
             </ListItemWithIcon>
             <ListItemWithIcon>
               <IconContainer>
                 <MdEventNote size={24} />
               </IconContainer>
-              Opintosuunnitelmasi
+              <FormattedMessage
+                id="introDialog.page2item3"
+                defaultMessage="Opintosuunnitelmasi"
+              />
             </ListItemWithIcon>
           </div>
         </ListContainer>
@@ -185,11 +220,17 @@ class IntroPage3 extends React.Component {
     return (
       <>
         <IntroPageTitle>
-          eHOKS-tiedoistasi vastaa oma oppilaitoksesi
+          <FormattedMessage
+            id="introDialog.page3Title"
+            defaultMessage="eHOKS-tiedoistasi vastaa oma oppilaitoksesi"
+          />
         </IntroPageTitle>
         <VerticallyCenteredText>
-          Ole yhteydessä omaan opettajaasi, jos tietosi eivät ole ajan tasalla
-          palvelussa.
+          <FormattedMessage
+            id="introDialog.page3paragraph1"
+            defaultMessage="Ole yhteydessä omaan opettajaasi, jos tietosi eivät ole ajan tasalla
+                palvelussa."
+          />
         </VerticallyCenteredText>
       </>
     )
@@ -299,7 +340,17 @@ export class IntroModalDialog extends React.Component<
             <IntroPageContent page={this.state.currentPage} />
           </IntroPageContainer>
           <NextIntroPageButton onClick={this.nextPage}>
-            {this.state.currentPage === IntroPage.Page3 ? "Valmis" : "Seuraava"}
+            {this.state.currentPage === IntroPage.Page3 ? (
+              <FormattedMessage
+                id="introDialog.valmisButtonLabel"
+                defaultMessage="Valmis"
+              />
+            ) : (
+              <FormattedMessage
+                id="introDialog.seuraavaButtonLabel"
+                defaultMessage="Seuraava"
+              />
+            )}
           </NextIntroPageButton>
           <NavigationContainer>
             <NavigationCircle
@@ -320,7 +371,10 @@ export class IntroModalDialog extends React.Component<
             checked={introDialog.userAcknowledgedIntroDialog}
             onToggle={introDialog.toggleUserAcknowledgementOfIntro}
           >
-            Älä näytä enää seuraavalla kerralla
+            <FormattedMessage
+              id="introDialog.alaNaytaSeuraavallaKerralla"
+              defaultMessage="Älä näytä enää seuraavalla kerralla"
+            />
           </Checkbox>
         </IntroModalContainer>
       </StyledModal>
