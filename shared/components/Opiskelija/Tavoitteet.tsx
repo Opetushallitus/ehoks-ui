@@ -157,8 +157,8 @@ export class Tavoitteet extends React.Component<
                 </tr>
                 <tr>
                   <LabeledColumn id="tavoitteet.ensikertainenHyvaksyminenTitle">
-                    {hoks.hyvaksytty ? (
-                      format(parseISO(hoks.hyvaksytty), "d.M.yyyy")
+                    {hoks.ensikertainenHyvaksyminen ? (
+                      format(parseISO(hoks.ensikertainenHyvaksyminen), "d.M.yyyy")
                     ) : (
                       <FormattedMessage
                         id="tavoitteet.eiVielaHyvaksyttyTitle"
