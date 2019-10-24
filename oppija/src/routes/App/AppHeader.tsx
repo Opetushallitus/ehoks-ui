@@ -258,7 +258,9 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
 
           {session!.isLoggedIn && (
             <LogoutContainer>
-              <User>{session!.user!.commonName}</User>
+              <User>
+                {session!.user!.firstName} {session!.user!.surname}
+              </User>
               <LogoutLink to="" onClick={this.logout}>
                 <FormattedMessage
                   id="header.kirjauduUlosLink"
