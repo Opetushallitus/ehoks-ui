@@ -131,7 +131,13 @@ export class AmmattitutkintoHaku extends React.Component<
                     ),
                     this.state.perPage
                   ).map(peruste => {
-                    return <SearchResult key={peruste.id} result={peruste} />
+                    return (
+                      <SearchResult
+                        key={peruste.id}
+                        result={peruste}
+                        intl={intl}
+                      />
+                    )
                   })}
                 </SearchResultsList>
               </SearchResultsContainer>

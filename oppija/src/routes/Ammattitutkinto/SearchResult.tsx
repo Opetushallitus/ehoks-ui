@@ -3,6 +3,7 @@ import React from "react"
 import { MdLaunch } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
+import InjectedIntl = ReactIntl.InjectedIntl
 
 const Container = styled("div")`
   margin: 15px 0 0 0;
@@ -38,18 +39,25 @@ const Values = styled("div")`
   margin-top: 20px;
 `
 
-interface SearchResultProps {
+export interface SearchResultProps {
   result: IPeruste
+  intl: InjectedIntl
 }
 
 export class SearchResult extends React.Component<SearchResultProps> {
   render() {
-    const { result } = this.props
+    const { intl, result } = this.props
     return (
       <Container role="listitem">
         <TitleContainer href={result.link} target="_blank">
-          <LinkIcon size={16} color="#84898C" />
           <Title>{result.title}</Title>
+          <LinkIcon
+            aria-label={intl.formatMessage({
+              id: "ammattitutkinto.hakutuloksienLinkkiEperusteisiinAriaLabel"
+            })}
+            size={16}
+            color="#84898C"
+          />
         </TitleContainer>
         {(result.qualificationTitles.length > 0 ||
           result.competenceAreas.length > 0) && (
