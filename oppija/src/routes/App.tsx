@@ -2,7 +2,9 @@ import { Router } from "@reach/router"
 import { ThemeWrapper } from "components/ThemeWrapper"
 import {
   cleanLocaleParam,
+  isLocaleStored,
   parseLocaleParam,
+  readLocaleFromDomain,
   readLocaleFromLocalStorage
 } from "localeUtils"
 import { inject, observer } from "mobx-react"
@@ -66,10 +68,10 @@ export class App extends React.Component<AppProps> {
       store!.translations.setActiveLocale(localeParam)
       cleanLocaleParam()
     } else {
-      const localStorageParam = readLocaleFromLocalStorage()
-      if (localStorageParam) {
-        store!.translations.setActiveLocale(localStorageParam)
-      }
+      const locale = isLocaleStored()
+        ? readLocaleFromLocalStorage()
+        : readLocaleFromDomain()
+      store!.translations.setActiveLocale(locale)
     }
     // load user session info from backend
     await store!.session.checkSession()

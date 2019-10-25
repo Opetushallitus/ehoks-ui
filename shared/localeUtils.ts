@@ -29,6 +29,14 @@ export function saveLocaleToLocalStorage(locale: string) {
     }
 }
 
+export function isLocaleStored() {
+    if (window.localStorage) {
+        return localStorage.getItem('ehoks-locale') ? true : false
+    } else {
+        return false
+    }
+}
+
 export function readLocaleFromLocalStorage() {
     if (window.localStorage) {
         const storedLocale = localStorage.getItem('ehoks-locale')
@@ -44,4 +52,9 @@ export function cleanLocaleParam() {
         const cleanUri = uri.substring(0, uri.indexOf("?lang"));
         window.history.replaceState({}, document.title, cleanUri);
     }
+}
+
+export function readLocaleFromDomain() {
+    const uri = window.location.toString()
+    return uri.includes("studieinfo") ? Locale.SV : Locale.FI
 }
