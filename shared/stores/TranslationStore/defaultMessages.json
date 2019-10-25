@@ -166,6 +166,11 @@
   },
   {
     "locale": "fi",
+    "key": "ammattitutkinto.hakutuloksienLinkkiEperusteisiinAriaLabel",
+    "value": "Siirtyy ePerusteet palveluun uuteen ikkunaan"
+  },
+  {
+    "locale": "fi",
     "key": "ammattitutkinto.hakutuloksienSivutuksenNavigaatioAriaLabel",
     "value": "Hakutuloksien sivutuksen navigaatio"
   },
