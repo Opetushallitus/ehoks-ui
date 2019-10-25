@@ -7,6 +7,7 @@
     "ammattitutkinto.ammattitutkintojaLadataanAriaLabel": "Ammattitutkintoja ladataan",
     "ammattitutkinto.hakuAriaLabel": "Hae tietoa",
     "ammattitutkinto.hakuPlaceholder": "Hae tietoa",
+    "ammattitutkinto.hakutuloksienLinkkiEperusteisiinAriaLabel": "Siirtyy ePerusteet palveluun uuteen ikkunaan",
     "ammattitutkinto.hakutuloksienSivutuksenNavigaatioAriaLabel": "Hakutuloksien sivutuksen navigaatio",
     "ammattitutkinto.meneHakutuloksienSivulleAriaLabel": "Mene hakutuloksien sivulle {page}",
     "errors.EnrichKoodiUri.fetchEPerusteet": "Tutkinnon osien haku ePerusteista epäonnistui",

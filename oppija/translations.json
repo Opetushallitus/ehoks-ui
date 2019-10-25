@@ -10,6 +10,7 @@
     "ammattitutkinto.hakuPlaceholder": "Hae tietoa",
     "ammattitutkinto.hakuTitle": "Hae tietoa ammatillisista tutkinnoista",
     "ammattitutkinto.hakutuloksetTitle": "Tutkinnot ({count})",
+    "ammattitutkinto.hakutuloksienLinkkiEperusteisiinAriaLabel": "Siirtyy ePerusteet palveluun uuteen ikkunaan",
     "ammattitutkinto.hakutuloksienSivutuksenNavigaatioAriaLabel": "Hakutuloksien sivutuksen navigaatio",
     "ammattitutkinto.kolmasKappale": "Lisää tietoa ammatillisesta koulutuksesta",
     "ammattitutkinto.meneHakutuloksienSivulleAriaLabel": "Mene hakutuloksien sivulle {page}",
