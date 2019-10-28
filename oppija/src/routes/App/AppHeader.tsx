@@ -1,4 +1,5 @@
 import { Link } from "@reach/router"
+import { getActiveDomain } from "localeUtils"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { MdMenu } from "react-icons/md"
@@ -185,6 +186,7 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
     const { intl } = this.context
     const { session } = store!
     const { activeLocale } = store!.translations
+    const activeDomain = getActiveDomain()
     return (
       <HeaderContainer>
         <TopLinksContainer>
@@ -195,19 +197,19 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
                 defaultMessage="Siirry pääsisältöön"
               />
             </SkipToMain>
-            <TopLink href="https://opintopolku.fi/">
+            <TopLink href={`https://${activeDomain}/`}>
               <FormattedMessage
                 id="header.opintopolkuLink"
                 defaultMessage="Opintopolku.fi"
               />
             </TopLink>
-            <TopLink href="https://opintopolku.fi/oma-opintopolku/">
+            <TopLink href={`https://${activeDomain}/oma-opintopolku/`}>
               <FormattedMessage
                 id="header.omaOpintopolkuLink"
                 defaultMessage="Oma Opintopolku"
               />
             </TopLink>
-            <TopLink href="https://eperusteet.opintopolku.fi/">
+            <TopLink href={`https://eperusteet.${activeDomain}/`}>
               <FormattedMessage
                 id="header.ePerusteetLink"
                 defaultMessage="ePerusteet"
