@@ -58,3 +58,8 @@ export function readLocaleFromDomain() {
     const uri = window.location.toString()
     return uri.includes("studieinfo") ? Locale.SV : Locale.FI
 }
+
+export function getActiveDomain() {
+    const uri = window.location.toString()
+    return uri.includes("studieinfo") ? "studieinfo.fi" : "opintopolku.fi"
+}
