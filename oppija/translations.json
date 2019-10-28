@@ -6,7 +6,7 @@
     "aiempiOsaaminen.titleHelpLabel": "Tietoa aiemmasta osaamisesta",
     "ammattitutkinto.ammattitutkintojaLadataanAriaLabel": "Ammattitutkintoja ladataan",
     "ammattitutkinto.ensimmainenKappale": "Ammatillisessa koulutuksessa hankit osaamista työelämää varten. Ammatillisia tutkintoja ovat ammatilliset perustutkinnot, ammattitutkinnot ja erikoisammattitutkinnot. Ammatillisessa perustutkinnossa osoitat laaja-alaiset ammatilliset perusvalmiudet alan eri tehtäviin. Lisäksi voit saada valmiuksia yrittäjyyteen sekä jatko-opintojen kannalta tarpeellisia tietoja ja taitoja. Ammatillinen perustutkinto 180 osaamispisteen laajuinen tutkinto.",
-    "ammattitutkinto.hakuAriaLabel": "Hae tietoa",
+    "ammattitutkinto.hakuAriaLabel": "Hae tietoa ammatillisista tutkinnoista",
     "ammattitutkinto.hakuPlaceholder": "Hae tietoa",
     "ammattitutkinto.hakuTitle": "Hae tietoa ammatillisista tutkinnoista",
     "ammattitutkinto.hakutuloksetTitle": "Tutkinnot ({count})",
