@@ -36,7 +36,7 @@ export interface LinkItemProps {
   /** Custom classname */
   className?: string
   /** Link URI */
-  to?: string
+  to: string
 }
 
 /**
