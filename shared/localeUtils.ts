@@ -1,5 +1,5 @@
 import queryString from "query-string"
-import {Locale} from "stores/TranslationStore"
+import { Locale } from "stores/TranslationStore"
 
 export function parseLocaleParam(search: string) {
     const lang = queryString.parse(search).lang
@@ -57,4 +57,9 @@ export function cleanLocaleParam() {
 export function readLocaleFromDomain() {
     const uri = window.location.toString()
     return uri.includes("studieinfo") ? Locale.SV : Locale.FI
+}
+
+export function getActiveDomain() {
+    const uri = window.location.toString()
+    return uri.includes("studieinfo") ? "studieinfo.fi" : "opintopolku.fi"
 }
