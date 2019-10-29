@@ -1,7 +1,5 @@
 import React from "react"
-import CircularProgressbar, {
-  ProgressbarStyles
-} from "react-circular-progressbar"
+import CircularProgressbar from "react-circular-progressbar"
 import styled from "styled"
 
 interface TitleProps {
@@ -85,7 +83,7 @@ export class ProgressPie extends React.Component<ProgressPieProps> {
       stroke = "#027FA9",
       ...rest
     } = this.props
-    const styles: ProgressbarStyles = {
+    const styles = {
       background: {
         fill: "#fff"
       },

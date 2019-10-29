@@ -34,7 +34,7 @@ export interface ButtonProps {
   /** Use secondary styles */
   secondary?: boolean
   /** Button type */
-  type?: string
+  type?: 'submit' | 'reset' | 'button'
 }
 
 /**
