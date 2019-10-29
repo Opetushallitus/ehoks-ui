@@ -348,9 +348,9 @@ export class Opiskelusuunnitelma extends React.Component<
 
           <StatBoxes>
             <ProgressPie
-              value={Math.round(
-                (suunnitellutOpinnot.length / totalStudiesLength) * 100
-              )}
+              value={totalStudiesLength != 0 ? Math.round(
+                (suunnitellutOpinnot.length / totalStudiesLength) * 100) : 0
+              }
               stroke={colors.planned}
               title={
                 <FormattedMessage
@@ -361,9 +361,9 @@ export class Opiskelusuunnitelma extends React.Component<
               onClick={this.showPlanSubAccordion("suunnitellut")}
             />
             <ProgressPie
-              value={Math.round(
+              value={totalStudiesLength != 0 ? Math.round(
                 (aikataulutetutOpinnot.length / totalStudiesLength) * 100
-              )}
+              ) : 0}
               stroke={colors.scheduled}
               title={
                 <FormattedMessage
@@ -374,9 +374,9 @@ export class Opiskelusuunnitelma extends React.Component<
               onClick={this.showPlanSubAccordion("aikataulutetut")}
             />
             <ProgressPie
-              value={Math.round(
+              value={totalStudiesLength != 0 ? Math.round(
                 (valmiitOpinnot.length / totalStudiesLength) * 100
-              )}
+              ) : 0}
               stroke={colors.ready}
               title={
                 <FormattedMessage
