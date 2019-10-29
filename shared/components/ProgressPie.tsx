@@ -1,7 +1,5 @@
 import React from "react"
-import CircularProgressbar, {
-  ProgressbarStyles
-} from "react-circular-progressbar"
+import { CircularProgressbar } from "react-circular-progressbar"
 import styled from "styled"
 
 interface TitleProps {
@@ -61,7 +59,7 @@ export interface ProgressPieProps {
    * Progress bar indicator fill percentage
    * @default 100
    */
-  percentage?: number
+  value?: number
   /** Text below circle */
   title?: React.ReactNode
   /** Click handler function */
@@ -79,13 +77,13 @@ export interface ProgressPieProps {
 export class ProgressPie extends React.Component<ProgressPieProps> {
   render() {
     const {
-      percentage = 100,
+      value = 100,
       title,
       onClick,
       stroke = "#027FA9",
       ...rest
     } = this.props
-    const styles: ProgressbarStyles = {
+    const styles = {
       background: {
         fill: "#fff"
       },
@@ -98,7 +96,7 @@ export class ProgressPie extends React.Component<ProgressPieProps> {
     const props = {
       background: true,
       backgroundPadding: 0,
-      percentage,
+      value,
       strokeWidth: 15,
       styles,
       ...rest
@@ -109,7 +107,7 @@ export class ProgressPie extends React.Component<ProgressPieProps> {
         <ProgressPieContainer>
           <CircularProgressbar {...props} />
           <PercentageContainer color={stroke}>
-            <PercentageTitle>{percentage}</PercentageTitle>%
+            <PercentageTitle>{value}</PercentageTitle>%
           </PercentageContainer>
         </ProgressPieContainer>
         <Title>{title}</Title>

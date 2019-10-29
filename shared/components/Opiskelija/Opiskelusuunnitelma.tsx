@@ -348,7 +348,7 @@ export class Opiskelusuunnitelma extends React.Component<
 
           <StatBoxes>
             <ProgressPie
-              percentage={Math.round(
+              value={Math.round(
                 (suunnitellutOpinnot.length / totalStudiesLength) * 100
               )}
               stroke={colors.planned}
@@ -361,7 +361,7 @@ export class Opiskelusuunnitelma extends React.Component<
               onClick={this.showPlanSubAccordion("suunnitellut")}
             />
             <ProgressPie
-              percentage={Math.round(
+              value={Math.round(
                 (aikataulutetutOpinnot.length / totalStudiesLength) * 100
               )}
               stroke={colors.scheduled}
@@ -374,7 +374,7 @@ export class Opiskelusuunnitelma extends React.Component<
               onClick={this.showPlanSubAccordion("aikataulutetut")}
             />
             <ProgressPie
-              percentage={Math.round(
+              value={Math.round(
                 (valmiitOpinnot.length / totalStudiesLength) * 100
               )}
               stroke={colors.ready}

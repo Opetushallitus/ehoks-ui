@@ -3,7 +3,7 @@ import React from "react"
 import styled from "styled"
 
 const LinkPanelContainer = styled("div")`
-  background-color: ${(props: LinkPanelProps) =>
+  background-color: ${(props: LinkPanelContainerProps) =>
     props.backgroundColor || "#00AC3D"};
   border: 1px solid #979797;
   margin: 0 0 20px 0;
@@ -21,7 +21,7 @@ const Content = styled("div")`
 `
 
 const Image = styled("div")`
-  background-image: url(${(props: LinkPanelProps) => props.image});
+  background-image: url(${(props: LinkPanelImageProps) => props.image});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -53,6 +53,15 @@ const StyledLink = styled(Link)`
   }
 `
 
+interface LinkPanelContainerProps {
+  backgroundColor?: string
+  className?: string
+}
+
+interface LinkPanelImageProps {
+  image?: string
+}
+
 export interface LinkPanelProps {
   /**
    * Background color for text container
@@ -70,7 +79,7 @@ export interface LinkPanelProps {
   /** Description text under title */
   description?: React.ReactNode
   /** Link URI */
-  to?: string
+  to: string
 }
 
 /**
