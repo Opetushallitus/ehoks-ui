@@ -17,6 +17,8 @@ const SuunnitelmaContainer = styled("div")`
   background: #fff;
   padding: 15px 15px 15px 30px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
 
   &:first-of-type {
     margin-top: 20px;
@@ -31,6 +33,12 @@ const Text = styled("div")`
   flex: 1;
   font-size: 20px;
   font-weight: 600;
+`
+
+const OpenHOKSButton = styled(HOKSButton)`
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    margin-top: 20px;
+  }
 `
 
 interface SuunnitelmaProps {
@@ -76,12 +84,12 @@ export const Suunnitelma = observer(function Suunnitelma(
         </EditIconContainer>
       )}
 
-      <HOKSButton to={`${hoksPath}${suunnitelma.eid}`}>
+      <OpenHOKSButton to={`${hoksPath}${suunnitelma.eid}`}>
         <FormattedMessage
           id="suunnitelma.avaaHoksTitle"
           defaultMessage="Avaa HOKS"
         />
-      </HOKSButton>
+      </OpenHOKSButton>
     </SuunnitelmaContainer>
   )
 })
