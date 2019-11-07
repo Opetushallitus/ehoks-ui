@@ -187,9 +187,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     this.setState({ isLoading: true })
 
     const request = await window.fetch(
-      `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${
-        fieldProps.formData["oppija-oid"]
-      }/hoksit`,
+      `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${fieldProps.formData["oppija-oid"]}/hoksit`,
       {
         method: "POST",
         credentials: "include",
