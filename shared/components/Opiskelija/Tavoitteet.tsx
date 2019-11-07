@@ -15,6 +15,30 @@ import { AppContext } from "components/AppContext"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 
+interface OsaamisenHankkimisenTarveProps {
+  osaamisenHankkimisenTarve: boolean | null
+}
+
+const OsaamisenHankkimisenTarveMessage =  ({ osaamisenHankkimisenTarve } : OsaamisenHankkimisenTarveProps) => {
+  if(osaamisenHankkimisenTarve == null)
+    return <FormattedMessage
+      id="tavoitteet.osaamisenHankkimisenTarveNullTitle"
+      defaultMessage="Opiskelijan osaamisen hankkimisen tarve ei tiedossa"
+    />
+
+  return osaamisenHankkimisenTarve ? (
+    <FormattedMessage
+      id="tavoitteet.osaamisenHankkimisenTarveTrueTitle"
+      defaultMessage="Opiskelijalla on osaamisen hankkimisen tarve"
+    />
+  ) : (
+    <FormattedMessage
+      id="tavoitteet.osaamisenHankkimisenTarveFalseTitle"
+      defaultMessage="Opiskelijalla ei ole osaamisen hankkimisen tarvetta"
+    />
+  )
+}
+
 export interface TavoitteetProps {
   children?: React.ReactChildren
   student: Instance<typeof SessionUser> | null
@@ -177,17 +201,7 @@ export class Tavoitteet extends React.Component<
                     )}
                   </LabeledColumn>
                   <LabeledColumn id="tavoitteet.osaamisenHankkimisenTarveTitle">
-                    {hoks.osaamisenHankkimisenTarve ? (
-                      <FormattedMessage
-                        id="tavoitteet.osaamisenHankkimisenTarveTrueTitle"
-                        defaultMessage="Opiskelijalla on osaamisen hankkimisen tarve"
-                      />
-                    ) : (
-                      <FormattedMessage
-                        id="tavoitteet.osaamisenHankkimisenTarveFalseTitle"
-                        defaultMessage="Opiskelijalla ei ole osaamisen hankkimisen tarvetta"
-                      />
-                    )}
+                    <OsaamisenHankkimisenTarveMessage osaamisenHankkimisenTarve={hoks.osaamisenHankkimisenTarve}/>
                   </LabeledColumn>
                 </tr>
               </tbody>

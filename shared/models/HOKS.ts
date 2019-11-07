@@ -34,7 +34,7 @@ const Model = types.model("HOKSModel", {
   opiskeluoikeusOid: types.optional(types.string, ""),
   opiskeluOikeus: types.optional(Opiskeluoikeus, {}),
   oppijaOid: types.optional(types.string, ""),
-  osaamisenHankkimisenTarve: types.optional(types.boolean, false),
+  osaamisenHankkimisenTarve: types.maybeNull(types.boolean),
   paivitetty: types.optional(types.string, ""),
   hankittavatAmmatTutkinnonOsat: types.array(
     HankittavaAmmatillinenTutkinnonOsa
