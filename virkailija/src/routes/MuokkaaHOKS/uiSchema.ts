@@ -66,6 +66,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
   "urasuunnitelma-koodi-versio": {
     "ui:widget": "hidden"
   },
+  "osaamisen-hankkimisen-tarve": {
+    "ui:widget": "customBooleanRadioButtonWidget"
+  },
   "aiemmin-hankitut-ammat-tutkinnon-osat": {
     "ui:options": {
       orderable: false
