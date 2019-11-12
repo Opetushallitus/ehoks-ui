@@ -18,6 +18,7 @@ export function CustomBooleanRadioButtonWidget(props: WidgetProps) {
             <input
               type="radio"
               checked={option.value === value}
+              aria-checked={option.value === value}
               name={name}
               required={required}
               value={option.value}
