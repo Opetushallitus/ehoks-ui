@@ -20,6 +20,8 @@ import { HelpPopup } from "components/HelpPopup"
 import find from "lodash.find"
 import { ShareType } from "stores/NotificationStore"
 import { parseShareParams } from "utils/shareParams"
+import format from "date-fns/format"
+import parseISO from "date-fns/parseISO"
 const { colors } = theme
 
 const ProgressTitle = styled("h2")`
@@ -589,7 +591,52 @@ export class Opiskelusuunnitelma extends React.Component<
             />
           }
         >
-          opiskeluvalmiuksia tukevat opinnot
+          <InfoTable>
+            <tbody>
+            <tr>
+              <th>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.opintoTitle"
+                  defaultMessage="Opinto"
+                />
+              </th>
+              <th>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.kuvausTitle"
+                  defaultMessage="Kuvaus"
+                />
+              </th>
+              <th>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.aloituspaivaTitle"
+                  defaultMessage="Aloituspäivä"
+                />
+              </th>
+              <th>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.lopetuspaivaTitle"
+                  defaultMessage="Lopetuspäivä"
+                />
+              </th>
+            </tr>
+            {plan.opiskeluvalmiuksiaTukevatOpinnot.map((study, i) => {
+              return <tr key={`study_${i}`}>
+                <td>{study.nimi}</td>
+                <td>{study.kuvaus}</td>
+                <td>
+                  {study.alku
+                    ? format(parseISO(study.alku), "d.M.yyyy")
+                    : "-"}
+                </td>
+                <td>
+                  {study.loppu
+                    ? format(parseISO(study.loppu), "d.M.yyyy")
+                    : "-"}
+                </td>
+              </tr>
+            })}
+            </tbody>
+          </InfoTable>
         </Accordion>
       </React.Fragment>
     )
