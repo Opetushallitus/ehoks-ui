@@ -263,14 +263,14 @@ export class Tavoitteet extends React.Component<
                   />
                 </th>
 
-                {student.commonName && (
-                  <th>
+                <th>
+                  {student.commonName && (
                     <FormattedMessage
                       id="tavoitteet.kutsumanimiTitle"
                       defaultMessage="Kutsumanimi"
                     />
-                  </th>
-                )}
+                  )}
+                </th>
 
                 <th>
                   <FormattedMessage
@@ -286,11 +286,11 @@ export class Tavoitteet extends React.Component<
                     : student.fullName}
                 </LabeledColumn>
 
-                {student.commonName && (
-                  <LabeledColumn id="tavoitteet.kutsumanimiTitle">
-                    {student.commonName}
-                  </LabeledColumn>
-                )}
+
+                <LabeledColumn id="tavoitteet.kutsumanimiTitle">
+                  {student.commonName}
+                </LabeledColumn>
+
                 <LabeledColumn id="tavoitteet.oppijanumeroTitle">
                   {student.oid}
                 </LabeledColumn>
