@@ -146,17 +146,15 @@ const Search = types
     sortDirection: "asc",
     perPage: 10
   })
-  .volatile(
-    (_): { searchTexts: { [key in SearchSortKey]: string } } => {
-      return {
-        searchTexts: {
-          nimi: "",
-          tutkinto: "",
-          osaamisala: ""
-        }
+  .volatile((_): { searchTexts: { [key in SearchSortKey]: string } } => {
+    return {
+      searchTexts: {
+        nimi: "",
+        tutkinto: "",
+        osaamisala: ""
       }
     }
-  )
+  })
   .actions(self => {
     const { fetchCollection, apiUrl, callerId } = getEnv<StoreEnvironment>(self)
 
