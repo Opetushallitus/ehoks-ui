@@ -126,9 +126,7 @@ export class Opiskelija extends React.Component<
           <LeftLink>
             {previous && (
               <StudentLink
-                to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${
-                  previous.oid
-                }`}
+                to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${previous.oid}`}
               >
                 &lt;&lt; {previous.nimi}
               </StudentLink>

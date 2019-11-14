@@ -15,6 +15,7 @@ import { Opiskeluoikeus } from "models/Opiskeluoikeus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import find from "lodash.find"
 import { APIResponse } from "types/APIResponse"
+import { OpiskeluvalmiuksiaTukevatOpinnot } from "./OpiskeluvalmiuksiaTukevatOpinnot"
 
 const Model = types.model("HOKSModel", {
   eid: types.optional(types.string, ""),
@@ -43,6 +44,7 @@ const Model = types.model("HOKSModel", {
     HankittavaPaikallinenTutkinnonOsa
   ),
   hankittavatYhteisetTutkinnonOsat: types.array(HankittavaYhteinenTutkinnonOsa),
+  opiskeluvalmiuksiaTukevatOpinnot: types.array(OpiskeluvalmiuksiaTukevatOpinnot),
   urasuunnitelmaKoodiUri: types.optional(types.string, ""),
   urasuunnitelma: types.optional(KoodistoVastaus, {}),
   versio: types.optional(types.number, 0),
