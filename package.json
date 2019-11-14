@@ -47,16 +47,16 @@
     "ts-jest": "^24.1.0",
     "ts-loader": "^5.4.5",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
-    "tslint": "^5.20.0",
+    "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
     "tslint-react": "^3.6.0",
     "tslint-react-a11y": "^1.1.0",
-    "typescript": "^3.6.4",
+    "typescript": "^3.7.2",
     "typescript-react-intl": "^0.3.0",
     "url-loader": "^1.1.2",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9",
+    "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
@@ -98,7 +98,7 @@
     "react-responsive": "^6.1.2",
     "react-swipeable-views": "^0.13.3",
     "reactjs-popup": "^1.5.0",
-    "styled-components": "^4.4.0",
+    "styled-components": "^4.4.1",
     "use-onclickoutside": "^0.3.1",
     "whatwg-fetch": "^3.0.0"
   }
