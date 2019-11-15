@@ -215,6 +215,7 @@ export class Tavoitteet extends React.Component<
           title={titles.goals}
           onToggle={this.toggleAccordion("personalGoal")}
         >
+          {(hoks.urasuunnitelma && hoks.urasuunnitelma.nimi) && (
           <InfoTable>
             <tbody>
               <tr>
@@ -236,6 +237,7 @@ export class Tavoitteet extends React.Component<
               </tr>
             </tbody>
           </InfoTable>
+          )}
         </Accordion>
 
         <Accordion
