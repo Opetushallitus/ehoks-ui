@@ -38,6 +38,7 @@ export const theme = {
     },
     buttons: {
       background: "#0076d9",
+      cancelBackground: themeColors.greyishBrown,
       color: "#fff"
     },
     modalDialog: {
