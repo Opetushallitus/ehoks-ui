@@ -1,6 +1,7 @@
 import { Button } from "components/Button"
 import { inject } from "mobx-react"
 import * as React from "react"
+import { FormattedMessage } from "react-intl"
 import Modal from "react-modal"
 import styled from "../../../../shared/styled"
 import { IRootStore } from "../../stores/RootStore"
@@ -100,18 +101,30 @@ export class StudentFeedbackModal extends React.Component<
       <StyledStudentFeedbackModal isOpen={this.state.introDialogOpen}>
         <FeedbackModalContainer>
           <StudentFeedbackTitle>
-            Anna palautetta opinnoistasi
+            <FormattedMessage
+              id="studentFeedbackDialog.Title"
+              defaultMessage="Anna palautetta opinnoistasi"
+            />
           </StudentFeedbackTitle>
           <StudentFeedbackTextContainer>
-            Vastaa opintojasi koskevaan AMIS-kyselyyn alla olevan linkin kautta.
-            Vastaamiseen kuluu noin 10-15 minuuttia.
+            <FormattedMessage
+              id="studentFeedbackDialog.paragraph"
+              defaultMessage="Vastaa opintojasi koskevaan AMIS-kyselyyn alla olevan linkin kautta.
+            Vastaamiseen kuluu noin 10-15 minuuttia."
+            />
           </StudentFeedbackTextContainer>
           <ButtonContainer>
             <CloseFeedbackModalButton onClick={this.closeFeedBackModal}>
-              Vastaan myöhemmin
+              <FormattedMessage
+                id="studentFeedbackDialog.closeFeedbackButton"
+                defaultMessage="Vastaan myöhemmin"
+              />
             </CloseFeedbackModalButton>
             <StartFeedbackButton href={this.state.feedbackLink} target="_blank">
-              Aloita vastaaminen
+              <FormattedMessage
+                id="studentFeedbackDialog.startFeedbackButton"
+                defaultMessage="Aloita vastaaminen"
+              />
             </StartFeedbackButton>
           </ButtonContainer>
         </FeedbackModalContainer>
