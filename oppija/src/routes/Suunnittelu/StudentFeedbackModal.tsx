@@ -92,6 +92,10 @@ export class StudentFeedbackModal extends React.Component<
     introDialogOpen: true
   }
 
+  // FEATURE Opiskelijapalaute
+  // Mieti mihin storeen palautelinkkien haku toteutetaan.
+  // Tänne pitää toteuttaa kyseisen storen haku.
+
   closeFeedBackModal = () => {
     this.setState({ introDialogOpen: false })
   }

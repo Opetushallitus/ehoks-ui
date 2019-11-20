@@ -99,6 +99,7 @@ export class Suunnittelu extends React.Component<
     return (
       <>
         <IntroModalDialog />
+        {/*FEATURE Opiskelijapalaute, ota pois kommenteista kun haluat palautedialogin näkyvän*/}
         {/*<StudentFeedbackModal />*/}
         <Router basepath={`/ehoks/suunnittelu`}>
           <ValitseHOKS path="/" suunnitelmat={store.hoks.suunnitelmat} />
