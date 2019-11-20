@@ -237,7 +237,8 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
               id: "header.ehoksLogoLabel"
             })}
           />
-
+          {/*FEATURE Opiskelijapalaute, toteuta tämän ikonin näkyvyys ehdolla onko oppijalla vastaamattomia kyselyjä*/}
+          {/*<MdAlarm size={60} />*/}
           <Flex />
 
           <LanguageSelector loggedIn={session!.isLoggedIn}>
