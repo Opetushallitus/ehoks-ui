@@ -34,13 +34,14 @@ const CloseFeedbackModalButton = styled(Button)`
   font-size: 16px;
 `
 
-const StartFeedbackButton = styled(Button)`
+const StartFeedbackButton = styled("a")`
   background: ${props => props.theme.colors.buttons.cancelBackground};
   color: ${props => props.theme.colors.buttons.color};
   padding: 10px 30px;
   margin-bottom: 20px;
   margin-left: 40px;
   font-size: 16px;
+  text-decoration: none;
 `
 
 const StyledStudentFeedbackModal = styled(Modal)`
@@ -72,6 +73,7 @@ const FeedbackModalContainer = styled("div")`
 `
 
 interface StudentFeedbackModalState {
+  feedbackLink: string
   introDialogOpen: boolean
 }
 
@@ -85,6 +87,7 @@ export class StudentFeedbackModal extends React.Component<
   StudentFeedbackModalState
 > {
   state: StudentFeedbackModalState = {
+    feedbackLink: "",
     introDialogOpen: true
   }
 
@@ -107,7 +110,9 @@ export class StudentFeedbackModal extends React.Component<
             <CloseFeedbackModalButton onClick={this.closeFeedBackModal}>
               Vastaan myöhemmin
             </CloseFeedbackModalButton>
-            <StartFeedbackButton>Aloita vastaaminen</StartFeedbackButton>
+            <StartFeedbackButton href={this.state.feedbackLink} target="_blank">
+              Aloita vastaaminen
+            </StartFeedbackButton>
           </ButtonContainer>
         </FeedbackModalContainer>
       </StyledStudentFeedbackModal>

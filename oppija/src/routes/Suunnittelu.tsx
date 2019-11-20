@@ -9,6 +9,7 @@ import { ValitseHOKS } from "routes/Suunnittelu/ValitseHOKS"
 import { IRootStore } from "stores/RootStore"
 import { Locale } from "stores/TranslationStore"
 import styled from "styled"
+import { StudentFeedbackModal } from "./Suunnittelu/StudentFeedbackModal"
 
 const LoadingContainer = styled("div")`
   display: flex;
@@ -98,6 +99,7 @@ export class Suunnittelu extends React.Component<
     return (
       <>
         <IntroModalDialog />
+        {/*<StudentFeedbackModal />*/}
         <Router basepath={`/ehoks/suunnittelu`}>
           <ValitseHOKS path="/" suunnitelmat={store.hoks.suunnitelmat} />
           <OmienOpintojenSuunnittelu
