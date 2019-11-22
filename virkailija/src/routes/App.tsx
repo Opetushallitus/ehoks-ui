@@ -13,6 +13,7 @@ import { KoulutuksenJarjestaja } from "./KoulutuksenJarjestaja"
 import { Opiskelija } from "./KoulutuksenJarjestaja/Opiskelija"
 import { LuoHOKS } from "./LuoHOKS"
 import { MuokkaaHOKS } from "./MuokkaaHOKS"
+import { VirkailijaRaamit } from "./VirkailijaRaamit"
 import { Yllapito } from "./Yllapito"
 
 const Container = styled("div")`
@@ -65,6 +66,7 @@ export class App extends React.Component<AppProps> {
           textComponent={React.Fragment}
         >
           <Container>
+            <VirkailijaRaamit />
             <Header />
             <StyledRouter basepath="/ehoks-virkailija-ui">
               <Redirect
