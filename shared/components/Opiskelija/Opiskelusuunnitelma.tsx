@@ -22,6 +22,7 @@ import { ShareType } from "stores/NotificationStore"
 import { parseShareParams } from "utils/shareParams"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
+import { StudyPoints } from "../StudyPoints"
 const { colors } = theme
 
 const ProgressTitle = styled("h2")`
@@ -305,13 +306,10 @@ export class Opiskelusuunnitelma extends React.Component<
                 <LabeledColumn id="opiskelusuunnitelma.tutkinnonNimiTitle">
                   {plan.tutkinnonNimi}
                 </LabeledColumn>
-                <LabeledColumn id="opiskelusuunnitelma.laajuusTitle">
-                  {plan.osaamispisteet}{" "}
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.osaamispistettaPostfix"
-                    defaultMessage="osaamispistettä"
-                  />
-                </LabeledColumn>
+                <StudyPoints
+                  osaamispisteet={plan.osaamispisteet}
+                  titleTranslationId={"opiskelusuunnitelma.laajuusTitle"}
+                  pointsTranslationId={"opiskelusuunnitelma.osaamispistettaPostfix"}/>
                 <td />
               </tr>
               <tr>

@@ -151,6 +151,11 @@
   },
   {
     "locale": "fi",
+    "key": "opiskelusuunnitelma.osaamispistettaPostfix",
+    "value": "osaamispistettä"
+  },
+  {
+    "locale": "fi",
     "key": "ammattitutkinto.hakuPlaceholder",
     "value": "Hae tietoa"
   },
@@ -278,6 +283,11 @@
     "locale": "fi",
     "key": "tyopaikanToimija.suunnitelmaJatkoOpintoihinTitle",
     "value": "Suunnitelma jatko-opintoihin siirtymisestä"
+  },
+  {
+    "locale": "fi",
+    "key": "tyopaikanToimija.osaamispistetta",
+    "value": "osaamispistettä"
   },
   {
     "locale": "fi",
