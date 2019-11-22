@@ -6,6 +6,7 @@ import { InfoTable } from "components/InfoTable"
 import { NavigationContainer } from "components/NavigationContainer"
 import { BackgroundContainer } from "components/SectionContainer"
 import { StudyInfo } from "components/StudyInfo"
+import { StudyPoints } from "components/StudyPoints"
 import { inject, observer } from "mobx-react"
 import { TutkinnonOsa } from "models/helpers/TutkinnonOsa"
 import React from "react"
@@ -142,17 +143,17 @@ export class TyopaikanToimija extends React.Component<TyopaikanToimijaProps> {
                                     >
                                       {oppija.hoks.tutkinnonNimi}
                                     </td>
-                                    <td
-                                      data-label={intl.formatMessage({
-                                        id: "tyopaikanToimija.laajuusTitle"
-                                      })}
-                                    >
-                                      {oppija.hoks.osaamispisteet}{" "}
-                                      <FormattedMessage
-                                        id="tyopaikanToimija.osaamispistetta"
-                                        defaultMessage="osaamispistettä"
-                                      />
-                                    </td>
+                                    <StudyPoints
+                                      osaamispisteet={
+                                        oppija.hoks.osaamispisteet
+                                      }
+                                      titleTranslationId={
+                                        "tyopaikanToimija.laajuusTitle"
+                                      }
+                                      pointsTranslationId={
+                                        "tyopaikanToimija.osaamispistetta"
+                                      }
+                                    />
                                     <td />
                                   </tr>
                                   <tr>
