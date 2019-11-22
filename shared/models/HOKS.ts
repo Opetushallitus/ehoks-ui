@@ -117,6 +117,13 @@ export const HOKS = types
       return response.data
     })
 
+    function getOsaamispisteetFromRakenne(rakenne: any) {
+      if(rakenne.muodostumisSaanto?.laajuus){
+        return rakenne.muodostumisSaanto.laajuus.minimi
+      }
+      return null
+    }
+
     const fetchOpiskeluoikeudet = flow(function*(): any {
       if (!self.oppijaOid) {
         return
@@ -139,16 +146,7 @@ export const HOKS = types
           self.opiskeluOikeus = opiskeluOikeus
           const tutkinto = yield fetchTutkinto()
           const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
-          self.osaamispisteet = rakenne.osat.reduce((osp: number, osa: any) => {
-            if (
-              osa.muodostumisSaanto &&
-              osa.muodostumisSaanto.laajuus &&
-              osa.muodostumisSaanto.laajuus.minimi
-            ) {
-              osp += osa.muodostumisSaanto.laajuus.minimi
-            }
-            return osp
-          }, 0)
+          self.osaamispisteet = getOsaamispisteetFromRakenne(rakenne)
         }
       } catch (error) {
         errors.logError("HOKS.fetchOpiskeluoikeudet", error.message)
