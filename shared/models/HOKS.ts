@@ -14,6 +14,7 @@ import { StoreEnvironment } from "types/StoreEnvironment"
 import { Opiskeluoikeus } from "models/Opiskeluoikeus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import find from "lodash.find"
+import { toJS } from 'mobx'
 import { APIResponse } from "types/APIResponse"
 import { OpiskeluvalmiuksiaTukevatOpinnot } from "./OpiskeluvalmiuksiaTukevatOpinnot"
 
@@ -188,9 +189,6 @@ export const HOKS = types
           to => to.tila === "aikataulutettu"
         )
       },
-      get valmiitOpinnot() {
-        return this.hankittavatTutkinnonOsat.filter(to => to.tila === "valmis")
-      },
       get aloitusPvm() {
         return self.opiskeluOikeus.alkamispaiva
       },
@@ -212,6 +210,16 @@ export const HOKS = types
         return self.opiskeluOikeus.suoritukset.length
           ? self.opiskeluOikeus.suoritukset[0].koulutusmoduuli.nimi
           : ""
+      },
+      get valmiitOpinnot() {
+        const endCutoffDate = new Date(new Date().setDate(new Date().getDate() - 14))
+        return this.hankittavatTutkinnonOsat.filter((to) => {
+          if (to.tila === "valmis") {
+            // @ts-ignore
+            const oo = toJS(to.osaamisenOsoittaminen).pop()
+            return new Date(oo.loppu) < endCutoffDate
+          }
+        })
       },
       get tutkintonimike() {
         return self.opiskeluOikeus.suoritukset &&
