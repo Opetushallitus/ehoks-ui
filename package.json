@@ -27,7 +27,7 @@
     "@types/react-dom": "^16.9.4",
     "@types/react-intl": "^2.3.18",
     "@types/react-jsonschema-form": "^1.0.14",
-    "@types/react-responsive": "^3.0.3",
+    "@types/react-responsive": "^8.0.2",
     "@types/react-swipeable-views": "^0.12.2",
     "@types/react-test-renderer": "^16.9.1",
     "@types/styled-components": "^4.4.0",
@@ -59,6 +59,7 @@
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
+    "@opetushallitus/virkailija-ui-components": "0.3.2",
     "@reach/router": "^1.2.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@types/lodash.find": "^4.6.6",
@@ -95,12 +96,11 @@
     "react-intl": "^2.9.0",
     "react-jsonschema-form": "1.8.0",
     "react-modal": "^3.11.1",
-    "react-responsive": "^6.1.2",
+    "react-responsive": "^8.0.1",
     "react-swipeable-views": "^0.13.3",
     "reactjs-popup": "^1.5.0",
     "styled-components": "^4.4.1",
     "use-onclickoutside": "^0.3.1",
-    "whatwg-fetch": "^3.0.0",
-    "@opetushallitus/virkailija-ui-components": "0.3.2"
+    "whatwg-fetch": "^3.0.0"
   }
 }
