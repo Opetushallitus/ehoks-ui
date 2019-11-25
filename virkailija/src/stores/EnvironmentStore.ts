@@ -11,6 +11,7 @@ const devBackendWithoutHost = (url: string) => {
 
 const EnvironmentStoreModel = {
   virkailijaLoginUrl: types.optional(types.string, ""),
+  virkailijaRaamitUrl: types.optional(types.string, ""),
   error: types.optional(types.string, ""),
   isLoading: false
 }
@@ -29,8 +30,9 @@ export const EnvironmentStore = types
           apiUrl("misc/environment"),
           { headers: callerId() }
         )
-        const { virkailijaLoginUrl } = response.data
+        const { virkailijaLoginUrl, raamitUrl } = response.data
         self.virkailijaLoginUrl = devBackendWithoutHost(virkailijaLoginUrl)
+        self.virkailijaRaamitUrl = devBackendWithoutHost(raamitUrl)
       } catch (error) {
         errors.logError("EnvironmentStore.getEnvironment", error.message)
       }
@@ -38,8 +40,7 @@ export const EnvironmentStore = types
     })
 
     const fetchSwaggerJSON = flow(function*() {
-      const response = yield fetch("/ehoks-virkailija-backend/doc/swagger.json")
-      return response
+      return yield fetch("/ehoks-virkailija-backend/doc/swagger.json")
     })
 
     return { getEnvironment, fetchSwaggerJSON }
