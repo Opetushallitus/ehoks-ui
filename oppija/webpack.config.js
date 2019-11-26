@@ -62,7 +62,14 @@ module.exports = {
         ]
       },
       // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-      { test: /\.js$/, enforce: "pre", use: "source-map-loader" },
+      {
+        test: /\.js$/,
+        enforce: "pre",
+        use: "source-map-loader",
+        // these packages have problems with their sourcemaps
+        exclude: [
+          /node_modules\/react-responsive/]
+      },
       // Load images with 'file-loader'.
       {
         test: /\.(png|jpg|gif|svg)$/,
