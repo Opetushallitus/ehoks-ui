@@ -65,19 +65,30 @@ export const EnrichKoodiUri = types
       }
     })
 
+    function keyShouldBeFetchedFromEperusteet(key: string) {
+      return key.match(/tutkinnonOsaKoodiUri/) && self[key]
+    }
+
+    function keyShouldBeFetchedFromKoodisto(key: string) {
+      return key.match(/KoodiUri/) && self[key]
+    }
+
+    function getCodes(key: string) {
+      const codes: string[] = Array.isArray(self[key])
+        ? self[key]
+        : [self[key]]
+      return codes
+    }
+
     const afterCreate = () => {
       Object.keys(self).forEach(key => {
-        if (key.match(/tutkinnonOsaKoodiUri/) && self[key]) {
-          const codes: string[] = Array.isArray(self[key])
-            ? self[key]
-            : [self[key]]
+        if (keyShouldBeFetchedFromEperusteet(key)) {
+          const codes = getCodes(key)
           codes.forEach(code => {
             fetchEPerusteet(key, code)
           })
-        } else if (key.match(/KoodiUri/) && self[key]) {
-          const codes: string[] = Array.isArray(self[key])
-            ? self[key]
-            : [self[key]]
+        } else if (keyShouldBeFetchedFromKoodisto(key)) {
+          const codes = getCodes(key)
           codes.forEach(code => {
             fetchKoodisto(key, code)
           })
