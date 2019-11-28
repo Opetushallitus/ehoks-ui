@@ -63,14 +63,15 @@ export const HOKS = types
     osaamispisteet: 0
   }))
   .actions(self => {
-    const { apiUrl, apiPrefix, errors, fetchCollection, fetchSingle } = getEnv<
+    const { apiUrl, apiPrefix, errors, fetchCollection, fetchSingle, callerId } = getEnv<
       StoreEnvironment
     >(self)
 
     // fetches detailed HOKS, only needed in virkailija app
     const fetchDetails = flow(function*(): any {
       const response: APIResponse = yield fetchSingle(
-        apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}`)
+        apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}`),
+        { headers: callerId() }
       )
       const keys = Object.keys(response.data)
       keys.forEach(key => {
