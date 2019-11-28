@@ -64,7 +64,6 @@ export const Notification = types
 
 export const NotificationStore = types
   .model("NotificationStore", {
-    isLoading: types.optional(types.boolean, false),
     notifications: types.array(Notification)
   })
   .actions(self => {

@@ -18,7 +18,6 @@ Object {
   },
   "isLoading": false,
   "notifications": Object {
-    "isLoading": false,
     "notifications": Array [],
   },
   "oppilas": Object {
