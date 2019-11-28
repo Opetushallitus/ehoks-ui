@@ -1,4 +1,4 @@
-import { Instance, types, getRoot, SnapshotOrInstance } from "mobx-state-tree"
+import { Instance, types, getRoot, SnapshotOrInstance, flow, getEnv } from "mobx-state-tree"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
@@ -7,6 +7,8 @@ import subMonths from "date-fns/subMonths"
 import isWithinInterval from "date-fns/isWithinInterval"
 import { ISettings } from "models/Settings"
 import find from "lodash.find"
+import { StoreEnvironment } from "../types/StoreEnvironment"
+import { APIResponse } from "../types/APIResponse"
 
 export type ShareType = "naytto" | "tyossaoppiminen"
 
@@ -64,7 +66,8 @@ export const Notification = types
 
 export const NotificationStore = types
   .model("NotificationStore", {
-    notifications: types.array(Notification)
+    notifications: types.array(Notification),
+    studentFeedbackLinks: types.array(types.string)
   })
   .actions(self => {
     const addNotifications = (
@@ -77,6 +80,25 @@ export const NotificationStore = types
     }
 
     return { addNotifications }
+  })
+  .actions(self => {
+    const { apiUrl, fetchCollection, errors, callerId } = getEnv<
+      StoreEnvironment
+      >(self)
+
+      const haeOpiskelijapalautelinkit = flow(function*(oid: string): any {
+      try {
+        const response: APIResponse = yield fetchCollection(
+          apiUrl(`oppija/oppijat/${oid}/kyselylinkit`),
+          { headers: callerId() }
+        )
+        self.studentFeedbackLinks = response.data
+      } catch (error) {
+        errors.logError("errors.NotificationStore.haeOpiskelijapalautelinkit", error.message)
+      }
+    })
+
+    return { haeOpiskelijapalautelinkit }
   })
   .views(self => {
     const {
