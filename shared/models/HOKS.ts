@@ -132,7 +132,8 @@ export const HOKS = types
       }
       try {
         const response = yield fetchCollection(
-          apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/opiskeluoikeudet`)
+          apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/opiskeluoikeudet`),
+          { headers: callerId() }
         )
         const opiskeluOikeudet: APIResponse = response.data || []
         const opiskeluOikeus = find(
