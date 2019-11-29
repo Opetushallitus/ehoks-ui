@@ -18,6 +18,7 @@ export interface Osaamisvaatimus {
 export interface OsaamisenHankkimistapa {
   tyopaikallaJarjestettavaKoulutus?: { tyopaikanYTunnus: string }
   ajanjaksonTarkenne?: string
+  jarjestajanEdustaja: { nimi: string; oppilaitosOid: string }
 }
 
 export interface Naytto {
