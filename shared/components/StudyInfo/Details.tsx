@@ -8,7 +8,8 @@ import { IconContainer } from "./IconContainer"
 import { LearningPeriod } from "./LearningPeriod"
 import {
   Harjoittelujakso,
-  Naytto, OsaamisenHankkimistapa,
+  Naytto,
+  OsaamisenHankkimistapa,
   TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "./LearningEvent"
