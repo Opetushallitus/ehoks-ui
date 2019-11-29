@@ -56,6 +56,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
     const workplaceSelite = tyyppi === "WORKPLACE" && method && method.tyopaikallaJarjestettavaKoulutus ?
         selite + ", " + method.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus :
         selite
+    const periodSpecifier = method && method.ajanjaksonTarkenne ? method.ajanjaksonTarkenne : ""
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
@@ -76,6 +77,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
               description={tyyppi === "WORKPLACE" ? workplaceSelite : selite}
               startDate={alku}
               endDate={loppu}
+              periodSpecifier={periodSpecifier}
               size="large"
             />
           </LearningPeriodTitle>
