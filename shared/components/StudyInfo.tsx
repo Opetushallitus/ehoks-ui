@@ -6,7 +6,8 @@ import {
   Osaamisvaatimus,
   Naytto,
   Harjoittelujakso,
-  TodentamisenProsessi
+  TodentamisenProsessi,
+  OsaamisenHankkimistapa
 } from "models/helpers/TutkinnonOsa"
 import { ShareType } from "stores/NotificationStore"
 import { MdShare } from "react-icons/md"
@@ -91,6 +92,11 @@ export interface StudyInfoProps {
    * @default []
    */
   competenceRequirements?: Array<Osaamisvaatimus>
+  /**
+   * List of competence acquiring methods
+   * @default []
+   */
+  competenceAcquiringMethods?: Array<OsaamisenHankkimistapa>
   /** List of competence demonstrations */
   demonstrations?: Array<Naytto>
   /** extraContent is passed through to Details component */
@@ -221,6 +227,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     const {
       accentColor,
       competenceRequirements = [],
+      competenceAcquiringMethods = [],
       demonstrations = [],
       extraContent = null,
       fadedColor,
@@ -275,6 +282,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
               extraContent={extraContent}
               expanded={detailsExpanded}
               learningPeriods={learningPeriods}
+              competenceAcquiringMethods={competenceAcquiringMethods}
               verificationProcess={verificationProcess}
               koodiUri={koodiUri}
               share={share}
