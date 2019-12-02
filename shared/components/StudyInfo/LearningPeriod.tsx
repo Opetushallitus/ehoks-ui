@@ -56,6 +56,9 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
     const workplaceSelite = tyyppi === "WORKPLACE" && method && method.tyopaikallaJarjestettavaKoulutus ?
         selite + ", " + method.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus :
         selite
+    const periodSpecifier = method && method.ajanjaksonTarkenne ? method.ajanjaksonTarkenne : ""
+    const organizer = method && method.jarjestajanEdustaja ? method && method.jarjestajanEdustaja : undefined
+    const organizerRepresentative = organizer && organizer.nimi ? organizer.nimi : ""
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
@@ -76,6 +79,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
               description={tyyppi === "WORKPLACE" ? workplaceSelite : selite}
               startDate={alku}
               endDate={loppu}
+              periodSpecifier={periodSpecifier}
               size="large"
             />
           </LearningPeriodTitle>
@@ -95,6 +99,19 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                   {ohjaaja.sahkoposti}
                 </TD>
               </tr>
+            )}
+            {tyyppi === "WORKPLACE" && ohjaaja && (
+                <tr>
+                  <TH>
+                    <FormattedMessage
+                        id="opiskelusuunnitelma.koulutuksenjarjestajanEdustajaTitle"
+                        defaultMessage="Koulutuksen järjestäjän edustaja"
+                    />
+                  </TH>
+                  <TD>
+                    {organizerRepresentative}
+                  </TD>
+                </tr>
             )}
             {tyotehtavat.length > 0 && (
               <tr>
