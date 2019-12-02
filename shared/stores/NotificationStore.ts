@@ -82,16 +82,17 @@ export const NotificationStore = types
     return { addNotifications }
   })
   .actions(self => {
-    const { apiUrl, fetchCollection, errors, callerId } = getEnv<
+    const { apiUrl, fetchPrimitiveCollection, errors, callerId } = getEnv<
       StoreEnvironment
       >(self)
 
       const haeOpiskelijapalautelinkit = flow(function*(oid: string): any {
       try {
-        const response: APIResponse = yield fetchCollection(
+        const response: APIResponse = yield fetchPrimitiveCollection(
           apiUrl(`oppija/oppijat/${oid}/kyselylinkit`),
           { headers: callerId() }
         )
+
         self.studentFeedbackLinks = response.data
       } catch (error) {
         errors.logError("errors.NotificationStore.haeOpiskelijapalautelinkit", error.message)
