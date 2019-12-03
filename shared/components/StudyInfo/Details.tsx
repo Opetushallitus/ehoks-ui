@@ -9,6 +9,7 @@ import { LearningPeriod } from "./LearningPeriod"
 import {
   Harjoittelujakso,
   Naytto,
+  OsaamisenHankkimistapa,
   TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "./LearningEvent"
@@ -73,6 +74,7 @@ interface DetailsProps {
   expanded?: boolean
   koodiUri?: string
   learningPeriods?: Array<Harjoittelujakso>
+  competenceAcquiringMethods?: Array<OsaamisenHankkimistapa>
   share?: { koodiUri: string; type: ShareType | "" }
   toggle: (name: "competences" | "details") => () => void
   verificationProcess?: TodentamisenProsessi
@@ -90,6 +92,7 @@ export class Details extends React.Component<DetailsProps> {
       fadedColor = "",
       koodiUri,
       learningPeriods = [],
+      competenceAcquiringMethods = [],
       share,
       toggle,
       verificationProcess
@@ -153,7 +156,7 @@ export class Details extends React.Component<DetailsProps> {
             defaultPeriod={defaultPeriod}
           >
             {learningPeriods.map((period, i) => {
-              return <LearningPeriod key={i} learningPeriod={period} />
+              return <LearningPeriod key={i} learningPeriod={period} competenceAcquiringMethods={competenceAcquiringMethods} />
             })}
           </ShareDialog>
 

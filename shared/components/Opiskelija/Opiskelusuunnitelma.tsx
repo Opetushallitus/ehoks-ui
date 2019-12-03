@@ -437,6 +437,7 @@ export class Opiskelusuunnitelma extends React.Component<
                     <StudyInfo
                       accentColor={colors.planned}
                       competenceRequirements={study.osaamisvaatimukset}
+                      competenceAcquiringMethods={study.osaamisenHankkimistavat}
                       demonstrations={study.naytot}
                       extraContent={
                         study.olennainenSeikka ? elements.essentialFactor : null
@@ -490,6 +491,7 @@ export class Opiskelusuunnitelma extends React.Component<
                     <StudyInfo
                       accentColor={colors.scheduled}
                       competenceRequirements={study.osaamisvaatimukset}
+                      competenceAcquiringMethods={study.osaamisenHankkimistavat}
                       demonstrations={study.naytot}
                       extraContent={
                         study.olennainenSeikka ? elements.essentialFactor : null
@@ -542,6 +544,7 @@ export class Opiskelusuunnitelma extends React.Component<
                     <StudyInfo
                       accentColor={colors.ready}
                       competenceRequirements={study.osaamisvaatimukset}
+                      competenceAcquiringMethods={study.osaamisenHankkimistavat}
                       demonstrations={study.naytot}
                       extraContent={
                         study.olennainenSeikka ? elements.essentialFactor : null

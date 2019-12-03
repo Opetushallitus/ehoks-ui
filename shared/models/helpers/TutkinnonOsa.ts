@@ -15,6 +15,12 @@ export interface Osaamisvaatimus {
   kriteerit?: Arviointikriteeri[]
 }
 
+export interface OsaamisenHankkimistapa {
+  tyopaikallaJarjestettavaKoulutus?: { tyopaikanYTunnus: string }
+  ajanjaksonTarkenne?: string
+  jarjestajanEdustaja: { nimi: string; oppilaitosOid: string }
+}
+
 export interface Naytto {
   alku?: string
   loppu?: string
@@ -39,6 +45,7 @@ export interface Harjoittelujakso {
 export interface TutkinnonOsa {
   id?: number
   osaamisvaatimukset?: Osaamisvaatimus[]
+  osaamisenHankkimistavat?: OsaamisenHankkimistapa[]
   naytot?: Naytto[]
   otsikko?: string
   osaamispisteet?: number
