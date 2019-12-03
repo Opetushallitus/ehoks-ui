@@ -99,7 +99,11 @@ export const NotificationStore = types
       }
     })
 
-    return { haeOpiskelijapalautelinkit }
+    const removeOpiskelijapalautelinkki = (feedbackLinkToRemove: string) => {
+        self.studentFeedbackLinks.remove(feedbackLinkToRemove)
+    }
+
+    return { haeOpiskelijapalautelinkit, removeOpiskelijapalautelinkki }
   })
   .views(self => {
     const {
@@ -127,6 +131,10 @@ export const NotificationStore = types
   })
   .views(self => {
     return {
+      get hasUnanswaredFeedbackLinks() {
+        return self.studentFeedbackLinks?.length != 0
+      },
+
       get visible() {
         return self.retainedNotifications.filter(notification => {
           const notificationInterval = {
