@@ -1,4 +1,5 @@
 import { Button } from "components/Button"
+import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { FormattedMessage } from "react-intl"
 import Modal from "react-modal"
@@ -81,6 +82,8 @@ interface StudentFeedbackProps {
   feedbackLinks: string[]
 }
 
+@inject("store")
+@observer
 export class StudentFeedbackModal extends React.Component<
   StudentFeedbackProps,
   StudentFeedbackModalState
@@ -89,8 +92,13 @@ export class StudentFeedbackModal extends React.Component<
     introDialogOpen: true
   }
 
-  closeFeedBackModal = () => {
+  closeFeedbackModal = () => {
     this.setState({ introDialogOpen: false })
+  }
+
+  removeFeedbackLink = (linkToRemove: string) => {
+    const { removeOpiskelijapalautelinkki } = this.props.store!.notifications
+    removeOpiskelijapalautelinkki(linkToRemove)
   }
 
   render() {
@@ -117,13 +125,17 @@ export class StudentFeedbackModal extends React.Component<
             />
           </StudentFeedbackTextContainer>
           <ButtonContainer>
-            <CloseFeedbackModalButton onClick={this.closeFeedBackModal}>
+            <CloseFeedbackModalButton onClick={this.closeFeedbackModal}>
               <FormattedMessage
                 id="studentFeedbackDialog.closeFeedbackButton"
                 defaultMessage="Vastaan myöhemmin"
               />
             </CloseFeedbackModalButton>
-            <StartFeedbackLink href={feedbackLink} target="_blank">
+            <StartFeedbackLink
+              href={feedbackLink}
+              onClick={this.removeFeedbackLink.bind(this, feedbackLink)}
+              target="_blank"
+            >
               <FormattedMessage
                 id="studentFeedbackDialog.startFeedbackButton"
                 defaultMessage="Aloita vastaaminen"
