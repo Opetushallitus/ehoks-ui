@@ -9,6 +9,7 @@ import { IRootStore } from "stores/RootStore"
 import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 import ehoksLogo from "./ehoks_logo.png"
+import { FeedbackReminder } from "./FeedbackReminder"
 
 interface TopLinkProps {
   active?: boolean
@@ -186,6 +187,8 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
     const { intl } = this.context
     const { session } = store!
     const { activeLocale } = store!.translations
+    const hasUnansweredFeedbackLinks = store!.notifications
+      .hasUnanswaredFeedbackLinks
     const activeDomain = getActiveDomain()
     return (
       <HeaderContainer>
@@ -237,8 +240,7 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
               id: "header.ehoksLogoLabel"
             })}
           />
-          {/*FEATURE Opiskelijapalaute, toteuta tämän ikonin näkyvyys ehdolla onko oppijalla vastaamattomia kyselyjä*/}
-          {/*<MdAlarm size={60} />*/}
+          <FeedbackReminder showReminder={hasUnansweredFeedbackLinks} />
           <Flex />
 
           <LanguageSelector loggedIn={session!.isLoggedIn}>
