@@ -1,5 +1,5 @@
 import * as React from "react"
-import { MdAlarm } from "react-icons/all"
+import { MdAlarm } from "react-icons/md"
 
 interface FeedbackReminderProps {
   showReminder: boolean

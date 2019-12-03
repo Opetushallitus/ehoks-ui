@@ -19,6 +19,7 @@ Object {
   "isLoading": false,
   "notifications": Object {
     "notifications": Array [],
+    "studentFeedbackLinks": Array [],
   },
   "oppilas": Object {
     "isLoading": false,
