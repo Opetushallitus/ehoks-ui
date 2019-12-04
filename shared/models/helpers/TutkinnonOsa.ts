@@ -18,7 +18,19 @@ export interface Osaamisvaatimus {
 export interface OsaamisenHankkimistapa {
   tyopaikallaJarjestettavaKoulutus?: { tyopaikanYTunnus: string }
   ajanjaksonTarkenne?: string
-  jarjestajanEdustaja: { nimi: string; oppilaitosOid: string }
+  jarjestajanEdustaja?: { nimi?: string; oppilaitosOid?: string }
+}
+
+export interface Nayttoymparisto {
+  kuvaus?: string
+  nimi?: string
+  yTunnus?: string
+}
+export interface OsaamisenOsoittaminen {
+  alku?: string
+  loppu?: string
+  jarjestaja?: { oppilaitosOid?: string }
+  nayttoYmparisto?: Nayttoymparisto
 }
 
 export interface Naytto {
@@ -46,6 +58,7 @@ export interface TutkinnonOsa {
   id?: number
   osaamisvaatimukset?: Osaamisvaatimus[]
   osaamisenHankkimistavat?: OsaamisenHankkimistapa[]
+  osaamisenOsoittaminen?: OsaamisenOsoittaminen[]
   naytot?: Naytto[]
   otsikko?: string
   osaamispisteet?: number
