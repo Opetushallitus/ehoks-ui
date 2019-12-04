@@ -151,6 +151,11 @@
   },
   {
     "locale": "fi",
+    "key": "opiskelusuunnitelma.koulutuksenjarjestajanEdustajaTitle",
+    "value": "Koulutuksen järjestäjän edustaja"
+  },
+  {
+    "locale": "fi",
     "key": "opiskelusuunnitelma.osaamispistettaPostfix",
     "value": "osaamispistettä"
   },
