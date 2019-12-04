@@ -73,10 +73,6 @@ const FeedbackModalContainer = styled("div")`
   height: 100%;
 `
 
-interface StudentFeedbackModalState {
-  introDialogOpen: boolean
-}
-
 interface StudentFeedbackProps {
   store?: IRootStore
   feedbackLinks: string[]
@@ -85,31 +81,26 @@ interface StudentFeedbackProps {
 @inject("store")
 @observer
 export class StudentFeedbackModal extends React.Component<
-  StudentFeedbackProps,
-  StudentFeedbackModalState
+  StudentFeedbackProps
 > {
-  state: StudentFeedbackModalState = {
-    introDialogOpen: true
-  }
-
   closeFeedbackModal = () => {
-    this.setState({ introDialogOpen: false })
+    this.props.store!.notifications.hideFeedbackModal()
   }
 
   removeFeedbackLink = (linkToRemove: string) => {
-    const { removeOpiskelijapalautelinkki } = this.props.store!.notifications
-    removeOpiskelijapalautelinkki(linkToRemove)
+    this.props.store!.notifications.removeOpiskelijapalautelinkki(linkToRemove)
   }
 
   render() {
-    const feedbackLink = this.props.feedbackLinks[0]
+    const showFeedbackModal = this.props.store!.notifications.showFeedbackModal
 
+    const feedbackLink = this.props.feedbackLinks[0]
     if (!feedbackLink) {
       return null
     }
 
     return (
-      <StyledStudentFeedbackModal isOpen={this.state.introDialogOpen}>
+      <StyledStudentFeedbackModal isOpen={showFeedbackModal}>
         <FeedbackModalContainer>
           <StudentFeedbackTitle>
             <FormattedMessage
