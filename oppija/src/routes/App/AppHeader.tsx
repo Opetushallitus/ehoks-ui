@@ -182,6 +182,10 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
     this.setState(state => ({ ...state, showMenu: !state.showMenu }))
   }
 
+  showFeedbackModal = () => {
+    this.props.store!.notifications.makeFeedbackModalVisible()
+  }
+
   render() {
     const { store } = this.props
     const { intl } = this.context
@@ -240,7 +244,11 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
               id: "header.ehoksLogoLabel"
             })}
           />
-          <FeedbackReminder showReminder={hasUnansweredFeedbackLinks} />
+
+          <FeedbackReminder
+            hasFeedbackLinks={hasUnansweredFeedbackLinks}
+            onClick={this.showFeedbackModal}
+          />
           <Flex />
 
           <LanguageSelector loggedIn={session!.isLoggedIn}>
