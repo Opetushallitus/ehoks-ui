@@ -69,6 +69,9 @@ export const NotificationStore = types
     notifications: types.array(Notification),
     studentFeedbackLinks: types.array(types.string)
   })
+  .volatile(_ => ({
+    showFeedbackModal: true
+  }))
   .actions(self => {
     const addNotifications = (
       notifications: Array<SnapshotOrInstance<typeof Notification>>
@@ -82,11 +85,17 @@ export const NotificationStore = types
     return { addNotifications }
   })
   .actions(self => {
-    const { apiUrl, fetchPrimitiveCollection, errors, callerId } = getEnv<
-      StoreEnvironment
-      >(self)
+    const { apiUrl, fetchPrimitiveCollection, errors, callerId } = getEnv<StoreEnvironment>(self)
 
-      const haeOpiskelijapalautelinkit = flow(function*(oid: string): any {
+    const hideFeedbackModal = () => {
+      self.showFeedbackModal = false
+    }
+
+    const makeFeedbackModalVisible = () => {
+      self.showFeedbackModal = true
+    }
+
+    const haeOpiskelijapalautelinkit = flow(function* (oid: string): any {
       try {
         const response: APIResponse = yield fetchPrimitiveCollection(
           apiUrl(`oppija/oppijat/${oid}/kyselylinkit`),
@@ -100,10 +109,10 @@ export const NotificationStore = types
     })
 
     const removeOpiskelijapalautelinkki = (feedbackLinkToRemove: string) => {
-        self.studentFeedbackLinks.remove(feedbackLinkToRemove)
+      self.studentFeedbackLinks.remove(feedbackLinkToRemove)
     }
 
-    return { haeOpiskelijapalautelinkit, removeOpiskelijapalautelinkki }
+    return { haeOpiskelijapalautelinkit, removeOpiskelijapalautelinkki, hideFeedbackModal, makeFeedbackModalVisible }
   })
   .views(self => {
     const {
@@ -120,7 +129,7 @@ export const NotificationStore = types
               return (
                 hiddenNotification.hoksId === notification.hoksId &&
                 hiddenNotification.tutkinnonOsaKoodiUri ===
-                  notification.tutkinnonOsaKoodiUri &&
+                notification.tutkinnonOsaKoodiUri &&
                 hiddenNotification.tyyppi === notification.tyyppi
               )
             }
@@ -151,4 +160,5 @@ export const NotificationStore = types
   })
 
 export interface INotificationStore
-  extends Instance<typeof NotificationStore> {}
+  extends Instance<typeof NotificationStore> {
+}
