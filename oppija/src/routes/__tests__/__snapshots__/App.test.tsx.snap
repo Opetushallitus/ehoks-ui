@@ -569,6 +569,12 @@ exports[`App renders correctly 1`] = `
   }
 }
 
+@media screen and (max-width:720px) {
+  .c11 {
+    display: none;
+  }
+}
+
 @media screen and (max-width:900px) {
   .c14 {
     display: block;
