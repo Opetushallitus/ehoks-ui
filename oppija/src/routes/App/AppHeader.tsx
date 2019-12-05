@@ -149,6 +149,10 @@ const LanguageSelector = styled("div")<LanguageSelectorProps>`
     font-size: 15px;
     cursor: pointer;
   }
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    display: none;
+  }
 `
 
 interface AppHeaderProps {
