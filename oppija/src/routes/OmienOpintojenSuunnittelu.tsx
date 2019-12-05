@@ -25,6 +25,7 @@ const Section = styled("div")`
   display: flex;
   flex-direction: row;
   flex: 1;
+  flex-wrap: wrap;
 `
 
 const SectionContainer = styled("div")`
@@ -33,6 +34,11 @@ const SectionContainer = styled("div")`
   justify-content: flex-end;
   align-items: flex-end;
   margin-bottom: 20px;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    margin-top: 30px;
+    justify-content: center;
+  }
 `
 
 const SectionItems = styled(ProgressPies)`
