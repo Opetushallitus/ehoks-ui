@@ -14,7 +14,6 @@ import { StoreEnvironment } from "types/StoreEnvironment"
 import { Opiskeluoikeus } from "models/Opiskeluoikeus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import find from "lodash.find"
-import { toJS } from 'mobx'
 import { APIResponse } from "types/APIResponse"
 import { OpiskeluvalmiuksiaTukevatOpinnot } from "./OpiskeluvalmiuksiaTukevatOpinnot"
 
@@ -215,9 +214,9 @@ export const HOKS = types
         const endCutoffDate = new Date(new Date().setDate(new Date().getDate() - 14))
         return this.hankittavatTutkinnonOsat.filter((to) => {
           if (to.tila === "valmis") {
-            // @ts-ignore
-            const oo = toJS(to.osaamisenOsoittaminen).pop()
-            return new Date(oo.loppu) < endCutoffDate
+            return to.osaamisenOsoittaminen && to.osaamisenOsoittaminen.length && to.osaamisenOsoittaminen[0].loppu
+                ? new Date(to.osaamisenOsoittaminen[0].loppu) < endCutoffDate
+                : false
           }
         })
       },
