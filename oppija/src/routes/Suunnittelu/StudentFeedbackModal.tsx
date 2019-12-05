@@ -1,5 +1,5 @@
 import { Button } from "components/Button"
-import { inject } from "mobx-react"
+import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { FormattedMessage } from "react-intl"
 import Modal from "react-modal"
@@ -35,7 +35,7 @@ const CloseFeedbackModalButton = styled(Button)`
   font-size: 16px;
 `
 
-const StartFeedbackButton = styled("a")`
+const StartFeedbackLink = styled("a")`
   background: ${props => props.theme.colors.buttons.cancelBackground};
   color: ${props => props.theme.colors.buttons.color};
   padding: 10px 30px;
@@ -73,36 +73,34 @@ const FeedbackModalContainer = styled("div")`
   height: 100%;
 `
 
-interface StudentFeedbackModalState {
-  feedbackLink: string
-  introDialogOpen: boolean
-}
-
 interface StudentFeedbackProps {
   store?: IRootStore
+  feedbackLinks: string[]
 }
 
 @inject("store")
+@observer
 export class StudentFeedbackModal extends React.Component<
-  StudentFeedbackProps,
-  StudentFeedbackModalState
+  StudentFeedbackProps
 > {
-  state: StudentFeedbackModalState = {
-    feedbackLink: "",
-    introDialogOpen: true
+  closeFeedbackModal = () => {
+    this.props.store!.notifications.hideFeedbackModal()
   }
 
-  // FEATURE Opiskelijapalaute
-  // Mieti mihin storeen palautelinkkien haku toteutetaan.
-  // Tänne pitää toteuttaa kyseisen storen haku.
-
-  closeFeedBackModal = () => {
-    this.setState({ introDialogOpen: false })
+  removeFeedbackLink = (linkToRemove: string) => {
+    this.props.store!.notifications.removeOpiskelijapalautelinkki(linkToRemove)
   }
 
   render() {
+    const showFeedbackModal = this.props.store!.notifications.showFeedbackModal
+
+    const feedbackLink = this.props.feedbackLinks[0]
+    if (!feedbackLink) {
+      return null
+    }
+
     return (
-      <StyledStudentFeedbackModal isOpen={this.state.introDialogOpen}>
+      <StyledStudentFeedbackModal isOpen={showFeedbackModal}>
         <FeedbackModalContainer>
           <StudentFeedbackTitle>
             <FormattedMessage
@@ -118,18 +116,22 @@ export class StudentFeedbackModal extends React.Component<
             />
           </StudentFeedbackTextContainer>
           <ButtonContainer>
-            <CloseFeedbackModalButton onClick={this.closeFeedBackModal}>
+            <CloseFeedbackModalButton onClick={this.closeFeedbackModal}>
               <FormattedMessage
                 id="studentFeedbackDialog.closeFeedbackButton"
                 defaultMessage="Vastaan myöhemmin"
               />
             </CloseFeedbackModalButton>
-            <StartFeedbackButton href={this.state.feedbackLink} target="_blank">
+            <StartFeedbackLink
+              href={feedbackLink}
+              onClick={this.removeFeedbackLink.bind(this, feedbackLink)}
+              target="_blank"
+            >
               <FormattedMessage
                 id="studentFeedbackDialog.startFeedbackButton"
                 defaultMessage="Aloita vastaaminen"
               />
-            </StartFeedbackButton>
+            </StartFeedbackLink>
           </ButtonContainer>
         </FeedbackModalContainer>
       </StyledStudentFeedbackModal>

@@ -1,4 +1,4 @@
-import { Instance, types, getRoot, SnapshotOrInstance } from "mobx-state-tree"
+import { Instance, types, getRoot, SnapshotOrInstance, flow, getEnv } from "mobx-state-tree"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
@@ -7,6 +7,8 @@ import subMonths from "date-fns/subMonths"
 import isWithinInterval from "date-fns/isWithinInterval"
 import { ISettings } from "models/Settings"
 import find from "lodash.find"
+import { StoreEnvironment } from "../types/StoreEnvironment"
+import { APIResponse } from "../types/APIResponse"
 
 export type ShareType = "naytto" | "tyossaoppiminen"
 
@@ -64,9 +66,12 @@ export const Notification = types
 
 export const NotificationStore = types
   .model("NotificationStore", {
-    isLoading: types.optional(types.boolean, false),
-    notifications: types.array(Notification)
+    notifications: types.array(Notification),
+    studentFeedbackLinks: types.array(types.string)
   })
+  .volatile(_ => ({
+    showFeedbackModal: true
+  }))
   .actions(self => {
     const addNotifications = (
       notifications: Array<SnapshotOrInstance<typeof Notification>>
@@ -78,6 +83,36 @@ export const NotificationStore = types
     }
 
     return { addNotifications }
+  })
+  .actions(self => {
+    const { apiUrl, fetchPrimitiveCollection, errors, callerId } = getEnv<StoreEnvironment>(self)
+
+    const hideFeedbackModal = () => {
+      self.showFeedbackModal = false
+    }
+
+    const makeFeedbackModalVisible = () => {
+      self.showFeedbackModal = true
+    }
+
+    const haeOpiskelijapalautelinkit = flow(function* (oid: string): any {
+      try {
+        const response: APIResponse = yield fetchPrimitiveCollection(
+          apiUrl(`oppija/oppijat/${oid}/kyselylinkit`),
+          { headers: callerId() }
+        )
+
+        self.studentFeedbackLinks = response.data
+      } catch (error) {
+        errors.logError("errors.NotificationStore.haeOpiskelijapalautelinkit", error.message)
+      }
+    })
+
+    const removeOpiskelijapalautelinkki = (feedbackLinkToRemove: string) => {
+      self.studentFeedbackLinks.remove(feedbackLinkToRemove)
+    }
+
+    return { haeOpiskelijapalautelinkit, removeOpiskelijapalautelinkki, hideFeedbackModal, makeFeedbackModalVisible }
   })
   .views(self => {
     const {
@@ -94,7 +129,7 @@ export const NotificationStore = types
               return (
                 hiddenNotification.hoksId === notification.hoksId &&
                 hiddenNotification.tutkinnonOsaKoodiUri ===
-                  notification.tutkinnonOsaKoodiUri &&
+                notification.tutkinnonOsaKoodiUri &&
                 hiddenNotification.tyyppi === notification.tyyppi
               )
             }
@@ -105,6 +140,10 @@ export const NotificationStore = types
   })
   .views(self => {
     return {
+      get hasUnanswaredFeedbackLinks() {
+        return self.studentFeedbackLinks?.length != 0
+      },
+
       get visible() {
         return self.retainedNotifications.filter(notification => {
           const notificationInterval = {
@@ -121,4 +160,5 @@ export const NotificationStore = types
   })
 
 export interface INotificationStore
-  extends Instance<typeof NotificationStore> {}
+  extends Instance<typeof NotificationStore> {
+}

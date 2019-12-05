@@ -17,8 +17,9 @@ export function withQueryString(url: string, queryParams: any) {
 export function fetchUtils(
   fetchImplementation: WindowOrWorkerGlobalScope["fetch"]
 ) {
-  async function fetchCollection<D = any, M = any>(
+  async function getCollection<D = any, M = any>(
     url: string,
+    isPrimitiveCollection: boolean,
     init?: RequestInit
   ): Promise<APIResponse<D, M>> {
     const response = await fetchImplementation(url, init)
@@ -26,11 +27,27 @@ export function fetchUtils(
       throw new Error(response.statusText)
     }
     const json = await response.json()
-    const model = {
-      data: (json.data ? json.data : []).map(camelCaseDeep),
+
+    const data = json.data ? json.data : []
+
+    return {
+      data: isPrimitiveCollection ? data : data.map(camelCaseDeep),
       meta: json.meta || {}
     }
-    return model
+  }
+
+  async function fetchPrimitiveCollection<D = any, M = any>(
+    url: string,
+    init?: RequestInit
+  ): Promise<APIResponse<D, M>>{
+    return getCollection(url, true, init)
+  }
+
+  async function fetchCollection<D = any, M = any>(
+    url: string,
+    init?: RequestInit
+  ): Promise<APIResponse<D, M>> {
+    return getCollection(url, false, init)
   }
 
   return {
@@ -59,6 +76,7 @@ export function fetchUtils(
     },
 
     fetchCollection,
+    fetchPrimitiveCollection,
 
     fetch: async (url: string, init?: RequestInit) => {
       const response = await fetchImplementation(url, init)

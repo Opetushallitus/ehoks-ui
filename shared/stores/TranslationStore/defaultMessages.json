@@ -51,6 +51,11 @@
   },
   {
     "locale": "fi",
+    "key": "errors.NotificationStore.haeOpiskelijapalautelinkit",
+    "value": "Opiskelijapalautelinkkien haku epäonnistui"
+  },
+  {
+    "locale": "fi",
     "key": "errors.OppilasStore.haePerusteet",
     "value": "Ammatillisten tutkintojen haku epäonnistui"
   },
