@@ -4,6 +4,8 @@ import styled from "styled"
 
 const StyledAlarm = styled(MdAlarm)`
   cursor: pointer;
+  width: 70px;
+  height: 70px;
 `
 
 interface FeedbackReminderProps {
@@ -18,7 +20,7 @@ export function FeedbackReminder(props: FeedbackReminderProps) {
 
   return (
     <React.Fragment>
-      <StyledAlarm size={60} onClick={props.onClick} />
+      <StyledAlarm onClick={props.onClick} />
     </React.Fragment>
   )
 }
