@@ -30,6 +30,7 @@ import {
   StudyPartType
 } from "./StudyPlanHelpers"
 import { PlannedStudies } from "./PlannedStudies"
+import { ScheduledStudies } from "./ScheduledStudies"
 const { colors } = theme
 
 const ProgressTitle = styled("h2")`
@@ -422,59 +423,14 @@ export class Opiskelusuunnitelma extends React.Component<
             toggleAccordion={this.toggleAccordion}
           />
 
-          <Accordion
-            id="suunnitelma.aikataulutetut"
-            open={
-              activeAccordions.suunnitelmat.aikataulutetut ||
-              hasActiveShare("aikataulutetut")
-            }
-            onToggle={this.toggleAccordion("suunnitelmat", "aikataulutetut")}
-            title={
-              <AccordionTitle>
-                <FormattedMessage
-                  id="opiskelusuunnitelma.aikataulutetutOpintoniTitle"
-                  defaultMessage="Aikataulutetut opintoni ({amount})"
-                  values={{ amount: aikataulutetutOpinnot.length }}
-                />
-              </AccordionTitle>
-            }
-            inline={true}
-            childContainer={false}
-          >
-            <StudiesContainer>
-              {aikataulutetutOpinnot.map((study, i) => {
-                const renderExtraItem = (i + 1) % 4 === 0
-                return (
-                  <React.Fragment key={`${study.id}_${i}`}>
-                    <StudyInfo
-                      accentColor={colors.scheduled}
-                      competenceRequirements={study.osaamisvaatimukset}
-                      competenceAcquiringMethods={study.osaamisenHankkimistavat}
-                      demonstrations={study.naytot}
-                      extraContent={
-                        study.olennainenSeikka ? elements.essentialFactor : null
-                      }
-                      fadedColor="#FDF6E9"
-                      koodiUri={study.tutkinnonOsaKoodiUri}
-                      learningPeriods={study.harjoittelujaksot}
-                      share={share}
-                      title={study.opintoOtsikko(competencePointsTitle)}
-                    />
-                    {renderExtraItem && <EmptyItem />}
-                  </React.Fragment>
-                )
-              })}
-              {!aikataulutetutOpinnot.length && (
-                <div>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.eiAikataulutettujaOpintojaTitle"
-                    defaultMessage="Ei aikataulutettuja opintoja"
-                  />
-                  .
-                </div>
-              )}
-            </StudiesContainer>
-          </Accordion>
+          <ScheduledStudies
+            accordionIsOpen={activeAccordions.suunnitelmat.aikataulutetut}
+            share={share}
+            hasActiveShare={hasActiveShare("aikataulutetut")}
+            toggleAccordion={this.toggleAccordion}
+            aikataulutetutOpinnot={aikataulutetutOpinnot}
+            competencePointsTitle={competencePointsTitle}
+          />
 
           <Accordion
             id="suunnitelma.valmiit"
