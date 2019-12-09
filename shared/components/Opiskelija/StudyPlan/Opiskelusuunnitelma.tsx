@@ -297,7 +297,10 @@ export class Opiskelusuunnitelma extends React.Component<
                 <StudyPoints
                   osaamispisteet={plan.osaamispisteet}
                   titleTranslationId={"opiskelusuunnitelma.laajuusTitle"}
-                  pointsTranslationId={"opiskelusuunnitelma.osaamispistettaPostfix"}/>
+                  pointsTranslationId={
+                    "opiskelusuunnitelma.osaamispistettaPostfix"
+                  }
+                />
                 <td />
               </tr>
               <tr>
@@ -336,8 +339,12 @@ export class Opiskelusuunnitelma extends React.Component<
 
           <StatBoxes>
             <ProgressPie
-              value={totalStudiesLength != 0 ? Math.round(
-                (suunnitellutOpinnot.length / totalStudiesLength) * 100) : 0
+              value={
+                totalStudiesLength != 0
+                  ? Math.round(
+                      (suunnitellutOpinnot.length / totalStudiesLength) * 100
+                    )
+                  : 0
               }
               stroke={colors.planned}
               title={
@@ -349,9 +356,13 @@ export class Opiskelusuunnitelma extends React.Component<
               onClick={this.showPlanSubAccordion("suunnitellut")}
             />
             <ProgressPie
-              value={totalStudiesLength != 0 ? Math.round(
-                (aikataulutetutOpinnot.length / totalStudiesLength) * 100
-              ) : 0}
+              value={
+                totalStudiesLength != 0
+                  ? Math.round(
+                      (aikataulutetutOpinnot.length / totalStudiesLength) * 100
+                    )
+                  : 0
+              }
               stroke={colors.scheduled}
               title={
                 <FormattedMessage
@@ -362,9 +373,13 @@ export class Opiskelusuunnitelma extends React.Component<
               onClick={this.showPlanSubAccordion("aikataulutetut")}
             />
             <ProgressPie
-              value={totalStudiesLength != 0 ? Math.round(
-                (valmiitOpinnot.length / totalStudiesLength) * 100
-              ) : 0}
+              value={
+                totalStudiesLength != 0
+                  ? Math.round(
+                      (valmiitOpinnot.length / totalStudiesLength) * 100
+                    )
+                  : 0
+              }
               stroke={colors.ready}
               title={
                 <FormattedMessage
@@ -537,48 +552,50 @@ export class Opiskelusuunnitelma extends React.Component<
         >
           <InfoTable>
             <tbody>
-            <tr>
-              <th>
-                <FormattedMessage
-                  id="opiskelusuunnitelma.opintoTitle"
-                  defaultMessage="Opinto"
-                />
-              </th>
-              <th>
-                <FormattedMessage
-                  id="opiskelusuunnitelma.kuvausTitle"
-                  defaultMessage="Kuvaus"
-                />
-              </th>
-              <th>
-                <FormattedMessage
-                  id="opiskelusuunnitelma.aloituspaivaTitle"
-                  defaultMessage="Aloituspäivä"
-                />
-              </th>
-              <th>
-                <FormattedMessage
-                  id="opiskelusuunnitelma.lopetuspaivaTitle"
-                  defaultMessage="Lopetuspäivä"
-                />
-              </th>
-            </tr>
-            {plan.opiskeluvalmiuksiaTukevatOpinnot.map((study, i) => {
-              return <tr key={`study_${i}`}>
-                <td>{study.nimi}</td>
-                <td>{study.kuvaus}</td>
-                <td>
-                  {study.alku
-                    ? format(parseISO(study.alku), "d.M.yyyy")
-                    : "-"}
-                </td>
-                <td>
-                  {study.loppu
-                    ? format(parseISO(study.loppu), "d.M.yyyy")
-                    : "-"}
-                </td>
+              <tr>
+                <th>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.opintoTitle"
+                    defaultMessage="Opinto"
+                  />
+                </th>
+                <th>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.kuvausTitle"
+                    defaultMessage="Kuvaus"
+                  />
+                </th>
+                <th>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.aloituspaivaTitle"
+                    defaultMessage="Aloituspäivä"
+                  />
+                </th>
+                <th>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.lopetuspaivaTitle"
+                    defaultMessage="Lopetuspäivä"
+                  />
+                </th>
               </tr>
-            })}
+              {plan.opiskeluvalmiuksiaTukevatOpinnot.map((study, i) => {
+                return (
+                  <tr key={`study_${i}`}>
+                    <td>{study.nimi}</td>
+                    <td>{study.kuvaus}</td>
+                    <td>
+                      {study.alku
+                        ? format(parseISO(study.alku), "d.M.yyyy")
+                        : "-"}
+                    </td>
+                    <td>
+                      {study.loppu
+                        ? format(parseISO(study.loppu), "d.M.yyyy")
+                        : "-"}
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </InfoTable>
         </Accordion>
