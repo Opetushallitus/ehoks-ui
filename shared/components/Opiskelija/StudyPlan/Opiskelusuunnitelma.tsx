@@ -23,6 +23,7 @@ import { parseShareParams } from "utils/shareParams"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import { StudyPoints } from "../../StudyPoints"
+import { OpiskelusuunnitelmaState, StudyPartType } from "./StudyPartsHelpers"
 const { colors } = theme
 
 const ProgressTitle = styled("h2")`
@@ -48,23 +49,6 @@ export type OpiskelusuunnitelmaProps = {
     essentialFactor?: React.ReactNode
   }
 } & RouteComponentProps
-
-export interface OpiskelusuunnitelmaState {
-  activeAccordions: {
-    suunnitelma: boolean
-    suunnitelmat: {
-      aikataulutetut: boolean
-      suunnitellut: boolean
-      valmiit: boolean
-    }
-    tavoitteet: boolean
-    tukevatOpinnot: boolean
-  }
-  share: {
-    koodiUri: string
-    type: ShareType | ""
-  }
-}
 
 @observer
 export class Opiskelusuunnitelma extends React.Component<
@@ -112,7 +96,7 @@ export class Opiskelusuunnitelma extends React.Component<
     return share.koodiUri !== "" && share.type !== ""
   }
 
-  hasActiveShare = (type: "aikataulutetut" | "suunnitellut" | "valmiit") => {
+  hasActiveShare = (type: StudyPartType) => {
     const {
       aikataulutetutOpinnot,
       suunnitellutOpinnot,
