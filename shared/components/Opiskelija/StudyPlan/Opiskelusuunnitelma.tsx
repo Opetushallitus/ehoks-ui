@@ -23,7 +23,13 @@ import { parseShareParams } from "utils/shareParams"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import { StudyPoints } from "../../StudyPoints"
-import { OpiskelusuunnitelmaState, StudyPartType } from "./StudyPartsHelpers"
+import {
+  ActiveAccordions,
+  OpiskelusuunnitelmaState,
+  StudyPartSubAccordions,
+  StudyPartType
+} from "./StudyPlanHelpers"
+import { PlannedStudies } from "./PlannedStudies"
 const { colors } = theme
 
 const ProgressTitle = styled("h2")`
@@ -148,9 +154,7 @@ export class Opiskelusuunnitelma extends React.Component<
     }
   }
 
-  showPlanSubAccordion = (
-    subAccordion: keyof OpiskelusuunnitelmaState["activeAccordions"]["suunnitelmat"]
-  ) => () => {
+  showPlanSubAccordion = (subAccordion: StudyPartSubAccordions) => () => {
     this.setState(
       state => ({
         ...state,
@@ -170,8 +174,8 @@ export class Opiskelusuunnitelma extends React.Component<
   }
 
   toggleAccordion = (
-    accordion: keyof OpiskelusuunnitelmaState["activeAccordions"],
-    subAccordion?: keyof OpiskelusuunnitelmaState["activeAccordions"]["suunnitelmat"]
+    accordion: ActiveAccordions,
+    subAccordion?: StudyPartSubAccordions
   ) => () => {
     this.setState(state => ({
       ...state,
@@ -188,16 +192,16 @@ export class Opiskelusuunnitelma extends React.Component<
   }
 
   toggleSubAccordion = (
-    accordion: boolean | { [subAccordionName: string]: boolean },
+    accordionState: boolean | { [subAccordionName: string]: boolean },
     subAccordion: string
   ) => {
     // no-op if accordion with sub-accordion has been accidentally initalized as boolean
-    if (typeof accordion === "boolean") {
-      return accordion
+    if (typeof accordionState === "boolean") {
+      return accordionState
     } else {
       return {
-        ...accordion,
-        [subAccordion]: !accordion[subAccordion]
+        ...accordionState,
+        [subAccordion]: !accordionState[subAccordion]
       }
     }
   }
@@ -394,59 +398,14 @@ export class Opiskelusuunnitelma extends React.Component<
           }
           childContainer={false}
         >
-          <Accordion
-            id="suunnitelma.suunnitellut"
-            open={
-              activeAccordions.suunnitelmat.suunnitellut ||
-              hasActiveShare("suunnitellut")
-            }
-            onToggle={this.toggleAccordion("suunnitelmat", "suunnitellut")}
-            title={
-              <AccordionTitle>
-                <FormattedMessage
-                  id="opiskelusuunnitelma.suunnitellutOpintoniTitle"
-                  defaultMessage="Suunnitellut opintoni ({amount})"
-                  values={{ amount: suunnitellutOpinnot.length }}
-                />
-              </AccordionTitle>
-            }
-            inline={true}
-            childContainer={false}
-          >
-            <StudiesContainer>
-              {suunnitellutOpinnot.map((study, i) => {
-                const renderExtraItem = (i + 1) % 4 === 0
-                return (
-                  <React.Fragment key={`${study.id}_${i}`}>
-                    <StudyInfo
-                      accentColor={colors.planned}
-                      competenceRequirements={study.osaamisvaatimukset}
-                      competenceAcquiringMethods={study.osaamisenHankkimistavat}
-                      demonstrations={study.naytot}
-                      extraContent={
-                        study.olennainenSeikka ? elements.essentialFactor : null
-                      }
-                      fadedColor="#FDF1E6"
-                      koodiUri={study.tutkinnonOsaKoodiUri}
-                      learningPeriods={study.harjoittelujaksot}
-                      share={share}
-                      title={study.opintoOtsikko(competencePointsTitle)}
-                    />
-                    {renderExtraItem && <EmptyItem />}
-                  </React.Fragment>
-                )
-              })}
-              {!suunnitellutOpinnot.length && (
-                <div>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.eiSuunniteltujaOpintojaTitle"
-                    defaultMessage="Ei suunniteltuja opintoja"
-                  />
-                  .
-                </div>
-              )}
-            </StudiesContainer>
-          </Accordion>
+          <PlannedStudies
+            accordionIsOpen={activeAccordions.suunnitelmat.suunnitellut}
+            competencePointsTitle={competencePointsTitle}
+            hasActiveShare={hasActiveShare("suunnitellut")}
+            share={share}
+            suunnitellutOpinnot={suunnitellutOpinnot}
+            toggleAccordion={this.toggleAccordion}
+          />
 
           <Accordion
             id="suunnitelma.aikataulutetut"

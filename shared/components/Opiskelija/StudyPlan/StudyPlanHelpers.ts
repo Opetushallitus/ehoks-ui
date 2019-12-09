@@ -18,3 +18,6 @@ export interface OpiskelusuunnitelmaState {
 }
 
 export type StudyPartType = "aikataulutetut" | "suunnitellut" | "valmiit"
+
+export type ActiveAccordions = keyof OpiskelusuunnitelmaState["activeAccordions"]
+export type StudyPartSubAccordions = keyof OpiskelusuunnitelmaState["activeAccordions"]["suunnitelmat"]
