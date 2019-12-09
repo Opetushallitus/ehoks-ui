@@ -22,7 +22,7 @@ import { ShareType } from "stores/NotificationStore"
 import { parseShareParams } from "utils/shareParams"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
-import { StudyPoints } from "../StudyPoints"
+import { StudyPoints } from "../../StudyPoints"
 const { colors } = theme
 
 const ProgressTitle = styled("h2")`
