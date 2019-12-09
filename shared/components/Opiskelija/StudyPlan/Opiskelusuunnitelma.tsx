@@ -1,14 +1,11 @@
 import { RouteComponentProps, navigate } from "@reach/router"
 import { Accordion } from "components/Accordion"
 import { AccordionTitle } from "components/AccordionTitle"
-import { EmptyItem } from "components/EmptyItem"
 import { Heading } from "components/Heading"
 import { InfoTable } from "components/InfoTable"
 import { LabeledColumn } from "components/LabeledColumn"
 import { ProgressPie } from "components/ProgressPie"
 import { StatBoxes } from "components/StatBox"
-import { StudiesContainer } from "components/StudiesContainer"
-import { StudyInfo } from "components/StudyInfo"
 import { observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
@@ -31,6 +28,7 @@ import {
 } from "./StudyPlanHelpers"
 import { PlannedStudies } from "./PlannedStudies"
 import { ScheduledStudies } from "./ScheduledStudies"
+import { CompletedStudies } from "./CompletedStudies"
 const { colors } = theme
 
 const ProgressTitle = styled("h2")`
@@ -420,70 +418,27 @@ export class Opiskelusuunnitelma extends React.Component<
             hasActiveShare={hasActiveShare("suunnitellut")}
             share={share}
             suunnitellutOpinnot={suunnitellutOpinnot}
+            elements={elements}
             toggleAccordion={this.toggleAccordion}
           />
-
           <ScheduledStudies
             accordionIsOpen={activeAccordions.suunnitelmat.aikataulutetut}
             share={share}
             hasActiveShare={hasActiveShare("aikataulutetut")}
             toggleAccordion={this.toggleAccordion}
             aikataulutetutOpinnot={aikataulutetutOpinnot}
+            elements={elements}
             competencePointsTitle={competencePointsTitle}
           />
-
-          <Accordion
-            id="suunnitelma.valmiit"
-            open={
-              activeAccordions.suunnitelmat.valmiit || hasActiveShare("valmiit")
-            }
-            onToggle={this.toggleAccordion("suunnitelmat", "valmiit")}
-            title={
-              <AccordionTitle>
-                <FormattedMessage
-                  id="opiskelusuunnitelma.valmiitOpintoniTitle"
-                  defaultMessage="Valmiit opintoni ({amount})"
-                  values={{ amount: valmiitOpinnot.length }}
-                />
-              </AccordionTitle>
-            }
-            inline={true}
-            childContainer={false}
-          >
-            <StudiesContainer>
-              {valmiitOpinnot.map((study, i) => {
-                const renderExtraItem = (i + 1) % 4 === 0
-                return (
-                  <React.Fragment key={`${study.id}_${i}`}>
-                    <StudyInfo
-                      accentColor={colors.ready}
-                      competenceRequirements={study.osaamisvaatimukset}
-                      competenceAcquiringMethods={study.osaamisenHankkimistavat}
-                      demonstrations={study.naytot}
-                      extraContent={
-                        study.olennainenSeikka ? elements.essentialFactor : null
-                      }
-                      fadedColor="#ECF6ED"
-                      koodiUri={study.tutkinnonOsaKoodiUri}
-                      learningPeriods={study.harjoittelujaksot}
-                      share={share}
-                      title={study.opintoOtsikko(competencePointsTitle)}
-                    />
-                    {renderExtraItem && <EmptyItem />}
-                  </React.Fragment>
-                )
-              })}
-              {!valmiitOpinnot.length && (
-                <div>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.eiValmiitaOpintojaTitle"
-                    defaultMessage="Ei valmiita opintoja"
-                  />
-                  .
-                </div>
-              )}
-            </StudiesContainer>
-          </Accordion>
+          <CompletedStudies
+            accordionIsOpen={activeAccordions.suunnitelmat.valmiit}
+            share={share}
+            hasActiveShare={hasActiveShare("valmiit")}
+            toggleAccordion={this.toggleAccordion}
+            valmiitOpinnot={valmiitOpinnot}
+            elements={elements}
+            competencePointsTitle={competencePointsTitle}
+          />
         </Accordion>
 
         <Accordion
