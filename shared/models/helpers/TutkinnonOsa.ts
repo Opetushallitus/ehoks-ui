@@ -41,6 +41,8 @@ export interface Naytto {
   koulutuksenJarjestajaArvioijat?: string[]
   tyoelamaArvioijat?: string[]
   tyotehtavat?: string[]
+  yksilollisetKriteerit?: string[]
+  vaatimuksistaTaiTavoitteistaPoikkeaminen?: string
   tyyppi?: "DEMONSTRATION"
 }
 
