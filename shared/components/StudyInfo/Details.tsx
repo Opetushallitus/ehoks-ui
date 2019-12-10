@@ -184,6 +184,9 @@ export class Details extends React.Component<DetailsProps> {
               </ShareDialog>
             )
           })}
+
+          <RequirementsAndReports toggle={toggle}/>
+
           {extraContent}
         </DetailsContent>
       </DetailsExpanded>
