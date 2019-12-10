@@ -16,6 +16,7 @@ import { FormattedMessage } from "react-intl"
 import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
+import { ToggleableItems } from "./StudyInfo/StudyInfoHelpers"
 
 interface ContainerProps {
   accentColor?: string
@@ -183,7 +184,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     }
   }
 
-  toggle = (name: "competences" | "details") => () => {
+  toggle = (name: ToggleableItems) => () => {
     this.setState(state => ({
       ...state,
       expanded: { ...state.expanded, [name]: !state.expanded[name] }

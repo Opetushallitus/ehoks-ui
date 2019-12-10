@@ -18,6 +18,8 @@ import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import { ShareType } from "stores/NotificationStore"
 import ShareDialog from "components/ShareDialog"
+import { RequirementsAndReports } from "./RequirementsAndReports"
+import { ToggleableItems } from "./StudyInfoHelpers"
 
 interface ColorProps {
   fadedColor: string
@@ -76,7 +78,7 @@ interface DetailsProps {
   learningPeriods?: Array<Harjoittelujakso>
   competenceAcquiringMethods?: Array<OsaamisenHankkimistapa>
   share?: { koodiUri: string; type: ShareType | "" }
-  toggle: (name: "competences" | "details") => () => void
+  toggle: (name: ToggleableItems) => () => void
   verificationProcess?: TodentamisenProsessi
 }
 
