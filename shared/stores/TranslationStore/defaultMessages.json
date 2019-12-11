@@ -141,6 +141,11 @@
   },
   {
     "locale": "fi",
+    "key": "opiskelusuunnitelma.piilotaPoikkeamatJaArviointikriteeritAriaLabel",
+    "value": "Piilota poikkeaminen ammattitaitovaatimuksista ja yksilölliset arviointikriteerisi"
+  },
+  {
+    "locale": "fi",
     "key": "opiskelusuunnitelma.nayttoTitle",
     "value": "Näyttö"
   },
