@@ -69,6 +69,10 @@ const VerificationTitle = styled("strong")`
   margin: 10px 0 8px 0;
 `
 
+interface DetailsState {
+  requirementsAndReportsExpanded: boolean
+}
+
 interface DetailsProps {
   fadedColor?: string
   demonstrations?: Array<Naytto>
@@ -82,10 +86,19 @@ interface DetailsProps {
   verificationProcess?: TodentamisenProsessi
 }
 
-export class Details extends React.Component<DetailsProps> {
+export class Details extends React.Component<DetailsProps, DetailsState> {
   static contextTypes = {
     intl: intlShape
   }
+
+  state: DetailsState = {
+    requirementsAndReportsExpanded: false
+  }
+
+  toggleRequirementsAndReports = () => {
+    this.setState(state => ({requirementsAndReportsExpanded: !state.requirementsAndReportsExpanded}))
+  }
+
   render() {
     const {
       demonstrations = [],
@@ -100,6 +113,7 @@ export class Details extends React.Component<DetailsProps> {
       verificationProcess
     } = this.props
     const { intl } = this.context
+    const { requirementsAndReportsExpanded} = this.state
 
     const verification = verificationProcess && verificationProcess.koodiUri
     const { SUORAAN, ARVIOIJIEN_KAUTTA, OHJAUS_NAYTTOON } = VerificationProcess
@@ -185,7 +199,7 @@ export class Details extends React.Component<DetailsProps> {
             )
           })}
 
-          <RequirementsAndReports toggle={toggle}/>
+          <RequirementsAndReports toggle={this.toggleRequirementsAndReports} expanded={requirementsAndReportsExpanded}/>
 
           {extraContent}
         </DetailsContent>

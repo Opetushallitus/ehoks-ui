@@ -3,7 +3,6 @@ import styled from "../../styled"
 import { FormattedMessage, intlShape } from "react-intl"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
-import { ToggleableItems } from "./StudyInfoHelpers"
 
 const RequirementsAndReportsContainer = styled("div")`
   display: flex;
@@ -26,7 +25,8 @@ const ExpandTitle = styled("div")`
 `
 
 interface RequirementsAndReportsProps {
-  toggle: (name: ToggleableItems) => () => void
+  expanded: boolean
+  toggle: () => void
 }
 
 export class RequirementsAndReports extends React.Component<RequirementsAndReportsProps> {
@@ -35,10 +35,14 @@ export class RequirementsAndReports extends React.Component<RequirementsAndRepor
   }
 
   render() {
-    // const { toggle } = this.props
+    const { expanded, toggle } = this.props
     const { intl } = this.context
 
-    return (
+    return expanded ? (
+      <RequirementsAndReportsContainer>
+        Nyt laajennettu
+      </RequirementsAndReportsContainer>
+    ) : (
       <RequirementsAndReportsContainer>
         <ExpandContainer>
           <ExpandTitle>
@@ -48,7 +52,7 @@ export class RequirementsAndReports extends React.Component<RequirementsAndRepor
             />
           </ExpandTitle>
           <IconContainer
-            // onClick={toggle("TODO")}
+            onClick={toggle}
             aria-label={intl.formatMessage({
               id: "opiskelusuunnitelma.naytaPoikkeamatJaArviointikriteeritAriaLabel"
             })}
