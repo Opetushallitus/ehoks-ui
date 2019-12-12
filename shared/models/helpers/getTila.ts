@@ -27,8 +27,10 @@ export function getTila(
   const maxOsoittaminenDate = max (osoittaminenEndDates)
   const endCutoffDate = new Date(new Date().setDate(new Date().getDate() - 14))
 
-  if (!minStartDate || !maxEndDate || !minOsoittaminenDate || !maxOsoittaminenDate) {
+  if (!minStartDate || !maxEndDate) {
     return "suunniteltu"
+  } else if (!minOsoittaminenDate || !maxOsoittaminenDate) {
+    return "aikataulutettu"
   } else if (minOsoittaminenDate < endCutoffDate && maxOsoittaminenDate < endCutoffDate) {
     return "valmis"
   } else {
