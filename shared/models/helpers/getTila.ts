@@ -5,25 +5,31 @@ export function getTila(
   osaamisenOsoittaminen: any[],
   osaamisenHankkimistavat: any[]
 ) {
-  const startDates: Date[] = []
-  const endDates: Date[] = []
+  const osoittaminenStartDates: Date[] = []
+  const osoittaminenEndDates: Date[] = []
+  const combinedStartDates: Date[] = []
+  const combinedEndDates: Date[] = []
 
   osaamisenOsoittaminen.forEach(oo => {
-    startDates.push(new Date(oo.alku))
-    endDates.push(new Date(oo.loppu))
+    osoittaminenStartDates.push(new Date(oo.alku))
+    osoittaminenEndDates.push(new Date(oo.loppu))
+    combinedStartDates.push(new Date(oo.alku))
+    combinedEndDates.push(new Date(oo.loppu))
   })
   osaamisenHankkimistavat.forEach(oht => {
-    startDates.push(new Date(oht.alku))
-    endDates.push(new Date(oht.loppu))
+    combinedStartDates.push(new Date(oht.alku))
+    combinedEndDates.push(new Date(oht.loppu))
   })
 
-  const minStartDate = min(startDates)
-  const maxEndDate = max(endDates)
-  const now = new Date()
+  const minStartDate = min(combinedStartDates)
+  const maxEndDate = max(combinedEndDates)
+  const minOsoittaminenDate = min(osoittaminenStartDates)
+  const maxOsoittaminenDate = max (osoittaminenEndDates)
+  const endCutoffDate = new Date(new Date().setDate(new Date().getDate() - 14))
 
-  if (!minStartDate || !maxEndDate) {
+  if (!minStartDate || !maxEndDate || !minOsoittaminenDate || !maxOsoittaminenDate) {
     return "suunniteltu"
-  } else if (minStartDate < now && maxEndDate < now) {
+  } else if (minOsoittaminenDate < endCutoffDate && maxOsoittaminenDate < endCutoffDate) {
     return "valmis"
   } else {
     return "aikataulutettu"

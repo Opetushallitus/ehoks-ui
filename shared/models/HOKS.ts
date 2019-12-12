@@ -211,14 +211,7 @@ export const HOKS = types
           : ""
       },
       get valmiitOpinnot() {
-        const endCutoffDate = new Date(new Date().setDate(new Date().getDate() - 14))
-        return this.hankittavatTutkinnonOsat.filter((to) => {
-          if (to.tila === "valmis") {
-            return to.osaamisenOsoittaminen && to.osaamisenOsoittaminen.length && to.osaamisenOsoittaminen[0].loppu
-                ? new Date(to.osaamisenOsoittaminen[0].loppu) < endCutoffDate
-                : false
-          }
-        })
+          return this.hankittavatTutkinnonOsat.filter(to => to.tila === "valmis")
       },
       get tutkintonimike() {
         return self.opiskeluOikeus.suoritukset &&
