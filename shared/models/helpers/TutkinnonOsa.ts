@@ -15,10 +15,21 @@ export interface Osaamisvaatimus {
   kriteerit?: Arviointikriteeri[]
 }
 
+export interface Oppimisymparisto {
+  nimi?: string
+}
+export interface MuuOppimisymparisto {
+  alku?: string
+  loppu?: string
+  oppimisymparisto?: Oppimisymparisto
+}
+
 export interface OsaamisenHankkimistapa {
   tyopaikallaJarjestettavaKoulutus?: { tyopaikanYTunnus: string }
+  osaamisenHankkimistapaKoodiUri?: string
   ajanjaksonTarkenne?: string
   jarjestajanEdustaja?: { nimi?: string; oppilaitosOid?: string }
+  muutOppimisymparistot?: MuuOppimisymparisto[]
 }
 
 export interface Nayttoymparisto {

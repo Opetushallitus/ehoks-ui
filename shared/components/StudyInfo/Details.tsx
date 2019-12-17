@@ -6,6 +6,7 @@ import { Demonstration } from "./Demonstration"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
 import { LearningPeriod } from "./LearningPeriod"
+import { OtherPeriod } from "./OtherPeriod"
 import {
   Harjoittelujakso,
   Naytto,
@@ -144,6 +145,10 @@ export class Details extends React.Component<DetailsProps, DetailsState> {
       ? { start: firstLearningPeriod.alku, end: firstLearningPeriod.loppu }
       : undefined
 
+    const otherPeriods = competenceAcquiringMethods[0] && competenceAcquiringMethods[0].muutOppimisymparistot
+        ? competenceAcquiringMethods[0] && competenceAcquiringMethods[0].muutOppimisymparistot
+        : []
+
     return expanded ? (
       <DetailsExpanded
         fadedColor={fadedColor}
@@ -175,6 +180,10 @@ export class Details extends React.Component<DetailsProps, DetailsState> {
               return <LearningPeriod key={i} learningPeriod={period} competenceAcquiringMethods={competenceAcquiringMethods} />
             })}
           </ShareDialog>
+
+          {otherPeriods.map((period, i) => {
+            return <OtherPeriod key={i} otherPeriod={period} />
+          })}
 
           {demonstrations.map((demonstration, i) => {
             return (

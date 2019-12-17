@@ -13,10 +13,13 @@ export function getHarjoittelujaksot(
       oppimisymparisto: { nimi: string }
       selite: string
     }>
+    osaamisenHankkimistapaKoodiUri: string
   }>
 ) {
   return osaamisenHankkimistavat.map<Harjoittelujakso>(tapa => {
-    const tyyppi = tapa.muutOppimisymparistot.length > 0 ? "OTHER" : "WORKPLACE"
+    const tyyppi = tapa.osaamisenHankkimistapaKoodiUri.includes("koulutussopimus") || tapa.osaamisenHankkimistapaKoodiUri.includes("oppisopimus")
+        ? "WORKPLACE"
+        : "OTHER"
 
     return {
       alku: tapa.alku,
