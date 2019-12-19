@@ -4,6 +4,20 @@ import { FormattedMessage, intlShape } from "react-intl"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
 import { Collapse } from "./Collapse"
+import { HorizontalLine } from "../HorizontalLine"
+
+const Line = styled(HorizontalLine)`
+  width: unset;
+  margin: 0;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    display: none;
+  }
+`
+
+const Prefix = styled("div")`
+  margin: 10px 0 10px 20px;
+`
 
 const Container = styled("div")`
   background: #fff;
@@ -88,6 +102,7 @@ export class RequirementsAndReports extends React.Component<
                 <Collapse size={40} />
               </IconContainer>
             </CollapseContainer>
+            <Line height="2px" backgroundColor="#000" />
           </RequirementsAndReportsContainer>
         ) : (
           <RequirementsAndReportsContainer>
@@ -109,6 +124,17 @@ export class RequirementsAndReports extends React.Component<
               </IconContainer>
             </ExpandContainer>
           </RequirementsAndReportsContainer>
+        )}
+        {expanded && (
+          <React.Fragment>
+            <Prefix>
+              <FormattedMessage
+                id="opiskelusuunnitelma.poiketaanPrefix"
+                defaultMessage="Poiketaan"
+                tagName="i"
+              />
+            </Prefix>
+          </React.Fragment>
         )}
       </Container>
     )
