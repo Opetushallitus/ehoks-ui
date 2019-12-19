@@ -40,7 +40,5 @@ export function CustomBooleanRadioButtonWidget(props: WidgetProps) {
 }
 
 CustomBooleanRadioButtonWidget.defaultProps = {
-  autofocus: false,
-  // FEATURE TOGGLE: osaamisen-hankkimisen-tarve, poista default value kunhan tämä kenttä muutettu pakolliseksi
-  value: false
+  autofocus: false
 }
