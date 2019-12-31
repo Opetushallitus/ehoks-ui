@@ -5,6 +5,7 @@ import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
 import { Collapse } from "./Collapse"
 import { HorizontalLine } from "../HorizontalLine"
+import { InfoContainer } from "./Shared"
 
 const Line = styled(HorizontalLine)`
   width: unset;
@@ -57,6 +58,7 @@ const CollapseTitle = styled("h2")`
   margin: 0;
   font-size: 22px;
   font-weight: 600;
+  cursor: pointer;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     flex: unset;
@@ -64,10 +66,15 @@ const CollapseTitle = styled("h2")`
   }
 `
 
+const Requirements = styled(InfoContainer)`
+  margin: 10px 20px 20px 20px;
+`
 
 interface RequirementsAndReportsProps {
   expanded: boolean
   toggle: () => void
+  requirements?: string[]
+  deviations?: string
 }
 
 export class RequirementsAndReports extends React.Component<
@@ -78,7 +85,7 @@ export class RequirementsAndReports extends React.Component<
   }
 
   render() {
-    const { expanded, toggle } = this.props
+    const { expanded, toggle, requirements, deviations } = this.props
     const { intl } = this.context
 
     return (
@@ -86,7 +93,7 @@ export class RequirementsAndReports extends React.Component<
         {expanded ? (
           <RequirementsAndReportsContainer>
             <CollapseContainer>
-              <CollapseTitle>
+              <CollapseTitle onClick={toggle}>
                 <FormattedMessage
                   id="opiskelusuunnitelma.poikkeamatJaArviointikriteerit"
                   defaultMessage="Poikkeaminen ammattitaitovaatimuksista ja yksilölliset arviointikriteerisi"
@@ -103,6 +110,19 @@ export class RequirementsAndReports extends React.Component<
               </IconContainer>
             </CollapseContainer>
             <Line height="2px" backgroundColor="#000" />
+            <Prefix>
+              <FormattedMessage
+                id="opiskelusuunnitelma.poiketaanPrefix"
+                defaultMessage="Poiketaan"
+                tagName="i"
+              />
+            </Prefix>
+            <Requirements>
+              {requirements &&
+              requirements.map((requirement, i) => {
+                return <li key={i}>{requirement}</li>
+              })}
+            </Requirements>
           </RequirementsAndReportsContainer>
         ) : (
           <RequirementsAndReportsContainer>
@@ -124,17 +144,6 @@ export class RequirementsAndReports extends React.Component<
               </IconContainer>
             </ExpandContainer>
           </RequirementsAndReportsContainer>
-        )}
-        {expanded && (
-          <React.Fragment>
-            <Prefix>
-              <FormattedMessage
-                id="opiskelusuunnitelma.poiketaanPrefix"
-                defaultMessage="Poiketaan"
-                tagName="i"
-              />
-            </Prefix>
-          </React.Fragment>
         )}
       </Container>
     )

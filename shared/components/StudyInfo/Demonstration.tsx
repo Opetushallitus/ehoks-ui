@@ -205,7 +205,8 @@ export class Demonstration extends React.Component<
         <RequirementsAndReports
           toggle={this.toggleRequirementsAndReports}
           expanded={requirementsAndReportsExpanded}
-          yksilollisetKriteerit={demonstration.yksilollisetKriteerit}
+          requirements={demonstration.yksilollisetKriteerit}
+          deviations={demonstration.vaatimuksistaTaiTavoitteistaPoikkeaminen}
         />
       </Container>
     )
