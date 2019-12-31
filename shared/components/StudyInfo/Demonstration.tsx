@@ -61,7 +61,10 @@ interface DemonstrationProps {
   hasActiveShare?: boolean
 }
 
-export class Demonstration extends React.Component<DemonstrationProps, DemonstrationState> {
+export class Demonstration extends React.Component<
+  DemonstrationProps,
+  DemonstrationState
+> {
   static contextType = AppContext
   context!: React.ContextType<typeof AppContext>
 
@@ -70,7 +73,9 @@ export class Demonstration extends React.Component<DemonstrationProps, Demonstra
   }
 
   toggleRequirementsAndReports = () => {
-    this.setState(state => ({requirementsAndReportsExpanded: !state.requirementsAndReportsExpanded}))
+    this.setState(state => ({
+      requirementsAndReportsExpanded: !state.requirementsAndReportsExpanded
+    }))
   }
 
   share = () => {
@@ -197,7 +202,11 @@ export class Demonstration extends React.Component<DemonstrationProps, Demonstra
             }
           }}
         </MediaQuery>
-        <RequirementsAndReports toggle={this.toggleRequirementsAndReports} expanded={requirementsAndReportsExpanded}/>
+        <RequirementsAndReports
+          toggle={this.toggleRequirementsAndReports}
+          expanded={requirementsAndReportsExpanded}
+          yksilollisetKriteerit={demonstration.yksilollisetKriteerit}
+        />
       </Container>
     )
   }
