@@ -5,7 +5,7 @@ import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
 import { Collapse } from "./Collapse"
 import { HorizontalLine } from "../HorizontalLine"
-import { InfoContainer } from "./Shared"
+import { InfoContainer, InfoTextContainer } from "./Shared"
 
 const Line = styled(HorizontalLine)`
   width: unset;
@@ -70,6 +70,10 @@ const Requirements = styled(InfoContainer)`
   margin: 10px 20px 20px 20px;
 `
 
+const Deviations = styled(InfoTextContainer)`
+  margin: 10px 20px 20px 20px;
+`
+
 interface RequirementsAndReportsProps {
   expanded: boolean
   toggle: () => void
@@ -114,6 +118,16 @@ export class RequirementsAndReports extends React.Component<
               <FormattedMessage
                 id="opiskelusuunnitelma.poiketaanPrefix"
                 defaultMessage="Poiketaan"
+                tagName="i"
+              />
+            </Prefix>
+            <Deviations>
+              {deviations}
+            </Deviations>
+            <Prefix>
+              <FormattedMessage
+                id="opiskelusuunnitelma.yksilollisetArviointikriteeritPrefix"
+                defaultMessage="Yksilölliset arviointikriteerisi"
                 tagName="i"
               />
             </Prefix>
