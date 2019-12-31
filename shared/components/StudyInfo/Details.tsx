@@ -19,7 +19,6 @@ import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import { ShareType } from "stores/NotificationStore"
 import ShareDialog from "components/ShareDialog"
-import { RequirementsAndReports } from "./RequirementsAndReports"
 import { ToggleableItems } from "./StudyInfoHelpers"
 
 interface ColorProps {
@@ -70,10 +69,6 @@ const VerificationTitle = styled("strong")`
   margin: 10px 0 8px 0;
 `
 
-interface DetailsState {
-  requirementsAndReportsExpanded: boolean
-}
-
 interface DetailsProps {
   fadedColor?: string
   demonstrations?: Array<Naytto>
@@ -87,17 +82,9 @@ interface DetailsProps {
   verificationProcess?: TodentamisenProsessi
 }
 
-export class Details extends React.Component<DetailsProps, DetailsState> {
+export class Details extends React.Component<DetailsProps> {
   static contextTypes = {
     intl: intlShape
-  }
-
-  state: DetailsState = {
-    requirementsAndReportsExpanded: false
-  }
-
-  toggleRequirementsAndReports = () => {
-    this.setState(state => ({requirementsAndReportsExpanded: !state.requirementsAndReportsExpanded}))
   }
 
   render() {
@@ -114,7 +101,6 @@ export class Details extends React.Component<DetailsProps, DetailsState> {
       verificationProcess
     } = this.props
     const { intl } = this.context
-    const { requirementsAndReportsExpanded} = this.state
 
     const verification = verificationProcess && verificationProcess.koodiUri
     const { SUORAAN, ARVIOIJIEN_KAUTTA, OHJAUS_NAYTTOON } = VerificationProcess
@@ -207,8 +193,6 @@ export class Details extends React.Component<DetailsProps, DetailsState> {
               </ShareDialog>
             )
           })}
-
-          <RequirementsAndReports toggle={this.toggleRequirementsAndReports} expanded={requirementsAndReportsExpanded}/>
 
           {extraContent}
         </DetailsContent>
