@@ -13,7 +13,7 @@ import { MdShare } from "react-icons/md"
 import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
-import { RequirementsAndReports } from "./RequirementsAndReports"
+import { RequirementsAndDeviations } from "./RequirementsAndDeviations"
 
 const DemonstrationTitle = styled(Title)`
   display: flex;
@@ -51,7 +51,7 @@ const ShareIcon = styled(MdShare)`
 `
 
 interface DemonstrationState {
-  requirementsAndReportsExpanded: boolean
+  requirementsAndDeviationsExpanded: boolean
 }
 
 interface DemonstrationProps {
@@ -69,12 +69,12 @@ export class Demonstration extends React.Component<
   context!: React.ContextType<typeof AppContext>
 
   state: DemonstrationState = {
-    requirementsAndReportsExpanded: false
+    requirementsAndDeviationsExpanded: false
   }
 
-  toggleRequirementsAndReports = () => {
+  toggleRequirementsAndDeviations = () => {
     this.setState(state => ({
-      requirementsAndReportsExpanded: !state.requirementsAndReportsExpanded
+      requirementsAndDeviationsExpanded: !state.requirementsAndDeviationsExpanded
     }))
   }
 
@@ -97,7 +97,7 @@ export class Demonstration extends React.Component<
       verificationProcess
     } = this.props
     const { featureFlags } = this.context
-    const { requirementsAndReportsExpanded } = this.state
+    const { requirementsAndDeviationsExpanded } = this.state
 
     const title =
       verificationProcess &&
@@ -202,9 +202,9 @@ export class Demonstration extends React.Component<
             }
           }}
         </MediaQuery>
-        <RequirementsAndReports
-          toggle={this.toggleRequirementsAndReports}
-          expanded={requirementsAndReportsExpanded}
+        <RequirementsAndDeviations
+          toggle={this.toggleRequirementsAndDeviations}
+          expanded={requirementsAndDeviationsExpanded}
           requirements={demonstration.yksilollisetKriteerit}
           deviations={demonstration.vaatimuksistaTaiTavoitteistaPoikkeaminen}
         />

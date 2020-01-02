@@ -24,7 +24,7 @@ const Container = styled("div")`
   background: #fff;
 `
 
-const RequirementsAndReportsContainer = styled("div")`
+const RequirementsAndDeviationsContainer = styled("div")`
   border-top: 1px solid #c9cdcf;
   border-bottom: 1px solid #c9cdcf;
 `
@@ -74,15 +74,15 @@ const Deviations = styled(InfoTextContainer)`
   margin: 10px 20px 20px 20px;
 `
 
-interface RequirementsAndReportsProps {
+interface RequirementsAndDeviationsProps {
   expanded: boolean
   toggle: () => void
   requirements?: string[]
   deviations?: string
 }
 
-export class RequirementsAndReports extends React.Component<
-  RequirementsAndReportsProps
+export class RequirementsAndDeviations extends React.Component<
+  RequirementsAndDeviationsProps
 > {
   static contextTypes = {
     intl: intlShape
@@ -95,7 +95,7 @@ export class RequirementsAndReports extends React.Component<
     return (
       <Container>
         {expanded ? (
-          <RequirementsAndReportsContainer>
+          <RequirementsAndDeviationsContainer>
             <CollapseContainer>
               <CollapseTitle onClick={toggle}>
                 <FormattedMessage
@@ -137,9 +137,9 @@ export class RequirementsAndReports extends React.Component<
                 return <li key={i}>{requirement}</li>
               })}
             </Requirements>
-          </RequirementsAndReportsContainer>
+          </RequirementsAndDeviationsContainer>
         ) : (
-          <RequirementsAndReportsContainer>
+          <RequirementsAndDeviationsContainer>
             <ExpandContainer>
               <ExpandTitle onClick={toggle}>
                 <FormattedMessage
@@ -157,7 +157,7 @@ export class RequirementsAndReports extends React.Component<
                 <Expand size={40} />
               </IconContainer>
             </ExpandContainer>
-          </RequirementsAndReportsContainer>
+          </RequirementsAndDeviationsContainer>
         )}
       </Container>
     )
