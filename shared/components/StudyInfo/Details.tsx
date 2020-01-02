@@ -19,6 +19,7 @@ import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import { ShareType } from "stores/NotificationStore"
 import ShareDialog from "components/ShareDialog"
+import { ToggleableItems } from "./StudyInfoHelpers"
 
 interface ColorProps {
   fadedColor: string
@@ -77,7 +78,7 @@ interface DetailsProps {
   learningPeriods?: Array<Harjoittelujakso>
   competenceAcquiringMethods?: Array<OsaamisenHankkimistapa>
   share?: { koodiUri: string; type: ShareType | "" }
-  toggle: (name: "competences" | "details") => () => void
+  toggle: (name: ToggleableItems) => () => void
   verificationProcess?: TodentamisenProsessi
 }
 
@@ -85,6 +86,7 @@ export class Details extends React.Component<DetailsProps> {
   static contextTypes = {
     intl: intlShape
   }
+
   render() {
     const {
       demonstrations = [],
@@ -191,6 +193,7 @@ export class Details extends React.Component<DetailsProps> {
               </ShareDialog>
             )
           })}
+
           {extraContent}
         </DetailsContent>
       </DetailsExpanded>

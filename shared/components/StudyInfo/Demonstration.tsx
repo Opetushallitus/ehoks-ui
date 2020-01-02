@@ -13,6 +13,8 @@ import { MdShare } from "react-icons/md"
 import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
+// {/*FEATURE EH-707 uncomment other places too*/}
+//// import { RequirementsAndReports } from "./RequirementsAndReports"
 
 const DemonstrationTitle = styled(Title)`
   display: flex;
@@ -49,6 +51,10 @@ const ShareIcon = styled(MdShare)`
   margin-left: 6px;
 `
 
+interface DemonstrationState {
+  requirementsAndReportsExpanded: boolean
+}
+
 interface DemonstrationProps {
   demonstration: Naytto
   verificationProcess?: TodentamisenProsessi
@@ -56,9 +62,22 @@ interface DemonstrationProps {
   hasActiveShare?: boolean
 }
 
-export class Demonstration extends React.Component<DemonstrationProps> {
+export class Demonstration extends React.Component<
+  DemonstrationProps,
+  DemonstrationState
+> {
   static contextType = AppContext
   context!: React.ContextType<typeof AppContext>
+
+  state: DemonstrationState = {
+    requirementsAndReportsExpanded: false
+  }
+
+  toggleRequirementsAndReports = () => {
+    this.setState(state => ({
+      requirementsAndReportsExpanded: !state.requirementsAndReportsExpanded
+    }))
+  }
 
   share = () => {
     const { koodiUri } = this.props
@@ -79,6 +98,8 @@ export class Demonstration extends React.Component<DemonstrationProps> {
       verificationProcess
     } = this.props
     const { featureFlags } = this.context
+    // {/*FEATURE EH-707 uncomment other places too*/}
+    // const { requirementsAndReportsExpanded } = this.state
 
     const title =
       verificationProcess &&
@@ -183,6 +204,13 @@ export class Demonstration extends React.Component<DemonstrationProps> {
             }
           }}
         </MediaQuery>
+        {/*FEATURE EH-707 uncomment other places too*/}
+        {/*<RequirementsAndReports*/}
+        {/*  toggle={this.toggleRequirementsAndReports}*/}
+        {/*  expanded={requirementsAndReportsExpanded}*/}
+        {/*  requirements={demonstration.yksilollisetKriteerit}*/}
+        {/*  deviations={demonstration.vaatimuksistaTaiTavoitteistaPoikkeaminen}*/}
+        {/*/>*/}
       </Container>
     )
   }

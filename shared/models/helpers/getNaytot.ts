@@ -15,6 +15,8 @@ export function getNaytot(
       organisaatio: { oppilaitosOid: string; oppilaitosNimi: string }
     }>
     sisallonKuvaus: string[]
+    yksilollisetKriteerit: string[]
+    vaatimuksistaTaiTavoitteistaPoikkeaminen: string
   }>
 ) {
   return osaamisenOsoittaminen.map<Naytto>(naytto => ({
@@ -28,7 +30,8 @@ export function getNaytot(
     tyoelamaArvioijat: naytto.tyoelamaOsaamisenArvioijat.map(a =>
       [a.nimi, a.organisaatio.nimi].filter(Boolean).join(", ")
     ),
-
+    yksilollisetKriteerit: naytto.yksilollisetKriteerit,
+    vaatimuksistaTaiTavoitteistaPoikkeaminen: naytto.vaatimuksistaTaiTavoitteistaPoikkeaminen,
     tyotehtavat: naytto.sisallonKuvaus,
     tyyppi: "DEMONSTRATION"
   }))
