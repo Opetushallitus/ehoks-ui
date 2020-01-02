@@ -31,7 +31,8 @@ const RequirementsAndDeviationsContainer = styled("div")`
 
 const ExpandContainer = styled("div")`
   display: flex;
-  padding: 20px 10px 20px 20px;
+  align-items: center;
+  padding: 10px 10px 10px 20px;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     padding: 10px 10px 10px 20px;
