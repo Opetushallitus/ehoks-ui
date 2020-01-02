@@ -44,7 +44,6 @@ const ExpandTitle = styled("div")`
 `
 
 const CollapseContainer = styled("div")`
-  flex: 1;
   display: flex;
   padding: 20px 10px 10px 20px;
 
@@ -56,6 +55,7 @@ const CollapseContainer = styled("div")`
 
 const CollapseTitle = styled("h2")`
   margin: 0;
+  flex: 1;
   font-size: 22px;
   font-weight: 600;
   cursor: pointer;

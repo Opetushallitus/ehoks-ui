@@ -59,6 +59,7 @@ export const InfoTextContainer = styled("div")`
   background: #fff;
   border-radius: 3px;
   border: 1px solid #999;
+  padding: 6px 20px;
 `
 
 export const InfoContainer = styled("ul")`
