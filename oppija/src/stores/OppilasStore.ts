@@ -11,7 +11,9 @@ const OppilasStoreModel = {
 export const OppilasStore = types
   .model("OppilasStore", OppilasStoreModel)
   .actions(self => {
-    const { apiUrl, fetchCollection, errors, callerId } = getEnv<StoreEnvironment>(self)
+    const { apiUrl, fetchCollection, errors, callerId } = getEnv<
+      StoreEnvironment
+    >(self)
     // tracks the most recent fetch by user
     let newestPromise = null
 

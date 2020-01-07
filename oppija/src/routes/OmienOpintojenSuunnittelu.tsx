@@ -6,7 +6,7 @@ import { HOKSEidContext } from "components/HOKSEidContext"
 import Flag from "components/icons/Flag"
 import { NavigationContainer } from "components/NavigationContainer"
 import { AiempiOsaaminen } from "components/Opiskelija/AiempiOsaaminen"
-import { Opiskelusuunnitelma } from "components/Opiskelija/Opiskelusuunnitelma"
+import { Opiskelusuunnitelma } from "components/Opiskelija/StudyPlan/Opiskelusuunnitelma"
 import { Tavoitteet } from "components/Opiskelija/Tavoitteet"
 import { ProgressPies } from "components/ProgressPies"
 import { BackgroundContainer } from "components/SectionContainer"
@@ -25,6 +25,7 @@ const Section = styled("div")`
   display: flex;
   flex-direction: row;
   flex: 1;
+  flex-wrap: wrap;
 `
 
 const SectionContainer = styled("div")`
@@ -33,6 +34,11 @@ const SectionContainer = styled("div")`
   justify-content: flex-end;
   align-items: flex-end;
   margin-bottom: 20px;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    margin-top: 30px;
+    justify-content: center;
+  }
 `
 
 const SectionItems = styled(ProgressPies)`

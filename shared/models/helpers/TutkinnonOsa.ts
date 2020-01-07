@@ -15,6 +15,35 @@ export interface Osaamisvaatimus {
   kriteerit?: Arviointikriteeri[]
 }
 
+export interface Oppimisymparisto {
+  nimi?: string
+}
+export interface MuuOppimisymparisto {
+  alku?: string
+  loppu?: string
+  oppimisymparisto?: Oppimisymparisto
+}
+
+export interface OsaamisenHankkimistapa {
+  tyopaikallaJarjestettavaKoulutus?: { tyopaikanYTunnus: string }
+  osaamisenHankkimistapaKoodiUri?: string
+  ajanjaksonTarkenne?: string
+  jarjestajanEdustaja?: { nimi?: string; oppilaitosOid?: string }
+  muutOppimisymparistot?: MuuOppimisymparisto[]
+}
+
+export interface Nayttoymparisto {
+  kuvaus?: string
+  nimi?: string
+  yTunnus?: string
+}
+export interface OsaamisenOsoittaminen {
+  alku?: string
+  loppu?: string
+  jarjestaja?: { oppilaitosOid?: string }
+  nayttoYmparisto?: Nayttoymparisto
+}
+
 export interface Naytto {
   alku?: string
   loppu?: string
@@ -23,6 +52,8 @@ export interface Naytto {
   koulutuksenJarjestajaArvioijat?: string[]
   tyoelamaArvioijat?: string[]
   tyotehtavat?: string[]
+  yksilollisetKriteerit?: string[]
+  vaatimuksistaTaiTavoitteistaPoikkeaminen?: string
   tyyppi?: "DEMONSTRATION"
 }
 
@@ -39,6 +70,8 @@ export interface Harjoittelujakso {
 export interface TutkinnonOsa {
   id?: number
   osaamisvaatimukset?: Osaamisvaatimus[]
+  osaamisenHankkimistavat?: OsaamisenHankkimistapa[]
+  osaamisenOsoittaminen?: OsaamisenOsoittaminen[]
   naytot?: Naytto[]
   otsikko?: string
   osaamispisteet?: number

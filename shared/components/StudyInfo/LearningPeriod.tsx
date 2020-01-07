@@ -14,7 +14,7 @@ import {
   TH,
   Title
 } from "./Shared"
-import { Harjoittelujakso } from "models/helpers/TutkinnonOsa"
+import {Harjoittelujakso, OsaamisenHankkimistapa} from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
 
 const LearningPeriodTitle = styled(Title)`
@@ -36,11 +36,12 @@ const CustomSlider = styled(MobileSlider)`
 
 interface LearningPeriodProps {
   learningPeriod: Harjoittelujakso
+  competenceAcquiringMethods?: Array<OsaamisenHankkimistapa>
 }
 
 export class LearningPeriod extends React.Component<LearningPeriodProps> {
   render() {
-    const { learningPeriod } = this.props
+    const { learningPeriod, competenceAcquiringMethods } = this.props
     const {
       tyotehtavat = [],
       alku,
@@ -50,6 +51,15 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
       ohjaaja,
       selite
     } = learningPeriod
+
+    const method = competenceAcquiringMethods ? competenceAcquiringMethods[0] : undefined
+    const workplaceSelite = tyyppi === "WORKPLACE" && method && method.tyopaikallaJarjestettavaKoulutus ?
+        selite + ", " + method.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus :
+        selite
+    const periodSpecifier = method && method.ajanjaksonTarkenne ? method.ajanjaksonTarkenne : ""
+    const organizer = method && method.jarjestajanEdustaja ? method && method.jarjestajanEdustaja : undefined
+    const organizerRepresentative = organizer && organizer.nimi ? organizer.nimi : ""
+
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
         {(alku || loppu) && (
@@ -66,9 +76,10 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                 )
               }
               type={tyyppi}
-              description={selite}
+              description={tyyppi === "WORKPLACE" ? workplaceSelite : selite}
               startDate={alku}
               endDate={loppu}
+              periodSpecifier={periodSpecifier}
               size="large"
             />
           </LearningPeriodTitle>
@@ -84,9 +95,23 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                   />
                 </TH>
                 <TD>
-                  {ohjaaja.nimi}, {selite}
+                  {ohjaaja.nimi}, {selite}<br/>
+                  {ohjaaja.sahkoposti}
                 </TD>
               </tr>
+            )}
+            {tyyppi === "WORKPLACE" && ohjaaja && (
+                <tr>
+                  <TH>
+                    <FormattedMessage
+                        id="opiskelusuunnitelma.koulutuksenjarjestajanEdustajaTitle"
+                        defaultMessage="Koulutuksen järjestäjän edustaja"
+                    />
+                  </TH>
+                  <TD>
+                    {organizerRepresentative}
+                  </TD>
+                </tr>
             )}
             {tyotehtavat.length > 0 && (
               <tr>

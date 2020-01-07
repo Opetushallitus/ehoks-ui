@@ -9,6 +9,7 @@ import { ValitseHOKS } from "routes/Suunnittelu/ValitseHOKS"
 import { IRootStore } from "stores/RootStore"
 import { Locale } from "stores/TranslationStore"
 import styled from "styled"
+import { StudentFeedbackModal } from "./Suunnittelu/StudentFeedbackModal"
 
 const LoadingContainer = styled("div")`
   display: flex;
@@ -62,6 +63,10 @@ export class Suunnittelu extends React.Component<
         } else {
           await store!.session.fetchSettings()
           await store!.hoks.haeSuunnitelmat(session.user!.oid)
+          await store!.notifications.haeOpiskelijapalautelinkit(
+            session.user!.oid
+          )
+
           this.setState({ allLoaded: true })
           const suunnitelmat = store!.hoks.suunnitelmat
           // navigate directly to HOKS if there's only one of them
@@ -98,8 +103,9 @@ export class Suunnittelu extends React.Component<
     return (
       <>
         <IntroModalDialog />
-        {/*FEATURE Opiskelijapalaute, ota pois kommenteista kun haluat palautedialogin näkyvän*/}
-        {/*<StudentFeedbackModal />*/}
+        <StudentFeedbackModal
+          feedbackLinks={store.notifications.studentFeedbackLinks}
+        />
         <Router basepath={`/ehoks/suunnittelu`}>
           <ValitseHOKS path="/" suunnitelmat={store.hoks.suunnitelmat} />
           <OmienOpintojenSuunnittelu

@@ -18,8 +18,8 @@ Object {
   },
   "isLoading": false,
   "notifications": Object {
-    "isLoading": false,
     "notifications": Array [],
+    "studentFeedbackLinks": Array [],
   },
   "oppilas": Object {
     "isLoading": false,

@@ -6,7 +6,8 @@ import {
   Osaamisvaatimus,
   Naytto,
   Harjoittelujakso,
-  TodentamisenProsessi
+  TodentamisenProsessi,
+  OsaamisenHankkimistapa
 } from "models/helpers/TutkinnonOsa"
 import { ShareType } from "stores/NotificationStore"
 import { MdShare } from "react-icons/md"
@@ -15,6 +16,7 @@ import { FormattedMessage } from "react-intl"
 import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
+import { ToggleableItems } from "./StudyInfo/StudyInfoHelpers"
 
 interface ContainerProps {
   accentColor?: string
@@ -91,6 +93,11 @@ export interface StudyInfoProps {
    * @default []
    */
   competenceRequirements?: Array<Osaamisvaatimus>
+  /**
+   * List of competence acquiring methods
+   * @default []
+   */
+  competenceAcquiringMethods?: Array<OsaamisenHankkimistapa>
   /** List of competence demonstrations */
   demonstrations?: Array<Naytto>
   /** extraContent is passed through to Details component */
@@ -177,7 +184,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     }
   }
 
-  toggle = (name: "competences" | "details") => () => {
+  toggle = (name: ToggleableItems) => () => {
     this.setState(state => ({
       ...state,
       expanded: { ...state.expanded, [name]: !state.expanded[name] }
@@ -221,6 +228,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     const {
       accentColor,
       competenceRequirements = [],
+      competenceAcquiringMethods = [],
       demonstrations = [],
       extraContent = null,
       fadedColor,
@@ -275,6 +283,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
               extraContent={extraContent}
               expanded={detailsExpanded}
               learningPeriods={learningPeriods}
+              competenceAcquiringMethods={competenceAcquiringMethods}
               verificationProcess={verificationProcess}
               koodiUri={koodiUri}
               share={share}

@@ -12,6 +12,7 @@ import { MobileCompetences } from "./MobileCompetences"
 import { ToggleLink } from "./ToggleLink"
 import { Osaamisvaatimus } from "models/Osaamisvaatimus"
 import { SnapshotOrInstance } from "mobx-state-tree"
+import { ToggleableItems } from "./StudyInfoHelpers"
 
 const Container = styled("div")`
   background: #fff;
@@ -106,7 +107,7 @@ interface CompetencesProps {
   expandCompetence: (index: number) => () => void
   expanded?: boolean
   expandedCompetences: number[]
-  toggle: (name: "competences" | "details") => () => void
+  toggle: (name: ToggleableItems) => () => void
 }
 
 export class Competences extends React.Component<CompetencesProps> {

@@ -14,7 +14,6 @@ import { StoreEnvironment } from "types/StoreEnvironment"
 import { Opiskeluoikeus } from "models/Opiskeluoikeus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import find from "lodash.find"
-import { toJS } from 'mobx'
 import { APIResponse } from "types/APIResponse"
 import { OpiskeluvalmiuksiaTukevatOpinnot } from "./OpiskeluvalmiuksiaTukevatOpinnot"
 
@@ -63,14 +62,15 @@ export const HOKS = types
     osaamispisteet: 0
   }))
   .actions(self => {
-    const { apiUrl, apiPrefix, errors, fetchCollection, fetchSingle } = getEnv<
+    const { apiUrl, apiPrefix, errors, fetchCollection, fetchSingle, callerId } = getEnv<
       StoreEnvironment
     >(self)
 
     // fetches detailed HOKS, only needed in virkailija app
     const fetchDetails = flow(function*(): any {
       const response: APIResponse = yield fetchSingle(
-        apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}`)
+        apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}`),
+        { headers: callerId() }
       )
       const keys = Object.keys(response.data)
       keys.forEach(key => {
@@ -131,7 +131,8 @@ export const HOKS = types
       }
       try {
         const response = yield fetchCollection(
-          apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/opiskeluoikeudet`)
+          apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/opiskeluoikeudet`),
+          { headers: callerId() }
         )
         const opiskeluOikeudet: APIResponse = response.data || []
         const opiskeluOikeus = find(
@@ -210,14 +211,7 @@ export const HOKS = types
           : ""
       },
       get valmiitOpinnot() {
-        const endCutoffDate = new Date(new Date().setDate(new Date().getDate() - 14))
-        return this.hankittavatTutkinnonOsat.filter((to) => {
-          if (to.tila === "valmis") {
-            // @ts-ignore
-            const oo = toJS(to.osaamisenOsoittaminen).pop()
-            return new Date(oo.loppu) < endCutoffDate
-          }
-        })
+          return this.hankittavatTutkinnonOsat.filter(to => to.tila === "valmis")
       },
       get tutkintonimike() {
         return self.opiskeluOikeus.suoritukset &&

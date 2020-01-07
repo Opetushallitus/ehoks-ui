@@ -6,9 +6,11 @@ import { Demonstration } from "./Demonstration"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
 import { LearningPeriod } from "./LearningPeriod"
+import { OtherPeriod } from "./OtherPeriod"
 import {
   Harjoittelujakso,
   Naytto,
+  OsaamisenHankkimistapa,
   TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "./LearningEvent"
@@ -17,6 +19,7 @@ import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import { ShareType } from "stores/NotificationStore"
 import ShareDialog from "components/ShareDialog"
+import { ToggleableItems } from "./StudyInfoHelpers"
 
 interface ColorProps {
   fadedColor: string
@@ -73,8 +76,9 @@ interface DetailsProps {
   expanded?: boolean
   koodiUri?: string
   learningPeriods?: Array<Harjoittelujakso>
+  competenceAcquiringMethods?: Array<OsaamisenHankkimistapa>
   share?: { koodiUri: string; type: ShareType | "" }
-  toggle: (name: "competences" | "details") => () => void
+  toggle: (name: ToggleableItems) => () => void
   verificationProcess?: TodentamisenProsessi
 }
 
@@ -82,6 +86,7 @@ export class Details extends React.Component<DetailsProps> {
   static contextTypes = {
     intl: intlShape
   }
+
   render() {
     const {
       demonstrations = [],
@@ -90,6 +95,7 @@ export class Details extends React.Component<DetailsProps> {
       fadedColor = "",
       koodiUri,
       learningPeriods = [],
+      competenceAcquiringMethods = [],
       share,
       toggle,
       verificationProcess
@@ -125,6 +131,10 @@ export class Details extends React.Component<DetailsProps> {
       ? { start: firstLearningPeriod.alku, end: firstLearningPeriod.loppu }
       : undefined
 
+    const otherPeriods = competenceAcquiringMethods[0] && competenceAcquiringMethods[0].muutOppimisymparistot
+        ? competenceAcquiringMethods[0] && competenceAcquiringMethods[0].muutOppimisymparistot
+        : []
+
     return expanded ? (
       <DetailsExpanded
         fadedColor={fadedColor}
@@ -153,9 +163,13 @@ export class Details extends React.Component<DetailsProps> {
             defaultPeriod={defaultPeriod}
           >
             {learningPeriods.map((period, i) => {
-              return <LearningPeriod key={i} learningPeriod={period} />
+              return <LearningPeriod key={i} learningPeriod={period} competenceAcquiringMethods={competenceAcquiringMethods} />
             })}
           </ShareDialog>
+
+          {otherPeriods.map((period, i) => {
+            return <OtherPeriod key={i} otherPeriod={period} />
+          })}
 
           {demonstrations.map((demonstration, i) => {
             return (
@@ -179,6 +193,7 @@ export class Details extends React.Component<DetailsProps> {
               </ShareDialog>
             )
           })}
+
           {extraContent}
         </DetailsContent>
       </DetailsExpanded>

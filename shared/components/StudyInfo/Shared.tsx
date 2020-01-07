@@ -53,6 +53,15 @@ export const EmptyTD = styled("td")`
   display: none;
 `
 
+export const InfoTextContainer = styled("div")`
+  padding: 0;
+  margin: 10px 0 0 0;
+  background: #fff;
+  border-radius: 3px;
+  border: 1px solid #999;
+  padding: 6px 20px;
+`
+
 export const InfoContainer = styled("ul")`
   padding: 0;
   margin: 10px 0 0 0;
