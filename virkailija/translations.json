@@ -13,6 +13,7 @@
     "errors.EnrichKoodiUri.fetchEPerusteet": "Tutkinnon osien haku ePerusteista epäonnistui",
     "errors.EnrichKoodiUri.fetchKoodisto": "Haku koodistosta epäonnistui",
     "errors.EnrichTutkinnonOsa.fetchViitteet": "Tutkinnon osan viitteiden haku epäonnistui",
+    "errors.EnrichOrganisaatioOid.fetchOrganisaatio": "Organisaation tietojen haku epäonnistui",
     "errors.EnvironmentStore.getEnvironment": "Ympäristömuuttujien haku epäonnistui",
     "errors.HOKS.fetchOpiskeluoikeudet": "Opiskeluoikeuksien hakeminen epäonnistui",
     "errors.HOKS.fetchOpiskeluoikeudet.wrongType": "HOKSiin liitetty opiskeluoikeus ei ole ammatillinen tutkinto",
