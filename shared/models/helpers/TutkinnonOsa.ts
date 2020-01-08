@@ -24,11 +24,16 @@ export interface MuuOppimisymparisto {
   oppimisymparisto?: Oppimisymparisto
 }
 
+export interface JarjestajanEdustaja {
+  nimi?: string
+  oppilaitosOid?: string
+  oppilaitosNimi?: string
+}
 export interface OsaamisenHankkimistapa {
   tyopaikallaJarjestettavaKoulutus?: { tyopaikanYTunnus: string }
   osaamisenHankkimistapaKoodiUri?: string
   ajanjaksonTarkenne?: string
-  jarjestajanEdustaja?: { nimi?: string; oppilaitosOid?: string }
+  jarjestajanEdustaja?: JarjestajanEdustaja
   muutOppimisymparistot?: MuuOppimisymparisto[]
 }
 
