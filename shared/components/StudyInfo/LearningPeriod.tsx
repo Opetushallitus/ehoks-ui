@@ -57,8 +57,15 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
         selite + ", " + method.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus :
         selite
     const periodSpecifier = method && method.ajanjaksonTarkenne ? method.ajanjaksonTarkenne : ""
-    const organizer = method && method.jarjestajanEdustaja ? method && method.jarjestajanEdustaja : undefined
+    const organizer = method && method.jarjestajanEdustaja ? method.jarjestajanEdustaja : undefined
     const organizerRepresentative = organizer && organizer.nimi ? organizer.nimi : ""
+    const organizerOrganisation = organizer && organizer.oppilaitosNimi ? organizer.oppilaitosNimi : ""
+    console.log("OrganizerRepresentative")
+    console.log(organizerRepresentative)
+    console.log("Organizer")
+    console.log(organizer)
+    console.log("OrganizerOrganisation")
+    console.log(organizerOrganisation)
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
@@ -109,7 +116,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                     />
                   </TH>
                   <TD>
-                    {organizerRepresentative}
+                    {organizerRepresentative}, {organizerOrganisation}
                   </TD>
                 </tr>
             )}
