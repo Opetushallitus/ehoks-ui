@@ -29,6 +29,7 @@ export const EnrichOrganisaatioOid = types
                 const response: APIResponse = yield cachedResponses[code]
                 if (Object.keys(self).indexOf(dynamicKey) > -1) {
                     self[dynamicKey] = response.data
+                    console.log("nimi sijoitettu")
                 } else {
                     const { name } = getPropertyMembers(self)
                     throw new Error(

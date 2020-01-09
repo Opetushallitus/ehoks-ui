@@ -31,6 +31,7 @@ export const Oppilaitoshenkilo = types
         const root: LocaleRoot = getRoot(self)
         return {
             get oppilaitosNimi() {
+              console.log("nimeä kysytty")
               return self.oppilaitos.nimi && self.oppilaitos.nimi[root.translations.activeLocale]
                 ? self.oppilaitos.nimi[root.translations.activeLocale]
                 : ""
