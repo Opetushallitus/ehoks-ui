@@ -133,6 +133,8 @@ export class Details extends React.Component<DetailsProps> {
         ? competenceAcquiringMethods[0] && competenceAcquiringMethods[0].muutOppimisymparistot
         : []
 
+    const organizer = competenceAcquiringMethods[0] && competenceAcquiringMethods[0].jarjestajanEdustaja
+
     return expanded ? (
       <DetailsExpanded
         fadedColor={fadedColor}
@@ -161,7 +163,7 @@ export class Details extends React.Component<DetailsProps> {
             defaultPeriod={defaultPeriod}
           >
             {learningPeriods.map((period, i) => {
-              return <LearningPeriod key={i} learningPeriod={period} competenceAcquiringMethods={competenceAcquiringMethods} />
+              return <LearningPeriod key={i} learningPeriod={period} competenceAcquiringMethods={competenceAcquiringMethods} organizer={organizer} />
             })}
           </ShareDialog>
 

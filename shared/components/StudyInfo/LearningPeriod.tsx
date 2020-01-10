@@ -14,7 +14,7 @@ import {
   TH,
   Title
 } from "./Shared"
-import {Harjoittelujakso, OsaamisenHankkimistapa} from "models/helpers/TutkinnonOsa"
+import { Harjoittelujakso, JarjestajanEdustaja, OsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
 
 const LearningPeriodTitle = styled(Title)`
@@ -37,11 +37,12 @@ const CustomSlider = styled(MobileSlider)`
 interface LearningPeriodProps {
   learningPeriod: Harjoittelujakso
   competenceAcquiringMethods?: Array<OsaamisenHankkimistapa>
+  organizer?: JarjestajanEdustaja
 }
 
 export class LearningPeriod extends React.Component<LearningPeriodProps> {
   render() {
-    const { learningPeriod, competenceAcquiringMethods } = this.props
+    const { learningPeriod, competenceAcquiringMethods, organizer } = this.props
     const {
       tyotehtavat = [],
       alku,
@@ -57,7 +58,6 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
         selite + ", " + method.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus :
         selite
     const periodSpecifier = method && method.ajanjaksonTarkenne ? method.ajanjaksonTarkenne : ""
-    const organizer = method && method.jarjestajanEdustaja ? method.jarjestajanEdustaja : undefined
     const organizerRepresentative = organizer && organizer.nimi ? organizer.nimi : ""
     const organizerOrganisation = organizer && organizer.oppilaitosNimi ? organizer.oppilaitosNimi : ""
     console.log("OrganizerRepresentative")
