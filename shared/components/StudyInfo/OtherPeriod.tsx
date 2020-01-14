@@ -13,35 +13,35 @@ const LearningPeriodTitle = styled(Title)`
 `
 
 interface OtherPeriodProps {
-    otherPeriod: MuuOppimisymparisto
+  otherPeriod: MuuOppimisymparisto
 }
 
 export class OtherPeriod extends React.Component<OtherPeriodProps> {
-    render() {
-        const { otherPeriod } = this.props
-        const {
-            alku,
-            loppu
-        } = otherPeriod
+  render() {
+    const { otherPeriod } = this.props
+    const {
+      alku,
+      loppu
+    } = otherPeriod
 
-        const nimi = otherPeriod.oppimisymparisto && otherPeriod.oppimisymparisto.nimi
-            ? otherPeriod.oppimisymparisto.nimi
-            : ""
+    const nimi = otherPeriod.oppimisymparisto && otherPeriod.oppimisymparisto.nimi
+      ? otherPeriod.oppimisymparisto.nimi
+      : ""
 
-        return (
-            <Container data-testid="StudyInfo.LearningPeriod">
-                {(alku || loppu) && (
-                    <LearningPeriodTitle>
-                        <LearningEvent
-                            title={nimi}
-                            type="OTHER"
-                            startDate={alku}
-                            endDate={loppu}
-                            size="large"
-                        />
-                    </LearningPeriodTitle>
-                )}
-            </Container>
-        )
-    }
+    return (
+      <Container data-testid="StudyInfo.LearningPeriod">
+        {(alku || loppu) && (
+          <LearningPeriodTitle>
+            <LearningEvent
+              title={nimi}
+              type="OTHER"
+              startDate={alku}
+              endDate={loppu}
+              size="large"
+            />
+          </LearningPeriodTitle>
+        )}
+      </Container>
+    )
+  }
 }
