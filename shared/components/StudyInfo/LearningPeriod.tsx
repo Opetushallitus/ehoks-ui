@@ -60,12 +60,6 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
     const periodSpecifier = method && method.ajanjaksonTarkenne ? method.ajanjaksonTarkenne : ""
     const organizerRepresentative = organizer && organizer.nimi ? organizer.nimi : ""
     const organizerOrganisation = organizer && organizer.oppilaitosNimi ? organizer.oppilaitosNimi : ""
-    console.log("OrganizerRepresentative")
-    console.log(organizerRepresentative)
-    console.log("Organizer")
-    console.log(organizer)
-    console.log("OrganizerOrganisation")
-    console.log(organizerOrganisation)
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
