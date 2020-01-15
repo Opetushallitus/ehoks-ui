@@ -181,8 +181,7 @@ export const HOKS = types
           ...self.aiemminHankitutAmmatTutkinnonOsat,
           ...self.aiemminHankitutPaikallisetTutkinnonOsat,
           // treat osaAlue as tutkinnonOsa for aiemminHankitutYhteisetTutkinnonOsat
-          ...self.aiemminHankitutYhteisetTutkinnonOsat
-          // ...osaAlueet
+          ...osaAlueet
         ]
       },
       get suunnitellutOpinnot() {
