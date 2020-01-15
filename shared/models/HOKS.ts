@@ -16,6 +16,7 @@ import { LocaleRoot } from "models/helpers/LocaleRoot"
 import find from "lodash.find"
 import { APIResponse } from "types/APIResponse"
 import { OpiskeluvalmiuksiaTukevatOpinnot } from "./OpiskeluvalmiuksiaTukevatOpinnot"
+import { AiemminHankitunYTOOsaAlue } from "./AiemminHankitunYTOOsaAlue"
 
 const Model = types.model("HOKSModel", {
   eid: types.optional(types.string, ""),
@@ -172,10 +173,16 @@ export const HOKS = types
         ]
       },
       get aiemminHankitutTutkinnonOsat(): TutkinnonOsa[] {
+        const osaAlueet = flattenDeep<
+          Instance<typeof AiemminHankitunYTOOsaAlue>
+          >(self.aiemminHankitutYhteisetTutkinnonOsat.map((to: any) => to.osaAlueet))
+
         return [
           ...self.aiemminHankitutAmmatTutkinnonOsat,
           ...self.aiemminHankitutPaikallisetTutkinnonOsat,
+          // treat osaAlue as tutkinnonOsa for aiemminHankitutYhteisetTutkinnonOsat
           ...self.aiemminHankitutYhteisetTutkinnonOsat
+          // ...osaAlueet
         ]
       },
       get suunnitellutOpinnot() {
