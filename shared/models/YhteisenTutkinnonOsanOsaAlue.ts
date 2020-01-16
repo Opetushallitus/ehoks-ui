@@ -27,7 +27,7 @@ export const YhteisenTutkinnonOsanOsaAlue = types
         return self.osaAlue ? self.osaAlue.nimi : ""
       },
       get osaamispisteet() {
-        // TODO: where do we get this?
+        // TODO: where do we get this? Fix this also to AiemminHankitunYTOOsaAlue.ts
         return 0
       }
     }
