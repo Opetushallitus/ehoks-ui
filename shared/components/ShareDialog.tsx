@@ -140,7 +140,8 @@ interface ShareDialogProps {
   background: string
   children: any // TODO: fix
   koodiUri: string
-  type: ShareType
+  type: ShareType,
+  uuid: string
   defaultPeriod?: { start?: string; end?: string }
   instructor?: { name: string; organisation?: string; email: string }
   intl?: InjectedIntl
@@ -155,6 +156,7 @@ export function ShareDialog(props: ShareDialogProps) {
     instructor,
     koodiUri,
     type,
+    uuid,
     intl
   } = props
 
@@ -193,7 +195,7 @@ export function ShareDialog(props: ShareDialogProps) {
 
   useEffect(() => {
     const fetchData = async () => {
-      setSharedLinks(await fetchLinks(eid, koodiUri, type, apiConfig))
+      setSharedLinks(await fetchLinks(eid, koodiUri, type, apiConfig, uuid))
     }
     fetchData()
   }, [])
@@ -205,9 +207,10 @@ export function ShareDialog(props: ShareDialogProps) {
       startDate,
       endDate,
       type,
+      uuid,
       apiConfig
     })
-    setSharedLinks(await fetchLinks(eid, koodiUri, type, apiConfig))
+    setSharedLinks(await fetchLinks(eid, koodiUri, type, apiConfig, uuid))
     setCreatedUrl(`https://not.implemented.yet/jako/${createdUuid}`)
   }
 
@@ -232,7 +235,7 @@ export function ShareDialog(props: ShareDialogProps) {
         uuid,
         apiConfig
       })
-      setSharedLinks(await fetchLinks(eid, koodiUri, type, apiConfig))
+      setSharedLinks(await fetchLinks(eid, koodiUri, type, apiConfig, uuid))
       setCreatedUrl("")
     }
   }
@@ -265,11 +268,11 @@ export function ShareDialog(props: ShareDialogProps) {
                     defaultMessage="Näytön tietojen jakaminen"
                   />
                 ) : (
-                  <FormattedMessage
-                    id="jakaminen.tutkinnonosanTietojenJakaminenTitle "
-                    defaultMessage="Tutkinnonosan tietojen jakaminen"
-                  />
-                )}
+                    <FormattedMessage
+                      id="jakaminen.tutkinnonosanTietojenJakaminenTitle "
+                      defaultMessage="Tutkinnonosan tietojen jakaminen"
+                    />
+                  )}
               </ShareTitle>
 
               <ShareDescription>
@@ -279,11 +282,11 @@ export function ShareDialog(props: ShareDialogProps) {
                     defaultMessage="Olet jakamassa näitä näytön tietoja"
                   />
                 ) : (
-                  <FormattedMessage
-                    id="jakaminen.tutkinnonosanJakoDescription"
-                    defaultMessage="Olet jakamassa näitä tutkinnonosan tietoja"
-                  />
-                )}
+                    <FormattedMessage
+                      id="jakaminen.tutkinnonosanJakoDescription"
+                      defaultMessage="Olet jakamassa näitä tutkinnonosan tietoja"
+                    />
+                  )}
               </ShareDescription>
             </ShareHeader>
             <div>
@@ -303,11 +306,11 @@ export function ShareDialog(props: ShareDialogProps) {
                 defaultMessage="Aiemmin tekemäsi näytön jakolinkit"
               />
             ) : (
-              <FormattedMessage
-                id="jakaminen.aiemmatTutkinnonosanJaotDescription"
-                defaultMessage="Aiemmin tekemäsi tutkinnonosan jakolinkit"
-              />
-            )}
+                <FormattedMessage
+                  id="jakaminen.aiemmatTutkinnonosanJaotDescription"
+                  defaultMessage="Aiemmin tekemäsi tutkinnonosan jakolinkit"
+                />
+              )}
           </ShareDescription>
           <SharedLinks>
             {sharedLinks.map((link, i) => {
@@ -357,11 +360,11 @@ export function ShareDialog(props: ShareDialogProps) {
                               defaultMessage="Linkki näytön tietoihin"
                             />
                           ) : (
-                            <FormattedMessage
-                              id="jakaminen.linkkiTutkinnonosanTietoihin"
-                              defaultMessage="Linkki tutkinnonosan tietoihin"
-                            />
-                          )}
+                              <FormattedMessage
+                                id="jakaminen.linkkiTutkinnonosanTietoihin"
+                                defaultMessage="Linkki tutkinnonosan tietoihin"
+                              />
+                            )}
                         </Subtitle>
                       </ShareColumn>
                       <ShareColumn>{createdUrl}</ShareColumn>
@@ -468,8 +471,8 @@ export function ShareDialog(props: ShareDialogProps) {
           </div>
         </ShareContainer>
       ) : (
-        children
-      )}
+          children
+        )}
     </React.Fragment>
   )
 }

@@ -14,15 +14,16 @@ export interface ShareLink {
   type: string
 }
 
-export const fetchLinks = async function(
+export const fetchLinks = async function (
   eid: string,
   koodiUri: string,
   type: string,
-  apiConfig: APIConfig
+  apiConfig: APIConfig,
+  uuid: string
 ): Promise<ShareLink[]> {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/hoksit/${eid}/share/${koodiUri}`),
+    apiUrl(`${apiPrefix}/hoksit/${eid}/${uuid}/share/${koodiUri}`),
     {
       credentials: "include"
     }
@@ -45,24 +46,26 @@ export const fetchLinks = async function(
     })
 }
 
-export const createLink = async function({
+export const createLink = async function ({
   eid,
   koodiUri,
   startDate,
   endDate,
   type,
+  uuid,
   apiConfig
 }: {
   eid: string
   koodiUri: string
   startDate: string
   endDate: string
-  type: string
+  type: string,
+  uuid: string,
   apiConfig: APIConfig
 }): Promise<string> {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/hoksit/${eid}/share/${koodiUri}`),
+    apiUrl(`${apiPrefix}/hoksit/${eid}/${uuid}/share/${koodiUri}`),
     {
       credentials: "include",
       method: "POST",
@@ -84,7 +87,7 @@ export const createLink = async function({
   return json.meta.uuid
 }
 
-export const removeLink = async function({
+export const removeLink = async function ({
   eid,
   koodiUri,
   uuid,

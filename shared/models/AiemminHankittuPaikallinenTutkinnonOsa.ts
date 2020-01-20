@@ -4,6 +4,7 @@ import { getOtsikko } from "./helpers/getOtsikko"
 export const AiemminHankittuPaikallinenTutkinnonOsa = types
   .model("AiemminHankittuPaikallinenTutkinnonOsa", {
     id: types.optional(types.number, 0),
+    uuid: types.optional(types.string, ""),
     tavoitteetJaSisallot: types.optional(types.string, ""),
     vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
     nimi: types.optional(types.string, ""),

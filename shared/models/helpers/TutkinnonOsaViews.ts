@@ -37,16 +37,17 @@ export const TutkinnonOsaViews = types.model({}).views((self: any) => {
     opintoOtsikko(ospLyhenne: string): string {
       return getOtsikko(self, ospLyhenne)
     },
-    hasNayttoOrHarjoittelujakso(koodiUri: string, type: ShareType | "") {
+    hasNayttoOrHarjoittelujakso(koodiUri: string, type: ShareType | "", uuid: string) {
       if (koodiUri === "" && type === "") {
         return false
       }
+      const uuidMatch = self.tutkinnonOsa.uuid === uuid
       const koodiUriMatch = self.tutkinnonOsaKoodiUri === koodiUri
       const typeMatch =
         type === "naytto"
           ? this.naytot.length > 0
           : !!find(this.harjoittelujaksot, hj => hj.tyyppi === "WORKPLACE")
-      return koodiUriMatch && typeMatch
+      return koodiUriMatch && typeMatch && uuidMatch
     }
   }
 })

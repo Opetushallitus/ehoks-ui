@@ -9,6 +9,7 @@ export const HankitunYTOOsaamisenNaytto = types.model(
   "HankitunYTOOsaamisenNaytto",
   {
     id: types.optional(types.number, 0),
+    uuid: types.optional(types.string, ""),
     jarjestaja: types.optional(NaytonJarjestaja, {}),
     osaAlueet: types.array(KoodistoKoodi),
     nayttoymparisto: types.optional(Nayttoymparisto, {}),

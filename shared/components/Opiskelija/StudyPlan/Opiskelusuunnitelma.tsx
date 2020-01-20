@@ -57,8 +57,8 @@ export type OpiskelusuunnitelmaProps = {
 
 @observer
 export class Opiskelusuunnitelma extends React.Component<
-  OpiskelusuunnitelmaProps,
-  OpiskelusuunnitelmaState
+OpiskelusuunnitelmaProps,
+OpiskelusuunnitelmaState
 > {
   static contextTypes = {
     intl: intlShape
@@ -76,29 +76,30 @@ export class Opiskelusuunnitelma extends React.Component<
     },
     share: {
       koodiUri: "",
-      type: ""
+      type: "",
+      uuid: ""
     }
   }
 
   async componentDidMount() {
     const { location } = this.props
-    const { share, type } = parseShareParams(location)
-    await this.showShareDialog(share, type)
-    this.setInitialExpanded(share, type)
+    const { share, type, uuid } = parseShareParams(location)
+    await this.showShareDialog(share, type, uuid)
+    this.setInitialExpanded(share, type, uuid)
   }
 
   componentDidUpdate(prevProps: OpiskelusuunnitelmaProps) {
     if (this.props.location !== prevProps.location) {
       // TODO: set proper share state when opening another dialog
       // previous dialog should close and new dialog should open
-      const { share, type } = parseShareParams(this.props.location)
-      this.showShareDialog(share, type)
+      const { share, type, uuid } = parseShareParams(this.props.location)
+      this.showShareDialog(share, type, uuid)
     }
   }
 
   isShareActive = () => {
     const { share } = this.state
-    return share.koodiUri !== "" && share.type !== ""
+    return share.koodiUri !== "" && share.type !== "" && share.uuid !== ""
   }
 
   hasActiveShare = (type: StudyPartType) => {
@@ -114,16 +115,16 @@ export class Opiskelusuunnitelma extends React.Component<
       valmiit: valmiitOpinnot
     }
     return !!find(studies[type], s =>
-      s.hasNayttoOrHarjoittelujakso(share.koodiUri, share.type)
+      s.hasNayttoOrHarjoittelujakso(share.koodiUri, share.type, share.uuid)
     )
   }
 
-  showShareDialog = (share: string, type: ShareType | "") => {
+  showShareDialog = (share: string, type: ShareType | "", uuid: string) => {
     return new Promise(resolve => {
       this.setState(
         state => ({
           ...state,
-          share: { koodiUri: share, type }
+          share: { koodiUri: share, type, uuid }
         }),
         () => {
           resolve()
@@ -132,12 +133,12 @@ export class Opiskelusuunnitelma extends React.Component<
     })
   }
 
-  setInitialExpanded = (share: string, type: ShareType | "") => {
+  setInitialExpanded = (share: string, type: ShareType | "", uuid: string) => {
     this.setState(state => ({
       ...state,
       activeAccordions: {
         ...state.activeAccordions,
-        suunnitelma: Boolean(share && type),
+        suunnitelma: Boolean(share && type && uuid),
         suunnitelmat: {
           aikataulutetut: this.hasActiveShare("aikataulutetut"),
           suunnitellut: this.hasActiveShare("suunnitellut"),
@@ -183,9 +184,9 @@ export class Opiskelusuunnitelma extends React.Component<
         [accordion]: !subAccordion
           ? !state.activeAccordions[accordion]
           : this.toggleSubAccordion(
-              state.activeAccordions[accordion],
-              subAccordion
-            )
+            state.activeAccordions[accordion],
+            subAccordion
+          )
       }
     }))
   }
@@ -341,8 +342,8 @@ export class Opiskelusuunnitelma extends React.Component<
               value={
                 totalStudiesLength != 0
                   ? Math.round(
-                      (suunnitellutOpinnot.length / totalStudiesLength) * 100
-                    )
+                    (suunnitellutOpinnot.length / totalStudiesLength) * 100
+                  )
                   : 0
               }
               stroke={colors.planned}
@@ -358,8 +359,8 @@ export class Opiskelusuunnitelma extends React.Component<
               value={
                 totalStudiesLength != 0
                   ? Math.round(
-                      (aikataulutetutOpinnot.length / totalStudiesLength) * 100
-                    )
+                    (aikataulutetutOpinnot.length / totalStudiesLength) * 100
+                  )
                   : 0
               }
               stroke={colors.scheduled}
@@ -375,8 +376,8 @@ export class Opiskelusuunnitelma extends React.Component<
               value={
                 totalStudiesLength != 0
                   ? Math.round(
-                      (valmiitOpinnot.length / totalStudiesLength) * 100
-                    )
+                    (valmiitOpinnot.length / totalStudiesLength) * 100
+                  )
                   : 0
               }
               stroke={colors.ready}
@@ -423,8 +424,8 @@ export class Opiskelusuunnitelma extends React.Component<
           />
           <ScheduledStudies
             accordionIsOpen={activeAccordions.suunnitelmat.aikataulutetut}
-            share={share}
             hasActiveShare={hasActiveShare("aikataulutetut")}
+            share={share}
             toggleAccordion={this.toggleAccordion}
             aikataulutetutOpinnot={aikataulutetutOpinnot}
             elements={elements}
@@ -432,8 +433,8 @@ export class Opiskelusuunnitelma extends React.Component<
           />
           <CompletedStudies
             accordionIsOpen={activeAccordions.suunnitelmat.valmiit}
-            share={share}
             hasActiveShare={hasActiveShare("valmiit")}
+            share={share}
             toggleAccordion={this.toggleAccordion}
             valmiitOpinnot={valmiitOpinnot}
             elements={elements}

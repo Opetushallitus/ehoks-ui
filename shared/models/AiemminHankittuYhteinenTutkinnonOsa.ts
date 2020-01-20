@@ -16,6 +16,7 @@ import { KoodistoVastaus } from "models/KoodistoVastaus"
 
 const Model = types.model({
   id: types.optional(types.number, 0),
+  uuid: types.optional(types.string, ""),
   tutkinnonOsaKoodiUri: types.optional(types.string, ""),
   tutkinnonOsa: types.optional(EPerusteetVastaus, {}),
   tutkinnonOsaViitteet: types.array(TutkinnonOsaViite),

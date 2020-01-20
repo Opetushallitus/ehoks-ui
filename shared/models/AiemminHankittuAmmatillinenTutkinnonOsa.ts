@@ -21,7 +21,8 @@ const Model = types.model({
   valittuTodentamisenProsessi: types.optional(KoodistoVastaus, {}),
   tarkentavatTiedotNaytto: types.array(OsaamisenOsoittaminen),
   tarkentavatTiedotArvioija: types.optional(TodennettuArviointiLisatiedot, {}),
-  olennainenSeikka: types.optional(types.boolean, false)
+  olennainenSeikka: types.optional(types.boolean, false),
+  uuid: types.optional(types.string, "")
 })
 
 export const AiemminHankittuAmmatillinenTutkinnonOsa = types

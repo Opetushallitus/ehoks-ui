@@ -6,6 +6,7 @@ export const AiemminHankitunYTOOsaAlue = types.model(
   "AiemminHankitunYTOOsaAlue",
   {
     id: types.optional(types.number, 0),
+    uuid: types.optional(types.string, ""),
     olennainenSeikka: types.optional(types.boolean, false),
     osaAlueKoodiUri: types.optional(types.string, ""),
     koulutuksenJarjestajaOid: types.optional(types.string, ""),

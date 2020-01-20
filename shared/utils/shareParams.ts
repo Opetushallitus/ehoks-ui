@@ -7,25 +7,29 @@ export function parseShareParams(
 ): {
   share: string
   type: ShareType | ""
+  uuid: string
 } {
   const qs = queryString.parse(location ? location.search : "")
   return {
     share: typeof qs.share === "string" ? qs.share : "",
     type:
       typeof qs.type === "string" &&
-      (qs.type === "naytto" || qs.type === "tyossaoppiminen")
+        (qs.type === "naytto" || qs.type === "tyossaoppiminen")
         ? qs.type
-        : ""
+        : "",
+    uuid: typeof qs.uuid === "string" ? qs.uuid : ""
   }
 }
 
 export function stringifyShareParams({
   share,
-  type
+  type,
+  uuid
 }: {
   share: string
   type: ShareType
+  uuid: string
 }): string {
-  return queryString.stringify({ share, type })
+  return queryString.stringify({ share, type, uuid })
 }
 queryString.stringify

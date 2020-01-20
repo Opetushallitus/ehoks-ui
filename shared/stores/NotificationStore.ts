@@ -20,7 +20,8 @@ export const NotificationModel = types.model("NotificationModel", {
   alku: types.optional(types.string, ""),
   loppu: types.optional(types.string, ""),
   paikka: types.optional(types.string, ""),
-  visible: types.optional(types.boolean, true)
+  visible: types.optional(types.boolean, true),
+  uuid: types.optional(types.string, "")
 })
 
 export const Notification = types
@@ -50,7 +51,7 @@ export const Notification = types
       session: { settings: ISettings; saveSettings: any }
     } = getRoot(self)
 
-    const ackNotification = function() {
+    const ackNotification = function () {
       root.session.settings.hiddenNotifications.hide(
         self.hoksId,
         self.tutkinnonOsaKoodiUri,

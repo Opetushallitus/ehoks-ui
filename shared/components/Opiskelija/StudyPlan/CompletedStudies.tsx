@@ -34,7 +34,6 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
   render() {
     const {
       accordionIsOpen,
-      share,
       hasActiveShare,
       toggleAccordion,
       valmiitOpinnot,
@@ -75,8 +74,9 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
                   fadedColor="#ECF6ED"
                   koodiUri={study.tutkinnonOsaKoodiUri}
                   learningPeriods={study.harjoittelujaksot}
-                  share={share}
                   title={study.opintoOtsikko(competencePointsTitle)}
+                  uuid={study.uuid}
+                  shareProps={{ tyyppi: study.tutkinnonOsaKoodiUri, uuid: study.uuid }}
                 />
                 {renderExtraItem && <EmptyItem />}
               </React.Fragment>

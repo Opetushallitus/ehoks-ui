@@ -59,12 +59,13 @@ interface DemonstrationProps {
   verificationProcess?: TodentamisenProsessi
   koodiUri?: string
   hasActiveShare?: boolean
+  shareProps?: { tyyppi?: string; uuid?: string | "" }
 }
 
 export class Demonstration extends React.Component<
   DemonstrationProps,
   DemonstrationState
-> {
+  > {
   static contextType = AppContext
   context!: React.ContextType<typeof AppContext>
 
@@ -84,7 +85,8 @@ export class Demonstration extends React.Component<
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
           share: koodiUri,
-          type: "naytto"
+          type: "naytto",
+          uuid: ""
         })}`
       )
     }
@@ -94,24 +96,24 @@ export class Demonstration extends React.Component<
     const {
       demonstration,
       hasActiveShare = false,
-      verificationProcess
+      verificationProcess,
     } = this.props
     const { featureFlags } = this.context
     const { requirementsAndDeviationsExpanded } = this.state
 
     const title =
       verificationProcess &&
-      verificationProcess.koodiUri === VerificationProcess.OHJAUS_NAYTTOON ? (
-        <FormattedMessage
-          id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
-          defaultMessage="Osaaminen osoitetaan näytössä"
-        />
-      ) : (
-        <FormattedMessage
-          id="opiskelusuunnitelma.nayttoTitle"
-          defaultMessage="Näyttö"
-        />
-      )
+        verificationProcess.koodiUri === VerificationProcess.OHJAUS_NAYTTOON ? (
+          <FormattedMessage
+            id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
+            defaultMessage="Osaaminen osoitetaan näytössä"
+          />
+        ) : (
+          <FormattedMessage
+            id="opiskelusuunnitelma.nayttoTitle"
+            defaultMessage="Näyttö"
+          />
+        )
 
     const showShareButton = !hasActiveShare && featureFlags.shareDialog
 

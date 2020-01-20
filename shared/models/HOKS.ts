@@ -67,7 +67,7 @@ export const HOKS = types
     >(self)
 
     // fetches detailed HOKS, only needed in virkailija app
-    const fetchDetails = flow(function*(): any {
+    const fetchDetails = flow(function* (): any {
       const response: APIResponse = yield fetchSingle(
         apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}`),
         { headers: callerId() }
@@ -78,7 +78,7 @@ export const HOKS = types
       })
     })
 
-    const fetchTutkinto = flow(function*(): any {
+    const fetchTutkinto = flow(function* (): any {
       const diaarinumero =
         self.opiskeluOikeus.suoritukset[0].koulutusmoduuli.perusteenDiaarinumero
       const response: APIResponse = yield fetchSingle(
@@ -104,14 +104,14 @@ export const HOKS = types
       return { id, suoritustapa }
     })
 
-    const fetchRakenne = flow(function*(
+    const fetchRakenne = flow(function* (
       id: string,
       suoritustapa: string = "reformi"
     ): any {
       const response: APIResponse = yield fetchSingle(
         apiUrl(
           `${apiPrefix}/external/eperusteet/tutkinnot/${id}/suoritustavat/${suoritustapa}/${
-            suoritustapa === "reformi" ? "rakenne" : "tutkinnonosat"
+          suoritustapa === "reformi" ? "rakenne" : "tutkinnonosat"
           }`
         )
       )
@@ -119,13 +119,13 @@ export const HOKS = types
     })
 
     function getOsaamispisteetFromRakenne(rakenne: any) {
-      if(rakenne.muodostumisSaanto?.laajuus){
+      if (rakenne.muodostumisSaanto?.laajuus) {
         return rakenne.muodostumisSaanto.laajuus.minimi
       }
       return null
     }
 
-    const fetchOpiskeluoikeudet = flow(function*(): any {
+    const fetchOpiskeluoikeudet = flow(function* (): any {
       if (!self.oppijaOid) {
         return
       }
@@ -201,8 +201,8 @@ export const HOKS = types
           self.opiskeluOikeus.suoritukset.length &&
           self.opiskeluOikeus.suoritukset[0].osaamisala.length
           ? self.opiskeluOikeus.suoritukset[0].osaamisala[0].osaamisala.nimi[
-              root.translations.activeLocale
-            ]
+          root.translations.activeLocale
+          ]
           : ""
       },
       get tutkinnonNimi() {
@@ -211,15 +211,15 @@ export const HOKS = types
           : ""
       },
       get valmiitOpinnot() {
-          return this.hankittavatTutkinnonOsat.filter(to => to.tila === "valmis")
+        return this.hankittavatTutkinnonOsat.filter(to => to.tila === "valmis")
       },
       get tutkintonimike() {
         return self.opiskeluOikeus.suoritukset &&
           self.opiskeluOikeus.suoritukset.length &&
           self.opiskeluOikeus.suoritukset[0].tutkintonimike.length
           ? self.opiskeluOikeus.suoritukset[0].tutkintonimike[0].nimi[
-              root.translations.activeLocale
-            ]
+          root.translations.activeLocale
+          ]
           : ""
       },
       get keskeytysPvm() {
@@ -232,4 +232,4 @@ export const HOKS = types
     }
   })
 
-export interface IHOKS extends Instance<typeof HOKS> {}
+export interface IHOKS extends Instance<typeof HOKS> { }

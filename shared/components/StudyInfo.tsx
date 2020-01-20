@@ -108,6 +108,7 @@ export interface StudyInfoProps {
    * KoodiURI for this study
    */
   koodiUri?: string
+  uuid?: string
   /**
    * List of learning periods
    * @default []
@@ -117,6 +118,7 @@ export interface StudyInfoProps {
    * Current share state from url
    */
   share?: { koodiUri: string; type: ShareType | "" }
+  shareProps?: { tyyppi?: string; uuid?: string | "" }
   /** Title of the study, always visible */
   title?: React.ReactNode
   /**
@@ -213,12 +215,13 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
   }
 
   share = () => {
-    const { koodiUri } = this.props
-    if (koodiUri) {
+    const { koodiUri, uuid } = this.props
+    if (koodiUri && uuid) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
           share: koodiUri,
-          type: "tyossaoppiminen"
+          type: "tyossaoppiminen",
+          uuid: uuid
         })}`
       )
     }
@@ -235,6 +238,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       learningPeriods = [],
       koodiUri,
       share,
+      uuid,
       title,
       verificationProcess,
       width = "25%"
@@ -287,6 +291,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
               verificationProcess={verificationProcess}
               koodiUri={koodiUri}
               share={share}
+              uuid={uuid}
               toggle={this.toggle}
             />
           )}

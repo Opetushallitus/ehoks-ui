@@ -80,6 +80,7 @@ interface DetailsProps {
   share?: { koodiUri: string; type: ShareType | "" }
   toggle: (name: ToggleableItems) => () => void
   verificationProcess?: TodentamisenProsessi
+  uuid?: string
 }
 
 export class Details extends React.Component<DetailsProps> {
@@ -97,6 +98,7 @@ export class Details extends React.Component<DetailsProps> {
       learningPeriods = [],
       competenceAcquiringMethods = [],
       share,
+      uuid,
       toggle,
       verificationProcess
     } = this.props
@@ -118,22 +120,22 @@ export class Details extends React.Component<DetailsProps> {
 
     const instructor = firstLearningPeriod
       ? {
-          name: firstLearningPeriod.ohjaaja
-            ? firstLearningPeriod.ohjaaja.nimi || ""
-            : "",
-          email: firstLearningPeriod.ohjaaja
-            ? firstLearningPeriod.ohjaaja.sahkoposti || ""
-            : "",
-          organisation: firstLearningPeriod.selite
-        }
+        name: firstLearningPeriod.ohjaaja
+          ? firstLearningPeriod.ohjaaja.nimi || ""
+          : "",
+        email: firstLearningPeriod.ohjaaja
+          ? firstLearningPeriod.ohjaaja.sahkoposti || ""
+          : "",
+        organisation: firstLearningPeriod.selite
+      }
       : undefined
     const defaultPeriod = firstLearningPeriod
       ? { start: firstLearningPeriod.alku, end: firstLearningPeriod.loppu }
       : undefined
 
     const otherPeriods = competenceAcquiringMethods[0] && competenceAcquiringMethods[0].muutOppimisymparistot
-        ? competenceAcquiringMethods[0] && competenceAcquiringMethods[0].muutOppimisymparistot
-        : []
+      ? competenceAcquiringMethods[0] && competenceAcquiringMethods[0].muutOppimisymparistot
+      : []
 
     return expanded ? (
       <DetailsExpanded
@@ -159,6 +161,7 @@ export class Details extends React.Component<DetailsProps> {
             background={fadedColor}
             koodiUri={koodiUri || ""}
             type="tyossaoppiminen"
+            uuid={uuid || ""}
             instructor={instructor}
             defaultPeriod={defaultPeriod}
           >
@@ -178,6 +181,7 @@ export class Details extends React.Component<DetailsProps> {
                 background={fadedColor}
                 koodiUri={koodiUri || ""}
                 type="naytto"
+                uuid={demonstration.uuid || ""}
                 defaultPeriod={{
                   start: demonstration.alku,
                   end: demonstration.loppu
@@ -189,6 +193,7 @@ export class Details extends React.Component<DetailsProps> {
                   verificationProcess={verificationProcess}
                   koodiUri={koodiUri}
                   hasActiveShare={hasActiveShare && shareType === "naytto"}
+                  shareProps={{ tyyppi: demonstration.tyyppi, uuid: demonstration.uuid }}
                 />
               </ShareDialog>
             )
@@ -198,105 +203,105 @@ export class Details extends React.Component<DetailsProps> {
         </DetailsContent>
       </DetailsExpanded>
     ) : (
-      <DetailsCollapsed
-        fadedColor={fadedColor}
-        data-testid="StudyInfo.DetailsCollapsed"
-      >
-        <LocationsContainer>
-          <DetailsContent>
-            {verification === SUORAAN && (
-              <VerificationTitle data-testid="StudyInfo.DirectVerification">
-                <FormattedMessage
-                  id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
-                  defaultMessage="Osaaminen tunnistettu suoraan"
-                />
-              </VerificationTitle>
-            )}
-            {verification === ARVIOIJIEN_KAUTTA && (
-              <VerificationTitle data-testid="StudyInfo.AssessmentVerification">
-                <FormattedMessage
-                  id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
-                  defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
-                  values={{
-                    date:
-                      verificationProcess &&
-                      verificationProcess.lahetettyArvioitavaksi
-                        ? format(
+        <DetailsCollapsed
+          fadedColor={fadedColor}
+          data-testid="StudyInfo.DetailsCollapsed"
+        >
+          <LocationsContainer>
+            <DetailsContent>
+              {verification === SUORAAN && (
+                <VerificationTitle data-testid="StudyInfo.DirectVerification">
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
+                    defaultMessage="Osaaminen tunnistettu suoraan"
+                  />
+                </VerificationTitle>
+              )}
+              {verification === ARVIOIJIEN_KAUTTA && (
+                <VerificationTitle data-testid="StudyInfo.AssessmentVerification">
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
+                    defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
+                    values={{
+                      date:
+                        verificationProcess &&
+                          verificationProcess.lahetettyArvioitavaksi
+                          ? format(
                             parseISO(
                               verificationProcess.lahetettyArvioitavaksi
                             ),
                             "d.M.yyyy"
                           )
-                        : ""
-                  }}
-                />
-              </VerificationTitle>
-            )}
-            {learningPeriods.map((lp, i) => {
-              return (
-                <LearningEvent
-                  key={i}
-                  title={
-                    lp.tyyppi === "OTHER" ? (
-                      lp.nimi
-                    ) : (
-                      <FormattedMessage
-                        id="opiskelusuunnitelma.tyossaoppiminenTitle"
-                        defaultMessage="Työpaikalla oppiminen"
-                      />
-                    )
-                  }
-                  type={lp.tyyppi}
-                  description={lp.selite}
-                  startDate={lp.alku}
-                  endDate={lp.loppu}
-                />
-              )
-            })}
-            {demonstrations.map((d, i) => {
-              const title =
-                verification === OHJAUS_NAYTTOON ? (
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
-                    defaultMessage="Osaaminen osoitetaan näytössä"
-                  >
-                    {msg => (
-                      <span data-testid="StudyInfo.DemonstrationVerification">
-                        {msg}
-                      </span>
-                    )}
-                  </FormattedMessage>
-                ) : (
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.nayttoTitle"
-                    defaultMessage="Näyttö"
+                          : ""
+                    }}
+                  />
+                </VerificationTitle>
+              )}
+              {learningPeriods.map((lp, i) => {
+                return (
+                  <LearningEvent
+                    key={i}
+                    title={
+                      lp.tyyppi === "OTHER" ? (
+                        lp.nimi
+                      ) : (
+                          <FormattedMessage
+                            id="opiskelusuunnitelma.tyossaoppiminenTitle"
+                            defaultMessage="Työpaikalla oppiminen"
+                          />
+                        )
+                    }
+                    type={lp.tyyppi}
+                    description={lp.selite}
+                    startDate={lp.alku}
+                    endDate={lp.loppu}
                   />
                 )
-              return (
-                <LearningEvent
-                  key={i}
-                  title={title}
-                  type={d.tyyppi}
-                  description={d.organisaatio}
-                  startDate={d.alku}
-                  endDate={d.loppu}
-                />
-              )
-            })}
-          </DetailsContent>
-          {showExpand && (
-            <IconContainer
-              onClick={toggle("details")}
-              aria-label={intl.formatMessage({
-                id: "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel"
               })}
-              data-testid="StudyInfo.ExpandDetails"
-            >
-              <Expand size={40} />
-            </IconContainer>
-          )}
-        </LocationsContainer>
-      </DetailsCollapsed>
-    )
+              {demonstrations.map((d, i) => {
+                const title =
+                  verification === OHJAUS_NAYTTOON ? (
+                    <FormattedMessage
+                      id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
+                      defaultMessage="Osaaminen osoitetaan näytössä"
+                    >
+                      {msg => (
+                        <span data-testid="StudyInfo.DemonstrationVerification">
+                          {msg}
+                        </span>
+                      )}
+                    </FormattedMessage>
+                  ) : (
+                      <FormattedMessage
+                        id="opiskelusuunnitelma.nayttoTitle"
+                        defaultMessage="Näyttö"
+                      />
+                    )
+                return (
+                  <LearningEvent
+                    key={i}
+                    title={title}
+                    type={d.tyyppi}
+                    description={d.organisaatio}
+                    startDate={d.alku}
+                    endDate={d.loppu}
+                  />
+                )
+              })}
+            </DetailsContent>
+            {showExpand && (
+              <IconContainer
+                onClick={toggle("details")}
+                aria-label={intl.formatMessage({
+                  id: "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel"
+                })}
+                data-testid="StudyInfo.ExpandDetails"
+              >
+                <Expand size={40} />
+              </IconContainer>
+            )}
+          </LocationsContainer>
+        </DetailsCollapsed>
+      )
   }
 }
