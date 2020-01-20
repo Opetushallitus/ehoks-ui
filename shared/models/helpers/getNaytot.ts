@@ -4,6 +4,7 @@ export function getNaytot(
   osaamisenOsoittaminen: Array<{
     alku: string
     loppu: string
+    uuid: string
     jarjestaja: { oppilaitosOid: string }
     nayttoymparisto: { nimi: string; yTunnus: string; kuvaus: string }
     tyoelamaOsaamisenArvioijat: Array<{
@@ -22,6 +23,7 @@ export function getNaytot(
   return osaamisenOsoittaminen.map<Naytto>(naytto => ({
     alku: naytto.alku,
     loppu: naytto.loppu,
+    uuid: naytto.uuid,
     organisaatio: naytto.nayttoymparisto.nimi,
     ymparisto: naytto.nayttoymparisto.kuvaus,
     koulutuksenJarjestajaArvioijat: naytto.koulutuksenJarjestajaOsaamisenArvioijat.map(
@@ -33,6 +35,7 @@ export function getNaytot(
     yksilollisetKriteerit: naytto.yksilollisetKriteerit,
     vaatimuksistaTaiTavoitteistaPoikkeaminen: naytto.vaatimuksistaTaiTavoitteistaPoikkeaminen,
     tyotehtavat: naytto.sisallonKuvaus,
-    tyyppi: "DEMONSTRATION"
+    tyyppi: "DEMONSTRATION",
+    shareProps: { tyyppi: "DEMONSTRATION", uuid: naytto.uuid }
   }))
 }

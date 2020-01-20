@@ -42,6 +42,7 @@ export interface OsaamisenOsoittaminen {
   loppu?: string
   jarjestaja?: { oppilaitosOid?: string }
   nayttoYmparisto?: Nayttoymparisto
+  uuid?: string
 }
 
 export interface Naytto {
@@ -55,6 +56,7 @@ export interface Naytto {
   yksilollisetKriteerit?: string[]
   vaatimuksistaTaiTavoitteistaPoikkeaminen?: string
   tyyppi?: "DEMONSTRATION"
+  uuid?: string
 }
 
 export interface Harjoittelujakso {
@@ -69,6 +71,7 @@ export interface Harjoittelujakso {
 
 export interface TutkinnonOsa {
   id?: number
+  uuid?: string
   osaamisvaatimukset?: Osaamisvaatimus[]
   osaamisenHankkimistavat?: OsaamisenHankkimistapa[]
   osaamisenOsoittaminen?: OsaamisenOsoittaminen[]
@@ -82,8 +85,9 @@ export interface TutkinnonOsa {
   olennainenSeikka?: boolean
   tutkinnonOsaKoodiUri?: string
   opintoOtsikko: (ospLyhenne: string) => string
+  share?: { koodiUri: string; type: ShareType | "", uuid: string }
 }
 
 export interface HankittavaTutkinnonOsa extends TutkinnonOsa {
-  hasNayttoOrHarjoittelujakso(koodiUri: string, type: ShareType | ""): boolean
+  hasNayttoOrHarjoittelujakso(koodiUri: string, type: ShareType | "", uuid: string | ""): boolean
 }
