@@ -86,8 +86,9 @@ export interface TutkinnonOsa {
   tutkinnonOsaKoodiUri?: string
   opintoOtsikko: (ospLyhenne: string) => string
   share?: { koodiUri: string; type: ShareType | "", uuid: string }
+  tutkinnonOsaTyyppi?: string
 }
 
 export interface HankittavaTutkinnonOsa extends TutkinnonOsa {
-  hasNayttoOrHarjoittelujakso(koodiUri: string, type: ShareType | "", uuid: string | ""): boolean
+  hasNayttoOrHarjoittelujakso(koodiUri: string, type: ShareType | ""): boolean
 }

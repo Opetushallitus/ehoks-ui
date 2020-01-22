@@ -26,6 +26,9 @@ export const AiemminHankittuPaikallinenTutkinnonOsa = types
       },
       opintoOtsikko(ospLyhenne: string): string {
         return getOtsikko(this, ospLyhenne)
+      },
+      get tutkinnonOsaTyyppi(): string {
+        return "AiemminHankitutPaikallisetTutkinnonOsat"
       }
     }
   })

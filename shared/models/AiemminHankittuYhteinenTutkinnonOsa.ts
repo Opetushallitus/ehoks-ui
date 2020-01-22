@@ -69,6 +69,9 @@ export const AiemminHankittuYhteinenTutkinnonOsa = types
       },
       opintoOtsikko(ospLyhenne: string): string {
         return getOtsikko(this, ospLyhenne)
+      },
+      get tutkinnonOsaTyyppi(): string {
+        return "AiemminHankitutYhteisetTutkinnonOsat"
       }
     }
   })

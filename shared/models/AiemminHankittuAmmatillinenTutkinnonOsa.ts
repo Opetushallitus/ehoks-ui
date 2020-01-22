@@ -52,6 +52,9 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
           lahetettyArvioitavaksi:
             self.tarkentavatTiedotArvioija.lahetettyArvioitavaksi
         }
+      },
+      get tutkinnonOsaTyyppi(): string {
+        return "AiemminHankitutAmmatillisetTutkinnonOsat"
       }
     }
   })

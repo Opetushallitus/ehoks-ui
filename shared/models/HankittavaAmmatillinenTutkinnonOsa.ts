@@ -36,6 +36,9 @@ export const HankittavaAmmatillinenTutkinnonOsa = types
         return self.tutkinnonOsa && self.tutkinnonOsa.nimi
           ? self.tutkinnonOsa.nimi[root.translations.activeLocale]
           : ""
+      },
+      get tutkinnonOsaTyyppi(): string {
+        return "HankittavatAmmatillisetTutkinnonOsat"
       }
     }
   })

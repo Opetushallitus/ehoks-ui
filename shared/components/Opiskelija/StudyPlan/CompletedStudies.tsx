@@ -76,7 +76,7 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
                   learningPeriods={study.harjoittelujaksot}
                   title={study.opintoOtsikko(competencePointsTitle)}
                   uuid={study.uuid}
-                  shareProps={{ tyyppi: study.tutkinnonOsaKoodiUri, uuid: study.uuid }}
+                  shareProps={{ tyyppi: study.tutkinnonOsaTyyppi, uuid: study.uuid }}
                 />
                 {renderExtraItem && <EmptyItem />}
               </React.Fragment>

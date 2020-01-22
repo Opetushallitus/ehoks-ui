@@ -30,6 +30,9 @@ export const HankittavaPaikallinenTutkinnonOsa = types
       },
       get osaamispisteet() {
         return self.laajuus
+      },
+      get tutkinnonOsaTyyppi(): string {
+        return "HankittavatPaikallisetTutkinnonOsat"
       }
     }
   })
