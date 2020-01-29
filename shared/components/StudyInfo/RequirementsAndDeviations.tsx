@@ -82,6 +82,10 @@ interface RequirementsAndDeviationsProps {
   deviations?: string
 }
 
+function doesntHaveRequirementsAndDeviations(requirements: string[] | undefined, deviations: string | undefined) {
+  return !((requirements && requirements.length > 0) || deviations)
+}
+
 export class RequirementsAndDeviations extends React.Component<
   RequirementsAndDeviationsProps
 > {
@@ -92,6 +96,10 @@ export class RequirementsAndDeviations extends React.Component<
   render() {
     const { expanded, toggle, requirements, deviations } = this.props
     const { intl } = this.context
+
+    if(doesntHaveRequirementsAndDeviations(requirements, deviations)){
+      return null
+    }
 
     return (
       <Container>
@@ -115,29 +123,39 @@ export class RequirementsAndDeviations extends React.Component<
               </IconContainer>
             </CollapseContainer>
             <Line height="2px" backgroundColor="#000" />
-            <Prefix>
-              <FormattedMessage
-                id="opiskelusuunnitelma.poiketaanPrefix"
-                defaultMessage="Poiketaan"
-                tagName="i"
-              />
-            </Prefix>
-            <Deviations>
-              {deviations}
-            </Deviations>
-            <Prefix>
-              <FormattedMessage
-                id="opiskelusuunnitelma.yksilollisetArviointikriteeritPrefix"
-                defaultMessage="Yksilölliset arviointikriteerisi"
-                tagName="i"
-              />
-            </Prefix>
-            <Requirements>
-              {requirements &&
-              requirements.map((requirement, i) => {
-                return <li key={i}>{requirement}</li>
-              })}
-            </Requirements>
+
+            {deviations && (
+              <>
+              <Prefix>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.poiketaanPrefix"
+                  defaultMessage="Poiketaan"
+                  tagName="i"
+                />
+              </Prefix>
+              <Deviations>
+                {deviations}
+              </Deviations>
+              </>
+            )}
+
+            {requirements && requirements.length > 0 && (
+              <>
+                <Prefix>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.yksilollisetArviointikriteeritPrefix"
+                    defaultMessage="Yksilölliset arviointikriteerisi"
+                    tagName="i"
+                  />
+                </Prefix>
+                <Requirements>
+                  {requirements &&
+                  requirements.map((requirement, i) => {
+                    return <li key={i}>{requirement}</li>
+                  })}
+                </Requirements>
+              </>
+            )}
           </RequirementsAndDeviationsContainer>
         ) : (
           <RequirementsAndDeviationsContainer>
