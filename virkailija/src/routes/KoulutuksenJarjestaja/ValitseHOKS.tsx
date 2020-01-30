@@ -33,6 +33,15 @@ export class ValitseHOKS extends React.Component<
       suunnitelma => !!suunnitelma.paattymispaiva
     )
 
+    function isHoksEditIconVisible(suunnitelma: any) {
+      return (
+        app === "virkailija" &&
+        oppijaId !== "" &&
+        suunnitelma.manuaalisyotto &&
+        session.hasEditPrivilege === true
+      )
+    }
+
     return (
       <React.Fragment>
         <NavigationContainer>
@@ -55,17 +64,12 @@ export class ValitseHOKS extends React.Component<
                 </Heading>
 
                 {voimassaOlevat.map((suunnitelma, i) => {
-                  const showEditIcon: boolean =
-                    app === "virkailija" &&
-                    oppijaId !== "" &&
-                    suunnitelma.manuaalisyotto &&
-                    session.hasEditPrivilege === true
                   return (
                     <Suunnitelma
                       hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
                       suunnitelma={suunnitelma}
                       oppijaId={oppijaId}
-                      showEditIcon={showEditIcon}
+                      showEditIcon={isHoksEditIconVisible(suunnitelma)}
                       key={i}
                     />
                   )
@@ -87,6 +91,7 @@ export class ValitseHOKS extends React.Component<
                       hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
                       suunnitelma={suunnitelma}
                       oppijaId={oppijaId}
+                      showEditIcon={isHoksEditIconVisible(suunnitelma)}
                       key={i}
                     />
                   )
