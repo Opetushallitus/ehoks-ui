@@ -7,10 +7,11 @@ import { Suunnitelma } from "components/Opiskelija/Suunnitelma"
 import { BackgroundContainer } from "components/SectionContainer"
 import partition from "lodash.partition"
 import { observer } from "mobx-react"
-import { IHOKS } from "models/HOKS"
+import { HOKS, IHOKS } from "models/HOKS"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import { ISessionStore } from "stores/SessionStore"
+import { Instance } from "mobx-state-tree"
 
 interface ValitseHOKSProps {
   nimi: string
@@ -32,6 +33,15 @@ export class ValitseHOKS extends React.Component<
       suunnitelmat,
       suunnitelma => !!suunnitelma.paattymispaiva
     )
+
+    function isHoksEditIconVisible(suunnitelma: Instance<typeof HOKS>) {
+      return (
+        app === "virkailija" &&
+        oppijaId !== "" &&
+        suunnitelma.manuaalisyotto &&
+        session.hasEditPrivilege === true
+      )
+    }
 
     return (
       <React.Fragment>
@@ -55,17 +65,12 @@ export class ValitseHOKS extends React.Component<
                 </Heading>
 
                 {voimassaOlevat.map((suunnitelma, i) => {
-                  const showEditIcon: boolean =
-                    app === "virkailija" &&
-                    oppijaId !== "" &&
-                    suunnitelma.manuaalisyotto &&
-                    session.hasEditPrivilege === true
                   return (
                     <Suunnitelma
                       hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
                       suunnitelma={suunnitelma}
                       oppijaId={oppijaId}
-                      showEditIcon={showEditIcon}
+                      showEditIcon={isHoksEditIconVisible(suunnitelma)}
                       key={i}
                     />
                   )
@@ -87,6 +92,7 @@ export class ValitseHOKS extends React.Component<
                       hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
                       suunnitelma={suunnitelma}
                       oppijaId={oppijaId}
+                      showEditIcon={isHoksEditIconVisible(suunnitelma)}
                       key={i}
                     />
                   )
