@@ -142,6 +142,7 @@ interface ShareDialogProps {
   koodiUri: string
   type: ShareType,
   uuid: string
+  tutkinnonOsaTyyppi: string
   defaultPeriod?: { start?: string; end?: string }
   instructor?: { name: string; organisation?: string; email: string }
   intl?: InjectedIntl
@@ -157,6 +158,7 @@ export function ShareDialog(props: ShareDialogProps) {
     koodiUri,
     type,
     uuid,
+    tutkinnonOsaTyyppi,
     intl
   } = props
 
@@ -195,7 +197,7 @@ export function ShareDialog(props: ShareDialogProps) {
 
   useEffect(() => {
     const fetchData = async () => {
-      setSharedLinks(await fetchLinks(eid, koodiUri, type, apiConfig, uuid))
+      setSharedLinks(await fetchLinks(apiConfig, uuid))
     }
     fetchData()
   }, [])
@@ -203,14 +205,13 @@ export function ShareDialog(props: ShareDialogProps) {
   const addLink = async () => {
     const createdUuid = await createLink({
       eid,
-      koodiUri,
       startDate,
       endDate,
-      type,
       uuid,
+      tutkinnonOsaTyyppi,
       apiConfig
     })
-    setSharedLinks(await fetchLinks(eid, koodiUri, type, apiConfig, uuid))
+    setSharedLinks(await fetchLinks(apiConfig, uuid))
     setCreatedUrl(`https://not.implemented.yet/jako/${createdUuid}`)
   }
 
@@ -235,7 +236,7 @@ export function ShareDialog(props: ShareDialogProps) {
         uuid,
         apiConfig
       })
-      setSharedLinks(await fetchLinks(eid, koodiUri, type, apiConfig, uuid))
+      setSharedLinks(await fetchLinks(apiConfig, uuid))
       setCreatedUrl("")
     }
   }

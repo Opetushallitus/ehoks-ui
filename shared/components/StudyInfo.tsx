@@ -117,10 +117,12 @@ export interface StudyInfoProps {
   /**
    * Current share state from url
    */
-  share?: { koodiUri: string; type: ShareType | "" }
+  share?: { koodiUri?: string | ""; type?: string | "", uuid?: string | "" }
   shareProps?: { tyyppi?: string; uuid?: string | "" }
   /** Title of the study, always visible */
   title?: React.ReactNode
+
+  tutkinnonOsaTyyppi?: string
   /**
    * Verification process details
    */
@@ -215,13 +217,12 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
   }
 
   share = () => {
-    const { koodiUri, uuid } = this.props
-    if (koodiUri && uuid) {
+    const { shareProps } = this.props
+    if (shareProps) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
-          share: koodiUri,
-          type: "tyossaoppiminen",
-          uuid: uuid
+          uuid: shareProps.uuid || "",
+          type: shareProps.tyyppi || ""
         })}`
       )
     }
@@ -250,8 +251,9 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       hasLearningPeriods || demonstrations.length > 0 || verificationProcess
     const hasActiveShare =
       typeof share !== "undefined" &&
-      koodiUri === share.koodiUri &&
-      share.type === "tyossaoppiminen"
+      uuid === share.uuid
+    // koodiUri === share.koodiUri &&
+    // share.type === "tyossaoppiminen"
     const detailsExpanded = expanded.details || hasActiveShare
     const showShareButton =
       expanded.details &&

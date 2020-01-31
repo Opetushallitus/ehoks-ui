@@ -99,7 +99,7 @@ OpiskelusuunnitelmaState
 
   isShareActive = () => {
     const { share } = this.state
-    return share.koodiUri !== "" && share.type !== "" && share.uuid !== ""
+    return share.koodiUri !== "" && share.type !== ""
   }
 
   hasActiveShare = (type: StudyPartType) => {
@@ -115,7 +115,7 @@ OpiskelusuunnitelmaState
       valmiit: valmiitOpinnot
     }
     return !!find(studies[type], s =>
-      s.hasNayttoOrHarjoittelujakso(share.koodiUri, share.type, share.uuid)
+      s.hasNayttoOrHarjoittelujakso(share.koodiUri, share.type)
     )
   }
 
@@ -434,7 +434,6 @@ OpiskelusuunnitelmaState
           <CompletedStudies
             accordionIsOpen={activeAccordions.suunnitelmat.valmiit}
             hasActiveShare={hasActiveShare("valmiit")}
-            share={share}
             toggleAccordion={this.toggleAccordion}
             valmiitOpinnot={valmiitOpinnot}
             elements={elements}

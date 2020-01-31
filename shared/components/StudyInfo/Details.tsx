@@ -77,7 +77,7 @@ interface DetailsProps {
   koodiUri?: string
   learningPeriods?: Array<Harjoittelujakso>
   competenceAcquiringMethods?: Array<OsaamisenHankkimistapa>
-  share?: { koodiUri: string; type: ShareType | "" }
+  share?: { koodiUri?: string; type?: string; uuid?: string }
   toggle: (name: ToggleableItems) => () => void
   verificationProcess?: TodentamisenProsessi
   uuid?: string
@@ -111,8 +111,9 @@ export class Details extends React.Component<DetailsProps> {
       learningPeriods.length ||
       verification === OHJAUS_NAYTTOON
     const hasActiveShare =
-      typeof share !== "undefined" && koodiUri === share.koodiUri
+      typeof share !== "undefined" && uuid === share.uuid
     const shareType = typeof share !== "undefined" ? share.type : undefined
+    const shareUuid = typeof share !== "undefined" ? share.uuid : undefined
     const firstLearningPeriod =
       shareType === "tyossaoppiminen" && learningPeriods[0]
         ? learningPeriods[0]
@@ -157,10 +158,11 @@ export class Details extends React.Component<DetailsProps> {
           )}
 
           <ShareDialog
-            active={hasActiveShare && shareType === "tyossaoppiminen"}
+            active={hasActiveShare && shareUuid === uuid}
             background={fadedColor}
             koodiUri={koodiUri || ""}
             type="tyossaoppiminen"
+            tutkinnonOsaTyyppi="tyossaoppiminen"
             uuid={uuid || ""}
             instructor={instructor}
             defaultPeriod={defaultPeriod}
@@ -177,10 +179,11 @@ export class Details extends React.Component<DetailsProps> {
           {demonstrations.map((demonstration, i) => {
             return (
               <ShareDialog
-                active={hasActiveShare && shareType === "naytto"}
+                active={hasActiveShare && shareUuid === demonstration.uuid}
                 background={fadedColor}
                 koodiUri={koodiUri || ""}
                 type="naytto"
+                tutkinnonOsaTyyppi="DEMONSTRATION"
                 uuid={demonstration.uuid || ""}
                 defaultPeriod={{
                   start: demonstration.alku,
@@ -192,7 +195,7 @@ export class Details extends React.Component<DetailsProps> {
                   demonstration={demonstration}
                   verificationProcess={verificationProcess}
                   koodiUri={koodiUri}
-                  hasActiveShare={hasActiveShare && shareType === "naytto"}
+                  hasActiveShare={hasActiveShare && shareType === demonstration.tyyppi}
                   shareProps={{ tyyppi: demonstration.tyyppi, uuid: demonstration.uuid }}
                 />
               </ShareDialog>

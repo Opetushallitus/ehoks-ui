@@ -14,7 +14,8 @@ export interface PlannedStudiesProps {
   accordionIsOpen: boolean
   share: {
     koodiUri: string
-    type: ShareType | ""
+    type: string
+    uuid: string
   }
   hasActiveShare: boolean
   toggleAccordion: (

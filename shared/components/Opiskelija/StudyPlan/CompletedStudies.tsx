@@ -12,10 +12,11 @@ import { theme } from "../../../theme"
 
 export interface CompletedStudiesProps {
   accordionIsOpen: boolean
-  share: {
-    koodiUri: string
-    type: ShareType | ""
-  }
+  // share: {
+  //   koodiUri: string
+  //   type: ShareType | "",
+  //   uuid: string
+  // }
   hasActiveShare: boolean
   toggleAccordion: (
     accordion: ActiveAccordions,
@@ -75,6 +76,10 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
                   koodiUri={study.tutkinnonOsaKoodiUri}
                   learningPeriods={study.harjoittelujaksot}
                   title={study.opintoOtsikko(competencePointsTitle)}
+                  share={{
+                    type: study.tutkinnonOsaTyyppi, uuid: study.uuid,
+                    koodiUri: study.tutkinnonOsaKoodiUri
+                  }}
                   uuid={study.uuid}
                   shareProps={{ tyyppi: study.tutkinnonOsaTyyppi, uuid: study.uuid }}
                 />

@@ -1,29 +1,28 @@
 import { APIConfig } from "components/APIConfigContext"
 
 interface BackendShareLink {
+  "jako-uuid": string
   uuid: string
-  "voimassaolo-alku": string
-  "voimassaolo-loppu": string
+  "alku": string
+  "loppu": string
   tyyppi: string
+  tutkinnonOsaTyyppi: string
 }
 
 export interface ShareLink {
   uuid: string
   validFrom: string
   validTo: string
-  type: string
+  tyyppi: string
 }
 
 export const fetchLinks = async function (
-  eid: string,
-  koodiUri: string,
-  type: string,
   apiConfig: APIConfig,
   uuid: string
 ): Promise<ShareLink[]> {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/hoksit/${eid}/${uuid}/share/${koodiUri}`),
+    apiUrl(`${apiPrefix}/hoksit/share/${uuid}`),
     {
       credentials: "include"
     }
@@ -34,38 +33,37 @@ export const fetchLinks = async function (
   const json: { data: BackendShareLink[] } = await response.json()
   return json.data
     .filter(link => {
-      return link.tyyppi === type
+      return link.uuid === uuid
     })
     .map(link => {
       return {
+        "jako-uuid": link["jako-uuid"],
         uuid: link.uuid,
-        validFrom: link["voimassaolo-alku"],
-        validTo: link["voimassaolo-loppu"],
-        type: link.tyyppi
+        validFrom: link["alku"],
+        validTo: link["loppu"],
+        tyyppi: link.tyyppi
       }
     })
 }
 
 export const createLink = async function ({
   eid,
-  koodiUri,
   startDate,
   endDate,
-  type,
   uuid,
+  tutkinnonOsaTyyppi,
   apiConfig
 }: {
   eid: string
-  koodiUri: string
   startDate: string
   endDate: string
-  type: string,
   uuid: string,
+  tutkinnonOsaTyyppi: string,
   apiConfig: APIConfig
 }): Promise<string> {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/hoksit/${eid}/${uuid}/share/${koodiUri}`),
+    apiUrl(`${apiPrefix}/hoksit/share/${eid}`),
     {
       credentials: "include",
       method: "POST",
@@ -75,7 +73,8 @@ export const createLink = async function ({
       body: JSON.stringify({
         "voimassaolo-alku": startDate,
         "voimassaolo-loppu": endDate,
-        tyyppi: type
+        "tyyppi": tutkinnonOsaTyyppi,
+        "uuid": uuid
       })
     }
   )

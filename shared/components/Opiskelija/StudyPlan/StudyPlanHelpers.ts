@@ -13,7 +13,8 @@ export interface OpiskelusuunnitelmaState {
   }
   share: {
     koodiUri: string
-    type: ShareType | ""
+    type: string,
+    uuid: string
   }
 }
 
