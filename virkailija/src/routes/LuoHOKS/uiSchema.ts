@@ -400,6 +400,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "osa-alue-koodi-versio",
             "valittu-todentamisen-prosessi-koodi-uri",
             "valittu-todentamisen-prosessi-koodi-versio",
+            "tarkentavat-tiedot-osaamisen-arvioija",
             "vaatimuksista-tai-tavoitteista-poikkeaminen",
             "koulutuksen-jarjestaja-oid",
             "olennainen-seikka",
@@ -421,6 +422,19 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           },
           "valittu-todentamisen-prosessi-koodi-versio": {
             "ui:widget": "hidden"
+          },
+          "tarkentavat-tiedot-osaamisen-arvioija": {
+            "aiemmin-hankitun-osaamisen-arvioijat": {
+              "ui:options": {
+                orderable: false
+              },
+              items: {
+                "ui:order": ["nimi", "*"],
+                id: {
+                  "ui:widget": "hidden"
+                }
+              }
+            }
           },
           "tarkentavat-tiedot-naytto": {
             "ui:options": {
