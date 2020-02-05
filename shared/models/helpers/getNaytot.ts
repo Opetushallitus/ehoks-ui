@@ -6,14 +6,19 @@ export function getNaytot(osaamisenOsoittaminen: Array<OsaamisenOsoittaminen>) {
     loppu: naytto.loppu,
     organisaatio: naytto.nayttoymparisto.nimi,
     ymparisto: naytto.nayttoymparisto.kuvaus,
-    koulutuksenJarjestajaArvioijat: naytto.koulutuksenJarjestajaOsaamisenArvioijat.map(
-      a => [a.nimi, a.organisaatio.oppilaitosNimi].filter(Boolean).join(", ")
+    koulutuksenJarjestajaArvioijat: naytto.koulutuksenJarjestajaOsaamisenArvioijat
+      .map(a => [a.nimi, a.organisaatio.oppilaitosNimi]
+      .filter(Boolean)
+      .join(", ")
     ),
-    tyoelamaArvioijat: naytto.tyoelamaOsaamisenArvioijat.map(a =>
-      [a.nimi, a.organisaatio.nimi].filter(Boolean).join(", ")
+    tyoelamaArvioijat: naytto.tyoelamaOsaamisenArvioijat
+      .map(a => [a.nimi, a.organisaatio.nimi]
+      .filter(Boolean)
+      .join(", ")
     ),
     yksilollisetKriteerit: naytto.yksilollisetKriteerit,
-    vaatimuksistaTaiTavoitteistaPoikkeaminen: naytto.vaatimuksistaTaiTavoitteistaPoikkeaminen,
+    vaatimuksistaTaiTavoitteistaPoikkeaminen:
+      naytto.vaatimuksistaTaiTavoitteistaPoikkeaminen,
     tyotehtavat: naytto.sisallonKuvaus,
     tyyppi: "DEMONSTRATION"
   }))
