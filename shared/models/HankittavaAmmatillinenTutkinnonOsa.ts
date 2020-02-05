@@ -1,7 +1,7 @@
 import { types, getRoot } from "mobx-state-tree"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { OsaamisenHankkimistapa } from "./OsaamisenHankkimistapa"
-import { TutkinnonOsaViews } from "./helpers/TutkinnonOsaViews"
+import { HankittavatTutkinnonOsatViews } from "./helpers/HankittavatTutkinnonOsatViews"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
@@ -26,7 +26,7 @@ export const HankittavaAmmatillinenTutkinnonOsa = types
     EnrichKoodiUri,
     EnrichTutkinnonOsa("tutkinnonOsaViitteet"),
     Model,
-    TutkinnonOsaViews
+    HankittavatTutkinnonOsatViews
   )
   .views(self => {
     const root: LocaleRoot = getRoot(self)

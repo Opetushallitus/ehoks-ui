@@ -1,7 +1,7 @@
 import { types } from "mobx-state-tree"
 import { OsaamisenHankkimistapa } from "./OsaamisenHankkimistapa"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
-import { TutkinnonOsaViews } from "./helpers/TutkinnonOsaViews"
+import { HankittavatTutkinnonOsatViews } from "./helpers/HankittavatTutkinnonOsatViews"
 
 const Model = types.model("HankittavaPaikallinenTutkinnonOsaModel", {
   id: types.optional(types.number, 0),
@@ -20,7 +20,7 @@ export const HankittavaPaikallinenTutkinnonOsa = types
   .compose(
     "HankittavaPaikallinenTutkinnonOsaModel",
     Model,
-    TutkinnonOsaViews
+    HankittavatTutkinnonOsatViews
   )
   .views(self => {
     return {

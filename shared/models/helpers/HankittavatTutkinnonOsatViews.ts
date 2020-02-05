@@ -10,7 +10,7 @@ import { ShareType } from "stores/NotificationStore"
 import find from "lodash.find"
 
 // TODO: type tutkinnonOsa
-export const TutkinnonOsaViews = types.model({}).views((self: any) => {
+export const HankittavatTutkinnonOsatViews = types.model({}).views((self: any) => {
   const root: LocaleRoot = getRoot(self)
   return {
     get tila() {
