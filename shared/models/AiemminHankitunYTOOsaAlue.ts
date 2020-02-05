@@ -4,8 +4,7 @@ import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 import { EnrichKoodiUri } from "./EnrichKoodiUri"
 import { KoodistoVastaus } from "./KoodistoVastaus"
 import { getOtsikko } from "./helpers/getOtsikko"
-import { Naytto } from "./helpers/TutkinnonOsa"
-import { getNaytot } from "./helpers/getNaytot"
+import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 
 export const Model = types.model(
   "AiemminHankitunYTOOsaAlue", {
@@ -25,6 +24,7 @@ export const Model = types.model(
 export const AiemminHankitunYTOOsaAlue = types
   .compose(
     EnrichKoodiUri,
+    AiemminHankitutTutkinnonOsatViews,
     Model
   )
   .views(self => {
@@ -35,9 +35,6 @@ export const AiemminHankitunYTOOsaAlue = types
       get osaamispisteet() {
         // TODO: where do we get this? Fix this also to YhteisenTutkinnonOsanOsaAlue.ts
         return 0
-      },
-      get naytot(): Naytto[] {
-        return getNaytot(self.tarkentavatTiedotNaytto)
       },
       get todentamisenProsessi() {
         return {

@@ -1,7 +1,6 @@
 import { types, getRoot } from "mobx-state-tree"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
-import { getNaytot } from "./helpers/getNaytot"
 import { getOtsikko } from "./helpers/getOtsikko"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
@@ -10,6 +9,7 @@ import { getOsaamispisteet } from "models/helpers/getOsaamispisteet"
 import { EnrichTutkinnonOsa } from "models/EnrichTutkinnonOsa"
 import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
+import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 
 const Model = types.model({
   id: types.optional(types.number, 0),
@@ -29,6 +29,7 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
     "AiemminHankittuAmmatillinenTutkinnonOsa",
     EnrichKoodiUri,
     EnrichTutkinnonOsa("tutkinnonOsaViitteet"),
+    AiemminHankitutTutkinnonOsatViews,
     Model
   )
   .views(self => {
@@ -41,9 +42,6 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
       },
       get osaamispisteet() {
         return getOsaamispisteet(self.tutkinnonOsaViitteet)
-      },
-      get naytot() {
-        return getNaytot(self.tarkentavatTiedotNaytto)
       },
       get todentamisenProsessi() {
         return {

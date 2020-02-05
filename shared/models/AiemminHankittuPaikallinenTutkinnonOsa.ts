@@ -4,7 +4,7 @@ import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { KoodistoVastaus } from "./KoodistoVastaus"
 import { EnrichKoodiUri } from "./EnrichKoodiUri"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
-import { getNaytot } from "./helpers/getNaytot"
+import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 
 const model = types.model({
   id: types.optional(types.number, 0),
@@ -24,6 +24,7 @@ const model = types.model({
 export const AiemminHankittuPaikallinenTutkinnonOsa = types.compose(
   "AiemminHankittuPaikallinenTutkinnonOsa",
   EnrichKoodiUri,
+  AiemminHankitutTutkinnonOsatViews,
   model
 ).views(self => {
   return {
@@ -32,9 +33,6 @@ export const AiemminHankittuPaikallinenTutkinnonOsa = types.compose(
     },
     get osaamispisteet() {
       return self.laajuus
-    },
-    get naytot() {
-      return getNaytot(self.tarkentavatTiedotNaytto)
     },
     get todentamisenProsessi() {
       return {
