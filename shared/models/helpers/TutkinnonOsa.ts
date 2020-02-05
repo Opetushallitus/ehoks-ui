@@ -35,15 +35,36 @@ export interface OsaamisenHankkimistapa {
 }
 
 export interface Nayttoymparisto {
-  kuvaus?: string
-  nimi?: string
+  nimi: string
   yTunnus?: string
+  kuvaus?: string
 }
+
+export interface Organisaatio {
+  nimi: string
+  yTunnus: string
+}
+
+export interface TyoelamaOsaamisenArvioija {
+  nimi: string
+  organisaatio: Organisaatio
+}
+
+export interface KoulutuksenJarjestajaOsaamisenArvioija {
+  nimi: string
+  organisaatio: { oppilaitosOid: string, oppilaitosNimi: string}
+}
+
 export interface OsaamisenOsoittaminen {
   alku: string
   loppu: string
   jarjestaja?: { oppilaitosOid?: string }
-  nayttoYmparisto?: Nayttoymparisto
+  nayttoymparisto: Nayttoymparisto
+  tyoelamaOsaamisenArvioijat: TyoelamaOsaamisenArvioija[]
+  koulutuksenJarjestajaOsaamisenArvioijat: KoulutuksenJarjestajaOsaamisenArvioija[]
+  sisallonKuvaus: string[]
+  yksilollisetKriteerit: string[]
+  vaatimuksistaTaiTavoitteistaPoikkeaminen: string
 }
 
 export interface Naytto {

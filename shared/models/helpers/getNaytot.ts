@@ -1,24 +1,6 @@
-import { Naytto } from "./TutkinnonOsa"
+import { Naytto, OsaamisenOsoittaminen } from "./TutkinnonOsa"
 
-export function getNaytot(
-  osaamisenOsoittaminen: Array<{
-    alku: string
-    loppu: string
-    jarjestaja: { oppilaitosOid: string }
-    nayttoymparisto: { nimi: string; yTunnus: string; kuvaus: string }
-    tyoelamaOsaamisenArvioijat: Array<{
-      nimi: string
-      organisaatio: { nimi: string }
-    }>
-    koulutuksenJarjestajaOsaamisenArvioijat: Array<{
-      nimi: string
-      organisaatio: { oppilaitosOid: string; oppilaitosNimi: string }
-    }>
-    sisallonKuvaus: string[]
-    yksilollisetKriteerit: string[]
-    vaatimuksistaTaiTavoitteistaPoikkeaminen: string
-  }>
-) {
+export function getNaytot(osaamisenOsoittaminen: Array<OsaamisenOsoittaminen>) {
   return osaamisenOsoittaminen.map<Naytto>(naytto => ({
     alku: naytto.alku,
     loppu: naytto.loppu,
