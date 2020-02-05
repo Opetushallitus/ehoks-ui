@@ -34,13 +34,6 @@ export const AiemminHankittuPaikallinenTutkinnonOsa = types.compose(
     get osaamispisteet() {
       return self.laajuus
     },
-    get todentamisenProsessi() {
-      return {
-        koodiUri: self.valittuTodentamisenProsessiKoodiUri,
-        lahetettyArvioitavaksi:
-        self.tarkentavatTiedotOsaamisenArvioija.lahetettyArvioitavaksi
-      }
-    },
     opintoOtsikko(ospLyhenne: string): string {
       return getOtsikko(this, ospLyhenne)
     }

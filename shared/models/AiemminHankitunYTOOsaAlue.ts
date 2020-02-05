@@ -36,13 +36,6 @@ export const AiemminHankitunYTOOsaAlue = types
         // TODO: where do we get this? Fix this also to YhteisenTutkinnonOsanOsaAlue.ts
         return 0
       },
-      get todentamisenProsessi() {
-        return {
-          koodiUri: self.valittuTodentamisenProsessiKoodiUri,
-          lahetettyArvioitavaksi:
-          self.tarkentavatTiedotOsaamisenArvioija.lahetettyArvioitavaksi
-        }
-      },
       opintoOtsikko(ospLyhenne: string): string {
         return getOtsikko(this, ospLyhenne)
       }

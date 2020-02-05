@@ -42,13 +42,6 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
       },
       get osaamispisteet() {
         return getOsaamispisteet(self.tutkinnonOsaViitteet)
-      },
-      get todentamisenProsessi() {
-        return {
-          koodiUri: self.valittuTodentamisenProsessiKoodiUri,
-          lahetettyArvioitavaksi:
-            self.tarkentavatTiedotOsaamisenArvioija.lahetettyArvioitavaksi
-        }
       }
     }
   })

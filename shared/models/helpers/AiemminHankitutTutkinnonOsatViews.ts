@@ -6,6 +6,13 @@ export const AiemminHankitutTutkinnonOsatViews = types.model({}).views((self: an
   return {
     get naytot(): Naytto[] {
       return getNaytot(self.tarkentavatTiedotNaytto)
+    },
+    get todentamisenProsessi() {
+      return {
+        koodiUri: self.valittuTodentamisenProsessiKoodiUri,
+        lahetettyArvioitavaksi:
+        self.tarkentavatTiedotOsaamisenArvioija.lahetettyArvioitavaksi
+      }
     }
   }
 })
