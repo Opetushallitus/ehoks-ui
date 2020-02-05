@@ -18,7 +18,7 @@ export const Model = types.model(
     valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
     valittuTodentamisenProsessi: types.optional(KoodistoVastaus, {}),
     tarkentavatTiedotNaytto: types.array(OsaamisenOsoittaminen),
-    tarkentavatTiedotArvioija: types.optional(TodennettuArviointiLisatiedot, {})
+    tarkentavatTiedotOsaamisenArvioija: types.optional(TodennettuArviointiLisatiedot, {})
   }
 )
 
@@ -43,7 +43,7 @@ export const AiemminHankitunYTOOsaAlue = types
         return {
           koodiUri: self.valittuTodentamisenProsessiKoodiUri,
           lahetettyArvioitavaksi:
-          self.tarkentavatTiedotArvioija.lahetettyArvioitavaksi
+          self.tarkentavatTiedotOsaamisenArvioija.lahetettyArvioitavaksi
         }
       },
       opintoOtsikko(ospLyhenne: string): string {
