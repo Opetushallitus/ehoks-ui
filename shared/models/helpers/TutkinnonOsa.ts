@@ -30,6 +30,8 @@ export interface OsaamisenHankkimistapa {
   ajanjaksonTarkenne?: string
   jarjestajanEdustaja?: { nimi?: string; oppilaitosOid?: string }
   muutOppimisymparistot?: MuuOppimisymparisto[]
+  alku: string
+  loppu: string
 }
 
 export interface Nayttoymparisto {
@@ -38,8 +40,8 @@ export interface Nayttoymparisto {
   yTunnus?: string
 }
 export interface OsaamisenOsoittaminen {
-  alku?: string
-  loppu?: string
+  alku: string
+  loppu: string
   jarjestaja?: { oppilaitosOid?: string }
   nayttoYmparisto?: Nayttoymparisto
 }
