@@ -1,7 +1,6 @@
 import { types, getRoot } from "mobx-state-tree"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
-import { getOtsikko } from "./helpers/getOtsikko"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
@@ -45,8 +44,3 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
       }
     }
   })
-  .views(self => ({
-    opintoOtsikko(ospLyhenne: string): string {
-      return getOtsikko(self, ospLyhenne)
-    }
-  }))

@@ -1,5 +1,4 @@
 import { types } from "mobx-state-tree"
-import { getOtsikko } from "./helpers/getOtsikko"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { KoodistoVastaus } from "./KoodistoVastaus"
 import { EnrichKoodiUri } from "./EnrichKoodiUri"
@@ -33,9 +32,6 @@ export const AiemminHankittuPaikallinenTutkinnonOsa = types.compose(
     },
     get osaamispisteet() {
       return self.laajuus
-    },
-    opintoOtsikko(ospLyhenne: string): string {
-      return getOtsikko(this, ospLyhenne)
     }
   }
 })

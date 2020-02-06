@@ -3,7 +3,6 @@ import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 import { EnrichKoodiUri } from "./EnrichKoodiUri"
 import { KoodistoVastaus } from "./KoodistoVastaus"
-import { getOtsikko } from "./helpers/getOtsikko"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 
 export const Model = types.model(
@@ -35,9 +34,6 @@ export const AiemminHankitunYTOOsaAlue = types
       get osaamispisteet() {
         // TODO: where do we get this? Fix this also to YhteisenTutkinnonOsanOsaAlue.ts
         return 0
-      },
-      opintoOtsikko(ospLyhenne: string): string {
-        return getOtsikko(this, ospLyhenne)
       }
     }
   })

@@ -1,6 +1,7 @@
 import { types } from "mobx-state-tree"
 import { getNaytot } from "./getNaytot"
 import { Naytto } from "./TutkinnonOsa"
+import { getOtsikko } from "./getOtsikko"
 
 export const AiemminHankitutTutkinnonOsatViews = types.model({}).views((self: any) => {
   return {
@@ -13,6 +14,9 @@ export const AiemminHankitutTutkinnonOsatViews = types.model({}).views((self: an
         lahetettyArvioitavaksi:
         self.tarkentavatTiedotOsaamisenArvioija.lahetettyArvioitavaksi
       }
+    },
+    opintoOtsikko(ospLyhenne: string): string {
+      return getOtsikko(self, ospLyhenne)
     }
   }
 })
