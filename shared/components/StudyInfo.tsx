@@ -17,6 +17,7 @@ import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
 import { ToggleableItems } from "./StudyInfo/StudyInfoHelpers"
+import { Objectives } from "./StudyInfo/Objectives"
 
 interface ContainerProps {
   accentColor?: string
@@ -299,6 +300,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
             expandedCompetences={expandedCompetences}
             toggle={this.toggle}
           />
+          <Objectives/>
         </InnerContainer>
       </Container>
     )
