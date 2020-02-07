@@ -105,6 +105,7 @@ export interface TutkinnonOsa {
   olennainenSeikka?: boolean
   tutkinnonOsaKoodiUri?: string
   opintoOtsikko: (ospLyhenne: string) => string
+  tavoitteetJaSisallot?: string
 }
 
 export interface HankittavaTutkinnonOsa extends TutkinnonOsa {

@@ -71,6 +71,7 @@ const ObjectiveData = styled(InfoTextContainer)`
 interface ObjectiveProps {
   expanded: boolean
   toggle: (name: ToggleableItems) => () => void
+  objectives?: string
 }
 
 export class Objectives extends React.Component<ObjectiveProps>{
@@ -79,7 +80,7 @@ export class Objectives extends React.Component<ObjectiveProps>{
   }
 
   render() {
-    const { expanded, toggle } = this.props
+    const { expanded, toggle, objectives } = this.props
     // TODO kaannokset
     // const { intl } = this.context
 
@@ -105,7 +106,7 @@ export class Objectives extends React.Component<ObjectiveProps>{
           </CollapseContainer>
           <Line height="2px" backgroundColor="#000" />
           <ObjectiveData>
-            Tassa testi tavoitteita
+            {objectives}
           </ObjectiveData>
         </ObjectivesContainer>
       ) : (

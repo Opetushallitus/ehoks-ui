@@ -92,6 +92,7 @@ export class AiempiOsaaminen extends React.Component<
                     competenceRequirements={study.osaamisvaatimukset}
                     demonstrations={study.naytot}
                     verificationProcess={study.todentamisenProsessi}
+                    objectives={study.tavoitteetJaSisallot}
                   />
                   {renderExtraItem && <EmptyItem />}
                 </React.Fragment>
