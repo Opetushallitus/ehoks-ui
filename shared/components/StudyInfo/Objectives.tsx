@@ -48,11 +48,11 @@ const CollapseTitle = styled("h2")`
   }
 `
 
-
 const ExpandContainer = styled("div")`
   display: flex;
   align-items: center;
   padding: 10px 10px 10px 20px;
+  border-top: 1px solid #c9cdcf;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     padding: 10px 10px 10px 20px;
