@@ -93,16 +93,16 @@ export class Objectives extends React.Component<ObjectiveProps>{
                 id="opiskelusuunnitelma.tavoitteetJaSisallot"
                 defaultMessage="Tavoitteet ja sisällöt"
               />
-              <IconContainer
-                onClick={toggle("objectives")}
-                // aria-label={intl.formatMessage({
-                //   id:
-                //     "opiskelusuunnitelma.piilotaTavoitteetjaSisallotAriaLabel"
-                // })}
-              >
-                <Collapse size={40} />
-              </IconContainer>
             </CollapseTitle>
+            <IconContainer
+              onClick={toggle("objectives")}
+              // aria-label={intl.formatMessage({
+              //   id:
+              //     "opiskelusuunnitelma.piilotaTavoitteetjaSisallotAriaLabel"
+              // })}
+            >
+              <Collapse size={40} />
+            </IconContainer>
           </CollapseContainer>
           <Line height="2px" backgroundColor="#000" />
           <ObjectiveData>
