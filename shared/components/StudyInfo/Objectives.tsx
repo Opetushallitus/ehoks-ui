@@ -77,8 +77,7 @@ export class Objectives extends React.Component<ObjectiveProps>{
 
   render() {
     const { expanded, toggle, objectives } = this.props
-    // TODO kaannokset
-    // const { intl } = this.context
+    const { intl } = this.context
 
     return <Container>
       {expanded ? (
@@ -92,10 +91,9 @@ export class Objectives extends React.Component<ObjectiveProps>{
             </CollapseTitle>
             <IconContainer
               onClick={toggle("objectives")}
-              // aria-label={intl.formatMessage({
-              //   id:
-              //     "opiskelusuunnitelma.piilotaTavoitteetjaSisallotAriaLabel"
-              // })}
+              aria-label={intl.formatMessage({
+                id: "opiskelusuunnitelma.piilotaTavoitteetjaSisallotAriaLabel"
+              })}
             >
               <Collapse size={40} />
             </IconContainer>
@@ -118,10 +116,9 @@ export class Objectives extends React.Component<ObjectiveProps>{
             </ExpandTitle>
             <IconContainer
               onClick={toggle("objectives")}
-              // aria-label={intl.formatMessage({
-              //   id:
-              //    "opiskelusuunnitelma.naytaTavoitteetjaSisallotAriaLabel"
-              //})}
+              aria-label={intl.formatMessage({
+                id: "opiskelusuunnitelma.naytaTavoitteetjaSisallotAriaLabel"
+              })}
             >
               <Expand size={40} />
             </IconContainer>
