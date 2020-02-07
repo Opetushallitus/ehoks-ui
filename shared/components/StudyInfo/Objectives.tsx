@@ -1,6 +1,8 @@
 import React from "react"
 import styled from "../../styled"
 import { FormattedMessage } from "react-intl"
+import { Expand } from "./Expand"
+import { IconContainer } from "./IconContainer"
 
 const Container = styled("div")`
   background: #fff;
@@ -39,6 +41,15 @@ export class Objectives extends React.Component<ObjectiveProps>{
               defaultMessage="Tavoitteet ja sisällöt"
             />
             </ExpandTitle>
+          <IconContainer
+            // onClick={toggle}
+            // aria-label={intl.formatMessage({
+            //   id:
+            //    "opiskelusuunnitelma.naytaTavoitteetjaSisallotAriaLabel"
+            //})}
+          >
+            <Expand size={40} />
+          </IconContainer>
         </ExpandContainer>
       </ObjectivesContainer>
     </Container>
