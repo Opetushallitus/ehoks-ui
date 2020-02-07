@@ -135,6 +135,7 @@ export interface StudyInfoState {
   expanded: {
     competences: boolean
     details: boolean
+    objectives: boolean
   }
   expandedCompetences: number[]
 }
@@ -149,7 +150,8 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
   state: StudyInfoState = {
     expanded: {
       competences: false,
-      details: false
+      details: false,
+      objectives: false
     },
     expandedCompetences: []
   }
@@ -300,7 +302,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
             expandedCompetences={expandedCompetences}
             toggle={this.toggle}
           />
-          <Objectives/>
+          <Objectives expanded={expanded.objectives} toggle={this.toggle}/>
         </InnerContainer>
       </Container>
     )

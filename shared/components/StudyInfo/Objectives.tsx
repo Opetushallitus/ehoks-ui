@@ -1,16 +1,53 @@
 import React from "react"
 import styled from "../../styled"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, intlShape } from "react-intl"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
+import { ToggleableItems } from "./StudyInfoHelpers"
+import { Collapse } from "./Collapse"
+import { HorizontalLine } from "../HorizontalLine"
+import { InfoTextContainer } from "./Shared"
 
 const Container = styled("div")`
   background: #fff;
 `
 
+const Line = styled(HorizontalLine)`
+  width: unset;
+  margin: 0;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    display: none;
+  }
+`
+
 const ObjectivesContainer = styled("div")`
   border-top: 1px solid #c9cdcf;
 `
+
+const CollapseContainer = styled("div")`
+  display: flex;
+  padding: 20px 10px 10px 20px;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    align-items: center;
+    padding-bottom: 0;
+  }
+`
+
+const CollapseTitle = styled("h2")`
+  margin: 0;
+  flex: 1;
+  font-size: 22px;
+  font-weight: 600;
+  cursor: pointer;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    flex: unset;
+    font-size: 16px;
+  }
+`
+
 
 const ExpandContainer = styled("div")`
   display: flex;
@@ -27,31 +64,73 @@ const ExpandTitle = styled("div")`
   cursor: pointer;
 `
 
+const ObjectiveData = styled(InfoTextContainer)`
+  margin: 10px 20px 20px 20px;
+`
+
 interface ObjectiveProps {
+  expanded: boolean
+  toggle: (name: ToggleableItems) => () => void
 }
 
 export class Objectives extends React.Component<ObjectiveProps>{
+  static contextTypes = {
+    intl: intlShape
+  }
+
   render() {
+    const { expanded, toggle } = this.props
+    // TODO kaannokset
+    // const { intl } = this.context
+
     return <Container>
-      <ObjectivesContainer>
-        <ExpandContainer>
-          <ExpandTitle>
-            <FormattedMessage
-              id="opiskelusuunnitelma.tavoitteetJaSisallot"
-              defaultMessage="Tavoitteet ja sisällöt"
-            />
+      {expanded ? (
+        <ObjectivesContainer>
+          <CollapseContainer>
+            <CollapseTitle>
+              <FormattedMessage
+                id="opiskelusuunnitelma.tavoitteetJaSisallot"
+                defaultMessage="Tavoitteet ja sisällöt"
+              />
+              <IconContainer
+                onClick={toggle("objectives")}
+                // aria-label={intl.formatMessage({
+                //   id:
+                //     "opiskelusuunnitelma.piilotaTavoitteetjaSisallotAriaLabel"
+                // })}
+              >
+                <Collapse size={40} />
+              </IconContainer>
+            </CollapseTitle>
+          </CollapseContainer>
+          <Line height="2px" backgroundColor="#000" />
+          <ObjectiveData>
+            Tassa testi tavoitteita
+          </ObjectiveData>
+        </ObjectivesContainer>
+      ) : (
+        <ObjectivesContainer>
+          <ExpandContainer>
+            <ExpandTitle
+              onClick={toggle("objectives")}
+            >
+              <FormattedMessage
+                id="opiskelusuunnitelma.tavoitteetJaSisallot"
+                defaultMessage="Tavoitteet ja sisällöt"
+              />
             </ExpandTitle>
-          <IconContainer
-            // onClick={toggle}
-            // aria-label={intl.formatMessage({
-            //   id:
-            //    "opiskelusuunnitelma.naytaTavoitteetjaSisallotAriaLabel"
-            //})}
-          >
-            <Expand size={40} />
-          </IconContainer>
-        </ExpandContainer>
-      </ObjectivesContainer>
+            <IconContainer
+              onClick={toggle("objectives")}
+              // aria-label={intl.formatMessage({
+              //   id:
+              //    "opiskelusuunnitelma.naytaTavoitteetjaSisallotAriaLabel"
+              //})}
+            >
+              <Expand size={40} />
+            </IconContainer>
+          </ExpandContainer>
+        </ObjectivesContainer>
+      )}
     </Container>
   }
 }
