@@ -21,10 +21,6 @@ const Line = styled(HorizontalLine)`
   }
 `
 
-const ObjectivesContainer = styled("div")`
-  border-top: 1px solid #c9cdcf;
-`
-
 const CollapseContainer = styled("div")`
   display: flex;
   padding: 20px 10px 10px 20px;
@@ -86,7 +82,7 @@ export class Objectives extends React.Component<ObjectiveProps>{
 
     return <Container>
       {expanded ? (
-        <ObjectivesContainer>
+        <>
           <CollapseContainer>
             <CollapseTitle>
               <FormattedMessage
@@ -108,9 +104,9 @@ export class Objectives extends React.Component<ObjectiveProps>{
           <ObjectiveData>
             {objectives}
           </ObjectiveData>
-        </ObjectivesContainer>
+        </>
       ) : (
-        <ObjectivesContainer>
+        <>
           <ExpandContainer>
             <ExpandTitle
               onClick={toggle("objectives")}
@@ -130,7 +126,7 @@ export class Objectives extends React.Component<ObjectiveProps>{
               <Expand size={40} />
             </IconContainer>
           </ExpandContainer>
-        </ObjectivesContainer>
+        </>
       )}
     </Container>
   }
