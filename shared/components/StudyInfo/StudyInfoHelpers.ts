@@ -1,1 +1,1 @@
-export type ToggleableItems = "competences" | "details"
+export type ToggleableItems = "competences" | "details" | "objectives"

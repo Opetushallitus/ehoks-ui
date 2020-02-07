@@ -146,6 +146,16 @@
   },
   {
     "locale": "fi",
+    "key": "opiskelusuunnitelma.naytaTavoitteetjaSisallotAriaLabel",
+    "value": "Näytä tavoitteet ja sisällöt"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.piilotaTavoitteetjaSisallotAriaLabel",
+    "value": "Piilota tavoitteet ja sisällöt"
+  },
+  {
+    "locale": "fi",
     "key": "opiskelusuunnitelma.nayttoTitle",
     "value": "Näyttö"
   },

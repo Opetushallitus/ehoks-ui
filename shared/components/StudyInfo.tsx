@@ -17,6 +17,7 @@ import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
 import { ToggleableItems } from "./StudyInfo/StudyInfoHelpers"
+import { Objectives } from "./StudyInfo/Objectives"
 
 interface ContainerProps {
   accentColor?: string
@@ -128,12 +129,14 @@ export interface StudyInfoProps {
    * @default 25%
    */
   width?: string
+  objectives?: string
 }
 
 export interface StudyInfoState {
   expanded: {
     competences: boolean
     details: boolean
+    objectives: boolean
   }
   expandedCompetences: number[]
 }
@@ -148,7 +151,8 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
   state: StudyInfoState = {
     expanded: {
       competences: false,
-      details: false
+      details: false,
+      objectives: false
     },
     expandedCompetences: []
   }
@@ -237,7 +241,8 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       share,
       title,
       verificationProcess,
-      width = "25%"
+      width = "25%",
+      objectives
     } = this.props
     const { featureFlags } = this.context
     const { expandedCompetences, expanded } = this.state
@@ -299,6 +304,9 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
             expandedCompetences={expandedCompetences}
             toggle={this.toggle}
           />
+          {objectives && (
+            <Objectives expanded={expanded.objectives} toggle={this.toggle} objectives={objectives}/>
+          )}
         </InnerContainer>
       </Container>
     )
