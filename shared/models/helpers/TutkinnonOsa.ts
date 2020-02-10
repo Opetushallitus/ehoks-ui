@@ -1,5 +1,3 @@
-import { ShareType } from "stores/NotificationStore"
-
 interface Arviointikriteeri {
   kuvaus?: string
   kriteerit?: string[]
@@ -85,10 +83,10 @@ export interface TutkinnonOsa {
   olennainenSeikka?: boolean
   tutkinnonOsaKoodiUri?: string
   opintoOtsikko: (ospLyhenne: string) => string
-  share?: { koodiUri: string; type: ShareType | "", uuid: string }
+  share?: { koodiUri: string; type: string, uuid: string }
   tutkinnonOsaTyyppi?: string
 }
 
 export interface HankittavaTutkinnonOsa extends TutkinnonOsa {
-  hasNayttoOrHarjoittelujakso(koodiUri: string, type: ShareType | ""): boolean
+  hasNayttoOrHarjoittelujakso(koodiUri: string, type: string): boolean
 }

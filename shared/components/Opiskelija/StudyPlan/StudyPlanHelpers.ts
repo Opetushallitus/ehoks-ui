@@ -1,5 +1,3 @@
-import { ShareType } from "../../../stores/NotificationStore"
-
 export interface OpiskelusuunnitelmaState {
   activeAccordions: {
     suunnitelma: boolean
@@ -13,7 +11,7 @@ export interface OpiskelusuunnitelmaState {
   }
   share: {
     koodiUri: string
-    type: string,
+    type: string
     uuid: string
   }
 }
@@ -22,3 +20,4 @@ export type StudyPartType = "aikataulutetut" | "suunnitellut" | "valmiit"
 
 export type ActiveAccordions = keyof OpiskelusuunnitelmaState["activeAccordions"]
 export type StudyPartSubAccordions = keyof OpiskelusuunnitelmaState["activeAccordions"]["suunnitelmat"]
+export type share = keyof OpiskelusuunnitelmaState["share"]

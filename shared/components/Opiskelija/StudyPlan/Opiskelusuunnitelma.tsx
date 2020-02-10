@@ -15,7 +15,6 @@ import styled from "styled"
 import { theme } from "theme"
 import { HelpPopup } from "components/HelpPopup"
 import find from "lodash.find"
-import { ShareType } from "stores/NotificationStore"
 import { parseShareParams } from "utils/shareParams"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
@@ -83,23 +82,23 @@ OpiskelusuunnitelmaState
 
   async componentDidMount() {
     const { location } = this.props
-    const { share, type, uuid } = parseShareParams(location)
-    await this.showShareDialog(share, type, uuid)
-    this.setInitialExpanded(share, type, uuid)
+    const { share } = parseShareParams(location)
+    await this.showShareDialog(share)
+    this.setInitialExpanded(share)
   }
 
   componentDidUpdate(prevProps: OpiskelusuunnitelmaProps) {
     if (this.props.location !== prevProps.location) {
       // TODO: set proper share state when opening another dialog
       // previous dialog should close and new dialog should open
-      const { share, type, uuid } = parseShareParams(this.props.location)
-      this.showShareDialog(share, type, uuid)
+      const { share } = parseShareParams(this.props.location)
+      this.showShareDialog(share)
     }
   }
 
   isShareActive = () => {
     const { share } = this.state
-    return share.koodiUri !== "" && share.type !== ""
+    return share.koodiUri !== "" && share.type !== "" && share.uuid !== ""
   }
 
   hasActiveShare = (type: StudyPartType) => {
@@ -119,12 +118,12 @@ OpiskelusuunnitelmaState
     )
   }
 
-  showShareDialog = (share: string, type: ShareType | "", uuid: string) => {
+  showShareDialog = (share: { koodiUri: string, type: string, uuid: string }) => {
     return new Promise(resolve => {
       this.setState(
         state => ({
           ...state,
-          share: { koodiUri: share, type, uuid }
+          share
         }),
         () => {
           resolve()
@@ -133,12 +132,12 @@ OpiskelusuunnitelmaState
     })
   }
 
-  setInitialExpanded = (share: string, type: ShareType | "", uuid: string) => {
+  setInitialExpanded = (share: { koodiUri: string, type: string, uuid: string }) => {
     this.setState(state => ({
       ...state,
       activeAccordions: {
         ...state.activeAccordions,
-        suunnitelma: Boolean(share && type && uuid),
+        suunnitelma: Boolean(share.koodiUri && share.type && share.uuid),
         suunnitelmat: {
           aikataulutetut: this.hasActiveShare("aikataulutetut"),
           suunnitellut: this.hasActiveShare("suunnitellut"),
@@ -437,6 +436,7 @@ OpiskelusuunnitelmaState
             toggleAccordion={this.toggleAccordion}
             valmiitOpinnot={valmiitOpinnot}
             elements={elements}
+            share={share}
             competencePointsTitle={competencePointsTitle}
           />
         </Accordion>

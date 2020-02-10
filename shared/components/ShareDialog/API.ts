@@ -6,7 +6,6 @@ interface BackendShareLink {
   "alku": string
   "loppu": string
   tyyppi: string
-  tutkinnonOsaTyyppi: string
 }
 
 export interface ShareLink {
@@ -30,12 +29,12 @@ export const fetchLinks = async function (
   if (!response.ok) {
     throw new Error(response.statusText)
   }
-  const json: { data: BackendShareLink[] } = await response.json()
-  return json.data
-    .filter(link => {
+  const jsondata: BackendShareLink[] = await response.json()
+  return jsondata
+    .filter((link: any) => {
       return link.uuid === uuid
     })
-    .map(link => {
+    .map((link: any) => {
       return {
         "jako-uuid": link["jako-uuid"],
         uuid: link.uuid,
@@ -83,7 +82,7 @@ export const createLink = async function ({
     throw new Error(response.statusText)
   }
   const json = await response.json()
-  return json.meta.uuid
+  return json["jako-uuid"]
 }
 
 export const removeLink = async function ({

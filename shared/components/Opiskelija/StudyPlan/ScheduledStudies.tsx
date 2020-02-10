@@ -4,7 +4,6 @@ import { StudiesContainer } from "../../StudiesContainer"
 import { StudyInfo } from "../../StudyInfo"
 import { EmptyItem } from "../../EmptyItem"
 import { Accordion } from "../../Accordion"
-import { ShareType } from "../../../stores/NotificationStore"
 import { ActiveAccordions, StudyPartSubAccordions } from "./StudyPlanHelpers"
 import { HankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
 import { theme } from "../../../theme"
@@ -78,6 +77,7 @@ export class ScheduledStudies extends React.Component<ScheduledStudiesProps> {
                   learningPeriods={study.harjoittelujaksot}
                   shareProps={{ tyyppi: study.tutkinnonOsaTyyppi, uuid: study.uuid }}
                   share={share}
+                  uuid={study.uuid}
                   title={study.opintoOtsikko(competencePointsTitle)}
                 />
                 {renderExtraItem && <EmptyItem />}

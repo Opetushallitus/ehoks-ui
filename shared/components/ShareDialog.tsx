@@ -212,13 +212,14 @@ export function ShareDialog(props: ShareDialogProps) {
       apiConfig
     })
     setSharedLinks(await fetchLinks(apiConfig, uuid))
-    setCreatedUrl(`https://not.implemented.yet/jako/${createdUuid}`)
+    setCreatedUrl(`https://` + window.location.host + `/ehoks/tyopaikantoimija/` + createdUuid)
   }
 
   const close = () => {
     // as query params are the master data for sharing,
     // closing the dialog is achieved by clearing them
     navigate(window.location.pathname)
+    console.log(window.location.pathname)
   }
 
   const remove = async (event: React.MouseEvent, uuid: string) => {

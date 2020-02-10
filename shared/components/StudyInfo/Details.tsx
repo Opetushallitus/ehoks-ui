@@ -17,7 +17,6 @@ import { LearningEvent } from "./LearningEvent"
 import { VerificationProcess } from "types/VerificationProcess"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
-import { ShareType } from "stores/NotificationStore"
 import ShareDialog from "components/ShareDialog"
 import { ToggleableItems } from "./StudyInfoHelpers"
 
@@ -158,7 +157,7 @@ export class Details extends React.Component<DetailsProps> {
           )}
 
           <ShareDialog
-            active={hasActiveShare && shareUuid === uuid}
+            active={shareUuid === uuid}
             background={fadedColor}
             koodiUri={koodiUri || ""}
             type="tyossaoppiminen"
@@ -177,9 +176,10 @@ export class Details extends React.Component<DetailsProps> {
           })}
 
           {demonstrations.map((demonstration, i) => {
+
             return (
               <ShareDialog
-                active={hasActiveShare && shareUuid === demonstration.uuid}
+                active={shareUuid === demonstration.uuid}
                 background={fadedColor}
                 koodiUri={koodiUri || ""}
                 type="naytto"
@@ -195,7 +195,7 @@ export class Details extends React.Component<DetailsProps> {
                   demonstration={demonstration}
                   verificationProcess={verificationProcess}
                   koodiUri={koodiUri}
-                  hasActiveShare={hasActiveShare && shareType === demonstration.tyyppi}
+                  hasActiveShare={shareUuid === demonstration.uuid}
                   shareProps={{ tyyppi: demonstration.tyyppi, uuid: demonstration.uuid }}
                 />
               </ShareDialog>

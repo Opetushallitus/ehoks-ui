@@ -9,7 +9,6 @@ import {
   TodentamisenProsessi,
   OsaamisenHankkimistapa
 } from "models/helpers/TutkinnonOsa"
-import { ShareType } from "stores/NotificationStore"
 import { MdShare } from "react-icons/md"
 import { HeroButton } from "components/Button"
 import { FormattedMessage } from "react-intl"
@@ -174,8 +173,8 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     nextProps: StudyInfoProps,
     prevState: StudyInfoState
   ) {
-    const { koodiUri, share } = nextProps
-    if (typeof share !== "undefined" && koodiUri === share.koodiUri) {
+    const { uuid, share } = nextProps
+    if (typeof share !== "undefined" && uuid === share.uuid) {
       return {
         ...prevState,
         expanded: {
@@ -217,12 +216,13 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
   }
 
   share = () => {
-    const { shareProps } = this.props
+    const { shareProps, koodiUri } = this.props
     if (shareProps) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
           uuid: shareProps.uuid || "",
-          type: shareProps.tyyppi || ""
+          type: shareProps.tyyppi || "",
+          koodiUri: koodiUri || ""
         })}`
       )
     }
@@ -252,9 +252,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     const hasActiveShare =
       typeof share !== "undefined" &&
       uuid === share.uuid
-    // koodiUri === share.koodiUri &&
-    // share.type === "tyossaoppiminen"
-    const detailsExpanded = expanded.details || hasActiveShare
+    const detailsExpanded = expanded.details
     const showShareButton =
       expanded.details &&
       hasLearningPeriods &&

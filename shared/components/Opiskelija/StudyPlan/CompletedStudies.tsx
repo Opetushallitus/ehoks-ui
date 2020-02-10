@@ -1,5 +1,4 @@
 import React from "react"
-import { ShareType } from "../../../stores/NotificationStore"
 import { ActiveAccordions, StudyPartSubAccordions } from "./StudyPlanHelpers"
 import { HankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
 import { AccordionTitle } from "../../AccordionTitle"
@@ -12,11 +11,11 @@ import { theme } from "../../../theme"
 
 export interface CompletedStudiesProps {
   accordionIsOpen: boolean
-  // share: {
-  //   koodiUri: string
-  //   type: ShareType | "",
-  //   uuid: string
-  // }
+  share: {
+    koodiUri: string
+    type: string
+    uuid: string
+  }
   hasActiveShare: boolean
   toggleAccordion: (
     accordion: ActiveAccordions,
@@ -35,6 +34,7 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
   render() {
     const {
       accordionIsOpen,
+      share,
       hasActiveShare,
       toggleAccordion,
       valmiitOpinnot,
@@ -43,12 +43,13 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
     } = this.props
 
     return (
-      <Accordion
+      < Accordion
         id="suunnitelma.valmiit"
-        open={accordionIsOpen || hasActiveShare}
+        open={accordionIsOpen || hasActiveShare
+        }
         onToggle={toggleAccordion("suunnitelmat", "valmiit")}
         title={
-          <AccordionTitle>
+          < AccordionTitle >
             <FormattedMessage
               id="opiskelusuunnitelma.valmiitOpintoniTitle"
               defaultMessage="Valmiit opintoni ({amount})"
@@ -76,10 +77,7 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
                   koodiUri={study.tutkinnonOsaKoodiUri}
                   learningPeriods={study.harjoittelujaksot}
                   title={study.opintoOtsikko(competencePointsTitle)}
-                  share={{
-                    type: study.tutkinnonOsaTyyppi, uuid: study.uuid,
-                    koodiUri: study.tutkinnonOsaKoodiUri
-                  }}
+                  share={share}
                   uuid={study.uuid}
                   shareProps={{ tyyppi: study.tutkinnonOsaTyyppi, uuid: study.uuid }}
                 />
@@ -97,7 +95,7 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
             </div>
           )}
         </StudiesContainer>
-      </Accordion>
+      </Accordion >
     )
   }
 }

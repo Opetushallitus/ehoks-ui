@@ -80,14 +80,15 @@ export class Demonstration extends React.Component<
   }
 
   share = () => {
-    const { shareProps } = this.props
+    const { shareProps, koodiUri } = this.props
     if (shareProps) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
           // share: koodiUri,
           // type: "naytto",
           uuid: shareProps.uuid || "",
-          type: shareProps.tyyppi || "naytto"
+          type: shareProps.tyyppi || "naytto",
+          koodiUri: koodiUri || ""
         })}`
       )
     }

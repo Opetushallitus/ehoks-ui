@@ -21,7 +21,7 @@ const ContentContainer = styled("div")`
 interface IconProps {
   isDemonstration: boolean
 }
-const Icon = styled("div")<IconProps>`
+const Icon = styled("div") <IconProps>`
   margin-right: 10px;
   padding-top: ${props => (props.isDemonstration ? "7px" : "3px")};
   color: ${props => (props.isDemonstration ? "#636769" : "#000")};
@@ -32,13 +32,13 @@ const DetailsContainer = styled("div")`
   flex-direction: column;
 `
 
-const Detail = styled("div")<SizeProps>`
+const Detail = styled("div") <SizeProps>`
   font-weight: 600;
   color: #636769;
   line-height: ${props => (props.size === "small" ? "inherit" : "1.6")};
 `
 
-const Title = styled("strong")<SizeProps>`
+const Title = styled("strong") <SizeProps>`
   display: block;
   margin: 10px 0 8px 0;
 `
@@ -75,8 +75,8 @@ export class LearningEvent extends React.Component<LearningEventProps> {
             {type === "DEMONSTRATION" ? (
               <Flag size={iconSize} />
             ) : (
-              <MdEventNote size={iconSize} fill="#636769" />
-            )}
+                <MdEventNote size={iconSize} fill="#636769" />
+              )}
           </Icon>
           <DetailsContainer>
             {startDate === endDate ? (
@@ -84,14 +84,14 @@ export class LearningEvent extends React.Component<LearningEventProps> {
                 {startDate ? format(parseISO(startDate), "d.M.yyyy") : ""}
               </Detail>
             ) : (
-              <Detail size={size}>
-                {format(parseISO(startDate), "d.M.")}
-                {" - "}
-                {format(parseISO(endDate), "d.M.yyyy")}
-              </Detail>
-            )}
+                <Detail size={size}>
+                  {format(parseISO(startDate), "d.M.")}
+                  {" - "}
+                  {format(parseISO(endDate), "d.M.yyyy")}
+                </Detail>
+              )}
             {periodSpecifier && (
-                <Detail size={size}>{periodSpecifier}</Detail>
+              <Detail size={size}>{periodSpecifier}</Detail>
             )}
             <Detail size={size}>{description}</Detail>
           </DetailsContainer>
