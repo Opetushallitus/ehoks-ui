@@ -219,7 +219,6 @@ export function ShareDialog(props: ShareDialogProps) {
     // as query params are the master data for sharing,
     // closing the dialog is achieved by clearing them
     navigate(window.location.pathname)
-    console.log(window.location.pathname)
   }
 
   const remove = async (event: React.MouseEvent, uuid: string) => {

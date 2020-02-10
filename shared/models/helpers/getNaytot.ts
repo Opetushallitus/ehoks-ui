@@ -36,6 +36,5 @@ export function getNaytot(
     vaatimuksistaTaiTavoitteistaPoikkeaminen: naytto.vaatimuksistaTaiTavoitteistaPoikkeaminen,
     tyotehtavat: naytto.sisallonKuvaus,
     tyyppi: "DEMONSTRATION",
-    shareProps: { tyyppi: "DEMONSTRATION", uuid: naytto.uuid }
   }))
 }

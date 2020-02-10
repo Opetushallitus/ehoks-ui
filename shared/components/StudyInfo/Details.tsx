@@ -196,7 +196,6 @@ export class Details extends React.Component<DetailsProps> {
                   verificationProcess={verificationProcess}
                   koodiUri={koodiUri}
                   hasActiveShare={shareUuid === demonstration.uuid}
-                  shareProps={{ tyyppi: demonstration.tyyppi, uuid: demonstration.uuid }}
                 />
               </ShareDialog>
             )

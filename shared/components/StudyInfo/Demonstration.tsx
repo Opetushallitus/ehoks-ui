@@ -59,7 +59,6 @@ interface DemonstrationProps {
   verificationProcess?: TodentamisenProsessi
   koodiUri?: string
   hasActiveShare?: boolean
-  shareProps?: { tyyppi?: string; uuid?: string | "" }
 }
 
 export class Demonstration extends React.Component<
@@ -80,18 +79,14 @@ export class Demonstration extends React.Component<
   }
 
   share = () => {
-    const { shareProps, koodiUri } = this.props
-    if (shareProps) {
-      navigate(
-        `${window.location.pathname}?${stringifyShareParams({
-          // share: koodiUri,
-          // type: "naytto",
-          uuid: shareProps.uuid || "",
-          type: shareProps.tyyppi || "naytto",
-          koodiUri: koodiUri || ""
-        })}`
-      )
-    }
+    const { koodiUri, demonstration } = this.props
+    navigate(
+      `${window.location.pathname}?${stringifyShareParams({
+        uuid: demonstration.uuid || "",
+        type: demonstration.tyyppi || "naytto",
+        koodiUri: koodiUri || ""
+      })}`
+    )
   }
 
   render() {

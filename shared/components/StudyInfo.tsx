@@ -117,7 +117,6 @@ export interface StudyInfoProps {
    * Current share state from url
    */
   share?: { koodiUri?: string | ""; type?: string | "", uuid?: string | "" }
-  shareProps?: { tyyppi?: string; uuid?: string | "" }
   /** Title of the study, always visible */
   title?: React.ReactNode
 
@@ -216,16 +215,14 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
   }
 
   share = () => {
-    const { shareProps, koodiUri } = this.props
-    if (shareProps) {
-      navigate(
-        `${window.location.pathname}?${stringifyShareParams({
-          uuid: shareProps.uuid || "",
-          type: shareProps.tyyppi || "",
-          koodiUri: koodiUri || ""
-        })}`
-      )
-    }
+    const { koodiUri, uuid, tutkinnonOsaTyyppi } = this.props
+    navigate(
+      `${window.location.pathname}?${stringifyShareParams({
+        uuid: uuid || "",
+        type: tutkinnonOsaTyyppi || "",
+        koodiUri: koodiUri || ""
+      })}`
+    )
   }
 
   render() {

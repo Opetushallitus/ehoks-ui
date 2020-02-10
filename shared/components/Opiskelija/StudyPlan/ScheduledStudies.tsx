@@ -75,7 +75,6 @@ export class ScheduledStudies extends React.Component<ScheduledStudiesProps> {
                   fadedColor="#FDF6E9"
                   koodiUri={study.tutkinnonOsaKoodiUri}
                   learningPeriods={study.harjoittelujaksot}
-                  shareProps={{ tyyppi: study.tutkinnonOsaTyyppi, uuid: study.uuid }}
                   share={share}
                   uuid={study.uuid}
                   title={study.opintoOtsikko(competencePointsTitle)}
