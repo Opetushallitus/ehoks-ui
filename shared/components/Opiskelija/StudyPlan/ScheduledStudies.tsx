@@ -77,6 +77,7 @@ export class ScheduledStudies extends React.Component<ScheduledStudiesProps> {
                   learningPeriods={study.harjoittelujaksot}
                   share={share}
                   title={study.opintoOtsikko(competencePointsTitle)}
+                  objectives={study.tavoitteetJaSisallot}
                 />
                 {renderExtraItem && <EmptyItem />}
               </React.Fragment>
