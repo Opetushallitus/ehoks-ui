@@ -813,7 +813,7 @@ exports[`App renders correctly 1`] = `
                     Kirjautumalla siirryt oman henkilö­kohtaiseen opintojen suunnitteluun.
                   </p>
                   <button
-                    class="c20 sc-fzXfPI c21"
+                    class="c20 sc-fznzqM c21"
                     type="button"
                   >
                     Kirjaudu omaan suunnitelmaan
@@ -855,7 +855,7 @@ exports[`App renders correctly 1`] = `
                     Kirjautumalla siirryt ohjattavien opiskelijoiden suunnitelmiin.
                   </p>
                   <button
-                    class="c20 sc-fzXfPI c21"
+                    class="c20 sc-fznzqM c21"
                     type="button"
                   >
                     Kirjaudu oppilaitoksen edustajana
@@ -960,7 +960,7 @@ exports[`App renders correctly 1`] = `
             class="c31"
           >
             <div
-              class="sc-fzXfNg c32"
+              class="sc-fznxKY c32"
             >
               <div
                 class="c33"
@@ -986,7 +986,7 @@ exports[`App renders correctly 1`] = `
               />
             </div>
             <div
-              class="sc-fzXfNg c37"
+              class="sc-fznxKY c37"
             >
               <div
                 class="c38"
