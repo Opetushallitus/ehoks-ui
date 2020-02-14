@@ -2,6 +2,8 @@ var webpack = require("webpack")
 var path = require("path")
 var ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
 var TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
+var createStyledComponentsTransformer = require('typescript-plugin-styled-components').default
+var styledComponentsTransformer = createStyledComponentsTransformer()
 
 module.exports = {
   mode: "development",
@@ -56,7 +58,8 @@ module.exports = {
             loader: "ts-loader",
             options: {
               transpileOnly: true,
-              experimentalWatchApi: true
+              experimentalWatchApi: true,
+              getCustomTransformers: () => ({ before: [styledComponentsTransformer] })
             }
           }
         ]
