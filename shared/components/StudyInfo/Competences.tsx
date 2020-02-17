@@ -2,9 +2,8 @@ import { CompetenceRequirement } from "components/CompetenceRequirement"
 import { HorizontalLine } from "components/HorizontalLine"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
-import MediaQuery from "react-responsive"
+import { HMediaQuery } from "responsive"
 import styled from "styled"
-import { breakpoints } from "theme"
 import { Collapse } from "./Collapse"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
@@ -191,44 +190,35 @@ export class Competences extends React.Component<CompetencesProps> {
           </ExpandContainer>
         )}
         {expanded && (
-          <MediaQuery maxWidth={breakpoints.Tablet}>
-            {matches => {
-              if (matches) {
-                return (
-                  <MobileCompetences
-                    competenceRequirements={competenceRequirements}
-                  />
-                )
-              } else {
-                return (
-                  <React.Fragment>
-                    <Prefix>
-                      <FormattedMessage
-                        id="opiskelusuunnitelma.opiskelijaOsaaPrefix"
-                        defaultMessage="Opiskelija osaa"
-                        tagName="i"
-                      />
-                    </Prefix>
+          <React.Fragment>
+            <HMediaQuery.SmallTablet>
+              <MobileCompetences
+                competenceRequirements={competenceRequirements}
+              />
+            </HMediaQuery.SmallTablet>
+            <HMediaQuery.MinWidth breakpoint="SmallTablet">
+              <Prefix>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.opiskelijaOsaaPrefix"
+                  defaultMessage="Opiskelija osaa"
+                  tagName="i"
+                />
+              </Prefix>
 
-                    <InfoContainer data-testid="StudyInfo.Competences.CompetenceRequirements">
-                      {competenceRequirements.map(
-                        (competenceRequirement, i) => {
-                          return (
-                            <CompetenceRequirement
-                              key={i}
-                              competenceRequirement={competenceRequirement}
-                              expanded={expandedCompetences.indexOf(i) > -1}
-                              expand={expandCompetence(i)}
-                            />
-                          )
-                        }
-                      )}
-                    </InfoContainer>
-                  </React.Fragment>
-                )
-              }
-            }}
-          </MediaQuery>
+              <InfoContainer data-testid="StudyInfo.Competences.CompetenceRequirements">
+                {competenceRequirements.map((competenceRequirement, i) => {
+                  return (
+                    <CompetenceRequirement
+                      key={i}
+                      competenceRequirement={competenceRequirement}
+                      expanded={expandedCompetences.indexOf(i) > -1}
+                      expand={expandCompetence(i)}
+                    />
+                  )
+                })}
+              </InfoContainer>
+            </HMediaQuery.MinWidth>
+          </React.Fragment>
         )}
       </Container>
     )
