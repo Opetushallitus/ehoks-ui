@@ -6,6 +6,8 @@ Frontend repository for [eHOKS project](https://confluence.csc.fi/display/OPHPAL
 
 `npm install` installs required npm dependencies for `oppija` and `virkailija`
 
+`npm start --prefix oppija` or `npm start --prefix virkailija` will run the specified subdirectory's `start`-script
+
 `npm run styleguide` launches [react-styleguidist](https://react-styleguidist.js.org/) styleguide server in [localhost:6060](http://localhost:6060/)
 
 ## Dependencies and directory structure

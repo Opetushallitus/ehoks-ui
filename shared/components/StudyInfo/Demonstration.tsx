@@ -13,6 +13,7 @@ import { MdShare } from "react-icons/md"
 import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
+import { RequirementsAndDeviations } from "./RequirementsAndDeviations"
 
 const DemonstrationTitle = styled(Title)`
   display: flex;
@@ -49,6 +50,10 @@ const ShareIcon = styled(MdShare)`
   margin-left: 6px;
 `
 
+interface DemonstrationState {
+  requirementsAndDeviationsExpanded: boolean
+}
+
 interface DemonstrationProps {
   demonstration: Naytto
   verificationProcess?: TodentamisenProsessi
@@ -56,9 +61,22 @@ interface DemonstrationProps {
   hasActiveShare?: boolean
 }
 
-export class Demonstration extends React.Component<DemonstrationProps> {
+export class Demonstration extends React.Component<
+  DemonstrationProps,
+  DemonstrationState
+> {
   static contextType = AppContext
   context!: React.ContextType<typeof AppContext>
+
+  state: DemonstrationState = {
+    requirementsAndDeviationsExpanded: false
+  }
+
+  toggleRequirementsAndDeviations = () => {
+    this.setState(state => ({
+      requirementsAndDeviationsExpanded: !state.requirementsAndDeviationsExpanded
+    }))
+  }
 
   share = () => {
     const { koodiUri } = this.props
@@ -79,6 +97,7 @@ export class Demonstration extends React.Component<DemonstrationProps> {
       verificationProcess
     } = this.props
     const { featureFlags } = this.context
+    const { requirementsAndDeviationsExpanded } = this.state
 
     const title =
       verificationProcess &&
@@ -183,6 +202,12 @@ export class Demonstration extends React.Component<DemonstrationProps> {
             }
           }}
         </MediaQuery>
+        <RequirementsAndDeviations
+          toggle={this.toggleRequirementsAndDeviations}
+          expanded={requirementsAndDeviationsExpanded}
+          requirements={demonstration.yksilollisetKriteerit}
+          deviations={demonstration.vaatimuksistaTaiTavoitteistaPoikkeaminen}
+        />
       </Container>
     )
   }

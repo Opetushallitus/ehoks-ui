@@ -32,4 +32,5 @@ nohup /usr/local/bin/node_exporter > /root/node_exporter.log 2>&1 &
 echo "Starting nginx…"
 mkdir -p /tmp/var/nginx
 mkdir -p /tmp/run/nginx
+mkdir -p /tmp/var/lib/nginx/tmp
 exec nginx -g 'daemon off;'

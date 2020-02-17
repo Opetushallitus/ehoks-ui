@@ -141,6 +141,26 @@
   },
   {
     "locale": "fi",
+    "key": "opiskelusuunnitelma.naytaPoikkeamatJaArviointikriteeritAriaLabel",
+    "value": "Näytä poikkeaminen ammattitaitovaatimuksista ja yksilölliset arviointikriteerisi"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.piilotaPoikkeamatJaArviointikriteeritAriaLabel",
+    "value": "Piilota poikkeaminen ammattitaitovaatimuksista ja yksilölliset arviointikriteerisi"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.naytaTavoitteetjaSisallotAriaLabel",
+    "value": "Näytä tavoitteet ja sisällöt"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.piilotaTavoitteetjaSisallotAriaLabel",
+    "value": "Piilota tavoitteet ja sisällöt"
+  },
+  {
+    "locale": "fi",
     "key": "opiskelusuunnitelma.nayttoTitle",
     "value": "Näyttö"
   },

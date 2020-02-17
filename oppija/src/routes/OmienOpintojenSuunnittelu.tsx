@@ -47,7 +47,7 @@ const SectionItems = styled(ProgressPies)`
 
 export interface OmienOpintojenSuunnitteluProps {
   student: Instance<typeof SessionUser> | null
-  suunnitelmat: Array<Instance<typeof HOKS>>
+  suunnitelmat: Instance<typeof HOKS>[]
   path?: string
   id?: string
 }

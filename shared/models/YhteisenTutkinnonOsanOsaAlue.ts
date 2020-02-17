@@ -1,7 +1,7 @@
 import { types } from "mobx-state-tree"
 import { OsaamisenHankkimistapa } from "./OsaamisenHankkimistapa"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
-import { TutkinnonOsaViews } from "./helpers/TutkinnonOsaViews"
+import { HankittavatTutkinnonOsatViews } from "./helpers/HankittavatTutkinnonOsatViews"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 
@@ -19,7 +19,7 @@ export const YhteisenTutkinnonOsanOsaAlue = types
   .compose(
     EnrichKoodiUri,
     Model,
-    TutkinnonOsaViews
+    HankittavatTutkinnonOsatViews
   )
   .views(self => {
     return {
@@ -27,7 +27,7 @@ export const YhteisenTutkinnonOsanOsaAlue = types
         return self.osaAlue ? self.osaAlue.nimi : ""
       },
       get osaamispisteet() {
-        // TODO: where do we get this?
+        // TODO: where do we get this? Fix this also to AiemminHankitunYTOOsaAlue.ts
         return 0
       }
     }
