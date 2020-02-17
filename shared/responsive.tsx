@@ -57,6 +57,7 @@ interface WithBreakpointProps extends WithChildrenProps {
 }
 /**
  * Wrapper for rendering children only when screen size conditions are met
+ * (Breakpoints are the highest resolution of the named device)
  * Using static methods: SmallTablet | Tablet | Desktop | Large | Max
  * <HMediaQuery.SmallTablet></HMediaQuery.SmallTablet>
  * Or: MaxWidth | MinWidth
