@@ -1,9 +1,8 @@
 import { MobileSlider, Slide } from "components/MobileSlider"
 import React from "react"
 import { FormattedMessage } from "react-intl"
-import MediaQuery from "react-responsive"
+import { HMediaQuery } from "responsive"
 import styled from "styled"
-import { breakpoints } from "theme"
 import {
   Container,
   EmptyTD,
@@ -127,27 +126,22 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
           </TBody>
         </LearningPeriodTable>
         {tyotehtavat.length > 0 && (
-          <MediaQuery maxWidth={breakpoints.Tablet}>
-            {matches => {
-              if (matches) {
-                return (
-                  <CustomSlider>
-                    {tyotehtavat.map((tyotehtava, i) => {
-                      return <Slide key={i}>{tyotehtava}</Slide>
-                    })}
-                  </CustomSlider>
-                )
-              } else {
-                return (
-                  <LearningPeriodTasks>
-                    {tyotehtavat.map((tyotehtava, i) => {
-                      return <li key={i}>{tyotehtava}</li>
-                    })}
-                  </LearningPeriodTasks>
-                )
-              }
-            }}
-          </MediaQuery>
+          <React.Fragment>
+            <HMediaQuery.MaxWidth breakpoint="Tablet">
+              <CustomSlider>
+                {tyotehtavat.map((tyotehtava, i) => {
+                  return <Slide key={i}>{tyotehtava}</Slide>
+                })}
+              </CustomSlider>
+            </HMediaQuery.MaxWidth>
+            <HMediaQuery.MinWidth breakpoint="Tablet">
+              <LearningPeriodTasks>
+                {tyotehtavat.map((tyotehtava, i) => {
+                  return <li key={i}>{tyotehtava}</li>
+                })}
+              </LearningPeriodTasks>
+            </HMediaQuery.MinWidth>
+          </React.Fragment>
         )}
       </Container>
     )
