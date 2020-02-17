@@ -9,6 +9,6 @@ import baseStyled, {
   withTheme as withThemeStyled,
   WithThemeFnInterface
 } from "styled-components"
-import { theme } from "./theme"
-export default baseStyled as ThemedStyledInterface<typeof theme>
-export const withTheme = withThemeStyled as WithThemeFnInterface<typeof theme>
+import { TypeOfTheme } from "./theme"
+export default baseStyled as ThemedStyledInterface<TypeOfTheme>
+export const withTheme = withThemeStyled as WithThemeFnInterface<TypeOfTheme>
