@@ -61,7 +61,7 @@ interface WithBreakpointProps extends WithChildrenProps {
  * Using static methods: SmallTablet | Tablet | Desktop | Large | Max
  * <HMediaQuery.SmallTablet></HMediaQuery.SmallTablet>
  * Or: MaxWidth | MinWidth
- * <HMediaQuery.MinWidth breakpoint="SmallTablet"></HMediaQuery.MaxWidth>
+ * <HMediaQuery.MinWidth breakpoint="SmallTablet"></HMediaQuery.MinWidth>
  */
 export class HMediaQuery extends React.Component<WithChildrenProps> {
   static SmallTablet = (props: WithChildrenProps) => (
