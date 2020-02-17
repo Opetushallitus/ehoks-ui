@@ -11,6 +11,7 @@ interface MediaQueryProps {
   minWidth?: Breakpoints
   breakpoint?: Breakpoints
   breakpointType?: "max" | "min"
+  notMatch?: boolean
 }
 
 const MediaQuery: React.SFC<MediaQueryProps> = props => {
@@ -20,7 +21,8 @@ const MediaQuery: React.SFC<MediaQueryProps> = props => {
     minWidth,
     breakpoint,
     breakpointType,
-    children
+    children,
+    notMatch
   } = props
   // breakpointType
   const breakpointMax = breakpointType === "max"
@@ -41,18 +43,21 @@ const MediaQuery: React.SFC<MediaQueryProps> = props => {
     ...(useMaxwitdh && { maxWidth: useMaxwitdh }),
     ...(useMinwitdh && { minWidth: useMinwitdh })
   }
-  return useMediaQuery(query) ? (
+  const testQuery = useMediaQuery(query)
+  return (testQuery && !notMatch) || (!testQuery && !!notMatch) ? (
     <React.Fragment>{children}</React.Fragment>
   ) : null
 }
 
 const MediaQueryWithTheme = withTheme(MediaQuery)
 
-interface WithChildrenProps {
+interface HMediaQueryProps {
   children: React.ReactNode
+  /** To get when query does not match */
+  notMatch?: boolean
 }
 
-interface WithBreakpointProps extends WithChildrenProps {
+interface WithBreakpointProps extends HMediaQueryProps {
   breakpoint: Breakpoints
 }
 /**
@@ -62,21 +67,22 @@ interface WithBreakpointProps extends WithChildrenProps {
  * <HMediaQuery.SmallTablet></HMediaQuery.SmallTablet>
  * Or: MaxWidth | MinWidth
  * <HMediaQuery.MinWidth breakpoint="SmallTablet"></HMediaQuery.MinWidth>
+ * To get all else but defined conditions use: notMatch
  */
-export class HMediaQuery extends React.Component<WithChildrenProps> {
-  static SmallTablet = (props: WithChildrenProps) => (
+export class HMediaQuery extends React.Component<HMediaQueryProps> {
+  static SmallTablet = (props: HMediaQueryProps) => (
     <MediaQueryWithTheme {...props} maxWidth="SmallTablet" />
   )
-  static Tablet = (props: WithChildrenProps) => (
+  static Tablet = (props: HMediaQueryProps) => (
     <MediaQueryWithTheme {...props} minWidth="SmallTablet" maxWidth="Tablet" />
   )
-  static Desktop = (props: WithChildrenProps) => (
+  static Desktop = (props: HMediaQueryProps) => (
     <MediaQueryWithTheme {...props} minWidth="Tablet" maxWidth="Desktop" />
   )
-  static Large = (props: WithChildrenProps) => (
+  static Large = (props: HMediaQueryProps) => (
     <MediaQueryWithTheme {...props} minWidth="Desktop" maxWidth="Large" />
   )
-  static Max = (props: WithChildrenProps) => (
+  static Max = (props: HMediaQueryProps) => (
     <MediaQueryWithTheme {...props} minWidth="Large" maxWidth="Max" />
   )
   static MaxWidth = (props: WithBreakpointProps) => (
