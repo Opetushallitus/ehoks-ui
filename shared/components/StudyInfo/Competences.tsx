@@ -196,7 +196,7 @@ export class Competences extends React.Component<CompetencesProps> {
                 competenceRequirements={competenceRequirements}
               />
             </HMediaQuery.SmallTablet>
-            <HMediaQuery.MinWidth breakpoint="SmallTablet">
+            <HMediaQuery.SmallTablet notMatch>
               <Prefix>
                 <FormattedMessage
                   id="opiskelusuunnitelma.opiskelijaOsaaPrefix"
@@ -217,7 +217,7 @@ export class Competences extends React.Component<CompetencesProps> {
                   )
                 })}
               </InfoContainer>
-            </HMediaQuery.MinWidth>
+            </HMediaQuery.SmallTablet>
           </React.Fragment>
         )}
       </Container>

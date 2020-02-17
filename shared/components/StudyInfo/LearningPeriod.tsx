@@ -134,13 +134,13 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                 })}
               </CustomSlider>
             </HMediaQuery.MaxWidth>
-            <HMediaQuery.MinWidth breakpoint="Tablet">
+            <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
               <LearningPeriodTasks>
                 {tyotehtavat.map((tyotehtava, i) => {
                   return <li key={i}>{tyotehtava}</li>
                 })}
               </LearningPeriodTasks>
-            </HMediaQuery.MinWidth>
+            </HMediaQuery.MaxWidth>
           </React.Fragment>
         )}
       </Container>

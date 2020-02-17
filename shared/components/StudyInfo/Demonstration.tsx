@@ -185,7 +185,7 @@ export class Demonstration extends React.Component<
               })}
           </CustomSlider>
         </HMediaQuery.MaxWidth>
-        <HMediaQuery.MinWidth breakpoint="Tablet">
+        <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
           <DemonstrationTasks>
             {demonstration &&
               demonstration.tyotehtavat &&
@@ -193,7 +193,7 @@ export class Demonstration extends React.Component<
                 return <li key={i}>{tyotehtava}</li>
               })}
           </DemonstrationTasks>
-        </HMediaQuery.MinWidth>
+        </HMediaQuery.MaxWidth>
 
         <RequirementsAndDeviations
           toggle={this.toggleRequirementsAndDeviations}
