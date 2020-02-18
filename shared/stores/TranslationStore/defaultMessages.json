@@ -101,6 +101,11 @@
   },
   {
     "locale": "fi",
+    "key": "errors.EnrichOrganisaatioOid.fetchOrganisaatio",
+    "value": "Organisaation tietojen haku epäonnistui"
+  },
+  {
+    "locale": "fi",
     "key": "footer.opintopolkuLogoLabel",
     "value": "Opintopolku logo"
   },

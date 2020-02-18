@@ -13,7 +13,7 @@ import {
   TH,
   Title
 } from "./Shared"
-import {Harjoittelujakso, OsaamisenHankkimistapa} from "models/helpers/TutkinnonOsa"
+import { Harjoittelujakso, JarjestajanEdustaja, OsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
 
 const LearningPeriodTitle = styled(Title)`
@@ -36,11 +36,12 @@ const CustomSlider = styled(MobileSlider)`
 interface LearningPeriodProps {
   learningPeriod: Harjoittelujakso
   competenceAcquiringMethods?: Array<OsaamisenHankkimistapa>
+  organizer?: JarjestajanEdustaja
 }
 
 export class LearningPeriod extends React.Component<LearningPeriodProps> {
   render() {
-    const { learningPeriod, competenceAcquiringMethods } = this.props
+    const { learningPeriod, competenceAcquiringMethods, organizer } = this.props
     const {
       tyotehtavat = [],
       alku,
@@ -56,8 +57,10 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
         selite + ", " + method.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus :
         selite
     const periodSpecifier = method && method.ajanjaksonTarkenne ? method.ajanjaksonTarkenne : ""
-    const organizer = method && method.jarjestajanEdustaja ? method && method.jarjestajanEdustaja : undefined
     const organizerRepresentative = organizer && organizer.nimi ? organizer.nimi : ""
+    // TODO EH-757, this need to be fixed. Comment out after competenceAqcquiringMethods have been removed and
+    // harjoittelujaksot replaced with osaamisenHankkimistapa
+    // const organizerOrganisation = organizer && organizer.oppilaitosNimi ? organizer.oppilaitosNimi : ""
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
@@ -108,6 +111,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                     />
                   </TH>
                   <TD>
+                    {/*TODO EH-757 add organizerOrgansation here, see comment above*/}
                     {organizerRepresentative}
                   </TD>
                 </tr>
