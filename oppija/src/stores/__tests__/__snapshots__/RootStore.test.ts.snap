@@ -46,9 +46,5 @@ Object {
     "isLoading": false,
     "translations": Array [],
   },
-  "tyopaikanToimija": Object {
-    "isLoading": false,
-    "oppijat": Array [],
-  },
 }
 `;
