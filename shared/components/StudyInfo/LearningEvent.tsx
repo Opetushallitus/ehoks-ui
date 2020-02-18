@@ -85,7 +85,7 @@ export class LearningEvent extends React.Component<LearningEventProps> {
               </Detail>
             ) : (
               <Detail size={size}>
-                {format(parseISO(startDate), "d.M.")}
+                {format(parseISO(startDate), "d.M.yyyy")}
                 {" - "}
                 {format(parseISO(endDate), "d.M.yyyy")}
               </Detail>
