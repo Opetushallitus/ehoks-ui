@@ -34,10 +34,12 @@ const SectionContainer = styled("div")`
   flex: 1;
   justify-content: flex-end;
   align-items: flex-end;
-  margin-bottom: 20px;
+  margin-left: ${props => props.theme.spacing.l};
+  margin-bottom: ${props => props.theme.spacing.l};
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
-    margin-top: 30px;
+    margin-top: ${props => props.theme.spacing.xl};
+    margin-left: 0;
     justify-content: center;
   }
 `
