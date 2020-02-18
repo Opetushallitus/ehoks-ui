@@ -20,6 +20,7 @@ import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
+import { HMediaQuery } from "responsive"
 
 const Section = styled("div")`
   display: flex;
@@ -142,14 +143,16 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                             <MdEventNote />
                           </SectionItem>
                         </SectionItems>
-                        <SectionContainer>
-                          <HOKSButton to="/ehoks/suunnittelu">
-                            <FormattedMessage
-                              id="kirjautunut.suljeHOKSLink"
-                              defaultMessage="Sulje HOKS"
-                            />
-                          </HOKSButton>
-                        </SectionContainer>
+                        <HMediaQuery.MinWidth breakpoint="Tablet">
+                          <SectionContainer>
+                            <HOKSButton to="/ehoks/suunnittelu">
+                              <FormattedMessage
+                                id="kirjautunut.suljeHOKSLink"
+                                defaultMessage="Sulje HOKS"
+                              />
+                            </HOKSButton>
+                          </SectionContainer>
+                        </HMediaQuery.MinWidth>
                       </Section>
                     </PaddedContent>
                   </Container>
@@ -177,6 +180,16 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                           plan={suunnitelma}
                         />
                       </Router>
+                      <HMediaQuery.MinWidth breakpoint="Tablet" notMatch={true}>
+                        <SectionContainer>
+                          <HOKSButton to="/ehoks/suunnittelu">
+                            <FormattedMessage
+                              id="kirjautunut.suljeHOKSLink"
+                              defaultMessage="Sulje HOKS"
+                            />
+                          </HOKSButton>
+                        </SectionContainer>
+                      </HMediaQuery.MinWidth>
                     </PaddedContent>
                   </Container>
                 </BackgroundContainer>
