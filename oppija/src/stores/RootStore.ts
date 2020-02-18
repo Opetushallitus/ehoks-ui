@@ -7,7 +7,6 @@ import { OppilasStore } from "stores/OppilasStore"
 import { SessionStore } from "stores/SessionStore"
 import { ShareLinkStore } from "stores/ShareLinkStore"
 import { TranslationStore } from "stores/TranslationStore"
-import { TyopaikanToimijaStore } from "stores/TyopaikanToimijaStore"
 
 export interface InjectedStores {
   store: IRootStore
@@ -21,8 +20,7 @@ const RootStoreModel = {
   oppilas: types.optional(OppilasStore, {}),
   session: types.optional(SessionStore, {}),
   shareLinks: types.optional(ShareLinkStore, {}),
-  translations: types.optional(TranslationStore, {}),
-  tyopaikanToimija: types.optional(TyopaikanToimijaStore, {})
+  translations: types.optional(TranslationStore, {})
 }
 
 export const RootStore = types

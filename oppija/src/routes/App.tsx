@@ -19,7 +19,6 @@ import { Etusivu } from "routes/Etusivu"
 import { Henkilokohtaistaminen } from "routes/Henkilokohtaistaminen"
 import { Saavutettavuusseloste } from "routes/Saavutettavuusseloste"
 import { Suunnittelu } from "routes/Suunnittelu"
-import { TyopaikanToimija } from "routes/TyopaikanToimija"
 import { IRootStore } from "stores/RootStore"
 import { Locale } from "stores/TranslationStore"
 import styled from "styled"
@@ -41,7 +40,6 @@ const MainApp = (_: { path: string }) => {
         <Router basepath="/ehoks">
           <Etusivu path="/" />
           <Suunnittelu path="suunnittelu/*" />
-          <TyopaikanToimija path="tyopaikantoimija" />
           <Henkilokohtaistaminen path="henkilokohtaistaminen" />
           <Ammatillinentutkinto path="ammatillinentutkinto" />
           <Saavutettavuusseloste path="saavutettavuusseloste" />

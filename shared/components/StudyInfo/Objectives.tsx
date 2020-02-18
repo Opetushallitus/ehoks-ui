@@ -70,7 +70,7 @@ interface ObjectiveProps {
   objectives?: string
 }
 
-export class Objectives extends React.Component<ObjectiveProps>{
+export class Objectives extends React.Component<ObjectiveProps> {
   static contextTypes = {
     intl: intlShape
   }
@@ -79,52 +79,50 @@ export class Objectives extends React.Component<ObjectiveProps>{
     const { expanded, toggle, objectives } = this.props
     const { intl } = this.context
 
-    return <Container>
-      {expanded ? (
-        <>
-          <CollapseContainer>
-            <CollapseTitle>
-              <FormattedMessage
-                id="opiskelusuunnitelma.tavoitteetJaSisallot"
-                defaultMessage="Tavoitteet ja sisällöt"
-              />
-            </CollapseTitle>
-            <IconContainer
-              onClick={toggle("objectives")}
-              aria-label={intl.formatMessage({
-                id: "opiskelusuunnitelma.piilotaTavoitteetjaSisallotAriaLabel"
-              })}
-            >
-              <Collapse size={40} />
-            </IconContainer>
-          </CollapseContainer>
-          <Line height="2px" backgroundColor="#000" />
-          <ObjectiveData>
-            {objectives}
-          </ObjectiveData>
-        </>
-      ) : (
-        <>
-          <ExpandContainer>
-            <ExpandTitle
-              onClick={toggle("objectives")}
-            >
-              <FormattedMessage
-                id="opiskelusuunnitelma.tavoitteetJaSisallot"
-                defaultMessage="Tavoitteet ja sisällöt"
-              />
-            </ExpandTitle>
-            <IconContainer
-              onClick={toggle("objectives")}
-              aria-label={intl.formatMessage({
-                id: "opiskelusuunnitelma.naytaTavoitteetjaSisallotAriaLabel"
-              })}
-            >
-              <Expand size={40} />
-            </IconContainer>
-          </ExpandContainer>
-        </>
-      )}
-    </Container>
+    return (
+      <Container>
+        {expanded ? (
+          <>
+            <CollapseContainer>
+              <CollapseTitle>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.tavoitteetJaSisallot"
+                  defaultMessage="Tavoitteet ja sisällöt"
+                />
+              </CollapseTitle>
+              <IconContainer
+                onClick={toggle("objectives")}
+                aria-label={intl.formatMessage({
+                  id: "opiskelusuunnitelma.piilotaTavoitteetjaSisallotAriaLabel"
+                })}
+              >
+                <Collapse size={40} />
+              </IconContainer>
+            </CollapseContainer>
+            <Line height="2px" backgroundColor="#000" />
+            <ObjectiveData>{objectives}</ObjectiveData>
+          </>
+        ) : (
+          <>
+            <ExpandContainer>
+              <ExpandTitle onClick={toggle("objectives")}>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.tavoitteetJaSisallot"
+                  defaultMessage="Tavoitteet ja sisällöt"
+                />
+              </ExpandTitle>
+              <IconContainer
+                onClick={toggle("objectives")}
+                aria-label={intl.formatMessage({
+                  id: "opiskelusuunnitelma.naytaTavoitteetjaSisallotAriaLabel"
+                })}
+              >
+                <Expand size={40} />
+              </IconContainer>
+            </ExpandContainer>
+          </>
+        )}
+      </Container>
+    )
   }
 }
