@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "styleguide": "styleguidist server --config shared/styleguide/styleguide.config.js"
+    "styleguide": "styleguidist server --config shared/styleguide/styleguide.config.js",
+    "prettier": "prettier --parser typescript --write \"{oppija,virkailija,shared}/**/*.{ts,tsx}\""
   },
   "private": true,
   "license": "",
