@@ -27,9 +27,6 @@ export const Oppija = types
           format(parseISO(this.harjoittelujakso.alku || ""), "d.M."),
           format(parseISO(this.harjoittelujakso.loppu || ""), "d.M.yyyy")
         ].join("-")
-      },
-      get oppijanOtsikko(): string {
-        return `${self.nimi}, ${this.harjoittelujakso.selite} ${this.ajankohta}`
       }
     }
   })
