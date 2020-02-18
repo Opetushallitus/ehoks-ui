@@ -59,7 +59,9 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
         selite
     const periodSpecifier = method && method.ajanjaksonTarkenne ? method.ajanjaksonTarkenne : ""
     const organizerRepresentative = organizer && organizer.nimi ? organizer.nimi : ""
-    const organizerOrganisation = organizer && organizer.oppilaitosNimi ? organizer.oppilaitosNimi : ""
+    // TODO EH-757, this need to be fixed. Comment out after competenceAqcquiringMethods have been removed and
+    // harjoittelujaksot replaced with osaamisenHankkimistapa
+    // const organizerOrganisation = organizer && organizer.oppilaitosNimi ? organizer.oppilaitosNimi : ""
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
@@ -110,7 +112,8 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                     />
                   </TH>
                   <TD>
-                    {organizerRepresentative}, {organizerOrganisation}
+                    {/*TODO EH-757 add organizerOrgansation here, see comment above*/}
+                    {organizerRepresentative}
                   </TD>
                 </tr>
             )}
