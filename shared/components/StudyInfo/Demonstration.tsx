@@ -1,9 +1,8 @@
 import { MobileSlider, Slide } from "components/MobileSlider"
 import React from "react"
 import { FormattedMessage } from "react-intl"
-import MediaQuery from "react-responsive"
+import { HMediaQuery } from "responsive"
 import styled from "styled"
-import { breakpoints } from "theme"
 import { Container, InfoContainer, Table, TBody, TD, TH, Title } from "./Shared"
 import { Naytto, TodentamisenProsessi } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
@@ -177,31 +176,25 @@ export class Demonstration extends React.Component<
             </tr>
           </TBody>
         </DemonstrationTable>
-        <MediaQuery maxWidth={breakpoints.Tablet}>
-          {matches => {
-            if (matches) {
-              return (
-                <CustomSlider>
-                  {demonstration &&
-                    demonstration.tyotehtavat &&
-                    demonstration.tyotehtavat.map((tyotehtava, i) => {
-                      return <Slide key={i}>{tyotehtava}</Slide>
-                    })}
-                </CustomSlider>
-              )
-            } else {
-              return (
-                <DemonstrationTasks>
-                  {demonstration &&
-                    demonstration.tyotehtavat &&
-                    demonstration.tyotehtavat.map((tyotehtava, i) => {
-                      return <li key={i}>{tyotehtava}</li>
-                    })}
-                </DemonstrationTasks>
-              )
-            }
-          }}
-        </MediaQuery>
+        <HMediaQuery.MaxWidth breakpoint="Tablet">
+          <CustomSlider>
+            {demonstration &&
+              demonstration.tyotehtavat &&
+              demonstration.tyotehtavat.map((tyotehtava, i) => {
+                return <Slide key={i}>{tyotehtava}</Slide>
+              })}
+          </CustomSlider>
+        </HMediaQuery.MaxWidth>
+        <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
+          <DemonstrationTasks>
+            {demonstration &&
+              demonstration.tyotehtavat &&
+              demonstration.tyotehtavat.map((tyotehtava, i) => {
+                return <li key={i}>{tyotehtava}</li>
+              })}
+          </DemonstrationTasks>
+        </HMediaQuery.MaxWidth>
+
         <RequirementsAndDeviations
           toggle={this.toggleRequirementsAndDeviations}
           expanded={requirementsAndDeviationsExpanded}

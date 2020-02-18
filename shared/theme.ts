@@ -67,3 +67,5 @@ export const theme = {
   },
   maxWidth: 1440
 }
+
+export type TypeOfTheme = typeof theme
