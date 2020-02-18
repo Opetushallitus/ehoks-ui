@@ -65,7 +65,14 @@ export const theme = {
       cellBorder: "#000"
     }
   },
-  maxWidth: 1440
+  maxWidth: 1440,
+  spacing: {
+    s: "10px",
+    m: "15px",
+    l: "20px",
+    xl: "40px",
+    xxl: "70px"
+  }
 }
 
 export type TypeOfTheme = typeof theme

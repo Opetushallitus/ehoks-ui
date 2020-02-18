@@ -20,6 +20,7 @@ import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
+import { HMediaQuery } from "responsive"
 
 const Section = styled("div")`
   display: flex;
@@ -33,10 +34,12 @@ const SectionContainer = styled("div")`
   flex: 1;
   justify-content: flex-end;
   align-items: flex-end;
-  margin-bottom: 20px;
+  margin-left: ${props => props.theme.spacing.l};
+  margin-bottom: ${props => props.theme.spacing.l};
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
-    margin-top: 30px;
+    margin-top: ${props => props.theme.spacing.xl};
+    margin-left: 0;
     justify-content: center;
   }
 `
@@ -142,14 +145,16 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                             <MdEventNote />
                           </SectionItem>
                         </SectionItems>
-                        <SectionContainer>
-                          <HOKSButton to="/ehoks/suunnittelu">
-                            <FormattedMessage
-                              id="kirjautunut.suljeHOKSLink"
-                              defaultMessage="Sulje HOKS"
-                            />
-                          </HOKSButton>
-                        </SectionContainer>
+                        <HMediaQuery.MinWidth breakpoint="Tablet">
+                          <SectionContainer>
+                            <HOKSButton to="/ehoks/suunnittelu">
+                              <FormattedMessage
+                                id="kirjautunut.suljeHOKSLink"
+                                defaultMessage="Sulje HOKS"
+                              />
+                            </HOKSButton>
+                          </SectionContainer>
+                        </HMediaQuery.MinWidth>
                       </Section>
                     </PaddedContent>
                   </Container>
@@ -177,6 +182,16 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                           plan={suunnitelma}
                         />
                       </Router>
+                      <HMediaQuery.MinWidth breakpoint="Tablet" notMatch={true}>
+                        <SectionContainer>
+                          <HOKSButton to="/ehoks/suunnittelu">
+                            <FormattedMessage
+                              id="kirjautunut.suljeHOKSLink"
+                              defaultMessage="Sulje HOKS"
+                            />
+                          </HOKSButton>
+                        </SectionContainer>
+                      </HMediaQuery.MinWidth>
                     </PaddedContent>
                   </Container>
                 </BackgroundContainer>
