@@ -17,7 +17,9 @@ export function getHarjoittelujaksot(
   }>
 ) {
   return osaamisenHankkimistavat.map<Harjoittelujakso>(tapa => {
-    const tyyppi = tapa.osaamisenHankkimistapaKoodiUri.includes("koulutussopimus") || tapa.osaamisenHankkimistapaKoodiUri.includes("oppisopimus")
+    const tyyppi =
+      tapa.osaamisenHankkimistapaKoodiUri.includes("koulutussopimus") ||
+      tapa.osaamisenHankkimistapaKoodiUri.includes("oppisopimus")
         ? "WORKPLACE"
         : "OTHER"
 

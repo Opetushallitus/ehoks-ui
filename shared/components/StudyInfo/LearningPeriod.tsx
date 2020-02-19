@@ -13,7 +13,11 @@ import {
   TH,
   Title
 } from "./Shared"
-import { Harjoittelujakso, JarjestajanEdustaja, OsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
+import {
+  Harjoittelujakso,
+  JarjestajanEdustaja,
+  OsaamisenHankkimistapa
+} from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
 
 const LearningPeriodTitle = styled(Title)`
@@ -52,12 +56,21 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
       selite
     } = learningPeriod
 
-    const method = competenceAcquiringMethods ? competenceAcquiringMethods[0] : undefined
-    const workplaceSelite = tyyppi === "WORKPLACE" && method && method.tyopaikallaJarjestettavaKoulutus ?
-        selite + ", " + method.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus :
-        selite
-    const periodSpecifier = method && method.ajanjaksonTarkenne ? method.ajanjaksonTarkenne : ""
-    const organizerRepresentative = organizer && organizer.nimi ? organizer.nimi : ""
+    const method = competenceAcquiringMethods
+      ? competenceAcquiringMethods[0]
+      : undefined
+    const workplaceSelite =
+      tyyppi === "WORKPLACE" &&
+      method &&
+      method.tyopaikallaJarjestettavaKoulutus
+        ? selite +
+          ", " +
+          method.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus
+        : selite
+    const periodSpecifier =
+      method && method.ajanjaksonTarkenne ? method.ajanjaksonTarkenne : ""
+    const organizerRepresentative =
+      organizer && organizer.nimi ? organizer.nimi : ""
     // TODO EH-757, this need to be fixed. Comment out after competenceAqcquiringMethods have been removed and
     // harjoittelujaksot replaced with osaamisenHankkimistapa
     // const organizerOrganisation = organizer && organizer.oppilaitosNimi ? organizer.oppilaitosNimi : ""
@@ -97,24 +110,25 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                   />
                 </TH>
                 <TD>
-                  {ohjaaja.nimi}, {selite}<br/>
+                  {ohjaaja.nimi}, {selite}
+                  <br />
                   {ohjaaja.sahkoposti}
                 </TD>
               </tr>
             )}
             {tyyppi === "WORKPLACE" && ohjaaja && (
-                <tr>
-                  <TH>
-                    <FormattedMessage
-                        id="opiskelusuunnitelma.koulutuksenjarjestajanEdustajaTitle"
-                        defaultMessage="Koulutuksen järjestäjän edustaja"
-                    />
-                  </TH>
-                  <TD>
-                    {/*TODO EH-757 add organizerOrgansation here, see comment above*/}
-                    {organizerRepresentative}
-                  </TD>
-                </tr>
+              <tr>
+                <TH>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.koulutuksenjarjestajanEdustajaTitle"
+                    defaultMessage="Koulutuksen järjestäjän edustaja"
+                  />
+                </TH>
+                <TD>
+                  {/*TODO EH-757 add organizerOrgansation here, see comment above*/}
+                  {organizerRepresentative}
+                </TD>
+              </tr>
             )}
             {tyotehtavat.length > 0 && (
               <tr>

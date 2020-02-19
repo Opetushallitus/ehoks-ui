@@ -44,13 +44,10 @@ export function transformErrors(errors: AjvError[]) {
 }
 
 export function buildKoodiUris() {
-  return Object.keys(koodistoUrls).reduce(
-    (urls, key) => {
-      urls[key] = []
-      return urls
-    },
-    {} as any
-  )
+  return Object.keys(koodistoUrls).reduce((urls, key) => {
+    urls[key] = []
+    return urls
+  }, {} as any)
 }
 
 export function mapKoodiUri({ koodiUri, versio, metadata }: any) {

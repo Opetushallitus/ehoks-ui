@@ -39,7 +39,7 @@ export function fetchUtils(
   async function fetchPrimitiveCollection<D = any, M = any>(
     url: string,
     init?: RequestInit
-  ): Promise<APIResponse<D, M>>{
+  ): Promise<APIResponse<D, M>> {
     return getCollection(url, true, init)
   }
 
@@ -118,10 +118,9 @@ export const mockFetch = (apiUrl: (path: string) => string, version = 0) => (
     bodyUsed: false,
     clone: () => mockResponse,
     json: () => {
-      return import(`stores/mocks/${path.replace(
-        /\/|\-/g,
-        "_"
-      )}${version}.json`)
+      return import(
+        `stores/mocks/${path.replace(/\/|\-/g, "_")}${version}.json`
+      )
     },
     ok: true,
     statusText: "Error"

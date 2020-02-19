@@ -305,7 +305,11 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
             toggle={this.toggle}
           />
           {objectives && (
-            <Objectives expanded={expanded.objectives} toggle={this.toggle} objectives={objectives}/>
+            <Objectives
+              expanded={expanded.objectives}
+              toggle={this.toggle}
+              objectives={objectives}
+            />
           )}
         </InnerContainer>
       </Container>

@@ -57,7 +57,7 @@ export interface TyoelamaOsaamisenArvioija {
 
 export interface KoulutuksenJarjestajaOsaamisenArvioija {
   nimi: string
-  organisaatio: { oppilaitosOid: string, oppilaitosNimi: string}
+  organisaatio: { oppilaitosOid: string; oppilaitosNimi: string }
 }
 
 export interface OsaamisenOsoittaminen {

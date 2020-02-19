@@ -74,9 +74,7 @@ export const EnrichKoodiUri = types
     }
 
     function getCodes(key: string) {
-      const codes: string[] = Array.isArray(self[key])
-        ? self[key]
-        : [self[key]]
+      const codes: string[] = Array.isArray(self[key]) ? self[key] : [self[key]]
       return codes
     }
 

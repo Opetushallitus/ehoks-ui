@@ -220,9 +220,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                         <TableCell>
                           {student.lukumaara > 0 ? (
                             <Link
-                              to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${
-                                student.oid
-                              }`}
+                              to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${student.oid}`}
                             >
                               {student.nimi}
                             </Link>

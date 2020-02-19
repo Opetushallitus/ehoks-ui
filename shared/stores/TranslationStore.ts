@@ -60,7 +60,8 @@ export const TranslationStore = types
       self.translations.replace(defaultMessages as ApiTranslation[])
       try {
         const response: APIResponse = yield fetchCollection(
-          apiUrl(`${apiPrefix}/external/lokalisointi`), { headers: callerId() }
+          apiUrl(`${apiPrefix}/external/lokalisointi`),
+          { headers: callerId() }
         )
         // add custom translations from API
         self.translations.replace([

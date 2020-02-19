@@ -13,33 +13,28 @@ export function schemaToTranslations(
   const defs = definitions || schema.definitions
   const properties = schema.properties
   const keys = Object.keys(properties)
-  return keys.reduce(
-    (arr, key) => {
-      const property = properties[key]
-      if (property.type === "array" || property.$ref) {
-        if (property.$ref || (property.items && property.items.$ref)) {
-          const ref = (property.$ref || property.items.$ref).replace(
-            "#/definitions/",
-            ""
-          )
-          if (defs[ref]) {
-            arr.push(
-              schemaToTranslations(defs[ref], `${prevPath}_${key}`, defs)
-            )
-          }
+  return keys.reduce((arr, key) => {
+    const property = properties[key]
+    if (property.type === "array" || property.$ref) {
+      if (property.$ref || (property.items && property.items.$ref)) {
+        const ref = (property.$ref || property.items.$ref).replace(
+          "#/definitions/",
+          ""
+        )
+        if (defs[ref]) {
+          arr.push(schemaToTranslations(defs[ref], `${prevPath}_${key}`, defs))
         }
       }
-      if (property.description || schema.description) {
-        arr.push({
-          category: "ehoks",
-          locale: Locale.FI,
-          key: idToTranslationKey(`${prevPath}_${key}`) + ".description",
-          value: property.description || schema.description
-        })
-      }
+    }
+    if (property.description || schema.description) {
+      arr.push({
+        category: "ehoks",
+        locale: Locale.FI,
+        key: idToTranslationKey(`${prevPath}_${key}`) + ".description",
+        value: property.description || schema.description
+      })
+    }
 
-      return flattenDeep(arr)
-    },
-    [] as any[]
-  )
+    return flattenDeep(arr)
+  }, [] as any[])
 }

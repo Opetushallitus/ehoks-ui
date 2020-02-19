@@ -130,11 +130,7 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
                     .
                   </Text>
                   <NotificationLink
-                    to={`/ehoks/suunnittelu/${
-                      message.hoksId
-                    }/opiskelusuunnitelmani?share=${message.koodiUri}&type=${
-                      message.type
-                    }`}
+                    to={`/ehoks/suunnittelu/${message.hoksId}/opiskelusuunnitelmani?share=${message.koodiUri}&type=${message.type}`}
                   >
                     <FormattedMessage
                       id="muistutukset.jaaTiedotTyopaikkaohjaajalle"
