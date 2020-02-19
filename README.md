@@ -31,3 +31,7 @@ See `README` files in [oppija](oppija/README.md) and [virkailija](virkailija/REA
 - [Webpack](https://webpack.js.org) for building the JS bundle
 
 See [TECHNICAL_DECISIONS.md](TECHNICAL_DECISIONS.md) document for more in-depth overview of the frontend architecture.
+
+## Git
+
+If you don't want code formatting commits to clutter git blame you can run `git config blame.ignoreRevsFile .git-blame-ignore-revs`. Works in git >= 2.23
