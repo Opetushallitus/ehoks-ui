@@ -23,6 +23,7 @@ install:
   - npm ci
 
 script:
+  - npm run prettier:check
   - cd oppija
   - npm run lint
   - npm test
