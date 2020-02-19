@@ -5,27 +5,24 @@ import { EnrichKoodiUri } from "./EnrichKoodiUri"
 import { KoodistoVastaus } from "./KoodistoVastaus"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 
-export const Model = types.model(
-  "AiemminHankitunYTOOsaAlue", {
-    id: types.optional(types.number, 0),
-    olennainenSeikka: types.optional(types.boolean, false),
-    osaAlueKoodiUri: types.optional(types.string, ""),
-    osaAlue: types.optional(KoodistoVastaus, {}),
-    koulutuksenJarjestajaOid: types.optional(types.string, ""),
-    vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
-    valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
-    valittuTodentamisenProsessi: types.optional(KoodistoVastaus, {}),
-    tarkentavatTiedotNaytto: types.array(OsaamisenOsoittaminen),
-    tarkentavatTiedotOsaamisenArvioija: types.optional(TodennettuArviointiLisatiedot, {})
-  }
-)
+export const Model = types.model("AiemminHankitunYTOOsaAlue", {
+  id: types.optional(types.number, 0),
+  olennainenSeikka: types.optional(types.boolean, false),
+  osaAlueKoodiUri: types.optional(types.string, ""),
+  osaAlue: types.optional(KoodistoVastaus, {}),
+  koulutuksenJarjestajaOid: types.optional(types.string, ""),
+  vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
+  valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
+  valittuTodentamisenProsessi: types.optional(KoodistoVastaus, {}),
+  tarkentavatTiedotNaytto: types.array(OsaamisenOsoittaminen),
+  tarkentavatTiedotOsaamisenArvioija: types.optional(
+    TodennettuArviointiLisatiedot,
+    {}
+  )
+})
 
 export const AiemminHankitunYTOOsaAlue = types
-  .compose(
-    EnrichKoodiUri,
-    AiemminHankitutTutkinnonOsatViews,
-    Model
-  )
+  .compose(EnrichKoodiUri, AiemminHankitutTutkinnonOsatViews, Model)
   .views(self => {
     return {
       get otsikko() {
@@ -37,6 +34,3 @@ export const AiemminHankitunYTOOsaAlue = types
       }
     }
   })
-
-
-

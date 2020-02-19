@@ -16,11 +16,7 @@ const Model = types.model("YhteisenTutkinnonOsanOsaAlue", {
 })
 
 export const YhteisenTutkinnonOsanOsaAlue = types
-  .compose(
-    EnrichKoodiUri,
-    Model,
-    HankittavatTutkinnonOsatViews
-  )
+  .compose(EnrichKoodiUri, Model, HankittavatTutkinnonOsatViews)
   .views(self => {
     return {
       get otsikko() {

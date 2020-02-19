@@ -3,13 +3,11 @@ import React, { ReactNode } from "react"
 export interface PagingProps {
   itemsLength?: number
   perPage?: number
-  children: (
-    obj: {
-      activePage: number
-      goToPage: (index: number) => () => void
-      totalPages: number
-    }
-  ) => ReactNode
+  children: (obj: {
+    activePage: number
+    goToPage: (index: number) => () => void
+    totalPages: number
+  }) => ReactNode
 }
 
 export class Paging extends React.Component<PagingProps> {

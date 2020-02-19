@@ -1,9 +1,6 @@
 import React from "react"
 import styled from "styled"
-import {
-    Container,
-    Title
-} from "./Shared"
+import { Container, Title } from "./Shared"
 import { MuuOppimisymparisto } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
 
@@ -19,14 +16,12 @@ interface OtherPeriodProps {
 export class OtherPeriod extends React.Component<OtherPeriodProps> {
   render() {
     const { otherPeriod } = this.props
-    const {
-      alku,
-      loppu
-    } = otherPeriod
+    const { alku, loppu } = otherPeriod
 
-    const nimi = otherPeriod.oppimisymparisto && otherPeriod.oppimisymparisto.nimi
-      ? otherPeriod.oppimisymparisto.nimi
-      : ""
+    const nimi =
+      otherPeriod.oppimisymparisto && otherPeriod.oppimisymparisto.nimi
+        ? otherPeriod.oppimisymparisto.nimi
+        : ""
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">

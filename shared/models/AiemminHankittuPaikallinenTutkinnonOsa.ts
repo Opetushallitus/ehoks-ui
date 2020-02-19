@@ -15,23 +15,28 @@ const model = types.model({
   valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
   valittuTodentamisenProsessi: types.optional(KoodistoVastaus, {}),
   tarkentavatTiedotNaytto: types.array(OsaamisenOsoittaminen),
-  tarkentavatTiedotOsaamisenArvioija: types.optional(TodennettuArviointiLisatiedot, {}),
+  tarkentavatTiedotOsaamisenArvioija: types.optional(
+    TodennettuArviointiLisatiedot,
+    {}
+  ),
   amosaaTunniste: types.optional(types.string, ""),
   olennainenSeikka: types.optional(types.boolean, false)
 })
 
-export const AiemminHankittuPaikallinenTutkinnonOsa = types.compose(
-  "AiemminHankittuPaikallinenTutkinnonOsa",
-  EnrichKoodiUri,
-  AiemminHankitutTutkinnonOsatViews,
-  model
-).views(self => {
-  return {
-    get otsikko() {
-      return self.nimi
-    },
-    get osaamispisteet() {
-      return self.laajuus
+export const AiemminHankittuPaikallinenTutkinnonOsa = types
+  .compose(
+    "AiemminHankittuPaikallinenTutkinnonOsa",
+    EnrichKoodiUri,
+    AiemminHankitutTutkinnonOsatViews,
+    model
+  )
+  .views(self => {
+    return {
+      get otsikko() {
+        return self.nimi
+      },
+      get osaamispisteet() {
+        return self.laajuus
+      }
     }
-  }
-})
+  })

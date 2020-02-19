@@ -90,9 +90,7 @@ export class LearningEvent extends React.Component<LearningEventProps> {
                 {format(parseISO(endDate), "d.M.yyyy")}
               </Detail>
             )}
-            {periodSpecifier && (
-                <Detail size={size}>{periodSpecifier}</Detail>
-            )}
+            {periodSpecifier && <Detail size={size}>{periodSpecifier}</Detail>}
             <Detail size={size}>{description}</Detail>
           </DetailsContainer>
         </ContentContainer>

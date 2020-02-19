@@ -39,15 +39,11 @@ export const SessionUser = types
         ) {
           return {}
         }
-        return self.contactValuesGroup[0].contact.reduce(
-          (result, contact) => {
-            const key =
-              ContactFields[contact.type as keyof typeof ContactFields]
-            result[key] = contact.value
-            return result
-          },
-          {} as Yhteystiedot
-        )
+        return self.contactValuesGroup[0].contact.reduce((result, contact) => {
+          const key = ContactFields[contact.type as keyof typeof ContactFields]
+          result[key] = contact.value
+          return result
+        }, {} as Yhteystiedot)
       }
     }
   })

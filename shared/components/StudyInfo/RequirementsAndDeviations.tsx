@@ -82,7 +82,10 @@ interface RequirementsAndDeviationsProps {
   deviations?: string
 }
 
-function doesntHaveRequirementsAndDeviations(requirements: string[] | undefined, deviations: string | undefined) {
+function doesntHaveRequirementsAndDeviations(
+  requirements: string[] | undefined,
+  deviations: string | undefined
+) {
   return !((requirements && requirements.length > 0) || deviations)
 }
 
@@ -97,7 +100,7 @@ export class RequirementsAndDeviations extends React.Component<
     const { expanded, toggle, requirements, deviations } = this.props
     const { intl } = this.context
 
-    if(doesntHaveRequirementsAndDeviations(requirements, deviations)){
+    if (doesntHaveRequirementsAndDeviations(requirements, deviations)) {
       return null
     }
 
@@ -126,16 +129,14 @@ export class RequirementsAndDeviations extends React.Component<
 
             {deviations && (
               <>
-              <Prefix>
-                <FormattedMessage
-                  id="opiskelusuunnitelma.poiketaanPrefix"
-                  defaultMessage="Poiketaan"
-                  tagName="i"
-                />
-              </Prefix>
-              <Deviations>
-                {deviations}
-              </Deviations>
+                <Prefix>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.poiketaanPrefix"
+                    defaultMessage="Poiketaan"
+                    tagName="i"
+                  />
+                </Prefix>
+                <Deviations>{deviations}</Deviations>
               </>
             )}
 
@@ -150,9 +151,9 @@ export class RequirementsAndDeviations extends React.Component<
                 </Prefix>
                 <Requirements>
                   {requirements &&
-                  requirements.map((requirement, i) => {
-                    return <li key={i}>{requirement}</li>
-                  })}
+                    requirements.map((requirement, i) => {
+                      return <li key={i}>{requirement}</li>
+                    })}
                 </Requirements>
               </>
             )}

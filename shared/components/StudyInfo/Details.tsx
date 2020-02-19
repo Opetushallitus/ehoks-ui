@@ -8,7 +8,8 @@ import { IconContainer } from "./IconContainer"
 import { LearningPeriod } from "./LearningPeriod"
 import { OtherPeriod } from "./OtherPeriod"
 import {
-  Harjoittelujakso, MuuOppimisymparisto,
+  Harjoittelujakso,
+  MuuOppimisymparisto,
   Naytto,
   OsaamisenHankkimistapa,
   TodentamisenProsessi
@@ -133,9 +134,17 @@ export class Details extends React.Component<DetailsProps> {
 
     let otherPeriods: MuuOppimisymparisto[] = []
     competenceAcquiringMethods
-      .filter(method => { return method.muutOppimisymparistot ? true : false })
-      .map(method => { method?.muutOppimisymparistot?.map(ymparisto => otherPeriods.push(ymparisto)) })
-    const organizer = competenceAcquiringMethods[0] && competenceAcquiringMethods[0].jarjestajanEdustaja
+      .filter(method => {
+        return method.muutOppimisymparistot ? true : false
+      })
+      .map(method => {
+        method?.muutOppimisymparistot?.map(ymparisto =>
+          otherPeriods.push(ymparisto)
+        )
+      })
+    const organizer =
+      competenceAcquiringMethods[0] &&
+      competenceAcquiringMethods[0].jarjestajanEdustaja
 
     return expanded ? (
       <DetailsExpanded
@@ -165,12 +174,19 @@ export class Details extends React.Component<DetailsProps> {
             defaultPeriod={defaultPeriod}
           >
             {learningPeriods.map((period, i) => {
-              return <LearningPeriod key={i} learningPeriod={period} competenceAcquiringMethods={competenceAcquiringMethods} organizer={organizer} />
+              return (
+                <LearningPeriod
+                  key={i}
+                  learningPeriod={period}
+                  competenceAcquiringMethods={competenceAcquiringMethods}
+                  organizer={organizer}
+                />
+              )
             })}
           </ShareDialog>
 
           {otherPeriods.map((period, i) => {
-            return <OtherPeriod key={i} otherPeriod={period}/>
+            return <OtherPeriod key={i} otherPeriod={period} />
           })}
 
           {demonstrations.map((demonstration, i) => {

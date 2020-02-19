@@ -45,7 +45,9 @@ const Model = types.model("HOKSModel", {
     HankittavaPaikallinenTutkinnonOsa
   ),
   hankittavatYhteisetTutkinnonOsat: types.array(HankittavaYhteinenTutkinnonOsa),
-  opiskeluvalmiuksiaTukevatOpinnot: types.array(OpiskeluvalmiuksiaTukevatOpinnot),
+  opiskeluvalmiuksiaTukevatOpinnot: types.array(
+    OpiskeluvalmiuksiaTukevatOpinnot
+  ),
   urasuunnitelmaKoodiUri: types.optional(types.string, ""),
   urasuunnitelma: types.optional(KoodistoVastaus, {}),
   versio: types.optional(types.number, 0),
@@ -54,18 +56,19 @@ const Model = types.model("HOKSModel", {
 })
 
 export const HOKS = types
-  .compose(
-    "HOKS",
-    EnrichKoodiUri,
-    Model
-  )
+  .compose("HOKS", EnrichKoodiUri, Model)
   .volatile(_ => ({
     osaamispisteet: 0
   }))
   .actions(self => {
-    const { apiUrl, apiPrefix, errors, fetchCollection, fetchSingle, callerId } = getEnv<
-      StoreEnvironment
-    >(self)
+    const {
+      apiUrl,
+      apiPrefix,
+      errors,
+      fetchCollection,
+      fetchSingle,
+      callerId
+    } = getEnv<StoreEnvironment>(self)
 
     // fetches detailed HOKS, only needed in virkailija app
     const fetchDetails = flow(function*(): any {
@@ -120,7 +123,7 @@ export const HOKS = types
     })
 
     function getOsaamispisteetFromRakenne(rakenne: any) {
-      if(rakenne.muodostumisSaanto?.laajuus){
+      if (rakenne.muodostumisSaanto?.laajuus) {
         return rakenne.muodostumisSaanto.laajuus.minimi
       }
       return null
@@ -175,7 +178,11 @@ export const HOKS = types
       get aiemminHankitutTutkinnonOsat(): TutkinnonOsa[] {
         const osaAlueet = flattenDeep<
           Instance<typeof AiemminHankitunYTOOsaAlue>
-          >(self.aiemminHankitutYhteisetTutkinnonOsat.map((to: any) => to.osaAlueet))
+        >(
+          self.aiemminHankitutYhteisetTutkinnonOsat.map(
+            (to: any) => to.osaAlueet
+          )
+        )
 
         return [
           ...self.aiemminHankitutAmmatTutkinnonOsat,
@@ -217,7 +224,7 @@ export const HOKS = types
           : ""
       },
       get valmiitOpinnot() {
-          return this.hankittavatTutkinnonOsat.filter(to => to.tila === "valmis")
+        return this.hankittavatTutkinnonOsat.filter(to => to.tila === "valmis")
       },
       get tutkintonimike() {
         return self.opiskeluOikeus.suoritukset &&

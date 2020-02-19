@@ -19,12 +19,16 @@ interface OsaamisenHankkimisenTarveProps {
   osaamisenHankkimisenTarve: boolean | null
 }
 
-const OsaamisenHankkimisenTarveMessage =  ({ osaamisenHankkimisenTarve } : OsaamisenHankkimisenTarveProps) => {
-  if(osaamisenHankkimisenTarve == null)
-    return <FormattedMessage
-      id="tavoitteet.osaamisenHankkimisenTarveNullTitle"
-      defaultMessage="Opiskelijan osaamisen hankkimisen tarve ei tiedossa"
-    />
+const OsaamisenHankkimisenTarveMessage = ({
+  osaamisenHankkimisenTarve
+}: OsaamisenHankkimisenTarveProps) => {
+  if (osaamisenHankkimisenTarve == null)
+    return (
+      <FormattedMessage
+        id="tavoitteet.osaamisenHankkimisenTarveNullTitle"
+        defaultMessage="Opiskelijan osaamisen hankkimisen tarve ei tiedossa"
+      />
+    )
 
   return osaamisenHankkimisenTarve ? (
     <FormattedMessage
@@ -182,7 +186,10 @@ export class Tavoitteet extends React.Component<
                 <tr>
                   <LabeledColumn id="tavoitteet.ensikertainenHyvaksyminenTitle">
                     {hoks.ensikertainenHyvaksyminen ? (
-                      format(parseISO(hoks.ensikertainenHyvaksyminen), "d.M.yyyy")
+                      format(
+                        parseISO(hoks.ensikertainenHyvaksyminen),
+                        "d.M.yyyy"
+                      )
                     ) : (
                       <FormattedMessage
                         id="tavoitteet.eiVielaHyvaksyttyTitle"
@@ -201,7 +208,9 @@ export class Tavoitteet extends React.Component<
                     )}
                   </LabeledColumn>
                   <LabeledColumn id="tavoitteet.osaamisenHankkimisenTarveTitle">
-                    <OsaamisenHankkimisenTarveMessage osaamisenHankkimisenTarve={hoks.osaamisenHankkimisenTarve}/>
+                    <OsaamisenHankkimisenTarveMessage
+                      osaamisenHankkimisenTarve={hoks.osaamisenHankkimisenTarve}
+                    />
                   </LabeledColumn>
                 </tr>
               </tbody>
@@ -215,28 +224,28 @@ export class Tavoitteet extends React.Component<
           title={titles.goals}
           onToggle={this.toggleAccordion("personalGoal")}
         >
-          {(hoks.urasuunnitelma && hoks.urasuunnitelma.nimi) && (
-          <InfoTable>
-            <tbody>
-              <tr>
-                <th>
-                  <FormattedMessage
-                    id="tavoitteet.suunnitelmaJatkoOpintoihinTitle"
-                    defaultMessage="Suunnitelma jatko-opintoihin siirtymisestä"
-                  />
-                </th>
-                <th />
-                <th />
-              </tr>
-              <tr>
-                <LabeledColumn id="tavoitteet.suunnitelmaJatkoOpintoihinTitle">
-                  {hoks.urasuunnitelma && hoks.urasuunnitelma.nimi}
-                </LabeledColumn>
-                <td />
-                <td />
-              </tr>
-            </tbody>
-          </InfoTable>
+          {hoks.urasuunnitelma && hoks.urasuunnitelma.nimi && (
+            <InfoTable>
+              <tbody>
+                <tr>
+                  <th>
+                    <FormattedMessage
+                      id="tavoitteet.suunnitelmaJatkoOpintoihinTitle"
+                      defaultMessage="Suunnitelma jatko-opintoihin siirtymisestä"
+                    />
+                  </th>
+                  <th />
+                  <th />
+                </tr>
+                <tr>
+                  <LabeledColumn id="tavoitteet.suunnitelmaJatkoOpintoihinTitle">
+                    {hoks.urasuunnitelma && hoks.urasuunnitelma.nimi}
+                  </LabeledColumn>
+                  <td />
+                  <td />
+                </tr>
+              </tbody>
+            </InfoTable>
           )}
         </Accordion>
 
@@ -287,7 +296,6 @@ export class Tavoitteet extends React.Component<
                     ? `${student.firstName} ${student.surname}`
                     : student.fullName}
                 </LabeledColumn>
-
 
                 <LabeledColumn id="tavoitteet.kutsumanimiTitle">
                   {student.commonName}

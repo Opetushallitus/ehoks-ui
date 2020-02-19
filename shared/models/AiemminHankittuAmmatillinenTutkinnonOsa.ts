@@ -19,7 +19,10 @@ const Model = types.model({
   valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
   valittuTodentamisenProsessi: types.optional(KoodistoVastaus, {}),
   tarkentavatTiedotNaytto: types.array(OsaamisenOsoittaminen),
-  tarkentavatTiedotOsaamisenArvioija: types.optional(TodennettuArviointiLisatiedot, {}),
+  tarkentavatTiedotOsaamisenArvioija: types.optional(
+    TodennettuArviointiLisatiedot,
+    {}
+  ),
   olennainenSeikka: types.optional(types.boolean, false)
 })
 

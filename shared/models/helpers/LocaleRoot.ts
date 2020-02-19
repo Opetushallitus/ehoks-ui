@@ -1,4 +1,4 @@
-import { Locale } from "../../stores/TranslationStore";
+import { Locale } from "../../stores/TranslationStore"
 
 export interface LocaleRoot {
   translations: {

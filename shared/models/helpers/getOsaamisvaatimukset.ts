@@ -1,5 +1,5 @@
 import flattenDeep from "lodash.flattendeep"
-import { Locale } from "../../stores/TranslationStore";
+import { Locale } from "../../stores/TranslationStore"
 
 export function getOsaamisvaatimukset(
   arviointi: {

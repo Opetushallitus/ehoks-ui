@@ -1,4 +1,11 @@
-import { Instance, types, getRoot, SnapshotOrInstance, flow, getEnv } from "mobx-state-tree"
+import {
+  Instance,
+  types,
+  getRoot,
+  SnapshotOrInstance,
+  flow,
+  getEnv
+} from "mobx-state-tree"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
@@ -24,11 +31,7 @@ export const NotificationModel = types.model("NotificationModel", {
 })
 
 export const Notification = types
-  .compose(
-    "Notification",
-    EnrichKoodiUri,
-    NotificationModel
-  )
+  .compose("Notification", EnrichKoodiUri, NotificationModel)
   .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {
@@ -85,7 +88,9 @@ export const NotificationStore = types
     return { addNotifications }
   })
   .actions(self => {
-    const { apiUrl, fetchPrimitiveCollection, errors, callerId } = getEnv<StoreEnvironment>(self)
+    const { apiUrl, fetchPrimitiveCollection, errors, callerId } = getEnv<
+      StoreEnvironment
+    >(self)
 
     const hideFeedbackModal = () => {
       self.showFeedbackModal = false
@@ -95,7 +100,7 @@ export const NotificationStore = types
       self.showFeedbackModal = true
     }
 
-    const haeOpiskelijapalautelinkit = flow(function* (oid: string): any {
+    const haeOpiskelijapalautelinkit = flow(function*(oid: string): any {
       try {
         const response: APIResponse = yield fetchPrimitiveCollection(
           apiUrl(`oppija/oppijat/${oid}/kyselylinkit`),
@@ -104,7 +109,10 @@ export const NotificationStore = types
 
         self.studentFeedbackLinks = response.data
       } catch (error) {
-        errors.logError("errors.NotificationStore.haeOpiskelijapalautelinkit", error.message)
+        errors.logError(
+          "errors.NotificationStore.haeOpiskelijapalautelinkit",
+          error.message
+        )
       }
     })
 
@@ -112,7 +120,12 @@ export const NotificationStore = types
       self.studentFeedbackLinks.remove(feedbackLinkToRemove)
     }
 
-    return { haeOpiskelijapalautelinkit, removeOpiskelijapalautelinkki, hideFeedbackModal, makeFeedbackModalVisible }
+    return {
+      haeOpiskelijapalautelinkit,
+      removeOpiskelijapalautelinkki,
+      hideFeedbackModal,
+      makeFeedbackModalVisible
+    }
   })
   .views(self => {
     const {
@@ -129,7 +142,7 @@ export const NotificationStore = types
               return (
                 hiddenNotification.hoksId === notification.hoksId &&
                 hiddenNotification.tutkinnonOsaKoodiUri ===
-                notification.tutkinnonOsaKoodiUri &&
+                  notification.tutkinnonOsaKoodiUri &&
                 hiddenNotification.tyyppi === notification.tyyppi
               )
             }
@@ -160,5 +173,4 @@ export const NotificationStore = types
   })
 
 export interface INotificationStore
-  extends Instance<typeof NotificationStore> {
-}
+  extends Instance<typeof NotificationStore> {}

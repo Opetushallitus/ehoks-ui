@@ -38,12 +38,16 @@ interface OsaamisenHankkimisenTarveProps {
   osaamisenHankkimisenTarve: boolean | null
 }
 
-const OsaamisenHankkimisenTarveMessage =  ({ osaamisenHankkimisenTarve } : OsaamisenHankkimisenTarveProps) => {
-  if(osaamisenHankkimisenTarve == null)
-    return <FormattedMessage
-      id="koulutuksenJarjestaja.opiskelija.osaamisenHankkimisenTarveNullTitle"
-      defaultMessage="Opiskelijan osaamisen hankkimisen tarve ei tiedossa"
-    />
+const OsaamisenHankkimisenTarveMessage = ({
+  osaamisenHankkimisenTarve
+}: OsaamisenHankkimisenTarveProps) => {
+  if (osaamisenHankkimisenTarve == null)
+    return (
+      <FormattedMessage
+        id="koulutuksenJarjestaja.opiskelija.osaamisenHankkimisenTarveNullTitle"
+        defaultMessage="Opiskelijan osaamisen hankkimisen tarve ei tiedossa"
+      />
+    )
 
   return osaamisenHankkimisenTarve ? (
     <FormattedMessage
@@ -93,7 +97,9 @@ export class HOKSInfo extends React.Component<HOKSInfoProps> {
             : "-"}
         </Timestamp>
         <Timestamp>
-          <OsaamisenHankkimisenTarveMessage osaamisenHankkimisenTarve={suunnitelma.osaamisenHankkimisenTarve} />
+          <OsaamisenHankkimisenTarveMessage
+            osaamisenHankkimisenTarve={suunnitelma.osaamisenHankkimisenTarve}
+          />
         </Timestamp>
       </StudentDetails>
     )
