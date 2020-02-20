@@ -110,8 +110,15 @@ export interface StudyInfoProps {
    */
   koodiUri?: string
   /**
+   * List of learning periods, this is going to replace deprecated learningPeriods
+   * @default []
+   * @deprecated
+   */
+  learningPeriodsTEMP?: Array<OsaamisenHankkimistapa>
+  /**
    * List of learning periods
    * @default []
+   * @deprecated
    */
   learningPeriods?: Array<Harjoittelujakso>
   /**
@@ -236,6 +243,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       demonstrations = [],
       extraContent = null,
       fadedColor,
+      learningPeriodsTEMP = [],
       learningPeriods = [],
       koodiUri,
       share,
@@ -246,7 +254,8 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     } = this.props
     const { featureFlags } = this.context
     const { expandedCompetences, expanded } = this.state
-    const hasLearningPeriods = learningPeriods && learningPeriods.length > 0
+    const hasLearningPeriods =
+      learningPeriodsTEMP && learningPeriodsTEMP.length > 0
     const hasDetails =
       hasLearningPeriods || demonstrations.length > 0 || verificationProcess
     const hasActiveShare =
