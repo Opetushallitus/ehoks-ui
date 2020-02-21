@@ -1,5 +1,4 @@
-import format from "date-fns/format"
-import parseISO from "date-fns/parseISO"
+import { FormattedDate } from "components/FormattedDate"
 import React from "react"
 import { InjectedIntlProps, injectIntl } from "react-intl"
 import { Harjoittelujakso } from "models/Harjoittelujakso"
@@ -19,12 +18,12 @@ export const LearningPeriodDates = injectIntl(
         {intl.formatMessage({
           id: "opiskelusuunnitelma.hyvaksyttyTitle"
         })}{" "}
-        {format(parseISO(hyvaksytty), "d.M.yyyy")}
+        <FormattedDate date={hyvaksytty} />
       </span>
     ) : ajankohta && ajankohta.alku && ajankohta.loppu ? (
       <span>
-        {format(parseISO(ajankohta.alku), "d.M.")} {"-"}
-        {format(parseISO(ajankohta.loppu), "d.M.yyyy")}
+        <FormattedDate date={ajankohta.alku} format="d.M." /> {"-"}
+        <FormattedDate date={ajankohta.loppu} />
       </span>
     ) : null
   }

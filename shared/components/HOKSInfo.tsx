@@ -1,9 +1,8 @@
-import format from "date-fns/format"
-import parseISO from "date-fns/parseISO"
 import { IHOKS } from "models/HOKS"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
+import { FormattedDate } from "components/FormattedDate"
 
 const StudentName = styled("h2")`
   margin-top: 0;
@@ -82,9 +81,9 @@ export class HOKSInfo extends React.Component<HOKSInfoProps> {
             defaultMessage="Ens. hyväksytty"
           />
           &nbsp;{" "}
-          {oppija.hyvaksytty
-            ? format(parseISO(oppija.hyvaksytty), "d.M.yyyy")
-            : "-"}
+          <FormattedDate
+            date={oppija.hyvaksytty ? oppija.hyvaksytty : undefined}
+          />
         </Timestamp>
         <Timestamp>
           <FormattedMessage
@@ -92,9 +91,9 @@ export class HOKSInfo extends React.Component<HOKSInfoProps> {
             defaultMessage="Päivitetty"
           />
           &nbsp;{" "}
-          {oppija.paivitetty
-            ? format(parseISO(oppija.paivitetty), "d.M.yyyy")
-            : "-"}
+          <FormattedDate
+            date={oppija.paivitetty ? oppija.paivitetty : undefined}
+          />
         </Timestamp>
         <Timestamp>
           <OsaamisenHankkimisenTarveMessage

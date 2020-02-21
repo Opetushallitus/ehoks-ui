@@ -19,8 +19,7 @@ import {
 } from "./ShareDialog/API"
 import { APIConfigContext } from "components/APIConfigContext"
 import CopyToClipboard from "react-copy-to-clipboard"
-import format from "date-fns/format"
-import parseISO from "date-fns/parseISO"
+import { FormattedDate } from "components/FormattedDate"
 import { HOKSEidContext } from "components/HOKSEidContext"
 import { AppContext } from "components/AppContext"
 
@@ -322,8 +321,8 @@ export function ShareDialog(props: ShareDialogProps) {
                       id="jakaminen.voimassa"
                       defaultMessage="voimassa"
                     />{" "}
-                    {format(parseISO(link.validFrom), "dd.MM.yyyy")} -{" "}
-                    {format(parseISO(link.validTo), "dd.MM.yyyy")}
+                    <FormattedDate date={link.validFrom} /> -{" "}
+                    <FormattedDate date={link.validTo} />
                   </LinkItem>
                   <LinkItem>{link.uuid}</LinkItem>
                   <LinkAnchor>

@@ -17,8 +17,7 @@ import { HelpPopup } from "components/HelpPopup"
 import find from "lodash.find"
 import { ShareType } from "stores/NotificationStore"
 import { parseShareParams } from "utils/shareParams"
-import format from "date-fns/format"
-import parseISO from "date-fns/parseISO"
+import { FormattedDate } from "components/FormattedDate"
 import { StudyPoints } from "../../StudyPoints"
 import {
   ActiveAccordions,
@@ -495,14 +494,10 @@ export class Opiskelusuunnitelma extends React.Component<
                     <td>{study.nimi}</td>
                     <td>{study.kuvaus}</td>
                     <td>
-                      {study.alku
-                        ? format(parseISO(study.alku), "d.M.yyyy")
-                        : "-"}
+                      <FormattedDate date={study.alku} />
                     </td>
                     <td>
-                      {study.loppu
-                        ? format(parseISO(study.loppu), "d.M.yyyy")
-                        : "-"}
+                      <FormattedDate date={study.loppu} />
                     </td>
                   </tr>
                 )
