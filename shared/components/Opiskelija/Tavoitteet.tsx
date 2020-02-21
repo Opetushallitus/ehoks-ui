@@ -12,8 +12,7 @@ import React from "react"
 import { FormattedMessage } from "react-intl"
 import { HOKS } from "models/HOKS"
 import { AppContext } from "components/AppContext"
-import format from "date-fns/format"
-import parseISO from "date-fns/parseISO"
+import { FormattedDate } from "components/FormattedDate"
 
 interface OsaamisenHankkimisenTarveProps {
   osaamisenHankkimisenTarve: boolean | null
@@ -185,27 +184,26 @@ export class Tavoitteet extends React.Component<
                 </tr>
                 <tr>
                   <LabeledColumn id="tavoitteet.ensikertainenHyvaksyminenTitle">
-                    {hoks.ensikertainenHyvaksyminen ? (
-                      format(
-                        parseISO(hoks.ensikertainenHyvaksyminen),
-                        "d.M.yyyy"
-                      )
-                    ) : (
-                      <FormattedMessage
-                        id="tavoitteet.eiVielaHyvaksyttyTitle"
-                        defaultMessage="Ei vielä hyväksytty"
-                      />
-                    )}
+                    <FormattedDate
+                      date={hoks.ensikertainenHyvaksyminen}
+                      dateNotSet={
+                        <FormattedMessage
+                          id="tavoitteet.eiVielaHyvaksyttyTitle"
+                          defaultMessage="Ei vielä hyväksytty"
+                        />
+                      }
+                    />
                   </LabeledColumn>
                   <LabeledColumn id="tavoitteet.paivitettyTitle">
-                    {hoks.paivitetty ? (
-                      format(parseISO(hoks.paivitetty), "d.M.yyyy")
-                    ) : (
-                      <FormattedMessage
-                        id="tavoitteet.eiVielaPaivityksiaTitle"
-                        defaultMessage="Ei vielä päivityksiä"
-                      />
-                    )}
+                    <FormattedDate
+                      date={hoks.paivitetty}
+                      dateNotSet={
+                        <FormattedMessage
+                          id="tavoitteet.eiVielaPaivityksiaTitle"
+                          defaultMessage="Ei vielä päivityksiä"
+                        />
+                      }
+                    />
                   </LabeledColumn>
                   <LabeledColumn id="tavoitteet.osaamisenHankkimisenTarveTitle">
                     <OsaamisenHankkimisenTarveMessage

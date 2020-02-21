@@ -2,8 +2,7 @@ import { Link } from "@reach/router"
 import { AppContext } from "components/AppContext"
 import { Container } from "components/Container"
 import { Notification } from "components/Notification"
-import format from "date-fns/format"
-import parseISO from "date-fns/parseISO"
+import { FormattedDate } from "components/FormattedDate"
 import { inject, observer } from "mobx-react"
 import { Instance } from "mobx-state-tree"
 import React from "react"
@@ -121,8 +120,8 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
                   <Text>
                     <AlertType type={message.type} />, {message.title},{" "}
                     {message.location}{" "}
-                    {format(parseISO(message.startDate || ""), "d.M.")}-
-                    {format(parseISO(message.endDate || ""), "d.M.yyyy")}{" "}
+                    <FormattedDate date={message.startDate} format="d.M." />-
+                    <FormattedDate date={message.endDate} />{" "}
                     <FormattedMessage
                       id="muistutukset.onPianAlkamassa"
                       defaultMessage="on pian alkamassa"
