@@ -3,6 +3,7 @@ import React from "react"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
 import { FormattedDate } from "components/FormattedDate"
+import { IOppija } from "stores/KoulutuksenJarjestajaStore"
 
 const StudentName = styled("h2")`
   margin-top: 0;
@@ -22,23 +23,14 @@ const Timestamp = styled("div")`
   margin-bottom: 10px;
 `
 
-interface Oppija {
-  nimi: string
-  paivitetty: string | null | undefined
-}
-
 export interface HOKSInfoProps {
   suunnitelma: IHOKS
-  oppija: Oppija
-}
-
-interface OsaamisenHankkimisenTarveProps {
-  osaamisenHankkimisenTarve: boolean | null
+  oppija: Pick<IOppija, "nimi" | "paivitetty">
 }
 
 const OsaamisenHankkimisenTarveMessage = ({
   osaamisenHankkimisenTarve
-}: OsaamisenHankkimisenTarveProps) => {
+}: Pick<IHOKS, "osaamisenHankkimisenTarve">) => {
   if (osaamisenHankkimisenTarve == null)
     return (
       <FormattedMessage
