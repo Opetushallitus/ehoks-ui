@@ -24,7 +24,6 @@ const Timestamp = styled("div")`
 
 interface Oppija {
   nimi: string
-  hyvaksytty: string | null | undefined
   paivitetty: string | null | undefined
 }
 
@@ -80,10 +79,7 @@ export class HOKSInfo extends React.Component<HOKSInfoProps> {
             id="koulutuksenJarjestaja.opiskelija.hyvaksyttyTitle"
             defaultMessage="Ens. hyväksytty"
           />
-          &nbsp;{" "}
-          <FormattedDate
-            date={oppija.hyvaksytty ? oppija.hyvaksytty : undefined}
-          />
+          &nbsp; <FormattedDate date={suunnitelma.ensikertainenHyvaksyminen} />
         </Timestamp>
         <Timestamp>
           <FormattedMessage
