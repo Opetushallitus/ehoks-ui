@@ -7,7 +7,7 @@ import {
 } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import { HelpPopup } from "components/HelpPopup"
-import { HOKSInfo } from "components/HOKSInfo"
+import { HOKSInfo } from "./HOKSInfo"
 import Flag from "components/icons/Flag"
 import { NavigationContainer } from "components/NavigationContainer"
 import { AiempiOsaaminen } from "components/Opiskelija/AiempiOsaaminen"
