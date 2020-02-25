@@ -1,4 +1,4 @@
-import { Link } from "@reach/router"
+import { RouteComponentProps, Link } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import { ContentArea } from "components/ContentArea"
 import { Heading } from "components/Heading"
@@ -52,9 +52,8 @@ const Spinner = styled(LoadingSpinner)`
   right: 0px;
 `
 
-interface KoulutuksenJarjestajaProps {
+interface KoulutuksenJarjestajaProps extends RouteComponentProps {
   store?: IRootStore
-  path?: string
 }
 
 @inject("store")
