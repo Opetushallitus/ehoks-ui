@@ -37,9 +37,9 @@ import "./HOKSLomake/styles.css"
 import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./LuoHOKS/uiSchema"
+import { RouteComponentProps } from "@reach/router"
 
-interface LuoHOKSProps {
-  path?: string
+interface LuoHOKSProps extends RouteComponentProps {
   store?: IRootStore
 }
 
