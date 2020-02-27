@@ -43,34 +43,42 @@ function CustomBaseInput(props: CustomBaseInputProps) {
     return props.onChange(target.value === "" ? "" : target.value)
   }
 
-  return [
-    <input
-      type="date"
-      key={inputProps.id}
-      className="form-control"
-      readOnly={readonly}
-      disabled={disabled}
-      autoFocus={autofocus}
-      value={value == null ? "" : value}
-      {...inputProps}
-      list={schema.examples ? `examples_${inputProps.id}` : undefined}
-      onChange={_onChange}
-      onBlur={onBlur && (event => onBlur(inputProps.id, event.target.value))}
-      onFocus={onFocus && (event => onFocus(inputProps.id, event.target.value))}
-    />,
-    schema.examples ? (
-      <datalist id={`examples_${inputProps.id}`}>
-        {[
-          // @ts-ignore
-          ...new Set(
-            schema.examples.concat(schema.default ? [schema.default] : [])
-          )
-        ].map(example => (
-          <option key={example} value={example} />
-        ))}
-      </datalist>
-    ) : null
-  ]
+  return (
+    <>
+      {[
+        <input
+          type="date"
+          key={inputProps.id}
+          className="form-control"
+          readOnly={readonly}
+          disabled={disabled}
+          autoFocus={autofocus}
+          value={value == null ? "" : value}
+          {...inputProps}
+          list={schema.examples ? `examples_${inputProps.id}` : undefined}
+          onChange={_onChange}
+          onBlur={
+            onBlur && (event => onBlur(inputProps.id, event.target.value))
+          }
+          onFocus={
+            onFocus && (event => onFocus(inputProps.id, event.target.value))
+          }
+        />,
+        schema.examples ? (
+          <datalist id={`examples_${inputProps.id}`}>
+            {[
+              // @ts-ignore
+              ...new Set(
+                schema.examples.concat(schema.default ? [schema.default] : [])
+              )
+            ].map(example => (
+              <option key={example} value={example} />
+            ))}
+          </datalist>
+        ) : null
+      ]}
+    </>
+  )
 }
 
 CustomBaseInput.defaultProps = {
