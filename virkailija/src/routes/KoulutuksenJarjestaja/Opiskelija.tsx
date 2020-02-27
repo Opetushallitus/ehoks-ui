@@ -38,6 +38,7 @@ const TopContainer = styled("div")`
 
 export interface OpiskelijaProps {
   store?: IRootStore
+  /* From router path */
   studentId?: string
 }
 

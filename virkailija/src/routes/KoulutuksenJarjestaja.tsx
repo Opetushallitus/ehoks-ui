@@ -1,4 +1,4 @@
-import { Link } from "@reach/router"
+import { RouteComponentProps, Link } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import { ContentArea } from "components/ContentArea"
 import { Heading } from "components/Heading"
@@ -9,8 +9,7 @@ import { TableBody } from "components/Table/TableBody"
 import { TableCell } from "components/Table/TableCell"
 import { TableHead } from "components/Table/TableHead"
 import { TableRow } from "components/Table/TableRow"
-import format from "date-fns/format"
-import parseISO from "date-fns/parseISO"
+import { FormattedDate } from "components/FormattedDate"
 import debounce from "lodash.debounce"
 import { IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
@@ -53,9 +52,8 @@ const Spinner = styled(LoadingSpinner)`
   right: 0px;
 `
 
-interface KoulutuksenJarjestajaProps {
+interface KoulutuksenJarjestajaProps extends RouteComponentProps {
   store?: IRootStore
-  path?: string
 }
 
 @inject("store")
@@ -231,14 +229,22 @@ export class KoulutuksenJarjestaja extends React.Component<
                         <TableCell>{student.tutkinto}</TableCell>
                         <TableCell>{student.osaamisala}</TableCell>
                         <TableCell>
-                          {student.hyvaksytty
-                            ? format(parseISO(student.hyvaksytty), "d.M.yyyy")
-                            : "-"}
+                          <FormattedDate
+                            date={
+                              student.hyvaksytty
+                                ? student.hyvaksytty
+                                : undefined
+                            }
+                          />
                         </TableCell>
                         <TableCell>
-                          {student.paivitetty
-                            ? format(parseISO(student.paivitetty), "d.M.yyyy")
-                            : "-"}
+                          <FormattedDate
+                            date={
+                              student.paivitetty
+                                ? student.paivitetty
+                                : undefined
+                            }
+                          />
                         </TableCell>
                         <TableCell>{student.lukumaara}</TableCell>
                         <TableCell>

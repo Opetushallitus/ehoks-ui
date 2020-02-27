@@ -57,7 +57,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
     "ui:widget": "hidden"
   },
   paivitetty: {
-    "ui:widget": "hidden"
+    "ui:widget": "DatetimeWidget"
   },
   "urasuunnitelma-koodi-uri": {
     "ui:field": "typeahead",

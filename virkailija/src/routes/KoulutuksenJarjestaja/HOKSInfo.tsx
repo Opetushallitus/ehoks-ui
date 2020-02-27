@@ -1,9 +1,9 @@
-import format from "date-fns/format"
-import parseISO from "date-fns/parseISO"
 import { IHOKS } from "models/HOKS"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
+import { FormattedDate } from "components/FormattedDate"
+import { IOppija } from "stores/KoulutuksenJarjestajaStore"
 
 const StudentName = styled("h2")`
   margin-top: 0;
@@ -23,24 +23,14 @@ const Timestamp = styled("div")`
   margin-bottom: 10px;
 `
 
-interface Oppija {
-  nimi: string
-  hyvaksytty: string | null | undefined
-  paivitetty: string | null | undefined
-}
-
 export interface HOKSInfoProps {
   suunnitelma: IHOKS
-  oppija: Oppija
-}
-
-interface OsaamisenHankkimisenTarveProps {
-  osaamisenHankkimisenTarve: boolean | null
+  oppija: Pick<IOppija, "nimi" | "paivitetty">
 }
 
 const OsaamisenHankkimisenTarveMessage = ({
   osaamisenHankkimisenTarve
-}: OsaamisenHankkimisenTarveProps) => {
+}: Pick<IHOKS, "osaamisenHankkimisenTarve">) => {
   if (osaamisenHankkimisenTarve == null)
     return (
       <FormattedMessage
@@ -81,20 +71,14 @@ export class HOKSInfo extends React.Component<HOKSInfoProps> {
             id="koulutuksenJarjestaja.opiskelija.hyvaksyttyTitle"
             defaultMessage="Ens. hyväksytty"
           />
-          &nbsp;{" "}
-          {oppija.hyvaksytty
-            ? format(parseISO(oppija.hyvaksytty), "d.M.yyyy")
-            : "-"}
+          &nbsp; <FormattedDate date={suunnitelma.ensikertainenHyvaksyminen} />
         </Timestamp>
         <Timestamp>
           <FormattedMessage
             id="koulutuksenJarjestaja.opiskelija.paivitettyTitle"
             defaultMessage="Päivitetty"
           />
-          &nbsp;{" "}
-          {oppija.paivitetty
-            ? format(parseISO(oppija.paivitetty), "d.M.yyyy")
-            : "-"}
+          &nbsp; <FormattedDate date={oppija.paivitetty} />
         </Timestamp>
         <Timestamp>
           <OsaamisenHankkimisenTarveMessage

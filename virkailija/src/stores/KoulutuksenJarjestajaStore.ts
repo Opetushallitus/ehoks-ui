@@ -90,12 +90,12 @@ export const Oppija = types
     get hyvaksytty() {
       return self.suunnitelmaIndex > -1
         ? self.suunnitelmat[self.suunnitelmaIndex].ensikertainenHyvaksyminen
-        : null
+        : undefined
     },
     get paivitetty() {
       return self.suunnitelmaIndex > -1
         ? self.suunnitelmat[self.suunnitelmaIndex].paivitetty
-        : null
+        : undefined
     },
     get lukumaara() {
       return self.suunnitelmat.length

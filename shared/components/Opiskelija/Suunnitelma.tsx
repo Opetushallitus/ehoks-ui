@@ -1,7 +1,6 @@
 import React from "react"
 import { HOKSButton } from "components/HOKSButton"
-import format from "date-fns/format"
-import parseISO from "date-fns/parseISO"
+import { FormattedDate } from "components/FormattedDate"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
 import { Instance } from "mobx-state-tree"
@@ -62,7 +61,7 @@ export const Suunnitelma = observer(function Suunnitelma(
               id="suunnitelma.opintoOikeusPaattynytTitle"
               defaultMessage="Opinto-oikeus päättynyt"
             />{" "}
-            {format(parseISO(suunnitelma.paattymispaiva), "d.M.yyyy")}
+            <FormattedDate date={suunnitelma.paattymispaiva} />
           </span>
         ) : suunnitelma.aloitusPvm ? (
           <span>
@@ -70,7 +69,7 @@ export const Suunnitelma = observer(function Suunnitelma(
               id="suunnitelma.aloitettuTitle"
               defaultMessage="Aloitettu"
             />{" "}
-            {format(parseISO(suunnitelma.aloitusPvm), "d.M.yyyy")}
+            <FormattedDate date={suunnitelma.aloitusPvm} />
           </span>
         ) : null}
         .

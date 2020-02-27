@@ -35,6 +35,7 @@ import "./HOKSLomake/styles.css"
 import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
+import { RouteComponentProps } from "@reach/router"
 
 const disallowedKeys = ["eid", "manuaalisyotto"]
 
@@ -47,11 +48,12 @@ function trimDisallowedKeys(formData: any) {
   }, {} as any)
 }
 
-interface MuokkaaHOKSProps {
-  path?: string
+interface MuokkaaHOKSProps extends RouteComponentProps {
   store?: IRootStore
-  oppijaOid?: string
+  /* From router path */
   hoksId?: string
+  /* From router path */
+  oppijaOid?: string
 }
 
 interface MuokkaaHOKSState {

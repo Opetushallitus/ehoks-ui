@@ -1,7 +1,6 @@
 import React from "react"
 import styled from "styled"
-import format from "date-fns/format"
-import parseISO from "date-fns/parseISO"
+import { FormattedDate } from "components/FormattedDate"
 import Flag from "components/icons/Flag"
 import { MdEventNote } from "react-icons/md"
 
@@ -81,13 +80,13 @@ export class LearningEvent extends React.Component<LearningEventProps> {
           <DetailsContainer>
             {startDate === endDate ? (
               <Detail size={size}>
-                {startDate ? format(parseISO(startDate), "d.M.yyyy") : ""}
+                <FormattedDate date={startDate} dateNotSet="" />
               </Detail>
             ) : (
               <Detail size={size}>
-                {format(parseISO(startDate), "d.M.yyyy")}
+                <FormattedDate date={startDate} dateNotSet="" />
                 {" - "}
-                {format(parseISO(endDate), "d.M.yyyy")}
+                <FormattedDate date={endDate} dateNotSet="" />
               </Detail>
             )}
             {periodSpecifier && <Detail size={size}>{periodSpecifier}</Detail>}

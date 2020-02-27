@@ -8,6 +8,7 @@ import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
+import { RouteComponentProps } from "@reach/router"
 
 export const BackgroundContainer = styled("div")`
   background: #f8f8f8;
@@ -49,9 +50,8 @@ const Header = styled(Heading)`
   padding-right: 10px;
 `
 
-interface YllapitoProps {
+interface YllapitoProps extends RouteComponentProps {
   store?: IRootStore
-  path?: string
 }
 
 interface SystemInfo {
