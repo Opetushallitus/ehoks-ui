@@ -7,8 +7,9 @@ import {
 
 interface CustomBaseInputProps
   extends WidgetProps,
-    Pick<FieldProps, "registry">,
-    Pick<FieldTemplateProps, "rawErrors"> {
+    Partial<
+      Pick<FieldProps, "registry"> & Pick<FieldTemplateProps, "rawErrors">
+    > {
   placeholder?: string
 }
 
