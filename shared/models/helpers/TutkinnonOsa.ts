@@ -37,6 +37,7 @@ export interface OsaamisenHankkimistapa {
   muutOppimisymparistot?: MuuOppimisymparisto[]
   alku: string
   loppu: string
+  nimi: string
 }
 
 export interface Nayttoymparisto {
