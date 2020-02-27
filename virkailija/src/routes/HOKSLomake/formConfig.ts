@@ -3,6 +3,7 @@ import { CustomBooleanRadioButtonWidget } from "./CustomBooleanRadioButtonWidget
 import { CustomCheckboxWidget } from "./CustomCheckboxWidget"
 import { CustomDescriptionField } from "./CustomDescriptionField"
 import { CustomSchemaField } from "./CustomSchemaField"
+import { CustomDatetimeWidget } from "./CustomDatetimeWidget"
 
 export const fields = {
   SchemaField: CustomSchemaField,
@@ -12,7 +13,8 @@ export const fields = {
 
 export const widgets = {
   CheckboxWidget: CustomCheckboxWidget,
-  customBooleanRadioButtonWidget: CustomBooleanRadioButtonWidget
+  customBooleanRadioButtonWidget: CustomBooleanRadioButtonWidget,
+  DatetimeWidget: CustomDatetimeWidget
 }
 
 export const koodistoUrls = {
