@@ -165,3 +165,131 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
     )
   }
 }
+
+interface LearningPeriodTEMPProps {
+  learningPeriodTEMP: OsaamisenHankkimistapa
+  competenceAcquiringMethods?: Array<OsaamisenHankkimistapa>
+  organizer?: JarjestajanEdustaja
+}
+
+export class LearningPeriodTEMP extends React.Component<
+  LearningPeriodTEMPProps
+> {
+  render() {
+    const {
+      learningPeriodTEMP
+      // competenceAcquiringMethods,
+      // organizer
+    } = this.props
+    const { alku, loppu, nimi } = learningPeriodTEMP
+
+    // const method = competenceAcquiringMethods
+    //   ? competenceAcquiringMethods[0]
+    //   : undefined
+    // const workplaceSelite =
+    //   tyyppi === "WORKPLACE" &&
+    //   method &&
+    //   method.tyopaikallaJarjestettavaKoulutus
+    //     ? selite +
+    //       ", " +
+    //       method.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus
+    //     : selite
+    // const periodSpecifier =
+    //   method && method.ajanjaksonTarkenne ? method.ajanjaksonTarkenne : ""
+    // const organizerRepresentative =
+    //   organizer && organizer.nimi ? organizer.nimi : ""
+    // TODO EH-757, this need to be fixed. Comment out after competenceAqcquiringMethods have been removed and
+    // harjoittelujaksot replaced with osaamisenHankkimistapa
+    // const organizerOrganisation = organizer && organizer.oppilaitosNimi ? organizer.oppilaitosNimi : ""
+
+    return (
+      <Container data-testid="StudyInfo.LearningPeriod">
+        TESTIA {alku}, {loppu}, {nimi}
+        {/*{(alku || loppu) && (*/}
+        {/*  <LearningPeriodTitle>*/}
+        {/*    <LearningEvent*/}
+        {/*      title={*/}
+        {/*        tyyppi === "OTHER" ? (*/}
+        {/*          nimi*/}
+        {/*        ) : (*/}
+        {/*          <FormattedMessage*/}
+        {/*            id="opiskelusuunnitelma.tyossaoppiminenTitle"*/}
+        {/*            defaultMessage="Työpaikalla oppiminen"*/}
+        {/*          />*/}
+        {/*        )*/}
+        {/*      }*/}
+        {/*      type={tyyppi}*/}
+        {/*      description={tyyppi === "WORKPLACE" ? workplaceSelite : selite}*/}
+        {/*      startDate={alku}*/}
+        {/*      endDate={loppu}*/}
+        {/*      periodSpecifier={periodSpecifier}*/}
+        {/*      size="large"*/}
+        {/*    />*/}
+        {/*  </LearningPeriodTitle>*/}
+        {/*)}*/}
+        {/*<LearningPeriodTable>*/}
+        {/*  <TBody>*/}
+        {/*    {tyyppi === "WORKPLACE" && ohjaaja && (*/}
+        {/*      <tr>*/}
+        {/*        <TH>*/}
+        {/*          <FormattedMessage*/}
+        {/*            id="opiskelusuunnitelma.tyopaikkaohjaajaTitle"*/}
+        {/*            defaultMessage="Työpaikkaohjaaja"*/}
+        {/*          />*/}
+        {/*        </TH>*/}
+        {/*        <TD>*/}
+        {/*          {ohjaaja.nimi}, {selite}*/}
+        {/*          <br />*/}
+        {/*          {ohjaaja.sahkoposti}*/}
+        {/*        </TD>*/}
+        {/*      </tr>*/}
+        {/*    )}*/}
+        {/*    {tyyppi === "WORKPLACE" && ohjaaja && (*/}
+        {/*      <tr>*/}
+        {/*        <TH>*/}
+        {/*          <FormattedMessage*/}
+        {/*            id="opiskelusuunnitelma.koulutuksenjarjestajanEdustajaTitle"*/}
+        {/*            defaultMessage="Koulutuksen järjestäjän edustaja"*/}
+        {/*          />*/}
+        {/*        </TH>*/}
+        {/*        <TD>*/}
+        {/*          /!*TODO EH-757 add organizerOrgansation here, see comment above*!/*/}
+        {/*          {organizerRepresentative}*/}
+        {/*        </TD>*/}
+        {/*      </tr>*/}
+        {/*    )}*/}
+        {/*    {tyotehtavat.length > 0 && (*/}
+        {/*      <tr>*/}
+        {/*        <TH>*/}
+        {/*          <FormattedMessage*/}
+        {/*            id="opiskelusuunnitelma.keskeisetTyotehtavatTitle"*/}
+        {/*            defaultMessage="Keskeiset työtehtävät"*/}
+        {/*          />*/}
+        {/*        </TH>*/}
+        {/*        <EmptyTD />*/}
+        {/*      </tr>*/}
+        {/*    )}*/}
+        {/*  </TBody>*/}
+        {/*</LearningPeriodTable>*/}
+        {/*{tyotehtavat.length > 0 && (*/}
+        {/*  <React.Fragment>*/}
+        {/*    <HMediaQuery.MaxWidth breakpoint="Tablet">*/}
+        {/*      <CustomSlider>*/}
+        {/*        {tyotehtavat.map((tyotehtava, i) => {*/}
+        {/*          return <Slide key={i}>{tyotehtava}</Slide>*/}
+        {/*        })}*/}
+        {/*      </CustomSlider>*/}
+        {/*    </HMediaQuery.MaxWidth>*/}
+        {/*    <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>*/}
+        {/*      <LearningPeriodTasks>*/}
+        {/*        {tyotehtavat.map((tyotehtava, i) => {*/}
+        {/*          return <li key={i}>{tyotehtava}</li>*/}
+        {/*        })}*/}
+        {/*      </LearningPeriodTasks>*/}
+        {/*    </HMediaQuery.MaxWidth>*/}
+        {/*  </React.Fragment>*/}
+        {/*)}*/}
+      </Container>
+    )
+  }
+}

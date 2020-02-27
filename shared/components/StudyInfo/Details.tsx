@@ -76,6 +76,7 @@ interface DetailsProps {
   extraContent?: React.ReactNode
   expanded?: boolean
   koodiUri?: string
+  learningPeriodsTEMP?: Array<OsaamisenHankkimistapa>
   learningPeriods?: Array<Harjoittelujakso>
   competenceAcquiringMethods?: Array<OsaamisenHankkimistapa>
   share?: { koodiUri: string; type: ShareType | "" }
@@ -95,6 +96,7 @@ export class Details extends React.Component<DetailsProps> {
       expanded,
       fadedColor = "",
       koodiUri,
+      learningPeriodsTEMP = [],
       learningPeriods = [],
       competenceAcquiringMethods = [],
       share,
@@ -107,7 +109,7 @@ export class Details extends React.Component<DetailsProps> {
     const { SUORAAN, ARVIOIJIEN_KAUTTA, OHJAUS_NAYTTOON } = VerificationProcess
     const showExpand =
       demonstrations.length ||
-      learningPeriods.length ||
+      learningPeriodsTEMP.length ||
       verification === OHJAUS_NAYTTOON
     const hasActiveShare =
       typeof share !== "undefined" && koodiUri === share.koodiUri
