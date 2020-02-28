@@ -181,21 +181,23 @@ export class LearningPeriodTEMP extends React.Component<
       // competenceAcquiringMethods,
       // organizer
     } = this.props
-    const { alku, loppu, nimi } = learningPeriodTEMP
+    const {
+      alku,
+      loppu,
+      nimi,
+      tyyppi,
+      tyopaikallaJarjestettavaKoulutus,
+      selite,
+      ajanjaksonTarkenne
+    } = learningPeriodTEMP
 
     // const method = competenceAcquiringMethods
     //   ? competenceAcquiringMethods[0]
     //   : undefined
-    // const workplaceSelite =
-    //   tyyppi === "WORKPLACE" &&
-    //   method &&
-    //   method.tyopaikallaJarjestettavaKoulutus
-    //     ? selite +
-    //       ", " +
-    //       method.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus
-    //     : selite
-    // const periodSpecifier =
-    //   method && method.ajanjaksonTarkenne ? method.ajanjaksonTarkenne : ""
+    const workplaceSelite =
+      tyyppi === "WORKPLACE" && tyopaikallaJarjestettavaKoulutus
+        ? selite + ", " + tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus
+        : selite
     // const organizerRepresentative =
     //   organizer && organizer.nimi ? organizer.nimi : ""
     // TODO EH-757, this need to be fixed. Comment out after competenceAqcquiringMethods have been removed and
@@ -204,29 +206,28 @@ export class LearningPeriodTEMP extends React.Component<
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
-        TESTIA {alku}, {loppu}, {nimi}
-        {/*{(alku || loppu) && (*/}
-        {/*  <LearningPeriodTitle>*/}
-        {/*    <LearningEvent*/}
-        {/*      title={*/}
-        {/*        tyyppi === "OTHER" ? (*/}
-        {/*          nimi*/}
-        {/*        ) : (*/}
-        {/*          <FormattedMessage*/}
-        {/*            id="opiskelusuunnitelma.tyossaoppiminenTitle"*/}
-        {/*            defaultMessage="Työpaikalla oppiminen"*/}
-        {/*          />*/}
-        {/*        )*/}
-        {/*      }*/}
-        {/*      type={tyyppi}*/}
-        {/*      description={tyyppi === "WORKPLACE" ? workplaceSelite : selite}*/}
-        {/*      startDate={alku}*/}
-        {/*      endDate={loppu}*/}
-        {/*      periodSpecifier={periodSpecifier}*/}
-        {/*      size="large"*/}
-        {/*    />*/}
-        {/*  </LearningPeriodTitle>*/}
-        {/*)}*/}
+        {(alku || loppu) && (
+          <LearningPeriodTitle>
+            <LearningEvent
+              title={
+                tyyppi === "OTHER" ? (
+                  nimi
+                ) : (
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.tyossaoppiminenTitle"
+                    defaultMessage="Työpaikalla oppiminen"
+                  />
+                )
+              }
+              type={tyyppi}
+              description={tyyppi === "WORKPLACE" ? workplaceSelite : selite}
+              startDate={alku}
+              endDate={loppu}
+              periodSpecifier={ajanjaksonTarkenne}
+              size="large"
+            />
+          </LearningPeriodTitle>
+        )}
         {/*<LearningPeriodTable>*/}
         {/*  <TBody>*/}
         {/*    {tyyppi === "WORKPLACE" && ohjaaja && (*/}
