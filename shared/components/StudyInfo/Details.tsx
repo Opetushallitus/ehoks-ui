@@ -175,14 +175,23 @@ export class Details extends React.Component<DetailsProps> {
             instructor={instructor}
             defaultPeriod={defaultPeriod}
           >
+            {/*TODO EH-843*/}
             {learningPeriods.map((period, i) => {
+              // {learningPeriodsTEMP.map((period, i) => {
               return (
+                // TODO EH-843
                 <LearningPeriod
                   key={i}
                   learningPeriod={period}
                   competenceAcquiringMethods={competenceAcquiringMethods}
                   organizer={organizer}
                 />
+                // <LearningPeriodTEMP
+                //   key={i}
+                //   learningPeriodTEMP={period}
+                //   competenceAcquiringMethods={competenceAcquiringMethods}
+                //   organizer={organizer}
+                // />
               )
             })}
           </ShareDialog>
