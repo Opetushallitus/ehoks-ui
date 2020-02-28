@@ -6,6 +6,7 @@ export const propertiesByStep: { [index: number]: string[] } = {
     "opiskeluoikeus-oid",
     "oppija-oid",
     "ensikertainen-hyvaksyminen",
+    "paivitetty",
     "sahkoposti",
     "urasuunnitelma-koodi-uri",
     "urasuunnitelma-koodi-versio",
@@ -25,6 +26,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
     "opiskeluoikeus-oid",
     "oppija-oid",
     "ensikertainen-hyvaksyminen",
+    "paivitetty",
     "sahkoposti",
     "urasuunnitelma-koodi-uri",
     "urasuunnitelma-koodi-versio",
@@ -48,7 +50,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
     "ui:widget": "hidden"
   },
   paivitetty: {
-    "ui:widget": "hidden"
+    "ui:widget": "DatetimeWidget"
   },
   "urasuunnitelma-koodi-uri": {
     "ui:field": "typeahead",
