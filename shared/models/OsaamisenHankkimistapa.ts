@@ -30,6 +30,18 @@ export const OsaamisenHankkimistapa = types
           self.muutOppimisymparistot[0].oppimisymparisto
           ? self.muutOppimisymparistot[0].oppimisymparisto.nimi
           : ""
+      },
+      get selite() {
+        return self.muutOppimisymparistot.length > 0
+          ? self.muutOppimisymparistot[0].selite
+          : self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi
+      },
+      get tyyppi() {
+        return self.osaamisenHankkimistapaKoodiUri.includes(
+          "koulutussopimus"
+        ) || self.osaamisenHankkimistapaKoodiUri.includes("oppisopimus")
+          ? "WORKPLACE"
+          : "OTHER"
       }
     }
   })
