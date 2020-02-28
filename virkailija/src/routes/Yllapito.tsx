@@ -75,7 +75,7 @@ interface YllapitoState {
   message: string
   success: boolean
   systemInfo?: SystemInfo | null
-  hoksId?: number,
+  hoksId?: number
   opiskeluoikeusOid?: string | ""
 }
 
@@ -214,7 +214,6 @@ export class Yllapito extends React.Component<YllapitoProps> {
     }
   }
 
-
   onGetHoksId = async (event: any) => {
     const { intl } = this.context
     const { opiskeluoikeusOid } = this.state
@@ -254,12 +253,11 @@ export class Yllapito extends React.Component<YllapitoProps> {
     }
   }
 
-  handleOidChange(event: any) {
-    const inputOid = event.target.value
+  handleOidChange = (inputOid: any) => {
+    // const inputOid = event.target.value
     this.setState({
       opiskeluoikeusOid: inputOid
     })
-    console.log(this.state.opiskeluoikeusOid)
   }
 
   hideMessage = () => {
@@ -285,10 +283,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
                   {message}
                 </SuccessMessage>
               ) : (
-                  <FailureMessage onClick={this.hideMessage}>
-                    {message}
-                  </FailureMessage>
-                )}
+                <FailureMessage onClick={this.hideMessage}>
+                  {message}
+                </FailureMessage>
+              )}
             </TopContainer>
             <ContentArea>
               {systemInfo && (
@@ -323,7 +321,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           <input
                             type="text"
                             value={this.state.opiskeluoikeusOid}
-                            onChange={this.handleOidChange.bind(this)}
+                            onChange={e => this.handleOidChange(e.target.value)}
                           />
                         </form>
                       </ContentElement>
@@ -340,8 +338,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                       id="yllapito.hoksIdTulos"
                       defaultMessage="Hoks-id on: {hoksId}"
                       values={{
-                        hoksId:
-                          this.state.hoksId
+                        hoksId: this.state.hoksId
                       }}
                     />
                   </ContentElement>
