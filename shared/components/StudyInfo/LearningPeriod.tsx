@@ -191,6 +191,9 @@ export class LearningPeriodTEMP extends React.Component<
       ajanjaksonTarkenne
     } = learningPeriodTEMP
 
+    const vastuullinenTyopaikkaOhjaaja =
+      tyopaikallaJarjestettavaKoulutus?.vastuullinenTyopaikkaOhjaaja
+
     // const method = competenceAcquiringMethods
     //   ? competenceAcquiringMethods[0]
     //   : undefined
@@ -228,50 +231,50 @@ export class LearningPeriodTEMP extends React.Component<
             />
           </LearningPeriodTitle>
         )}
-        {/*<LearningPeriodTable>*/}
-        {/*  <TBody>*/}
-        {/*    {tyyppi === "WORKPLACE" && ohjaaja && (*/}
-        {/*      <tr>*/}
-        {/*        <TH>*/}
-        {/*          <FormattedMessage*/}
-        {/*            id="opiskelusuunnitelma.tyopaikkaohjaajaTitle"*/}
-        {/*            defaultMessage="Työpaikkaohjaaja"*/}
-        {/*          />*/}
-        {/*        </TH>*/}
-        {/*        <TD>*/}
-        {/*          {ohjaaja.nimi}, {selite}*/}
-        {/*          <br />*/}
-        {/*          {ohjaaja.sahkoposti}*/}
-        {/*        </TD>*/}
-        {/*      </tr>*/}
-        {/*    )}*/}
-        {/*    {tyyppi === "WORKPLACE" && ohjaaja && (*/}
-        {/*      <tr>*/}
-        {/*        <TH>*/}
-        {/*          <FormattedMessage*/}
-        {/*            id="opiskelusuunnitelma.koulutuksenjarjestajanEdustajaTitle"*/}
-        {/*            defaultMessage="Koulutuksen järjestäjän edustaja"*/}
-        {/*          />*/}
-        {/*        </TH>*/}
-        {/*        <TD>*/}
-        {/*          /!*TODO EH-757 add organizerOrgansation here, see comment above*!/*/}
-        {/*          {organizerRepresentative}*/}
-        {/*        </TD>*/}
-        {/*      </tr>*/}
-        {/*    )}*/}
-        {/*    {tyotehtavat.length > 0 && (*/}
-        {/*      <tr>*/}
-        {/*        <TH>*/}
-        {/*          <FormattedMessage*/}
-        {/*            id="opiskelusuunnitelma.keskeisetTyotehtavatTitle"*/}
-        {/*            defaultMessage="Keskeiset työtehtävät"*/}
-        {/*          />*/}
-        {/*        </TH>*/}
-        {/*        <EmptyTD />*/}
-        {/*      </tr>*/}
-        {/*    )}*/}
-        {/*  </TBody>*/}
-        {/*</LearningPeriodTable>*/}
+        <LearningPeriodTable>
+          <TBody>
+            {tyyppi === "WORKPLACE" && vastuullinenTyopaikkaOhjaaja && (
+              <tr>
+                <TH>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.tyopaikkaohjaajaTitle"
+                    defaultMessage="Työpaikkaohjaaja"
+                  />
+                </TH>
+                <TD>
+                  {vastuullinenTyopaikkaOhjaaja.nimi}, {selite}
+                  <br />
+                  {vastuullinenTyopaikkaOhjaaja.sahkoposti}
+                </TD>
+              </tr>
+            )}
+            {/*{tyyppi === "WORKPLACE" && ohjaaja && (*/}
+            {/*  <tr>*/}
+            {/*    <TH>*/}
+            {/*      <FormattedMessage*/}
+            {/*        id="opiskelusuunnitelma.koulutuksenjarjestajanEdustajaTitle"*/}
+            {/*        defaultMessage="Koulutuksen järjestäjän edustaja"*/}
+            {/*      />*/}
+            {/*    </TH>*/}
+            {/*    <TD>*/}
+            {/*      /!*TODO EH-757 add organizerOrgansation here, see comment above*!/*/}
+            {/*      {organizerRepresentative}*/}
+            {/*    </TD>*/}
+            {/*  </tr>*/}
+            {/*)}*/}
+            {/*{tyotehtavat.length > 0 && (*/}
+            {/*  <tr>*/}
+            {/*    <TH>*/}
+            {/*      <FormattedMessage*/}
+            {/*        id="opiskelusuunnitelma.keskeisetTyotehtavatTitle"*/}
+            {/*        defaultMessage="Keskeiset työtehtävät"*/}
+            {/*      />*/}
+            {/*    </TH>*/}
+            {/*    <EmptyTD />*/}
+            {/*  </tr>*/}
+            {/*)}*/}
+          </TBody>
+        </LearningPeriodTable>
         {/*{tyotehtavat.length > 0 && (*/}
         {/*  <React.Fragment>*/}
         {/*    <HMediaQuery.MaxWidth breakpoint="Tablet">*/}
