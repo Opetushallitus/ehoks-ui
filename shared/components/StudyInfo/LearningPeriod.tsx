@@ -177,9 +177,9 @@ export class LearningPeriodTEMP extends React.Component<
 > {
   render() {
     const {
-      learningPeriodTEMP
+      learningPeriodTEMP,
       // competenceAcquiringMethods,
-      // organizer
+      organizer
     } = this.props
     const {
       alku,
@@ -201,11 +201,12 @@ export class LearningPeriodTEMP extends React.Component<
       tyyppi === "WORKPLACE" && tyopaikallaJarjestettavaKoulutus
         ? selite + ", " + tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus
         : selite
-    // const organizerRepresentative =
-    //   organizer && organizer.nimi ? organizer.nimi : ""
+    const organizerRepresentative =
+      organizer && organizer.nimi ? organizer.nimi : ""
     // TODO EH-757, this need to be fixed. Comment out after competenceAqcquiringMethods have been removed and
     // harjoittelujaksot replaced with osaamisenHankkimistapa
-    // const organizerOrganisation = organizer && organizer.oppilaitosNimi ? organizer.oppilaitosNimi : ""
+    const organizerOrganisation =
+      organizer && organizer.oppilaitosNimi ? organizer.oppilaitosNimi : ""
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
@@ -248,20 +249,20 @@ export class LearningPeriodTEMP extends React.Component<
                 </TD>
               </tr>
             )}
-            {/*{tyyppi === "WORKPLACE" && ohjaaja && (*/}
-            {/*  <tr>*/}
-            {/*    <TH>*/}
-            {/*      <FormattedMessage*/}
-            {/*        id="opiskelusuunnitelma.koulutuksenjarjestajanEdustajaTitle"*/}
-            {/*        defaultMessage="Koulutuksen järjestäjän edustaja"*/}
-            {/*      />*/}
-            {/*    </TH>*/}
-            {/*    <TD>*/}
-            {/*      /!*TODO EH-757 add organizerOrgansation here, see comment above*!/*/}
-            {/*      {organizerRepresentative}*/}
-            {/*    </TD>*/}
-            {/*  </tr>*/}
-            {/*)}*/}
+            {tyyppi === "WORKPLACE" && vastuullinenTyopaikkaOhjaaja && (
+              <tr>
+                <TH>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.koulutuksenjarjestajanEdustajaTitle"
+                    defaultMessage="Koulutuksen järjestäjän edustaja"
+                  />
+                </TH>
+                <TD>
+                  {/*TODO EH-757 add organizerOrgansation here, see comment above*/}
+                  {organizerRepresentative}, {organizerOrganisation}
+                </TD>
+              </tr>
+            )}
             {/*{tyotehtavat.length > 0 && (*/}
             {/*  <tr>*/}
             {/*    <TH>*/}
