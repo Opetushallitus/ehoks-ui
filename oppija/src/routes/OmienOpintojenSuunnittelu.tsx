@@ -13,9 +13,8 @@ import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
 import find from "lodash.find"
 import { observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
-import { HOKS } from "models/HOKS"
-import { SessionUser } from "models/SessionUser"
+import { IHOKS } from "models/HOKS"
+import { ISessionUser } from "models/SessionUser"
 import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
@@ -49,8 +48,8 @@ const SectionItems = styled(ProgressPies)`
 `
 
 export interface OmienOpintojenSuunnitteluProps {
-  student: Instance<typeof SessionUser> | null
-  suunnitelmat: Instance<typeof HOKS>[]
+  student?: ISessionUser
+  suunnitelmat?: IHOKS[]
   path?: string
   id?: string
 }
@@ -73,7 +72,7 @@ export class OmienOpintojenSuunnittelu extends React.Component<
     const { id, student, suunnitelmat } = this.props
     const suunnitelma = find(suunnitelmat, s => s.eid === id)
 
-    if (!suunnitelma) {
+    if (!student || !suunnitelma) {
       return null
     }
 
