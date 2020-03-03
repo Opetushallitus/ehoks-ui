@@ -20,7 +20,7 @@ const SessionStoreModel = {
   error: types.optional(types.string, ""),
   isLoading: false,
   userDidLogout: false,
-  user: types.optional(types.union(VirkailijaUser, types.null), null),
+  user: types.maybe(VirkailijaUser),
   selectedOrganisationOid: types.optional(types.string, ""),
   organisations: types.array(OrganisationModel)
 }
@@ -103,7 +103,7 @@ export const SessionStore = types
         yield deleteResource(apiUrl("virkailija/session"), {
           headers: callerId()
         })
-        self.user = null
+        self.user = undefined
         self.isLoading = false
         self.userDidLogout = true
       } catch (error) {
