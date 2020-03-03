@@ -23,11 +23,11 @@ const ContactValue = types.model("ContactValue", {
 
 export const SessionUser = types
   .model("SessionUser", {
-    commonName: types.string,
-    contactValuesGroup: types.array(ContactValue),
+    commonName: types.optional(types.string, ""),
+    contactValuesGroup: types.optional(types.array(ContactValue), []),
     firstName: types.optional(types.string, ""),
     oid: types.optional(types.string, ""),
-    surname: types.string,
+    surname: types.optional(types.string, ""),
     fullName: types.optional(types.string, "")
   })
   .views(self => {
