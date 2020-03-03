@@ -22,7 +22,7 @@ const SessionStoreModel = {
   userDidLogout: false,
   user: types.maybe(VirkailijaUser),
   selectedOrganisationOid: types.optional(types.string, ""),
-  organisations: types.array(OrganisationModel)
+  organisations: types.optional(types.array(OrganisationModel), [])
 }
 
 export const SessionStore = types
