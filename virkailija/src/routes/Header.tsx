@@ -74,9 +74,9 @@ export class Header extends React.Component<HeaderProps> {
     const { session } = this.props.store!
     return (
       <HeaderContainer>
-        {session!.organisations ? (
+        {session.organisations ? (
           <OrganisationDropdown
-            organisations={session!.organisations}
+            organisations={session.organisations}
             onChange={this.handleOnOrganisationChange}
             value={session.selectedOrganisationOid}
             lang={Locale.FI}
