@@ -88,9 +88,6 @@ export class Tavoitteet extends React.Component<
   render() {
     const { student, hoks, titles: customTitles = {} } = this.props
     const { app } = this.context
-    if (!student) {
-      return null
-    }
 
     const titles = {
       heading: customTitles.heading || (
