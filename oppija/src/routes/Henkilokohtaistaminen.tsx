@@ -1,3 +1,4 @@
+import { RouteComponentProps } from "@reach/router"
 import {
   ChartArrowBottom,
   ChartArrowLeft,
@@ -44,9 +45,7 @@ const SectionTitle = styled("h1")`
   margin: 0 0 10px 0;
 `
 
-export interface HenkilokohtaistaminenProps {
-  path?: string
-}
+export interface HenkilokohtaistaminenProps extends RouteComponentProps {}
 
 export class Henkilokohtaistaminen extends React.Component<
   HenkilokohtaistaminenProps

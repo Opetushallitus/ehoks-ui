@@ -1,3 +1,4 @@
+import { RouteComponentProps } from "@reach/router"
 import { Container, PaddedContainer } from "components/Container"
 import { HomeLink } from "components/HomeLink"
 import { HomeOrb } from "components/HomeOrb"
@@ -16,9 +17,7 @@ const SectionContainer = styled("div")`
   }
 `
 
-export interface AmmatillinentutkintoProps {
-  path?: string
-}
+export interface AmmatillinentutkintoProps extends RouteComponentProps {}
 
 export class Ammatillinentutkinto extends React.Component<
   AmmatillinentutkintoProps
