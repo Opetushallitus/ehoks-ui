@@ -194,6 +194,7 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
     const { store } = this.props
     const { intl } = this.context
     const { session } = store!
+    const { user, isLoggedIn } = session!
     const { activeLocale } = store!.translations
     const hasUnansweredFeedbackLinks = store!.notifications
       .hasUnanswaredFeedbackLinks
@@ -255,7 +256,7 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
           />
           <Flex />
 
-          <LanguageSelector loggedIn={session!.isLoggedIn}>
+          <LanguageSelector loggedIn={isLoggedIn}>
             {activeLocale === Locale.FI ? (
               <a onClick={this.changeLocale(Locale.SV)} role="button">
                 <FormattedMessage
@@ -273,10 +274,10 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
             )}
           </LanguageSelector>
 
-          {session!.isLoggedIn && (
+          {isLoggedIn && user && (
             <LogoutContainer>
               <User>
-                {session!.user!.firstName} {session!.user!.surname}
+                {user.firstName} {user.surname}
               </User>
               <LogoutLink to="" onClick={this.logout}>
                 <FormattedMessage
