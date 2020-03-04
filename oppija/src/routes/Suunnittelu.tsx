@@ -39,7 +39,7 @@ export class Suunnittelu extends React.Component<
   disposeLoginReaction: IReactionDisposer
   componentDidMount() {
     const { store, uri } = this.props
-    const session = store!.session
+    const { session } = store!
 
     this.disposeLoginReaction = reaction(
       () => {
@@ -62,10 +62,14 @@ export class Suunnittelu extends React.Component<
           // ensure that SessionStore's checkSession call has finished
         } else {
           await store!.session.fetchSettings()
-          await store!.hoks.haeSuunnitelmat(session.user!.oid)
-          await store!.notifications.haeOpiskelijapalautelinkit(
-            session.user!.oid
-          )
+          if (session.user) {
+            await store!.hoks.haeSuunnitelmat(session.user.oid)
+            await store!.notifications.haeOpiskelijapalautelinkit(
+              session.user.oid
+            )
+          } else {
+            throw new Error(`Session user not defined`)
+          }
 
           this.setState({ allLoaded: true })
           const suunnitelmat = store!.hoks.suunnitelmat
