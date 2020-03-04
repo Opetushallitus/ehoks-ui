@@ -90,7 +90,7 @@ export class Suunnittelu extends React.Component<
   }
 
   render() {
-    const store = this.props.store!
+    const { notifications, hoks, session } = this.props.store!
 
     if (!this.state.allLoaded) {
       return (
@@ -104,14 +104,14 @@ export class Suunnittelu extends React.Component<
       <>
         <IntroModalDialog />
         <StudentFeedbackModal
-          feedbackLinks={store.notifications.studentFeedbackLinks}
+          feedbackLinks={notifications.studentFeedbackLinks}
         />
         <Router basepath={`/ehoks/suunnittelu`}>
-          <ValitseHOKS path="/" suunnitelmat={store.hoks.suunnitelmat} />
+          <ValitseHOKS path="/" suunnitelmat={hoks.suunnitelmat} />
           <OmienOpintojenSuunnittelu
             path=":id/*"
-            student={store.session.user}
-            suunnitelmat={store.hoks.suunnitelmat}
+            student={session.user}
+            suunnitelmat={hoks.suunnitelmat}
           />
         </Router>
       </>
