@@ -65,7 +65,7 @@ export class Demonstration extends React.Component<
   DemonstrationState
 > {
   static contextType = AppContext
-  context!: React.ContextType<typeof AppContext>
+  declare context: React.ContextType<typeof AppContext>
 
   state: DemonstrationState = {
     requirementsAndDeviationsExpanded: false

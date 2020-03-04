@@ -65,7 +65,7 @@ export class Tavoitteet extends React.Component<
   TavoitteetState
 > {
   static contextType = AppContext
-  context!: React.ContextType<typeof AppContext>
+  declare context: React.ContextType<typeof AppContext>
   state = {
     activeAccordions: {
       hoksDates: false,

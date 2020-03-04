@@ -25,7 +25,7 @@ export class ValitseHOKS extends React.Component<
   ValitseHOKSProps & RouteComponentProps
 > {
   static contextType = AppContext
-  context!: React.ContextType<typeof AppContext>
+  declare context: React.ContextType<typeof AppContext>
   render() {
     const { nimi, suunnitelmat, oppijaId, session } = this.props
     const { app } = this.context

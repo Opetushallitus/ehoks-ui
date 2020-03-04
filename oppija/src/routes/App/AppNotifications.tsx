@@ -67,7 +67,7 @@ export interface AppNotificationsProps {
 @observer
 export class AppNotifications extends React.Component<AppNotificationsProps> {
   static contextType = AppContext
-  context!: React.ContextType<typeof AppContext>
+  declare context: React.ContextType<typeof AppContext>
 
   ackNotification = (hide: () => void) => (event: React.MouseEvent) => {
     event.preventDefault()
