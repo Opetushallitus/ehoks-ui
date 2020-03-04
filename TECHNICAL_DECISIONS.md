@@ -28,7 +28,9 @@ Use `types.optional` with default value as much as possible, it makes testing th
 
 #### TypeScript
 
-You can get the TypeScript typings for your model / store using `Instance<typeof Model>` and `SnapshotOrInstance<typeof Model>` , use it instead of writing separate typings for TypeScript.
+You can get the TypeScript typings for your model / store using `Instance<typeof Model>` and `SnapshotOrInstance<typeof Model>` , use it instead of writing separate typings for TypeScript. For convention I-prefixed naming is used for and only model / store interfaces.
+
+With `@inject("store")` you need to set store as optional property: `store?: IRootStore` and mark it as always defined with exclamation mark `this.props.store!` .
 
 Use TypeScript utility types like [Pick](https://www.typescriptlang.org/docs/handbook/utility-types.html) and [Omit](https://www.typescriptlang.org/docs/handbook/utility-types.html) to construct correct interface from the model typings for your component. Do not just use all properties as optionally - if all are not used.
 
