@@ -18,22 +18,22 @@ const LoadingContainer = styled("div")`
   min-height: 300px;
 `
 
-interface ValitseHOKSProps {
+interface SuunnitteluProps extends RouteComponentProps {
   store?: IRootStore
   "*"?: string
 }
 
-interface ValitseHOKSState {
+interface SuunnitteluState {
   allLoaded: boolean
 }
 
 @inject("store")
 @observer
 export class Suunnittelu extends React.Component<
-  ValitseHOKSProps & RouteComponentProps,
-  ValitseHOKSState
+  SuunnitteluProps & RouteComponentProps,
+  SuunnitteluState
 > {
-  state: ValitseHOKSState = {
+  state: SuunnitteluState = {
     allLoaded: false
   }
   disposeLoginReaction: IReactionDisposer
