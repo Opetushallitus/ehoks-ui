@@ -5,7 +5,7 @@ import { Collapse } from "./Collapse"
 import { Demonstration } from "./Demonstration"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
-import { LearningPeriod } from "./LearningPeriod"
+import { LearningPeriodTEMP } from "./LearningPeriod"
 import { OtherPeriod } from "./OtherPeriod"
 import {
   Harjoittelujakso,
@@ -175,24 +175,8 @@ export class Details extends React.Component<DetailsProps> {
             instructor={instructor}
             defaultPeriod={defaultPeriod}
           >
-            {/*TODO EH-843*/}
-            {learningPeriods.map((period, i) => {
-              // {learningPeriodsTEMP.map((period, i) => {
-              return (
-                // TODO EH-843
-                <LearningPeriod
-                  key={i}
-                  learningPeriod={period}
-                  competenceAcquiringMethods={competenceAcquiringMethods}
-                  organizer={organizer}
-                />
-                // <LearningPeriodTEMP
-                //   key={i}
-                //   learningPeriodTEMP={period}
-                //   competenceAcquiringMethods={competenceAcquiringMethods}
-                //   organizer={organizer}
-                // />
-              )
+            {learningPeriodsTEMP.map((period, i) => {
+              return <LearningPeriodTEMP key={i} learningPeriodTEMP={period} />
             })}
           </ShareDialog>
 
