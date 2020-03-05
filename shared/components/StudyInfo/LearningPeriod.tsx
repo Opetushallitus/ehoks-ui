@@ -49,6 +49,7 @@ export class LearningPeriodTEMP extends React.Component<
       tyyppi,
       tyopaikallaJarjestettavaKoulutus,
       selite,
+      workplaceSelite,
       ajanjaksonTarkenne,
       jarjestajanEdustaja
     } = learningPeriodTEMP
@@ -58,11 +59,6 @@ export class LearningPeriodTEMP extends React.Component<
 
     const keskeisetTyotehtavat =
       tyopaikallaJarjestettavaKoulutus?.keskeisetTyotehtavat
-
-    const workplaceSelite =
-      tyyppi === "WORKPLACE" && tyopaikallaJarjestettavaKoulutus
-        ? selite + ", " + tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus
-        : selite
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">

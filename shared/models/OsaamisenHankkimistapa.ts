@@ -36,6 +36,14 @@ export const OsaamisenHankkimistapa = types
           ? self.muutOppimisymparistot[0].selite
           : self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi
       },
+      get workplaceSelite() {
+        return self.tyyppi === "WORKPLACE" &&
+          self.tyopaikallaJarjestettavaKoulutus
+          ? self.selite +
+              ", " +
+              self.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus
+          : self.selite
+      },
       get tyyppi() {
         return self.osaamisenHankkimistapaKoodiUri.includes(
           "koulutussopimus"
