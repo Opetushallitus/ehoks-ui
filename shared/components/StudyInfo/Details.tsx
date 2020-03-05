@@ -144,9 +144,6 @@ export class Details extends React.Component<DetailsProps> {
           otherPeriods.push(ymparisto)
         )
       })
-    const organizer =
-      competenceAcquiringMethods[0] &&
-      competenceAcquiringMethods[0].jarjestajanEdustaja
 
     return expanded ? (
       <DetailsExpanded
