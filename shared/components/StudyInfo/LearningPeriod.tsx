@@ -188,25 +188,17 @@ export class LearningPeriodTEMP extends React.Component<
       tyyppi,
       tyopaikallaJarjestettavaKoulutus,
       selite,
-      ajanjaksonTarkenne
+      ajanjaksonTarkenne,
+      jarjestajanEdustaja
     } = learningPeriodTEMP
 
     const vastuullinenTyopaikkaOhjaaja =
       tyopaikallaJarjestettavaKoulutus?.vastuullinenTyopaikkaOhjaaja
 
-    // const method = competenceAcquiringMethods
-    //   ? competenceAcquiringMethods[0]
-    //   : undefined
     const workplaceSelite =
       tyyppi === "WORKPLACE" && tyopaikallaJarjestettavaKoulutus
         ? selite + ", " + tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus
         : selite
-    const organizerRepresentative =
-      organizer && organizer.nimi ? organizer.nimi : ""
-    // TODO EH-757, this need to be fixed. Comment out after competenceAqcquiringMethods have been removed and
-    // harjoittelujaksot replaced with osaamisenHankkimistapa
-    const organizerOrganisation =
-      organizer && organizer.oppilaitosNimi ? organizer.oppilaitosNimi : ""
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
@@ -257,10 +249,7 @@ export class LearningPeriodTEMP extends React.Component<
                     defaultMessage="Koulutuksen järjestäjän edustaja"
                   />
                 </TH>
-                <TD>
-                  {/*TODO EH-757 add organizerOrgansation here, see comment above*/}
-                  {organizerRepresentative}, {organizerOrganisation}
-                </TD>
+                <TD>{jarjestajanEdustaja.oppilaitosHenkiloDescription}</TD>
               </tr>
             )}
             {/*{tyotehtavat.length > 0 && (*/}

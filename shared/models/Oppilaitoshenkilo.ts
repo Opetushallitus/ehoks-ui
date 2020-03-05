@@ -31,6 +31,11 @@ export const Oppilaitoshenkilo = types
           self.oppilaitos.nimi[root.translations.activeLocale]
           ? self.oppilaitos.nimi[root.translations.activeLocale]
           : ""
+      },
+      get oppilaitosHenkiloDescription() {
+        return (
+          self.nimi + (self.oppilaitosNimi ? ", " + self.oppilatosNimi : "")
+        )
       }
     }
   })
