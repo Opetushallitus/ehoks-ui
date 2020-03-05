@@ -67,7 +67,7 @@ export const SessionStore = types
         const queryParams = {
           oids: Array.from(
             new Set(
-              self.user!.organisationPrivileges!.reduce(
+              self.user?.organisationPrivileges.reduce(
                 (a, o) => [...a, ...o.childOrganisations!, o.oid],
                 []
               )
