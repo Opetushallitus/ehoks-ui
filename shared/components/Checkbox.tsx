@@ -57,7 +57,9 @@ export class Checkbox extends React.Component<CheckboxProps> {
   }
 
   focusCheckbox = () => {
-    this.checkboxRef.current!.focus()
+    if (this.checkboxRef.current) {
+      this.checkboxRef.current.focus()
+    }
     if (typeof this.props.onToggle === "function") {
       this.props.onToggle()
     }
