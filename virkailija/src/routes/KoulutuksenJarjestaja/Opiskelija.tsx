@@ -157,7 +157,7 @@ export class Opiskelija extends React.Component<
           <ValitseHOKS
             path="/"
             oppijaId={studentId}
-            nimi={oppija ? oppija.nimi : ""}
+            nimi={oppija?.nimi}
             suunnitelmat={suunnitelmat}
             session={session}
           />
