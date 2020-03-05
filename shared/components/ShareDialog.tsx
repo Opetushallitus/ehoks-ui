@@ -219,8 +219,9 @@ export function ShareDialog(props: ShareDialogProps) {
   const remove = async (event: React.MouseEvent, uuid: string) => {
     event.preventDefault()
     if (
+      intl &&
       confirm(
-        intl!.formatMessage({
+        intl.formatMessage({
           id: "jakaminen.haluatkoPoistaaConfirm"
         })
       )
