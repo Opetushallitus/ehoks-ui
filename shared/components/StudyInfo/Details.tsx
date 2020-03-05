@@ -115,8 +115,8 @@ export class Details extends React.Component<DetailsProps> {
       typeof share !== "undefined" && koodiUri === share.koodiUri
     const shareType = typeof share !== "undefined" ? share.type : undefined
     const firstLearningPeriod =
-      shareType === "tyossaoppiminen" && learningPeriods[0]
-        ? learningPeriods[0]
+      shareType === "tyossaoppiminen" && learningPeriodsTEMP[0]
+        ? learningPeriodsTEMP[0]
         : undefined
 
     const instructor = firstLearningPeriod
@@ -242,7 +242,7 @@ export class Details extends React.Component<DetailsProps> {
                 />
               </VerificationTitle>
             )}
-            {learningPeriods.map((lp, i) => {
+            {learningPeriodsTEMP.map((lp, i) => {
               return (
                 <LearningEvent
                   key={i}
