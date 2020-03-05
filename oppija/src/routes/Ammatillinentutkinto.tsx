@@ -17,7 +17,7 @@ const SectionContainer = styled("div")`
   }
 `
 
-export interface AmmatillinentutkintoProps extends RouteComponentProps {}
+export type AmmatillinentutkintoProps = RouteComponentProps
 
 export class Ammatillinentutkinto extends React.Component<
   AmmatillinentutkintoProps

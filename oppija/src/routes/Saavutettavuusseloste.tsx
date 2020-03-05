@@ -12,7 +12,7 @@ const Content = styled("div")`
   }
 `
 
-interface SaavutettavuusselosteProps extends RouteComponentProps {}
+type SaavutettavuusselosteProps = RouteComponentProps
 
 export function Saavutettavuusseloste(_: SaavutettavuusselosteProps) {
   return (

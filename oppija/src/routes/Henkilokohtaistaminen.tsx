@@ -45,7 +45,7 @@ const SectionTitle = styled("h1")`
   margin: 0 0 10px 0;
 `
 
-export interface HenkilokohtaistaminenProps extends RouteComponentProps {}
+export type HenkilokohtaistaminenProps = RouteComponentProps
 
 export class Henkilokohtaistaminen extends React.Component<
   HenkilokohtaistaminenProps
