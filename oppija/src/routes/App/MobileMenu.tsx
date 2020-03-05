@@ -1,9 +1,8 @@
 import { Link } from "@reach/router"
-import { Instance } from "mobx-state-tree"
 import React from "react"
 import { MdClose } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
-import { SessionStore } from "stores/SessionStore"
+import { ISessionStore } from "stores/SessionStore"
 import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 import useOnClickOutside from "use-onclickoutside"
@@ -75,7 +74,7 @@ interface MobileMenuProps {
   changeLocale: (locale: Locale) => (event: React.MouseEvent) => void
   toggleMenu: () => void
   logout: (event: React.MouseEvent) => void
-  session: Instance<typeof SessionStore>
+  session: ISessionStore
 }
 
 export const MobileMenu: React.FunctionComponent<MobileMenuProps> = ({
