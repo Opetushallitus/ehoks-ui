@@ -126,7 +126,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                 <SectionItems>
                   <SectionItem
                     selected={
-                      location!.pathname ===
+                      location?.pathname ===
                       `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${suunnitelma.eid}`
                     }
                     onClick={this.setActiveTab(
@@ -143,7 +143,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                   </SectionItem>
                   <SectionItem
                     selected={
-                      location!.pathname ===
+                      location?.pathname ===
                       `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${suunnitelma.eid}/osaaminen`
                     }
                     onClick={this.setActiveTab(
@@ -160,7 +160,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                   </SectionItem>
                   <SectionItem
                     selected={
-                      location!.pathname ===
+                      location?.pathname ===
                       `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${suunnitelma.eid}/opiskelusuunnitelma`
                     }
                     onClick={this.setActiveTab(
