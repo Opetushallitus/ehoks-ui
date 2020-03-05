@@ -8,7 +8,7 @@ const SessionStoreModel = {
   error: types.optional(types.string, ""),
   settings: types.optional(Settings, {}),
   userDidLogout: false,
-  user: types.maybeNull(SessionUser),
+  user: types.maybe(SessionUser),
   selectedOrganisationOid: "",
   isLoading: types.optional(types.boolean, false)
 }
@@ -88,7 +88,7 @@ export const SessionStore = types
       self.isLoading = true
       try {
         yield deleteResource(apiUrl("oppija/session"), { headers: callerId() })
-        self.user = null
+        self.user = undefined
         self.userDidLogout = true
         self.isLoading = false
       } catch (error) {
@@ -112,7 +112,7 @@ export const SessionStore = types
   .views(self => {
     return {
       get isLoggedIn() {
-        return self.user !== null
+        return !!self.user
       }
     }
   })

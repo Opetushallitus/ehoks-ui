@@ -37,7 +37,7 @@ Object {
         "userAcknowledgedIntroDialog": false,
       },
     },
-    "user": null,
+    "user": undefined,
     "userDidLogout": false,
   },
   "shareLinks": Object {},

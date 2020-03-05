@@ -14,7 +14,7 @@ describe("SessionStore", () => {
     )
 
     expect(store.isLoading).toBe(false)
-    expect(store.user).toEqual(null)
+    expect(store.user).toBeUndefined()
 
     store.checkSession()
     expect(store.isLoading).toBe(true)
@@ -22,7 +22,7 @@ describe("SessionStore", () => {
     when(
       () => !store.isLoading,
       () => {
-        expect(store.user).toEqual(null)
+        expect(store.user).toBeUndefined()
       }
     )
   })
@@ -34,7 +34,7 @@ describe("SessionStore", () => {
     )
 
     expect(store.isLoading).toBe(false)
-    expect(store.user).toEqual(null)
+    expect(store.user).toBeUndefined()
 
     store.checkSession()
     expect(store.isLoading).toBe(true)
@@ -91,7 +91,7 @@ describe("SessionStore", () => {
     when(
       () => !store.isLoading,
       () => {
-        expect(store.user).toEqual(null)
+        expect(store.user).toBeUndefined()
       }
     )
   })
