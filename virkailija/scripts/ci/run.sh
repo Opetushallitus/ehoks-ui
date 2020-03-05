@@ -18,7 +18,7 @@ unset tpl_file target
 
 cp /var/www/html/public/ehoks/index.html /home/oph/index.html
 
-echo "Insert app boot config for this env into /root/public/index.html …"
+echo "Insert app boot config for this env into /home/oph/index.html …"
 config_json=$(python /opt/ehoks/escape-html.py < /home/oph/config.json)
 sed -f <(cat <<EOF
 s|APP-BOOT-CONFIG-DEFAULT|${config_json//&/\\&}|
