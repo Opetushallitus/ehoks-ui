@@ -121,9 +121,11 @@ export const MobileMenu: React.FunctionComponent<MobileMenuProps> = ({
       </Languages>
       {session.isLoggedIn && (
         <LinksContainer>
-          <UserInfo>
-            {session.user!.firstName} {session.user!.surname}
-          </UserInfo>
+          {session.user && (
+            <UserInfo>
+              {session.user.firstName} {session.user.surname}
+            </UserInfo>
+          )}
           <LogoutLink to="" onClick={logout}>
             <FormattedMessage
               id="mobileMenu.kirjauduUlosLink"
