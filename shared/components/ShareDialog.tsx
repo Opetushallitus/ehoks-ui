@@ -137,7 +137,7 @@ const DateInput = styled("input")`
 interface ShareDialogProps {
   active: boolean
   background: string
-  children: any // TODO: fix
+  children: React.ReactNode
   koodiUri: string
   type: ShareType
   defaultPeriod?: { start?: string; end?: string }
