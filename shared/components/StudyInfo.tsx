@@ -296,7 +296,6 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
               demonstrations={demonstrations}
               extraContent={extraContent}
               expanded={detailsExpanded}
-              learningPeriods={learningPeriods}
               learningPeriodsTEMP={learningPeriodsTEMP}
               competenceAcquiringMethods={competenceAcquiringMethods}
               verificationProcess={verificationProcess}
