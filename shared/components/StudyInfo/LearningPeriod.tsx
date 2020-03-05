@@ -195,6 +195,9 @@ export class LearningPeriodTEMP extends React.Component<
     const vastuullinenTyopaikkaOhjaaja =
       tyopaikallaJarjestettavaKoulutus?.vastuullinenTyopaikkaOhjaaja
 
+    const keskeisetTyotehtavat =
+      tyopaikallaJarjestettavaKoulutus?.keskeisetTyotehtavat
+
     const workplaceSelite =
       tyyppi === "WORKPLACE" && tyopaikallaJarjestettavaKoulutus
         ? selite + ", " + tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus
@@ -252,37 +255,37 @@ export class LearningPeriodTEMP extends React.Component<
                 <TD>{jarjestajanEdustaja.oppilaitosHenkiloDescription}</TD>
               </tr>
             )}
-            {/*{tyotehtavat.length > 0 && (*/}
-            {/*  <tr>*/}
-            {/*    <TH>*/}
-            {/*      <FormattedMessage*/}
-            {/*        id="opiskelusuunnitelma.keskeisetTyotehtavatTitle"*/}
-            {/*        defaultMessage="Keskeiset työtehtävät"*/}
-            {/*      />*/}
-            {/*    </TH>*/}
-            {/*    <EmptyTD />*/}
-            {/*  </tr>*/}
-            {/*)}*/}
+            {keskeisetTyotehtavat.length > 0 && (
+              <tr>
+                <TH>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.keskeisetTyotehtavatTitle"
+                    defaultMessage="Keskeiset työtehtävät"
+                  />
+                </TH>
+                <EmptyTD />
+              </tr>
+            )}
           </TBody>
         </LearningPeriodTable>
-        {/*{tyotehtavat.length > 0 && (*/}
-        {/*  <React.Fragment>*/}
-        {/*    <HMediaQuery.MaxWidth breakpoint="Tablet">*/}
-        {/*      <CustomSlider>*/}
-        {/*        {tyotehtavat.map((tyotehtava, i) => {*/}
-        {/*          return <Slide key={i}>{tyotehtava}</Slide>*/}
-        {/*        })}*/}
-        {/*      </CustomSlider>*/}
-        {/*    </HMediaQuery.MaxWidth>*/}
-        {/*    <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>*/}
-        {/*      <LearningPeriodTasks>*/}
-        {/*        {tyotehtavat.map((tyotehtava, i) => {*/}
-        {/*          return <li key={i}>{tyotehtava}</li>*/}
-        {/*        })}*/}
-        {/*      </LearningPeriodTasks>*/}
-        {/*    </HMediaQuery.MaxWidth>*/}
-        {/*  </React.Fragment>*/}
-        {/*)}*/}
+        {keskeisetTyotehtavat.length > 0 && (
+          <React.Fragment>
+            <HMediaQuery.MaxWidth breakpoint="Tablet">
+              <CustomSlider>
+                {keskeisetTyotehtavat.map((tyotehtava, i) => {
+                  return <Slide key={i}>{tyotehtava}</Slide>
+                })}
+              </CustomSlider>
+            </HMediaQuery.MaxWidth>
+            <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
+              <LearningPeriodTasks>
+                {keskeisetTyotehtavat.map((tyotehtava, i) => {
+                  return <li key={i}>{tyotehtava}</li>
+                })}
+              </LearningPeriodTasks>
+            </HMediaQuery.MaxWidth>
+          </React.Fragment>
+        )}
       </Container>
     )
   }
