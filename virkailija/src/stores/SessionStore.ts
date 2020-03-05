@@ -155,7 +155,7 @@ export const SessionStore = types
       get hasSuperUserPrivilege() {
         return (
           self.selectedOrganisation &&
-          self.selectedOrganisation.roles!.indexOf("oph-super-user") > -1
+          self.selectedOrganisation.roles.indexOf("oph-super-user") > -1
         )
       }
     }
