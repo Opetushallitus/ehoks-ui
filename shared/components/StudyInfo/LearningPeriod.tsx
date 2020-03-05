@@ -33,15 +33,13 @@ const CustomSlider = styled(MobileSlider)`
   margin: 10px 20px 20px 10px;
 `
 
-interface LearningPeriodTEMPProps {
-  learningPeriodTEMP: OsaamisenHankkimistapa
+interface LearningPeriodProps {
+  learningPeriod: OsaamisenHankkimistapa
 }
 
-export class LearningPeriodTEMP extends React.Component<
-  LearningPeriodTEMPProps
-> {
+export class LearningPeriod extends React.Component<LearningPeriodProps> {
   render() {
-    const { learningPeriodTEMP } = this.props
+    const { learningPeriod } = this.props
     const {
       alku,
       loppu,
@@ -52,7 +50,7 @@ export class LearningPeriodTEMP extends React.Component<
       workplaceSelite,
       ajanjaksonTarkenne,
       jarjestajanEdustaja
-    } = learningPeriodTEMP
+    } = learningPeriod
 
     const vastuullinenTyopaikkaOhjaaja =
       tyopaikallaJarjestettavaKoulutus?.vastuullinenTyopaikkaOhjaaja

@@ -5,7 +5,7 @@ import { Collapse } from "./Collapse"
 import { Demonstration } from "./Demonstration"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
-import { LearningPeriodTEMP } from "./LearningPeriod"
+import { LearningPeriod } from "./LearningPeriod"
 import { OtherPeriod } from "./OtherPeriod"
 import {
   Harjoittelujakso,
@@ -173,7 +173,7 @@ export class Details extends React.Component<DetailsProps> {
             defaultPeriod={defaultPeriod}
           >
             {learningPeriodsTEMP.map((period, i) => {
-              return <LearningPeriodTEMP key={i} learningPeriodTEMP={period} />
+              return <LearningPeriod key={i} learningPeriod={period} />
             })}
           </ShareDialog>
 
