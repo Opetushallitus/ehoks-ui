@@ -5,6 +5,11 @@ import { MuuOppimisymparisto } from "./MuuOppimisymparisto"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 
+export enum OsaamisenHankkimistapaType {
+  Workplace = "WORKPLACE",
+  Other = "OTHER"
+}
+
 const Model = types.model("OsaamisenHankkimistapaModel", {
   id: types.optional(types.number, 0),
   hankkijanEdustaja: types.optional(Oppilaitoshenkilo, {}),
