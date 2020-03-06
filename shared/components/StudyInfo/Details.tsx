@@ -21,6 +21,7 @@ import parseISO from "date-fns/parseISO"
 import { ShareType } from "stores/NotificationStore"
 import ShareDialog from "components/ShareDialog"
 import { ToggleableItems } from "./StudyInfoHelpers"
+import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
 
 interface ColorProps {
   fadedColor: string
@@ -245,7 +246,7 @@ export class Details extends React.Component<DetailsProps> {
                 <LearningEvent
                   key={i}
                   title={
-                    lp.tyyppi === "OTHER" ? (
+                    lp.tyyppi === OsaamisenHankkimistapaType.Other ? (
                       lp.nimi
                     ) : (
                       <FormattedMessage

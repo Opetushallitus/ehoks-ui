@@ -4,6 +4,7 @@ import { StudyInfo } from "../StudyInfo"
 import { renderWithContext } from "testUtils"
 import { Naytto, Harjoittelujakso } from "models/helpers/TutkinnonOsa"
 import { mockFetch } from "fetchUtils"
+import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
 
 const osaamisvaatimukset = [
   {
@@ -85,7 +86,7 @@ const harjoittelujaksot1 = [
     loppu: "2019-07-31",
     nimi: "Verkko-oppiminen",
     selite: "Moodle-kurssi, viestintä",
-    tyyppi: "OTHER" as Harjoittelujakso["tyyppi"]
+    tyyppi: OsaamisenHankkimistapaType.Other as Harjoittelujakso["tyyppi"]
   }
 ]
 
@@ -96,14 +97,14 @@ const harjoittelujaksot2 = [
     ohjaaja: { nimi: "John McAfee", sahkoposti: "john@mock.dev" },
     tyotehtavat: ["Elintarvikkeiden valmistus", "Elintarvikkeiden säilytys"],
     selite: "Palvelutalo Koivikkola",
-    tyyppi: "WORKPLACE" as Harjoittelujakso["tyyppi"]
+    tyyppi: OsaamisenHankkimistapaType.Workplace as Harjoittelujakso["tyyppi"]
   },
   {
     alku: "2019-10-01",
     loppu: "2019-10-15",
     nimi: "Verkko-oppiminen",
     selite: "Moodle-kurssi, Ikääntyminen",
-    tyyppi: "OTHER" as Harjoittelujakso["tyyppi"]
+    tyyppi: OsaamisenHankkimistapaType.Other as Harjoittelujakso["tyyppi"]
   }
 ]
 

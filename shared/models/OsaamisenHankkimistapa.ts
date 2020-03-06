@@ -42,19 +42,21 @@ export const OsaamisenHankkimistapa = types
           : self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi
       },
       get workplaceSelite() {
-        return self.tyyppi === "WORKPLACE" &&
+        return self.tyyppi === OsaamisenHankkimistapaType.Workplace &&
           self.tyopaikallaJarjestettavaKoulutus
           ? self.selite +
               ", " +
               self.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus
           : self.selite
       },
-      get tyyppi() {
+      get tyyppi():
+        | OsaamisenHankkimistapaType.Workplace
+        | OsaamisenHankkimistapaType.Other {
         return self.osaamisenHankkimistapaKoodiUri.includes(
           "koulutussopimus"
         ) || self.osaamisenHankkimistapaKoodiUri.includes("oppisopimus")
-          ? "WORKPLACE"
-          : "OTHER"
+          ? OsaamisenHankkimistapaType.Workplace
+          : OsaamisenHankkimistapaType.Other
       }
     }
   })

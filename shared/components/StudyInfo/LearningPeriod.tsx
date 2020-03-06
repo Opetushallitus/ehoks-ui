@@ -15,6 +15,7 @@ import {
 } from "./Shared"
 import { OsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
+import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
 
 const LearningPeriodTitle = styled(Title)`
   margin-left: 20px;
@@ -64,7 +65,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
           <LearningPeriodTitle>
             <LearningEvent
               title={
-                tyyppi === "OTHER" ? (
+                tyyppi === OsaamisenHankkimistapaType.Other ? (
                   nimi
                 ) : (
                   <FormattedMessage
@@ -74,7 +75,11 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                 )
               }
               type={tyyppi}
-              description={tyyppi === "WORKPLACE" ? workplaceSelite : selite}
+              description={
+                tyyppi === OsaamisenHankkimistapaType.Workplace
+                  ? workplaceSelite
+                  : selite
+              }
               startDate={alku}
               endDate={loppu}
               periodSpecifier={ajanjaksonTarkenne}
@@ -84,32 +89,34 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
         )}
         <LearningPeriodTable>
           <TBody>
-            {tyyppi === "WORKPLACE" && vastuullinenTyopaikkaOhjaaja && (
-              <tr>
-                <TH>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.tyopaikkaohjaajaTitle"
-                    defaultMessage="Työpaikkaohjaaja"
-                  />
-                </TH>
-                <TD>
-                  {vastuullinenTyopaikkaOhjaaja.nimi}, {selite}
-                  <br />
-                  {vastuullinenTyopaikkaOhjaaja.sahkoposti}
-                </TD>
-              </tr>
-            )}
-            {tyyppi === "WORKPLACE" && vastuullinenTyopaikkaOhjaaja && (
-              <tr>
-                <TH>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.koulutuksenjarjestajanEdustajaTitle"
-                    defaultMessage="Koulutuksen järjestäjän edustaja"
-                  />
-                </TH>
-                <TD>{jarjestajanEdustaja.oppilaitosHenkiloDescription}</TD>
-              </tr>
-            )}
+            {tyyppi === OsaamisenHankkimistapaType.Workplace &&
+              vastuullinenTyopaikkaOhjaaja && (
+                <tr>
+                  <TH>
+                    <FormattedMessage
+                      id="opiskelusuunnitelma.tyopaikkaohjaajaTitle"
+                      defaultMessage="Työpaikkaohjaaja"
+                    />
+                  </TH>
+                  <TD>
+                    {vastuullinenTyopaikkaOhjaaja.nimi}, {selite}
+                    <br />
+                    {vastuullinenTyopaikkaOhjaaja.sahkoposti}
+                  </TD>
+                </tr>
+              )}
+            {tyyppi === OsaamisenHankkimistapaType.Workplace &&
+              vastuullinenTyopaikkaOhjaaja && (
+                <tr>
+                  <TH>
+                    <FormattedMessage
+                      id="opiskelusuunnitelma.koulutuksenjarjestajanEdustajaTitle"
+                      defaultMessage="Koulutuksen järjestäjän edustaja"
+                    />
+                  </TH>
+                  <TD>{jarjestajanEdustaja.oppilaitosHenkiloDescription}</TD>
+                </tr>
+              )}
             {keskeisetTyotehtavat.length > 0 && (
               <tr>
                 <TH>
