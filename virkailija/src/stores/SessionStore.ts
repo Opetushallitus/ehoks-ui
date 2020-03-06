@@ -130,7 +130,7 @@ export const SessionStore = types
   .views(self => {
     return {
       get isLoggedIn() {
-        return self.user !== null
+        return !!self.user
       },
       get selectedOrganisation() {
         return (
