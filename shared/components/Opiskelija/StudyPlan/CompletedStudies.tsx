@@ -74,6 +74,7 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
                   }
                   fadedColor="#ECF6ED"
                   koodiUri={study.tutkinnonOsaKoodiUri}
+                  learningPeriodsTEMP={study.osaamisenHankkimistavat}
                   learningPeriods={study.harjoittelujaksot}
                   share={share}
                   title={study.opintoOtsikko(competencePointsTitle)}
