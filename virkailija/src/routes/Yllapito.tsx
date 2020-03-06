@@ -65,6 +65,9 @@ interface SystemInfo {
     unindexedOppijat: number
     unindexedOpiskeluoikeudet: number
   }
+  hoksit: {
+    amount: number
+  }
 }
 
 interface YllapitoState {
@@ -72,6 +75,8 @@ interface YllapitoState {
   message: string
   success: boolean
   systemInfo?: SystemInfo | null
+  hoksId?: number
+  opiskeluoikeusOid?: string | ""
 }
 
 interface SystemInfoResponse {
@@ -89,7 +94,9 @@ export class Yllapito extends React.Component<YllapitoProps> {
     isLoading: false,
     message: "",
     success: false,
-    systemInfo: null
+    systemInfo: null,
+    hoksId: undefined,
+    opiskeluoikeusOid: ""
   }
 
   async loadSystemInfo() {
@@ -207,6 +214,52 @@ export class Yllapito extends React.Component<YllapitoProps> {
     }
   }
 
+  onGetHoksId = async (event: any) => {
+    const { intl } = this.context
+    const { opiskeluoikeusOid } = this.state
+    event.preventDefault()
+    const request = await window.fetch(
+      `/ehoks-virkailija-backend/api/v1/virkailija/opiskeluoikeus/${opiskeluoikeusOid}`,
+      {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json; charset=utf-8",
+          "Content-Type": "application/json"
+        }
+      }
+    )
+    if (request.status === 200) {
+      const json = await request.json()
+      console.log(json)
+      this.setState({
+        success: true,
+        message: intl.formatMessage({
+          id: "yllapito.hoksinHakuOnnistui",
+          defaultMessage: ""
+        }),
+        isLoading: false,
+        hoksId: json.data.id
+      })
+    } else {
+      this.setState({
+        success: false,
+        message: intl.formatMessage({
+          id: "yllapito.hoksinHakuEpaonnistui",
+          defaultMessage: "Hoksin haku epäonnistui"
+        }),
+        isLoading: false
+      })
+    }
+  }
+
+  handleOidChange = (inputOid: any) => {
+    // const inputOid = event.target.value
+    this.setState({
+      opiskeluoikeusOid: inputOid
+    })
+  }
+
   hideMessage = () => {
     this.setState({ message: "" })
   }
@@ -238,6 +291,72 @@ export class Yllapito extends React.Component<YllapitoProps> {
             <ContentArea>
               {systemInfo && (
                 <ContentElement>
+                  <ContentElement>
+                    <Header>
+                      <FormattedMessage
+                        id="yllapito.oppijaIndeksiTitle"
+                        defaultMessage="Oppijaindeksi"
+                      />
+                    </Header>
+                    <ContentElement>
+                      <FormattedMessage
+                        id="yllapito.oppijaIndeksoimatta"
+                        defaultMessage="Indeksoimatta: {unindexed} oppijaa"
+                        values={{
+                          unindexed: systemInfo.oppijaindex.unindexedOppijat
+                        }}
+                      />
+                    </ContentElement>
+                  </ContentElement>
+                  <ContentElement>
+                    <Header>
+                      <FormattedMessage
+                        id="yllapito.hoksIdnHaku"
+                        defaultMessage="Hoks-id:n haku"
+                      />
+                    </Header>
+                    <ContentElement>
+                      <ContentElement>
+                        <form>
+                          <input
+                            type="text"
+                            value={this.state.opiskeluoikeusOid}
+                            onChange={e => this.handleOidChange(e.target.value)}
+                          />
+                        </form>
+                      </ContentElement>
+                      <ContentElement>
+                        <Button onClick={this.onGetHoksId}>
+                          <FormattedMessage
+                            id="yllapito.haeHoksIdButton"
+                            defaultMessage="Hae hoks-id"
+                          />
+                        </Button>
+                      </ContentElement>
+                    </ContentElement>
+                    <FormattedMessage
+                      id="yllapito.hoksIdTulos"
+                      defaultMessage="Hoks-id on: {hoksId}"
+                      values={{
+                        hoksId: this.state.hoksId
+                      }}
+                    />
+                  </ContentElement>
+                  <ContentElement>
+                    <Header>
+                      <FormattedMessage
+                        id="yllapito.hoksienmaaraTitle"
+                        defaultMessage="Hoksien lukumäärä"
+                      />
+                    </Header>
+                    <ContentElement>
+                      <FormattedMessage
+                        id="yllapito.hoksienmaaraArvo"
+                        defaultMessage="Lukumäärä: {hoksAmount}"
+                        values={{ hoksAmount: systemInfo.hoksit.amount }}
+                      />
+                    </ContentElement>
+                  </ContentElement>
                   <ContentElement>
                     <Header>
                       <FormattedMessage

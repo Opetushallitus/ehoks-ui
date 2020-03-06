@@ -212,6 +212,12 @@
     "yllapito.title": "Ylläpito",
     "yllapito.tyhjennaValimuisti": "Tyhjennä välimuisti",
     "yllapito.valimuistiKoko": "Koko: {cacheSize}",
-    "yllapito.valimuistiTitle": "Välimuisti"
+    "yllapito.valimuistiTitle": "Välimuisti",
+    "yllapito.hoksIdTulos": "Hoks-id on: {hoksId}",
+    "yllapito.hoksIdnHaku": "Hoks-id:n haku",
+    "yllapito.hoksienmaaraTitle": "Hoksien lukumäärä",
+    "yllapito.hoksienmaaraArvo": "Lukumäärä: {hoksAmount}",
+    "yllapito.hoksinHakuOnnistui": "Hoks-id:n haku onnistui",
+    "yllapito.hoksinHakuEpaonnistui": "Hoks-id:n haku epäonnistui"
   }
 }
