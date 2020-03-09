@@ -5,7 +5,6 @@ import { Details } from "./StudyInfo/Details"
 import {
   Osaamisvaatimus,
   Naytto,
-  Harjoittelujakso,
   TodentamisenProsessi,
   OsaamisenHankkimistapa
 } from "models/helpers/TutkinnonOsa"
@@ -110,10 +109,10 @@ export interface StudyInfoProps {
    */
   koodiUri?: string
   /**
-   * List of learning periods
+   * List of learning periods.
    * @default []
    */
-  learningPeriods?: Array<Harjoittelujakso>
+  learningPeriodsTEMP?: Array<OsaamisenHankkimistapa>
   /**
    * Current share state from url
    */
@@ -236,7 +235,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       demonstrations = [],
       extraContent = null,
       fadedColor,
-      learningPeriods = [],
+      learningPeriodsTEMP = [],
       koodiUri,
       share,
       title,
@@ -246,7 +245,8 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     } = this.props
     const { featureFlags } = this.context
     const { expandedCompetences, expanded } = this.state
-    const hasLearningPeriods = learningPeriods && learningPeriods.length > 0
+    const hasLearningPeriods =
+      learningPeriodsTEMP && learningPeriodsTEMP.length > 0
     const hasDetails =
       hasLearningPeriods || demonstrations.length > 0 || verificationProcess
     const hasActiveShare =
@@ -287,7 +287,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
               demonstrations={demonstrations}
               extraContent={extraContent}
               expanded={detailsExpanded}
-              learningPeriods={learningPeriods}
+              learningPeriodsTEMP={learningPeriodsTEMP}
               competenceAcquiringMethods={competenceAcquiringMethods}
               verificationProcess={verificationProcess}
               koodiUri={koodiUri}

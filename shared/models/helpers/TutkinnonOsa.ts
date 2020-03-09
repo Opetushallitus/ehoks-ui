@@ -1,4 +1,7 @@
 import { ShareType } from "stores/NotificationStore"
+import { Instance } from "mobx-state-tree"
+import { OsaamisenHankkimistapa } from "../OsaamisenHankkimistapa"
+import { Oppilaitoshenkilo } from "../Oppilaitoshenkilo"
 
 interface Arviointikriteeri {
   kuvaus?: string
@@ -24,20 +27,11 @@ export interface MuuOppimisymparisto {
   oppimisymparisto?: Oppimisymparisto
 }
 
-export interface JarjestajanEdustaja {
-  nimi?: string
-  oppilaitosOid?: string
-  oppilaitosNimi?: string
-}
-export interface OsaamisenHankkimistapa {
-  tyopaikallaJarjestettavaKoulutus?: { tyopaikanYTunnus: string }
-  osaamisenHankkimistapaKoodiUri?: string
-  ajanjaksonTarkenne?: string
-  jarjestajanEdustaja?: JarjestajanEdustaja
-  muutOppimisymparistot?: MuuOppimisymparisto[]
-  alku: string
-  loppu: string
-}
+export interface JarjestajanEdustaja
+  extends Instance<typeof Oppilaitoshenkilo> {}
+
+export interface OsaamisenHankkimistapa
+  extends Instance<typeof OsaamisenHankkimistapa> {}
 
 export interface Nayttoymparisto {
   nimi: string

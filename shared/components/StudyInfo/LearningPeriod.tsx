@@ -13,12 +13,9 @@ import {
   TH,
   Title
 } from "./Shared"
-import {
-  Harjoittelujakso,
-  JarjestajanEdustaja,
-  OsaamisenHankkimistapa
-} from "models/helpers/TutkinnonOsa"
+import { OsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
+import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
 
 const LearningPeriodTitle = styled(Title)`
   margin-left: 20px;
@@ -38,42 +35,29 @@ const CustomSlider = styled(MobileSlider)`
 `
 
 interface LearningPeriodProps {
-  learningPeriod: Harjoittelujakso
-  competenceAcquiringMethods?: Array<OsaamisenHankkimistapa>
-  organizer?: JarjestajanEdustaja
+  learningPeriod: OsaamisenHankkimistapa
 }
 
 export class LearningPeriod extends React.Component<LearningPeriodProps> {
   render() {
-    const { learningPeriod, competenceAcquiringMethods, organizer } = this.props
+    const { learningPeriod } = this.props
     const {
-      tyotehtavat = [],
       alku,
       loppu,
       nimi,
       tyyppi,
-      ohjaaja,
-      selite
+      tyopaikallaJarjestettavaKoulutus,
+      selite,
+      workplaceSelite,
+      ajanjaksonTarkenne,
+      jarjestajanEdustaja
     } = learningPeriod
 
-    const method = competenceAcquiringMethods
-      ? competenceAcquiringMethods[0]
-      : undefined
-    const workplaceSelite =
-      tyyppi === "WORKPLACE" &&
-      method &&
-      method.tyopaikallaJarjestettavaKoulutus
-        ? selite +
-          ", " +
-          method.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus
-        : selite
-    const periodSpecifier =
-      method && method.ajanjaksonTarkenne ? method.ajanjaksonTarkenne : ""
-    const organizerRepresentative =
-      organizer && organizer.nimi ? organizer.nimi : ""
-    // TODO EH-757, this need to be fixed. Comment out after competenceAqcquiringMethods have been removed and
-    // harjoittelujaksot replaced with osaamisenHankkimistapa
-    // const organizerOrganisation = organizer && organizer.oppilaitosNimi ? organizer.oppilaitosNimi : ""
+    const vastuullinenTyopaikkaOhjaaja =
+      tyopaikallaJarjestettavaKoulutus?.vastuullinenTyopaikkaOhjaaja
+
+    const keskeisetTyotehtavat =
+      tyopaikallaJarjestettavaKoulutus?.keskeisetTyotehtavat
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
@@ -81,7 +65,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
           <LearningPeriodTitle>
             <LearningEvent
               title={
-                tyyppi === "OTHER" ? (
+                tyyppi === OsaamisenHankkimistapaType.Other ? (
                   nimi
                 ) : (
                   <FormattedMessage
@@ -91,46 +75,49 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                 )
               }
               type={tyyppi}
-              description={tyyppi === "WORKPLACE" ? workplaceSelite : selite}
+              description={
+                tyyppi === OsaamisenHankkimistapaType.Workplace
+                  ? workplaceSelite
+                  : selite
+              }
               startDate={alku}
               endDate={loppu}
-              periodSpecifier={periodSpecifier}
+              periodSpecifier={ajanjaksonTarkenne}
               size="large"
             />
           </LearningPeriodTitle>
         )}
         <LearningPeriodTable>
           <TBody>
-            {tyyppi === "WORKPLACE" && ohjaaja && (
-              <tr>
-                <TH>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.tyopaikkaohjaajaTitle"
-                    defaultMessage="Työpaikkaohjaaja"
-                  />
-                </TH>
-                <TD>
-                  {ohjaaja.nimi}, {selite}
-                  <br />
-                  {ohjaaja.sahkoposti}
-                </TD>
-              </tr>
-            )}
-            {tyyppi === "WORKPLACE" && ohjaaja && (
-              <tr>
-                <TH>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.koulutuksenjarjestajanEdustajaTitle"
-                    defaultMessage="Koulutuksen järjestäjän edustaja"
-                  />
-                </TH>
-                <TD>
-                  {/*TODO EH-757 add organizerOrgansation here, see comment above*/}
-                  {organizerRepresentative}
-                </TD>
-              </tr>
-            )}
-            {tyotehtavat.length > 0 && (
+            {tyyppi === OsaamisenHankkimistapaType.Workplace &&
+              vastuullinenTyopaikkaOhjaaja && (
+                <tr>
+                  <TH>
+                    <FormattedMessage
+                      id="opiskelusuunnitelma.tyopaikkaohjaajaTitle"
+                      defaultMessage="Työpaikkaohjaaja"
+                    />
+                  </TH>
+                  <TD>
+                    {vastuullinenTyopaikkaOhjaaja.nimi}, {selite}
+                    <br />
+                    {vastuullinenTyopaikkaOhjaaja.sahkoposti}
+                  </TD>
+                </tr>
+              )}
+            {tyyppi === OsaamisenHankkimistapaType.Workplace &&
+              vastuullinenTyopaikkaOhjaaja && (
+                <tr>
+                  <TH>
+                    <FormattedMessage
+                      id="opiskelusuunnitelma.koulutuksenjarjestajanEdustajaTitle"
+                      defaultMessage="Koulutuksen järjestäjän edustaja"
+                    />
+                  </TH>
+                  <TD>{jarjestajanEdustaja?.oppilaitosHenkiloDescription}</TD>
+                </tr>
+              )}
+            {keskeisetTyotehtavat?.length > 0 && (
               <tr>
                 <TH>
                   <FormattedMessage
@@ -143,18 +130,18 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
             )}
           </TBody>
         </LearningPeriodTable>
-        {tyotehtavat.length > 0 && (
+        {keskeisetTyotehtavat?.length > 0 && (
           <React.Fragment>
             <HMediaQuery.MaxWidth breakpoint="Tablet">
               <CustomSlider>
-                {tyotehtavat.map((tyotehtava, i) => {
+                {keskeisetTyotehtavat.map((tyotehtava, i) => {
                   return <Slide key={i}>{tyotehtava}</Slide>
                 })}
               </CustomSlider>
             </HMediaQuery.MaxWidth>
             <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
               <LearningPeriodTasks>
-                {tyotehtavat.map((tyotehtava, i) => {
+                {keskeisetTyotehtavat.map((tyotehtava, i) => {
                   return <li key={i}>{tyotehtava}</li>
                 })}
               </LearningPeriodTasks>

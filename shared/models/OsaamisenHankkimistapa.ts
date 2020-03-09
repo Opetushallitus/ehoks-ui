@@ -5,6 +5,11 @@ import { MuuOppimisymparisto } from "./MuuOppimisymparisto"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 
+export enum OsaamisenHankkimistapaType {
+  Workplace = "WORKPLACE",
+  Other = "OTHER"
+}
+
 const Model = types.model("OsaamisenHankkimistapaModel", {
   id: types.optional(types.number, 0),
   hankkijanEdustaja: types.optional(Oppilaitoshenkilo, {}),
@@ -21,8 +26,37 @@ const Model = types.model("OsaamisenHankkimistapaModel", {
   loppu: types.optional(types.string, "")
 })
 
-export const OsaamisenHankkimistapa = types.compose(
-  "OsaamisenHankkimistapa",
-  EnrichKoodiUri,
-  Model
-)
+export const OsaamisenHankkimistapa = types
+  .compose("OsaamisenHankkimistapa", EnrichKoodiUri, Model)
+  .views(self => {
+    return {
+      get nimi() {
+        return self.muutOppimisymparistot.length > 0 &&
+          self.muutOppimisymparistot[0].oppimisymparisto
+          ? self.muutOppimisymparistot[0].oppimisymparisto.nimi
+          : ""
+      },
+      get selite() {
+        return self.muutOppimisymparistot.length > 0
+          ? self.muutOppimisymparistot[0].selite
+          : self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi
+      },
+      get workplaceSelite() {
+        return self.tyyppi === OsaamisenHankkimistapaType.Workplace &&
+          self.tyopaikallaJarjestettavaKoulutus
+          ? self.selite +
+              ", " +
+              self.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus
+          : self.selite
+      },
+      get tyyppi():
+        | OsaamisenHankkimistapaType.Workplace
+        | OsaamisenHankkimistapaType.Other {
+        return self.osaamisenHankkimistapaKoodiUri.includes(
+          "koulutussopimus"
+        ) || self.osaamisenHankkimistapaKoodiUri.includes("oppisopimus")
+          ? OsaamisenHankkimistapaType.Workplace
+          : OsaamisenHankkimistapaType.Other
+      }
+    }
+  })
