@@ -145,7 +145,7 @@ export interface StudyInfoState {
  */
 export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
   static contextType = AppContext
-  context!: React.ContextType<typeof AppContext>
+  declare context: React.ContextType<typeof AppContext>
 
   state: StudyInfoState = {
     expanded: {

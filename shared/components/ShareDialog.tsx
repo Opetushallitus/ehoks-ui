@@ -6,7 +6,7 @@ import React, {
   useLayoutEffect
 } from "react"
 import { navigate } from "@reach/router"
-import { FormattedMessage, injectIntl, InjectedIntl } from "react-intl"
+import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl"
 import styled from "styled"
 import { ShareType } from "stores/NotificationStore"
 import { HeroButton } from "components/Button"
@@ -134,15 +134,15 @@ const DateInput = styled("input")`
   font-size: 14px;
 `
 
-interface ShareDialogProps {
+interface ShareDialogProps extends InjectedIntlProps {
   active: boolean
   background: string
-  children: any // TODO: fix
+  /* Used version of react-intl cannot handle React.ReactNode here */
+  children: any
   koodiUri: string
   type: ShareType
   defaultPeriod?: { start?: string; end?: string }
   instructor?: { name: string; organisation?: string; email: string }
-  intl?: InjectedIntl
 }
 
 export function ShareDialog(props: ShareDialogProps) {
@@ -220,7 +220,7 @@ export function ShareDialog(props: ShareDialogProps) {
     event.preventDefault()
     if (
       confirm(
-        intl!.formatMessage({
+        intl.formatMessage({
           id: "jakaminen.haluatkoPoistaaConfirm"
         })
       )
