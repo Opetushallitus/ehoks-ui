@@ -133,10 +133,8 @@ export class Details extends React.Component<DetailsProps> {
       : undefined
 
     let otherPeriods: MuuOppimisymparisto[] = []
-    competenceAcquiringMethods
-      .filter(method => {
-        return method.muutOppimisymparistot ? true : false
-      })
+    learningPeriods
+      .filter(method => !!method.muutOppimisymparistot)
       .map(method => {
         method?.muutOppimisymparistot?.map(ymparisto =>
           otherPeriods.push(ymparisto)
