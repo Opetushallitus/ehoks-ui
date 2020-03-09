@@ -74,14 +74,14 @@ export class Header extends React.Component<HeaderProps> {
     const { session } = this.props.store!
     return (
       <HeaderContainer>
-        {session!.organisations ? (
+        {session.organisations && (
           <OrganisationDropdown
-            organisations={session!.organisations}
+            organisations={session.organisations}
             onChange={this.handleOnOrganisationChange}
             value={session.selectedOrganisationOid}
             lang={Locale.FI}
           />
-        ) : null}
+        )}
         <TopLink to="/ehoks-virkailija-ui/koulutuksenjarjestaja">
           <FormattedMessage
             id="header.opiskelijatLink"
@@ -89,7 +89,7 @@ export class Header extends React.Component<HeaderProps> {
           />
           <ActiveIndicator />
         </TopLink>
-        {session.hasWritePrivilege ? (
+        {session.hasWritePrivilege && (
           <TopLink to="/ehoks-virkailija-ui/luohoks">
             <FormattedMessage
               id="header.tietojenTallennusLink"
@@ -97,7 +97,7 @@ export class Header extends React.Component<HeaderProps> {
             />
             <ActiveIndicator />
           </TopLink>
-        ) : null}
+        )}
         <TopLink to="/ehoks-virkailija-ui/raportit">
           <FormattedMessage
             id="header.raportitLink"
@@ -112,7 +112,7 @@ export class Header extends React.Component<HeaderProps> {
           />
           <ActiveIndicator />
         </TopLink>
-        {session.hasSuperUserPrivilege ? (
+        {session.hasSuperUserPrivilege && (
           <TopLink to="/ehoks-virkailija-ui/yllapito">
             <FormattedMessage
               id="header.yllapitoLink"
@@ -120,7 +120,7 @@ export class Header extends React.Component<HeaderProps> {
             />
             <ActiveIndicator />
           </TopLink>
-        ) : null}
+        )}
       </HeaderContainer>
     )
   }

@@ -1,3 +1,4 @@
+import { RouteComponentProps } from "@reach/router"
 import { Container } from "components/Container"
 import React from "react"
 import { FormattedMessage } from "react-intl"
@@ -11,9 +12,7 @@ const Content = styled("div")`
   }
 `
 
-interface SaavutettavuusselosteProps {
-  path?: string
-}
+type SaavutettavuusselosteProps = RouteComponentProps
 
 export function Saavutettavuusseloste(_: SaavutettavuusselosteProps) {
   return (

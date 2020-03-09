@@ -70,13 +70,14 @@ interface SystemInfo {
   }
 }
 
+type LoadingState = "initial" | "loading" | "success" | "unsuccessful"
+
 interface YllapitoState {
-  isLoading: boolean
+  loadingState: LoadingState
   message: string
-  success: boolean
-  systemInfo?: SystemInfo | null
   hoksId?: number
   opiskeluoikeusOid?: string | ""
+  systemInfo?: SystemInfo
 }
 
 interface SystemInfoResponse {
@@ -91,12 +92,11 @@ export class Yllapito extends React.Component<YllapitoProps> {
   }
 
   state: YllapitoState = {
-    isLoading: false,
+    loadingState: "initial",
     message: "",
-    success: false,
-    systemInfo: null,
     hoksId: undefined,
-    opiskeluoikeusOid: ""
+    opiskeluoikeusOid: "",
+    systemInfo: undefined
   }
 
   async loadSystemInfo() {
@@ -116,18 +116,16 @@ export class Yllapito extends React.Component<YllapitoProps> {
     if (request.status === 200) {
       const json: SystemInfoResponse = await request.json()
       this.setState({
-        success: true,
-        systemInfo: json.data,
-        isLoading: false
+        loadingState: "success",
+        systemInfo: json.data
       })
     } else {
       this.setState({
-        success: false,
+        loadingState: "unsuccessful",
         message: intl.formatMessage({
           id: "yllapito.jarjestelmanTietojenLatausEpaonnistui",
           defaultMessage: "Järjestelmän tietojen lataus epäonnistui"
-        }),
-        isLoading: false
+        })
       })
     }
   }
@@ -142,7 +140,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
 
   onClearCacheClicked = async () => {
     const { intl } = this.context
-    this.setState({ isLoading: true, message: "" })
+    this.setState({ loadingState: "loading", isLoading: true, message: "" })
     const request = await window.fetch(
       "/ehoks-virkailija-backend/api/v1/virkailija/cache",
       {
@@ -157,29 +155,27 @@ export class Yllapito extends React.Component<YllapitoProps> {
 
     if (request.status === 200) {
       this.setState({
-        success: true,
+        loadingState: "successfull",
         message: intl.formatMessage({
           id: "yllapito.valimuistiTyhjennetty",
           defaultMessage: "Välimuisti tyhjennetty"
-        }),
-        isLoading: false
+        })
       })
       await this.loadSystemInfo()
     } else {
       this.setState({
-        success: false,
+        loadingState: "unsuccessful",
         message: intl.formatMessage({
           id: "yllapito.valimuistinTyhjennysEpaonnistui",
           defaultMessage: "Välimuistin tyhjennys epäonnistui"
-        }),
-        isLoading: false
+        })
       })
     }
   }
 
   onRunIndexClicked = async () => {
     const { intl } = this.context
-    this.setState({ isLoading: true, message: "" })
+    this.setState({ loadingState: "loading", message: "" })
     const request = await window.fetch(
       "/ehoks-virkailija-backend/api/v1/virkailija/index",
       {
@@ -194,22 +190,20 @@ export class Yllapito extends React.Component<YllapitoProps> {
 
     if (request.status === 200) {
       this.setState({
-        success: true,
+        loadingState: "successfull",
         message: intl.formatMessage({
           id: "yllapito.indeksointiSuoritettu",
           defaultMessage: "Indeksointi suoritettu"
-        }),
-        isLoading: false
+        })
       })
       await this.loadSystemInfo()
     } else {
       this.setState({
-        success: false,
+        loadingState: "unsuccessful",
         message: intl.formatMessage({
           id: "yllapito.indeksointiEpaonnistui",
           defaultMessage: "Indeksointi epäonnistui"
-        }),
-        isLoading: false
+        })
       })
     }
   }
@@ -265,7 +259,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
   }
 
   render() {
-    const { isLoading, message, success, systemInfo } = this.state
+    const { loadingState, message, systemInfo } = this.state
     return (
       <BackgroundContainer>
         <Container>
@@ -277,8 +271,9 @@ export class Yllapito extends React.Component<YllapitoProps> {
                   defaultMessage="Ylläpito"
                 />
               </TopHeading>
-              {isLoading && <Spinner />}
-              {success ? (
+              {loadingState === "initial" ||
+                (loadingState === "loading" && <Spinner />)}
+              {loadingState === "success" ? (
                 <SuccessMessage onClick={this.hideMessage}>
                   {message}
                 </SuccessMessage>

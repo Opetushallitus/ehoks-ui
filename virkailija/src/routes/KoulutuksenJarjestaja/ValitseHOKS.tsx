@@ -13,19 +13,17 @@ import { FormattedMessage } from "react-intl"
 import { ISessionStore } from "stores/SessionStore"
 import { Instance } from "mobx-state-tree"
 
-interface ValitseHOKSProps {
-  nimi: string
+interface ValitseHOKSProps extends RouteComponentProps {
+  nimi?: string
   oppijaId: string
   suunnitelmat: IHOKS[]
   session: ISessionStore
 }
 
 @observer
-export class ValitseHOKS extends React.Component<
-  ValitseHOKSProps & RouteComponentProps
-> {
+export class ValitseHOKS extends React.Component<ValitseHOKSProps> {
   static contextType = AppContext
-  context!: React.ContextType<typeof AppContext>
+  declare context: React.ContextType<typeof AppContext>
   render() {
     const { nimi, suunnitelmat, oppijaId, session } = this.props
     const { app } = this.context

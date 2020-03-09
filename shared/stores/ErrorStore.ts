@@ -30,10 +30,11 @@ export const ErrorStore = types
   })
   .views(self => {
     return {
-      get unhandled(): Array<Instance<typeof AppError>> {
+      get unhandled(): Array<IAppError> {
         return self.errors.filter(error => !error.handled)
       }
     }
   })
 
 export interface IErrorStore extends Instance<typeof ErrorStore> {}
+export type IAppError = Instance<typeof AppError>

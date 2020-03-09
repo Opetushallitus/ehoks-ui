@@ -1,10 +1,4 @@
-import {
-  Link,
-  navigate,
-  RouteComponentProps,
-  Router,
-  WindowLocation
-} from "@reach/router"
+import { Link, navigate, RouteComponentProps, Router } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import { HelpPopup } from "components/HelpPopup"
 import { HOKSInfo } from "./HOKSInfo"
@@ -53,16 +47,16 @@ const HelpButton = styled(HelpPopup)`
   margin: 0 0 0 20px;
 `
 
-export interface HOKSProps {
+export interface KoulutuksenJarjestajaHOKSProps extends RouteComponentProps {
   suunnitelmat: IHOKS[]
   oppija?: IOppija
-  location?: WindowLocation
+  /* From router path */
   hoksId?: string
 }
 
 @observer
 export class KoulutuksenJarjestajaHOKS extends React.Component<
-  HOKSProps & RouteComponentProps
+  KoulutuksenJarjestajaHOKSProps
 > {
   disposeReaction: IReactionDisposer
   componentDidMount() {
@@ -126,7 +120,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                 <SectionItems>
                   <SectionItem
                     selected={
-                      location!.pathname ===
+                      location?.pathname ===
                       `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${suunnitelma.eid}`
                     }
                     onClick={this.setActiveTab(
@@ -143,7 +137,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                   </SectionItem>
                   <SectionItem
                     selected={
-                      location!.pathname ===
+                      location?.pathname ===
                       `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${suunnitelma.eid}/osaaminen`
                     }
                     onClick={this.setActiveTab(
@@ -160,7 +154,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                   </SectionItem>
                   <SectionItem
                     selected={
-                      location!.pathname ===
+                      location?.pathname ===
                       `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${suunnitelma.eid}/opiskelusuunnitelma`
                     }
                     onClick={this.setActiveTab(
