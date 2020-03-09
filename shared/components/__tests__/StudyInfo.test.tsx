@@ -199,7 +199,7 @@ describe("StudyInfo", () => {
       queryByTestId,
       rerender
     } = renderWithContext(
-      <StudyInfo title="Test" learningPeriodsTEMP={osaamisenHankkimistapa1} />
+      <StudyInfo title="Test" learningPeriods={osaamisenHankkimistapa1} />
     )
 
     expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
@@ -207,7 +207,7 @@ describe("StudyInfo", () => {
     expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
 
     rerender(
-      <StudyInfo title="Test" learningPeriodsTEMP={osaamisenHankkimistapa2} />
+      <StudyInfo title="Test" learningPeriods={osaamisenHankkimistapa2} />
     )
 
     await wait(() => {

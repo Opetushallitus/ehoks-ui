@@ -76,8 +76,7 @@ interface DetailsProps {
   extraContent?: React.ReactNode
   expanded?: boolean
   koodiUri?: string
-  learningPeriodsTEMP?: Array<OsaamisenHankkimistapa>
-  competenceAcquiringMethods?: Array<OsaamisenHankkimistapa>
+  learningPeriods?: Array<OsaamisenHankkimistapa>
   share?: { koodiUri: string; type: ShareType | "" }
   toggle: (name: ToggleableItems) => () => void
   verificationProcess?: TodentamisenProsessi
@@ -95,8 +94,7 @@ export class Details extends React.Component<DetailsProps> {
       expanded,
       fadedColor = "",
       koodiUri,
-      learningPeriodsTEMP = [],
-      competenceAcquiringMethods = [],
+      learningPeriods = [],
       share,
       toggle,
       verificationProcess
@@ -107,14 +105,14 @@ export class Details extends React.Component<DetailsProps> {
     const { SUORAAN, ARVIOIJIEN_KAUTTA, OHJAUS_NAYTTOON } = VerificationProcess
     const showExpand =
       demonstrations.length ||
-      learningPeriodsTEMP.length ||
+      learningPeriods.length ||
       verification === OHJAUS_NAYTTOON
     const hasActiveShare =
       typeof share !== "undefined" && koodiUri === share.koodiUri
     const shareType = typeof share !== "undefined" ? share.type : undefined
     const firstLearningPeriod =
-      shareType === "tyossaoppiminen" && learningPeriodsTEMP[0]
-        ? learningPeriodsTEMP[0]
+      shareType === "tyossaoppiminen" && learningPeriods[0]
+        ? learningPeriods[0]
         : undefined
 
     const instructor = firstLearningPeriod
@@ -133,10 +131,8 @@ export class Details extends React.Component<DetailsProps> {
       : undefined
 
     let otherPeriods: MuuOppimisymparisto[] = []
-    competenceAcquiringMethods
-      .filter(method => {
-        return method.muutOppimisymparistot ? true : false
-      })
+    learningPeriods
+      .filter(method => !!method.muutOppimisymparistot)
       .map(method => {
         method?.muutOppimisymparistot?.map(ymparisto =>
           otherPeriods.push(ymparisto)
@@ -170,7 +166,7 @@ export class Details extends React.Component<DetailsProps> {
             instructor={instructor}
             defaultPeriod={defaultPeriod}
           >
-            {learningPeriodsTEMP.map((period, i) => {
+            {learningPeriods.map((period, i) => {
               return <LearningPeriod key={i} learningPeriod={period} />
             })}
           </ShareDialog>
@@ -240,7 +236,7 @@ export class Details extends React.Component<DetailsProps> {
                 />
               </VerificationTitle>
             )}
-            {learningPeriodsTEMP.map((lp, i) => {
+            {learningPeriods.map((lp, i) => {
               return (
                 <LearningEvent
                   key={i}

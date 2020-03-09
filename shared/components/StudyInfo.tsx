@@ -93,11 +93,6 @@ export interface StudyInfoProps {
    * @default []
    */
   competenceRequirements?: Array<Osaamisvaatimus>
-  /**
-   * List of competence acquiring methods
-   * @default []
-   */
-  competenceAcquiringMethods?: Array<OsaamisenHankkimistapa>
   /** List of competence demonstrations */
   demonstrations?: Array<Naytto>
   /** extraContent is passed through to Details component */
@@ -112,7 +107,7 @@ export interface StudyInfoProps {
    * List of learning periods.
    * @default []
    */
-  learningPeriodsTEMP?: Array<OsaamisenHankkimistapa>
+  learningPeriods?: Array<OsaamisenHankkimistapa>
   /**
    * Current share state from url
    */
@@ -231,11 +226,10 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     const {
       accentColor,
       competenceRequirements = [],
-      competenceAcquiringMethods = [],
       demonstrations = [],
       extraContent = null,
       fadedColor,
-      learningPeriodsTEMP = [],
+      learningPeriods = [],
       koodiUri,
       share,
       title,
@@ -245,8 +239,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     } = this.props
     const { featureFlags } = this.context
     const { expandedCompetences, expanded } = this.state
-    const hasLearningPeriods =
-      learningPeriodsTEMP && learningPeriodsTEMP.length > 0
+    const hasLearningPeriods = learningPeriods && learningPeriods.length > 0
     const hasDetails =
       hasLearningPeriods || demonstrations.length > 0 || verificationProcess
     const hasActiveShare =
@@ -287,8 +280,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
               demonstrations={demonstrations}
               extraContent={extraContent}
               expanded={detailsExpanded}
-              learningPeriodsTEMP={learningPeriodsTEMP}
-              competenceAcquiringMethods={competenceAcquiringMethods}
+              learningPeriods={learningPeriods}
               verificationProcess={verificationProcess}
               koodiUri={koodiUri}
               share={share}

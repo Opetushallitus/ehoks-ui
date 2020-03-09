@@ -1,4 +1,3 @@
-import { getHarjoittelujaksot } from "./getHarjoittelujaksot"
 import { getNaytot } from "./getNaytot"
 import { getOsaamisvaatimukset } from "./getOsaamisvaatimukset"
 import { getOtsikko } from "./getOtsikko"
@@ -22,9 +21,6 @@ export const HankittavatTutkinnonOsatViews = types
       get naytot() {
         return getNaytot(self.osaamisenOsoittaminen)
       },
-      get harjoittelujaksot() {
-        return getHarjoittelujaksot(self.osaamisenHankkimistavat)
-      },
       get osaamisvaatimukset() {
         if (!self.tutkinnonOsa) {
           return []
@@ -47,10 +43,10 @@ export const HankittavatTutkinnonOsatViews = types
         const koodiUriMatch = self.tutkinnonOsaKoodiUri === koodiUri
         const typeMatch =
           type === "naytto"
-            ? this.naytot.length > 0
+            ? self.naytot.length > 0
             : !!find(
-                this.harjoittelujaksot,
-                hj => hj.tyyppi === OsaamisenHankkimistapaType.Workplace
+                self.osaamisenHankkimistavat,
+                oh => oh.tyyppi === OsaamisenHankkimistapaType.Workplace
               )
         return koodiUriMatch && typeMatch
       }

@@ -67,14 +67,13 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
                 <StudyInfo
                   accentColor={theme.colors.ready}
                   competenceRequirements={study.osaamisvaatimukset}
-                  competenceAcquiringMethods={study.osaamisenHankkimistavat}
                   demonstrations={study.naytot}
                   extraContent={
                     study.olennainenSeikka ? elements.essentialFactor : null
                   }
                   fadedColor="#ECF6ED"
                   koodiUri={study.tutkinnonOsaKoodiUri}
-                  learningPeriodsTEMP={study.osaamisenHankkimistavat}
+                  learningPeriods={study.osaamisenHankkimistavat}
                   share={share}
                   title={study.opintoOtsikko(competencePointsTitle)}
                   objectives={study.tavoitteetJaSisallot}

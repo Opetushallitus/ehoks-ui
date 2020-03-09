@@ -67,14 +67,13 @@ export class ScheduledStudies extends React.Component<ScheduledStudiesProps> {
                 <StudyInfo
                   accentColor={theme.colors.scheduled}
                   competenceRequirements={study.osaamisvaatimukset}
-                  competenceAcquiringMethods={study.osaamisenHankkimistavat}
                   demonstrations={study.naytot}
                   extraContent={
                     study.olennainenSeikka ? elements.essentialFactor : null
                   }
                   fadedColor="#FDF6E9"
                   koodiUri={study.tutkinnonOsaKoodiUri}
-                  learningPeriodsTEMP={study.osaamisenHankkimistavat}
+                  learningPeriods={study.osaamisenHankkimistavat}
                   share={share}
                   title={study.opintoOtsikko(competencePointsTitle)}
                   objectives={study.tavoitteetJaSisallot}
