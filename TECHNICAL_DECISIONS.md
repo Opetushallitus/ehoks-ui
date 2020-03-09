@@ -58,7 +58,12 @@ React's Context API is used for several features as it provides easy way to prov
 
 This project uses [Jest](https://jestjs.io/) testing framework with [react-testing-library](https://github.com/kentcdodds/react-testing-library).
 
-* Try to write tests that use your components like a real user would use them.
-* Try to use `data-testid` s as your element identifiers as much as possible instead of matching by `classNames` or by text strings.
-* Try to test your component's main functionality, not implementation details. Your tests should still work after you change styles, button texts or rearrange the DOM elements.
+- Try to write tests that use your components like a real user would use them.
+- Try to use `data-testid` s as your element identifiers as much as possible instead of matching by `classNames` or by text strings.
+- Try to test your component's main functionality, not implementation details. Your tests should still work after you change styles, button texts or rearrange the DOM elements.
 
+### mockFetch
+
+`shared/fetchUtils.ts` has `mockFetch`-util to mock fetch calls using local JSON files.
+
+Mock jsons are placed to `stores/mocks/[path_with_underscores][version number or 0].json`.
