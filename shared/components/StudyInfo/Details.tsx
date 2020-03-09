@@ -77,7 +77,6 @@ interface DetailsProps {
   expanded?: boolean
   koodiUri?: string
   learningPeriods?: Array<OsaamisenHankkimistapa>
-  competenceAcquiringMethods?: Array<OsaamisenHankkimistapa>
   share?: { koodiUri: string; type: ShareType | "" }
   toggle: (name: ToggleableItems) => () => void
   verificationProcess?: TodentamisenProsessi
@@ -96,7 +95,6 @@ export class Details extends React.Component<DetailsProps> {
       fadedColor = "",
       koodiUri,
       learningPeriods = [],
-      competenceAcquiringMethods = [],
       share,
       toggle,
       verificationProcess
