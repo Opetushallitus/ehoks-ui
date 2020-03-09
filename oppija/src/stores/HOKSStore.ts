@@ -33,14 +33,14 @@ export const HOKSStore = types
                       paikka: naytto.ymparisto
                     }
                   }),
-                  ...(to.harjoittelujaksot || []).map(hj => {
+                  ...(to.osaamisenHankkimistavat || []).map(oh => {
                     return {
                       hoksId: s.eid,
                       tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
                       tyyppi: "tyossaoppiminen",
-                      alku: hj.alku,
-                      loppu: hj.loppu,
-                      paikka: hj.selite
+                      alku: oh.alku,
+                      loppu: oh.loppu,
+                      paikka: oh.selite
                     }
                   })
                 ]
