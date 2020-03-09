@@ -65,7 +65,7 @@ export class Tavoitteet extends React.Component<
   TavoitteetState
 > {
   static contextType = AppContext
-  context!: React.ContextType<typeof AppContext>
+  declare context: React.ContextType<typeof AppContext>
   state = {
     activeAccordions: {
       hoksDates: false,
@@ -88,9 +88,6 @@ export class Tavoitteet extends React.Component<
   render() {
     const { student, hoks, titles: customTitles = {} } = this.props
     const { app } = this.context
-    if (!student) {
-      return null
-    }
 
     const titles = {
       heading: customTitles.heading || (

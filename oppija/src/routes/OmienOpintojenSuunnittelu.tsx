@@ -1,4 +1,4 @@
-import { Location, navigate, Router } from "@reach/router"
+import { Location, navigate, Router, RouteComponentProps } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import { MainHeading } from "components/Heading"
 import { HOKSButton } from "components/HOKSButton"
@@ -47,10 +47,10 @@ const SectionItems = styled(ProgressPies)`
   flex: 2;
 `
 
-export interface OmienOpintojenSuunnitteluProps {
+export interface OmienOpintojenSuunnitteluProps extends RouteComponentProps {
   student?: ISessionUser
   suunnitelmat?: IHOKS[]
-  path?: string
+  /* From router path */
   id?: string
 }
 

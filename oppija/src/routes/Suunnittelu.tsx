@@ -18,28 +18,28 @@ const LoadingContainer = styled("div")`
   min-height: 300px;
 `
 
-interface ValitseHOKSProps {
+interface SuunnitteluProps extends RouteComponentProps {
   store?: IRootStore
   "*"?: string
 }
 
-interface ValitseHOKSState {
+interface SuunnitteluState {
   allLoaded: boolean
 }
 
 @inject("store")
 @observer
 export class Suunnittelu extends React.Component<
-  ValitseHOKSProps & RouteComponentProps,
-  ValitseHOKSState
+  SuunnitteluProps & RouteComponentProps,
+  SuunnitteluState
 > {
-  state: ValitseHOKSState = {
+  state: SuunnitteluState = {
     allLoaded: false
   }
   disposeLoginReaction: IReactionDisposer
   componentDidMount() {
     const { store, uri } = this.props
-    const session = store!.session
+    const { session } = store!
 
     this.disposeLoginReaction = reaction(
       () => {
@@ -62,10 +62,14 @@ export class Suunnittelu extends React.Component<
           // ensure that SessionStore's checkSession call has finished
         } else {
           await store!.session.fetchSettings()
-          await store!.hoks.haeSuunnitelmat(session.user!.oid)
-          await store!.notifications.haeOpiskelijapalautelinkit(
-            session.user!.oid
-          )
+          if (session.user) {
+            await store!.hoks.haeSuunnitelmat(session.user.oid)
+            await store!.notifications.haeOpiskelijapalautelinkit(
+              session.user.oid
+            )
+          } else {
+            throw new Error(`Session user not defined`)
+          }
 
           this.setState({ allLoaded: true })
           const suunnitelmat = store!.hoks.suunnitelmat
@@ -90,7 +94,7 @@ export class Suunnittelu extends React.Component<
   }
 
   render() {
-    const store = this.props.store!
+    const { notifications, hoks, session } = this.props.store!
 
     if (!this.state.allLoaded) {
       return (
@@ -104,14 +108,14 @@ export class Suunnittelu extends React.Component<
       <>
         <IntroModalDialog />
         <StudentFeedbackModal
-          feedbackLinks={store.notifications.studentFeedbackLinks}
+          feedbackLinks={notifications.studentFeedbackLinks}
         />
         <Router basepath={`/ehoks/suunnittelu`}>
-          <ValitseHOKS path="/" suunnitelmat={store.hoks.suunnitelmat} />
+          <ValitseHOKS path="/" suunnitelmat={hoks.suunnitelmat} />
           <OmienOpintojenSuunnittelu
             path=":id/*"
-            student={store.session.user}
-            suunnitelmat={store.hoks.suunnitelmat}
+            student={session.user}
+            suunnitelmat={hoks.suunnitelmat}
           />
         </Router>
       </>

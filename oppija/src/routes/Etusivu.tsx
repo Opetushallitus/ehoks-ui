@@ -1,4 +1,4 @@
-import { navigate } from "@reach/router"
+import { navigate, RouteComponentProps } from "@reach/router"
 import { HeroButton } from "components/Button"
 import { Container } from "components/Container"
 import { ContentContainer } from "components/ContentContainer"
@@ -114,9 +114,8 @@ const HelpButton = styled(HelpPopup)`
   margin-top: 7px;
 `
 
-export interface EtusivuProps {
+export interface EtusivuProps extends RouteComponentProps {
   store?: IRootStore
-  path?: string
 }
 
 @inject("store")

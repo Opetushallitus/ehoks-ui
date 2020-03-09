@@ -115,11 +115,11 @@ export class Opiskelija extends React.Component<
     const oppija = koulutuksenJarjestaja.search.oppija(studentId)
     const suunnitelmat = oppija ? oppija.suunnitelmat : []
     const studentIndex = oppija ? results.indexOf(oppija) : -1
-    const previous = studentIndex > 0 ? results[studentIndex - 1] : null
+    const previous = studentIndex > 0 ? results[studentIndex - 1] : undefined
     const next =
       results.length && studentIndex !== -1 && studentIndex < results.length
         ? results[studentIndex + 1]
-        : null
+        : undefined
 
     return (
       <React.Fragment>
@@ -157,7 +157,7 @@ export class Opiskelija extends React.Component<
           <ValitseHOKS
             path="/"
             oppijaId={studentId}
-            nimi={oppija ? oppija.nimi : ""}
+            nimi={oppija?.nimi}
             suunnitelmat={suunnitelmat}
             session={session}
           />

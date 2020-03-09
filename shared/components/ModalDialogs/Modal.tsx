@@ -2,6 +2,11 @@ import React from "react"
 import ReactDOM from "react-dom"
 import styled from "styled"
 
+const modalRoot = document.getElementById("modal-root")
+const modalRootError = () => {
+  throw new Error(`modal-root not found`)
+}
+
 const ModalBackground = styled("div")`
   background: #000;
   opacity: 0.1;
@@ -20,11 +25,19 @@ export class Modal extends React.Component<{}> {
   }
 
   componentDidMount() {
-    document.getElementById("modal-root")!.appendChild(this.el)
+    if (modalRoot) {
+      modalRoot.appendChild(this.el)
+    } else {
+      modalRootError()
+    }
   }
 
   componentWillUnmount() {
-    document.getElementById("modal-root")!.removeChild(this.el)
+    if (modalRoot) {
+      modalRoot.removeChild(this.el)
+    } else {
+      modalRootError()
+    }
   }
 
   render() {

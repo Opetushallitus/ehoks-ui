@@ -4,11 +4,10 @@ import { Container } from "components/Container"
 import { Notification } from "components/Notification"
 import { FormattedDate } from "components/FormattedDate"
 import { inject, observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
 import React from "react"
 import { MdClose } from "react-icons/md"
 import { FormattedMessage, InjectedIntl, injectIntl } from "react-intl"
-import { AppError } from "stores/ErrorStore"
+import { IAppError } from "stores/ErrorStore"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 
@@ -67,7 +66,7 @@ export interface AppNotificationsProps {
 @observer
 export class AppNotifications extends React.Component<AppNotificationsProps> {
   static contextType = AppContext
-  context!: React.ContextType<typeof AppContext>
+  declare context: React.ContextType<typeof AppContext>
 
   ackNotification = (hide: () => void) => (event: React.MouseEvent) => {
     event.preventDefault()
@@ -83,7 +82,7 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
     } = store!
     return (
       <Container>
-        {unhandled.map((error: Instance<typeof AppError>, i: number) => {
+        {unhandled.map((error: IAppError, i: number) => {
           return (
             <AppNotification key={i} type="error">
               <Content>
