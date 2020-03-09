@@ -1,4 +1,3 @@
-import { getHarjoittelujaksot } from "./getHarjoittelujaksot"
 import { getNaytot } from "./getNaytot"
 import { getOsaamisvaatimukset } from "./getOsaamisvaatimukset"
 import { getOtsikko } from "./getOtsikko"
@@ -21,9 +20,6 @@ export const HankittavatTutkinnonOsatViews = types
       },
       get naytot() {
         return getNaytot(self.osaamisenOsoittaminen)
-      },
-      get harjoittelujaksot() {
-        return getHarjoittelujaksot(self.osaamisenHankkimistavat)
       },
       get osaamisvaatimukset() {
         if (!self.tutkinnonOsa) {

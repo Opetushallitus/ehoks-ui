@@ -1,7 +1,6 @@
 import { ShareType } from "stores/NotificationStore"
 import { Instance } from "mobx-state-tree"
 import { OsaamisenHankkimistapa } from "../OsaamisenHankkimistapa"
-import { Oppilaitoshenkilo } from "../Oppilaitoshenkilo"
 
 interface Arviointikriteeri {
   kuvaus?: string
@@ -79,16 +78,6 @@ export interface Naytto {
   tyyppi?: "DEMONSTRATION"
 }
 
-export interface Harjoittelujakso {
-  alku?: string
-  loppu?: string
-  ohjaaja?: { nimi: string; sahkoposti: string }
-  tyotehtavat?: string[]
-  nimi?: string
-  selite?: string
-  tyyppi?: "WORKPLACE" | "OTHER"
-}
-
 export interface TutkinnonOsa {
   id?: number
   osaamisvaatimukset?: Osaamisvaatimus[]
@@ -98,7 +87,6 @@ export interface TutkinnonOsa {
   otsikko?: string
   osaamispisteet?: number
   sijainnit?: string[]
-  harjoittelujaksot?: Harjoittelujakso[]
   tila?: string
   todentamisenProsessi?: TodentamisenProsessi
   olennainenSeikka?: boolean
