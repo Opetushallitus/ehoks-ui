@@ -5,7 +5,6 @@ import { Details } from "./StudyInfo/Details"
 import {
   Osaamisvaatimus,
   Naytto,
-  Harjoittelujakso,
   TodentamisenProsessi,
   OsaamisenHankkimistapa
 } from "models/helpers/TutkinnonOsa"
@@ -110,17 +109,10 @@ export interface StudyInfoProps {
    */
   koodiUri?: string
   /**
-   * List of learning periods, this is going to replace deprecated learningPeriods
+   * List of learning periods.
    * @default []
-   * @deprecated
    */
   learningPeriodsTEMP?: Array<OsaamisenHankkimistapa>
-  /**
-   * List of learning periods
-   * @default []
-   * @deprecated
-   */
-  learningPeriods?: Array<Harjoittelujakso>
   /**
    * Current share state from url
    */
@@ -244,7 +236,6 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       extraContent = null,
       fadedColor,
       learningPeriodsTEMP = [],
-      learningPeriods = [],
       koodiUri,
       share,
       title,
