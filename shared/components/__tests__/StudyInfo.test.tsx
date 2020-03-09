@@ -2,7 +2,7 @@ import React from "react"
 import { render, fireEvent, wait } from "@testing-library/react"
 import { StudyInfo } from "../StudyInfo"
 import { renderWithContext } from "testUtils"
-import { Naytto, Harjoittelujakso } from "models/helpers/TutkinnonOsa"
+import { Naytto, OsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
 import { mockFetch } from "fetchUtils"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
 
@@ -80,32 +80,40 @@ const naytot3 = [
   }
 ]
 
-const harjoittelujaksot1 = [
+const osaamisenHankkimistapa1 = [
   {
     alku: "2019-05-24",
     loppu: "2019-07-31",
     nimi: "Verkko-oppiminen",
     selite: "Moodle-kurssi, viestintä",
-    tyyppi: OsaamisenHankkimistapaType.Other as Harjoittelujakso["tyyppi"]
-  }
+    tyyppi: OsaamisenHankkimistapaType.Other
+  } as OsaamisenHankkimistapa
 ]
 
-const harjoittelujaksot2 = [
+const osaamisenHankkimistapa2 = [
   {
     alku: "2019-09-13",
     loppu: "2019-09-30",
-    ohjaaja: { nimi: "John McAfee", sahkoposti: "john@mock.dev" },
-    tyotehtavat: ["Elintarvikkeiden valmistus", "Elintarvikkeiden säilytys"],
+    tyopaikallaJarjestettavaKoulutus: {
+      vastuullinenTyopaikkaOhjaaja: {
+        nimi: "John McAfee",
+        sahkoposti: "john@mock.dev"
+      },
+      keskeisetTyotehtavat: [
+        "Elintarvikkeiden valmistus",
+        "Elintarvikkeiden säilytys"
+      ]
+    },
     selite: "Palvelutalo Koivikkola",
-    tyyppi: OsaamisenHankkimistapaType.Workplace as Harjoittelujakso["tyyppi"]
-  },
+    tyyppi: OsaamisenHankkimistapaType.Workplace
+  } as OsaamisenHankkimistapa,
   {
     alku: "2019-10-01",
     loppu: "2019-10-15",
     nimi: "Verkko-oppiminen",
     selite: "Moodle-kurssi, Ikääntyminen",
-    tyyppi: OsaamisenHankkimistapaType.Other as Harjoittelujakso["tyyppi"]
-  }
+    tyyppi: OsaamisenHankkimistapaType.Other
+  } as OsaamisenHankkimistapa
 ]
 
 describe("StudyInfo", () => {
@@ -191,14 +199,16 @@ describe("StudyInfo", () => {
       queryByTestId,
       rerender
     } = renderWithContext(
-      <StudyInfo title="Test" learningPeriods={harjoittelujaksot1} />
+      <StudyInfo title="Test" learningPeriodsTEMP={osaamisenHankkimistapa1} />
     )
 
     expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
     expect(queryByTestId("StudyInfo.DetailsExpanded")).not.toBeInTheDocument()
     expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
 
-    rerender(<StudyInfo title="Test" learningPeriods={harjoittelujaksot2} />)
+    rerender(
+      <StudyInfo title="Test" learningPeriodsTEMP={osaamisenHankkimistapa2} />
+    )
 
     await wait(() => {
       expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
