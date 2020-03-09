@@ -26,9 +26,6 @@ export interface MuuOppimisymparisto {
   oppimisymparisto?: Oppimisymparisto
 }
 
-export interface JarjestajanEdustaja
-  extends Instance<typeof Oppilaitoshenkilo> {}
-
 export interface OsaamisenHankkimistapa
   extends Instance<typeof OsaamisenHankkimistapa> {}
 
