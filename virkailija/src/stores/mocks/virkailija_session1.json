@@ -1,0 +1,20 @@
+{
+  "meta": {},
+  "data": {
+    "oidHenkilo": "1.1.111.111.11.11111111111",
+    "organisation-privileges": [
+      {
+        "oid": "1.1.111.111.11.11111111112",
+        "privileges": ["read", "update", "delete", "write"],
+        "roles": [],
+        "child-organisations": []
+      },
+      {
+        "oid": "1.1.111.111.11.11111111113",
+        "privileges": ["read"],
+        "roles": [],
+        "child-organisations": []
+      }
+    ]
+  }
+}

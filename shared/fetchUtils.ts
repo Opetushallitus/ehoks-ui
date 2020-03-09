@@ -97,7 +97,9 @@ export function fetchUtils(
   }
 }
 
-// mocked fetch using local JSON files
+/** mocked fetch using local JSON files
+ * stores/mocks/[path_with_underscores][version number or 0].json
+ */
 export const mockFetch = (apiUrl: (path: string) => string, version = 0) => (
   url: string,
   _init?: RequestInit
