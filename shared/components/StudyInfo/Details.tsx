@@ -8,7 +8,6 @@ import { IconContainer } from "./IconContainer"
 import { LearningPeriod } from "./LearningPeriod"
 import { OtherPeriod } from "./OtherPeriod"
 import {
-  Harjoittelujakso,
   MuuOppimisymparisto,
   Naytto,
   OsaamisenHankkimistapa,
