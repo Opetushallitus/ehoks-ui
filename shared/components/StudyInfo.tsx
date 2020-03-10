@@ -5,7 +5,7 @@ import {
   Osaamisvaatimus,
   Naytto,
   TodentamisenProsessi,
-  OsaamisenHankkimistapa,
+  IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen
 } from "models/helpers/TutkinnonOsa"
 import { ShareType } from "stores/NotificationStore"
@@ -110,7 +110,7 @@ export interface StudyInfoProps {
    * List of learning periods.
    * @default []
    */
-  learningPeriods?: Array<OsaamisenHankkimistapa>
+  learningPeriods?: Array<IOsaamisenHankkimistapa>
   /**
    * Current share state from url
    */

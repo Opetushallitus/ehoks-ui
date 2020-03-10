@@ -10,7 +10,7 @@ import { OtherPeriod } from "./OtherPeriod"
 import {
   MuuOppimisymparisto,
   Naytto,
-  OsaamisenHankkimistapa,
+  IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
   TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
@@ -78,7 +78,7 @@ interface DetailsProps {
   extraContent?: React.ReactNode
   expanded?: boolean
   koodiUri?: string
-  learningPeriods?: Array<OsaamisenHankkimistapa>
+  learningPeriods?: Array<IOsaamisenHankkimistapa>
   share?: { koodiUri: string; type: ShareType | "" }
   toggle: (name: ToggleableItems) => () => void
   verificationProcess?: TodentamisenProsessi

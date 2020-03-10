@@ -27,7 +27,7 @@ export interface MuuOppimisymparisto {
   oppimisymparisto?: Oppimisymparisto
 }
 
-export interface OsaamisenHankkimistapa
+export interface IOsaamisenHankkimistapa
   extends Instance<typeof OsaamisenHankkimistapa> {}
 
 export interface Organisaatio {
@@ -54,7 +54,7 @@ export interface Naytto {
 export interface TutkinnonOsa {
   id?: number
   osaamisvaatimukset?: Osaamisvaatimus[]
-  osaamisenHankkimistavat?: OsaamisenHankkimistapa[]
+  osaamisenHankkimistavat?: IOsaamisenHankkimistapa[]
   osaamisenOsoittaminen?: IOsaamisenOsoittaminen[]
   naytot?: Naytto[]
   otsikko?: string

@@ -2,7 +2,7 @@ import React from "react"
 import { render, fireEvent, wait } from "@testing-library/react"
 import { StudyInfo } from "../StudyInfo"
 import { renderWithContext } from "testUtils"
-import { Naytto, OsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
+import { Naytto, IOsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
 import { mockFetch } from "fetchUtils"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
 
@@ -87,7 +87,7 @@ const osaamisenHankkimistapa1 = [
     nimi: "Verkko-oppiminen",
     selite: "Moodle-kurssi, viestintä",
     tyyppi: OsaamisenHankkimistapaType.Other
-  } as OsaamisenHankkimistapa
+  } as IOsaamisenHankkimistapa
 ]
 
 const osaamisenHankkimistapa2 = [
@@ -106,14 +106,14 @@ const osaamisenHankkimistapa2 = [
     },
     selite: "Palvelutalo Koivikkola",
     tyyppi: OsaamisenHankkimistapaType.Workplace
-  } as OsaamisenHankkimistapa,
+  } as IOsaamisenHankkimistapa,
   {
     alku: "2019-10-01",
     loppu: "2019-10-15",
     nimi: "Verkko-oppiminen",
     selite: "Moodle-kurssi, Ikääntyminen",
     tyyppi: OsaamisenHankkimistapaType.Other
-  } as OsaamisenHankkimistapa
+  } as IOsaamisenHankkimistapa
 ]
 
 describe("StudyInfo", () => {
