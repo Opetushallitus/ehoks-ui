@@ -1,12 +1,12 @@
 import React from "react"
 import styled from "styled"
 import { Competences } from "./StudyInfo/Competences"
-import { Details } from "./StudyInfo/Details"
 import {
   Osaamisvaatimus,
   Naytto,
   TodentamisenProsessi,
-  OsaamisenHankkimistapa
+  OsaamisenHankkimistapa,
+  OsaamisenOsoittaminen
 } from "models/helpers/TutkinnonOsa"
 import { ShareType } from "stores/NotificationStore"
 import { MdShare } from "react-icons/md"
@@ -17,6 +17,7 @@ import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
 import { ToggleableItems } from "./StudyInfo/StudyInfoHelpers"
 import { Objectives } from "./StudyInfo/Objectives"
+import { Details } from "./StudyInfo/Details"
 
 interface ContainerProps {
   accentColor?: string
@@ -93,6 +94,8 @@ export interface StudyInfoProps {
    * @default []
    */
   competenceRequirements?: Array<Osaamisvaatimus>
+  /** List of competence demonstrations */
+  demonstrationsTEMP?: Array<OsaamisenOsoittaminen>
   /** List of competence demonstrations */
   demonstrations?: Array<Naytto>
   /** extraContent is passed through to Details component */
@@ -227,6 +230,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       accentColor,
       competenceRequirements = [],
       demonstrations = [],
+      demonstrationsTEMP = [],
       extraContent = null,
       fadedColor,
       learningPeriods = [],
@@ -278,6 +282,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
             <Details
               fadedColor={fadedColor}
               demonstrations={demonstrations}
+              demonstrationsTEMP={demonstrationsTEMP}
               extraContent={extraContent}
               expanded={detailsExpanded}
               learningPeriods={learningPeriods}
