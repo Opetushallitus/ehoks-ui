@@ -255,7 +255,7 @@ export class DemonstrationTEMP extends React.Component<
       verificationProcess
     } = this.props
     const { featureFlags } = this.context
-    // const { requirementsAndDeviationsExpanded } = this.state
+    const { requirementsAndDeviationsExpanded } = this.state
 
     const title =
       verificationProcess &&
@@ -348,12 +348,14 @@ export class DemonstrationTEMP extends React.Component<
           </DemonstrationTasks>
         </HMediaQuery.MaxWidth>
 
-        {/*<RequirementsAndDeviations*/}
-        {/*  toggle={this.toggleRequirementsAndDeviations}*/}
-        {/*  expanded={requirementsAndDeviationsExpanded}*/}
-        {/*  requirements={demonstration.yksilollisetKriteerit}*/}
-        {/*  deviations={demonstration.vaatimuksistaTaiTavoitteistaPoikkeaminen}*/}
-        {/*/>*/}
+        <RequirementsAndDeviations
+          toggle={this.toggleRequirementsAndDeviations}
+          expanded={requirementsAndDeviationsExpanded}
+          requirements={demonstrationTEMP.yksilollisetKriteerit}
+          deviations={
+            demonstrationTEMP.vaatimuksistaTaiTavoitteistaPoikkeaminen
+          }
+        />
       </Container>
     )
   }
