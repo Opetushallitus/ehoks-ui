@@ -298,45 +298,45 @@ export class DemonstrationTEMP extends React.Component<
             </ButtonContainer>
           )}
         </DemonstrationTitle>
-        {/*<DemonstrationTable>*/}
-        {/*  <TBody>*/}
-        {/*    <tr>*/}
-        {/*      <TH>*/}
-        {/*        <FormattedMessage*/}
-        {/*          id="opiskelusuunnitelma.nayttoymparistoTitle"*/}
-        {/*          defaultMessage="Näyttöympäristö"*/}
-        {/*        />*/}
-        {/*      </TH>*/}
-        {/*      <TD>{demonstration.ymparisto}</TD>*/}
-        {/*    </tr>*/}
-        {/*    <tr>*/}
-        {/*      <TH>*/}
-        {/*        <FormattedMessage*/}
-        {/*          id="opiskelusuunnitelma.arvioijatTitle"*/}
-        {/*          defaultMessage="Näytön arvioijat"*/}
-        {/*        />*/}
-        {/*      </TH>*/}
-        {/*      <TD>*/}
-        {/*        {demonstration &&*/}
-        {/*          demonstration.koulutuksenJarjestajaArvioijat &&*/}
-        {/*          demonstration.koulutuksenJarjestajaArvioijat.map(*/}
-        {/*            (arvioija, i) => (*/}
-        {/*              <span key={i}>*/}
-        {/*                {arvioija} <br />*/}
-        {/*              </span>*/}
-        {/*            )*/}
-        {/*          )}*/}
-        {/*        {demonstration &&*/}
-        {/*          demonstration.tyoelamaArvioijat &&*/}
-        {/*          demonstration.tyoelamaArvioijat.map((arvioija, i) => (*/}
-        {/*            <span key={i}>*/}
-        {/*              {arvioija} <br />*/}
-        {/*            </span>*/}
-        {/*          ))}*/}
-        {/*      </TD>*/}
-        {/*    </tr>*/}
-        {/*  </TBody>*/}
-        {/*</DemonstrationTable>*/}
+        <DemonstrationTable>
+          <TBody>
+            <tr>
+              <TH>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.nayttoymparistoTitle"
+                  defaultMessage="Näyttöympäristö"
+                />
+              </TH>
+              <TD>{nayttoymparisto?.kuvaus}</TD>
+            </tr>
+            <tr>
+              <TH>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.arvioijatTitle"
+                  defaultMessage="Näytön arvioijat"
+                />
+              </TH>
+              <TD>
+                {demonstrationTEMP &&
+                  demonstrationTEMP.koulutuksenJarjestajaArvioijat &&
+                  demonstrationTEMP.koulutuksenJarjestajaArvioijat.map(
+                    (arvioija, i) => (
+                      <span key={i}>
+                        {arvioija} <br />
+                      </span>
+                    )
+                  )}
+                {demonstrationTEMP &&
+                  demonstrationTEMP.tyoelamaArvioijat &&
+                  demonstrationTEMP.tyoelamaArvioijat.map((arvioija, i) => (
+                    <span key={i}>
+                      {arvioija} <br />
+                    </span>
+                  ))}
+              </TD>
+            </tr>
+          </TBody>
+        </DemonstrationTable>
         {/*<HMediaQuery.MaxWidth breakpoint="Tablet">*/}
         {/*  <CustomSlider>*/}
         {/*    {demonstration &&*/}
