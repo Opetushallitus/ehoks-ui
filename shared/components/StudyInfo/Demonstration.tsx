@@ -337,24 +337,24 @@ export class DemonstrationTEMP extends React.Component<
             </tr>
           </TBody>
         </DemonstrationTable>
-        {/*<HMediaQuery.MaxWidth breakpoint="Tablet">*/}
-        {/*  <CustomSlider>*/}
-        {/*    {demonstration &&*/}
-        {/*      demonstration.tyotehtavat &&*/}
-        {/*      demonstration.tyotehtavat.map((tyotehtava, i) => {*/}
-        {/*        return <Slide key={i}>{tyotehtava}</Slide>*/}
-        {/*      })}*/}
-        {/*  </CustomSlider>*/}
-        {/*</HMediaQuery.MaxWidth>*/}
-        {/*<HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>*/}
-        {/*  <DemonstrationTasks>*/}
-        {/*    {demonstration &&*/}
-        {/*      demonstration.tyotehtavat &&*/}
-        {/*      demonstration.tyotehtavat.map((tyotehtava, i) => {*/}
-        {/*        return <li key={i}>{tyotehtava}</li>*/}
-        {/*      })}*/}
-        {/*  </DemonstrationTasks>*/}
-        {/*</HMediaQuery.MaxWidth>*/}
+        <HMediaQuery.MaxWidth breakpoint="Tablet">
+          <CustomSlider>
+            {demonstrationTEMP &&
+              demonstrationTEMP.sisallonKuvaus &&
+              demonstrationTEMP.sisallonKuvaus.map((tyotehtava, i) => {
+                return <Slide key={i}>{tyotehtava}</Slide>
+              })}
+          </CustomSlider>
+        </HMediaQuery.MaxWidth>
+        <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
+          <DemonstrationTasks>
+            {demonstrationTEMP &&
+              demonstrationTEMP.sisallonKuvaus &&
+              demonstrationTEMP.sisallonKuvaus.map((tyotehtava, i) => {
+                return <li key={i}>{tyotehtava}</li>
+              })}
+          </DemonstrationTasks>
+        </HMediaQuery.MaxWidth>
 
         {/*<RequirementsAndDeviations*/}
         {/*  toggle={this.toggleRequirementsAndDeviations}*/}
