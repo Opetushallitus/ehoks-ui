@@ -273,7 +273,7 @@ export class DemonstrationTEMP extends React.Component<
 
     const showShareButton = !hasActiveShare && featureFlags.shareDialog
 
-    const organizationName = demonstrationTEMP.nayttoymparisto?.nimi
+    const nayttoymparisto = demonstrationTEMP.nayttoymparisto
 
     return (
       <Container data-testid="StudyInfo.Demonstration">
@@ -281,7 +281,7 @@ export class DemonstrationTEMP extends React.Component<
           <FlexLearningEvent
             title={title}
             isDemonstration={true}
-            description={organizationName}
+            description={nayttoymparisto?.nimi}
             startDate={demonstrationTEMP.alku}
             endDate={demonstrationTEMP.loppu}
             size="large"
