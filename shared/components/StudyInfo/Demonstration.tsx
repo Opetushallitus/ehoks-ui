@@ -6,7 +6,7 @@ import styled from "styled"
 import { Container, InfoContainer, Table, TBody, TD, TH, Title } from "./Shared"
 import {
   Naytto,
-  OsaamisenOsoittaminen,
+  IOsaamisenOsoittaminen,
   TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
@@ -212,7 +212,7 @@ export class Demonstration extends React.Component<
 
 interface DemonstrationPropsTEMP {
   demonstration?: Naytto
-  demonstrationTEMP: OsaamisenOsoittaminen
+  demonstrationTEMP: IOsaamisenOsoittaminen
   verificationProcess?: TodentamisenProsessi
   koodiUri?: string
   hasActiveShare?: boolean

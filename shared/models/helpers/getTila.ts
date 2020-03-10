@@ -1,9 +1,9 @@
 import min from "lodash.min"
 import max from "lodash.max"
-import { OsaamisenHankkimistapa, OsaamisenOsoittaminen } from "./TutkinnonOsa"
+import { OsaamisenHankkimistapa, IOsaamisenOsoittaminen } from "./TutkinnonOsa"
 
 export function getTila(
-  osaamisenOsoittaminen: OsaamisenOsoittaminen[],
+  osaamisenOsoittaminen: IOsaamisenOsoittaminen[],
   osaamisenHankkimistavat: OsaamisenHankkimistapa[]
 ) {
   const osoittaminenStartDates: Date[] = []

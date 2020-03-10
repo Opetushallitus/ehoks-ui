@@ -11,7 +11,7 @@ import {
   MuuOppimisymparisto,
   Naytto,
   OsaamisenHankkimistapa,
-  OsaamisenOsoittaminen,
+  IOsaamisenOsoittaminen,
   TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "./LearningEvent"
@@ -74,7 +74,7 @@ const VerificationTitle = styled("strong")`
 interface DetailsProps {
   fadedColor?: string
   demonstrations?: Array<Naytto>
-  demonstrationsTEMP?: Array<OsaamisenOsoittaminen>
+  demonstrationsTEMP?: Array<IOsaamisenOsoittaminen>
   extraContent?: React.ReactNode
   expanded?: boolean
   koodiUri?: string

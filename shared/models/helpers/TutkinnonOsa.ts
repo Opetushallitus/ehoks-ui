@@ -35,7 +35,7 @@ export interface Organisaatio {
   yTunnus: string
 }
 
-export interface OsaamisenOsoittaminen
+export interface IOsaamisenOsoittaminen
   extends Instance<typeof OsaamisenOsoittaminen> {}
 
 export interface Naytto {
@@ -55,7 +55,7 @@ export interface TutkinnonOsa {
   id?: number
   osaamisvaatimukset?: Osaamisvaatimus[]
   osaamisenHankkimistavat?: OsaamisenHankkimistapa[]
-  osaamisenOsoittaminen?: OsaamisenOsoittaminen[]
+  osaamisenOsoittaminen?: IOsaamisenOsoittaminen[]
   naytot?: Naytto[]
   otsikko?: string
   osaamispisteet?: number

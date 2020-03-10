@@ -6,7 +6,7 @@ import {
   Naytto,
   TodentamisenProsessi,
   OsaamisenHankkimistapa,
-  OsaamisenOsoittaminen
+  IOsaamisenOsoittaminen
 } from "models/helpers/TutkinnonOsa"
 import { ShareType } from "stores/NotificationStore"
 import { MdShare } from "react-icons/md"
@@ -95,7 +95,7 @@ export interface StudyInfoProps {
    */
   competenceRequirements?: Array<Osaamisvaatimus>
   /** List of competence demonstrations */
-  demonstrationsTEMP?: Array<OsaamisenOsoittaminen>
+  demonstrationsTEMP?: Array<IOsaamisenOsoittaminen>
   /** List of competence demonstrations */
   demonstrations?: Array<Naytto>
   /** extraContent is passed through to Details component */
