@@ -317,42 +317,34 @@ export class DemonstrationTEMP extends React.Component<
                 />
               </TH>
               <TD>
-                {demonstrationTEMP &&
-                  demonstrationTEMP.koulutuksenJarjestajaArvioijat &&
-                  demonstrationTEMP.koulutuksenJarjestajaArvioijat.map(
-                    (arvioija, i) => (
-                      <span key={i}>
-                        {arvioija} <br />
-                      </span>
-                    )
-                  )}
-                {demonstrationTEMP &&
-                  demonstrationTEMP.tyoelamaArvioijat &&
-                  demonstrationTEMP.tyoelamaArvioijat.map((arvioija, i) => (
+                {demonstrationTEMP.koulutuksenJarjestajaArvioijat?.map(
+                  (arvioija, i) => (
                     <span key={i}>
                       {arvioija} <br />
                     </span>
-                  ))}
+                  )
+                )}
+                {demonstrationTEMP.tyoelamaArvioijat?.map((arvioija, i) => (
+                  <span key={i}>
+                    {arvioija} <br />
+                  </span>
+                ))}
               </TD>
             </tr>
           </TBody>
         </DemonstrationTable>
         <HMediaQuery.MaxWidth breakpoint="Tablet">
           <CustomSlider>
-            {demonstrationTEMP &&
-              demonstrationTEMP.sisallonKuvaus &&
-              demonstrationTEMP.sisallonKuvaus.map((tyotehtava, i) => {
-                return <Slide key={i}>{tyotehtava}</Slide>
-              })}
+            {demonstrationTEMP.sisallonKuvaus?.map((tyotehtava, i) => {
+              return <Slide key={i}>{tyotehtava}</Slide>
+            })}
           </CustomSlider>
         </HMediaQuery.MaxWidth>
         <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
           <DemonstrationTasks>
-            {demonstrationTEMP &&
-              demonstrationTEMP.sisallonKuvaus &&
-              demonstrationTEMP.sisallonKuvaus.map((tyotehtava, i) => {
-                return <li key={i}>{tyotehtava}</li>
-              })}
+            {demonstrationTEMP.sisallonKuvaus?.map((tyotehtava, i) => {
+              return <li key={i}>{tyotehtava}</li>
+            })}
           </DemonstrationTasks>
         </HMediaQuery.MaxWidth>
 
