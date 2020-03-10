@@ -11,6 +11,7 @@ import {
   MuuOppimisymparisto,
   Naytto,
   OsaamisenHankkimistapa,
+  OsaamisenOsoittaminen,
   TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "./LearningEvent"
@@ -73,6 +74,7 @@ const VerificationTitle = styled("strong")`
 interface DetailsProps {
   fadedColor?: string
   demonstrations?: Array<Naytto>
+  demonstrationsTEMP?: Array<OsaamisenOsoittaminen>
   extraContent?: React.ReactNode
   expanded?: boolean
   koodiUri?: string
@@ -90,6 +92,7 @@ export class Details extends React.Component<DetailsProps> {
   render() {
     const {
       demonstrations = [],
+      // demonstrationsTEMP = [],
       extraContent = null,
       expanded,
       fadedColor = "",
@@ -175,7 +178,9 @@ export class Details extends React.Component<DetailsProps> {
             return <OtherPeriod key={i} otherPeriod={period} />
           })}
 
+          {/*TODO EH-743 uncomment when implemented*/}
           {demonstrations.map((demonstration, i) => {
+            // {demonstrationsTEMP.map((demonstration, i) => {
             return (
               <ShareDialog
                 active={hasActiveShare && shareType === "naytto"}
@@ -194,6 +199,13 @@ export class Details extends React.Component<DetailsProps> {
                   koodiUri={koodiUri}
                   hasActiveShare={hasActiveShare && shareType === "naytto"}
                 />
+                {/*TODO EH-743 uncomment when implemented*/}
+                {/*<DemonstrationTEMP*/}
+                {/*  demonstrationTEMP={demonstration}*/}
+                {/*  verificationProcess={verificationProcess}*/}
+                {/*  koodiUri={koodiUri}*/}
+                {/*  hasActiveShare={hasActiveShare && shareType === "naytto"}*/}
+                {/*/>*/}
               </ShareDialog>
             )
           })}
