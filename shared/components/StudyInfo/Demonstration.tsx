@@ -123,7 +123,7 @@ export class Demonstration extends React.Component<
         <DemonstrationTitle>
           <FlexLearningEvent
             title={title}
-            type={demonstration.tyyppi}
+            isDemonstration={true}
             description={demonstration.organisaatio}
             startDate={demonstration.alku}
             endDate={demonstration.loppu}
@@ -274,15 +274,13 @@ export class DemonstrationTEMP extends React.Component<
     const showShareButton = !hasActiveShare && featureFlags.shareDialog
 
     const organizationName = demonstrationTEMP.nayttoymparisto?.nimi
-    // TODO siirra modeliin
-    const learningEventType = "DEMONSTRATION"
 
     return (
       <Container data-testid="StudyInfo.Demonstration">
         <DemonstrationTitle>
           <FlexLearningEvent
             title={title}
-            type={learningEventType}
+            isDemonstration={true}
             description={organizationName}
             startDate={demonstrationTEMP.alku}
             endDate={demonstrationTEMP.loppu}

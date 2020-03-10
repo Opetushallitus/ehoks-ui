@@ -29,7 +29,6 @@ export class OtherPeriod extends React.Component<OtherPeriodProps> {
           <LearningPeriodTitle>
             <LearningEvent
               title={nimi}
-              type="OTHER"
               startDate={alku}
               endDate={loppu}
               size="large"

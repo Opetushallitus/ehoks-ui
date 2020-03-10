@@ -45,7 +45,7 @@ const Title = styled("strong")<SizeProps>`
 interface LearningEventProps {
   className?: string
   title?: React.ReactNode
-  type: "WORKPLACE" | "OTHER" | "DEMONSTRATION" | undefined
+  isDemonstration?: boolean
   size?: "small" | "large"
   description?: string
   startDate?: string
@@ -63,15 +63,15 @@ export class LearningEvent extends React.Component<LearningEventProps> {
       startDate = "",
       endDate = "",
       periodSpecifier = "",
-      type
+      isDemonstration = false
     } = this.props
     const iconSize = size === "small" ? 24 : 32
     return (
       <Container className={className} data-testid="StudyInfo.LearningEvent">
         <Title size={size}>{title}</Title>
         <ContentContainer>
-          <Icon isDemonstration={type === "DEMONSTRATION"}>
-            {type === "DEMONSTRATION" ? (
+          <Icon isDemonstration={isDemonstration}>
+            {isDemonstration ? (
               <Flag size={iconSize} />
             ) : (
               <MdEventNote size={iconSize} fill="#636769" />

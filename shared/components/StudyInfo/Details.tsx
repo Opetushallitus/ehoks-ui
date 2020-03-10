@@ -262,7 +262,6 @@ export class Details extends React.Component<DetailsProps> {
                       />
                     )
                   }
-                  type={lp.tyyppi}
                   description={lp.selite}
                   startDate={lp.alku}
                   endDate={lp.loppu}
@@ -292,7 +291,6 @@ export class Details extends React.Component<DetailsProps> {
                 <LearningEvent
                   key={i}
                   title={title}
-                  type={d.tyyppi}
                   description={d.organisaatio}
                   startDate={d.alku}
                   endDate={d.loppu}

@@ -74,7 +74,6 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                   />
                 )
               }
-              type={tyyppi}
               description={
                 tyyppi === OsaamisenHankkimistapaType.Workplace
                   ? workplaceSelite
