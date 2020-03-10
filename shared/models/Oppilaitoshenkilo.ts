@@ -33,9 +33,9 @@ export const Oppilaitoshenkilo = types
           : ""
       },
       get oppilaitosHenkiloDescription() {
-        return (
-          self.nimi + (self.oppilaitosNimi ? ", " + self.oppilaitosNimi : "")
-        )
+        return self.nimi && self.oppilaitosNimi
+          ? `${self.nimi}, ${self.oppilaitosNimi}`
+          : self.nimi
       }
     }
   })
