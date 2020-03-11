@@ -245,7 +245,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     const { expandedCompetences, expanded } = this.state
     const hasLearningPeriods = learningPeriods && learningPeriods.length > 0
     const hasDetails =
-      hasLearningPeriods || demonstrations.length > 0 || verificationProcess
+      hasLearningPeriods || demonstrationsTEMP.length > 0 || verificationProcess
     const hasActiveShare =
       typeof share !== "undefined" &&
       koodiUri === share.koodiUri &&
