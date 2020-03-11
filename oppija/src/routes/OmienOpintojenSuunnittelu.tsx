@@ -1,4 +1,4 @@
-import { Location, navigate, Router, RouteComponentProps } from "@reach/router"
+import { Location, navigate, RouteComponentProps, Router } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import { MainHeading } from "components/Heading"
 import { HOKSButton } from "components/HOKSButton"
@@ -18,8 +18,8 @@ import { ISessionUser } from "models/SessionUser"
 import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
-import styled from "styled"
 import { HMediaQuery } from "responsive"
+import styled from "styled"
 
 const Section = styled("div")`
   display: flex;

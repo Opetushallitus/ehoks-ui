@@ -1,3 +1,4 @@
+import { RouteComponentProps } from "@reach/router"
 import { Button } from "components/Button"
 import { Container, PaddedContent } from "components/Container"
 import { ContentArea } from "components/ContentArea"
@@ -8,7 +9,6 @@ import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
-import { RouteComponentProps } from "@reach/router"
 
 export const BackgroundContainer = styled("div")`
   background: #f8f8f8;
