@@ -43,7 +43,7 @@
     "@types/react-circular-progressbar": "^1.1.0",
     "@types/react-dom": "^16.9.5",
     "@types/react-intl": "^2.3.18",
-    "@types/react-jsonschema-form": "^1.7.1",
+    "@types/react-jsonschema-form": "^1.0.14",
     "@types/react-responsive": "^8.0.2",
     "@types/react-swipeable-views": "^0.12.2",
     "@types/react-test-renderer": "^16.9.2",
