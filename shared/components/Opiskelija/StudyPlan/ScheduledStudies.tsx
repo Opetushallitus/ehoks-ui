@@ -67,7 +67,6 @@ export class ScheduledStudies extends React.Component<ScheduledStudiesProps> {
                 <StudyInfo
                   accentColor={theme.colors.scheduled}
                   competenceRequirements={study.osaamisvaatimukset}
-                  demonstrations={study.naytot}
                   demonstrationsTEMP={study.osaamisenOsoittaminen}
                   extraContent={
                     study.olennainenSeikka ? elements.essentialFactor : null

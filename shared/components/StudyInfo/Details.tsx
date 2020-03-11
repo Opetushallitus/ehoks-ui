@@ -8,7 +8,6 @@ import { LearningPeriod } from "./LearningPeriod"
 import { OtherPeriod } from "./OtherPeriod"
 import {
   MuuOppimisymparisto,
-  Naytto,
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
   TodentamisenProsessi
@@ -73,7 +72,6 @@ const VerificationTitle = styled("strong")`
 
 interface DetailsProps {
   fadedColor?: string
-  demonstrations?: Array<Naytto>
   demonstrationsTEMP?: Array<IOsaamisenOsoittaminen>
   extraContent?: React.ReactNode
   expanded?: boolean
