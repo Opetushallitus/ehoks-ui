@@ -53,7 +53,6 @@ export interface Naytto {
 
 interface TutkinnonOsa {
   id?: number
-  osaamisenHankkimistavat?: IOsaamisenHankkimistapa[]
   osaamisenOsoittaminen?: IOsaamisenOsoittaminen[]
   naytot?: Naytto[]
   otsikko?: string
@@ -71,5 +70,6 @@ export interface AiemminHankittuTutkinnonOsa extends TutkinnonOsa {}
 
 export interface HankittavaTutkinnonOsa extends TutkinnonOsa {
   osaamisvaatimukset?: Osaamisvaatimus[]
+  osaamisenHankkimistavat?: IOsaamisenHankkimistapa[]
   hasNayttoOrHarjoittelujakso(koodiUri: string, type: ShareType | ""): boolean
 }
