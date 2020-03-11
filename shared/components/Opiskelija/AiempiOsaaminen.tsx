@@ -91,6 +91,7 @@ export class AiempiOsaaminen extends React.Component<
                     learningPeriods={study.osaamisenHankkimistavat}
                     competenceRequirements={study.osaamisvaatimukset}
                     demonstrations={study.naytot}
+                    demonstrationsTEMP={study.osaamisenOsoittaminen}
                     verificationProcess={study.todentamisenProsessi}
                     objectives={study.tavoitteetJaSisallot}
                   />
