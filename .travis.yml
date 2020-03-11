@@ -23,17 +23,12 @@ install:
   - npm ci
 
 script:
-  - npm run prettier:check
+  - npm run travis
   - cd oppija
-  - npm run lint
-  - npm test
-  - npm run build
   - export BASE_IMAGE=baseimage-fatjar:master
   - ../ci-tools/common/pull-image.sh
   - ./scripts/ci/build.sh ehoks-oppija-ui
   - cd ../virkailija
-  - npm test
-  - npm run build
   - ./scripts/ci/build.sh ehoks-virkailija-ui
 
 deploy:

@@ -8,6 +8,7 @@
     "lint": "../node_modules/.bin/tslint src/*.tsx src/**/*.tsx",
     "test": "../node_modules/.bin/jest",
     "build": "../node_modules/.bin/webpack --config webpack.config.production.js --mode production",
+    "prepush": "../node_modules/.bin/tsc --project tsconfig.json --skipLibCheck false",
     "extract_translations": "node ../shared/extractMessages.js"
   },
   "private": true,

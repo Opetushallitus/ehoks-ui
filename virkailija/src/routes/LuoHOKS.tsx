@@ -1,3 +1,4 @@
+import { RouteComponentProps } from "@reach/router"
 import { Button } from "components/Button"
 import { LoadingSpinner } from "components/LoadingSpinner"
 import { ModalDialog } from "components/ModalDialogs/ModalDialog"
@@ -37,7 +38,6 @@ import "./HOKSLomake/styles.css"
 import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./LuoHOKS/uiSchema"
-import { RouteComponentProps } from "@reach/router"
 
 interface LuoHOKSProps extends RouteComponentProps {
   store?: IRootStore

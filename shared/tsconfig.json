@@ -13,9 +13,14 @@
     "moduleResolution": "node",
     "target": "es5",
     "jsx": "react",
-    "lib": ["es5", "es6", "dom"],
+    "lib": [
+      "es5",
+      "es6",
+      "dom",
+      "es2018" /* mobx - error TS2304: Cannot find name 'AsyncGenerator'*/
+    ],
     "baseUrl": "."
   },
   "include": ["./**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "./**/__tests__"]
 }

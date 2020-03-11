@@ -1,3 +1,4 @@
+import { RouteComponentProps } from "@reach/router"
 import { Button } from "components/Button"
 import { LoadingSpinner } from "components/LoadingSpinner"
 import { JSONSchema6 } from "json-schema"
@@ -35,7 +36,6 @@ import "./HOKSLomake/styles.css"
 import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
-import { RouteComponentProps } from "@reach/router"
 
 const disallowedKeys = ["eid", "manuaalisyotto"]
 
