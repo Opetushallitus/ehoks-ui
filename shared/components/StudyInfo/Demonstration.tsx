@@ -129,6 +129,7 @@ export class Demonstration extends React.Component<
             startDate={demonstration.alku}
             endDate={demonstration.loppu}
             size="large"
+            demonstrationEnviromentDescription={nayttoymparisto?.kuvaus}
           />
           {showShareButton && (
             <ButtonContainer>
@@ -144,15 +145,6 @@ export class Demonstration extends React.Component<
         </DemonstrationTitle>
         <DemonstrationTable>
           <TBody>
-            <tr>
-              <TH>
-                <FormattedMessage
-                  id="opiskelusuunnitelma.nayttoymparistoTitle"
-                  defaultMessage="Näyttöympäristö"
-                />
-              </TH>
-              <TD>{nayttoymparisto?.kuvaus}</TD>
-            </tr>
             <tr>
               <TH>
                 <FormattedMessage
