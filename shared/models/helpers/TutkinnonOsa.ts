@@ -38,22 +38,8 @@ export interface Organisaatio {
 export interface IOsaamisenOsoittaminen
   extends Instance<typeof OsaamisenOsoittaminen> {}
 
-export interface Naytto {
-  alku?: string
-  loppu?: string
-  organisaatio?: string
-  ymparisto?: string
-  koulutuksenJarjestajaArvioijat?: string[]
-  tyoelamaArvioijat?: string[]
-  tyotehtavat?: string[]
-  yksilollisetKriteerit?: string[]
-  vaatimuksistaTaiTavoitteistaPoikkeaminen?: string
-  tyyppi?: "DEMONSTRATION"
-}
-
 interface TutkinnonOsa {
   id?: number
-  naytot?: Naytto[]
   otsikko?: string
   osaamispisteet?: number
   olennainenSeikka?: boolean
