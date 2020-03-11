@@ -56,7 +56,6 @@ interface TutkinnonOsa {
   naytot?: Naytto[]
   otsikko?: string
   osaamispisteet?: number
-  sijainnit?: string[]
   tila?: string
   todentamisenProsessi?: TodentamisenProsessi
   olennainenSeikka?: boolean
