@@ -167,6 +167,14 @@ export class Demonstration extends React.Component<
                 ))}
               </TD>
             </tr>
+            <tr>
+              <TH>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.jarjestajaTitle"
+                  defaultMessage="Järjestäjä"
+                />
+              </TH>
+            </tr>
           </TBody>
         </DemonstrationTable>
         <HMediaQuery.MaxWidth breakpoint="Tablet">
