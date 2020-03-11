@@ -4,6 +4,8 @@
 
 `npm start` starts the development server in [localhost:8080/ehoks](http://localhost:8080/ehoks)
 
+`npm lint`runs linter for the code
+
 `npm test` runs the Jest test suite
 
 `npm run build` builds the application
