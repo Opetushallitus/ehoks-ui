@@ -1,6 +1,8 @@
-import { Naytto, OsaamisenOsoittaminen } from "./TutkinnonOsa"
+import { Naytto, IOsaamisenOsoittaminen } from "./TutkinnonOsa"
 
-export function getNaytot(osaamisenOsoittaminen: Array<OsaamisenOsoittaminen>) {
+export function getNaytot(
+  osaamisenOsoittaminen: Array<IOsaamisenOsoittaminen>
+) {
   return osaamisenOsoittaminen.map<Naytto>(naytto => ({
     alku: naytto.alku,
     loppu: naytto.loppu,

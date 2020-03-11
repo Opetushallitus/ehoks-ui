@@ -1,12 +1,12 @@
 import React from "react"
 import styled from "styled"
 import { Competences } from "./StudyInfo/Competences"
-import { Details } from "./StudyInfo/Details"
 import {
   Osaamisvaatimus,
   Naytto,
   TodentamisenProsessi,
-  OsaamisenHankkimistapa
+  IOsaamisenHankkimistapa,
+  IOsaamisenOsoittaminen
 } from "models/helpers/TutkinnonOsa"
 import { ShareType } from "stores/NotificationStore"
 import { MdShare } from "react-icons/md"
@@ -17,6 +17,7 @@ import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
 import { ToggleableItems } from "./StudyInfo/StudyInfoHelpers"
 import { Objectives } from "./StudyInfo/Objectives"
+import { Details } from "./StudyInfo/Details"
 
 interface ContainerProps {
   accentColor?: string
@@ -94,6 +95,8 @@ export interface StudyInfoProps {
    */
   competenceRequirements?: Array<Osaamisvaatimus>
   /** List of competence demonstrations */
+  demonstrationsTEMP?: Array<IOsaamisenOsoittaminen>
+  /** List of competence demonstrations */
   demonstrations?: Array<Naytto>
   /** extraContent is passed through to Details component */
   extraContent?: React.ReactNode
@@ -107,7 +110,7 @@ export interface StudyInfoProps {
    * List of learning periods.
    * @default []
    */
-  learningPeriods?: Array<OsaamisenHankkimistapa>
+  learningPeriods?: Array<IOsaamisenHankkimistapa>
   /**
    * Current share state from url
    */
@@ -227,6 +230,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       accentColor,
       competenceRequirements = [],
       demonstrations = [],
+      demonstrationsTEMP = [],
       extraContent = null,
       fadedColor,
       learningPeriods = [],
@@ -241,7 +245,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     const { expandedCompetences, expanded } = this.state
     const hasLearningPeriods = learningPeriods && learningPeriods.length > 0
     const hasDetails =
-      hasLearningPeriods || demonstrations.length > 0 || verificationProcess
+      hasLearningPeriods || demonstrationsTEMP.length > 0 || verificationProcess
     const hasActiveShare =
       typeof share !== "undefined" &&
       koodiUri === share.koodiUri &&
@@ -278,6 +282,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
             <Details
               fadedColor={fadedColor}
               demonstrations={demonstrations}
+              demonstrationsTEMP={demonstrationsTEMP}
               extraContent={extraContent}
               expanded={detailsExpanded}
               learningPeriods={learningPeriods}

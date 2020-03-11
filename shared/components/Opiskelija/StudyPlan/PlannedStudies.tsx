@@ -68,6 +68,7 @@ export class PlannedStudies extends React.Component<PlannedStudiesProps> {
                   accentColor={theme.colors.planned}
                   competenceRequirements={study.osaamisvaatimukset}
                   demonstrations={study.naytot}
+                  demonstrationsTEMP={study.osaamisenOsoittaminen}
                   extraContent={
                     study.olennainenSeikka ? elements.essentialFactor : null
                   }

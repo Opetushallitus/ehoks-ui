@@ -13,7 +13,7 @@ import {
   TH,
   Title
 } from "./Shared"
-import { OsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
+import { IOsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
 
@@ -35,7 +35,7 @@ const CustomSlider = styled(MobileSlider)`
 `
 
 interface LearningPeriodProps {
-  learningPeriod: OsaamisenHankkimistapa
+  learningPeriod: IOsaamisenHankkimistapa
 }
 
 export class LearningPeriod extends React.Component<LearningPeriodProps> {
@@ -74,7 +74,6 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                   />
                 )
               }
-              type={tyyppi}
               description={
                 tyyppi === OsaamisenHankkimistapaType.Workplace
                   ? workplaceSelite

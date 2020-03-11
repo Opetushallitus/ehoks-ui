@@ -2,7 +2,6 @@ import React from "react"
 import { intlShape, FormattedMessage } from "react-intl"
 import styled from "styled"
 import { Collapse } from "./Collapse"
-import { Demonstration } from "./Demonstration"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
 import { LearningPeriod } from "./LearningPeriod"
@@ -10,7 +9,8 @@ import { OtherPeriod } from "./OtherPeriod"
 import {
   MuuOppimisymparisto,
   Naytto,
-  OsaamisenHankkimistapa,
+  IOsaamisenHankkimistapa,
+  IOsaamisenOsoittaminen,
   TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "./LearningEvent"
@@ -21,6 +21,7 @@ import { ShareType } from "stores/NotificationStore"
 import ShareDialog from "components/ShareDialog"
 import { ToggleableItems } from "./StudyInfoHelpers"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
+import { DemonstrationTEMP } from "./Demonstration"
 
 interface ColorProps {
   fadedColor: string
@@ -73,10 +74,11 @@ const VerificationTitle = styled("strong")`
 interface DetailsProps {
   fadedColor?: string
   demonstrations?: Array<Naytto>
+  demonstrationsTEMP?: Array<IOsaamisenOsoittaminen>
   extraContent?: React.ReactNode
   expanded?: boolean
   koodiUri?: string
-  learningPeriods?: Array<OsaamisenHankkimistapa>
+  learningPeriods?: Array<IOsaamisenHankkimistapa>
   share?: { koodiUri: string; type: ShareType | "" }
   toggle: (name: ToggleableItems) => () => void
   verificationProcess?: TodentamisenProsessi
@@ -89,7 +91,7 @@ export class Details extends React.Component<DetailsProps> {
 
   render() {
     const {
-      demonstrations = [],
+      demonstrationsTEMP = [],
       extraContent = null,
       expanded,
       fadedColor = "",
@@ -104,7 +106,7 @@ export class Details extends React.Component<DetailsProps> {
     const verification = verificationProcess && verificationProcess.koodiUri
     const { SUORAAN, ARVIOIJIEN_KAUTTA, OHJAUS_NAYTTOON } = VerificationProcess
     const showExpand =
-      demonstrations.length ||
+      demonstrationsTEMP.length ||
       learningPeriods.length ||
       verification === OHJAUS_NAYTTOON
     const hasActiveShare =
@@ -175,7 +177,7 @@ export class Details extends React.Component<DetailsProps> {
             return <OtherPeriod key={i} otherPeriod={period} />
           })}
 
-          {demonstrations.map((demonstration, i) => {
+          {demonstrationsTEMP.map((demonstration, i) => {
             return (
               <ShareDialog
                 active={hasActiveShare && shareType === "naytto"}
@@ -188,8 +190,8 @@ export class Details extends React.Component<DetailsProps> {
                 }}
                 key={i}
               >
-                <Demonstration
-                  demonstration={demonstration}
+                <DemonstrationTEMP
+                  demonstrationTEMP={demonstration}
                   verificationProcess={verificationProcess}
                   koodiUri={koodiUri}
                   hasActiveShare={hasActiveShare && shareType === "naytto"}
@@ -250,14 +252,13 @@ export class Details extends React.Component<DetailsProps> {
                       />
                     )
                   }
-                  type={lp.tyyppi}
                   description={lp.selite}
                   startDate={lp.alku}
                   endDate={lp.loppu}
                 />
               )
             })}
-            {demonstrations.map((d, i) => {
+            {demonstrationsTEMP.map((d, i) => {
               const title =
                 verification === OHJAUS_NAYTTOON ? (
                   <FormattedMessage
@@ -280,8 +281,7 @@ export class Details extends React.Component<DetailsProps> {
                 <LearningEvent
                   key={i}
                   title={title}
-                  type={d.tyyppi}
-                  description={d.organisaatio}
+                  description={d?.nayttoymparisto?.nimi}
                   startDate={d.alku}
                   endDate={d.loppu}
                 />

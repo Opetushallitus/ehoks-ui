@@ -2,7 +2,7 @@ import { types } from "mobx-state-tree"
 import { Organisaatio } from "./Organisaatio"
 import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
 
-const Model = types.model("NaytonJarjestaja", {
+const Model = types.model("NaytonJarjestajaModel", {
   id: types.optional(types.number, 0),
   oppilaitosOid: types.optional(types.string, ""),
   oppilaitos: types.optional(Organisaatio, {})

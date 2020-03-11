@@ -2,7 +2,10 @@ import React from "react"
 import { render, fireEvent, wait } from "@testing-library/react"
 import { StudyInfo } from "../StudyInfo"
 import { renderWithContext } from "testUtils"
-import { Naytto, OsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
+import {
+  IOsaamisenHankkimistapa,
+  IOsaamisenOsoittaminen
+} from "models/helpers/TutkinnonOsa"
 import { mockFetch } from "fetchUtils"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
 
@@ -26,58 +29,52 @@ const naytot1 = [
   {
     alku: "2017-10-25",
     loppu: "2017-10-26",
-    organisaatio: "Näyttöpaikka",
-    ymparisto: "Näyttöympäristö",
-    koulutuksenJarjestajaArvioijat: [
-      "Koulu Järjestäjä, koulutuksen järjestäjä"
-    ],
-    tyoelamaArvioijat: ["Työ Arvioija, työelämä"],
-    tyotehtavat: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"],
-    tyyppi: "DEMONSTRATION" as Naytto["tyyppi"]
-  }
+    nayttoymparisto: {
+      kuvaus: "Näyttöympäristö",
+      nimi: "Näyttöpaikka"
+    },
+    tyoelamaOsaamisenArvioijat: {},
+    osaAlueet: [{ koodiVersio: 1 }],
+    yksilollisetKriteerit: ["joku kriteeri"],
+    sisallonKuvaus: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"]
+  } as IOsaamisenOsoittaminen
 ]
 
 const naytot2 = [
   {
     alku: "2017-10-25",
     loppu: "2017-10-26",
-    organisaatio: "Näyttöpaikka",
-    ymparisto: "Näyttöympäristö",
-    koulutuksenJarjestajaArvioijat: [
-      "Koulu Järjestäjä, koulutuksen järjestäjä"
-    ],
-    tyoelamaArvioijat: ["Työ Arvioija, työelämä"],
-    tyotehtavat: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"],
-    tyyppi: "DEMONSTRATION" as Naytto["tyyppi"]
-  },
+    nayttoymparisto: {
+      kuvaus: "Näyttöympäristö",
+      nimi: "Näyttöpaikka"
+    },
+    sisallonKuvaus: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"]
+  } as IOsaamisenOsoittaminen,
   {
     alku: "2017-10-25",
     loppu: "2017-10-26",
-    organisaatio: "Näyttöpaikka",
-    ymparisto: "Näyttöympäristö",
-    koulutuksenJarjestajaArvioijat: [
-      "Koulu Järjestäjä, koulutuksen järjestäjä"
-    ],
-    tyoelamaArvioijat: ["Työ Arvioija, työelämä"],
-    tyotehtavat: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"],
-    tyyppi: "DEMONSTRATION" as Naytto["tyyppi"]
-  }
+    nayttoymparisto: {
+      kuvaus: "Näyttöympäristö",
+      nimi: "Näyttöpaikka"
+    },
+    koulutuksenJarjestajaOsaamisenArvioijat: {},
+    tyoelamaOsaamisenArvioijat: {},
+    sisallonKuvaus: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"]
+  } as IOsaamisenOsoittaminen
 ]
 
 const naytot3 = [
   {
     alku: "2019-08-01",
     loppu: "2019-08-01",
-    organisaatio: "Näyttöpaikka",
-    ymparisto: "Näyttöympäristö",
-    koulutuksenJarjestajaArvioijat: [
-      "Olli Opettaja, koulutuksen järjestäjä",
-      "Oona Opettaja, koulutuksen järjestäjä"
-    ],
-    tyoelamaArvioijat: ["Teuvo Työpaikka, työelämä"],
-    tyotehtavat: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"],
-    tyyppi: "DEMONSTRATION" as Naytto["tyyppi"]
-  }
+    nayttoymparisto: {
+      kuvaus: "Näyttöympäristö",
+      nimi: "Näyttöpaikka"
+    },
+    koulutuksenJarjestajaOsaamisenArvioijat: {},
+    tyoelamaOsaamisenArvioijat: {},
+    sisallonKuvaus: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"]
+  } as IOsaamisenOsoittaminen
 ]
 
 const osaamisenHankkimistapa1 = [
@@ -87,7 +84,7 @@ const osaamisenHankkimistapa1 = [
     nimi: "Verkko-oppiminen",
     selite: "Moodle-kurssi, viestintä",
     tyyppi: OsaamisenHankkimistapaType.Other
-  } as OsaamisenHankkimistapa
+  } as IOsaamisenHankkimistapa
 ]
 
 const osaamisenHankkimistapa2 = [
@@ -106,14 +103,14 @@ const osaamisenHankkimistapa2 = [
     },
     selite: "Palvelutalo Koivikkola",
     tyyppi: OsaamisenHankkimistapaType.Workplace
-  } as OsaamisenHankkimistapa,
+  } as IOsaamisenHankkimistapa,
   {
     alku: "2019-10-01",
     loppu: "2019-10-15",
     nimi: "Verkko-oppiminen",
     selite: "Moodle-kurssi, Ikääntyminen",
     tyyppi: OsaamisenHankkimistapaType.Other
-  } as OsaamisenHankkimistapa
+  } as IOsaamisenHankkimistapa
 ]
 
 describe("StudyInfo", () => {
@@ -173,13 +170,15 @@ describe("StudyInfo", () => {
       getAllByTestId,
       queryByTestId,
       rerender
-    } = renderWithContext(<StudyInfo title="Test" demonstrations={naytot1} />)
+    } = renderWithContext(
+      <StudyInfo title="Test" demonstrationsTEMP={naytot1} />
+    )
 
     expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
     expect(queryByTestId("StudyInfo.DetailsExpanded")).not.toBeInTheDocument()
     expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
 
-    rerender(<StudyInfo title="Test" demonstrations={naytot2} />)
+    rerender(<StudyInfo title="Test" demonstrationsTEMP={naytot2} />)
 
     await wait(() => {
       expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
@@ -252,7 +251,7 @@ describe("StudyInfo", () => {
     rerender(
       <StudyInfo
         title="Title"
-        demonstrations={naytot3}
+        demonstrationsTEMP={naytot3}
         verificationProcess={{
           koodiUri: "osaamisentodentamisenprosessi_0003"
         }}
