@@ -20,7 +20,8 @@
     "baseUrl": "./src",
     "paths": {
       "*": ["*", "../../shared/*"]
-    }
+    },
+    "skipLibCheck": true
   },
   "include": ["./**/*", "../shared/**/*"],
   "exclude": ["node_modules"]
