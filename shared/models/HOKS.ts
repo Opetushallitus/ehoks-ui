@@ -5,7 +5,10 @@ import { AiemminHankittuYhteinenTutkinnonOsa } from "models/AiemminHankittuYhtei
 import { HankittavaAmmatillinenTutkinnonOsa } from "models/HankittavaAmmatillinenTutkinnonOsa"
 import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenTutkinnonOsa"
 import { HankittavaYhteinenTutkinnonOsa } from "models/HankittavaYhteinenTutkinnonOsa"
-import { TutkinnonOsa, HankittavaTutkinnonOsa } from "./helpers/TutkinnonOsa"
+import {
+  HankittavaTutkinnonOsa,
+  AiemminHankittuTutkinnonOsa
+} from "./helpers/TutkinnonOsa"
 import flattenDeep from "lodash.flattendeep"
 import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
@@ -175,7 +178,7 @@ export const HOKS = types
           ...osaAlueet
         ]
       },
-      get aiemminHankitutTutkinnonOsat(): TutkinnonOsa[] {
+      get aiemminHankitutTutkinnonOsat(): AiemminHankittuTutkinnonOsa[] {
         const osaAlueet = flattenDeep<
           Instance<typeof AiemminHankitunYTOOsaAlue>
         >(
