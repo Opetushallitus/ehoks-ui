@@ -38,36 +38,25 @@ export interface Organisaatio {
 export interface IOsaamisenOsoittaminen
   extends Instance<typeof OsaamisenOsoittaminen> {}
 
-export interface Naytto {
-  alku?: string
-  loppu?: string
-  organisaatio?: string
-  ymparisto?: string
-  koulutuksenJarjestajaArvioijat?: string[]
-  tyoelamaArvioijat?: string[]
-  tyotehtavat?: string[]
-  yksilollisetKriteerit?: string[]
-  vaatimuksistaTaiTavoitteistaPoikkeaminen?: string
-  tyyppi?: "DEMONSTRATION"
-}
-
-export interface TutkinnonOsa {
+interface TutkinnonOsa {
   id?: number
-  osaamisvaatimukset?: Osaamisvaatimus[]
-  osaamisenHankkimistavat?: IOsaamisenHankkimistapa[]
-  osaamisenOsoittaminen?: IOsaamisenOsoittaminen[]
-  naytot?: Naytto[]
   otsikko?: string
   osaamispisteet?: number
-  sijainnit?: string[]
-  tila?: string
-  todentamisenProsessi?: TodentamisenProsessi
   olennainenSeikka?: boolean
   tutkinnonOsaKoodiUri?: string
   opintoOtsikko: (ospLyhenne: string) => string
   tavoitteetJaSisallot?: string
 }
 
+export interface AiemminHankittuTutkinnonOsa extends TutkinnonOsa {
+  tarkentavatTiedotNaytto?: IOsaamisenOsoittaminen[]
+  todentamisenProsessi?: TodentamisenProsessi
+}
+
 export interface HankittavaTutkinnonOsa extends TutkinnonOsa {
+  osaamisvaatimukset?: Osaamisvaatimus[]
+  osaamisenOsoittaminen?: IOsaamisenOsoittaminen[]
+  osaamisenHankkimistavat?: IOsaamisenHankkimistapa[]
+  tila?: string
   hasNayttoOrHarjoittelujakso(koodiUri: string, type: ShareType | ""): boolean
 }

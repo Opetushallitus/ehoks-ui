@@ -7,8 +7,8 @@ import { StudiesContainer } from "components/StudiesContainer"
 import { StudyInfo } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
-import { TutkinnonOsa } from "models/helpers/TutkinnonOsa"
 import styled from "styled"
+import { AiemminHankittuTutkinnonOsa } from "../../models/helpers/TutkinnonOsa"
 
 const Container = styled(StudiesContainer)`
   margin-top: 0;
@@ -17,7 +17,7 @@ const Container = styled(StudiesContainer)`
 export interface AiempiOsaaminenProps {
   children?: React.ReactChildren
   heading?: React.ReactNode
-  studies: Array<TutkinnonOsa>
+  studies: Array<AiemminHankittuTutkinnonOsa>
 }
 
 export interface AiempiOsaaminenState {
@@ -88,10 +88,7 @@ export class AiempiOsaaminen extends React.Component<
                     accentColor="#43A047"
                     fadedColor="#ECF6ED"
                     title={study.opintoOtsikko(competencePointsTitle)}
-                    learningPeriods={study.osaamisenHankkimistavat}
-                    competenceRequirements={study.osaamisvaatimukset}
-                    demonstrations={study.naytot}
-                    demonstrationsTEMP={study.osaamisenOsoittaminen}
+                    demonstrations={study.tarkentavatTiedotNaytto}
                     verificationProcess={study.todentamisenProsessi}
                     objectives={study.tavoitteetJaSisallot}
                   />

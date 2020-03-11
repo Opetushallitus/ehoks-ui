@@ -1,4 +1,3 @@
-import { getNaytot } from "./getNaytot"
 import { getOsaamisvaatimukset } from "./getOsaamisvaatimukset"
 import { getOtsikko } from "./getOtsikko"
 import { getTila } from "./getTila"
@@ -9,7 +8,6 @@ import { ShareType } from "stores/NotificationStore"
 import find from "lodash.find"
 import { OsaamisenHankkimistapaType } from "../OsaamisenHankkimistapa"
 
-// TODO: type tutkinnonOsa
 export const HankittavatTutkinnonOsatViews = types
   .model({})
   .views((self: any) => {
@@ -17,9 +15,6 @@ export const HankittavatTutkinnonOsatViews = types
     return {
       get tila() {
         return getTila(self.osaamisenOsoittaminen, self.osaamisenHankkimistavat)
-      },
-      get naytot() {
-        return getNaytot(self.osaamisenOsoittaminen)
       },
       get osaamisvaatimukset() {
         if (!self.tutkinnonOsa) {
@@ -43,7 +38,7 @@ export const HankittavatTutkinnonOsatViews = types
         const koodiUriMatch = self.tutkinnonOsaKoodiUri === koodiUri
         const typeMatch =
           type === "naytto"
-            ? self.naytot.length > 0
+            ? self.osaamisenOsoittaminen?.length > 0
             : !!find(
                 self.osaamisenHankkimistavat,
                 oh => oh.tyyppi === OsaamisenHankkimistapaType.Workplace

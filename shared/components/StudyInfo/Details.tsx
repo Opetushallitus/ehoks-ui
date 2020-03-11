@@ -8,7 +8,6 @@ import { LearningPeriod } from "./LearningPeriod"
 import { OtherPeriod } from "./OtherPeriod"
 import {
   MuuOppimisymparisto,
-  Naytto,
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
   TodentamisenProsessi
@@ -21,7 +20,7 @@ import { ShareType } from "stores/NotificationStore"
 import ShareDialog from "components/ShareDialog"
 import { ToggleableItems } from "./StudyInfoHelpers"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
-import { DemonstrationTEMP } from "./Demonstration"
+import { Demonstration } from "./Demonstration"
 
 interface ColorProps {
   fadedColor: string
@@ -73,8 +72,7 @@ const VerificationTitle = styled("strong")`
 
 interface DetailsProps {
   fadedColor?: string
-  demonstrations?: Array<Naytto>
-  demonstrationsTEMP?: Array<IOsaamisenOsoittaminen>
+  demonstrations?: Array<IOsaamisenOsoittaminen>
   extraContent?: React.ReactNode
   expanded?: boolean
   koodiUri?: string
@@ -91,7 +89,7 @@ export class Details extends React.Component<DetailsProps> {
 
   render() {
     const {
-      demonstrationsTEMP = [],
+      demonstrations = [],
       extraContent = null,
       expanded,
       fadedColor = "",
@@ -106,7 +104,7 @@ export class Details extends React.Component<DetailsProps> {
     const verification = verificationProcess && verificationProcess.koodiUri
     const { SUORAAN, ARVIOIJIEN_KAUTTA, OHJAUS_NAYTTOON } = VerificationProcess
     const showExpand =
-      demonstrationsTEMP.length ||
+      demonstrations.length ||
       learningPeriods.length ||
       verification === OHJAUS_NAYTTOON
     const hasActiveShare =
@@ -177,7 +175,7 @@ export class Details extends React.Component<DetailsProps> {
             return <OtherPeriod key={i} otherPeriod={period} />
           })}
 
-          {demonstrationsTEMP.map((demonstration, i) => {
+          {demonstrations.map((demonstration, i) => {
             return (
               <ShareDialog
                 active={hasActiveShare && shareType === "naytto"}
@@ -190,8 +188,8 @@ export class Details extends React.Component<DetailsProps> {
                 }}
                 key={i}
               >
-                <DemonstrationTEMP
-                  demonstrationTEMP={demonstration}
+                <Demonstration
+                  demonstration={demonstration}
                   verificationProcess={verificationProcess}
                   koodiUri={koodiUri}
                   hasActiveShare={hasActiveShare && shareType === "naytto"}
@@ -258,7 +256,7 @@ export class Details extends React.Component<DetailsProps> {
                 />
               )
             })}
-            {demonstrationsTEMP.map((d, i) => {
+            {demonstrations.map((d, i) => {
               const title =
                 verification === OHJAUS_NAYTTOON ? (
                   <FormattedMessage

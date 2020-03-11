@@ -23,14 +23,14 @@ export const HOKSStore = types
               .filter(t => t.tutkinnonOsaKoodiUri)
               .map(to => {
                 return [
-                  ...(to.naytot || []).map(naytto => {
+                  ...(to.osaamisenOsoittaminen || []).map(naytto => {
                     return {
                       hoksId: s.eid,
                       tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
                       tyyppi: "naytto",
                       alku: naytto.alku,
                       loppu: naytto.loppu,
-                      paikka: naytto.ymparisto
+                      paikka: naytto.nayttoymparisto?.kuvaus
                     }
                   }),
                   ...(to.osaamisenHankkimistavat || []).map(oh => {
