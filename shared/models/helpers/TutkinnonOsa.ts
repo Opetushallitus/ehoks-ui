@@ -56,7 +56,6 @@ interface TutkinnonOsa {
   naytot?: Naytto[]
   otsikko?: string
   osaamispisteet?: number
-  tila?: string
   olennainenSeikka?: boolean
   tutkinnonOsaKoodiUri?: string
   opintoOtsikko: (ospLyhenne: string) => string
@@ -72,5 +71,6 @@ export interface HankittavaTutkinnonOsa extends TutkinnonOsa {
   osaamisvaatimukset?: Osaamisvaatimus[]
   osaamisenOsoittaminen?: IOsaamisenOsoittaminen[]
   osaamisenHankkimistavat?: IOsaamisenHankkimistapa[]
+  tila?: string
   hasNayttoOrHarjoittelujakso(koodiUri: string, type: ShareType | ""): boolean
 }
