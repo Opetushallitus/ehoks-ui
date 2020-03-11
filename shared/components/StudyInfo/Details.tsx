@@ -72,7 +72,7 @@ const VerificationTitle = styled("strong")`
 
 interface DetailsProps {
   fadedColor?: string
-  demonstrationsTEMP?: Array<IOsaamisenOsoittaminen>
+  demonstrations?: Array<IOsaamisenOsoittaminen>
   extraContent?: React.ReactNode
   expanded?: boolean
   koodiUri?: string
@@ -89,7 +89,7 @@ export class Details extends React.Component<DetailsProps> {
 
   render() {
     const {
-      demonstrationsTEMP = [],
+      demonstrations = [],
       extraContent = null,
       expanded,
       fadedColor = "",
@@ -104,7 +104,7 @@ export class Details extends React.Component<DetailsProps> {
     const verification = verificationProcess && verificationProcess.koodiUri
     const { SUORAAN, ARVIOIJIEN_KAUTTA, OHJAUS_NAYTTOON } = VerificationProcess
     const showExpand =
-      demonstrationsTEMP.length ||
+      demonstrations.length ||
       learningPeriods.length ||
       verification === OHJAUS_NAYTTOON
     const hasActiveShare =
@@ -175,7 +175,7 @@ export class Details extends React.Component<DetailsProps> {
             return <OtherPeriod key={i} otherPeriod={period} />
           })}
 
-          {demonstrationsTEMP.map((demonstration, i) => {
+          {demonstrations.map((demonstration, i) => {
             return (
               <ShareDialog
                 active={hasActiveShare && shareType === "naytto"}
@@ -256,7 +256,7 @@ export class Details extends React.Component<DetailsProps> {
                 />
               )
             })}
-            {demonstrationsTEMP.map((d, i) => {
+            {demonstrations.map((d, i) => {
               const title =
                 verification === OHJAUS_NAYTTOON ? (
                   <FormattedMessage
