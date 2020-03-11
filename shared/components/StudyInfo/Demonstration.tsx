@@ -5,7 +5,6 @@ import { HMediaQuery } from "responsive"
 import styled from "styled"
 import { Container, InfoContainer, Table, TBody, TD, TH, Title } from "./Shared"
 import {
-  Naytto,
   IOsaamisenOsoittaminen,
   TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
@@ -57,16 +56,15 @@ interface DemonstrationState {
   requirementsAndDeviationsExpanded: boolean
 }
 
-interface DemonstrationPropsTEMP {
-  demonstration?: Naytto
-  demonstrationTEMP: IOsaamisenOsoittaminen
+interface DemonstrationProps {
+  demonstration: IOsaamisenOsoittaminen
   verificationProcess?: TodentamisenProsessi
   koodiUri?: string
   hasActiveShare?: boolean
 }
 
-export class DemonstrationTEMP extends React.Component<
-  DemonstrationPropsTEMP,
+export class Demonstration extends React.Component<
+  DemonstrationProps,
   DemonstrationState
 > {
   static contextType = AppContext
@@ -96,8 +94,7 @@ export class DemonstrationTEMP extends React.Component<
 
   render() {
     const {
-      // demonstration,
-      demonstrationTEMP,
+      demonstration,
       hasActiveShare = false,
       verificationProcess
     } = this.props
@@ -120,7 +117,7 @@ export class DemonstrationTEMP extends React.Component<
 
     const showShareButton = !hasActiveShare && featureFlags.shareDialog
 
-    const nayttoymparisto = demonstrationTEMP.nayttoymparisto
+    const nayttoymparisto = demonstration.nayttoymparisto
 
     return (
       <Container data-testid="StudyInfo.Demonstration">
@@ -129,8 +126,8 @@ export class DemonstrationTEMP extends React.Component<
             title={title}
             isDemonstration={true}
             description={nayttoymparisto?.nimi}
-            startDate={demonstrationTEMP.alku}
-            endDate={demonstrationTEMP.loppu}
+            startDate={demonstration.alku}
+            endDate={demonstration.loppu}
             size="large"
           />
           {showShareButton && (
@@ -164,14 +161,14 @@ export class DemonstrationTEMP extends React.Component<
                 />
               </TH>
               <TD>
-                {demonstrationTEMP.koulutuksenJarjestajaArvioijat?.map(
+                {demonstration.koulutuksenJarjestajaArvioijat?.map(
                   (arvioija, i) => (
                     <span key={i}>
                       {arvioija} <br />
                     </span>
                   )
                 )}
-                {demonstrationTEMP.tyoelamaArvioijat?.map((arvioija, i) => (
+                {demonstration.tyoelamaArvioijat?.map((arvioija, i) => (
                   <span key={i}>
                     {arvioija} <br />
                   </span>
@@ -182,14 +179,14 @@ export class DemonstrationTEMP extends React.Component<
         </DemonstrationTable>
         <HMediaQuery.MaxWidth breakpoint="Tablet">
           <CustomSlider>
-            {demonstrationTEMP.sisallonKuvaus?.map((tyotehtava, i) => {
+            {demonstration.sisallonKuvaus?.map((tyotehtava, i) => {
               return <Slide key={i}>{tyotehtava}</Slide>
             })}
           </CustomSlider>
         </HMediaQuery.MaxWidth>
         <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
           <DemonstrationTasks>
-            {demonstrationTEMP.sisallonKuvaus?.map((tyotehtava, i) => {
+            {demonstration.sisallonKuvaus?.map((tyotehtava, i) => {
               return <li key={i}>{tyotehtava}</li>
             })}
           </DemonstrationTasks>
@@ -198,10 +195,8 @@ export class DemonstrationTEMP extends React.Component<
         <RequirementsAndDeviations
           toggle={this.toggleRequirementsAndDeviations}
           expanded={requirementsAndDeviationsExpanded}
-          requirements={demonstrationTEMP.yksilollisetKriteerit}
-          deviations={
-            demonstrationTEMP.vaatimuksistaTaiTavoitteistaPoikkeaminen
-          }
+          requirements={demonstration.yksilollisetKriteerit}
+          deviations={demonstration.vaatimuksistaTaiTavoitteistaPoikkeaminen}
         />
       </Container>
     )

@@ -20,7 +20,7 @@ import { ShareType } from "stores/NotificationStore"
 import ShareDialog from "components/ShareDialog"
 import { ToggleableItems } from "./StudyInfoHelpers"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
-import { DemonstrationTEMP } from "./Demonstration"
+import { Demonstration } from "./Demonstration"
 
 interface ColorProps {
   fadedColor: string
@@ -188,8 +188,8 @@ export class Details extends React.Component<DetailsProps> {
                 }}
                 key={i}
               >
-                <DemonstrationTEMP
-                  demonstrationTEMP={demonstration}
+                <Demonstration
+                  demonstration={demonstration}
                   verificationProcess={verificationProcess}
                   koodiUri={koodiUri}
                   hasActiveShare={hasActiveShare && shareType === "naytto"}
