@@ -2,7 +2,6 @@ import React from "react"
 import { intlShape, FormattedMessage } from "react-intl"
 import styled from "styled"
 import { Collapse } from "./Collapse"
-import { Demonstration } from "./Demonstration"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
 import { LearningPeriod } from "./LearningPeriod"
@@ -22,6 +21,7 @@ import { ShareType } from "stores/NotificationStore"
 import ShareDialog from "components/ShareDialog"
 import { ToggleableItems } from "./StudyInfoHelpers"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
+import { DemonstrationTEMP } from "./Demonstration"
 
 interface ColorProps {
   fadedColor: string
@@ -91,8 +91,7 @@ export class Details extends React.Component<DetailsProps> {
 
   render() {
     const {
-      demonstrations = [],
-      // demonstrationsTEMP = [],
+      demonstrationsTEMP = [],
       extraContent = null,
       expanded,
       fadedColor = "",
@@ -107,7 +106,7 @@ export class Details extends React.Component<DetailsProps> {
     const verification = verificationProcess && verificationProcess.koodiUri
     const { SUORAAN, ARVIOIJIEN_KAUTTA, OHJAUS_NAYTTOON } = VerificationProcess
     const showExpand =
-      demonstrations.length ||
+      demonstrationsTEMP.length ||
       learningPeriods.length ||
       verification === OHJAUS_NAYTTOON
     const hasActiveShare =
@@ -178,9 +177,7 @@ export class Details extends React.Component<DetailsProps> {
             return <OtherPeriod key={i} otherPeriod={period} />
           })}
 
-          {/*TODO EH-743 uncomment when implemented*/}
-          {demonstrations.map((demonstration, i) => {
-            // {demonstrationsTEMP.map((demonstration, i) => {
+          {demonstrationsTEMP.map((demonstration, i) => {
             return (
               <ShareDialog
                 active={hasActiveShare && shareType === "naytto"}
@@ -193,19 +190,12 @@ export class Details extends React.Component<DetailsProps> {
                 }}
                 key={i}
               >
-                <Demonstration
-                  demonstration={demonstration}
+                <DemonstrationTEMP
+                  demonstrationTEMP={demonstration}
                   verificationProcess={verificationProcess}
                   koodiUri={koodiUri}
                   hasActiveShare={hasActiveShare && shareType === "naytto"}
                 />
-                {/*TODO EH-743 uncomment when implemented*/}
-                {/*<DemonstrationTEMP*/}
-                {/*  demonstrationTEMP={demonstration}*/}
-                {/*  verificationProcess={verificationProcess}*/}
-                {/*  koodiUri={koodiUri}*/}
-                {/*  hasActiveShare={hasActiveShare && shareType === "naytto"}*/}
-                {/*/>*/}
               </ShareDialog>
             )
           })}
@@ -268,7 +258,7 @@ export class Details extends React.Component<DetailsProps> {
                 />
               )
             })}
-            {demonstrations.map((d, i) => {
+            {demonstrationsTEMP.map((d, i) => {
               const title =
                 verification === OHJAUS_NAYTTOON ? (
                   <FormattedMessage
@@ -291,7 +281,7 @@ export class Details extends React.Component<DetailsProps> {
                 <LearningEvent
                   key={i}
                   title={title}
-                  description={d.organisaatio}
+                  description={d?.nayttoymparisto?.nimi}
                   startDate={d.alku}
                   endDate={d.loppu}
                 />
