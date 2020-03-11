@@ -2,17 +2,7 @@ import { types, getEnv, flow, getRoot } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import { APIResponse } from "types/APIResponse"
-
-const Organisaatio = types.model("Organisaatio", {
-  oid: types.optional(types.string, ""),
-  nimi: types.optional(
-    types.model({
-      fi: types.optional(types.string, ""),
-      sv: types.optional(types.string, "")
-    }),
-    {}
-  )
-})
+import { Organisaatio } from "./Organisaatio"
 
 export const KoulutuksenJarjestajaOrganisaatio = types
   .model("KoulutuksenJarjestajaOrganisaatio", {
