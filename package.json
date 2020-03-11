@@ -80,6 +80,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "@opetushallitus/virkailija-ui-components": "^0.3.2",
     "@reach/router": "^1.3.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@types/lodash.find": "^4.6.6",
