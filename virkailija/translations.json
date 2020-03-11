@@ -12,8 +12,8 @@
     "ammattitutkinto.meneHakutuloksienSivulleAriaLabel": "Mene hakutuloksien sivulle {page}",
     "errors.EnrichKoodiUri.fetchEPerusteet": "Tutkinnon osien haku ePerusteista epäonnistui",
     "errors.EnrichKoodiUri.fetchKoodisto": "Haku koodistosta epäonnistui",
-    "errors.EnrichTutkinnonOsa.fetchViitteet": "Tutkinnon osan viitteiden haku epäonnistui",
     "errors.EnrichOrganisaatioOid.fetchOrganisaatio": "Organisaation tietojen haku epäonnistui",
+    "errors.EnrichTutkinnonOsa.fetchViitteet": "Tutkinnon osan viitteiden haku epäonnistui",
     "errors.EnvironmentStore.getEnvironment": "Ympäristömuuttujien haku epäonnistui",
     "errors.HOKS.fetchOpiskeluoikeudet": "Opiskeluoikeuksien hakeminen epäonnistui",
     "errors.HOKS.fetchOpiskeluoikeudet.wrongType": "HOKSiin liitetty opiskeluoikeus ei ole ammatillinen tutkinto",
@@ -201,6 +201,11 @@
     "tyopaikanToimija.osaamispistetta": "osaamispistettä",
     "tyopaikanToimija.suunnitelmaJatkoOpintoihinTitle": "Suunnitelma jatko-opintoihin siirtymisestä",
     "tyopaikanToimija.tutkinnonNimiTitle": "Tutkinnon nimi",
+    "yllapito.haeHoksIdButton": "Hae hoks-id",
+    "yllapito.hoksIdTulos": "Hoks-id on: {hoksId}",
+    "yllapito.hoksIdnHaku": "Hoks-id:n haku",
+    "yllapito.hoksienmaaraArvo": "Lukumäärä: {hoksAmount}",
+    "yllapito.hoksienmaaraTitle": "Hoksien lukumäärä",
     "yllapito.muistiMaksimi": "Maksimi: {max} MB",
     "yllapito.muistiTitle": "Muisti",
     "yllapito.muistiVapaana": "Vapaana: {free} MB",
@@ -212,12 +217,6 @@
     "yllapito.title": "Ylläpito",
     "yllapito.tyhjennaValimuisti": "Tyhjennä välimuisti",
     "yllapito.valimuistiKoko": "Koko: {cacheSize}",
-    "yllapito.valimuistiTitle": "Välimuisti",
-    "yllapito.hoksIdTulos": "Hoks-id on: {hoksId}",
-    "yllapito.hoksIdnHaku": "Hoks-id:n haku",
-    "yllapito.hoksienmaaraTitle": "Hoksien lukumäärä",
-    "yllapito.hoksienmaaraArvo": "Lukumäärä: {hoksAmount}",
-    "yllapito.hoksinHakuOnnistui": "Hoks-id:n haku onnistui",
-    "yllapito.hoksinHakuEpaonnistui": "Hoks-id:n haku epäonnistui"
+    "yllapito.valimuistiTitle": "Välimuisti"
   }
 }
