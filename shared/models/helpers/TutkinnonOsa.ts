@@ -57,7 +57,6 @@ interface TutkinnonOsa {
   otsikko?: string
   osaamispisteet?: number
   tila?: string
-  todentamisenProsessi?: TodentamisenProsessi
   olennainenSeikka?: boolean
   tutkinnonOsaKoodiUri?: string
   opintoOtsikko: (ospLyhenne: string) => string
@@ -66,6 +65,7 @@ interface TutkinnonOsa {
 
 export interface AiemminHankittuTutkinnonOsa extends TutkinnonOsa {
   tarkentavatTiedotNaytto?: IOsaamisenOsoittaminen[]
+  todentamisenProsessi?: TodentamisenProsessi
 }
 
 export interface HankittavaTutkinnonOsa extends TutkinnonOsa {
