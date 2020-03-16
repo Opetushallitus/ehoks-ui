@@ -29,5 +29,5 @@
     "skipLibCheck": true
   },
   "include": ["./**/*", "../shared/**/*"],
-  "exclude": ["node_modules", "./**/__tests__"]
+  "exclude": ["node_modules", "./**/__tests__", "../shared/**/__tests__"]
 }
