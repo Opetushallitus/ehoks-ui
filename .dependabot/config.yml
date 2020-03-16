@@ -1,0 +1,19 @@
+version: 1
+update_configs:
+  - package_manager: "javascript"
+    directory: "/"
+    update_schedule: "monthly"
+    version_requirement_updates: "increase_versions"
+    commit_message:
+      prefix: "Update"
+      prefix_development: "Update(devDeps)" # To get separate for dev https://github.com/dependabot/feedback/issues/433
+      include_scope: true
+    allowed_updates:
+      - match:
+          dependency_type: "production"
+          update_type: "security"
+    default_reviewers:
+      - "j-kallunki"
+    default_labels:
+      - "dependencies"
+      - "dependabot"
