@@ -16,6 +16,7 @@ import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
 import { RequirementsAndDeviations } from "./RequirementsAndDeviations"
+import { observer } from "mobx-react"
 
 const DemonstrationTitle = styled(Title)`
   display: flex;
@@ -63,6 +64,7 @@ interface DemonstrationProps {
   hasActiveShare?: boolean
 }
 
+@observer
 export class Demonstration extends React.Component<
   DemonstrationProps,
   DemonstrationState
@@ -174,6 +176,7 @@ export class Demonstration extends React.Component<
                   defaultMessage="Järjestäjä"
                 />
               </TH>
+              <TD>{demonstration.jarjestaja?.oppilaitosNimi}</TD>
             </tr>
           </TBody>
         </DemonstrationTable>
