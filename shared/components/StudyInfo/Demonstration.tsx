@@ -127,7 +127,7 @@ export class Demonstration extends React.Component<
       sisallonKuvaus
     } = demonstration
 
-    const jarjestajaOppilaitos = jarjestaja?.oppilaitosNimi
+    const jarjestajaOppilaitos = jarjestaja.oppilaitosNimi
 
     return (
       <Container data-testid="StudyInfo.Demonstration">
@@ -135,11 +135,11 @@ export class Demonstration extends React.Component<
           <FlexLearningEvent
             title={title}
             isDemonstration={true}
-            description={nayttoymparisto?.nimi}
+            description={nayttoymparisto.nimi}
             startDate={demonstration.alku}
             endDate={demonstration.loppu}
             size="large"
-            demonstrationEnviromentDescription={nayttoymparisto?.kuvaus}
+            demonstrationEnviromentDescription={nayttoymparisto.kuvaus}
           />
           {showShareButton && (
             <ButtonContainer>
@@ -163,12 +163,12 @@ export class Demonstration extends React.Component<
                 />
               </TH>
               <TD>
-                {koulutuksenJarjestajaArvioijat?.map((arvioija, i) => (
+                {koulutuksenJarjestajaArvioijat.map((arvioija, i) => (
                   <span key={i}>
                     {arvioija} <br />
                   </span>
                 ))}
-                {tyoelamaArvioijat?.map((arvioija, i) => (
+                {tyoelamaArvioijat.map((arvioija, i) => (
                   <span key={i}>
                     {arvioija} <br />
                   </span>
@@ -190,14 +190,14 @@ export class Demonstration extends React.Component<
         </DemonstrationTable>
         <HMediaQuery.MaxWidth breakpoint="Tablet">
           <CustomSlider>
-            {sisallonKuvaus?.map((tyotehtava, i) => {
+            {sisallonKuvaus.map((tyotehtava, i) => {
               return <Slide key={i}>{tyotehtava}</Slide>
             })}
           </CustomSlider>
         </HMediaQuery.MaxWidth>
         <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
           <DemonstrationTasks>
-            {sisallonKuvaus?.map((tyotehtava, i) => {
+            {sisallonKuvaus.map((tyotehtava, i) => {
               return <li key={i}>{tyotehtava}</li>
             })}
           </DemonstrationTasks>
