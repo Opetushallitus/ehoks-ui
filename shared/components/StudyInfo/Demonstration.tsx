@@ -127,6 +127,8 @@ export class Demonstration extends React.Component<
       sisallonKuvaus
     } = demonstration
 
+    const jarjestajaOppilaitos = jarjestaja?.oppilaitosNimi
+
     return (
       <Container data-testid="StudyInfo.Demonstration">
         <DemonstrationTitle>
@@ -173,15 +175,17 @@ export class Demonstration extends React.Component<
                 ))}
               </TD>
             </tr>
-            <tr>
-              <TH>
-                <FormattedMessage
-                  id="opiskelusuunnitelma.jarjestajaTitle"
-                  defaultMessage="Järjestäjä"
-                />
-              </TH>
-              <TD>{jarjestaja?.oppilaitosNimi}</TD>
-            </tr>
+            {jarjestajaOppilaitos && (
+              <tr>
+                <TH>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.jarjestajaTitle"
+                    defaultMessage="Järjestäjä"
+                  />
+                </TH>
+                <TD>{jarjestajaOppilaitos}</TD>
+              </tr>
+            )}
           </TBody>
         </DemonstrationTable>
         <HMediaQuery.MaxWidth breakpoint="Tablet">
