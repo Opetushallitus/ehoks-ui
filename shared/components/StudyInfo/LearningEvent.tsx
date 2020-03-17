@@ -51,6 +51,7 @@ interface LearningEventProps {
   startDate?: string
   endDate?: string
   periodSpecifier?: string
+  demonstrationEnviromentDescription?: string
 }
 
 export class LearningEvent extends React.Component<LearningEventProps> {
@@ -63,7 +64,8 @@ export class LearningEvent extends React.Component<LearningEventProps> {
       startDate = "",
       endDate = "",
       periodSpecifier = "",
-      isDemonstration = false
+      isDemonstration = false,
+      demonstrationEnviromentDescription
     } = this.props
     const iconSize = size === "small" ? 24 : 32
     return (
@@ -91,6 +93,7 @@ export class LearningEvent extends React.Component<LearningEventProps> {
             )}
             {periodSpecifier && <Detail size={size}>{periodSpecifier}</Detail>}
             <Detail size={size}>{description}</Detail>
+            <Detail size={size}>{demonstrationEnviromentDescription}</Detail>
           </DetailsContainer>
         </ContentContainer>
       </Container>

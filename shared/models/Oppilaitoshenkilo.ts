@@ -1,17 +1,7 @@
 import { getRoot, types } from "mobx-state-tree"
 import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
 import { LocaleRoot } from "./helpers/LocaleRoot"
-
-const Organisaatio = types.model("Organisaatio", {
-  oid: types.optional(types.string, ""),
-  nimi: types.optional(
-    types.model({
-      fi: types.optional(types.string, ""),
-      sv: types.optional(types.string, "")
-    }),
-    {}
-  )
-})
+import { Organisaatio } from "./Organisaatio"
 
 const Model = types.model("OppilaitoshenkiloModel", {
   id: types.optional(types.number, 0),

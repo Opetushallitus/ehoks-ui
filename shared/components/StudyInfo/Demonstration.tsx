@@ -16,6 +16,7 @@ import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
 import { RequirementsAndDeviations } from "./RequirementsAndDeviations"
+import { observer } from "mobx-react"
 
 const DemonstrationTitle = styled(Title)`
   display: flex;
@@ -63,6 +64,7 @@ interface DemonstrationProps {
   hasActiveShare?: boolean
 }
 
+@observer
 export class Demonstration extends React.Component<
   DemonstrationProps,
   DemonstrationState
@@ -117,7 +119,13 @@ export class Demonstration extends React.Component<
 
     const showShareButton = !hasActiveShare && featureFlags.shareDialog
 
-    const nayttoymparisto = demonstration.nayttoymparisto
+    const {
+      nayttoymparisto,
+      koulutuksenJarjestajaArvioijat,
+      tyoelamaArvioijat,
+      jarjestaja,
+      sisallonKuvaus
+    } = demonstration
 
     return (
       <Container data-testid="StudyInfo.Demonstration">
@@ -129,6 +137,7 @@ export class Demonstration extends React.Component<
             startDate={demonstration.alku}
             endDate={demonstration.loppu}
             size="large"
+            demonstrationEnviromentDescription={nayttoymparisto?.kuvaus}
           />
           {showShareButton && (
             <ButtonContainer>
@@ -147,46 +156,44 @@ export class Demonstration extends React.Component<
             <tr>
               <TH>
                 <FormattedMessage
-                  id="opiskelusuunnitelma.nayttoymparistoTitle"
-                  defaultMessage="Näyttöympäristö"
-                />
-              </TH>
-              <TD>{nayttoymparisto?.kuvaus}</TD>
-            </tr>
-            <tr>
-              <TH>
-                <FormattedMessage
                   id="opiskelusuunnitelma.arvioijatTitle"
                   defaultMessage="Näytön arvioijat"
                 />
               </TH>
               <TD>
-                {demonstration.koulutuksenJarjestajaArvioijat?.map(
-                  (arvioija, i) => (
-                    <span key={i}>
-                      {arvioija} <br />
-                    </span>
-                  )
-                )}
-                {demonstration.tyoelamaArvioijat?.map((arvioija, i) => (
+                {koulutuksenJarjestajaArvioijat?.map((arvioija, i) => (
+                  <span key={i}>
+                    {arvioija} <br />
+                  </span>
+                ))}
+                {tyoelamaArvioijat?.map((arvioija, i) => (
                   <span key={i}>
                     {arvioija} <br />
                   </span>
                 ))}
               </TD>
             </tr>
+            <tr>
+              <TH>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.jarjestajaTitle"
+                  defaultMessage="Järjestäjä"
+                />
+              </TH>
+              <TD>{jarjestaja?.oppilaitosNimi}</TD>
+            </tr>
           </TBody>
         </DemonstrationTable>
         <HMediaQuery.MaxWidth breakpoint="Tablet">
           <CustomSlider>
-            {demonstration.sisallonKuvaus?.map((tyotehtava, i) => {
+            {sisallonKuvaus?.map((tyotehtava, i) => {
               return <Slide key={i}>{tyotehtava}</Slide>
             })}
           </CustomSlider>
         </HMediaQuery.MaxWidth>
         <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
           <DemonstrationTasks>
-            {demonstration.sisallonKuvaus?.map((tyotehtava, i) => {
+            {sisallonKuvaus?.map((tyotehtava, i) => {
               return <li key={i}>{tyotehtava}</li>
             })}
           </DemonstrationTasks>
