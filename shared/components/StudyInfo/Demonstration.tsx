@@ -175,7 +175,7 @@ export class Demonstration extends React.Component<
                 ))}
               </TD>
             </tr>
-            {jarjestajaOppilaitos && (
+            {jarjestajaOppilaitos ? (
               <tr>
                 <TH>
                   <FormattedMessage
@@ -185,7 +185,7 @@ export class Demonstration extends React.Component<
                 </TH>
                 <TD>{jarjestajaOppilaitos}</TD>
               </tr>
-            )}
+            ) : null}
           </TBody>
         </DemonstrationTable>
         <HMediaQuery.MaxWidth breakpoint="Tablet">
