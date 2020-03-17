@@ -33,7 +33,9 @@ const naytot1 = [
       kuvaus: "Näyttöympäristö",
       nimi: "Näyttöpaikka"
     },
-    tyoelamaOsaamisenArvioijat: {},
+    jarjestaja: { oppilaitosNimi: "testi testi" },
+    tyoelamaArvioijat: ["arvioija"],
+    koulutuksenJarjestajaArvioijat: ["koulutuksen arvioija"],
     osaAlueet: [{ koodiVersio: 1 }],
     yksilollisetKriteerit: ["joku kriteeri"],
     sisallonKuvaus: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"]
@@ -48,6 +50,9 @@ const naytot2 = [
       kuvaus: "Näyttöympäristö",
       nimi: "Näyttöpaikka"
     },
+    jarjestaja: { oppilaitosNimi: "testi testi" },
+    koulutuksenJarjestajaArvioijat: ["koulutuksen arvioija"],
+    tyoelamaArvioijat: ["arvioija"],
     sisallonKuvaus: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"]
   } as IOsaamisenOsoittaminen,
   {
@@ -57,8 +62,9 @@ const naytot2 = [
       kuvaus: "Näyttöympäristö",
       nimi: "Näyttöpaikka"
     },
-    koulutuksenJarjestajaOsaamisenArvioijat: {},
-    tyoelamaOsaamisenArvioijat: {},
+    jarjestaja: { oppilaitosNimi: "testi testi" },
+    koulutuksenJarjestajaArvioijat: ["koulutuksen arvioija"],
+    tyoelamaArvioijat: ["arvioija"],
     sisallonKuvaus: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"]
   } as IOsaamisenOsoittaminen
 ]
@@ -71,8 +77,9 @@ const naytot3 = [
       kuvaus: "Näyttöympäristö",
       nimi: "Näyttöpaikka"
     },
-    koulutuksenJarjestajaOsaamisenArvioijat: {},
-    tyoelamaOsaamisenArvioijat: {},
+    jarjestaja: { oppilaitosNimi: "testi testi" },
+    koulutuksenJarjestajaArvioijat: ["koulutuksen arvioija"],
+    tyoelamaArvioijat: ["arvioija"],
     sisallonKuvaus: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"]
   } as IOsaamisenOsoittaminen
 ]
