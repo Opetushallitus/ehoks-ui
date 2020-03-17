@@ -9,17 +9,21 @@ export const OsaamisenOsoittaminen = types
   .model("OsaamisenOsoittaminen", {
     id: types.optional(types.number, 0),
     jarjestaja: types.optional(NaytonJarjestaja, {}),
-    osaAlueet: types.array(KoodistoKoodi),
+    osaAlueet: types.optional(types.array(KoodistoKoodi), []),
     nayttoymparisto: types.optional(Nayttoymparisto, {}),
     alku: types.optional(types.string, ""),
     loppu: types.optional(types.string, ""),
-    koulutuksenJarjestajaOsaamisenArvioijat: types.array(
-      KoulutuksenJarjestajaArvioija
+    koulutuksenJarjestajaOsaamisenArvioijat: types.optional(
+      types.array(KoulutuksenJarjestajaArvioija),
+      []
     ),
-    tyoelamaOsaamisenArvioijat: types.array(TyoelamaOsaamisenArvioija),
-    sisallonKuvaus: types.array(types.string),
+    tyoelamaOsaamisenArvioijat: types.optional(
+      types.array(TyoelamaOsaamisenArvioija),
+      []
+    ),
+    sisallonKuvaus: types.optional(types.array(types.string), []),
     vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
-    yksilollisetKriteerit: types.array(types.string)
+    yksilollisetKriteerit: types.optional(types.array(types.string), [])
   })
   .views(self => {
     return {
