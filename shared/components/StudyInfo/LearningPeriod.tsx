@@ -16,6 +16,7 @@ import {
 import { IOsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
+import { observer } from "mobx-react"
 
 const LearningPeriodTitle = styled(Title)`
   margin-left: 20px;
@@ -38,6 +39,7 @@ interface LearningPeriodProps {
   learningPeriod: IOsaamisenHankkimistapa
 }
 
+@observer
 export class LearningPeriod extends React.Component<LearningPeriodProps> {
   render() {
     const { learningPeriod } = this.props

@@ -23,9 +23,17 @@ export const Oppilaitoshenkilo = types
           : ""
       },
       get oppilaitosHenkiloDescription() {
-        return self.nimi && self.oppilaitosNimi
-          ? `${self.nimi}, ${self.oppilaitosNimi}`
-          : self.nimi
+        let result = self.nimi
+
+        if (!!self.rooli) {
+          result += `, ${self.rooli}`
+        }
+
+        if (!!self.oppilaitosNimi) {
+          result += `, ${self.oppilaitosNimi}`
+        }
+
+        return result
       }
     }
   })
