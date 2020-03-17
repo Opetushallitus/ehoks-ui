@@ -46,7 +46,7 @@ module.exports = {
     plugins: [new TsconfigPathsPlugin({})]
   },
   plugins: [
-    new ForkTsCheckerWebpackPlugin(),
+    new ForkTsCheckerWebpackPlugin({ useTypescriptIncrementalApi: false }),
     new webpack.HotModuleReplacementPlugin()
   ],
   module: {
