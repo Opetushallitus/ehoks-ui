@@ -20,6 +20,7 @@ const LoadingContainer = styled("div")`
 
 interface SuunnitteluProps extends RouteComponentProps {
   store?: IRootStore
+  /* From router path */
   "*"?: string
 }
 
