@@ -1,4 +1,4 @@
-import { navigate, RouteComponentProps, Router } from "@reach/router"
+import { RouteComponentProps, Router } from "@reach/router"
 import { LoadingSpinner } from "components/LoadingSpinner"
 import { comparer, IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
@@ -39,7 +39,7 @@ export class Suunnittelu extends React.Component<
   }
   disposeLoginReaction: IReactionDisposer
   componentDidMount() {
-    const { store, uri } = this.props
+    const { store } = this.props
     const { session } = store!
 
     this.disposeLoginReaction = reaction(
@@ -73,17 +73,6 @@ export class Suunnittelu extends React.Component<
           }
 
           this.setState({ allLoaded: true })
-          const suunnitelmat = store!.hoks.suunnitelmat
-          // navigate directly to HOKS if there's only one of them
-          if (
-            suunnitelmat.length === 1 &&
-            uri === "/ehoks/suunnittelu" &&
-            this.props["*"] === ""
-          ) {
-            navigate(`/ehoks/suunnittelu/${suunnitelmat[0].eid}`, {
-              replace: true
-            })
-          }
         }
       },
       { fireImmediately: true, equals: comparer.structural }
