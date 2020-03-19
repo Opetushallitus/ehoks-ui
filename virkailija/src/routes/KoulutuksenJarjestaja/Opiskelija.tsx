@@ -69,7 +69,6 @@ export class Opiskelija extends React.Component<
             if (oppija) {
               await oppija.fetchOpiskeluoikeudet()
             }
-            this.redirectToOnlyHOKS()
           }
         }
       },
@@ -79,26 +78,6 @@ export class Opiskelija extends React.Component<
 
   componentWillUnmount() {
     this.disposeLoginReaction()
-  }
-
-  async componentDidUpdate(prevProps: OpiskelijaProps) {
-    const { studentId } = this.props
-    if (studentId && studentId !== prevProps.studentId) {
-      this.redirectToOnlyHOKS()
-    }
-  }
-
-  redirectToOnlyHOKS = () => {
-    const { studentId, store } = this.props
-    // navigate directly to HOKS if there's only one of them
-    const { search } = store!.koulutuksenJarjestaja
-    const oppija = search.oppija(studentId!)
-    if (oppija && oppija.suunnitelmat.length === 1) {
-      const hoks = oppija.suunnitelmat[0]
-      navigate(
-        `/ehoks-virkailija-ui/koulutuksenjarjestaja/${studentId}/${hoks.eid}`
-      )
-    }
   }
 
   setActiveTab = (route: string) => () => {
