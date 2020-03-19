@@ -46,7 +46,6 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
     const {
       alku,
       loppu,
-      nimi,
       tyyppi,
       tyopaikallaJarjestettavaKoulutus,
       selite,
@@ -67,13 +66,13 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
           <LearningPeriodTitle>
             <LearningEvent
               title={
-                tyyppi === OsaamisenHankkimistapaType.Other ? (
-                  nimi
-                ) : (
+                tyyppi === OsaamisenHankkimistapaType.Workplace ? (
                   <FormattedMessage
                     id="opiskelusuunnitelma.tyossaoppiminenTitle"
                     defaultMessage="Työpaikalla oppiminen"
                   />
+                ) : (
+                  ""
                 )
               }
               description={
