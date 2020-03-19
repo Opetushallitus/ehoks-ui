@@ -241,13 +241,13 @@ export class Details extends React.Component<DetailsProps> {
                 <LearningEvent
                   key={i}
                   title={
-                    lp.tyyppi === OsaamisenHankkimistapaType.Other ? (
-                      lp.nimi
-                    ) : (
+                    lp.tyyppi === OsaamisenHankkimistapaType.Workplace ? (
                       <FormattedMessage
                         id="opiskelusuunnitelma.tyossaoppiminenTitle"
                         defaultMessage="Työpaikalla oppiminen"
                       />
+                    ) : (
+                      ""
                     )
                   }
                   description={lp.selite}
