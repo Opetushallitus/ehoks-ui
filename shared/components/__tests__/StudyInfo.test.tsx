@@ -88,7 +88,6 @@ const osaamisenHankkimistapa1 = [
   {
     alku: "2019-05-24",
     loppu: "2019-07-31",
-    nimi: "Verkko-oppiminen",
     selite: "Moodle-kurssi, viestintä",
     tyyppi: OsaamisenHankkimistapaType.Other
   } as IOsaamisenHankkimistapa
@@ -114,7 +113,6 @@ const osaamisenHankkimistapa2 = [
   {
     alku: "2019-10-01",
     loppu: "2019-10-15",
-    nimi: "Verkko-oppiminen",
     selite: "Moodle-kurssi, Ikääntyminen",
     tyyppi: OsaamisenHankkimistapaType.Other
   } as IOsaamisenHankkimistapa

@@ -30,12 +30,6 @@ export const OsaamisenHankkimistapa = types
   .compose("OsaamisenHankkimistapa", EnrichKoodiUri, Model)
   .views(self => {
     return {
-      get nimi() {
-        return self.muutOppimisymparistot.length > 0 &&
-          self.muutOppimisymparistot[0].oppimisymparisto
-          ? self.muutOppimisymparistot[0].oppimisymparisto.nimi
-          : ""
-      },
       get selite() {
         return self.muutOppimisymparistot.length > 0
           ? self.muutOppimisymparistot[0].selite
