@@ -36,11 +36,9 @@ export const OsaamisenHankkimistapa = types
           : ""
       },
       get workplaceSelite() {
-        return self.tyyppi === OsaamisenHankkimistapaType.Workplace &&
-          self.selite &&
-          self.tyopaikallaJarjestettavaKoulutus?.tyopaikanYTunnus
-          ? `${self.selite}, ${self.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus}`
-          : self.selite
+        return self.tyyppi === OsaamisenHankkimistapaType.Workplace
+          ? `${self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi}, ${self.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus}`
+          : ""
       },
       get tyyppi():
         | OsaamisenHankkimistapaType.Workplace
