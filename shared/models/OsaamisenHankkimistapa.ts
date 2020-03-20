@@ -31,9 +31,9 @@ export const OsaamisenHankkimistapa = types
   .views(self => {
     return {
       get selite() {
-        return self.muutOppimisymparistot.length > 0
-          ? self.muutOppimisymparistot[0].selite
-          : self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi
+        return self.tyyppi === OsaamisenHankkimistapaType.Workplace
+          ? self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi
+          : ""
       },
       get workplaceSelite() {
         return self.tyyppi === OsaamisenHankkimistapaType.Workplace &&
