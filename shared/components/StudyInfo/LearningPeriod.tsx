@@ -51,7 +51,8 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
       selite,
       workplaceSelite,
       ajanjaksonTarkenne,
-      jarjestajanEdustaja
+      jarjestajanEdustaja,
+      muutOppimisymparistot
     } = learningPeriod
 
     const vastuullinenTyopaikkaOhjaaja =
@@ -148,6 +149,24 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
             </HMediaQuery.MaxWidth>
           </React.Fragment>
         )}
+
+        {muutOppimisymparistot.map((environment, i) => {
+          const nimi =
+            environment.oppimisymparisto && environment.oppimisymparisto.nimi
+              ? environment.oppimisymparisto.nimi
+              : ""
+
+          return (
+            <LearningPeriodTitle key={i}>
+              <LearningEvent
+                title={nimi}
+                startDate={environment.alku}
+                endDate={environment.loppu}
+                size="large"
+              />
+            </LearningPeriodTitle>
+          )
+        })}
       </Container>
     )
   }

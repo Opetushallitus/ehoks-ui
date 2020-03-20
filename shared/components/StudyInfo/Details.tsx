@@ -5,9 +5,7 @@ import { Collapse } from "./Collapse"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
 import { LearningPeriod } from "./LearningPeriod"
-import { OtherPeriod } from "./OtherPeriod"
 import {
-  MuuOppimisymparisto,
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
   TodentamisenProsessi
@@ -130,15 +128,6 @@ export class Details extends React.Component<DetailsProps> {
       ? { start: firstLearningPeriod.alku, end: firstLearningPeriod.loppu }
       : undefined
 
-    let otherPeriods: MuuOppimisymparisto[] = []
-    learningPeriods
-      .filter(method => !!method.muutOppimisymparistot)
-      .map(method => {
-        method?.muutOppimisymparistot?.map(ymparisto =>
-          otherPeriods.push(ymparisto)
-        )
-      })
-
     return expanded ? (
       <DetailsExpanded
         fadedColor={fadedColor}
@@ -170,10 +159,6 @@ export class Details extends React.Component<DetailsProps> {
               return <LearningPeriod key={i} learningPeriod={period} />
             })}
           </ShareDialog>
-
-          {otherPeriods.map((period, i) => {
-            return <OtherPeriod key={i} otherPeriod={period} />
-          })}
 
           {demonstrations.map((demonstration, i) => {
             return (
