@@ -18,22 +18,8 @@ export interface Osaamisvaatimus {
   kriteerit?: Arviointikriteeri[]
 }
 
-export interface Oppimisymparisto {
-  nimi?: string
-}
-export interface MuuOppimisymparisto {
-  alku?: string
-  loppu?: string
-  oppimisymparisto?: Oppimisymparisto
-}
-
 export interface IOsaamisenHankkimistapa
   extends Instance<typeof OsaamisenHankkimistapa> {}
-
-export interface Organisaatio {
-  nimi: string
-  yTunnus: string
-}
 
 export interface IOsaamisenOsoittaminen
   extends Instance<typeof OsaamisenOsoittaminen> {}
