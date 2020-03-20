@@ -57,10 +57,10 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
     } = learningPeriod
 
     const vastuullinenTyopaikkaOhjaaja =
-      tyopaikallaJarjestettavaKoulutus?.vastuullinenTyopaikkaOhjaaja
+      tyopaikallaJarjestettavaKoulutus.vastuullinenTyopaikkaOhjaaja
 
     const keskeisetTyotehtavat =
-      tyopaikallaJarjestettavaKoulutus?.keskeisetTyotehtavat
+      tyopaikallaJarjestettavaKoulutus.keskeisetTyotehtavat
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
