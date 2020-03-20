@@ -40,9 +40,7 @@ export const OsaamisenHankkimistapa = types
           ? `${self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi}, ${self.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus}`
           : ""
       },
-      get tyyppi():
-        | OsaamisenHankkimistapaType.Workplace
-        | OsaamisenHankkimistapaType.Other {
+      get tyyppi(): OsaamisenHankkimistapaType {
         return self.osaamisenHankkimistapaKoodiUri.includes(
           "koulutussopimus"
         ) || self.osaamisenHankkimistapaKoodiUri.includes("oppisopimus")
