@@ -68,11 +68,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
           <LearningPeriodTitle>
             <LearningEvent
               title={<CompetenceAquirementTitle hankkimistapaType={tyyppi} />}
-              description={
-                tyyppi === OsaamisenHankkimistapaType.Workplace
-                  ? workplaceSelite
-                  : selite
-              }
+              description={workplaceSelite}
               startDate={alku}
               endDate={loppu}
               periodSpecifier={ajanjaksonTarkenne}
