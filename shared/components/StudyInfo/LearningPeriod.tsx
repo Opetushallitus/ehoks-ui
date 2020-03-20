@@ -17,6 +17,7 @@ import { IOsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
 import { observer } from "mobx-react"
+import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
 
 const LearningPeriodTitle = styled(Title)`
   margin-left: 20px;
@@ -66,16 +67,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
         {(alku || loppu) && (
           <LearningPeriodTitle>
             <LearningEvent
-              title={
-                tyyppi === OsaamisenHankkimistapaType.Workplace ? (
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.tyossaoppiminenTitle"
-                    defaultMessage="Työpaikalla oppiminen"
-                  />
-                ) : (
-                  ""
-                )
-              }
+              title={<CompetenceAquirementTitle hankkimistapaType={tyyppi} />}
               description={
                 tyyppi === OsaamisenHankkimistapaType.Workplace
                   ? workplaceSelite
