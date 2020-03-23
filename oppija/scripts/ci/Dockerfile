@@ -28,6 +28,8 @@ RUN mkdir -p /opt/oph/scripts
 COPY run run.sh /usr/local/bin/
 
 RUN chown -R nginx:nginx /var/www/html/public
+RUN mkdir -p /home/oph/logs
+RUN chown -R nginx:nginx /home/oph/logs
 
 EXPOSE 8080
 
