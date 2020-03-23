@@ -88,7 +88,8 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                     />
                   </TH>
                   <TD>
-                    {vastuullinenTyopaikkaOhjaaja.nimi}, {selite}
+                    {vastuullinenTyopaikkaOhjaaja.nimi}
+                    {!!selite ? `, ${selite}` : ""}
                     <br />
                     {vastuullinenTyopaikkaOhjaaja.sahkoposti}
                   </TD>
