@@ -872,6 +872,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
         items: {
           "ui:order": [
             "osa-alue-koodi-uri",
+            "koulutuksen-jarjestaja-oid",
             "osa-alue-koodi-versio",
             "vaatimuksista-tai-tavoitteista-poikkeaminen",
             "olennainen-seikka",
