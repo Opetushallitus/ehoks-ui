@@ -56,11 +56,10 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
       muutOppimisymparistot
     } = learningPeriod
 
-    const vastuullinenTyopaikkaOhjaaja =
-      tyopaikallaJarjestettavaKoulutus.vastuullinenTyopaikkaOhjaaja
-
-    const keskeisetTyotehtavat =
-      tyopaikallaJarjestettavaKoulutus.keskeisetTyotehtavat
+    const {
+      vastuullinenTyopaikkaOhjaaja,
+      keskeisetTyotehtavat
+    } = tyopaikallaJarjestettavaKoulutus
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
@@ -140,15 +139,10 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
         )}
 
         {muutOppimisymparistot.map((environment, i) => {
-          const nimi =
-            environment.oppimisymparisto && environment.oppimisymparisto.nimi
-              ? environment.oppimisymparisto.nimi
-              : ""
-
           return (
             <LearningPeriodTitle key={i}>
               <LearningEvent
-                title={nimi}
+                title={environment.oppimisymparisto.nimi}
                 startDate={environment.alku}
                 endDate={environment.loppu}
                 size="large"
