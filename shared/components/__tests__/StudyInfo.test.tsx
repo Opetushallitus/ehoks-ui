@@ -108,7 +108,7 @@ const osaamisenHankkimistapa2 = [
       ]
     },
     selite: "Palvelutalo Koivikkola",
-    muutOppimisymparistot: [{}],
+    muutOppimisymparistot: [{ oppimisymparisto: { nimi: "testiymparisto" } }],
     tyyppi: OsaamisenHankkimistapaType.Workplace
   } as IOsaamisenHankkimistapa,
   {
@@ -125,7 +125,7 @@ const osaamisenHankkimistapa2 = [
         "Elintarvikkeiden säilytys"
       ]
     },
-    muutOppimisymparistot: [{}],
+    muutOppimisymparistot: [{ oppimisymparisto: { nimi: "testiymparisto" } }],
     tyyppi: OsaamisenHankkimistapaType.Other
   } as IOsaamisenHankkimistapa
 ]
