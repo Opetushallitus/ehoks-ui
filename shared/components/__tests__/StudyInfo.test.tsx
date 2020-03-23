@@ -108,12 +108,24 @@ const osaamisenHankkimistapa2 = [
       ]
     },
     selite: "Palvelutalo Koivikkola",
+    muutOppimisymparistot: [{}],
     tyyppi: OsaamisenHankkimistapaType.Workplace
   } as IOsaamisenHankkimistapa,
   {
     alku: "2019-10-01",
     loppu: "2019-10-15",
     selite: "Moodle-kurssi, Ikääntyminen",
+    tyopaikallaJarjestettavaKoulutus: {
+      vastuullinenTyopaikkaOhjaaja: {
+        nimi: "John McAfee",
+        sahkoposti: "john@mock.dev"
+      },
+      keskeisetTyotehtavat: [
+        "Elintarvikkeiden valmistus",
+        "Elintarvikkeiden säilytys"
+      ]
+    },
+    muutOppimisymparistot: [{}],
     tyyppi: OsaamisenHankkimistapaType.Other
   } as IOsaamisenHankkimistapa
 ]
