@@ -30,27 +30,18 @@ export const OsaamisenHankkimistapa = types
   .compose("OsaamisenHankkimistapa", EnrichKoodiUri, Model)
   .views(self => {
     return {
-      get nimi() {
-        return self.muutOppimisymparistot.length > 0 &&
-          self.muutOppimisymparistot[0].oppimisymparisto
-          ? self.muutOppimisymparistot[0].oppimisymparisto.nimi
-          : ""
-      },
       get selite() {
-        return self.muutOppimisymparistot.length > 0
-          ? self.muutOppimisymparistot[0].selite
-          : self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi
+        return self.tyyppi === OsaamisenHankkimistapaType.Workplace
+          ? self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi
+          : ""
       },
       get workplaceSelite() {
         return self.tyyppi === OsaamisenHankkimistapaType.Workplace &&
-          self.selite &&
-          self.tyopaikallaJarjestettavaKoulutus?.tyopaikanYTunnus
-          ? `${self.selite}, ${self.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus}`
-          : self.selite
+          !!self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi
+          ? `${self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi}, ${self.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus}`
+          : ""
       },
-      get tyyppi():
-        | OsaamisenHankkimistapaType.Workplace
-        | OsaamisenHankkimistapaType.Other {
+      get tyyppi() {
         return self.osaamisenHankkimistapaKoodiUri.includes(
           "koulutussopimus"
         ) || self.osaamisenHankkimistapaKoodiUri.includes("oppisopimus")

@@ -88,7 +88,6 @@ const osaamisenHankkimistapa1 = [
   {
     alku: "2019-05-24",
     loppu: "2019-07-31",
-    nimi: "Verkko-oppiminen",
     selite: "Moodle-kurssi, viestintä",
     tyyppi: OsaamisenHankkimistapaType.Other
   } as IOsaamisenHankkimistapa
@@ -109,13 +108,24 @@ const osaamisenHankkimistapa2 = [
       ]
     },
     selite: "Palvelutalo Koivikkola",
+    muutOppimisymparistot: [{ oppimisymparisto: { nimi: "testiymparisto" } }],
     tyyppi: OsaamisenHankkimistapaType.Workplace
   } as IOsaamisenHankkimistapa,
   {
     alku: "2019-10-01",
     loppu: "2019-10-15",
-    nimi: "Verkko-oppiminen",
     selite: "Moodle-kurssi, Ikääntyminen",
+    tyopaikallaJarjestettavaKoulutus: {
+      vastuullinenTyopaikkaOhjaaja: {
+        nimi: "John McAfee",
+        sahkoposti: "john@mock.dev"
+      },
+      keskeisetTyotehtavat: [
+        "Elintarvikkeiden valmistus",
+        "Elintarvikkeiden säilytys"
+      ]
+    },
+    muutOppimisymparistot: [{ oppimisymparisto: { nimi: "testiymparisto" } }],
     tyyppi: OsaamisenHankkimistapaType.Other
   } as IOsaamisenHankkimistapa
 ]

@@ -5,9 +5,7 @@ import { Collapse } from "./Collapse"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
 import { LearningPeriod } from "./LearningPeriod"
-import { OtherPeriod } from "./OtherPeriod"
 import {
-  MuuOppimisymparisto,
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
   TodentamisenProsessi
@@ -19,8 +17,8 @@ import parseISO from "date-fns/parseISO"
 import { ShareType } from "stores/NotificationStore"
 import ShareDialog from "components/ShareDialog"
 import { ToggleableItems } from "./StudyInfoHelpers"
-import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
 import { Demonstration } from "./Demonstration"
+import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
 
 interface ColorProps {
   fadedColor: string
@@ -130,15 +128,6 @@ export class Details extends React.Component<DetailsProps> {
       ? { start: firstLearningPeriod.alku, end: firstLearningPeriod.loppu }
       : undefined
 
-    let otherPeriods: MuuOppimisymparisto[] = []
-    learningPeriods
-      .filter(method => !!method.muutOppimisymparistot)
-      .map(method => {
-        method?.muutOppimisymparistot?.map(ymparisto =>
-          otherPeriods.push(ymparisto)
-        )
-      })
-
     return expanded ? (
       <DetailsExpanded
         fadedColor={fadedColor}
@@ -170,10 +159,6 @@ export class Details extends React.Component<DetailsProps> {
               return <LearningPeriod key={i} learningPeriod={period} />
             })}
           </ShareDialog>
-
-          {otherPeriods.map((period, i) => {
-            return <OtherPeriod key={i} otherPeriod={period} />
-          })}
 
           {demonstrations.map((demonstration, i) => {
             return (
@@ -241,14 +226,7 @@ export class Details extends React.Component<DetailsProps> {
                 <LearningEvent
                   key={i}
                   title={
-                    lp.tyyppi === OsaamisenHankkimistapaType.Other ? (
-                      lp.nimi
-                    ) : (
-                      <FormattedMessage
-                        id="opiskelusuunnitelma.tyossaoppiminenTitle"
-                        defaultMessage="Työpaikalla oppiminen"
-                      />
-                    )
+                    <CompetenceAquirementTitle hankkimistapaType={lp.tyyppi} />
                   }
                   description={lp.selite}
                   startDate={lp.alku}

@@ -17,6 +17,7 @@ import { IOsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
 import { observer } from "mobx-react"
+import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
 
 const LearningPeriodTitle = styled(Title)`
   margin-left: 20px;
@@ -46,41 +47,27 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
     const {
       alku,
       loppu,
-      nimi,
       tyyppi,
       tyopaikallaJarjestettavaKoulutus,
       selite,
       workplaceSelite,
       ajanjaksonTarkenne,
-      jarjestajanEdustaja
+      jarjestajanEdustaja,
+      muutOppimisymparistot
     } = learningPeriod
 
-    const vastuullinenTyopaikkaOhjaaja =
-      tyopaikallaJarjestettavaKoulutus?.vastuullinenTyopaikkaOhjaaja
-
-    const keskeisetTyotehtavat =
-      tyopaikallaJarjestettavaKoulutus?.keskeisetTyotehtavat
+    const {
+      vastuullinenTyopaikkaOhjaaja,
+      keskeisetTyotehtavat
+    } = tyopaikallaJarjestettavaKoulutus
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
         {(alku || loppu) && (
           <LearningPeriodTitle>
             <LearningEvent
-              title={
-                tyyppi === OsaamisenHankkimistapaType.Other ? (
-                  nimi
-                ) : (
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.tyossaoppiminenTitle"
-                    defaultMessage="Työpaikalla oppiminen"
-                  />
-                )
-              }
-              description={
-                tyyppi === OsaamisenHankkimistapaType.Workplace
-                  ? workplaceSelite
-                  : selite
-              }
+              title={<CompetenceAquirementTitle hankkimistapaType={tyyppi} />}
+              description={workplaceSelite}
               startDate={alku}
               endDate={loppu}
               periodSpecifier={ajanjaksonTarkenne}
@@ -100,7 +87,8 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                     />
                   </TH>
                   <TD>
-                    {vastuullinenTyopaikkaOhjaaja.nimi}, {selite}
+                    {vastuullinenTyopaikkaOhjaaja.nimi}
+                    {!!selite ? `, ${selite}` : ""}
                     <br />
                     {vastuullinenTyopaikkaOhjaaja.sahkoposti}
                   </TD>
@@ -149,6 +137,19 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
             </HMediaQuery.MaxWidth>
           </React.Fragment>
         )}
+
+        {muutOppimisymparistot.map((environment, i) => {
+          return (
+            <LearningPeriodTitle key={i}>
+              <LearningEvent
+                title={environment.oppimisymparisto.nimi}
+                startDate={environment.alku}
+                endDate={environment.loppu}
+                size="large"
+              />
+            </LearningPeriodTitle>
+          )
+        })}
       </Container>
     )
   }
