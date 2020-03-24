@@ -18,7 +18,7 @@ unset tpl_file target
 
 cp /var/www/html/public/ehoks/index.html /home/oph/index.html
 
-echo "Insert app boot config for this env into /home/oph/index.html …"
+echo "Insert app boot config for this env into /root/public/index.html …"
 config_json=$(python /opt/ehoks/escape-html.py < /home/oph/config.json)
 sed -f <(cat <<EOF
 s|APP-BOOT-CONFIG-DEFAULT|${config_json//&/\\&}|
@@ -28,9 +28,6 @@ unset config_json
 
 echo "Starting Prometheus node_exporter…"
 nohup /usr/local/bin/node_exporter > /root/node_exporter.log 2>&1 &
-
-echo "Create log directory…"
-mkdir -p /home/oph/logs
 
 echo "Starting nginx…"
 mkdir -p /tmp/var/nginx
