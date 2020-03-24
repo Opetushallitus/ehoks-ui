@@ -56,10 +56,8 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
       muutOppimisymparistot
     } = learningPeriod
 
-    const {
-      vastuullinenTyopaikkaOhjaaja,
-      keskeisetTyotehtavat
-    } = tyopaikallaJarjestettavaKoulutus
+    const { vastuullinenTyopaikkaOhjaaja, keskeisetTyotehtavat } =
+      tyopaikallaJarjestettavaKoulutus || {}
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
@@ -87,15 +85,16 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                     />
                   </TH>
                   <TD>
-                    {vastuullinenTyopaikkaOhjaaja.nimi}
-                    {!!selite ? `, ${selite}` : ""}
+                    {[vastuullinenTyopaikkaOhjaaja.nimi, selite]
+                      .filter(Boolean)
+                      .join(", ")}
                     <br />
                     {vastuullinenTyopaikkaOhjaaja.sahkoposti}
                   </TD>
                 </tr>
               )}
             {tyyppi === OsaamisenHankkimistapaType.Workplace &&
-              vastuullinenTyopaikkaOhjaaja && (
+              jarjestajanEdustaja && (
                 <tr>
                   <TH>
                     <FormattedMessage
@@ -103,10 +102,10 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                       defaultMessage="Koulutuksen järjestäjän edustaja"
                     />
                   </TH>
-                  <TD>{jarjestajanEdustaja?.oppilaitosHenkiloDescription}</TD>
+                  <TD>{jarjestajanEdustaja.oppilaitosHenkiloDescription}</TD>
                 </tr>
               )}
-            {keskeisetTyotehtavat?.length > 0 && (
+            {!!keskeisetTyotehtavat?.length && (
               <tr>
                 <TH>
                   <FormattedMessage
@@ -119,7 +118,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
             )}
           </TBody>
         </LearningPeriodTable>
-        {keskeisetTyotehtavat?.length > 0 && (
+        {!!keskeisetTyotehtavat?.length && (
           <React.Fragment>
             <HMediaQuery.MaxWidth breakpoint="Tablet">
               <CustomSlider>

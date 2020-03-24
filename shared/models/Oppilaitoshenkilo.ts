@@ -23,17 +23,9 @@ export const Oppilaitoshenkilo = types
           : ""
       },
       get oppilaitosHenkiloDescription() {
-        let result = self.nimi
-
-        if (!!self.rooli) {
-          result += `, ${self.rooli}`
-        }
-
-        if (!!self.oppilaitosNimi) {
-          result += `, ${self.oppilaitosNimi}`
-        }
-
-        return result
+        return [self.nimi, self.rooli, self.oppilaitosNimi]
+          .filter(Boolean)
+          .join(", ")
       }
     }
   })
