@@ -35,10 +35,19 @@ export const OsaamisenHankkimistapa = types
           : ""
       },
       get workplaceSelite() {
-        return self.tyyppi === OsaamisenHankkimistapaType.Workplace &&
-          !!self.tyopaikallaJarjestettavaKoulutus?.tyopaikanNimi
-          ? `${self.tyopaikallaJarjestettavaKoulutus?.tyopaikanNimi}, ${self.tyopaikallaJarjestettavaKoulutus?.tyopaikanYTunnus}`
-          : ""
+        if (
+          self.tyyppi !== OsaamisenHankkimistapaType.Workplace ||
+          !self.tyopaikallaJarjestettavaKoulutus
+        ) {
+          return ""
+        }
+
+        return [
+          self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi,
+          self.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus
+        ]
+          .filter(Boolean)
+          .join(", ")
       },
       get tyyppi() {
         return self.osaamisenHankkimistapaKoodiUri.includes(
