@@ -95,7 +95,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                 </tr>
               )}
             {tyyppi === OsaamisenHankkimistapaType.Workplace &&
-              vastuullinenTyopaikkaOhjaaja && (
+              jarjestajanEdustaja && (
                 <tr>
                   <TH>
                     <FormattedMessage
@@ -103,7 +103,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                       defaultMessage="Koulutuksen järjestäjän edustaja"
                     />
                   </TH>
-                  <TD>{jarjestajanEdustaja?.oppilaitosHenkiloDescription}</TD>
+                  <TD>{jarjestajanEdustaja.oppilaitosHenkiloDescription}</TD>
                 </tr>
               )}
             {keskeisetTyotehtavat?.length > 0 && (

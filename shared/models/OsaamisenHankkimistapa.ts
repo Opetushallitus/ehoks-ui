@@ -19,7 +19,7 @@ const Model = types.model("OsaamisenHankkimistapaModel", {
   ),
   osaamisenHankkimistapaKoodiUri: types.optional(types.string, ""),
   osaamisenHankkimistapa: types.optional(KoodistoVastaus, {}),
-  jarjestajanEdustaja: types.optional(Oppilaitoshenkilo, {}),
+  jarjestajanEdustaja: types.maybe(Oppilaitoshenkilo),
   ajanjaksonTarkenne: types.optional(types.string, ""),
   alku: types.optional(types.string, ""),
   muutOppimisymparistot: types.array(MuuOppimisymparisto),
