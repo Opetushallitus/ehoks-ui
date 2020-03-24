@@ -108,7 +108,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                   <TD>{jarjestajanEdustaja.oppilaitosHenkiloDescription}</TD>
                 </tr>
               )}
-            {keskeisetTyotehtavat && (
+            {!!keskeisetTyotehtavat?.length && (
               <tr>
                 <TH>
                   <FormattedMessage
@@ -121,7 +121,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
             )}
           </TBody>
         </LearningPeriodTable>
-        {keskeisetTyotehtavat && (
+        {!!keskeisetTyotehtavat?.length && (
           <React.Fragment>
             <HMediaQuery.MaxWidth breakpoint="Tablet">
               <CustomSlider>
