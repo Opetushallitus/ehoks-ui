@@ -56,11 +56,8 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
       muutOppimisymparistot
     } = learningPeriod
 
-    const vastuullinenTyopaikkaOhjaaja =
-      tyopaikallaJarjestettavaKoulutus?.vastuullinenTyopaikkaOhjaaja
-
-    const keskeisetTyotehtavat =
-      tyopaikallaJarjestettavaKoulutus?.keskeisetTyotehtavat
+    const { vastuullinenTyopaikkaOhjaaja, keskeisetTyotehtavat } =
+      tyopaikallaJarjestettavaKoulutus || {}
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
