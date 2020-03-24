@@ -56,10 +56,11 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
       muutOppimisymparistot
     } = learningPeriod
 
-    const {
-      vastuullinenTyopaikkaOhjaaja,
-      keskeisetTyotehtavat
-    } = tyopaikallaJarjestettavaKoulutus
+    const vastuullinenTyopaikkaOhjaaja =
+      tyopaikallaJarjestettavaKoulutus?.vastuullinenTyopaikkaOhjaaja
+
+    const keskeisetTyotehtavat =
+      tyopaikallaJarjestettavaKoulutus?.keskeisetTyotehtavat
 
     return (
       <Container data-testid="StudyInfo.LearningPeriod">
@@ -106,7 +107,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                   <TD>{jarjestajanEdustaja.oppilaitosHenkiloDescription}</TD>
                 </tr>
               )}
-            {keskeisetTyotehtavat?.length > 0 && (
+            {keskeisetTyotehtavat && (
               <tr>
                 <TH>
                   <FormattedMessage
@@ -119,7 +120,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
             )}
           </TBody>
         </LearningPeriodTable>
-        {keskeisetTyotehtavat?.length > 0 && (
+        {keskeisetTyotehtavat && (
           <React.Fragment>
             <HMediaQuery.MaxWidth breakpoint="Tablet">
               <CustomSlider>

@@ -13,9 +13,8 @@ export enum OsaamisenHankkimistapaType {
 const Model = types.model("OsaamisenHankkimistapaModel", {
   id: types.optional(types.number, 0),
   hankkijanEdustaja: types.optional(Oppilaitoshenkilo, {}),
-  tyopaikallaJarjestettavaKoulutus: types.optional(
-    TyopaikallaJarjestettavaKoulutus,
-    {}
+  tyopaikallaJarjestettavaKoulutus: types.maybe(
+    TyopaikallaJarjestettavaKoulutus
   ),
   osaamisenHankkimistapaKoodiUri: types.optional(types.string, ""),
   osaamisenHankkimistapa: types.optional(KoodistoVastaus, {}),
@@ -32,13 +31,13 @@ export const OsaamisenHankkimistapa = types
     return {
       get selite() {
         return self.tyyppi === OsaamisenHankkimistapaType.Workplace
-          ? self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi
+          ? self.tyopaikallaJarjestettavaKoulutus?.tyopaikanNimi
           : ""
       },
       get workplaceSelite() {
         return self.tyyppi === OsaamisenHankkimistapaType.Workplace &&
-          !!self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi
-          ? `${self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi}, ${self.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus}`
+          !!self.tyopaikallaJarjestettavaKoulutus?.tyopaikanNimi
+          ? `${self.tyopaikallaJarjestettavaKoulutus?.tyopaikanNimi}, ${self.tyopaikallaJarjestettavaKoulutus?.tyopaikanYTunnus}`
           : ""
       },
       get tyyppi() {
