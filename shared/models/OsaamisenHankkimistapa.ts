@@ -12,7 +12,7 @@ export enum OsaamisenHankkimistapaType {
 
 const Model = types.model("OsaamisenHankkimistapaModel", {
   id: types.optional(types.number, 0),
-  hankkijanEdustaja: types.optional(Oppilaitoshenkilo, {}),
+  hankkijanEdustaja: types.maybe(Oppilaitoshenkilo),
   tyopaikallaJarjestettavaKoulutus: types.maybe(
     TyopaikallaJarjestettavaKoulutus
   ),
