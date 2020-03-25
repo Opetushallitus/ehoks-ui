@@ -1,7 +1,10 @@
 import { ShareType } from "stores/NotificationStore"
-import { Instance } from "mobx-state-tree"
+import { types, Instance } from "mobx-state-tree"
 import { OsaamisenHankkimistapa } from "../OsaamisenHankkimistapa"
 import { OsaamisenOsoittaminen } from "../OsaamisenOsoittaminen"
+import { AiemminHankittuAmmatillinenTutkinnonOsa } from "models/AiemminHankittuAmmatillinenTutkinnonOsa"
+import { AiemminHankittuPaikallinenTutkinnonOsa } from "models/AiemminHankittuPaikallinenTutkinnonOsa"
+import { AiemminHankitunYTOOsaAlue } from "models/AiemminHankitunYTOOsaAlue"
 
 interface Arviointikriteeri {
   kuvaus?: string
@@ -34,15 +37,25 @@ interface TutkinnonOsa {
   tavoitteetJaSisallot?: string
 }
 
-export interface AiemminHankittuTutkinnonOsa extends TutkinnonOsa {
-  tarkentavatTiedotNaytto?: IOsaamisenOsoittaminen[]
-  todentamisenProsessi?: TodentamisenProsessi
-}
-
+// TODO do it like IAiemminHankittuTutkinnonOsa ??
 export interface HankittavaTutkinnonOsa extends TutkinnonOsa {
   osaamisvaatimukset?: Osaamisvaatimus[]
   osaamisenOsoittaminen?: IOsaamisenOsoittaminen[]
   osaamisenHankkimistavat?: IOsaamisenHankkimistapa[]
   tila?: string
   hasNayttoOrHarjoittelujakso(koodiUri: string, type: ShareType | ""): boolean
+}
+
+const AiemminHankittuTutkinnonOsa = types
+  .compose(
+    AiemminHankittuAmmatillinenTutkinnonOsa,
+    AiemminHankittuPaikallinenTutkinnonOsa,
+    AiemminHankitunYTOOsaAlue // added with flattenDeep
+  )
+  .named("AiemminHankittuTutkinnonOsa")
+
+export interface IAiemminHankittuTutkinnonOsa
+  extends Partial<Instance<typeof AiemminHankittuTutkinnonOsa>> {
+  /** AiemminHankitunYTOOsaAlue does not contain this but it is defined after flattenDeep */
+  opintoOtsikko(ospLyhenne: string): string
 }

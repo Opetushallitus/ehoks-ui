@@ -7,7 +7,7 @@ import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenT
 import { HankittavaYhteinenTutkinnonOsa } from "models/HankittavaYhteinenTutkinnonOsa"
 import {
   HankittavaTutkinnonOsa,
-  AiemminHankittuTutkinnonOsa
+  IAiemminHankittuTutkinnonOsa
 } from "./helpers/TutkinnonOsa"
 import flattenDeep from "lodash.flattendeep"
 import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
@@ -178,7 +178,7 @@ export const HOKS = types
           ...osaAlueet
         ]
       },
-      get aiemminHankitutTutkinnonOsat(): AiemminHankittuTutkinnonOsa[] {
+      get aiemminHankitutTutkinnonOsat(): IAiemminHankittuTutkinnonOsa[] {
         const osaAlueet = flattenDeep<
           Instance<typeof AiemminHankitunYTOOsaAlue>
         >(
