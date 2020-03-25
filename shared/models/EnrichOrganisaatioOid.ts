@@ -50,7 +50,7 @@ export const EnrichOrganisaatioOid = (fieldPostfix: string) => {
 
         const afterCreate = () => {
           Object.keys(self).forEach(key => {
-            if (key.match(/oppilaitosOid/) && self[key]) {
+            if (key.match(new RegExp(fieldPostfix)) && self[key]) {
               const codes: string[] = Array.isArray(self[key])
                 ? self[key]
                 : [self[key]]
