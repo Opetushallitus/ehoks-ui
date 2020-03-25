@@ -23,26 +23,30 @@ export const HOKSStore = types
               .filter(t => t.tutkinnonOsaKoodiUri)
               .map(to => {
                 return [
-                  ...(to.osaamisenOsoittaminen || []).map(naytto => {
-                    return {
-                      hoksId: s.eid,
-                      tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
-                      tyyppi: "naytto",
-                      alku: naytto.alku,
-                      loppu: naytto.loppu,
-                      paikka: naytto.nayttoymparisto?.kuvaus
-                    }
-                  }),
-                  ...(to.osaamisenHankkimistavat || []).map(oh => {
-                    return {
-                      hoksId: s.eid,
-                      tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
-                      tyyppi: "tyossaoppiminen",
-                      alku: oh.alku,
-                      loppu: oh.loppu,
-                      paikka: oh.selite
-                    }
-                  })
+                  ...(!!to.osaamisenOsoittaminen
+                    ? to.osaamisenOsoittaminen.map(naytto => {
+                        return {
+                          hoksId: s.eid,
+                          tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
+                          tyyppi: "naytto",
+                          alku: naytto.alku,
+                          loppu: naytto.loppu,
+                          paikka: naytto.nayttoymparisto?.kuvaus
+                        }
+                      })
+                    : []),
+                  ...(!!to.osaamisenHankkimistavat
+                    ? to.osaamisenHankkimistavat.map(oh => {
+                        return {
+                          hoksId: s.eid,
+                          tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
+                          tyyppi: "tyossaoppiminen",
+                          alku: oh.alku,
+                          loppu: oh.loppu,
+                          paikka: oh.selite
+                        }
+                      })
+                    : [])
                 ]
               })
           })
