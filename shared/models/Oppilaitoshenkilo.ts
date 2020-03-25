@@ -12,7 +12,7 @@ const Model = types.model("OppilaitoshenkiloModel", {
 })
 
 export const Oppilaitoshenkilo = types
-  .compose("Oppilaitoshenkilo", EnrichOrganisaatioOid, Model)
+  .compose("Oppilaitoshenkilo", EnrichOrganisaatioOid("oppilaitosOid"), Model)
   .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {

@@ -4,6 +4,8 @@ import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 import { EnrichKoodiUri } from "./EnrichKoodiUri"
 import { KoodistoVastaus } from "./KoodistoVastaus"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
+import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
+import { Organisaatio } from "./Organisaatio"
 
 export const Model = types.model("AiemminHankitunYTOOsaAlue", {
   id: types.optional(types.number, 0),
@@ -11,6 +13,7 @@ export const Model = types.model("AiemminHankitunYTOOsaAlue", {
   osaAlueKoodiUri: types.optional(types.string, ""),
   osaAlue: types.optional(KoodistoVastaus, {}),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
+  koulutuksenJarjestaja: types.maybe(Organisaatio),
   vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
   valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
   valittuTodentamisenProsessi: types.optional(KoodistoVastaus, {}),
@@ -22,7 +25,12 @@ export const Model = types.model("AiemminHankitunYTOOsaAlue", {
 })
 
 export const AiemminHankitunYTOOsaAlue = types
-  .compose(EnrichKoodiUri, AiemminHankitutTutkinnonOsatViews, Model)
+  .compose(
+    EnrichKoodiUri,
+    EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
+    AiemminHankitutTutkinnonOsatViews,
+    Model
+  )
   .views(self => {
     return {
       get otsikko() {
