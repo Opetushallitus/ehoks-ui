@@ -262,6 +262,10 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
         <InnerContainer>
           <TitleContainer>
             <Title data-testid="Title">{title}</Title>
+            <FormattedMessage
+              id="tutkinnonOsa.toteuttaKoulutuksenJarjetajaTitle"
+              defaultMessage="Toteuttava koulutuksenjärjestäjä"
+            />
             {showShareButton && (
               <ShareButton>
                 <Button onClick={this.share}>
