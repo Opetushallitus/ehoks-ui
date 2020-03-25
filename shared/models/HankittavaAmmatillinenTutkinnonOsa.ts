@@ -7,8 +7,8 @@ import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
 import { EnrichTutkinnonOsa } from "models/EnrichTutkinnonOsa"
-import { Oppilaitoshenkilo } from "./Oppilaitoshenkilo"
 import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
+import { Organisaatio } from "./Organisaatio"
 
 export const Model = types.model({
   id: types.optional(types.number, 0),
@@ -19,7 +19,7 @@ export const Model = types.model({
   osaamisenOsoittaminen: types.array(OsaamisenOsoittaminen),
   osaamisenHankkimistavat: types.array(OsaamisenHankkimistapa),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
-  koulutuksenJarjestaja: types.maybe(Oppilaitoshenkilo),
+  koulutuksenJarjestaja: types.maybe(Organisaatio),
   olennainenSeikka: types.optional(types.boolean, false)
 })
 

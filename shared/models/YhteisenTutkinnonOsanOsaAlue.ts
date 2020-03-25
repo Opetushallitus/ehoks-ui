@@ -4,8 +4,8 @@ import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { HankittavatTutkinnonOsatViews } from "./helpers/HankittavatTutkinnonOsatViews"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
-import { Oppilaitoshenkilo } from "./Oppilaitoshenkilo"
 import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
+import { Organisaatio } from "./Organisaatio"
 
 const Model = types.model("YhteisenTutkinnonOsanOsaAlue", {
   id: types.optional(types.number, 0),
@@ -15,7 +15,7 @@ const Model = types.model("YhteisenTutkinnonOsanOsaAlue", {
   vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
   osaamisenOsoittaminen: types.array(OsaamisenOsoittaminen),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
-  koulutuksenJarjestaja: types.maybe(Oppilaitoshenkilo),
+  koulutuksenJarjestaja: types.maybe(Organisaatio),
   olennainenSeikka: types.optional(types.boolean, false)
 })
 
