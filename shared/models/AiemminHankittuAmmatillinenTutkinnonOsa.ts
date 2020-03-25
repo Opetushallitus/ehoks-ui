@@ -9,6 +9,8 @@ import { EnrichTutkinnonOsa } from "models/EnrichTutkinnonOsa"
 import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
+import { Organisaatio } from "./Organisaatio"
+import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
 
 const Model = types.model({
   id: types.optional(types.number, 0),
@@ -16,6 +18,7 @@ const Model = types.model({
   tutkinnonOsa: types.optional(EPerusteetVastaus, {}),
   tutkinnonOsaViitteet: types.array(TutkinnonOsaViite),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
+  koulutuksenJarjestaja: types.maybe(Organisaatio),
   valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
   valittuTodentamisenProsessi: types.optional(KoodistoVastaus, {}),
   tarkentavatTiedotNaytto: types.array(OsaamisenOsoittaminen),
@@ -31,6 +34,7 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
     "AiemminHankittuAmmatillinenTutkinnonOsa",
     EnrichKoodiUri,
     EnrichTutkinnonOsa("tutkinnonOsaViitteet"),
+    EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
     AiemminHankitutTutkinnonOsatViews,
     Model
   )
