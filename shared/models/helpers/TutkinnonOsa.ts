@@ -1,10 +1,13 @@
-import { ShareType } from "stores/NotificationStore"
 import { types, Instance } from "mobx-state-tree"
 import { OsaamisenHankkimistapa } from "../OsaamisenHankkimistapa"
 import { OsaamisenOsoittaminen } from "../OsaamisenOsoittaminen"
 import { AiemminHankittuAmmatillinenTutkinnonOsa } from "models/AiemminHankittuAmmatillinenTutkinnonOsa"
 import { AiemminHankittuPaikallinenTutkinnonOsa } from "models/AiemminHankittuPaikallinenTutkinnonOsa"
 import { AiemminHankitunYTOOsaAlue } from "models/AiemminHankitunYTOOsaAlue"
+import { HankittavaAmmatillinenTutkinnonOsa } from "models/HankittavaAmmatillinenTutkinnonOsa"
+import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenTutkinnonOsa"
+import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
+import { ShareType } from "stores/NotificationStore"
 
 interface Arviointikriteeri {
   kuvaus?: string
@@ -27,22 +30,19 @@ export interface IOsaamisenHankkimistapa
 export interface IOsaamisenOsoittaminen
   extends Instance<typeof OsaamisenOsoittaminen> {}
 
-interface TutkinnonOsa {
-  id?: number
-  otsikko?: string
-  osaamispisteet?: number
-  olennainenSeikka?: boolean
-  tutkinnonOsaKoodiUri?: string
-  opintoOtsikko: (ospLyhenne: string) => string
-  tavoitteetJaSisallot?: string
-}
+const HankittavaTutkinnonOsa = types
+  .compose(
+    HankittavaAmmatillinenTutkinnonOsa,
+    HankittavaPaikallinenTutkinnonOsa,
+    YhteisenTutkinnonOsanOsaAlue // added with flattenDeep
+  )
+  .named("HankittavaTutkinnonOsa")
+export interface IHankittavaTutkinnonOsa
+  extends Partial<Instance<typeof HankittavaTutkinnonOsa>> {
+  /** YhteisenTutkinnonOsanOsaAlue does not contain this but it is defined after flattenDeep */
+  opintoOtsikko(ospLyhenne: string): string
+  /** YhteisenTutkinnonOsanOsaAlue does not contain this but it is defined after flattenDeep */
 
-// TODO do it like IAiemminHankittuTutkinnonOsa ??
-export interface HankittavaTutkinnonOsa extends TutkinnonOsa {
-  osaamisvaatimukset?: Osaamisvaatimus[]
-  osaamisenOsoittaminen?: IOsaamisenOsoittaminen[]
-  osaamisenHankkimistavat?: IOsaamisenHankkimistapa[]
-  tila?: string
   hasNayttoOrHarjoittelujakso(koodiUri: string, type: ShareType | ""): boolean
 }
 

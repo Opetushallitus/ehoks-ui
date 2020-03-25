@@ -6,7 +6,7 @@ import { HankittavaAmmatillinenTutkinnonOsa } from "models/HankittavaAmmatilline
 import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenTutkinnonOsa"
 import { HankittavaYhteinenTutkinnonOsa } from "models/HankittavaYhteinenTutkinnonOsa"
 import {
-  HankittavaTutkinnonOsa,
+  IHankittavaTutkinnonOsa,
   IAiemminHankittuTutkinnonOsa
 } from "./helpers/TutkinnonOsa"
 import flattenDeep from "lodash.flattendeep"
@@ -167,7 +167,7 @@ export const HOKS = types
   .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {
-      get hankittavatTutkinnonOsat(): HankittavaTutkinnonOsa[] {
+      get hankittavatTutkinnonOsat(): IHankittavaTutkinnonOsa[] {
         const osaAlueet = flattenDeep<
           Instance<typeof YhteisenTutkinnonOsanOsaAlue>
         >(self.hankittavatYhteisetTutkinnonOsat.map((to: any) => to.osaAlueet))
