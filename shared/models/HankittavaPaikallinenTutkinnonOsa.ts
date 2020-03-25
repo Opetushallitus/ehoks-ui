@@ -2,6 +2,8 @@ import { types } from "mobx-state-tree"
 import { OsaamisenHankkimistapa } from "./OsaamisenHankkimistapa"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { HankittavatTutkinnonOsatViews } from "./helpers/HankittavatTutkinnonOsatViews"
+import { Oppilaitoshenkilo } from "./Oppilaitoshenkilo"
+import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
 
 const Model = types.model("HankittavaPaikallinenTutkinnonOsaModel", {
   id: types.optional(types.number, 0),
@@ -13,12 +15,14 @@ const Model = types.model("HankittavaPaikallinenTutkinnonOsaModel", {
   nimi: types.optional(types.string, ""),
   laajuus: types.optional(types.number, 0),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
+  koulutuksenJarjestaja: types.maybe(Oppilaitoshenkilo),
   amosaaTunniste: types.optional(types.string, "")
 })
 
 export const HankittavaPaikallinenTutkinnonOsa = types
   .compose(
     "HankittavaPaikallinenTutkinnonOsaModel",
+    EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
     Model,
     HankittavatTutkinnonOsatViews
   )
