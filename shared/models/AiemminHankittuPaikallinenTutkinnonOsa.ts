@@ -4,6 +4,8 @@ import { KoodistoVastaus } from "./KoodistoVastaus"
 import { EnrichKoodiUri } from "./EnrichKoodiUri"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
+import { Organisaatio } from "./Organisaatio"
+import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
 
 const model = types.model({
   id: types.optional(types.number, 0),
@@ -12,6 +14,7 @@ const model = types.model({
   nimi: types.optional(types.string, ""),
   laajuus: types.optional(types.number, 0),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
+  koulutuksenJarjestaja: types.maybe(Organisaatio),
   valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
   valittuTodentamisenProsessi: types.optional(KoodistoVastaus, {}),
   tarkentavatTiedotNaytto: types.array(OsaamisenOsoittaminen),
@@ -27,6 +30,7 @@ export const AiemminHankittuPaikallinenTutkinnonOsa = types
   .compose(
     "AiemminHankittuPaikallinenTutkinnonOsa",
     EnrichKoodiUri,
+    EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
     AiemminHankitutTutkinnonOsatViews,
     model
   )

@@ -7,7 +7,7 @@ import { EmptyItem } from "../../EmptyItem"
 import { Accordion } from "../../Accordion"
 import { ShareType } from "../../../stores/NotificationStore"
 import { ActiveAccordions, StudyPartSubAccordions } from "./StudyPlanHelpers"
-import { HankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
+import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
 import { theme } from "../../../theme"
 
 export interface PlannedStudiesProps {
@@ -21,7 +21,7 @@ export interface PlannedStudiesProps {
     accordion: ActiveAccordions,
     subAccordion?: StudyPartSubAccordions
   ) => () => void
-  suunnitellutOpinnot: HankittavaTutkinnonOsa[]
+  suunnitellutOpinnot: IHankittavaTutkinnonOsa[]
   elements?: {
     heading?: React.ReactNode
     goals?: React.ReactNode
