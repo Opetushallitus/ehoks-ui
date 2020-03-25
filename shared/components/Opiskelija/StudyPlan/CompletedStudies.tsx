@@ -1,7 +1,7 @@
 import React from "react"
 import { ShareType } from "../../../stores/NotificationStore"
 import { ActiveAccordions, StudyPartSubAccordions } from "./StudyPlanHelpers"
-import { HankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
+import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
 import { AccordionTitle } from "../../AccordionTitle"
 import { FormattedMessage } from "react-intl"
 import { StudiesContainer } from "../../StudiesContainer"
@@ -21,7 +21,7 @@ export interface CompletedStudiesProps {
     accordion: ActiveAccordions,
     subAccordion?: StudyPartSubAccordions
   ) => () => void
-  valmiitOpinnot: HankittavaTutkinnonOsa[]
+  valmiitOpinnot: IHankittavaTutkinnonOsa[]
   elements?: {
     heading?: React.ReactNode
     goals?: React.ReactNode
