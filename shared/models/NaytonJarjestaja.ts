@@ -10,7 +10,7 @@ const Model = types.model("NaytonJarjestajaModel", {
 })
 
 export const NaytonJarjestaja = types
-  .compose("NaytonJarjestaja", EnrichOrganisaatioOid, Model)
+  .compose("NaytonJarjestaja", EnrichOrganisaatioOid("oppilaitosOid"), Model)
   .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {
