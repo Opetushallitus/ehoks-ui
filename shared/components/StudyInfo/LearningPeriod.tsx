@@ -106,18 +106,17 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                   <TD>{jarjestajanEdustaja.oppilaitosHenkiloDescription}</TD>
                 </tr>
               )}
-            {tyyppi === OsaamisenHankkimistapaType.Workplace &&
-              hankkijanEdustaja && (
-                <tr>
-                  <TH>
-                    <FormattedMessage
-                      id="opiskelusuunnitelma.hankkijanEdustajaTitle"
-                      defaultMessage="Hankkivan koulutuksen järjestäjän edustaja"
-                    />
-                  </TH>
-                  <TD>{hankkijanEdustaja.oppilaitosHenkiloDescription}</TD>
-                </tr>
-              )}
+            {hankkijanEdustaja && (
+              <tr>
+                <TH>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.hankkijanEdustajaTitle"
+                    defaultMessage="Hankkivan koulutuksen järjestäjän edustaja"
+                  />
+                </TH>
+                <TD>{hankkijanEdustaja.oppilaitosHenkiloDescription}</TD>
+              </tr>
+            )}
             {!!keskeisetTyotehtavat?.length && (
               <tr>
                 <TH>
