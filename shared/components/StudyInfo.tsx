@@ -65,10 +65,11 @@ const TitleContainer = styled("div")`
   align-items: center;
 `
 
-const BoldedFormattedMessage = styled("div")`
-  font-weight: 700;
-  margin: 10px 20px;
-`
+// TODO will be used in a upcoming PR
+// const BoldedFormattedMessage = styled("div")`
+//   font-weight: 700;
+//   margin: 10px 20px;
+// `
 
 const Title = styled("h2")`
   flex: 1;
@@ -242,8 +243,8 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       title,
       verificationProcess,
       width = "25%",
-      objectives,
-      educationOrganizer
+      objectives
+      // educationOrganizer
     } = this.props
     const { featureFlags } = this.context
     const { expandedCompetences, expanded } = this.state
@@ -282,16 +283,17 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
               </ShareButton>
             )}
           </TitleContainer>
-          <TitleContainer>
-            <BoldedFormattedMessage>
-              <FormattedMessage
-                id="tutkinnonOsa.toteuttaKoulutuksenJarjetajaTitle"
-                defaultMessage="Toteuttava koulutuksenjärjestäjä"
-              />
-            </BoldedFormattedMessage>
-            &nbsp;
-            {educationOrganizer?.organisaatioNimi}
-          </TitleContainer>
+          {/*TODO this will be released in a upcoming PR, not ready yet stylewise*/}
+          {/*<TitleContainer>*/}
+          {/*  <BoldedFormattedMessage>*/}
+          {/*    <FormattedMessage*/}
+          {/*      id="tutkinnonOsa.toteuttaKoulutuksenJarjetajaTitle"*/}
+          {/*      defaultMessage="Toteuttava koulutuksenjärjestäjä"*/}
+          {/*    />*/}
+          {/*  </BoldedFormattedMessage>*/}
+          {/*  &nbsp;*/}
+          {/*  {educationOrganizer?.organisaatioNimi}*/}
+          {/*</TitleContainer>*/}
           {hasDetails && (
             <Details
               fadedColor={fadedColor}
