@@ -33,9 +33,9 @@ interface LearningEventProps {
 }
 ```
 
-className, title, size, description, startDate, endDate are techincal or generic words and should be in English.
+className, title, size, description, startDate, endDate are technical or generic words and should be in English.
 Demonstration and demonstrationEnvironment are domain and datamodel words naytto and nayttoYmparisto and should be in
-Finnish. PeriodSpecifier is straight from the data model thus should be ajanjaksonTarkenne. LearningEvent is used for
+Finnish. PeriodSpecifier is straight from the data model and thus should be ajanjaksonTarkenne. LearningEvent is used for
 both osaamisenHankkiminen and osaamisenOsoittaminen and there isn't domain word to describe these both so learningEvent
 should stay as is, although probably best option would be to split learningEvent component to OsaamisenHankkiminen and
 OsaamisenOsoittaminen components.
@@ -58,5 +58,5 @@ interface LearningEventProps {
 
 ## Consequences
 
-Translation causes confusion and misunderstandings. It's clearer when one ubiquitous language for domain is used when
-talking to domain experts and in coding.
+Translation causes confusion and misunderstandings. It's clearer when one ubiquitous language for domain is used in
+coding and when talking to domain experts.
