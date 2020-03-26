@@ -9,7 +9,7 @@ Accepted
 ## Context
 
 There are currently mixed conventions of translating domain words. For example mobx-state-tree-model properties are
-in Finnish but react component props in English even though data might be exactly same.
+in Finnish but react component props in English even though data might be exactly the same.
 
 ## Decision
 
