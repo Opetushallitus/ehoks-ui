@@ -5,7 +5,8 @@ import {
   Osaamisvaatimus,
   TodentamisenProsessi,
   IOsaamisenHankkimistapa,
-  IOsaamisenOsoittaminen
+  IOsaamisenOsoittaminen,
+  IOrganisaatio
 } from "models/helpers/TutkinnonOsa"
 import { ShareType } from "stores/NotificationStore"
 import { MdShare } from "react-icons/md"
@@ -124,6 +125,7 @@ export interface StudyInfoProps {
    */
   width?: string
   objectives?: string
+  educationOrganizer?: IOrganisaatio
 }
 
 export interface StudyInfoState {
@@ -235,7 +237,8 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       title,
       verificationProcess,
       width = "25%",
-      objectives
+      objectives,
+      educationOrganizer
     } = this.props
     const { featureFlags } = this.context
     const { expandedCompetences, expanded } = this.state
