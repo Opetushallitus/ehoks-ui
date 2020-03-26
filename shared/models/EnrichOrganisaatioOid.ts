@@ -17,7 +17,7 @@ export const EnrichOrganisaatioOid = (fieldPostfix: string) => {
       // when assigning to self[dynamicKey]
       .volatile((_): DynamicObject => ({}))
       .actions(self => {
-        const { apiUrl, apiPrefix, errors, fetchSingle } = getEnv<
+        const { apiUrl, apiPrefix, errors, fetchSingle, callerId } = getEnv<
           StoreEnvironment
         >(self)
 
@@ -30,7 +30,10 @@ export const EnrichOrganisaatioOid = (fieldPostfix: string) => {
             // check our global cache first
             cachedResponses[code] =
               cachedResponses[code] ||
-              fetchSingle(apiUrl(`${apiPrefix}/external/organisaatio/${code}`))
+              fetchSingle(
+                apiUrl(`${apiPrefix}/external/organisaatio/${code}`),
+                { headers: callerId() }
+              )
             const response: APIResponse = yield cachedResponses[code]
             if (Object.keys(self).indexOf(dynamicKey) > -1) {
               self[dynamicKey] = response.data

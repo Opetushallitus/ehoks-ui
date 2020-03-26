@@ -15,9 +15,9 @@ export const EnrichKoodiUri = types
   // when assigning to self[dynamicKey]
   .volatile((_): DynamicObject => ({}))
   .actions(self => {
-    const { apiUrl, apiPrefix, errors, fetchSingle } = getEnv<StoreEnvironment>(
-      self
-    )
+    const { apiUrl, apiPrefix, errors, fetchSingle, callerId } = getEnv<
+      StoreEnvironment
+    >(self)
 
     const fetchEPerusteet = flow(function*(key: string, code: string): any {
       try {
@@ -25,7 +25,9 @@ export const EnrichKoodiUri = types
         // check our global cache first
         cachedResponses[code] =
           cachedResponses[code] ||
-          fetchSingle(apiUrl(`${apiPrefix}/external/eperusteet/${code}`))
+          fetchSingle(apiUrl(`${apiPrefix}/external/eperusteet/${code}`), {
+            headers: callerId()
+          })
         const response: APIResponse = yield cachedResponses[code]
         if (Object.keys(self).indexOf(dynamicKey) > -1) {
           self[dynamicKey] = response.data
@@ -46,7 +48,9 @@ export const EnrichKoodiUri = types
         // check our global cache first
         cachedResponses[code] =
           cachedResponses[code] ||
-          fetchSingle(apiUrl(`${apiPrefix}/external/koodisto/${code}`))
+          fetchSingle(apiUrl(`${apiPrefix}/external/koodisto/${code}`), {
+            headers: callerId()
+          })
         const { data }: APIResponse = yield cachedResponses[code]
         // we currently only need nimi from KoodistoKoodi
         if (Object.keys(self).indexOf(dynamicKey) > -1) {

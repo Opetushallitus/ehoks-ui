@@ -91,7 +91,8 @@ export const HOKS = types
       const response: APIResponse = yield fetchSingle(
         apiUrl(
           `${apiPrefix}/external/eperusteet/tutkinnot?diaarinumero=${diaarinumero}`
-        )
+        ),
+        { headers: callerId() }
       )
       const { id, suoritustavat } = response.data
       const suoritustapa = suoritustavat.reduce(
@@ -120,7 +121,8 @@ export const HOKS = types
           `${apiPrefix}/external/eperusteet/tutkinnot/${id}/suoritustavat/${suoritustapa}/${
             suoritustapa === "reformi" ? "rakenne" : "tutkinnonosat"
           }`
-        )
+        ),
+        { headers: callerId() }
       )
       return response.data
     })
