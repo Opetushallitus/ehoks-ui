@@ -1,4 +1,4 @@
-# 1. Use Finnish as the domain language
+# 2. Use Finnish as the domain language
 
 Date: 26.03.2020
 
