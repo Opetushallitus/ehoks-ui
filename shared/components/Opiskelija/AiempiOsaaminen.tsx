@@ -91,6 +91,7 @@ export class AiempiOsaaminen extends React.Component<
                     demonstrations={study.tarkentavatTiedotNaytto}
                     verificationProcess={study.todentamisenProsessi}
                     objectives={study.tavoitteetJaSisallot}
+                    educationOrganizer={study.koulutuksenJarjestaja}
                   />
                   {renderExtraItem && <EmptyItem />}
                 </React.Fragment>

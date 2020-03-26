@@ -77,6 +77,7 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
                   share={share}
                   title={study.opintoOtsikko(competencePointsTitle)}
                   objectives={study.tavoitteetJaSisallot}
+                  educationOrganizer={study.koulutuksenJarjestaja}
                 />
                 {renderExtraItem && <EmptyItem />}
               </React.Fragment>

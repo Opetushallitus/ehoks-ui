@@ -53,6 +53,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
       workplaceSelite,
       ajanjaksonTarkenne,
       jarjestajanEdustaja,
+      hankkijanEdustaja,
       muutOppimisymparistot
     } = learningPeriod
 
@@ -105,6 +106,18 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
                   <TD>{jarjestajanEdustaja.oppilaitosHenkiloDescription}</TD>
                 </tr>
               )}
+            {tyyppi === OsaamisenHankkimistapaType.Workplace &&
+              hankkijanEdustaja && (
+                <tr>
+                  <TH>
+                    <FormattedMessage
+                      id="opiskelusuunnitelma.hankkijanEdustajaTitle"
+                      defaultMessage="Hankkivan koulutuksen järjestäjän edustaja"
+                    />
+                  </TH>
+                  <TD>{hankkijanEdustaja.oppilaitosHenkiloDescription}</TD>
+                </tr>
+              )}
             {!!keskeisetTyotehtavat?.length && (
               <tr>
                 <TH>
@@ -136,7 +149,6 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
             </HMediaQuery.MaxWidth>
           </React.Fragment>
         )}
-
         {muutOppimisymparistot.map((environment, i) => {
           return (
             <LearningPeriodTitle key={i}>

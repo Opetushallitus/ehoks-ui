@@ -5,7 +5,8 @@ import {
   Osaamisvaatimus,
   TodentamisenProsessi,
   IOsaamisenHankkimistapa,
-  IOsaamisenOsoittaminen
+  IOsaamisenOsoittaminen,
+  IOrganisaatio
 } from "models/helpers/TutkinnonOsa"
 import { ShareType } from "stores/NotificationStore"
 import { MdShare } from "react-icons/md"
@@ -63,6 +64,12 @@ const TitleContainer = styled("div")`
   flex-direction: row;
   align-items: center;
 `
+
+// TODO will be used in a upcoming PR
+// const BoldedFormattedMessage = styled("div")`
+//   font-weight: 700;
+//   margin: 10px 20px;
+// `
 
 const Title = styled("h2")`
   flex: 1;
@@ -124,6 +131,7 @@ export interface StudyInfoProps {
    */
   width?: string
   objectives?: string
+  educationOrganizer?: IOrganisaatio
 }
 
 export interface StudyInfoState {
@@ -236,6 +244,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       verificationProcess,
       width = "25%",
       objectives
+      // educationOrganizer
     } = this.props
     const { featureFlags } = this.context
     const { expandedCompetences, expanded } = this.state
@@ -274,6 +283,17 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
               </ShareButton>
             )}
           </TitleContainer>
+          {/*TODO this will be released in a upcoming PR, not ready yet stylewise*/}
+          {/*<TitleContainer>*/}
+          {/*  <BoldedFormattedMessage>*/}
+          {/*    <FormattedMessage*/}
+          {/*      id="tutkinnonOsa.toteuttaKoulutuksenJarjetajaTitle"*/}
+          {/*      defaultMessage="Toteuttava koulutuksenjärjestäjä"*/}
+          {/*    />*/}
+          {/*  </BoldedFormattedMessage>*/}
+          {/*  &nbsp;*/}
+          {/*  {educationOrganizer?.organisaatioNimi}*/}
+          {/*</TitleContainer>*/}
           {hasDetails && (
             <Details
               fadedColor={fadedColor}

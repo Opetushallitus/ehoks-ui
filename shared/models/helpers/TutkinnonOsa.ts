@@ -8,6 +8,7 @@ import { HankittavaAmmatillinenTutkinnonOsa } from "models/HankittavaAmmatilline
 import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenTutkinnonOsa"
 import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
 import { ShareType } from "stores/NotificationStore"
+import { Organisaatio } from "../Organisaatio"
 
 interface Arviointikriteeri {
   kuvaus?: string
@@ -23,6 +24,8 @@ export interface Osaamisvaatimus {
   kuvaus?: string
   kriteerit?: Arviointikriteeri[]
 }
+
+export interface IOrganisaatio extends Instance<typeof Organisaatio> {}
 
 export interface IOsaamisenHankkimistapa
   extends Instance<typeof OsaamisenHankkimistapa> {}
