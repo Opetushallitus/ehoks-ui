@@ -65,6 +65,11 @@ const TitleContainer = styled("div")`
   align-items: center;
 `
 
+const BoldedFormattedMessage = styled("div")`
+  font-weight: 700;
+  margin: 10px 20px;
+`
+
 const Title = styled("h2")`
   flex: 1;
   color: #000;
@@ -265,10 +270,6 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
         <InnerContainer>
           <TitleContainer>
             <Title data-testid="Title">{title}</Title>
-            <FormattedMessage
-              id="tutkinnonOsa.toteuttaKoulutuksenJarjetajaTitle"
-              defaultMessage="Toteuttava koulutuksenjärjestäjä"
-            />
             {showShareButton && (
               <ShareButton>
                 <Button onClick={this.share}>
@@ -280,6 +281,16 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
                 </Button>
               </ShareButton>
             )}
+          </TitleContainer>
+          <TitleContainer>
+            <BoldedFormattedMessage>
+              <FormattedMessage
+                id="tutkinnonOsa.toteuttaKoulutuksenJarjetajaTitle"
+                defaultMessage="Toteuttava koulutuksenjärjestäjä"
+              />
+            </BoldedFormattedMessage>
+            &nbsp;
+            {educationOrganizer?.organisaatioNimi}
           </TitleContainer>
           {hasDetails && (
             <Details
