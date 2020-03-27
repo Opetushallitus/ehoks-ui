@@ -1,7 +1,7 @@
 import { AppContext } from "components/AppContext"
-import { apiPrefix, apiUrl, callerId } from "config"
+import { apiPrefix, apiUrl } from "config"
 import { createEnvironment } from "createEnvironment"
-import { fetch } from "fetchUtils"
+import { callerId, fetch } from "fetchUtils"
 import { Provider } from "mobx-react"
 import "promise-polyfill/src/polyfill" // polyfill Promise for IE 11
 import React from "react"

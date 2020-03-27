@@ -11,14 +11,15 @@ export const KoulutuksenJarjestajaOrganisaatio = types
   })
   // TODO: extract fetching organisation to a helper like EnrichKoodiUri
   .actions(self => {
-    const { apiUrl, apiPrefix, errors, fetchSingle } = getEnv<StoreEnvironment>(
-      self
-    )
+    const { apiUrl, apiPrefix, errors, fetchSingle, callerId } = getEnv<
+      StoreEnvironment
+    >(self)
 
     const fetchOrganisation = flow(function*(): any {
       try {
         const response: APIResponse = yield fetchSingle(
-          apiUrl(`${apiPrefix}/external/organisaatio/${self.oppilaitosOid}`)
+          apiUrl(`${apiPrefix}/external/organisaatio/${self.oppilaitosOid}`),
+          { headers: callerId() }
         )
         self.oppilaitos = response.data
       } catch (error) {
