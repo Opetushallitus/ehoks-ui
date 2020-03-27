@@ -134,7 +134,7 @@ export interface StudyInfoProps {
    */
   width?: string
   objectives?: string
-  educationOrganizer?: IOrganisaatio
+  koulutuksenJarjestaja?: IOrganisaatio
 }
 
 export interface StudyInfoState {
@@ -255,7 +255,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       verificationProcess,
       width = "25%",
       objectives,
-      educationOrganizer
+      koulutuksenJarjestaja
     } = this.props
     const { featureFlags } = this.context
     const { expandedCompetences, expanded } = this.state
@@ -303,7 +303,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
                 />
               </BoldedFormattedMessage>
               &nbsp;
-              {educationOrganizer?.organisaatioNimi}
+              {koulutuksenJarjestaja?.organisaatioNimi}
             </SubTitleContainer>
           )}
           {hasDetails && (
