@@ -65,11 +65,14 @@ const TitleContainer = styled("div")`
   align-items: center;
 `
 
-// TODO will be used in a upcoming PR
-// const BoldedFormattedMessage = styled("div")`
-//   font-weight: 700;
-//   margin: 10px 20px;
-// `
+const SubTitleContainer = styled(TitleContainer)`
+  margin: 0px 0px 15px 20px;
+`
+
+const BoldedFormattedMessage = styled("div")`
+  font-weight: 700;
+  margin-right: 10px;
+`
 
 const Title = styled("h2")`
   flex: 1;
@@ -131,7 +134,7 @@ export interface StudyInfoProps {
    */
   width?: string
   objectives?: string
-  educationOrganizer?: IOrganisaatio
+  koulutuksenJarjestaja?: IOrganisaatio
 }
 
 export interface StudyInfoState {
@@ -230,6 +233,14 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     }
   }
 
+  private koulutuksenJarjestajaShouldBeShown() {
+    return (
+      this.state.expanded.details ||
+      this.state.expanded.competences ||
+      this.state.expanded.objectives
+    )
+  }
+
   render() {
     const {
       accentColor,
@@ -243,8 +254,8 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       title,
       verificationProcess,
       width = "25%",
-      objectives
-      // educationOrganizer
+      objectives,
+      koulutuksenJarjestaja
     } = this.props
     const { featureFlags } = this.context
     const { expandedCompetences, expanded } = this.state
@@ -283,17 +294,18 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
               </ShareButton>
             )}
           </TitleContainer>
-          {/*TODO this will be released in a upcoming PR, not ready yet stylewise*/}
-          {/*<TitleContainer>*/}
-          {/*  <BoldedFormattedMessage>*/}
-          {/*    <FormattedMessage*/}
-          {/*      id="tutkinnonOsa.toteuttaKoulutuksenJarjetajaTitle"*/}
-          {/*      defaultMessage="Toteuttava koulutuksenjärjestäjä"*/}
-          {/*    />*/}
-          {/*  </BoldedFormattedMessage>*/}
-          {/*  &nbsp;*/}
-          {/*  {educationOrganizer?.organisaatioNimi}*/}
-          {/*</TitleContainer>*/}
+          {this.koulutuksenJarjestajaShouldBeShown() && (
+            <SubTitleContainer>
+              <BoldedFormattedMessage>
+                <FormattedMessage
+                  id="tutkinnonOsa.toteuttaKoulutuksenJarjetajaTitle"
+                  defaultMessage="Toteuttava koulutuksenjärjestäjä"
+                />
+              </BoldedFormattedMessage>
+              &nbsp;
+              {koulutuksenJarjestaja?.organisaatioNimi}
+            </SubTitleContainer>
+          )}
           {hasDetails && (
             <Details
               fadedColor={fadedColor}
