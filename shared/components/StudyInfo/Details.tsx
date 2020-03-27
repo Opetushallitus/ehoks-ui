@@ -187,7 +187,7 @@ export class Details extends React.Component<DetailsProps> {
           })}
 
           {extraContent}
-          {!!koulutuksenJarjestaja?.organizationName && (
+          {!!verification && !!koulutuksenJarjestaja?.organizationName && (
             <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
               <FormattedMessage
                 id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
