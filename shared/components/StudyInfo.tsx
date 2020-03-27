@@ -317,6 +317,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
               koodiUri={koodiUri}
               share={share}
               toggle={this.toggle}
+              educationOrganizer={educationOrganizer}
             />
           )}
           <Competences

@@ -8,7 +8,8 @@ import { LearningPeriod } from "./LearningPeriod"
 import {
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
-  TodentamisenProsessi
+  TodentamisenProsessi,
+  IOrganisaatio
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "./LearningEvent"
 import { VerificationProcess } from "types/VerificationProcess"
@@ -78,6 +79,7 @@ interface DetailsProps {
   share?: { koodiUri: string; type: ShareType | "" }
   toggle: (name: ToggleableItems) => () => void
   verificationProcess?: TodentamisenProsessi
+  educationOrganizer?: IOrganisaatio
 }
 
 export class Details extends React.Component<DetailsProps> {
@@ -95,7 +97,8 @@ export class Details extends React.Component<DetailsProps> {
       learningPeriods = [],
       share,
       toggle,
-      verificationProcess
+      verificationProcess,
+      educationOrganizer
     } = this.props
     const { intl } = this.context
 
@@ -184,6 +187,25 @@ export class Details extends React.Component<DetailsProps> {
           })}
 
           {extraContent}
+          {!!educationOrganizer?.organisaatioNimi && (
+            <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
+              <FormattedMessage
+                id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
+                defaultMessage="Aiemman osaamisen todentanut"
+                values={{
+                  date:
+                    verificationProcess &&
+                    verificationProcess.lahetettyArvioitavaksi
+                      ? format(
+                          parseISO(verificationProcess.lahetettyArvioitavaksi),
+                          "d.M.yyyy"
+                        )
+                      : ""
+                }}
+              />{" "}
+              {educationOrganizer.organisaatioNimi}
+            </VerificationTitle>
+          )}
         </DetailsContent>
       </DetailsExpanded>
     ) : (
@@ -196,9 +218,11 @@ export class Details extends React.Component<DetailsProps> {
             {verification === SUORAAN && (
               <VerificationTitle data-testid="StudyInfo.DirectVerification">
                 <FormattedMessage
-                  id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
-                  defaultMessage="Osaaminen tunnistettu suoraan"
-                />
+                  id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
+                  defaultMessage="Aiemman osaamisen todentanut"
+                />{" "}
+                {!!educationOrganizer?.organisaatioNimi &&
+                  educationOrganizer.organisaatioNimi}
               </VerificationTitle>
             )}
             {verification === ARVIOIJIEN_KAUTTA && (
@@ -219,6 +243,27 @@ export class Details extends React.Component<DetailsProps> {
                         : ""
                   }}
                 />
+                {!!educationOrganizer?.organisaatioNimi && (
+                  <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
+                    <FormattedMessage
+                      id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
+                      defaultMessage="Aiemman osaamisen todentanut"
+                      values={{
+                        date:
+                          verificationProcess &&
+                          verificationProcess.lahetettyArvioitavaksi
+                            ? format(
+                                parseISO(
+                                  verificationProcess.lahetettyArvioitavaksi
+                                ),
+                                "d.M.yyyy"
+                              )
+                            : ""
+                      }}
+                    />{" "}
+                    {educationOrganizer.organisaatioNimi}
+                  </VerificationTitle>
+                )}
               </VerificationTitle>
             )}
             {learningPeriods.map((lp, i) => {
