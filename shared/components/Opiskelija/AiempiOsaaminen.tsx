@@ -9,6 +9,7 @@ import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
 import { IAiemminHankittuTutkinnonOsa } from "../../models/helpers/TutkinnonOsa"
+import { observer } from "mobx-react"
 
 const Container = styled(StudiesContainer)`
   margin-top: 0;
@@ -26,6 +27,7 @@ export interface AiempiOsaaminenState {
   }
 }
 
+@observer
 export class AiempiOsaaminen extends React.Component<
   AiempiOsaaminenProps & RouteComponentProps,
   AiempiOsaaminenState

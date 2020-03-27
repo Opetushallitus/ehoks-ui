@@ -255,12 +255,20 @@ describe("StudyInfo", () => {
           koodiUri: "osaamisentodentamisenprosessi_0002",
           lahetettyArvioitavaksi: "2019-04-15"
         }}
+        koulutuksenJarjestaja={{
+          oid: "1.2.246.562.10.5921222",
+          nimi: { fi: "Koulutuksen järjestäjä-organisaatio", sv: "" },
+          organizationName: "Koulutuksen järjestäjä-organisaatio"
+        }}
       />
     )
 
     expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
     expect(
       queryByTestId("StudyInfo.AssessmentVerification")
+    ).toBeInTheDocument()
+    expect(
+      queryByTestId("StudyInfo.AssessmentVerificationOrganisation")
     ).toBeInTheDocument()
 
     rerender(

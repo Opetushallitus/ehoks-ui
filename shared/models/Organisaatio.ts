@@ -15,7 +15,7 @@ export const Organisaatio = types
   .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {
-      get organisaatioNimi() {
+      get organizationName() {
         return self.nimi[root.translations.activeLocale]
       }
     }
