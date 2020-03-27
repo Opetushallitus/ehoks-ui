@@ -79,7 +79,7 @@ interface DetailsProps {
   share?: { koodiUri: string; type: ShareType | "" }
   toggle: (name: ToggleableItems) => () => void
   verificationProcess?: TodentamisenProsessi
-  educationOrganizer?: IOrganisaatio
+  koulutuksenJarjestaja?: IOrganisaatio
 }
 
 export class Details extends React.Component<DetailsProps> {
@@ -98,7 +98,7 @@ export class Details extends React.Component<DetailsProps> {
       share,
       toggle,
       verificationProcess,
-      educationOrganizer
+      koulutuksenJarjestaja
     } = this.props
     const { intl } = this.context
 
@@ -187,7 +187,7 @@ export class Details extends React.Component<DetailsProps> {
           })}
 
           {extraContent}
-          {!!educationOrganizer?.organisaatioNimi && (
+          {!!koulutuksenJarjestaja?.organizationName && (
             <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
               <FormattedMessage
                 id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
@@ -203,7 +203,7 @@ export class Details extends React.Component<DetailsProps> {
                       : ""
                 }}
               />{" "}
-              {educationOrganizer.organisaatioNimi}
+              {koulutuksenJarjestaja.organizationName}
             </VerificationTitle>
           )}
         </DetailsContent>
@@ -221,8 +221,8 @@ export class Details extends React.Component<DetailsProps> {
                   id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
                   defaultMessage="Aiemman osaamisen todentanut"
                 />{" "}
-                {!!educationOrganizer?.organisaatioNimi &&
-                  educationOrganizer.organisaatioNimi}
+                {!!koulutuksenJarjestaja?.organizationName &&
+                  koulutuksenJarjestaja.organizationName}
               </VerificationTitle>
             )}
             {verification === ARVIOIJIEN_KAUTTA && (
@@ -243,7 +243,7 @@ export class Details extends React.Component<DetailsProps> {
                         : ""
                   }}
                 />
-                {!!educationOrganizer?.organisaatioNimi && (
+                {!!koulutuksenJarjestaja?.organizationName && (
                   <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
                     <FormattedMessage
                       id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
@@ -261,7 +261,7 @@ export class Details extends React.Component<DetailsProps> {
                             : ""
                       }}
                     />{" "}
-                    {educationOrganizer.organisaatioNimi}
+                    {koulutuksenJarjestaja.organizationName}
                   </VerificationTitle>
                 )}
               </VerificationTitle>

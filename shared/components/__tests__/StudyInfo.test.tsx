@@ -258,7 +258,7 @@ describe("StudyInfo", () => {
         educationOrganizer={{
           oid: "1.2.246.562.10.5921222",
           nimi: { fi: "Koulutuksen järjestäjä-organisaatio", sv: "" },
-          organisaatioNimi: "Koulutuksen järjestäjä-organisaatio"
+          organizationName: "Koulutuksen järjestäjä-organisaatio"
         }}
       />
     )

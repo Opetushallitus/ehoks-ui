@@ -303,7 +303,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
                 />
               </BoldedFormattedMessage>
               &nbsp;
-              {koulutuksenJarjestaja?.organisaatioNimi}
+              {koulutuksenJarjestaja?.organizationName}
             </SubTitleContainer>
           )}
           {hasDetails && (
@@ -317,7 +317,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
               koodiUri={koodiUri}
               share={share}
               toggle={this.toggle}
-              educationOrganizer={educationOrganizer}
+              koulutuksenJarjestaja={koulutuksenJarjestaja}
             />
           )}
           <Competences
