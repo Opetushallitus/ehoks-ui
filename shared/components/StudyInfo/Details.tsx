@@ -82,6 +82,27 @@ interface DetailsProps {
   koulutuksenJarjestaja?: IOrganisaatio
 }
 
+const PreviouslyConfirmedOrganization = ({
+  lahetettyArvioitavaksi,
+  organizationName
+}: {
+  lahetettyArvioitavaksi?: string
+  organizationName?: string
+}) => (
+  <React.Fragment>
+    <FormattedMessage
+      id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
+      defaultMessage="Aiemman osaamisen todentanut"
+      values={{
+        date: !!lahetettyArvioitavaksi
+          ? format(parseISO(lahetettyArvioitavaksi), "d.M.yyyy")
+          : ""
+      }}
+    />{" "}
+    {organizationName}
+  </React.Fragment>
+)
+
 export class Details extends React.Component<DetailsProps> {
   static contextTypes = {
     intl: intlShape
@@ -108,6 +129,7 @@ export class Details extends React.Component<DetailsProps> {
       demonstrations.length ||
       learningPeriods.length ||
       verification === OHJAUS_NAYTTOON
+    const isAiempiOsaaminen = !!verification
     const hasActiveShare =
       typeof share !== "undefined" && koodiUri === share.koodiUri
     const shareType = typeof share !== "undefined" ? share.type : undefined
@@ -187,23 +209,15 @@ export class Details extends React.Component<DetailsProps> {
           })}
 
           {extraContent}
-          {!!koulutuksenJarjestaja?.organizationName && (
+
+          {!!isAiempiOsaaminen && (
             <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
-              <FormattedMessage
-                id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
-                defaultMessage="Aiemman osaamisen todentanut"
-                values={{
-                  date:
-                    verificationProcess &&
-                    verificationProcess.lahetettyArvioitavaksi
-                      ? format(
-                          parseISO(verificationProcess.lahetettyArvioitavaksi),
-                          "d.M.yyyy"
-                        )
-                      : ""
-                }}
-              />{" "}
-              {koulutuksenJarjestaja.organizationName}
+              <PreviouslyConfirmedOrganization
+                lahetettyArvioitavaksi={
+                  verificationProcess?.lahetettyArvioitavaksi
+                }
+                organizationName={koulutuksenJarjestaja?.organizationName}
+              />
             </VerificationTitle>
           )}
         </DetailsContent>
@@ -217,12 +231,9 @@ export class Details extends React.Component<DetailsProps> {
           <DetailsContent>
             {verification === SUORAAN && (
               <VerificationTitle data-testid="StudyInfo.DirectVerification">
-                <FormattedMessage
-                  id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
-                  defaultMessage="Aiemman osaamisen todentanut"
-                />{" "}
-                {!!koulutuksenJarjestaja?.organizationName &&
-                  koulutuksenJarjestaja.organizationName}
+                <PreviouslyConfirmedOrganization
+                  organizationName={koulutuksenJarjestaja?.organizationName}
+                />
               </VerificationTitle>
             )}
             {verification === ARVIOIJIEN_KAUTTA && (
@@ -245,23 +256,12 @@ export class Details extends React.Component<DetailsProps> {
                 />
                 {!!koulutuksenJarjestaja?.organizationName && (
                   <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
-                    <FormattedMessage
-                      id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
-                      defaultMessage="Aiemman osaamisen todentanut"
-                      values={{
-                        date:
-                          verificationProcess &&
-                          verificationProcess.lahetettyArvioitavaksi
-                            ? format(
-                                parseISO(
-                                  verificationProcess.lahetettyArvioitavaksi
-                                ),
-                                "d.M.yyyy"
-                              )
-                            : ""
-                      }}
-                    />{" "}
-                    {koulutuksenJarjestaja.organizationName}
+                    <PreviouslyConfirmedOrganization
+                      organizationName={koulutuksenJarjestaja?.organizationName}
+                      lahetettyArvioitavaksi={
+                        verificationProcess?.lahetettyArvioitavaksi
+                      }
+                    />
                   </VerificationTitle>
                 )}
               </VerificationTitle>
@@ -299,13 +299,25 @@ export class Details extends React.Component<DetailsProps> {
                   />
                 )
               return (
-                <LearningEvent
-                  key={i}
-                  title={title}
-                  description={d?.nayttoymparisto?.nimi}
-                  startDate={d.alku}
-                  endDate={d.loppu}
-                />
+                <React.Fragment>
+                  <LearningEvent
+                    key={i}
+                    title={title}
+                    description={d?.nayttoymparisto?.nimi}
+                    startDate={d.alku}
+                    endDate={d.loppu}
+                  />
+                  {verification === OHJAUS_NAYTTOON &&
+                    !!koulutuksenJarjestaja?.organizationName && (
+                      <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
+                        <PreviouslyConfirmedOrganization
+                          organizationName={
+                            koulutuksenJarjestaja?.organizationName
+                          }
+                        />
+                      </VerificationTitle>
+                    )}
+                </React.Fragment>
               )
             })}
           </DetailsContent>
