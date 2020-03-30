@@ -43,7 +43,7 @@ const StartFeedbackLink = styled("a")`
 `
 
 const StyledStudentFeedbackModal = styled(Modal)`
-  font-family: "Source Sans Pro", sans-serif;
+  ${props => props.theme.typography.body}
   box-sizing: inherit;
   color: rgb(255, 255, 255);
   text-align: center;
