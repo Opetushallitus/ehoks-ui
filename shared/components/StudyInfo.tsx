@@ -18,6 +18,7 @@ import { AppContext } from "components/AppContext"
 import { ToggleableItems } from "./StudyInfo/StudyInfoHelpers"
 import { Objectives } from "./StudyInfo/Objectives"
 import { Details } from "./StudyInfo/Details"
+import { OneRowTable } from "./StudyInfo/Shared"
 
 interface ContainerProps {
   accentColor?: string
@@ -67,11 +68,6 @@ const TitleContainer = styled("div")`
 
 const SubTitleContainer = styled(TitleContainer)`
   margin: 0px 0px 15px 20px;
-`
-
-const BoldedFormattedMessage = styled("div")`
-  font-weight: 700;
-  margin-right: 10px;
 `
 
 const Title = styled("h2")`
@@ -295,14 +291,16 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
           </TitleContainer>
           {this.koulutuksenJarjestajaShouldBeShown() && (
             <SubTitleContainer>
-              <BoldedFormattedMessage>
-                <FormattedMessage
-                  id="tutkinnonOsa.toteuttaKoulutuksenJarjetajaTitle"
-                  defaultMessage="Toteuttava koulutuksenjärjestäjä"
-                />
-              </BoldedFormattedMessage>
-              &nbsp;
-              {koulutuksenJarjestaja?.organizationName}
+              <OneRowTable
+                th={
+                  <FormattedMessage
+                    id="tutkinnonOsa.toteuttaKoulutuksenJarjetajaTitle"
+                    defaultMessage="Toteuttava koulutuksenjärjestäjä"
+                  />
+                }
+              >
+                {koulutuksenJarjestaja?.organizationName}
+              </OneRowTable>
             </SubTitleContainer>
           )}
           {hasDetails && (
