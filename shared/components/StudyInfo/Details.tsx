@@ -69,6 +69,11 @@ const VerificationTitle = styled("strong")`
   margin: 10px 0 8px 0;
 `
 
+const VerificationTitleExpanded = styled("strong")`
+  display: block;
+  margin: 10px 0 8px 20px;
+`
+
 interface DetailsProps {
   fadedColor?: string
   demonstrations?: Array<IOsaamisenOsoittaminen>
@@ -211,14 +216,14 @@ export class Details extends React.Component<DetailsProps> {
           {extraContent}
 
           {!!isAiempiOsaaminen && (
-            <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
+            <VerificationTitleExpanded data-testid="StudyInfo.AssessmentVerificationOrganisation">
               <PreviouslyConfirmedOrganization
                 lahetettyArvioitavaksi={
                   verificationProcess?.lahetettyArvioitavaksi
                 }
                 organizationName={koulutuksenJarjestaja?.organizationName}
               />
-            </VerificationTitle>
+            </VerificationTitleExpanded>
           )}
         </DetailsContent>
       </DetailsExpanded>
