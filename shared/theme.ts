@@ -36,13 +36,13 @@ const fontBase = `
   text-size-adjust: 100%;
 `
 const fontSizes = {
-  base: "14px",
+  base: "16px",
   lead: "20px",
   routeButton: "20px",
   heading1: "30px",
   heading2: "20px",
   heading3: "20px",
-  heading4: "14px"
+  heading4: "16px"
 }
 const fontWeight = {
   base: "400",
@@ -51,7 +51,7 @@ const fontWeight = {
   heading1: "400",
   heading2: "400",
   heading3: "600",
-  heading4: "400"
+  heading4: "700"
 }
 const typography = {
   body: `
