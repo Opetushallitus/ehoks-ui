@@ -7,19 +7,15 @@ import { IOppija } from "stores/KoulutuksenJarjestajaStore"
 
 const StudentName = styled("h2")`
   margin-top: 0;
+  ${props => props.theme.typography.heading1}
 `
 
 const StudentDetails = styled("div")`
   flex: 1;
-
-  h2 {
-    font-weight: 400;
-    font-size: 28px;
-  }
 `
 
 const Timestamp = styled("div")`
-  font-size: 20px;
+  ${props => props.theme.typography.lead}
   margin-bottom: 10px;
 `
 
