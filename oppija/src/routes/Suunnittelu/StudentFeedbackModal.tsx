@@ -6,10 +6,7 @@ import Modal from "react-modal"
 import styled from "../../../../shared/styled"
 import { IRootStore } from "../../stores/RootStore"
 
-const StudentFeedbackTitle = styled("h1")`
-  font-weight: 400;
-  font-size: 30px;
-`
+const StudentFeedbackTitle = styled("h1")``
 
 const StudentFeedbackTextContainer = styled("p")`
   font-size: 17px;
