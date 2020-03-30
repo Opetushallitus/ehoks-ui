@@ -30,6 +30,9 @@ export const GlobalStyles = css`
   h1 {
     ${props => props.theme.typography.heading1}
   }
+  h2 {
+    ${props => props.theme.typography.heading2}
+  }
 
   /*
   * react-circular-progressbar styles
