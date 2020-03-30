@@ -230,11 +230,19 @@ export class Details extends React.Component<DetailsProps> {
         <LocationsContainer>
           <DetailsContent>
             {verification === SUORAAN && (
-              <VerificationTitle data-testid="StudyInfo.DirectVerification">
-                <PreviouslyConfirmedOrganization
-                  organizationName={koulutuksenJarjestaja?.organizationName}
-                />
-              </VerificationTitle>
+              <React.Fragment>
+                <VerificationTitle>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
+                    defaultMessage="Osaaminen tunnistettu suoraan"
+                  />
+                </VerificationTitle>
+                <VerificationTitle data-testid="StudyInfo.DirectVerification">
+                  <PreviouslyConfirmedOrganization
+                    organizationName={koulutuksenJarjestaja?.organizationName}
+                  />
+                </VerificationTitle>
+              </React.Fragment>
             )}
             {verification === ARVIOIJIEN_KAUTTA && (
               <VerificationTitle data-testid="StudyInfo.AssessmentVerification">
