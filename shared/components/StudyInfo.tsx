@@ -77,10 +77,9 @@ const BoldedFormattedMessage = styled("div")`
 const Title = styled("h2")`
   flex: 1;
   color: #000;
-  font-weight: 600;
-  font-size: 20px;
   display: block;
   margin: 10px 20px;
+  ${props => props.theme.typography.heading3}
 `
 
 const ShareIcon = styled(MdShare)`

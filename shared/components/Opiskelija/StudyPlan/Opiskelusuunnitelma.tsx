@@ -31,9 +31,8 @@ import { CompletedStudies } from "./CompletedStudies"
 const { colors } = theme
 
 const ProgressTitle = styled("h2")`
-  font-weight: 600;
-  font-size: 20px;
   margin-left: 4px;
+  ${props => props.theme.typography.heading3}
 `
 
 const EssentialFactorContainer = styled("div")`

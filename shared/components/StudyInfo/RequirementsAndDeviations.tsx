@@ -57,9 +57,8 @@ const CollapseContainer = styled("div")`
 const CollapseTitle = styled("h2")`
   margin: 0;
   flex: 1;
-  font-size: 22px;
-  font-weight: 600;
   cursor: pointer;
+  ${props => props.theme.typography.heading3}
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     flex: unset;
