@@ -11,3 +11,7 @@ const {
 } = (StyledComponents as any) as ThemedStyledComponentsModule<TypeOfTheme>
 export default baseStyled
 export { css, createGlobalStyle, keyframes, ThemeProvider, withTheme }
+
+export interface ComponentWithTheme {
+  theme: TypeOfTheme
+}

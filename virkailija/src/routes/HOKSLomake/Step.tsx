@@ -1,7 +1,14 @@
 import React from "react"
 import { MdCheck, MdClose } from "react-icons/md"
 import styled from "styled"
-import { theme } from "theme"
+
+const MdReady = styled(MdCheck)`
+  color: ${props => props.theme.colors.ready};
+`
+
+const MdPlanned = styled(MdClose)`
+  color: ${props => props.theme.colors.planned};
+`
 
 interface CircleProps {
   active?: boolean
@@ -77,11 +84,7 @@ export class Step extends React.Component<StepProps> {
       <StepContainer onClick={this.setIndex} disabled={disabled}>
         <StatusContainer>
           <Circle active={active}>{index + 1}</Circle>
-          {completed ? (
-            <MdCheck color={theme.colors.ready} />
-          ) : (
-            <MdClose color={theme.colors.planned} />
-          )}
+          {completed ? <MdReady /> : <MdPlanned />}
         </StatusContainer>
         <Description>{children}</Description>
       </StepContainer>

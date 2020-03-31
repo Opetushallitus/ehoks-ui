@@ -139,3 +139,4 @@ export const theme = {
 }
 
 export type TypeOfTheme = typeof theme
+export type ColorType = keyof typeof theme.colors
