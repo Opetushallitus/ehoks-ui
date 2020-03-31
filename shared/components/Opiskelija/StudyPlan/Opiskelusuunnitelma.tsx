@@ -11,7 +11,7 @@ import { Instance } from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
-import styled, { withTheme, ComponentWithTheme } from "styled"
+import styled from "styled"
 import { HelpPopup } from "components/HelpPopup"
 import find from "lodash.find"
 import { ShareType } from "stores/NotificationStore"
@@ -41,9 +41,7 @@ const HelpButton = styled(HelpPopup)`
   margin: 0 0 0 20px;
 `
 
-export interface OpiskelusuunnitelmaProps
-  extends ComponentWithTheme,
-    RouteComponentProps {
+export interface OpiskelusuunnitelmaProps extends RouteComponentProps {
   children?: React.ReactChildren
   plan: Instance<typeof HOKS>
   elements?: {
@@ -54,7 +52,7 @@ export interface OpiskelusuunnitelmaProps
 }
 
 @observer
-export class OpiskelusuunnitelmaWithTheme extends React.Component<
+export class Opiskelusuunnitelma extends React.Component<
   OpiskelusuunnitelmaProps,
   OpiskelusuunnitelmaState
 > {
@@ -206,7 +204,7 @@ export class OpiskelusuunnitelmaWithTheme extends React.Component<
   render() {
     const { intl } = this.context
     const { activeAccordions, share } = this.state
-    const { plan, elements: customElements = {}, theme } = this.props
+    const { plan, elements: customElements = {} } = this.props
     const { suunnitellutOpinnot, aikataulutetutOpinnot, valmiitOpinnot } = plan
     const competencePointsTitle = intl.formatMessage({
       id: "opiskelusuunnitelma.osaamispisteLyhenne"
@@ -343,7 +341,7 @@ export class OpiskelusuunnitelmaWithTheme extends React.Component<
                     )
                   : 0
               }
-              stroke={theme.colors.planned}
+              stroke="planned"
               title={
                 <FormattedMessage
                   id="opiskelusuunnitelma.suunniteltunaTitle"
@@ -360,7 +358,7 @@ export class OpiskelusuunnitelmaWithTheme extends React.Component<
                     )
                   : 0
               }
-              stroke={theme.colors.scheduled}
+              stroke="scheduled"
               title={
                 <FormattedMessage
                   id="opiskelusuunnitelma.aikataulutettunaTitle"
@@ -377,7 +375,7 @@ export class OpiskelusuunnitelmaWithTheme extends React.Component<
                     )
                   : 0
               }
-              stroke={theme.colors.ready}
+              stroke="ready"
               title={
                 <FormattedMessage
                   id="opiskelusuunnitelma.valmiinaTitle"
@@ -508,5 +506,3 @@ export class OpiskelusuunnitelmaWithTheme extends React.Component<
     )
   }
 }
-
-export const Opiskelusuunnitelma = withTheme(OpiskelusuunnitelmaWithTheme)
