@@ -27,10 +27,72 @@ const themeColors = {
   ready: "#5BAC13"
 }
 
+const fontFamily = '"Source Sans Pro", sans-serif;'
+const fontBase = `
+  font-family: ${fontFamily};
+  line-height: 1.5;
+  font-style: normal;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+`
+const fontSizes = {
+  base: "16px",
+  lead: "20px",
+  routeButton: "20px",
+  heading1: "30px",
+  heading2: "20px",
+  heading3: "20px",
+  heading4: "16px"
+}
+const fontWeight = {
+  base: "400",
+  lead: "400",
+  routeButton: "300",
+  heading1: "400",
+  heading2: "400",
+  heading3: "600",
+  heading4: "700"
+}
+const typography = {
+  body: `
+    ${fontBase}
+    font-size: ${fontSizes.base};
+    font-weight: ${fontWeight.base};
+  `,
+  lead: `
+    ${fontBase}
+    font-size: ${fontSizes.lead};
+    font-weight: ${fontWeight.lead};
+  `,
+  routeButton: `
+    ${fontBase}
+    font-size: ${fontSizes.routeButton};
+    font-weight: ${fontWeight.routeButton};
+  `,
+  heading1: `
+    ${fontBase}
+    font-size: ${fontSizes.heading1};
+    font-weight: ${fontWeight.heading1};
+  `,
+  heading2: `
+    ${fontBase}
+    font-size: ${fontSizes.heading2};
+    font-weight: ${fontWeight.heading2};
+  `,
+  heading3: `
+    ${fontBase}
+    font-size: ${fontSizes.heading3};
+    font-weight: ${fontWeight.heading3};
+  `,
+  heading4: `
+    ${fontBase}
+    font-size: ${fontSizes.heading4};
+    font-weight: ${fontWeight.heading4};
+  `
+}
+
 export const theme = {
-  breakpoints: {
-    ...breakpoints
-  },
+  breakpoints,
   colors: {
     ...themeColors,
     header: {
@@ -65,6 +127,7 @@ export const theme = {
       cellBorder: "#000"
     }
   },
+  typography,
   maxWidth: 1440,
   spacing: {
     s: "10px",

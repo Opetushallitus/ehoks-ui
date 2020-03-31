@@ -312,9 +312,8 @@ export class Details extends React.Component<DetailsProps> {
                   />
                 )
               return (
-                <React.Fragment>
+                <React.Fragment key={i}>
                   <LearningEvent
-                    key={i}
                     title={title}
                     description={d?.nayttoymparisto?.nimi}
                     startDate={d.alku}

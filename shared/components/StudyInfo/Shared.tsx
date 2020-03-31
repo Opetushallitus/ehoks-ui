@@ -1,3 +1,4 @@
+import React from "react"
 import styled from "styled"
 import { Period } from "./Period"
 
@@ -78,3 +79,20 @@ export const InfoContainer = styled("ul")`
     }
   }
 `
+
+export const OneRowTable = ({
+  th,
+  children
+}: {
+  th: React.ReactNode
+  children?: React.ReactNode
+}) => (
+  <Table>
+    <TBody>
+      <tr>
+        <TH>{th}</TH>
+        <TD>{children}</TD>
+      </tr>
+    </TBody>
+  </Table>
+)

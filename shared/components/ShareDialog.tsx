@@ -45,7 +45,6 @@ const ShareHeader = styled("div")`
 `
 
 const ShareTitle = styled("h1")`
-  font-weight: 400;
   margin: 0 0 16px 0;
 `
 
