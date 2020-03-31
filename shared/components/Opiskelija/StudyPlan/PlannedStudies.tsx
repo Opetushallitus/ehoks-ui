@@ -8,9 +8,8 @@ import { Accordion } from "../../Accordion"
 import { ShareType } from "../../../stores/NotificationStore"
 import { ActiveAccordions, StudyPartSubAccordions } from "./StudyPlanHelpers"
 import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
-import { withTheme, ComponentWithTheme } from "styled"
 
-export interface PlannedStudiesProps extends ComponentWithTheme {
+export interface PlannedStudiesProps {
   accordionIsOpen: boolean
   share: {
     koodiUri: string
@@ -30,9 +29,7 @@ export interface PlannedStudiesProps extends ComponentWithTheme {
   competencePointsTitle: string
 }
 
-export class PlannedStudiesWithTheme extends React.Component<
-  PlannedStudiesProps
-> {
+export class PlannedStudies extends React.Component<PlannedStudiesProps> {
   render() {
     const {
       accordionIsOpen,
@@ -41,8 +38,7 @@ export class PlannedStudiesWithTheme extends React.Component<
       toggleAccordion,
       suunnitellutOpinnot,
       elements = {},
-      competencePointsTitle,
-      theme
+      competencePointsTitle
     } = this.props
 
     return (
@@ -68,7 +64,7 @@ export class PlannedStudiesWithTheme extends React.Component<
             return (
               <React.Fragment key={`${study.id}_${i}`}>
                 <StudyInfo
-                  accentColor={theme.colors.planned}
+                  accentColor="planned"
                   competenceRequirements={study.osaamisvaatimukset}
                   demonstrations={study.osaamisenOsoittaminen}
                   extraContent={
@@ -100,5 +96,3 @@ export class PlannedStudiesWithTheme extends React.Component<
     )
   }
 }
-
-export const PlannedStudies = withTheme(PlannedStudiesWithTheme)
