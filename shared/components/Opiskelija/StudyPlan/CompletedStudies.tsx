@@ -8,9 +8,9 @@ import { StudiesContainer } from "../../StudiesContainer"
 import { StudyInfo } from "../../StudyInfo"
 import { EmptyItem } from "../../EmptyItem"
 import { Accordion } from "../../Accordion"
-import { theme } from "../../../theme"
+import { withTheme, ComponentWithTheme } from "styled"
 
-export interface CompletedStudiesProps {
+export interface CompletedStudiesProps extends ComponentWithTheme {
   accordionIsOpen: boolean
   share: {
     koodiUri: string
@@ -30,7 +30,9 @@ export interface CompletedStudiesProps {
   competencePointsTitle: string
 }
 
-export class CompletedStudies extends React.Component<CompletedStudiesProps> {
+export class CompletedStudiesWithTheme extends React.Component<
+  CompletedStudiesProps
+> {
   render() {
     const {
       accordionIsOpen,
@@ -39,7 +41,8 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
       toggleAccordion,
       valmiitOpinnot,
       elements = {},
-      competencePointsTitle
+      competencePointsTitle,
+      theme
     } = this.props
 
     return (
@@ -97,3 +100,5 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
     )
   }
 }
+
+export const CompletedStudies = withTheme(CompletedStudiesWithTheme)
