@@ -238,7 +238,7 @@ describe("StudyInfo", () => {
         queryByTestId("StudyInfo.DetailsCollapsed")
       ).not.toBeInTheDocument()
       expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
-      expect(getAllByTestId("StudyInfo.LearningPeriod").length).toBe(2)
+      expect(getAllByTestId("StudyInfo.OsaamisenHankkimistapa").length).toBe(2)
     })
   })
 

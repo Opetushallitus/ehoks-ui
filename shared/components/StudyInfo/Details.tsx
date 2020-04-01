@@ -4,7 +4,7 @@ import styled from "styled"
 import { Collapse } from "./Collapse"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
-import { LearningPeriod } from "./LearningPeriod"
+import { OsaamisenHankkimistapa } from "./OsaamisenHankkimistapa"
 import {
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
@@ -182,7 +182,12 @@ export class Details extends React.Component<DetailsProps> {
             defaultPeriod={defaultPeriod}
           >
             {osaamisenHankkimistavat.map((period, i) => {
-              return <LearningPeriod key={i} learningPeriod={period} />
+              return (
+                <OsaamisenHankkimistapa
+                  key={i}
+                  osaamisenHankkimistapa={period}
+                />
+              )
             })}
           </ShareDialog>
 
