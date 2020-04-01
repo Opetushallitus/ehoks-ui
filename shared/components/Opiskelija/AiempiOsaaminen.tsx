@@ -90,7 +90,7 @@ export class AiempiOsaaminen extends React.Component<
                     accentColor="midGreen"
                     fadedColor="#ECF6ED"
                     title={study.opintoOtsikko(competencePointsTitle)}
-                    demonstrations={study.tarkentavatTiedotNaytto}
+                    osaamisenOsoittamiset={study.tarkentavatTiedotNaytto}
                     verificationProcess={study.todentamisenProsessi}
                     objectives={study.tavoitteetJaSisallot}
                     koulutuksenJarjestaja={study.koulutuksenJarjestaja}

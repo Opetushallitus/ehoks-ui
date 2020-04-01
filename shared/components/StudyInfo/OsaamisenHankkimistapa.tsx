@@ -19,16 +19,16 @@ import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
 import { observer } from "mobx-react"
 import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
 
-const LearningPeriodTitle = styled(Title)`
+const OsaamisenHankkimistapaTitle = styled(Title)`
   margin-left: 20px;
   margin-right: 20px;
 `
 
-const LearningPeriodTable = styled(Table)`
+const OsaamisenHankkimistapaTable = styled(Table)`
   margin-left: 20px;
 `
 
-const LearningPeriodTasks = styled(InfoContainer)`
+const OsaamisenHankkimistapaTasks = styled(InfoContainer)`
   margin: 10px 20px 20px 10px;
 `
 
@@ -36,14 +36,16 @@ const CustomSlider = styled(MobileSlider)`
   margin: 10px 20px 20px 10px;
 `
 
-interface LearningPeriodProps {
-  learningPeriod: IOsaamisenHankkimistapa
+interface OsaamisenHankkimistapaProps {
+  osaamisenHankkimistapa: IOsaamisenHankkimistapa
 }
 
 @observer
-export class LearningPeriod extends React.Component<LearningPeriodProps> {
+export class OsaamisenHankkimistapa extends React.Component<
+  OsaamisenHankkimistapaProps
+> {
   render() {
-    const { learningPeriod } = this.props
+    const { osaamisenHankkimistapa } = this.props
     const {
       alku,
       loppu,
@@ -55,15 +57,15 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
       jarjestajanEdustaja,
       hankkijanEdustaja,
       muutOppimisymparistot
-    } = learningPeriod
+    } = osaamisenHankkimistapa
 
     const { vastuullinenTyopaikkaOhjaaja, keskeisetTyotehtavat } =
       tyopaikallaJarjestettavaKoulutus || {}
 
     return (
-      <Container data-testid="StudyInfo.LearningPeriod">
+      <Container data-testid="StudyInfo.OsaamisenHankkimistapa">
         {(alku || loppu) && (
-          <LearningPeriodTitle>
+          <OsaamisenHankkimistapaTitle>
             <LearningEvent
               title={<CompetenceAquirementTitle hankkimistapaType={tyyppi} />}
               description={workplaceSelite}
@@ -72,9 +74,9 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
               periodSpecifier={ajanjaksonTarkenne}
               size="large"
             />
-          </LearningPeriodTitle>
+          </OsaamisenHankkimistapaTitle>
         )}
-        <LearningPeriodTable>
+        <OsaamisenHankkimistapaTable>
           <TBody>
             {tyyppi === OsaamisenHankkimistapaType.Workplace &&
               vastuullinenTyopaikkaOhjaaja && (
@@ -129,7 +131,7 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
               </tr>
             )}
           </TBody>
-        </LearningPeriodTable>
+        </OsaamisenHankkimistapaTable>
         {!!keskeisetTyotehtavat?.length && (
           <React.Fragment>
             <HMediaQuery.MaxWidth breakpoint="Tablet">
@@ -140,24 +142,24 @@ export class LearningPeriod extends React.Component<LearningPeriodProps> {
               </CustomSlider>
             </HMediaQuery.MaxWidth>
             <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
-              <LearningPeriodTasks>
+              <OsaamisenHankkimistapaTasks>
                 {keskeisetTyotehtavat.map((tyotehtava, i) => {
                   return <li key={i}>{tyotehtava}</li>
                 })}
-              </LearningPeriodTasks>
+              </OsaamisenHankkimistapaTasks>
             </HMediaQuery.MaxWidth>
           </React.Fragment>
         )}
         {muutOppimisymparistot.map((environment, i) => {
           return (
-            <LearningPeriodTitle key={i}>
+            <OsaamisenHankkimistapaTitle key={i}>
               <LearningEvent
                 title={environment.oppimisymparisto.nimi}
                 startDate={environment.alku}
                 endDate={environment.loppu}
                 size="large"
               />
-            </LearningPeriodTitle>
+            </OsaamisenHankkimistapaTitle>
           )
         })}
       </Container>

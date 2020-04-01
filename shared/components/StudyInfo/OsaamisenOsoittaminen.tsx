@@ -18,7 +18,7 @@ import { AppContext } from "components/AppContext"
 import { RequirementsAndDeviations } from "./RequirementsAndDeviations"
 import { observer } from "mobx-react"
 
-const DemonstrationTitle = styled(Title)`
+const OsaamisenOsoittaminenTitle = styled(Title)`
   display: flex;
   align-items: center;
   margin-left: 20px;
@@ -29,11 +29,11 @@ const FlexLearningEvent = styled(LearningEvent)`
   flex: 1;
 `
 
-const DemonstrationTable = styled(Table)`
+const OsaamisenOsoittaminenTable = styled(Table)`
   margin-left: 20px;
 `
 
-const DemonstrationTasks = styled(InfoContainer)`
+const OsaamisenOsoittaminenTasks = styled(InfoContainer)`
   margin: 10px 20px 20px 20px;
 `
 
@@ -53,26 +53,26 @@ const ShareIcon = styled(MdShare)`
   margin-left: 6px;
 `
 
-interface DemonstrationState {
+interface OsaamisenOsoittaminenState {
   requirementsAndDeviationsExpanded: boolean
 }
 
-interface DemonstrationProps {
-  demonstration: IOsaamisenOsoittaminen
+interface OsaamisenOsoittaminenProps {
+  osaamisenOsoittaminen: IOsaamisenOsoittaminen
   verificationProcess?: TodentamisenProsessi
   koodiUri?: string
   hasActiveShare?: boolean
 }
 
 @observer
-export class Demonstration extends React.Component<
-  DemonstrationProps,
-  DemonstrationState
+export class OsaamisenOsoittaminen extends React.Component<
+  OsaamisenOsoittaminenProps,
+  OsaamisenOsoittaminenState
 > {
   static contextType = AppContext
   declare context: React.ContextType<typeof AppContext>
 
-  state: DemonstrationState = {
+  state: OsaamisenOsoittaminenState = {
     requirementsAndDeviationsExpanded: false
   }
 
@@ -96,7 +96,7 @@ export class Demonstration extends React.Component<
 
   render() {
     const {
-      demonstration,
+      osaamisenOsoittaminen,
       hasActiveShare = false,
       verificationProcess
     } = this.props
@@ -125,21 +125,21 @@ export class Demonstration extends React.Component<
       tyoelamaArvioijat,
       jarjestaja,
       sisallonKuvaus
-    } = demonstration
+    } = osaamisenOsoittaminen
 
     const jarjestajaOppilaitos = jarjestaja.oppilaitosNimi
 
     return (
-      <Container data-testid="StudyInfo.Demonstration">
-        <DemonstrationTitle>
+      <Container data-testid="StudyInfo.OsaamisenOsoittaminen">
+        <OsaamisenOsoittaminenTitle>
           <FlexLearningEvent
             title={title}
-            isDemonstration={true}
+            isOsaamisenOsoittaminen={true}
             description={nayttoymparisto.nimi}
-            startDate={demonstration.alku}
-            endDate={demonstration.loppu}
+            startDate={osaamisenOsoittaminen.alku}
+            endDate={osaamisenOsoittaminen.loppu}
             size="large"
-            demonstrationEnviromentDescription={nayttoymparisto.kuvaus}
+            nayttoYmparistoDescription={nayttoymparisto.kuvaus}
           />
           {showShareButton && (
             <ButtonContainer>
@@ -152,8 +152,8 @@ export class Demonstration extends React.Component<
               </Button>
             </ButtonContainer>
           )}
-        </DemonstrationTitle>
-        <DemonstrationTable>
+        </OsaamisenOsoittaminenTitle>
+        <OsaamisenOsoittaminenTable>
           <TBody>
             <tr>
               <TH>
@@ -187,7 +187,7 @@ export class Demonstration extends React.Component<
               </tr>
             ) : null}
           </TBody>
-        </DemonstrationTable>
+        </OsaamisenOsoittaminenTable>
         <HMediaQuery.MaxWidth breakpoint="Tablet">
           <CustomSlider>
             {sisallonKuvaus.map((tyotehtava, i) => {
@@ -196,18 +196,20 @@ export class Demonstration extends React.Component<
           </CustomSlider>
         </HMediaQuery.MaxWidth>
         <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
-          <DemonstrationTasks>
+          <OsaamisenOsoittaminenTasks>
             {sisallonKuvaus.map((tyotehtava, i) => {
               return <li key={i}>{tyotehtava}</li>
             })}
-          </DemonstrationTasks>
+          </OsaamisenOsoittaminenTasks>
         </HMediaQuery.MaxWidth>
 
         <RequirementsAndDeviations
           toggle={this.toggleRequirementsAndDeviations}
           expanded={requirementsAndDeviationsExpanded}
-          requirements={demonstration.yksilollisetKriteerit}
-          deviations={demonstration.vaatimuksistaTaiTavoitteistaPoikkeaminen}
+          requirements={osaamisenOsoittaminen.yksilollisetKriteerit}
+          deviations={
+            osaamisenOsoittaminen.vaatimuksistaTaiTavoitteistaPoikkeaminen
+          }
         />
       </Container>
     )

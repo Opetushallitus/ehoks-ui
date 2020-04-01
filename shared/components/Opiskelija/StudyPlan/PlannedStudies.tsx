@@ -66,13 +66,15 @@ export class PlannedStudies extends React.Component<PlannedStudiesProps> {
                 <StudyInfo
                   accentColor="planned"
                   competenceRequirements={study.osaamisvaatimukset}
-                  demonstrations={study.osaamisenOsoittaminen}
-                  extraContent={
-                    study.olennainenSeikka ? elements.essentialFactor : null
+                  osaamisenOsoittamiset={study.osaamisenOsoittaminen}
+                  olennainenSeikka={
+                    study.olennainenSeikka
+                      ? elements.essentialFactor
+                      : undefined
                   }
                   fadedColor="#FDF1E6"
                   koodiUri={study.tutkinnonOsaKoodiUri}
-                  learningPeriods={study.osaamisenHankkimistavat}
+                  osaamisenHankkimistavat={study.osaamisenHankkimistavat}
                   share={share}
                   title={study.opintoOtsikko(competencePointsTitle)}
                   objectives={study.tavoitteetJaSisallot}

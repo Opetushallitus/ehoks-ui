@@ -100,9 +100,9 @@ export interface StudyInfoProps {
    */
   competenceRequirements?: Array<Osaamisvaatimus>
   /** List of competence demonstrations */
-  demonstrations?: Array<IOsaamisenOsoittaminen>
-  /** extraContent is passed through to Details component */
-  extraContent?: React.ReactNode
+  osaamisenOsoittamiset?: Array<IOsaamisenOsoittaminen>
+  /** olennainenSeikka is passed through to Details component */
+  olennainenSeikka?: React.ReactNode
   /** Color of additional info container */
   fadedColor?: string
   /**
@@ -113,7 +113,7 @@ export interface StudyInfoProps {
    * List of learning periods.
    * @default []
    */
-  learningPeriods?: Array<IOsaamisenHankkimistapa>
+  osaamisenHankkimistavat?: Array<IOsaamisenHankkimistapa>
   /**
    * Current share state from url
    */
@@ -241,10 +241,10 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     const {
       accentColor,
       competenceRequirements = [],
-      demonstrations = [],
-      extraContent = null,
+      osaamisenOsoittamiset = [],
+      olennainenSeikka,
       fadedColor,
-      learningPeriods = [],
+      osaamisenHankkimistavat = [],
       koodiUri,
       share,
       title,
@@ -255,9 +255,12 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     } = this.props
     const { featureFlags } = this.context
     const { expandedCompetences, expanded } = this.state
-    const hasLearningPeriods = learningPeriods && learningPeriods.length > 0
+    const hasOsaamisenHakkimistavat =
+      osaamisenHankkimistavat && osaamisenHankkimistavat.length > 0
     const hasDetails =
-      hasLearningPeriods || demonstrations.length > 0 || verificationProcess
+      hasOsaamisenHakkimistavat ||
+      osaamisenOsoittamiset.length > 0 ||
+      verificationProcess
     const hasActiveShare =
       typeof share !== "undefined" &&
       koodiUri === share.koodiUri &&
@@ -265,7 +268,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     const detailsExpanded = expanded.details || hasActiveShare
     const showShareButton =
       expanded.details &&
-      hasLearningPeriods &&
+      hasOsaamisenHakkimistavat &&
       !hasActiveShare &&
       featureFlags.shareDialog
 
@@ -307,10 +310,10 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
           {hasDetails && (
             <Details
               fadedColor={fadedColor}
-              demonstrations={demonstrations}
-              extraContent={extraContent}
+              osaamisenOsoittamiset={osaamisenOsoittamiset}
+              olennainenSeikka={olennainenSeikka}
               expanded={detailsExpanded}
-              learningPeriods={learningPeriods}
+              osaamisenHankkimistavat={osaamisenHankkimistavat}
               verificationProcess={verificationProcess}
               koodiUri={koodiUri}
               share={share}

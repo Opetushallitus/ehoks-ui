@@ -15,7 +15,7 @@ export const HOKSStore = types
   .model("HOKSStore", HOKSStoreModel)
   .views(self => {
     return {
-      // shown as notification banners about current and upcoming demonstrations/learning periods
+      // shown as notification banners about current and upcoming OsaamisenOsoittamiset/OsaamisenHankkimistavat
       get notifications() {
         return flattenDeep<SnapshotIn<typeof Notification>>(
           self.suunnitelmat.map(s => {

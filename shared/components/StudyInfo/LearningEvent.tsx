@@ -18,12 +18,12 @@ const ContentContainer = styled("div")`
 `
 
 interface IconProps {
-  isDemonstration: boolean
+  isOsaamisenOsoittaminen: boolean
 }
 const Icon = styled("div")<IconProps>`
   margin-right: 10px;
-  padding-top: ${props => (props.isDemonstration ? "7px" : "3px")};
-  color: ${props => (props.isDemonstration ? "#636769" : "#000")};
+  padding-top: ${props => (props.isOsaamisenOsoittaminen ? "7px" : "3px")};
+  color: ${props => (props.isOsaamisenOsoittaminen ? "#636769" : "#000")};
 `
 
 const DetailsContainer = styled("div")`
@@ -45,13 +45,13 @@ const Title = styled("strong")<SizeProps>`
 interface LearningEventProps {
   className?: string
   title?: React.ReactNode
-  isDemonstration?: boolean
+  isOsaamisenOsoittaminen?: boolean
   size?: "small" | "large"
   description?: string
   startDate?: string
   endDate?: string
   periodSpecifier?: string
-  demonstrationEnviromentDescription?: string
+  nayttoYmparistoDescription?: string
 }
 
 export class LearningEvent extends React.Component<LearningEventProps> {
@@ -64,16 +64,16 @@ export class LearningEvent extends React.Component<LearningEventProps> {
       startDate = "",
       endDate = "",
       periodSpecifier = "",
-      isDemonstration = false,
-      demonstrationEnviromentDescription
+      isOsaamisenOsoittaminen = false,
+      nayttoYmparistoDescription
     } = this.props
     const iconSize = size === "small" ? 24 : 32
     return (
       <Container className={className} data-testid="StudyInfo.LearningEvent">
         <Title size={size}>{title}</Title>
         <ContentContainer>
-          <Icon isDemonstration={isDemonstration}>
-            {isDemonstration ? (
+          <Icon isOsaamisenOsoittaminen={isOsaamisenOsoittaminen}>
+            {isOsaamisenOsoittaminen ? (
               <Flag size={iconSize} />
             ) : (
               <MdEventNote size={iconSize} fill="#636769" />
@@ -93,7 +93,7 @@ export class LearningEvent extends React.Component<LearningEventProps> {
             )}
             {periodSpecifier && <Detail size={size}>{periodSpecifier}</Detail>}
             <Detail size={size}>{description}</Detail>
-            <Detail size={size}>{demonstrationEnviromentDescription}</Detail>
+            <Detail size={size}>{nayttoYmparistoDescription}</Detail>
           </DetailsContainer>
         </ContentContainer>
       </Container>

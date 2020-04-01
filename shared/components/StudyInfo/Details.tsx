@@ -1,10 +1,10 @@
 import React from "react"
-import { intlShape, FormattedMessage } from "react-intl"
+import { intlShape, FormattedMessage, InjectedIntl } from "react-intl"
 import styled from "styled"
 import { Collapse } from "./Collapse"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
-import { LearningPeriod } from "./LearningPeriod"
+import { OsaamisenHankkimistapa } from "./OsaamisenHankkimistapa"
 import {
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
@@ -16,9 +16,12 @@ import { VerificationProcess } from "types/VerificationProcess"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import { ShareType } from "stores/NotificationStore"
-import ShareDialog from "components/ShareDialog"
+import ShareDialog, {
+  Instructor,
+  ShareLinkValidityPeriod
+} from "components/ShareDialog"
 import { ToggleableItems } from "./StudyInfoHelpers"
-import { Demonstration } from "./Demonstration"
+import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
 
 interface ColorProps {
@@ -74,39 +77,93 @@ const VerificationTitleExpanded = styled("strong")`
   margin: 10px 0 8px 20px;
 `
 
-interface DetailsProps {
-  fadedColor?: string
-  demonstrations?: Array<IOsaamisenOsoittaminen>
-  extraContent?: React.ReactNode
-  expanded?: boolean
-  koodiUri?: string
-  learningPeriods?: Array<IOsaamisenHankkimistapa>
-  share?: { koodiUri: string; type: ShareType | "" }
+const CollapseIcon = ({
+  hasActiveShare,
+  toggle,
+  intl
+}: {
+  hasActiveShare: boolean
   toggle: (name: ToggleableItems) => () => void
-  verificationProcess?: TodentamisenProsessi
-  koulutuksenJarjestaja?: IOrganisaatio
-}
+  intl: InjectedIntl
+}) => (
+  <>
+    {!hasActiveShare && (
+      <LocationsContainerExpanded>
+        <IconContainer
+          onClick={toggle("details")}
+          aria-label={intl.formatMessage({
+            id: "opiskelusuunnitelma.piilotaTyossaOppiminenAriaLabel"
+          })}
+        >
+          <Collapse size={40} />
+        </IconContainer>
+      </LocationsContainerExpanded>
+    )}
+  </>
+)
+
+const OsaamisenHankkimistavatExpanded = ({
+  hasActiveShare,
+  shareType,
+  fadedColor,
+  koodiUri,
+  instructor,
+  defaultPeriod,
+  osaamisenHankkimistavat
+}: {
+  hasActiveShare: boolean
+  shareType?: ShareType | ""
+  fadedColor: string
+  koodiUri?: string
+  instructor?: Instructor
+  defaultPeriod?: ShareLinkValidityPeriod
+  osaamisenHankkimistavat: Array<IOsaamisenHankkimistapa>
+}) => (
+  <ShareDialog
+    active={hasActiveShare && shareType === "tyossaoppiminen"}
+    background={fadedColor}
+    koodiUri={koodiUri || ""}
+    type="tyossaoppiminen"
+    instructor={instructor}
+    defaultPeriod={defaultPeriod}
+  >
+    {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => {
+      return (
+        <OsaamisenHankkimistapa
+          key={i}
+          osaamisenHankkimistapa={osaamisenHankkimistapa}
+        />
+      )
+    })}
+  </ShareDialog>
+)
 
 const PreviouslyConfirmedOrganization = ({
-  lahetettyArvioitavaksi,
   organizationName
 }: {
-  lahetettyArvioitavaksi?: string
   organizationName?: string
 }) => (
   <React.Fragment>
     <FormattedMessage
       id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
       defaultMessage="Aiemman osaamisen todentanut"
-      values={{
-        date: !!lahetettyArvioitavaksi
-          ? format(parseISO(lahetettyArvioitavaksi), "d.M.yyyy")
-          : ""
-      }}
     />{" "}
     {organizationName}
   </React.Fragment>
 )
+
+interface DetailsProps {
+  fadedColor?: string
+  osaamisenOsoittamiset?: Array<IOsaamisenOsoittaminen>
+  olennainenSeikka?: React.ReactNode
+  expanded?: boolean
+  koodiUri?: string
+  osaamisenHankkimistavat?: Array<IOsaamisenHankkimistapa>
+  share?: { koodiUri: string; type: ShareType | "" }
+  toggle: (name: ToggleableItems) => () => void
+  verificationProcess?: TodentamisenProsessi
+  koulutuksenJarjestaja?: IOrganisaatio
+}
 
 export class Details extends React.Component<DetailsProps> {
   static contextTypes = {
@@ -115,12 +172,12 @@ export class Details extends React.Component<DetailsProps> {
 
   render() {
     const {
-      demonstrations = [],
-      extraContent = null,
+      osaamisenOsoittamiset = [],
+      olennainenSeikka,
       expanded,
       fadedColor = "",
       koodiUri,
-      learningPeriods = [],
+      osaamisenHankkimistavat = [],
       share,
       toggle,
       verificationProcess,
@@ -131,31 +188,34 @@ export class Details extends React.Component<DetailsProps> {
     const verification = verificationProcess && verificationProcess.koodiUri
     const { SUORAAN, ARVIOIJIEN_KAUTTA, OHJAUS_NAYTTOON } = VerificationProcess
     const showExpand =
-      demonstrations.length ||
-      learningPeriods.length ||
+      osaamisenOsoittamiset.length ||
+      osaamisenHankkimistavat.length ||
       verification === OHJAUS_NAYTTOON
     const isAiempiOsaaminen = !!verification
     const hasActiveShare =
       typeof share !== "undefined" && koodiUri === share.koodiUri
     const shareType = typeof share !== "undefined" ? share.type : undefined
-    const firstLearningPeriod =
-      shareType === "tyossaoppiminen" && learningPeriods[0]
-        ? learningPeriods[0]
+    const firstOsaamisenHankkimistapa =
+      shareType === "tyossaoppiminen" && osaamisenHankkimistavat[0]
+        ? osaamisenHankkimistavat[0]
         : undefined
 
-    const instructor = firstLearningPeriod
+    const instructor = firstOsaamisenHankkimistapa
       ? {
-          name: firstLearningPeriod.ohjaaja
-            ? firstLearningPeriod.ohjaaja.nimi || ""
+          name: firstOsaamisenHankkimistapa.ohjaaja
+            ? firstOsaamisenHankkimistapa.ohjaaja.nimi || ""
             : "",
-          email: firstLearningPeriod.ohjaaja
-            ? firstLearningPeriod.ohjaaja.sahkoposti || ""
+          email: firstOsaamisenHankkimistapa.ohjaaja
+            ? firstOsaamisenHankkimistapa.ohjaaja.sahkoposti || ""
             : "",
-          organisation: firstLearningPeriod.selite
+          organisation: firstOsaamisenHankkimistapa.selite
         }
       : undefined
-    const defaultPeriod = firstLearningPeriod
-      ? { start: firstLearningPeriod.alku, end: firstLearningPeriod.loppu }
+    const defaultPeriod = firstOsaamisenHankkimistapa
+      ? {
+          start: firstOsaamisenHankkimistapa.alku,
+          end: firstOsaamisenHankkimistapa.loppu
+        }
       : undefined
 
     return expanded ? (
@@ -164,33 +224,21 @@ export class Details extends React.Component<DetailsProps> {
         data-testid="StudyInfo.DetailsExpanded"
       >
         <DetailsContent>
-          {!hasActiveShare && (
-            <LocationsContainerExpanded>
-              <IconContainer
-                onClick={toggle("details")}
-                aria-label={intl.formatMessage({
-                  id: "opiskelusuunnitelma.piilotaTyossaOppiminenAriaLabel"
-                })}
-              >
-                <Collapse size={40} />
-              </IconContainer>
-            </LocationsContainerExpanded>
-          )}
+          <CollapseIcon
+            hasActiveShare={hasActiveShare}
+            toggle={toggle}
+            intl={intl}
+          />
 
-          <ShareDialog
-            active={hasActiveShare && shareType === "tyossaoppiminen"}
-            background={fadedColor}
-            koodiUri={koodiUri || ""}
-            type="tyossaoppiminen"
+          <OsaamisenHankkimistavatExpanded
+            hasActiveShare={hasActiveShare}
+            fadedColor={fadedColor}
             instructor={instructor}
             defaultPeriod={defaultPeriod}
-          >
-            {learningPeriods.map((period, i) => {
-              return <LearningPeriod key={i} learningPeriod={period} />
-            })}
-          </ShareDialog>
+            osaamisenHankkimistavat={osaamisenHankkimistavat}
+          />
 
-          {demonstrations.map((demonstration, i) => {
+          {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => {
             return (
               <ShareDialog
                 active={hasActiveShare && shareType === "naytto"}
@@ -198,13 +246,13 @@ export class Details extends React.Component<DetailsProps> {
                 koodiUri={koodiUri || ""}
                 type="naytto"
                 defaultPeriod={{
-                  start: demonstration.alku,
-                  end: demonstration.loppu
+                  start: osaamisenOsoittaminen.alku,
+                  end: osaamisenOsoittaminen.loppu
                 }}
                 key={i}
               >
-                <Demonstration
-                  demonstration={demonstration}
+                <OsaamisenOsoittaminen
+                  osaamisenOsoittaminen={osaamisenOsoittaminen}
                   verificationProcess={verificationProcess}
                   koodiUri={koodiUri}
                   hasActiveShare={hasActiveShare && shareType === "naytto"}
@@ -213,14 +261,11 @@ export class Details extends React.Component<DetailsProps> {
             )
           })}
 
-          {extraContent}
+          {olennainenSeikka}
 
-          {!!isAiempiOsaaminen && (
+          {isAiempiOsaaminen && (
             <VerificationTitleExpanded data-testid="StudyInfo.AssessmentVerificationOrganisation">
               <PreviouslyConfirmedOrganization
-                lahetettyArvioitavaksi={
-                  verificationProcess?.lahetettyArvioitavaksi
-                }
                 organizationName={koulutuksenJarjestaja?.organizationName}
               />
             </VerificationTitleExpanded>
@@ -271,15 +316,12 @@ export class Details extends React.Component<DetailsProps> {
                   <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
                     <PreviouslyConfirmedOrganization
                       organizationName={koulutuksenJarjestaja?.organizationName}
-                      lahetettyArvioitavaksi={
-                        verificationProcess?.lahetettyArvioitavaksi
-                      }
                     />
                   </VerificationTitle>
                 )}
               </VerificationTitle>
             )}
-            {learningPeriods.map((lp, i) => {
+            {osaamisenHankkimistavat.map((lp, i) => {
               return (
                 <LearningEvent
                   key={i}
@@ -292,7 +334,7 @@ export class Details extends React.Component<DetailsProps> {
                 />
               )
             })}
-            {demonstrations.map((d, i) => {
+            {osaamisenOsoittamiset.map((d, i) => {
               const title =
                 verification === OHJAUS_NAYTTOON ? (
                   <FormattedMessage
