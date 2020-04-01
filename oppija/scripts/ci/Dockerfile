@@ -14,6 +14,7 @@ COPY nginx-server.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /root
 
+COPY opintopolku.yml /root/oph-configuration/opintopolku.yml
 COPY public /var/www/html/public
 COPY config.json.template escape-html.py /opt/ehoks/
 RUN ln -s /var/www/html/public/ehoks/index.html /home/oph/index.html
@@ -29,7 +30,6 @@ COPY run run.sh /usr/local/bin/
 
 RUN chown -R nginx:nginx /var/www/html/public
 RUN mkdir -p /home/oph/logs
-RUN chown -R nginx:nginx /home/oph/logs
 
 EXPOSE 8080
 
