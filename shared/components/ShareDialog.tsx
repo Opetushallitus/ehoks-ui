@@ -133,6 +133,17 @@ const DateInput = styled("input")`
   font-size: 14px;
 `
 
+export interface Instructor {
+  name: string
+  organisation?: string
+  email: string
+}
+
+export interface ShareLinkValidityPeriod {
+  start?: string
+  end?: string
+}
+
 interface ShareDialogProps extends InjectedIntlProps {
   active: boolean
   background: string
@@ -140,8 +151,8 @@ interface ShareDialogProps extends InjectedIntlProps {
   children: any
   koodiUri: string
   type: ShareType
-  defaultPeriod?: { start?: string; end?: string }
-  instructor?: { name: string; organisation?: string; email: string }
+  defaultPeriod?: ShareLinkValidityPeriod
+  instructor?: Instructor
 }
 
 export function ShareDialog(props: ShareDialogProps) {
