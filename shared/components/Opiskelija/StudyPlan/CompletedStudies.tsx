@@ -67,7 +67,7 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
                   accentColor="ready"
                   competenceRequirements={study.osaamisvaatimukset}
                   demonstrations={study.osaamisenOsoittaminen}
-                  extraContent={
+                  olennainenSeikka={
                     study.olennainenSeikka ? elements.essentialFactor : null
                   }
                   fadedColor="#ECF6ED"

@@ -77,7 +77,7 @@ const VerificationTitleExpanded = styled("strong")`
 interface DetailsProps {
   fadedColor?: string
   demonstrations?: Array<IOsaamisenOsoittaminen>
-  extraContent?: React.ReactNode
+  olennainenSeikka?: React.ReactNode
   expanded?: boolean
   koodiUri?: string
   learningPeriods?: Array<IOsaamisenHankkimistapa>
@@ -116,7 +116,7 @@ export class Details extends React.Component<DetailsProps> {
   render() {
     const {
       demonstrations = [],
-      extraContent = null,
+      olennainenSeikka = null,
       expanded,
       fadedColor = "",
       koodiUri,
@@ -213,7 +213,7 @@ export class Details extends React.Component<DetailsProps> {
             )
           })}
 
-          {extraContent}
+          {olennainenSeikka}
 
           {!!isAiempiOsaaminen && (
             <VerificationTitleExpanded data-testid="StudyInfo.AssessmentVerificationOrganisation">
