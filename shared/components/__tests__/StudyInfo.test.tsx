@@ -188,13 +188,15 @@ describe("StudyInfo", () => {
       getAllByTestId,
       queryByTestId,
       rerender
-    } = renderWithContext(<StudyInfo title="Test" demonstrations={naytot1} />)
+    } = renderWithContext(
+      <StudyInfo title="Test" osaamisenOsoittamiset={naytot1} />
+    )
 
     expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
     expect(queryByTestId("StudyInfo.DetailsExpanded")).not.toBeInTheDocument()
     expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
 
-    rerender(<StudyInfo title="Test" demonstrations={naytot2} />)
+    rerender(<StudyInfo title="Test" osaamisenOsoittamiset={naytot2} />)
 
     await wait(() => {
       expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
@@ -281,7 +283,7 @@ describe("StudyInfo", () => {
     rerender(
       <StudyInfo
         title="Title"
-        demonstrations={naytot3}
+        osaamisenOsoittamiset={naytot3}
         verificationProcess={{
           koodiUri: "osaamisentodentamisenprosessi_0003"
         }}

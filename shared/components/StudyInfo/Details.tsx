@@ -149,7 +149,7 @@ const PreviouslyConfirmedOrganization = ({
 
 interface DetailsProps {
   fadedColor?: string
-  demonstrations?: Array<IOsaamisenOsoittaminen>
+  osaamisenOsoittamiset?: Array<IOsaamisenOsoittaminen>
   olennainenSeikka?: React.ReactNode
   expanded?: boolean
   koodiUri?: string
@@ -167,7 +167,7 @@ export class Details extends React.Component<DetailsProps> {
 
   render() {
     const {
-      demonstrations = [],
+      osaamisenOsoittamiset = [],
       olennainenSeikka,
       expanded,
       fadedColor = "",
@@ -183,7 +183,7 @@ export class Details extends React.Component<DetailsProps> {
     const verification = verificationProcess && verificationProcess.koodiUri
     const { SUORAAN, ARVIOIJIEN_KAUTTA, OHJAUS_NAYTTOON } = VerificationProcess
     const showExpand =
-      demonstrations.length ||
+      osaamisenOsoittamiset.length ||
       osaamisenHankkimistavat.length ||
       verification === OHJAUS_NAYTTOON
     const isAiempiOsaaminen = !!verification
@@ -233,7 +233,7 @@ export class Details extends React.Component<DetailsProps> {
             osaamisenHankkimistavat={osaamisenHankkimistavat}
           />
 
-          {demonstrations.map((demonstration, i) => {
+          {osaamisenOsoittamiset.map((demonstration, i) => {
             return (
               <ShareDialog
                 active={hasActiveShare && shareType === "naytto"}
@@ -329,7 +329,7 @@ export class Details extends React.Component<DetailsProps> {
                 />
               )
             })}
-            {demonstrations.map((d, i) => {
+            {osaamisenOsoittamiset.map((d, i) => {
               const title =
                 verification === OHJAUS_NAYTTOON ? (
                   <FormattedMessage
