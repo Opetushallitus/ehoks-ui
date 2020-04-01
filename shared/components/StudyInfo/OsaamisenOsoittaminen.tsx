@@ -51,6 +51,10 @@ const Button = styled(HeroButton)`
 
 const ShareIcon = styled(MdShare)`
   margin-left: 6px;
+
+const DemonstrationTasksTitle = styled("h3")`
+  margin-left: ${props => props.theme.spacing.l};
+  ${props => props.theme.typography.heading4}
 `
 
 interface OsaamisenOsoittaminenState {
@@ -188,6 +192,12 @@ export class OsaamisenOsoittaminen extends React.Component<
             ) : null}
           </TBody>
         </OsaamisenOsoittaminenTable>
+        <DemonstrationTasksTitle>
+          <FormattedMessage
+            id="opiskelusuunnitelma.sisaltoTitle"
+            defaultMessage="Sisältö"
+          />
+        </DemonstrationTasksTitle>
         <HMediaQuery.MaxWidth breakpoint="Tablet">
           <CustomSlider>
             {sisallonKuvaus.map((tyotehtava, i) => {
