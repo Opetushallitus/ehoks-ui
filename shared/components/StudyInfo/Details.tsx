@@ -127,8 +127,13 @@ const OsaamisenHankkimistavatExpanded = ({
     instructor={instructor}
     defaultPeriod={defaultPeriod}
   >
-    {osaamisenHankkimistavat.map((period, i) => {
-      return <OsaamisenHankkimistapa key={i} osaamisenHankkimistapa={period} />
+    {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => {
+      return (
+        <OsaamisenHankkimistapa
+          key={i}
+          osaamisenHankkimistapa={osaamisenHankkimistapa}
+        />
+      )
     })}
   </ShareDialog>
 )
