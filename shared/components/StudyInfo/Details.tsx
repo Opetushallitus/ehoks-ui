@@ -16,7 +16,10 @@ import { VerificationProcess } from "types/VerificationProcess"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import { ShareType } from "stores/NotificationStore"
-import ShareDialog from "components/ShareDialog"
+import ShareDialog, {
+  Instructor,
+  ShareLinkValidityPeriod
+} from "components/ShareDialog"
 import { ToggleableItems } from "./StudyInfoHelpers"
 import { Demonstration } from "./Demonstration"
 import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
@@ -86,6 +89,37 @@ interface DetailsProps {
   verificationProcess?: TodentamisenProsessi
   koulutuksenJarjestaja?: IOrganisaatio
 }
+
+const OsaamisenHankkimistavatExpanded = ({
+  hasActiveShare,
+  shareType,
+  fadedColor,
+  koodiUri,
+  instructor,
+  defaultPeriod,
+  osaamisenHankkimistavat
+}: {
+  hasActiveShare: boolean
+  shareType?: ShareType | ""
+  fadedColor: string
+  koodiUri?: string
+  instructor?: Instructor
+  defaultPeriod?: ShareLinkValidityPeriod
+  osaamisenHankkimistavat: Array<IOsaamisenHankkimistapa>
+}) => (
+  <ShareDialog
+    active={hasActiveShare && shareType === "tyossaoppiminen"}
+    background={fadedColor}
+    koodiUri={koodiUri || ""}
+    type="tyossaoppiminen"
+    instructor={instructor}
+    defaultPeriod={defaultPeriod}
+  >
+    {osaamisenHankkimistavat.map((period, i) => {
+      return <OsaamisenHankkimistapa key={i} osaamisenHankkimistapa={period} />
+    })}
+  </ShareDialog>
+)
 
 const PreviouslyConfirmedOrganization = ({
   organizationName
@@ -173,23 +207,13 @@ export class Details extends React.Component<DetailsProps> {
             </LocationsContainerExpanded>
           )}
 
-          <ShareDialog
-            active={hasActiveShare && shareType === "tyossaoppiminen"}
-            background={fadedColor}
-            koodiUri={koodiUri || ""}
-            type="tyossaoppiminen"
+          <OsaamisenHankkimistavatExpanded
+            hasActiveShare={hasActiveShare}
+            fadedColor={fadedColor}
             instructor={instructor}
             defaultPeriod={defaultPeriod}
-          >
-            {osaamisenHankkimistavat.map((period, i) => {
-              return (
-                <OsaamisenHankkimistapa
-                  key={i}
-                  osaamisenHankkimistapa={period}
-                />
-              )
-            })}
-          </ShareDialog>
+            osaamisenHankkimistavat={osaamisenHankkimistavat}
+          />
 
           {demonstrations.map((demonstration, i) => {
             return (
