@@ -80,7 +80,7 @@ interface DetailsProps {
   olennainenSeikka?: React.ReactNode
   expanded?: boolean
   koodiUri?: string
-  learningPeriods?: Array<IOsaamisenHankkimistapa>
+  osaamisenHankkimistavat?: Array<IOsaamisenHankkimistapa>
   share?: { koodiUri: string; type: ShareType | "" }
   toggle: (name: ToggleableItems) => () => void
   verificationProcess?: TodentamisenProsessi
@@ -113,7 +113,7 @@ export class Details extends React.Component<DetailsProps> {
       expanded,
       fadedColor = "",
       koodiUri,
-      learningPeriods = [],
+      osaamisenHankkimistavat = [],
       share,
       toggle,
       verificationProcess,
@@ -125,30 +125,33 @@ export class Details extends React.Component<DetailsProps> {
     const { SUORAAN, ARVIOIJIEN_KAUTTA, OHJAUS_NAYTTOON } = VerificationProcess
     const showExpand =
       demonstrations.length ||
-      learningPeriods.length ||
+      osaamisenHankkimistavat.length ||
       verification === OHJAUS_NAYTTOON
     const isAiempiOsaaminen = !!verification
     const hasActiveShare =
       typeof share !== "undefined" && koodiUri === share.koodiUri
     const shareType = typeof share !== "undefined" ? share.type : undefined
-    const firstLearningPeriod =
-      shareType === "tyossaoppiminen" && learningPeriods[0]
-        ? learningPeriods[0]
+    const firstOsaamisenHankkimistapa =
+      shareType === "tyossaoppiminen" && osaamisenHankkimistavat[0]
+        ? osaamisenHankkimistavat[0]
         : undefined
 
-    const instructor = firstLearningPeriod
+    const instructor = firstOsaamisenHankkimistapa
       ? {
-          name: firstLearningPeriod.ohjaaja
-            ? firstLearningPeriod.ohjaaja.nimi || ""
+          name: firstOsaamisenHankkimistapa.ohjaaja
+            ? firstOsaamisenHankkimistapa.ohjaaja.nimi || ""
             : "",
-          email: firstLearningPeriod.ohjaaja
-            ? firstLearningPeriod.ohjaaja.sahkoposti || ""
+          email: firstOsaamisenHankkimistapa.ohjaaja
+            ? firstOsaamisenHankkimistapa.ohjaaja.sahkoposti || ""
             : "",
-          organisation: firstLearningPeriod.selite
+          organisation: firstOsaamisenHankkimistapa.selite
         }
       : undefined
-    const defaultPeriod = firstLearningPeriod
-      ? { start: firstLearningPeriod.alku, end: firstLearningPeriod.loppu }
+    const defaultPeriod = firstOsaamisenHankkimistapa
+      ? {
+          start: firstOsaamisenHankkimistapa.alku,
+          end: firstOsaamisenHankkimistapa.loppu
+        }
       : undefined
 
     return expanded ? (
@@ -178,7 +181,7 @@ export class Details extends React.Component<DetailsProps> {
             instructor={instructor}
             defaultPeriod={defaultPeriod}
           >
-            {learningPeriods.map((period, i) => {
+            {osaamisenHankkimistavat.map((period, i) => {
               return <LearningPeriod key={i} learningPeriod={period} />
             })}
           </ShareDialog>
@@ -266,7 +269,7 @@ export class Details extends React.Component<DetailsProps> {
                 )}
               </VerificationTitle>
             )}
-            {learningPeriods.map((lp, i) => {
+            {osaamisenHankkimistavat.map((lp, i) => {
               return (
                 <LearningEvent
                   key={i}
