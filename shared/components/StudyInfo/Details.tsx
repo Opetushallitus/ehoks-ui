@@ -88,21 +88,14 @@ interface DetailsProps {
 }
 
 const PreviouslyConfirmedOrganization = ({
-  lahetettyArvioitavaksi,
   organizationName
 }: {
-  lahetettyArvioitavaksi?: string
   organizationName?: string
 }) => (
   <React.Fragment>
     <FormattedMessage
       id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
       defaultMessage="Aiemman osaamisen todentanut"
-      values={{
-        date: !!lahetettyArvioitavaksi
-          ? format(parseISO(lahetettyArvioitavaksi), "d.M.yyyy")
-          : ""
-      }}
     />{" "}
     {organizationName}
   </React.Fragment>
@@ -218,9 +211,6 @@ export class Details extends React.Component<DetailsProps> {
           {isAiempiOsaaminen && (
             <VerificationTitleExpanded data-testid="StudyInfo.AssessmentVerificationOrganisation">
               <PreviouslyConfirmedOrganization
-                lahetettyArvioitavaksi={
-                  verificationProcess?.lahetettyArvioitavaksi
-                }
                 organizationName={koulutuksenJarjestaja?.organizationName}
               />
             </VerificationTitleExpanded>
@@ -271,9 +261,6 @@ export class Details extends React.Component<DetailsProps> {
                   <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
                     <PreviouslyConfirmedOrganization
                       organizationName={koulutuksenJarjestaja?.organizationName}
-                      lahetettyArvioitavaksi={
-                        verificationProcess?.lahetettyArvioitavaksi
-                      }
                     />
                   </VerificationTitle>
                 )}
