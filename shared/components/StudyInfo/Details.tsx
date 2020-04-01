@@ -21,7 +21,7 @@ import ShareDialog, {
   ShareLinkValidityPeriod
 } from "components/ShareDialog"
 import { ToggleableItems } from "./StudyInfoHelpers"
-import { Demonstration } from "./Demonstration"
+import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
 
 interface ColorProps {
@@ -233,7 +233,7 @@ export class Details extends React.Component<DetailsProps> {
             osaamisenHankkimistavat={osaamisenHankkimistavat}
           />
 
-          {osaamisenOsoittamiset.map((demonstration, i) => {
+          {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => {
             return (
               <ShareDialog
                 active={hasActiveShare && shareType === "naytto"}
@@ -241,13 +241,13 @@ export class Details extends React.Component<DetailsProps> {
                 koodiUri={koodiUri || ""}
                 type="naytto"
                 defaultPeriod={{
-                  start: demonstration.alku,
-                  end: demonstration.loppu
+                  start: osaamisenOsoittaminen.alku,
+                  end: osaamisenOsoittaminen.loppu
                 }}
                 key={i}
               >
-                <Demonstration
-                  demonstration={demonstration}
+                <OsaamisenOsoittaminen
+                  osaamisenOsoittaminen={osaamisenOsoittaminen}
                   verificationProcess={verificationProcess}
                   koodiUri={koodiUri}
                   hasActiveShare={hasActiveShare && shareType === "naytto"}

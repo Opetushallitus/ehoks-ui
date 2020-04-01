@@ -182,7 +182,7 @@ describe("StudyInfo", () => {
     ).not.toBeInTheDocument()
   })
 
-  test("render demonstrations", async () => {
+  test("render OsaamisenOsoittamiset", async () => {
     const {
       getByTestId,
       getAllByTestId,
@@ -205,7 +205,7 @@ describe("StudyInfo", () => {
         queryByTestId("StudyInfo.DetailsCollapsed")
       ).not.toBeInTheDocument()
       expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
-      expect(getAllByTestId("StudyInfo.Demonstration").length).toBe(2)
+      expect(getAllByTestId("StudyInfo.OsaamisenOsoittaminen").length).toBe(2)
     })
   })
 
