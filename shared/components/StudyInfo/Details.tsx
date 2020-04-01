@@ -116,7 +116,7 @@ export class Details extends React.Component<DetailsProps> {
   render() {
     const {
       demonstrations = [],
-      olennainenSeikka = null,
+      olennainenSeikka,
       expanded,
       fadedColor = "",
       koodiUri,

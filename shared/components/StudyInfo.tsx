@@ -242,7 +242,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       accentColor,
       competenceRequirements = [],
       demonstrations = [],
-      olennainenSeikka = null,
+      olennainenSeikka,
       fadedColor,
       learningPeriods = [],
       koodiUri,

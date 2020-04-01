@@ -68,7 +68,9 @@ export class ScheduledStudies extends React.Component<ScheduledStudiesProps> {
                   competenceRequirements={study.osaamisvaatimukset}
                   demonstrations={study.osaamisenOsoittaminen}
                   olennainenSeikka={
-                    study.olennainenSeikka ? elements.essentialFactor : null
+                    study.olennainenSeikka
+                      ? elements.essentialFactor
+                      : undefined
                   }
                   fadedColor="#FDF6E9"
                   koodiUri={study.tutkinnonOsaKoodiUri}
