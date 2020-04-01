@@ -1,5 +1,5 @@
 import React from "react"
-import { intlShape, FormattedMessage } from "react-intl"
+import { intlShape, FormattedMessage, InjectedIntl } from "react-intl"
 import styled from "styled"
 import { Collapse } from "./Collapse"
 import { Expand } from "./Expand"
@@ -76,6 +76,31 @@ const VerificationTitleExpanded = styled("strong")`
   display: block;
   margin: 10px 0 8px 20px;
 `
+
+const CollapseIcon = ({
+  hasActiveShare,
+  toggle,
+  intl
+}: {
+  hasActiveShare: boolean
+  toggle: (name: ToggleableItems) => () => void
+  intl: InjectedIntl
+}) => (
+  <>
+    {!hasActiveShare && (
+      <LocationsContainerExpanded>
+        <IconContainer
+          onClick={toggle("details")}
+          aria-label={intl.formatMessage({
+            id: "opiskelusuunnitelma.piilotaTyossaOppiminenAriaLabel"
+          })}
+        >
+          <Collapse size={40} />
+        </IconContainer>
+      </LocationsContainerExpanded>
+    )}
+  </>
+)
 
 const OsaamisenHankkimistavatExpanded = ({
   hasActiveShare,
@@ -194,18 +219,11 @@ export class Details extends React.Component<DetailsProps> {
         data-testid="StudyInfo.DetailsExpanded"
       >
         <DetailsContent>
-          {!hasActiveShare && (
-            <LocationsContainerExpanded>
-              <IconContainer
-                onClick={toggle("details")}
-                aria-label={intl.formatMessage({
-                  id: "opiskelusuunnitelma.piilotaTyossaOppiminenAriaLabel"
-                })}
-              >
-                <Collapse size={40} />
-              </IconContainer>
-            </LocationsContainerExpanded>
-          )}
+          <CollapseIcon
+            hasActiveShare={hasActiveShare}
+            toggle={toggle}
+            intl={intl}
+          />
 
           <OsaamisenHankkimistavatExpanded
             hasActiveShare={hasActiveShare}
