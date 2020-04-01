@@ -77,19 +77,6 @@ const VerificationTitleExpanded = styled("strong")`
   margin: 10px 0 8px 20px;
 `
 
-interface DetailsProps {
-  fadedColor?: string
-  demonstrations?: Array<IOsaamisenOsoittaminen>
-  olennainenSeikka?: React.ReactNode
-  expanded?: boolean
-  koodiUri?: string
-  osaamisenHankkimistavat?: Array<IOsaamisenHankkimistapa>
-  share?: { koodiUri: string; type: ShareType | "" }
-  toggle: (name: ToggleableItems) => () => void
-  verificationProcess?: TodentamisenProsessi
-  koulutuksenJarjestaja?: IOrganisaatio
-}
-
 const OsaamisenHankkimistavatExpanded = ({
   hasActiveShare,
   shareType,
@@ -134,6 +121,19 @@ const PreviouslyConfirmedOrganization = ({
     {organizationName}
   </React.Fragment>
 )
+
+interface DetailsProps {
+  fadedColor?: string
+  demonstrations?: Array<IOsaamisenOsoittaminen>
+  olennainenSeikka?: React.ReactNode
+  expanded?: boolean
+  koodiUri?: string
+  osaamisenHankkimistavat?: Array<IOsaamisenHankkimistapa>
+  share?: { koodiUri: string; type: ShareType | "" }
+  toggle: (name: ToggleableItems) => () => void
+  verificationProcess?: TodentamisenProsessi
+  koulutuksenJarjestaja?: IOrganisaatio
+}
 
 export class Details extends React.Component<DetailsProps> {
   static contextTypes = {
