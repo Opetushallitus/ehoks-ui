@@ -1,13 +1,14 @@
 import React from "react"
 import { render, fireEvent, wait } from "@testing-library/react"
-import { StudyInfo } from "../StudyInfo"
-import { renderWithContext } from "testUtils"
+import { StudyInfo as StudyInfoWithoutTheme } from "../StudyInfo"
+import { renderWithContext, withTheme } from "testUtils"
 import {
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen
 } from "models/helpers/TutkinnonOsa"
 import { mockFetch } from "fetchUtils"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
+const StudyInfo = withTheme(StudyInfoWithoutTheme)
 
 const osaamisvaatimukset = [
   {

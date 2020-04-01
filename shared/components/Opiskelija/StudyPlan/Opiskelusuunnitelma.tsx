@@ -12,7 +12,6 @@ import { HOKS } from "models/HOKS"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
-import { theme } from "theme"
 import { HelpPopup } from "components/HelpPopup"
 import find from "lodash.find"
 import { ShareType } from "stores/NotificationStore"
@@ -28,12 +27,10 @@ import {
 import { PlannedStudies } from "./PlannedStudies"
 import { ScheduledStudies } from "./ScheduledStudies"
 import { CompletedStudies } from "./CompletedStudies"
-const { colors } = theme
 
 const ProgressTitle = styled("h2")`
-  font-weight: 600;
-  font-size: 20px;
   margin-left: 4px;
+  ${props => props.theme.typography.heading3}
 `
 
 const EssentialFactorContainer = styled("div")`
@@ -44,7 +41,7 @@ const HelpButton = styled(HelpPopup)`
   margin: 0 0 0 20px;
 `
 
-export type OpiskelusuunnitelmaProps = {
+export interface OpiskelusuunnitelmaProps extends RouteComponentProps {
   children?: React.ReactChildren
   plan: Instance<typeof HOKS>
   elements?: {
@@ -52,7 +49,7 @@ export type OpiskelusuunnitelmaProps = {
     goals?: React.ReactNode
     essentialFactor?: React.ReactNode
   }
-} & RouteComponentProps
+}
 
 @observer
 export class Opiskelusuunnitelma extends React.Component<
@@ -344,7 +341,7 @@ export class Opiskelusuunnitelma extends React.Component<
                     )
                   : 0
               }
-              stroke={colors.planned}
+              stroke="planned"
               title={
                 <FormattedMessage
                   id="opiskelusuunnitelma.suunniteltunaTitle"
@@ -361,7 +358,7 @@ export class Opiskelusuunnitelma extends React.Component<
                     )
                   : 0
               }
-              stroke={colors.scheduled}
+              stroke="scheduled"
               title={
                 <FormattedMessage
                   id="opiskelusuunnitelma.aikataulutettunaTitle"
@@ -378,7 +375,7 @@ export class Opiskelusuunnitelma extends React.Component<
                     )
                   : 0
               }
-              stroke={colors.ready}
+              stroke="ready"
               title={
                 <FormattedMessage
                   id="opiskelusuunnitelma.valmiinaTitle"

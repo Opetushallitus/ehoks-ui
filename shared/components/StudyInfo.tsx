@@ -18,24 +18,26 @@ import { AppContext } from "components/AppContext"
 import { ToggleableItems } from "./StudyInfo/StudyInfoHelpers"
 import { Objectives } from "./StudyInfo/Objectives"
 import { Details } from "./StudyInfo/Details"
+import { OneRowTable } from "./StudyInfo/Shared"
+import { ColorType } from "theme"
 
 interface ContainerProps {
-  accentColor?: string
+  accentColor?: ColorType
   expanded: boolean
   width: string
 }
-const Container = styled("div")`
-  display: ${(props: ContainerProps) => (props.expanded ? "block" : "flex")};
-  flex: ${(props: ContainerProps) => (props.expanded ? "unset" : 1)};
-  max-width: ${(props: ContainerProps) =>
+const Container = styled("div")<ContainerProps>`
+  display: ${props => (props.expanded ? "block" : "flex")};
+  flex: ${props => (props.expanded ? "unset" : 1)};
+  max-width: ${props =>
     props.expanded ? "100%" : `calc(${props.width} - 15px)`};
-  width: ${(props: ContainerProps) => (props.expanded ? "100%" : "unset")};
+  width: ${props => (props.expanded ? "100%" : "unset")};
   border-top-style: solid;
   border-top-width: 4px;
-  border-top-color: ${(props: ContainerProps) =>
-    props.accentColor ? props.accentColor : "#979797"};
+  border-top-color: ${props =>
+    !!props.accentColor ? props.theme.colors[props.accentColor] : "#979797"};
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.4);
-  margin-left: ${(props: ContainerProps) => (props.expanded ? "0" : "20px")};
+  margin-left: ${props => (props.expanded ? "0" : "20px")};
   margin-bottom: 20px;
 
   &:first-of-type {
@@ -69,18 +71,12 @@ const SubTitleContainer = styled(TitleContainer)`
   margin: 0px 0px 15px 20px;
 `
 
-const BoldedFormattedMessage = styled("div")`
-  font-weight: 700;
-  margin-right: 10px;
-`
-
 const Title = styled("h2")`
   flex: 1;
   color: #000;
-  font-weight: 600;
-  font-size: 20px;
   display: block;
   margin: 10px 20px;
+  ${props => props.theme.typography.heading3}
 `
 
 const ShareIcon = styled(MdShare)`
@@ -97,7 +93,7 @@ const ShareButton = styled("div")`
 
 export interface StudyInfoProps {
   /** Color of top border */
-  accentColor?: string
+  accentColor?: ColorType
   /**
    * List of competence requirements
    * @default []
@@ -296,14 +292,16 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
           </TitleContainer>
           {this.koulutuksenJarjestajaShouldBeShown() && (
             <SubTitleContainer>
-              <BoldedFormattedMessage>
-                <FormattedMessage
-                  id="tutkinnonOsa.toteuttaKoulutuksenJarjetajaTitle"
-                  defaultMessage="Toteuttava koulutuksenjärjestäjä"
-                />
-              </BoldedFormattedMessage>
-              &nbsp;
-              {koulutuksenJarjestaja?.organizationName}
+              <OneRowTable
+                th={
+                  <FormattedMessage
+                    id="tutkinnonOsa.toteuttaKoulutuksenJarjetajaTitle"
+                    defaultMessage="Toteuttava koulutuksenjärjestäjä"
+                  />
+                }
+              >
+                {koulutuksenJarjestaja?.organizationName}
+              </OneRowTable>
             </SubTitleContainer>
           )}
           {hasDetails && (

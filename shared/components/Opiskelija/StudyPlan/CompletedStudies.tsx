@@ -8,7 +8,6 @@ import { StudiesContainer } from "../../StudiesContainer"
 import { StudyInfo } from "../../StudyInfo"
 import { EmptyItem } from "../../EmptyItem"
 import { Accordion } from "../../Accordion"
-import { theme } from "../../../theme"
 
 export interface CompletedStudiesProps {
   accordionIsOpen: boolean
@@ -65,7 +64,7 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
             return (
               <React.Fragment key={`${study.id}_${i}`}>
                 <StudyInfo
-                  accentColor={theme.colors.ready}
+                  accentColor="ready"
                   competenceRequirements={study.osaamisvaatimukset}
                   demonstrations={study.osaamisenOsoittaminen}
                   extraContent={

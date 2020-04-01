@@ -32,7 +32,7 @@ import { ReactJSONSchemaForm } from "./HOKSLomake/ReactJSONSchemaForm"
 import { SpinnerContainer } from "./HOKSLomake/SpinnerContainer"
 import { Step } from "./HOKSLomake/Step"
 import { Stepper } from "./HOKSLomake/Stepper"
-import "./HOKSLomake/styles.css"
+import { EditHOKSStyles } from "./HOKSLomake/styles"
 import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
@@ -275,6 +275,7 @@ export class MuokkaaHOKS extends React.Component<
   render() {
     return (
       <HOKSFormContainer onKeyUp={this.userHasEnteredText}>
+        <EditHOKSStyles />
         <TopToolbar id="topToolbar">
           <Header>Muokkaa HOKSia</Header>
           <Stepper

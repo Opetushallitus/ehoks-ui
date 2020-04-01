@@ -8,7 +8,6 @@ import { Accordion } from "../../Accordion"
 import { ShareType } from "../../../stores/NotificationStore"
 import { ActiveAccordions, StudyPartSubAccordions } from "./StudyPlanHelpers"
 import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
-import { theme } from "../../../theme"
 
 export interface PlannedStudiesProps {
   accordionIsOpen: boolean
@@ -65,7 +64,7 @@ export class PlannedStudies extends React.Component<PlannedStudiesProps> {
             return (
               <React.Fragment key={`${study.id}_${i}`}>
                 <StudyInfo
-                  accentColor={theme.colors.planned}
+                  accentColor="planned"
                   competenceRequirements={study.osaamisvaatimukset}
                   demonstrations={study.osaamisenOsoittaminen}
                   extraContent={

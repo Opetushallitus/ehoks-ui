@@ -26,7 +26,6 @@ module.exports = {
     "**/shared/components/ListColumnHeaders.tsx",
     "**/shared/components/ListContainer.tsx",
     "**/shared/components/ListHeading.tsx",
-    "**/shared/components/ListItem.tsx",
     "**/shared/components/NavigationContainer.tsx",
     "**/shared/components/Page.tsx",
     "**/shared/components/Paging.tsx",

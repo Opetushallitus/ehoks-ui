@@ -38,7 +38,24 @@ Many `flow` functions in stores are currently cluttered with `any` return values
 
 ## Styles
 
-Styles are defined within React components using CSS-in-JS library called [styled-components](https://www.styled-components.com/). Global styles can be added to `src/components/App/globalStyles.ts` , but try to keep all component specific styles away from global styles.
+Styles are defined within React components using CSS-in-JS library called [styled-components](https://www.styled-components.com/). Global styles can be added to `shared/globalStyles.ts` , but try to keep all component specific styles away from global styles.
+
+HOX!! Do not export theme to components. Theme is already available when using styled-function:
+
+```js
+import { ColorType } from "theme"
+interface ComponentProps {
+  strokeColor?: ColorType;
+}
+const Component =
+  styled("div") <
+  ComponentProps >
+  `
+    background-color: ${props => props.theme.colors.header.background};
+    ${props =>
+      !!props.strokeColor && `color: ${props.theme.colors[props.strokeColor]};`}
+  `
+```
 
 ## Usage of new React features
 

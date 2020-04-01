@@ -1,12 +1,11 @@
 import React from "react"
 import { useMediaQuery } from "react-responsive"
-import { withTheme } from "styled"
-import { TypeOfTheme, breakpoints } from "theme"
+import { withTheme, ComponentWithTheme } from "styled"
+import { breakpoints } from "theme"
 
 type Breakpoints = keyof typeof breakpoints
 
-interface MediaQueryProps {
-  theme: TypeOfTheme
+interface MediaQueryProps extends ComponentWithTheme {
   maxWidth?: Breakpoints
   minWidth?: Breakpoints
   breakpoint?: Breakpoints

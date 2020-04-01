@@ -87,7 +87,7 @@ export class AiempiOsaaminen extends React.Component<
               return (
                 <React.Fragment key={i}>
                   <StudyInfo
-                    accentColor="#43A047"
+                    accentColor="midGreen"
                     fadedColor="#ECF6ED"
                     title={study.opintoOtsikko(competencePointsTitle)}
                     demonstrations={study.tarkentavatTiedotNaytto}

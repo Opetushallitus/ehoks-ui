@@ -7,7 +7,6 @@ import { Accordion } from "../../Accordion"
 import { ShareType } from "../../../stores/NotificationStore"
 import { ActiveAccordions, StudyPartSubAccordions } from "./StudyPlanHelpers"
 import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
-import { theme } from "../../../theme"
 import React from "react"
 
 export interface ScheduledStudiesProps {
@@ -65,7 +64,7 @@ export class ScheduledStudies extends React.Component<ScheduledStudiesProps> {
             return (
               <React.Fragment key={`${study.id}_${i}`}>
                 <StudyInfo
-                  accentColor={theme.colors.scheduled}
+                  accentColor="scheduled"
                   competenceRequirements={study.osaamisvaatimukset}
                   demonstrations={study.osaamisenOsoittaminen}
                   extraContent={
