@@ -215,7 +215,7 @@ export class Details extends React.Component<DetailsProps> {
 
           {olennainenSeikka}
 
-          {!!isAiempiOsaaminen && (
+          {isAiempiOsaaminen && (
             <VerificationTitleExpanded data-testid="StudyInfo.AssessmentVerificationOrganisation">
               <PreviouslyConfirmedOrganization
                 lahetettyArvioitavaksi={
