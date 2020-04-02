@@ -292,6 +292,58 @@ const PreviouslyConfirmedOrganization = ({
   </React.Fragment>
 )
 
+const VerificationCollapsed = ({
+  verification,
+  koulutuksenJarjestaja,
+  verificationProcess
+}: {
+  verification?: string
+  koulutuksenJarjestaja?: IOrganisaatio
+  verificationProcess?: TodentamisenProsessi
+}) => (
+  <>
+    {verification === VerificationProcess.SUORAAN && (
+      <React.Fragment>
+        <VerificationTitle>
+          <FormattedMessage
+            id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
+            defaultMessage="Osaaminen tunnistettu suoraan"
+          />
+        </VerificationTitle>
+        <VerificationTitle data-testid="StudyInfo.DirectVerification">
+          <PreviouslyConfirmedOrganization
+            organizationName={koulutuksenJarjestaja?.organizationName}
+          />
+        </VerificationTitle>
+      </React.Fragment>
+    )}
+    {verification === VerificationProcess.ARVIOIJIEN_KAUTTA && (
+      <VerificationTitle data-testid="StudyInfo.AssessmentVerification">
+        <FormattedMessage
+          id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
+          defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
+          values={{
+            date:
+              verificationProcess && verificationProcess.lahetettyArvioitavaksi
+                ? format(
+                    parseISO(verificationProcess.lahetettyArvioitavaksi),
+                    "d.M.yyyy"
+                  )
+                : ""
+          }}
+        />
+        {!!koulutuksenJarjestaja?.organizationName && (
+          <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
+            <PreviouslyConfirmedOrganization
+              organizationName={koulutuksenJarjestaja?.organizationName}
+            />
+          </VerificationTitle>
+        )}
+      </VerificationTitle>
+    )}
+  </>
+)
+
 interface DetailsProps {
   fadedColor?: string
   osaamisenOsoittamiset?: Array<IOsaamisenOsoittaminen>
@@ -326,11 +378,10 @@ export class Details extends React.Component<DetailsProps> {
     const { intl } = this.context
 
     const verification = verificationProcess && verificationProcess.koodiUri
-    const { SUORAAN, ARVIOIJIEN_KAUTTA, OHJAUS_NAYTTOON } = VerificationProcess
     const showExpand =
       !!osaamisenOsoittamiset.length ||
       !!osaamisenHankkimistavat.length ||
-      verification === OHJAUS_NAYTTOON
+      verification === VerificationProcess.OHJAUS_NAYTTOON
     const isAiempiOsaaminen = !!verification
     const hasActiveShare =
       typeof share !== "undefined" && koodiUri === share.koodiUri
@@ -407,48 +458,11 @@ export class Details extends React.Component<DetailsProps> {
       >
         <LocationsContainer>
           <DetailsContent>
-            {verification === SUORAAN && (
-              <React.Fragment>
-                <VerificationTitle>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
-                    defaultMessage="Osaaminen tunnistettu suoraan"
-                  />
-                </VerificationTitle>
-                <VerificationTitle data-testid="StudyInfo.DirectVerification">
-                  <PreviouslyConfirmedOrganization
-                    organizationName={koulutuksenJarjestaja?.organizationName}
-                  />
-                </VerificationTitle>
-              </React.Fragment>
-            )}
-            {verification === ARVIOIJIEN_KAUTTA && (
-              <VerificationTitle data-testid="StudyInfo.AssessmentVerification">
-                <FormattedMessage
-                  id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
-                  defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
-                  values={{
-                    date:
-                      verificationProcess &&
-                      verificationProcess.lahetettyArvioitavaksi
-                        ? format(
-                            parseISO(
-                              verificationProcess.lahetettyArvioitavaksi
-                            ),
-                            "d.M.yyyy"
-                          )
-                        : ""
-                  }}
-                />
-                {!!koulutuksenJarjestaja?.organizationName && (
-                  <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
-                    <PreviouslyConfirmedOrganization
-                      organizationName={koulutuksenJarjestaja?.organizationName}
-                    />
-                  </VerificationTitle>
-                )}
-              </VerificationTitle>
-            )}
+            <VerificationCollapsed
+              koulutuksenJarjestaja={koulutuksenJarjestaja}
+              verification={verification}
+              verificationProcess={verificationProcess}
+            />
 
             <OsaamisenHankkimistavatCollapsed
               osaamisenHankkimistavat={osaamisenHankkimistavat}
@@ -460,7 +474,6 @@ export class Details extends React.Component<DetailsProps> {
               koulutuksenJarjestaja={koulutuksenJarjestaja}
             />
           </DetailsContent>
-
           <ExpandIcon showExpand={showExpand} toggle={toggle} intl={intl} />
         </LocationsContainer>
       </DetailsCollapsed>
