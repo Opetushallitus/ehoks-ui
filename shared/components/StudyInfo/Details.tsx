@@ -213,7 +213,7 @@ const OsaamisenOsoittamisetCollapsed = ({
   koulutuksenJarjestaja?: IOrganisaatio
 }) => (
   <>
-    {osaamisenOsoittamiset.map((d, i) => {
+    {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => {
       const title =
         verification === VerificationProcess.OHJAUS_NAYTTOON ? (
           <FormattedMessage
@@ -236,9 +236,9 @@ const OsaamisenOsoittamisetCollapsed = ({
         <React.Fragment key={i}>
           <LearningEvent
             title={title}
-            description={d?.nayttoymparisto?.nimi}
-            startDate={d.alku}
-            endDate={d.loppu}
+            description={osaamisenOsoittaminen?.nayttoymparisto?.nimi}
+            startDate={osaamisenOsoittaminen.alku}
+            endDate={osaamisenOsoittaminen.loppu}
           />
           {verification === VerificationProcess.OHJAUS_NAYTTOON &&
             !!koulutuksenJarjestaja?.organizationName && (
