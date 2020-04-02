@@ -102,6 +102,30 @@ const CollapseIcon = ({
   </>
 )
 
+const ExpandIcon = ({
+  showExpand,
+  toggle,
+  intl
+}: {
+  showExpand: boolean
+  toggle: (name: ToggleableItems) => () => void
+  intl: InjectedIntl
+}) => (
+  <>
+    {showExpand && (
+      <IconContainer
+        onClick={toggle("details")}
+        aria-label={intl.formatMessage({
+          id: "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel"
+        })}
+        data-testid="StudyInfo.ExpandDetails"
+      >
+        <Expand size={40} />
+      </IconContainer>
+    )}
+  </>
+)
+
 const OsaamisenHankkimistavatExpanded = ({
   hasActiveShare,
   shareType,
@@ -404,17 +428,8 @@ export class Details extends React.Component<DetailsProps> {
               )
             })}
           </DetailsContent>
-          {showExpand && (
-            <IconContainer
-              onClick={toggle("details")}
-              aria-label={intl.formatMessage({
-                id: "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel"
-              })}
-              data-testid="StudyInfo.ExpandDetails"
-            >
-              <Expand size={40} />
-            </IconContainer>
-          )}
+
+          <ExpandIcon showExpand={showExpand} toggle={toggle} intl={intl} />
         </LocationsContainer>
       </DetailsCollapsed>
     )
