@@ -138,6 +138,47 @@ const OsaamisenHankkimistavatExpanded = ({
   </ShareDialog>
 )
 
+const OsaamisenOsoittamisetExpanded = ({
+  osaamisenOsoittamiset,
+  hasActiveShare,
+  shareType,
+  fadedColor,
+  koodiUri,
+  verificationProcess
+}: {
+  osaamisenOsoittamiset: Array<IOsaamisenOsoittaminen>
+  hasActiveShare: boolean
+  shareType?: ShareType | ""
+  fadedColor: string
+  koodiUri?: string
+  verificationProcess?: TodentamisenProsessi
+}) => (
+  <>
+    {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => {
+      return (
+        <ShareDialog
+          active={hasActiveShare && shareType === "naytto"}
+          background={fadedColor}
+          koodiUri={koodiUri || ""}
+          type="naytto"
+          defaultPeriod={{
+            start: osaamisenOsoittaminen.alku,
+            end: osaamisenOsoittaminen.loppu
+          }}
+          key={i}
+        >
+          <OsaamisenOsoittaminen
+            osaamisenOsoittaminen={osaamisenOsoittaminen}
+            verificationProcess={verificationProcess}
+            koodiUri={koodiUri}
+            hasActiveShare={hasActiveShare && shareType === "naytto"}
+          />
+        </ShareDialog>
+      )
+    })}
+  </>
+)
+
 const PreviouslyConfirmedOrganization = ({
   organizationName
 }: {
@@ -240,28 +281,14 @@ export class Details extends React.Component<DetailsProps> {
             osaamisenHankkimistavat={osaamisenHankkimistavat}
           />
 
-          {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => {
-            return (
-              <ShareDialog
-                active={hasActiveShare && shareType === "naytto"}
-                background={fadedColor}
-                koodiUri={koodiUri || ""}
-                type="naytto"
-                defaultPeriod={{
-                  start: osaamisenOsoittaminen.alku,
-                  end: osaamisenOsoittaminen.loppu
-                }}
-                key={i}
-              >
-                <OsaamisenOsoittaminen
-                  osaamisenOsoittaminen={osaamisenOsoittaminen}
-                  verificationProcess={verificationProcess}
-                  koodiUri={koodiUri}
-                  hasActiveShare={hasActiveShare && shareType === "naytto"}
-                />
-              </ShareDialog>
-            )
-          })}
+          <OsaamisenOsoittamisetExpanded
+            osaamisenOsoittamiset={osaamisenOsoittamiset}
+            hasActiveShare={hasActiveShare}
+            shareType={shareType}
+            fadedColor={fadedColor}
+            koodiUri={koodiUri}
+            verificationProcess={verificationProcess}
+          />
 
           {olennainenSeikka}
 
