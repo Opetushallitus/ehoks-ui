@@ -162,6 +162,30 @@ const OsaamisenHankkimistavatExpanded = ({
   </ShareDialog>
 )
 
+const OsaamisenHankkimistavatCollapsed = ({
+  osaamisenHankkimistavat
+}: {
+  osaamisenHankkimistavat: Array<IOsaamisenHankkimistapa>
+}) => (
+  <>
+    {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => {
+      return (
+        <LearningEvent
+          key={i}
+          title={
+            <CompetenceAquirementTitle
+              hankkimistapaType={osaamisenHankkimistapa.tyyppi}
+            />
+          }
+          description={osaamisenHankkimistapa.selite}
+          startDate={osaamisenHankkimistapa.alku}
+          endDate={osaamisenHankkimistapa.loppu}
+        />
+      )
+    })}
+  </>
+)
+
 const OsaamisenOsoittamisetExpanded = ({
   osaamisenOsoittamiset,
   hasActiveShare,
@@ -425,19 +449,10 @@ export class Details extends React.Component<DetailsProps> {
                 )}
               </VerificationTitle>
             )}
-            {osaamisenHankkimistavat.map((lp, i) => {
-              return (
-                <LearningEvent
-                  key={i}
-                  title={
-                    <CompetenceAquirementTitle hankkimistapaType={lp.tyyppi} />
-                  }
-                  description={lp.selite}
-                  startDate={lp.alku}
-                  endDate={lp.loppu}
-                />
-              )
-            })}
+
+            <OsaamisenHankkimistavatCollapsed
+              osaamisenHankkimistavat={osaamisenHankkimistavat}
+            />
 
             <OsaamisenOsoittamisetCollapsed
               osaamisenOsoittamiset={osaamisenOsoittamiset}
