@@ -130,6 +130,7 @@ export const theme = {
   typography,
   maxWidth: 1440,
   spacing: {
+    xs: "6px",
     s: "10px",
     m: "15px",
     l: "20px",
