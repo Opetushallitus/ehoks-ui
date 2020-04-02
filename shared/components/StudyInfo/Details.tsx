@@ -232,7 +232,9 @@ export class Details extends React.Component<DetailsProps> {
 
           <OsaamisenHankkimistavatExpanded
             hasActiveShare={hasActiveShare}
+            shareType={shareType}
             fadedColor={fadedColor}
+            koodiUri={koodiUri}
             instructor={instructor}
             defaultPeriod={defaultPeriod}
             osaamisenHankkimistavat={osaamisenHankkimistavat}
