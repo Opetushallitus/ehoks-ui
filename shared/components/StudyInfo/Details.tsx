@@ -203,6 +203,57 @@ const OsaamisenOsoittamisetExpanded = ({
   </>
 )
 
+const OsaamisenOsoittamisetCollapsed = ({
+  osaamisenOsoittamiset,
+  verification,
+  koulutuksenJarjestaja
+}: {
+  osaamisenOsoittamiset: Array<IOsaamisenOsoittaminen>
+  verification?: string
+  koulutuksenJarjestaja?: IOrganisaatio
+}) => (
+  <>
+    {osaamisenOsoittamiset.map((d, i) => {
+      const title =
+        verification === VerificationProcess.OHJAUS_NAYTTOON ? (
+          <FormattedMessage
+            id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
+            defaultMessage="Osaaminen osoitetaan näytössä"
+          >
+            {msg => (
+              <span data-testid="StudyInfo.DemonstrationVerification">
+                {msg}
+              </span>
+            )}
+          </FormattedMessage>
+        ) : (
+          <FormattedMessage
+            id="opiskelusuunnitelma.nayttoTitle"
+            defaultMessage="Näyttö"
+          />
+        )
+      return (
+        <React.Fragment key={i}>
+          <LearningEvent
+            title={title}
+            description={d?.nayttoymparisto?.nimi}
+            startDate={d.alku}
+            endDate={d.loppu}
+          />
+          {verification === VerificationProcess.OHJAUS_NAYTTOON &&
+            !!koulutuksenJarjestaja?.organizationName && (
+              <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
+                <PreviouslyConfirmedOrganization
+                  organizationName={koulutuksenJarjestaja?.organizationName}
+                />
+              </VerificationTitle>
+            )}
+        </React.Fragment>
+      )
+    })}
+  </>
+)
+
 const PreviouslyConfirmedOrganization = ({
   organizationName
 }: {
@@ -387,46 +438,12 @@ export class Details extends React.Component<DetailsProps> {
                 />
               )
             })}
-            {osaamisenOsoittamiset.map((d, i) => {
-              const title =
-                verification === OHJAUS_NAYTTOON ? (
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
-                    defaultMessage="Osaaminen osoitetaan näytössä"
-                  >
-                    {msg => (
-                      <span data-testid="StudyInfo.DemonstrationVerification">
-                        {msg}
-                      </span>
-                    )}
-                  </FormattedMessage>
-                ) : (
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.nayttoTitle"
-                    defaultMessage="Näyttö"
-                  />
-                )
-              return (
-                <React.Fragment key={i}>
-                  <LearningEvent
-                    title={title}
-                    description={d?.nayttoymparisto?.nimi}
-                    startDate={d.alku}
-                    endDate={d.loppu}
-                  />
-                  {verification === OHJAUS_NAYTTOON &&
-                    !!koulutuksenJarjestaja?.organizationName && (
-                      <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
-                        <PreviouslyConfirmedOrganization
-                          organizationName={
-                            koulutuksenJarjestaja?.organizationName
-                          }
-                        />
-                      </VerificationTitle>
-                    )}
-                </React.Fragment>
-              )
-            })}
+
+            <OsaamisenOsoittamisetCollapsed
+              osaamisenOsoittamiset={osaamisenOsoittamiset}
+              verification={verification}
+              koulutuksenJarjestaja={koulutuksenJarjestaja}
+            />
           </DetailsContent>
 
           <ExpandIcon showExpand={showExpand} toggle={toggle} intl={intl} />
