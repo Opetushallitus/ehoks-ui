@@ -229,8 +229,8 @@ export class Details extends React.Component<DetailsProps> {
     const verification = verificationProcess && verificationProcess.koodiUri
     const { SUORAAN, ARVIOIJIEN_KAUTTA, OHJAUS_NAYTTOON } = VerificationProcess
     const showExpand =
-      osaamisenOsoittamiset.length ||
-      osaamisenHankkimistavat.length ||
+      !!osaamisenOsoittamiset.length ||
+      !!osaamisenHankkimistavat.length ||
       verification === OHJAUS_NAYTTOON
     const isAiempiOsaaminen = !!verification
     const hasActiveShare =
