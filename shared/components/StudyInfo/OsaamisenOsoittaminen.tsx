@@ -18,31 +18,37 @@ import { AppContext } from "components/AppContext"
 import { RequirementsAndDeviations } from "./RequirementsAndDeviations"
 import { observer } from "mobx-react"
 
-const OsaamisenOsoittaminenTitle = styled(Title)`
+const OsaamisenOsoittaminenTitle = styled(Title)(
+  props => `
   display: flex;
   align-items: center;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: ${props.theme.spacing.l};
+  margin-right: ${props.theme.spacing.l};
 `
+)
 
 const FlexLearningEvent = styled(LearningEvent)`
   flex: 1;
 `
 
 const OsaamisenOsoittaminenTable = styled(Table)`
-  margin-left: 20px;
+  margin-left: ${props => props.theme.spacing.l};
 `
 
-const OsaamisenOsoittaminenTasks = styled(InfoContainer)`
-  margin: 10px 20px 20px 20px;
+const OsaamisenOsoittaminenTasks = styled(InfoContainer)(
+  ({ theme: { spacing } }) => `
+  margin: ${spacing.s} ${spacing.l} ${spacing.l} ${spacing.l};
 `
+)
 
-const CustomSlider = styled(MobileSlider)`
-  margin: 10px 20px 20px 10px;
+const CustomSlider = styled(MobileSlider)(
+  ({ theme: { spacing } }) => `
+  margin: ${spacing.s} ${spacing.l} ${spacing.l} ${spacing.s};
 `
+)
 
 const ButtonContainer = styled("div")`
-  margin-right: 50px;
+  margin-right: ${props => props.theme.spacing.xl};
 `
 
 const Button = styled(HeroButton)`
@@ -50,7 +56,12 @@ const Button = styled(HeroButton)`
 `
 
 const ShareIcon = styled(MdShare)`
-  margin-left: 6px;
+  margin-left: ${props => props.theme.spacing.xs};
+`
+
+const DemonstrationTasksTitle = styled("h3")`
+  margin-left: ${props => props.theme.spacing.l};
+  ${props => props.theme.typography.heading4}
 `
 
 interface OsaamisenOsoittaminenState {
@@ -188,6 +199,12 @@ export class OsaamisenOsoittaminen extends React.Component<
             ) : null}
           </TBody>
         </OsaamisenOsoittaminenTable>
+        <DemonstrationTasksTitle>
+          <FormattedMessage
+            id="opiskelusuunnitelma.sisaltoTitle"
+            defaultMessage="Sisältö"
+          />
+        </DemonstrationTasksTitle>
         <HMediaQuery.MaxWidth breakpoint="Tablet">
           <CustomSlider>
             {sisallonKuvaus.map((tyotehtava, i) => {
