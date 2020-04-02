@@ -1,10 +1,7 @@
 import React from "react"
 import { CircularProgressbar } from "react-circular-progressbar"
 import styled from "styled"
-
-interface TitleProps {
-  color?: string
-}
+import { ColorType } from "theme"
 
 const Container = styled("div")`
   display: flex;
@@ -27,7 +24,9 @@ const ProgressPieContainer = styled("div")`
   }
 `
 
-const PercentageContainer = styled("div")`
+const PercentageContainer = styled("div")<{
+  color?: ColorType
+}>`
   position: absolute;
   display: flex;
   align-items: center;
@@ -38,7 +37,8 @@ const PercentageContainer = styled("div")`
   left: 0;
   font-size: 14px;
   font-weight: bold;
-  color: ${(props: TitleProps) => (props.color ? props.color : "#000")};
+  color: ${props =>
+    props.color ? props.theme.colors[props.color] : "#027FA9"};
 `
 
 const PercentageTitle = styled("div")`
@@ -68,7 +68,7 @@ export interface ProgressPieProps {
    * Color of circle's filled path
    * @default #027FA9
    */
-  stroke?: string
+  stroke?: ColorType
 }
 
 /**
@@ -76,13 +76,7 @@ export interface ProgressPieProps {
  */
 export class ProgressPie extends React.Component<ProgressPieProps> {
   render() {
-    const {
-      value = 100,
-      title,
-      onClick,
-      stroke = "#027FA9",
-      ...rest
-    } = this.props
+    const { value = 100, title, onClick, stroke, ...rest } = this.props
     const styles = {
       background: {
         fill: "#fff"

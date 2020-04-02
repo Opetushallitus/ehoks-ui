@@ -1,14 +1,17 @@
-export {
-  css,
-  keyframes,
-  createGlobalStyle,
-  ThemeProvider
-} from "styled-components"
-import baseStyled, {
-  ThemedStyledInterface,
-  withTheme as withThemeStyled,
-  WithThemeFnInterface
-} from "styled-components"
+import * as StyledComponents from "styled-components"
+import { ThemedStyledComponentsModule } from "styled-components"
 import { TypeOfTheme } from "./theme"
-export default baseStyled as ThemedStyledInterface<TypeOfTheme>
-export const withTheme = withThemeStyled as WithThemeFnInterface<TypeOfTheme>
+const {
+  default: baseStyled,
+  css,
+  createGlobalStyle,
+  keyframes,
+  ThemeProvider,
+  withTheme
+} = (StyledComponents as any) as ThemedStyledComponentsModule<TypeOfTheme>
+export default baseStyled
+export { css, createGlobalStyle, keyframes, ThemeProvider, withTheme }
+
+export interface ComponentWithTheme {
+  theme: TypeOfTheme
+}

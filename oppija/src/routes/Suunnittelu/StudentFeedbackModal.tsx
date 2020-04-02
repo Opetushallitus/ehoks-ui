@@ -6,10 +6,7 @@ import Modal from "react-modal"
 import styled from "../../../../shared/styled"
 import { IRootStore } from "../../stores/RootStore"
 
-const StudentFeedbackTitle = styled("h1")`
-  font-weight: 400;
-  font-size: 30px;
-`
+const StudentFeedbackTitle = styled("h1")``
 
 const StudentFeedbackTextContainer = styled("p")`
   font-size: 17px;
@@ -46,7 +43,7 @@ const StartFeedbackLink = styled("a")`
 `
 
 const StyledStudentFeedbackModal = styled(Modal)`
-  font-family: "Source Sans Pro", sans-serif;
+  ${props => props.theme.typography.body}
   box-sizing: inherit;
   color: rgb(255, 255, 255);
   text-align: center;

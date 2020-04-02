@@ -31,7 +31,6 @@ const LoginBoxes = styled("div")`
 
 const Header = styled("h1")`
   margin: 30px 50px 30px 40px;
-  font-weight: 400;
   color: #4a4a4a;
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {

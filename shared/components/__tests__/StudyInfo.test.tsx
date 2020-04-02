@@ -1,13 +1,14 @@
 import React from "react"
 import { render, fireEvent, wait } from "@testing-library/react"
-import { StudyInfo } from "../StudyInfo"
-import { renderWithContext } from "testUtils"
+import { StudyInfo as StudyInfoWithoutTheme } from "../StudyInfo"
+import { renderWithContext, withTheme } from "testUtils"
 import {
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen
 } from "models/helpers/TutkinnonOsa"
 import { mockFetch } from "fetchUtils"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
+const StudyInfo = withTheme(StudyInfoWithoutTheme)
 
 const osaamisvaatimukset = [
   {
@@ -181,19 +182,21 @@ describe("StudyInfo", () => {
     ).not.toBeInTheDocument()
   })
 
-  test("render demonstrations", async () => {
+  test("render OsaamisenOsoittamiset", async () => {
     const {
       getByTestId,
       getAllByTestId,
       queryByTestId,
       rerender
-    } = renderWithContext(<StudyInfo title="Test" demonstrations={naytot1} />)
+    } = renderWithContext(
+      <StudyInfo title="Test" osaamisenOsoittamiset={naytot1} />
+    )
 
     expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
     expect(queryByTestId("StudyInfo.DetailsExpanded")).not.toBeInTheDocument()
     expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
 
-    rerender(<StudyInfo title="Test" demonstrations={naytot2} />)
+    rerender(<StudyInfo title="Test" osaamisenOsoittamiset={naytot2} />)
 
     await wait(() => {
       expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
@@ -202,7 +205,7 @@ describe("StudyInfo", () => {
         queryByTestId("StudyInfo.DetailsCollapsed")
       ).not.toBeInTheDocument()
       expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
-      expect(getAllByTestId("StudyInfo.Demonstration").length).toBe(2)
+      expect(getAllByTestId("StudyInfo.OsaamisenOsoittaminen").length).toBe(2)
     })
   })
 
@@ -213,7 +216,10 @@ describe("StudyInfo", () => {
       queryByTestId,
       rerender
     } = renderWithContext(
-      <StudyInfo title="Test" learningPeriods={osaamisenHankkimistapa1} />
+      <StudyInfo
+        title="Test"
+        osaamisenHankkimistavat={osaamisenHankkimistapa1}
+      />
     )
 
     expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
@@ -221,7 +227,10 @@ describe("StudyInfo", () => {
     expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
 
     rerender(
-      <StudyInfo title="Test" learningPeriods={osaamisenHankkimistapa2} />
+      <StudyInfo
+        title="Test"
+        osaamisenHankkimistavat={osaamisenHankkimistapa2}
+      />
     )
 
     await wait(() => {
@@ -231,7 +240,7 @@ describe("StudyInfo", () => {
         queryByTestId("StudyInfo.DetailsCollapsed")
       ).not.toBeInTheDocument()
       expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
-      expect(getAllByTestId("StudyInfo.LearningPeriod").length).toBe(2)
+      expect(getAllByTestId("StudyInfo.OsaamisenHankkimistapa").length).toBe(2)
     })
   })
 
@@ -255,6 +264,11 @@ describe("StudyInfo", () => {
           koodiUri: "osaamisentodentamisenprosessi_0002",
           lahetettyArvioitavaksi: "2019-04-15"
         }}
+        koulutuksenJarjestaja={{
+          oid: "1.2.246.562.10.5921222",
+          nimi: { fi: "Koulutuksen järjestäjä-organisaatio", sv: "" },
+          organizationName: "Koulutuksen järjestäjä-organisaatio"
+        }}
       />
     )
 
@@ -262,11 +276,14 @@ describe("StudyInfo", () => {
     expect(
       queryByTestId("StudyInfo.AssessmentVerification")
     ).toBeInTheDocument()
+    expect(
+      queryByTestId("StudyInfo.AssessmentVerificationOrganisation")
+    ).toBeInTheDocument()
 
     rerender(
       <StudyInfo
         title="Title"
-        demonstrations={naytot3}
+        osaamisenOsoittamiset={naytot3}
         verificationProcess={{
           koodiUri: "osaamisentodentamisenprosessi_0003"
         }}

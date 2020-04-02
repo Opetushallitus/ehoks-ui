@@ -1,52 +1,13 @@
 import { createGlobalStyle } from "styled"
+import { GlobalStyles as GlobalStylesBase } from "globalStyles"
 
 export const GlobalStyles = createGlobalStyle`
-  html {
-    box-sizing: border-box;
-  }
-
-  *, *:before, *:after {
-    box-sizing: inherit;
-  }
-
+  ${GlobalStylesBase}
   html, body {
-    margin: 0;
-    padding: 0;
-    background: #fff;
-    height: 100%;
-  }
-
-  body  {
-    font-family: 'Source Sans Pro', sans-serif;
+      height: 100%;
   }
 
   #app {
     height: 100%;
-  }
-
-  :focus {
-    outline-color: rgba(25, 118, 210, .4);
-    outline-style: solid;
-  }
-
-  /*
-  * react-circular-progressbar styles
-  *
-  * All of the styles in this file are optional and configurable!
-  */
-  .CircularProgressbar .CircularProgressbar-path {
-    stroke: #027FA9;
-    stroke-linecap: square;
-  }
-
-  .CircularProgressbar .CircularProgressbar-trail {
-    stroke: #f5f5f5;
-  }
-
-  .CircularProgressbar .CircularProgressbar-text {
-    fill: #027FA9;
-    font-size: 48px;
-    dominant-baseline: middle;
-    text-anchor: middle;
   }
 `

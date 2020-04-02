@@ -34,7 +34,7 @@ import { ReactJSONSchemaForm } from "./HOKSLomake/ReactJSONSchemaForm"
 import { SpinnerContainer } from "./HOKSLomake/SpinnerContainer"
 import { Step } from "./HOKSLomake/Step"
 import { Stepper } from "./HOKSLomake/Stepper"
-import "./HOKSLomake/styles.css"
+import { EditHOKSStyles } from "./HOKSLomake/styles"
 import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./LuoHOKS/uiSchema"
@@ -282,6 +282,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     const { clearModalOpen } = this.state
     return (
       <HOKSFormContainer onKeyUp={this.userHasEnteredText}>
+        <EditHOKSStyles />
         <TopToolbar id="topToolbar">
           <Header>Luo HOKS</Header>
           <Stepper

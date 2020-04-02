@@ -28,10 +28,7 @@ const IntroPageContainer = styled("div")`
   }
 `
 
-const IntroPageTitle = styled("h1")`
-  font-weight: 400;
-  font-size: 30px;
-`
+const IntroPageTitle = styled("h1")``
 
 const IntroPageTextContainer = styled("p")`
   font-size: 17px;
@@ -55,7 +52,7 @@ const NextIntroPageButton = styled(Button)`
 `
 
 const StyledModal = styled(Modal)`
-  font-family: "Source Sans Pro", sans-serif;
+  ${props => props.theme.typography.body}
   box-sizing: inherit;
   color: rgb(255, 255, 255);
   text-align: center;

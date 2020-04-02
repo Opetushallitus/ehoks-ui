@@ -50,9 +50,8 @@ const CollapseHeaderContainer = styled("div")`
 const CollapseHeader = styled("h2")`
   flex: 1;
   margin: 0;
-  font-size: 22px;
-  font-weight: 600;
-
+  ${props => props.theme.typography.heading3}
+  
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     flex: unset;
     font-size: 16px;

@@ -15,7 +15,7 @@ export const HOKSStore = types
   .model("HOKSStore", HOKSStoreModel)
   .views(self => {
     return {
-      // shown as notification banners about current and upcoming demonstrations/learning periods
+      // shown as notification banners about current and upcoming OsaamisenOsoittamiset/OsaamisenHankkimistavat
       get notifications() {
         return flattenDeep<SnapshotIn<typeof Notification>>(
           self.suunnitelmat.map(s => {
@@ -23,26 +23,30 @@ export const HOKSStore = types
               .filter(t => t.tutkinnonOsaKoodiUri)
               .map(to => {
                 return [
-                  ...(to.osaamisenOsoittaminen || []).map(naytto => {
-                    return {
-                      hoksId: s.eid,
-                      tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
-                      tyyppi: "naytto",
-                      alku: naytto.alku,
-                      loppu: naytto.loppu,
-                      paikka: naytto.nayttoymparisto?.kuvaus
-                    }
-                  }),
-                  ...(to.osaamisenHankkimistavat || []).map(oh => {
-                    return {
-                      hoksId: s.eid,
-                      tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
-                      tyyppi: "tyossaoppiminen",
-                      alku: oh.alku,
-                      loppu: oh.loppu,
-                      paikka: oh.selite
-                    }
-                  })
+                  ...(!!to.osaamisenOsoittaminen
+                    ? to.osaamisenOsoittaminen.map(naytto => {
+                        return {
+                          hoksId: s.eid,
+                          tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
+                          tyyppi: "naytto",
+                          alku: naytto.alku,
+                          loppu: naytto.loppu,
+                          paikka: naytto.nayttoymparisto?.kuvaus
+                        }
+                      })
+                    : []),
+                  ...(!!to.osaamisenHankkimistavat
+                    ? to.osaamisenHankkimistavat.map(oh => {
+                        return {
+                          hoksId: s.eid,
+                          tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
+                          tyyppi: "tyossaoppiminen",
+                          alku: oh.alku,
+                          loppu: oh.loppu,
+                          paikka: oh.selite
+                        }
+                      })
+                    : [])
                 ]
               })
           })

@@ -52,8 +52,8 @@ interface TitleProps {
 const Title = styled("div")<TitleProps>`
   margin-top: 10px;
   color: ${props => props.theme.colors.battleshipGrey};
-  font-size: 20px;
-  font-weight: ${props => (props.selected ? 600 : 300)};
+  ${props => props.theme.typography.routeButton}
+  ${props => props.selected && "font-weight: 600"};
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     display: none;
   }

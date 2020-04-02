@@ -18,31 +18,37 @@ import { AppContext } from "components/AppContext"
 import { RequirementsAndDeviations } from "./RequirementsAndDeviations"
 import { observer } from "mobx-react"
 
-const DemonstrationTitle = styled(Title)`
+const OsaamisenOsoittaminenTitle = styled(Title)(
+  props => `
   display: flex;
   align-items: center;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: ${props.theme.spacing.l};
+  margin-right: ${props.theme.spacing.l};
 `
+)
 
 const FlexLearningEvent = styled(LearningEvent)`
   flex: 1;
 `
 
-const DemonstrationTable = styled(Table)`
-  margin-left: 20px;
+const OsaamisenOsoittaminenTable = styled(Table)`
+  margin-left: ${props => props.theme.spacing.l};
 `
 
-const DemonstrationTasks = styled(InfoContainer)`
-  margin: 10px 20px 20px 20px;
+const OsaamisenOsoittaminenTasks = styled(InfoContainer)(
+  ({ theme: { spacing } }) => `
+  margin: ${spacing.s} ${spacing.l} ${spacing.l} ${spacing.l};
 `
+)
 
-const CustomSlider = styled(MobileSlider)`
-  margin: 10px 20px 20px 10px;
+const CustomSlider = styled(MobileSlider)(
+  ({ theme: { spacing } }) => `
+  margin: ${spacing.s} ${spacing.l} ${spacing.l} ${spacing.s};
 `
+)
 
 const ButtonContainer = styled("div")`
-  margin-right: 50px;
+  margin-right: ${props => props.theme.spacing.xl};
 `
 
 const Button = styled(HeroButton)`
@@ -50,29 +56,34 @@ const Button = styled(HeroButton)`
 `
 
 const ShareIcon = styled(MdShare)`
-  margin-left: 6px;
+  margin-left: ${props => props.theme.spacing.xs};
 `
 
-interface DemonstrationState {
+const DemonstrationTasksTitle = styled("h3")`
+  margin-left: ${props => props.theme.spacing.l};
+  ${props => props.theme.typography.heading4}
+`
+
+interface OsaamisenOsoittaminenState {
   requirementsAndDeviationsExpanded: boolean
 }
 
-interface DemonstrationProps {
-  demonstration: IOsaamisenOsoittaminen
+interface OsaamisenOsoittaminenProps {
+  osaamisenOsoittaminen: IOsaamisenOsoittaminen
   verificationProcess?: TodentamisenProsessi
   koodiUri?: string
   hasActiveShare?: boolean
 }
 
 @observer
-export class Demonstration extends React.Component<
-  DemonstrationProps,
-  DemonstrationState
+export class OsaamisenOsoittaminen extends React.Component<
+  OsaamisenOsoittaminenProps,
+  OsaamisenOsoittaminenState
 > {
   static contextType = AppContext
   declare context: React.ContextType<typeof AppContext>
 
-  state: DemonstrationState = {
+  state: OsaamisenOsoittaminenState = {
     requirementsAndDeviationsExpanded: false
   }
 
@@ -96,7 +107,7 @@ export class Demonstration extends React.Component<
 
   render() {
     const {
-      demonstration,
+      osaamisenOsoittaminen,
       hasActiveShare = false,
       verificationProcess
     } = this.props
@@ -125,21 +136,21 @@ export class Demonstration extends React.Component<
       tyoelamaArvioijat,
       jarjestaja,
       sisallonKuvaus
-    } = demonstration
+    } = osaamisenOsoittaminen
 
     const jarjestajaOppilaitos = jarjestaja.oppilaitosNimi
 
     return (
-      <Container data-testid="StudyInfo.Demonstration">
-        <DemonstrationTitle>
+      <Container data-testid="StudyInfo.OsaamisenOsoittaminen">
+        <OsaamisenOsoittaminenTitle>
           <FlexLearningEvent
             title={title}
-            isDemonstration={true}
+            isOsaamisenOsoittaminen={true}
             description={nayttoymparisto.nimi}
-            startDate={demonstration.alku}
-            endDate={demonstration.loppu}
+            startDate={osaamisenOsoittaminen.alku}
+            endDate={osaamisenOsoittaminen.loppu}
             size="large"
-            demonstrationEnviromentDescription={nayttoymparisto.kuvaus}
+            nayttoYmparistoDescription={nayttoymparisto.kuvaus}
           />
           {showShareButton && (
             <ButtonContainer>
@@ -152,8 +163,8 @@ export class Demonstration extends React.Component<
               </Button>
             </ButtonContainer>
           )}
-        </DemonstrationTitle>
-        <DemonstrationTable>
+        </OsaamisenOsoittaminenTitle>
+        <OsaamisenOsoittaminenTable>
           <TBody>
             <tr>
               <TH>
@@ -187,7 +198,13 @@ export class Demonstration extends React.Component<
               </tr>
             ) : null}
           </TBody>
-        </DemonstrationTable>
+        </OsaamisenOsoittaminenTable>
+        <DemonstrationTasksTitle>
+          <FormattedMessage
+            id="opiskelusuunnitelma.sisaltoTitle"
+            defaultMessage="Sisältö"
+          />
+        </DemonstrationTasksTitle>
         <HMediaQuery.MaxWidth breakpoint="Tablet">
           <CustomSlider>
             {sisallonKuvaus.map((tyotehtava, i) => {
@@ -196,18 +213,20 @@ export class Demonstration extends React.Component<
           </CustomSlider>
         </HMediaQuery.MaxWidth>
         <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
-          <DemonstrationTasks>
+          <OsaamisenOsoittaminenTasks>
             {sisallonKuvaus.map((tyotehtava, i) => {
               return <li key={i}>{tyotehtava}</li>
             })}
-          </DemonstrationTasks>
+          </OsaamisenOsoittaminenTasks>
         </HMediaQuery.MaxWidth>
 
         <RequirementsAndDeviations
           toggle={this.toggleRequirementsAndDeviations}
           expanded={requirementsAndDeviationsExpanded}
-          requirements={demonstration.yksilollisetKriteerit}
-          deviations={demonstration.vaatimuksistaTaiTavoitteistaPoikkeaminen}
+          requirements={osaamisenOsoittaminen.yksilollisetKriteerit}
+          deviations={
+            osaamisenOsoittaminen.vaatimuksistaTaiTavoitteistaPoikkeaminen
+          }
         />
       </Container>
     )

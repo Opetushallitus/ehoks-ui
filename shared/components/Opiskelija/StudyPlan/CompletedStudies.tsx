@@ -1,14 +1,13 @@
 import React from "react"
 import { ShareType } from "../../../stores/NotificationStore"
 import { ActiveAccordions, StudyPartSubAccordions } from "./StudyPlanHelpers"
-import { HankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
+import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
 import { AccordionTitle } from "../../AccordionTitle"
 import { FormattedMessage } from "react-intl"
 import { StudiesContainer } from "../../StudiesContainer"
 import { StudyInfo } from "../../StudyInfo"
 import { EmptyItem } from "../../EmptyItem"
 import { Accordion } from "../../Accordion"
-import { theme } from "../../../theme"
 
 export interface CompletedStudiesProps {
   accordionIsOpen: boolean
@@ -21,7 +20,7 @@ export interface CompletedStudiesProps {
     accordion: ActiveAccordions,
     subAccordion?: StudyPartSubAccordions
   ) => () => void
-  valmiitOpinnot: HankittavaTutkinnonOsa[]
+  valmiitOpinnot: IHankittavaTutkinnonOsa[]
   elements?: {
     heading?: React.ReactNode
     goals?: React.ReactNode
@@ -65,18 +64,21 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
             return (
               <React.Fragment key={`${study.id}_${i}`}>
                 <StudyInfo
-                  accentColor={theme.colors.ready}
+                  accentColor="ready"
                   competenceRequirements={study.osaamisvaatimukset}
-                  demonstrations={study.osaamisenOsoittaminen}
-                  extraContent={
-                    study.olennainenSeikka ? elements.essentialFactor : null
+                  osaamisenOsoittamiset={study.osaamisenOsoittaminen}
+                  olennainenSeikka={
+                    study.olennainenSeikka
+                      ? elements.essentialFactor
+                      : undefined
                   }
                   fadedColor="#ECF6ED"
                   koodiUri={study.tutkinnonOsaKoodiUri}
-                  learningPeriods={study.osaamisenHankkimistavat}
+                  osaamisenHankkimistavat={study.osaamisenHankkimistavat}
                   share={share}
                   title={study.opintoOtsikko(competencePointsTitle)}
                   objectives={study.tavoitteetJaSisallot}
+                  koulutuksenJarjestaja={study.koulutuksenJarjestaja}
                 />
                 {renderExtraItem && <EmptyItem />}
               </React.Fragment>

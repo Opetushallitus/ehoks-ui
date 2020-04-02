@@ -6,8 +6,7 @@ import { EmptyItem } from "../../EmptyItem"
 import { Accordion } from "../../Accordion"
 import { ShareType } from "../../../stores/NotificationStore"
 import { ActiveAccordions, StudyPartSubAccordions } from "./StudyPlanHelpers"
-import { HankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
-import { theme } from "../../../theme"
+import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
 import React from "react"
 
 export interface ScheduledStudiesProps {
@@ -21,7 +20,7 @@ export interface ScheduledStudiesProps {
     accordion: ActiveAccordions,
     subAccordion?: StudyPartSubAccordions
   ) => () => void
-  aikataulutetutOpinnot: HankittavaTutkinnonOsa[]
+  aikataulutetutOpinnot: IHankittavaTutkinnonOsa[]
   elements?: {
     heading?: React.ReactNode
     goals?: React.ReactNode
@@ -65,18 +64,21 @@ export class ScheduledStudies extends React.Component<ScheduledStudiesProps> {
             return (
               <React.Fragment key={`${study.id}_${i}`}>
                 <StudyInfo
-                  accentColor={theme.colors.scheduled}
+                  accentColor="scheduled"
                   competenceRequirements={study.osaamisvaatimukset}
-                  demonstrations={study.osaamisenOsoittaminen}
-                  extraContent={
-                    study.olennainenSeikka ? elements.essentialFactor : null
+                  osaamisenOsoittamiset={study.osaamisenOsoittaminen}
+                  olennainenSeikka={
+                    study.olennainenSeikka
+                      ? elements.essentialFactor
+                      : undefined
                   }
                   fadedColor="#FDF6E9"
                   koodiUri={study.tutkinnonOsaKoodiUri}
-                  learningPeriods={study.osaamisenHankkimistavat}
+                  osaamisenHankkimistavat={study.osaamisenHankkimistavat}
                   share={share}
                   title={study.opintoOtsikko(competencePointsTitle)}
                   objectives={study.tavoitteetJaSisallot}
+                  koulutuksenJarjestaja={study.koulutuksenJarjestaja}
                 />
                 {renderExtraItem && <EmptyItem />}
               </React.Fragment>

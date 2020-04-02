@@ -19,6 +19,9 @@ import { Yllapito } from "./Yllapito"
 const Container = styled("div")`
   margin: 0;
   height: 100%;
+  ${props =>
+    props.theme.typography
+      .body} /* Needed for fixing apply-raamit.css injection */
 `
 
 const StyledRouter = styled(Router)`

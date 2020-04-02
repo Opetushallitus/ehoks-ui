@@ -8,7 +8,8 @@ import { StudyInfo } from "components/StudyInfo"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
-import { AiemminHankittuTutkinnonOsa } from "../../models/helpers/TutkinnonOsa"
+import { IAiemminHankittuTutkinnonOsa } from "../../models/helpers/TutkinnonOsa"
+import { observer } from "mobx-react"
 
 const Container = styled(StudiesContainer)`
   margin-top: 0;
@@ -17,7 +18,7 @@ const Container = styled(StudiesContainer)`
 export interface AiempiOsaaminenProps {
   children?: React.ReactChildren
   heading?: React.ReactNode
-  studies: Array<AiemminHankittuTutkinnonOsa>
+  studies: Array<IAiemminHankittuTutkinnonOsa>
 }
 
 export interface AiempiOsaaminenState {
@@ -26,6 +27,7 @@ export interface AiempiOsaaminenState {
   }
 }
 
+@observer
 export class AiempiOsaaminen extends React.Component<
   AiempiOsaaminenProps & RouteComponentProps,
   AiempiOsaaminenState
@@ -85,12 +87,13 @@ export class AiempiOsaaminen extends React.Component<
               return (
                 <React.Fragment key={i}>
                   <StudyInfo
-                    accentColor="#43A047"
+                    accentColor="midGreen"
                     fadedColor="#ECF6ED"
                     title={study.opintoOtsikko(competencePointsTitle)}
-                    demonstrations={study.tarkentavatTiedotNaytto}
+                    osaamisenOsoittamiset={study.tarkentavatTiedotNaytto}
                     verificationProcess={study.todentamisenProsessi}
                     objectives={study.tavoitteetJaSisallot}
+                    koulutuksenJarjestaja={study.koulutuksenJarjestaja}
                   />
                   {renderExtraItem && <EmptyItem />}
                 </React.Fragment>

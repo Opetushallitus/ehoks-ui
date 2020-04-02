@@ -12,14 +12,13 @@ export enum OsaamisenHankkimistapaType {
 
 const Model = types.model("OsaamisenHankkimistapaModel", {
   id: types.optional(types.number, 0),
-  hankkijanEdustaja: types.optional(Oppilaitoshenkilo, {}),
-  tyopaikallaJarjestettavaKoulutus: types.optional(
-    TyopaikallaJarjestettavaKoulutus,
-    {}
+  hankkijanEdustaja: types.maybe(Oppilaitoshenkilo),
+  tyopaikallaJarjestettavaKoulutus: types.maybe(
+    TyopaikallaJarjestettavaKoulutus
   ),
   osaamisenHankkimistapaKoodiUri: types.optional(types.string, ""),
   osaamisenHankkimistapa: types.optional(KoodistoVastaus, {}),
-  jarjestajanEdustaja: types.optional(Oppilaitoshenkilo, {}),
+  jarjestajanEdustaja: types.maybe(Oppilaitoshenkilo),
   ajanjaksonTarkenne: types.optional(types.string, ""),
   alku: types.optional(types.string, ""),
   muutOppimisymparistot: types.array(MuuOppimisymparisto),
@@ -32,14 +31,23 @@ export const OsaamisenHankkimistapa = types
     return {
       get selite() {
         return self.tyyppi === OsaamisenHankkimistapaType.Workplace
-          ? self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi
+          ? self.tyopaikallaJarjestettavaKoulutus?.tyopaikanNimi
           : ""
       },
       get workplaceSelite() {
-        return self.tyyppi === OsaamisenHankkimistapaType.Workplace &&
-          !!self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi
-          ? `${self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi}, ${self.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus}`
-          : ""
+        if (
+          self.tyyppi !== OsaamisenHankkimistapaType.Workplace ||
+          !self.tyopaikallaJarjestettavaKoulutus
+        ) {
+          return ""
+        }
+
+        return [
+          self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi,
+          self.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus
+        ]
+          .filter(Boolean)
+          .join(", ")
       },
       get tyyppi() {
         return self.osaamisenHankkimistapaKoodiUri.includes(
