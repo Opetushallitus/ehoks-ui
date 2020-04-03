@@ -68,12 +68,12 @@ const LocationsContainerExpanded = styled("div")`
   padding-right: 14px;
 `
 
-const TodentamisenProsessiTitle = styled("strong")`
+const CollapsedDetailsTitle = styled("strong")`
   display: block;
   margin: 10px 0 8px 0;
 `
 
-const TodentamisenProsessiTitleExpanded = styled("strong")`
+const AiemmanOsaamisenTitleExpanded = styled("strong")`
   display: block;
   margin: 10px 0 8px 20px;
 `
@@ -317,12 +317,12 @@ const TodentamisenProsessiSuoraan = ({
   <>
     {todentamisenProsessiKoodi === TodentamisenProsessiKoodi.SUORAAN && (
       <React.Fragment>
-        <TodentamisenProsessiTitle>
+        <CollapsedDetailsTitle>
           <FormattedMessage
             id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
             defaultMessage="Osaaminen tunnistettu suoraan"
           />
-        </TodentamisenProsessiTitle>
+        </CollapsedDetailsTitle>
       </React.Fragment>
     )}
   </>
@@ -338,7 +338,7 @@ const TodentamisenProsessiArvioijienKautta = ({
   <>
     {todentamisenProsessiKoodi ===
       TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA && (
-      <TodentamisenProsessiTitle data-testid="StudyInfo.AssessmentVerification">
+      <CollapsedDetailsTitle data-testid="StudyInfo.AssessmentVerification">
         <FormattedMessage
           id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
           defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
@@ -353,7 +353,7 @@ const TodentamisenProsessiArvioijienKautta = ({
                 : ""
           }}
         />
-      </TodentamisenProsessiTitle>
+      </CollapsedDetailsTitle>
     )}
   </>
 )
