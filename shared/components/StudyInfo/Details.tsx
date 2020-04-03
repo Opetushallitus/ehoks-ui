@@ -193,14 +193,14 @@ const OsaamisenOsoittamisetExpanded = ({
   shareType,
   fadedColor,
   koodiUri,
-  verificationProcess
+  todentamisenProsessi
 }: {
   osaamisenOsoittamiset: Array<IOsaamisenOsoittaminen>
   hasActiveShare: boolean
   shareType?: ShareType | ""
   fadedColor: string
   koodiUri?: string
-  verificationProcess?: TodentamisenProsessi
+  todentamisenProsessi?: TodentamisenProsessi
 }) => (
   <>
     {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => {
@@ -218,7 +218,7 @@ const OsaamisenOsoittamisetExpanded = ({
         >
           <OsaamisenOsoittaminen
             osaamisenOsoittaminen={osaamisenOsoittaminen}
-            verificationProcess={verificationProcess}
+            todentamisenProsessi={todentamisenProsessi}
             koodiUri={koodiUri}
             hasActiveShare={hasActiveShare && shareType === "naytto"}
           />
@@ -296,11 +296,11 @@ const PreviouslyConfirmedOrganization = ({
 const VerificationCollapsed = ({
   verification,
   koulutuksenJarjestaja,
-  verificationProcess
+  todentamisenProsessi
 }: {
   verification?: string
   koulutuksenJarjestaja?: IOrganisaatio
-  verificationProcess?: TodentamisenProsessi
+  todentamisenProsessi?: TodentamisenProsessi
 }) => (
   <>
     {verification === VerificationProcess.SUORAAN && (
@@ -325,9 +325,10 @@ const VerificationCollapsed = ({
           defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
           values={{
             date:
-              verificationProcess && verificationProcess.lahetettyArvioitavaksi
+              todentamisenProsessi &&
+              todentamisenProsessi.lahetettyArvioitavaksi
                 ? format(
-                    parseISO(verificationProcess.lahetettyArvioitavaksi),
+                    parseISO(todentamisenProsessi.lahetettyArvioitavaksi),
                     "d.M.yyyy"
                   )
                 : ""
@@ -354,7 +355,7 @@ interface DetailsProps {
   osaamisenHankkimistavat?: Array<IOsaamisenHankkimistapa>
   share?: { koodiUri: string; type: ShareType | "" }
   toggle: (name: ToggleableItems) => () => void
-  verificationProcess?: TodentamisenProsessi
+  todentamisenProsessi?: TodentamisenProsessi
   koulutuksenJarjestaja?: IOrganisaatio
   tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
 }
@@ -374,12 +375,12 @@ export class Details extends React.Component<DetailsProps> {
       osaamisenHankkimistavat = [],
       share,
       toggle,
-      verificationProcess,
+      todentamisenProsessi,
       koulutuksenJarjestaja
     } = this.props
     const { intl } = this.context
 
-    const verification = verificationProcess && verificationProcess.koodiUri
+    const verification = todentamisenProsessi && todentamisenProsessi.koodiUri
     const showExpand =
       !!osaamisenOsoittamiset.length ||
       !!osaamisenHankkimistavat.length ||
@@ -439,7 +440,7 @@ export class Details extends React.Component<DetailsProps> {
             shareType={shareType}
             fadedColor={fadedColor}
             koodiUri={koodiUri}
-            verificationProcess={verificationProcess}
+            todentamisenProsessi={todentamisenProsessi}
           />
 
           {olennainenSeikka}
@@ -463,7 +464,7 @@ export class Details extends React.Component<DetailsProps> {
             <VerificationCollapsed
               koulutuksenJarjestaja={koulutuksenJarjestaja}
               verification={verification}
-              verificationProcess={verificationProcess}
+              todentamisenProsessi={todentamisenProsessi}
             />
 
             <OsaamisenHankkimistavatCollapsed

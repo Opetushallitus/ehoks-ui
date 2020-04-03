@@ -248,7 +248,7 @@ describe("StudyInfo", () => {
     const { queryByTestId, queryAllByTestId, rerender } = renderWithContext(
       <StudyInfo
         title="Title"
-        verificationProcess={{
+        todentamisenProsessi={{
           koodiUri: "osaamisentodentamisenprosessi_0001"
         }}
       />
@@ -260,7 +260,7 @@ describe("StudyInfo", () => {
     rerender(
       <StudyInfo
         title="Title"
-        verificationProcess={{
+        todentamisenProsessi={{
           koodiUri: "osaamisentodentamisenprosessi_0002",
           lahetettyArvioitavaksi: "2019-04-15"
         }}
@@ -284,7 +284,7 @@ describe("StudyInfo", () => {
       <StudyInfo
         title="Title"
         osaamisenOsoittamiset={naytot3}
-        verificationProcess={{
+        todentamisenProsessi={{
           koodiUri: "osaamisentodentamisenprosessi_0003"
         }}
       />

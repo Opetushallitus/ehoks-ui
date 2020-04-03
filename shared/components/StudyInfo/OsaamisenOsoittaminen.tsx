@@ -70,7 +70,7 @@ interface OsaamisenOsoittaminenState {
 
 interface OsaamisenOsoittaminenProps {
   osaamisenOsoittaminen: IOsaamisenOsoittaminen
-  verificationProcess?: TodentamisenProsessi
+  todentamisenProsessi?: TodentamisenProsessi
   koodiUri?: string
   hasActiveShare?: boolean
 }
@@ -109,14 +109,14 @@ export class OsaamisenOsoittaminen extends React.Component<
     const {
       osaamisenOsoittaminen,
       hasActiveShare = false,
-      verificationProcess
+      todentamisenProsessi
     } = this.props
     const { featureFlags } = this.context
     const { requirementsAndDeviationsExpanded } = this.state
 
     const title =
-      verificationProcess &&
-      verificationProcess.koodiUri === VerificationProcess.OHJAUS_NAYTTOON ? (
+      todentamisenProsessi &&
+      todentamisenProsessi.koodiUri === VerificationProcess.OHJAUS_NAYTTOON ? (
         <FormattedMessage
           id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
           defaultMessage="Osaaminen osoitetaan näytössä"
