@@ -38,6 +38,11 @@ export const OsaamisenOsoittaminen = types
             .filter(Boolean)
             .join(", ")
         )
+      },
+      get nayttoymparistoDetails() {
+        return [self.nayttoymparisto.nimi, self.nayttoymparisto.yTunnus]
+          .filter(Boolean)
+          .join(", ")
       }
     }
   })
