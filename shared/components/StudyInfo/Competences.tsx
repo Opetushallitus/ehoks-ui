@@ -127,7 +127,7 @@ export class Competences extends React.Component<CompetencesProps> {
       expandedCompetences.length === competenceRequirements.length
 
     if (!competenceRequirements.length) {
-      return <Container data-testid="StudyInfo.Competences" />
+      return <Container data-testid="StudyInfo.EmptyCompetences" />
     }
 
     return (
