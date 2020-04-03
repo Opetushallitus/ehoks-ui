@@ -13,7 +13,7 @@ import {
   ITarkentavatTiedotOsaamisenArvioija
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "./LearningEvent"
-import { VerificationProcess } from "types/VerificationProcess"
+import { TodentamisenProsessiKoodi } from "types/TodentamisenProsessiKoodi"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
 import { ShareType } from "stores/NotificationStore"
@@ -240,7 +240,7 @@ const OsaamisenOsoittamisetCollapsed = ({
   <>
     {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => {
       const title =
-        verification === VerificationProcess.OHJAUS_NAYTTOON ? (
+        verification === TodentamisenProsessiKoodi.OHJAUS_NAYTTOON ? (
           <FormattedMessage
             id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
             defaultMessage="Osaaminen osoitetaan näytössä"
@@ -265,7 +265,7 @@ const OsaamisenOsoittamisetCollapsed = ({
             startDate={osaamisenOsoittaminen.alku}
             endDate={osaamisenOsoittaminen.loppu}
           />
-          {verification === VerificationProcess.OHJAUS_NAYTTOON &&
+          {verification === TodentamisenProsessiKoodi.OHJAUS_NAYTTOON &&
             !!koulutuksenJarjestaja?.organizationName && (
               <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
                 <PreviouslyConfirmedOrganization
@@ -303,7 +303,7 @@ const VerificationCollapsed = ({
   todentamisenProsessi?: TodentamisenProsessi
 }) => (
   <>
-    {verification === VerificationProcess.SUORAAN && (
+    {verification === TodentamisenProsessiKoodi.SUORAAN && (
       <React.Fragment>
         <VerificationTitle>
           <FormattedMessage
@@ -318,7 +318,7 @@ const VerificationCollapsed = ({
         </VerificationTitle>
       </React.Fragment>
     )}
-    {verification === VerificationProcess.ARVIOIJIEN_KAUTTA && (
+    {verification === TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA && (
       <VerificationTitle data-testid="StudyInfo.AssessmentVerification">
         <FormattedMessage
           id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
@@ -384,7 +384,7 @@ export class Details extends React.Component<DetailsProps> {
     const showExpand =
       !!osaamisenOsoittamiset.length ||
       !!osaamisenHankkimistavat.length ||
-      verification === VerificationProcess.OHJAUS_NAYTTOON
+      verification === TodentamisenProsessiKoodi.OHJAUS_NAYTTOON
     const isAiempiOsaaminen = !!verification
     const hasActiveShare =
       typeof share !== "undefined" && koodiUri === share.koodiUri

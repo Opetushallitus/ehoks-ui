@@ -9,7 +9,7 @@ import {
   TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
-import { VerificationProcess } from "types/VerificationProcess"
+import { TodentamisenProsessiKoodi } from "types/TodentamisenProsessiKoodi"
 import { HeroButton } from "components/Button"
 import { MdShare } from "react-icons/md"
 import { navigate } from "@reach/router"
@@ -116,7 +116,8 @@ export class OsaamisenOsoittaminen extends React.Component<
 
     const title =
       todentamisenProsessi &&
-      todentamisenProsessi.koodiUri === VerificationProcess.OHJAUS_NAYTTOON ? (
+      todentamisenProsessi.koodiUri ===
+        TodentamisenProsessiKoodi.OHJAUS_NAYTTOON ? (
         <FormattedMessage
           id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
           defaultMessage="Osaaminen osoitetaan näytössä"
