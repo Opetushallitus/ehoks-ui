@@ -47,11 +47,11 @@ interface LearningEventProps {
   title?: React.ReactNode
   isOsaamisenOsoittaminen?: boolean
   size?: "small" | "large"
-  description?: string
+  nayttoymparistoDetails?: string
   startDate?: string
   endDate?: string
   periodSpecifier?: string
-  nayttoYmparistoDescription?: string
+  description?: string
 }
 
 export class LearningEvent extends React.Component<LearningEventProps> {
@@ -60,12 +60,12 @@ export class LearningEvent extends React.Component<LearningEventProps> {
       className,
       title,
       size = "small",
-      description,
+      nayttoymparistoDetails,
       startDate = "",
       endDate = "",
       periodSpecifier = "",
       isOsaamisenOsoittaminen = false,
-      nayttoYmparistoDescription
+      description
     } = this.props
     const iconSize = size === "small" ? 24 : 32
     return (
@@ -92,8 +92,8 @@ export class LearningEvent extends React.Component<LearningEventProps> {
               </Detail>
             )}
             {periodSpecifier && <Detail size={size}>{periodSpecifier}</Detail>}
+            <Detail size={size}>{nayttoymparistoDetails}</Detail>
             <Detail size={size}>{description}</Detail>
-            <Detail size={size}>{nayttoYmparistoDescription}</Detail>
           </DetailsContainer>
         </ContentContainer>
       </Container>

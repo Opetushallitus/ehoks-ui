@@ -34,8 +34,15 @@ export const OsaamisenOsoittaminen = types
       },
       get tyoelamaArvioijat() {
         return self.tyoelamaOsaamisenArvioijat.map(a =>
-          [a.nimi, a.organisaatio.nimi].filter(Boolean).join(", ")
+          [a.nimi, a.organisaatio.nimi, a.organisaatio.yTunnus]
+            .filter(Boolean)
+            .join(", ")
         )
+      },
+      get nayttoymparistoDetails() {
+        return [self.nayttoymparisto.nimi, self.nayttoymparisto.yTunnus]
+          .filter(Boolean)
+          .join(", ")
       }
     }
   })

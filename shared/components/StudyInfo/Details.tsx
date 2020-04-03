@@ -260,7 +260,9 @@ const OsaamisenOsoittamisetCollapsed = ({
         <React.Fragment key={i}>
           <LearningEvent
             title={title}
-            description={osaamisenOsoittaminen?.nayttoymparisto?.nimi}
+            nayttoymparistoDetails={
+              osaamisenOsoittaminen?.nayttoymparistoDetails
+            }
             startDate={osaamisenOsoittaminen.alku}
             endDate={osaamisenOsoittaminen.loppu}
           />

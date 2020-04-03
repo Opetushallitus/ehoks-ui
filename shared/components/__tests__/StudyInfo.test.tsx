@@ -138,9 +138,10 @@ describe("StudyInfo", () => {
   })
 
   test("render without params", () => {
-    const { getByTestId } = render(<StudyInfo />)
+    const { getByTestId, queryByTestId } = render(<StudyInfo />)
     expect(getByTestId("Title")).toBeEmpty()
-    expect(getByTestId("StudyInfo.Competences")).toBeEmpty()
+    expect(getByTestId("StudyInfo.EmptyCompetences")).toBeInTheDocument()
+    expect(queryByTestId("StudyInfo.Competences")).not.toBeInTheDocument()
   })
 
   test("render title", () => {
