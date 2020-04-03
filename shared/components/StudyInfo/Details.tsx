@@ -68,12 +68,12 @@ const LocationsContainerExpanded = styled("div")`
   padding-right: 14px;
 `
 
-const VerificationTitle = styled("strong")`
+const TodentamisenProsessiTitle = styled("strong")`
   display: block;
   margin: 10px 0 8px 0;
 `
 
-const VerificationTitleExpanded = styled("strong")`
+const TodentamisenProsessiTitleExpanded = styled("strong")`
   display: block;
   margin: 10px 0 8px 20px;
 `
@@ -230,17 +230,18 @@ const OsaamisenOsoittamisetExpanded = ({
 
 const OsaamisenOsoittamisetCollapsed = ({
   osaamisenOsoittamiset,
-  verification,
+  todentamisenProsessiKoodi,
   koulutuksenJarjestaja
 }: {
   osaamisenOsoittamiset: Array<IOsaamisenOsoittaminen>
-  verification?: string
+  todentamisenProsessiKoodi?: string
   koulutuksenJarjestaja?: IOrganisaatio
 }) => (
   <>
     {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => {
       const title =
-        verification === TodentamisenProsessiKoodi.OHJAUS_NAYTTOON ? (
+        todentamisenProsessiKoodi ===
+        TodentamisenProsessiKoodi.OHJAUS_NAYTTOON ? (
           <FormattedMessage
             id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
             defaultMessage="Osaaminen osoitetaan näytössä"
@@ -265,13 +266,14 @@ const OsaamisenOsoittamisetCollapsed = ({
             startDate={osaamisenOsoittaminen.alku}
             endDate={osaamisenOsoittaminen.loppu}
           />
-          {verification === TodentamisenProsessiKoodi.OHJAUS_NAYTTOON &&
+          {todentamisenProsessiKoodi ===
+            TodentamisenProsessiKoodi.OHJAUS_NAYTTOON &&
             !!koulutuksenJarjestaja?.organizationName && (
-              <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
+              <TodentamisenProsessiTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
                 <PreviouslyConfirmedOrganization
                   organizationName={koulutuksenJarjestaja?.organizationName}
                 />
-              </VerificationTitle>
+              </TodentamisenProsessiTitle>
             )}
         </React.Fragment>
       )
@@ -293,33 +295,34 @@ const PreviouslyConfirmedOrganization = ({
   </React.Fragment>
 )
 
-const VerificationCollapsed = ({
-  verification,
+const TodentamisenProsessiCollapsed = ({
+  todentamisenProsessiKoodi,
   koulutuksenJarjestaja,
   todentamisenProsessi
 }: {
-  verification?: string
+  todentamisenProsessiKoodi?: string
   koulutuksenJarjestaja?: IOrganisaatio
   todentamisenProsessi?: TodentamisenProsessi
 }) => (
   <>
-    {verification === TodentamisenProsessiKoodi.SUORAAN && (
+    {todentamisenProsessiKoodi === TodentamisenProsessiKoodi.SUORAAN && (
       <React.Fragment>
-        <VerificationTitle>
+        <TodentamisenProsessiTitle>
           <FormattedMessage
             id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
             defaultMessage="Osaaminen tunnistettu suoraan"
           />
-        </VerificationTitle>
-        <VerificationTitle data-testid="StudyInfo.DirectVerification">
+        </TodentamisenProsessiTitle>
+        <TodentamisenProsessiTitle data-testid="StudyInfo.DirectVerification">
           <PreviouslyConfirmedOrganization
             organizationName={koulutuksenJarjestaja?.organizationName}
           />
-        </VerificationTitle>
+        </TodentamisenProsessiTitle>
       </React.Fragment>
     )}
-    {verification === TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA && (
-      <VerificationTitle data-testid="StudyInfo.AssessmentVerification">
+    {todentamisenProsessiKoodi ===
+      TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA && (
+      <TodentamisenProsessiTitle data-testid="StudyInfo.AssessmentVerification">
         <FormattedMessage
           id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
           defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
@@ -335,13 +338,13 @@ const VerificationCollapsed = ({
           }}
         />
         {!!koulutuksenJarjestaja?.organizationName && (
-          <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
+          <TodentamisenProsessiTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
             <PreviouslyConfirmedOrganization
               organizationName={koulutuksenJarjestaja?.organizationName}
             />
-          </VerificationTitle>
+          </TodentamisenProsessiTitle>
         )}
-      </VerificationTitle>
+      </TodentamisenProsessiTitle>
     )}
   </>
 )
@@ -380,12 +383,13 @@ export class Details extends React.Component<DetailsProps> {
     } = this.props
     const { intl } = this.context
 
-    const verification = todentamisenProsessi && todentamisenProsessi.koodiUri
+    const todentamisenProsessiKoodi =
+      todentamisenProsessi && todentamisenProsessi.koodiUri
     const showExpand =
       !!osaamisenOsoittamiset.length ||
       !!osaamisenHankkimistavat.length ||
-      verification === TodentamisenProsessiKoodi.OHJAUS_NAYTTOON
-    const isAiempiOsaaminen = !!verification
+      todentamisenProsessiKoodi === TodentamisenProsessiKoodi.OHJAUS_NAYTTOON
+    const isAiempiOsaaminen = !!todentamisenProsessiKoodi
     const hasActiveShare =
       typeof share !== "undefined" && koodiUri === share.koodiUri
     const shareType = typeof share !== "undefined" ? share.type : undefined
@@ -446,11 +450,11 @@ export class Details extends React.Component<DetailsProps> {
           {olennainenSeikka}
 
           {isAiempiOsaaminen && (
-            <VerificationTitleExpanded data-testid="StudyInfo.AssessmentVerificationOrganisation">
+            <TodentamisenProsessiTitleExpanded data-testid="StudyInfo.AssessmentVerificationOrganisation">
               <PreviouslyConfirmedOrganization
                 organizationName={koulutuksenJarjestaja?.organizationName}
               />
-            </VerificationTitleExpanded>
+            </TodentamisenProsessiTitleExpanded>
           )}
         </DetailsContent>
       </DetailsExpanded>
@@ -461,9 +465,9 @@ export class Details extends React.Component<DetailsProps> {
       >
         <LocationsContainer>
           <DetailsContent>
-            <VerificationCollapsed
+            <TodentamisenProsessiCollapsed
               koulutuksenJarjestaja={koulutuksenJarjestaja}
-              verification={verification}
+              todentamisenProsessiKoodi={todentamisenProsessiKoodi}
               todentamisenProsessi={todentamisenProsessi}
             />
 
@@ -473,7 +477,7 @@ export class Details extends React.Component<DetailsProps> {
 
             <OsaamisenOsoittamisetCollapsed
               osaamisenOsoittamiset={osaamisenOsoittamiset}
-              verification={verification}
+              todentamisenProsessiKoodi={todentamisenProsessiKoodi}
               koulutuksenJarjestaja={koulutuksenJarjestaja}
             />
           </DetailsContent>
