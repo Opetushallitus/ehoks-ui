@@ -327,15 +327,18 @@ const TodentamisenProsessiCollapsed = ({
                 : ""
           }}
         />
-        {!!koulutuksenJarjestaja?.organizationName && (
-          <TodentamisenProsessiTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
-            <PreviouslyConfirmedOrganization
-              organizationName={koulutuksenJarjestaja?.organizationName}
-            />
-          </TodentamisenProsessiTitle>
-        )}
       </TodentamisenProsessiTitle>
     )}
+
+    {todentamisenProsessiKoodi ===
+      TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA &&
+      !!koulutuksenJarjestaja?.organizationName && (
+        <TodentamisenProsessiTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
+          <PreviouslyConfirmedOrganization
+            organizationName={koulutuksenJarjestaja?.organizationName}
+          />
+        </TodentamisenProsessiTitle>
+      )}
   </>
 )
 
