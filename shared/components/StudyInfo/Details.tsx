@@ -234,7 +234,6 @@ const OsaamisenOsoittamisetCollapsed = ({
 }: {
   osaamisenOsoittamiset: Array<IOsaamisenOsoittaminen>
   todentamisenProsessiKoodi?: string
-  koulutuksenJarjestaja?: IOrganisaatio
 }) => (
   <>
     {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => {
@@ -283,6 +282,24 @@ const PreviouslyConfirmedOrganization = ({
     />{" "}
     {organizationName}
   </React.Fragment>
+)
+
+const AiemmanOsaamisenTodentanutOrganisaatio = ({
+  isAiempiOsaaminen,
+  koulutuksenJarjestaja
+}: {
+  isAiempiOsaaminen: boolean
+  koulutuksenJarjestaja?: IOrganisaatio
+}) => (
+  <>
+    {isAiempiOsaaminen && (
+      <TodentamisenProsessiTitleExpanded data-testid="StudyInfo.AssessmentVerificationOrganisation">
+        <PreviouslyConfirmedOrganization
+          organizationName={koulutuksenJarjestaja?.organizationName}
+        />
+      </TodentamisenProsessiTitleExpanded>
+    )}
+  </>
 )
 
 const TodentamisenProsessiCollapsed = ({
@@ -453,13 +470,10 @@ export class Details extends React.Component<DetailsProps> {
 
           {olennainenSeikka}
 
-          {isAiempiOsaaminen && (
-            <TodentamisenProsessiTitleExpanded data-testid="StudyInfo.AssessmentVerificationOrganisation">
-              <PreviouslyConfirmedOrganization
-                organizationName={koulutuksenJarjestaja?.organizationName}
-              />
-            </TodentamisenProsessiTitleExpanded>
-          )}
+          <AiemmanOsaamisenTodentanutOrganisaatio
+            isAiempiOsaaminen={isAiempiOsaaminen}
+            koulutuksenJarjestaja={koulutuksenJarjestaja}
+          />
         </DetailsContent>
       </DetailsExpanded>
     ) : (
@@ -483,13 +497,10 @@ export class Details extends React.Component<DetailsProps> {
               todentamisenProsessiKoodi={todentamisenProsessiKoodi}
             />
 
-            {isAiempiOsaaminen && (
-              <TodentamisenProsessiTitleExpanded data-testid="StudyInfo.AssessmentVerificationOrganisation">
-                <PreviouslyConfirmedOrganization
-                  organizationName={koulutuksenJarjestaja?.organizationName}
-                />
-              </TodentamisenProsessiTitleExpanded>
-            )}
+            <AiemmanOsaamisenTodentanutOrganisaatio
+              isAiempiOsaaminen={isAiempiOsaaminen}
+              koulutuksenJarjestaja={koulutuksenJarjestaja}
+            />
           </DetailsContent>
 
           <ExpandIcon showExpand={showExpand} toggle={toggle} intl={intl} />
