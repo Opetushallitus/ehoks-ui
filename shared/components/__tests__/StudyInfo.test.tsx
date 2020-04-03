@@ -245,7 +245,12 @@ describe("StudyInfo", () => {
   })
 
   test("render verification processes", () => {
-    const { queryByTestId, queryAllByTestId, rerender } = renderWithContext(
+    const {
+      queryByTestId,
+      queryAllByTestId,
+      rerender,
+      getByText
+    } = renderWithContext(
       <StudyInfo
         title="Title"
         todentamisenProsessi={{
@@ -255,7 +260,10 @@ describe("StudyInfo", () => {
     )
 
     expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
-    expect(queryByTestId("StudyInfo.DirectVerification")).toBeInTheDocument()
+    expect(
+      queryByTestId("StudyInfo.TodentamisenProsessiSuoraan")
+    ).toBeInTheDocument()
+    expect(getByText("Aiemman osaamisen todentanut")).toBeInTheDocument()
 
     rerender(
       <StudyInfo
@@ -274,11 +282,9 @@ describe("StudyInfo", () => {
 
     expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
     expect(
-      queryByTestId("StudyInfo.AssessmentVerification")
+      queryByTestId("StudyInfo.TodentamisenProsessiArvioijienKautta")
     ).toBeInTheDocument()
-    expect(
-      queryByTestId("StudyInfo.AssessmentVerificationOrganisation")
-    ).toBeInTheDocument()
+    expect(getByText("Aiemman osaamisen todentanut")).toBeInTheDocument()
 
     rerender(
       <StudyInfo
@@ -292,7 +298,8 @@ describe("StudyInfo", () => {
 
     expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
     expect(
-      queryByTestId("StudyInfo.DemonstrationVerification")
+      queryByTestId("StudyInfo.TodentamisenProsessiOhjausNayttoon")
     ).toBeInTheDocument()
+    expect(getByText("Aiemman osaamisen todentanut")).toBeInTheDocument()
   })
 })

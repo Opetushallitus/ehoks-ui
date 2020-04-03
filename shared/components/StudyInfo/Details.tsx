@@ -245,7 +245,7 @@ const OsaamisenOsoittamisetCollapsed = ({
             defaultMessage="Osaaminen osoitetaan näytössä"
           >
             {msg => (
-              <span data-testid="StudyInfo.DemonstrationVerification">
+              <span data-testid="StudyInfo.TodentamisenProsessiOhjausNayttoon">
                 {msg}
               </span>
             )}
@@ -292,7 +292,7 @@ const AiemmanOsaamisenTodentanutOrganisaatioExpanded = ({
   isAiempiOsaaminen: boolean
   koulutuksenJarjestaja?: IOrganisaatio
 }) => (
-  <AiemmanOsaamisenTitleExpanded data-testid="StudyInfo.AssessmentVerificationOrganisation">
+  <AiemmanOsaamisenTitleExpanded>
     <AiemmanOsaamisenTodentanutOrganisaatio
       isAiempiOsaaminen={isAiempiOsaaminen}
       koulutuksenJarjestaja={koulutuksenJarjestaja}
@@ -347,7 +347,7 @@ const TodentamisenProsessiSuoraan = ({
   <>
     {todentamisenProsessiKoodi === TodentamisenProsessiKoodi.SUORAAN && (
       <React.Fragment>
-        <CollapsedDetailsTitle>
+        <CollapsedDetailsTitle data-testid="StudyInfo.TodentamisenProsessiSuoraan">
           <FormattedMessage
             id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
             defaultMessage="Osaaminen tunnistettu suoraan"
@@ -368,7 +368,7 @@ const TodentamisenProsessiArvioijienKautta = ({
   <>
     {todentamisenProsessiKoodi ===
       TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA && (
-      <CollapsedDetailsTitle data-testid="StudyInfo.AssessmentVerification">
+      <CollapsedDetailsTitle data-testid="StudyInfo.TodentamisenProsessiArvioijienKautta">
         <FormattedMessage
           id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
           defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
