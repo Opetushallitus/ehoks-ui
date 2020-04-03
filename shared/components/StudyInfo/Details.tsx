@@ -9,7 +9,8 @@ import {
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
   TodentamisenProsessi,
-  IOrganisaatio
+  IOrganisaatio,
+  ITarkentavatTiedotOsaamisenArvioija
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "./LearningEvent"
 import { VerificationProcess } from "types/VerificationProcess"
@@ -355,6 +356,7 @@ interface DetailsProps {
   toggle: (name: ToggleableItems) => () => void
   verificationProcess?: TodentamisenProsessi
   koulutuksenJarjestaja?: IOrganisaatio
+  tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
 }
 
 export class Details extends React.Component<DetailsProps> {

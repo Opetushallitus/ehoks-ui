@@ -253,7 +253,8 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       verificationProcess,
       width = "25%",
       objectives,
-      koulutuksenJarjestaja
+      koulutuksenJarjestaja,
+      tarkentavatTiedotOsaamisenArvioija
     } = this.props
     const { featureFlags } = this.context
     const { expandedCompetences, expanded } = this.state
@@ -321,6 +322,9 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
               share={share}
               toggle={this.toggle}
               koulutuksenJarjestaja={koulutuksenJarjestaja}
+              tarkentavatTiedotOsaamisenArvioija={
+                tarkentavatTiedotOsaamisenArvioija
+              }
             />
           )}
           <Competences
