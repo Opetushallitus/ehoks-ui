@@ -298,7 +298,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
               <OneRowTable
                 th={
                   <FormattedMessage
-                    id="tutkinnonOsa.toteuttaKoulutuksenJarjetajaTitle"
+                    id="tutkinnonOsa.toteuttavaKoulutuksenJarjestajaTitle"
                     defaultMessage="Toteuttava koulutuksenjärjestäjä"
                   />
                 }
