@@ -270,20 +270,6 @@ const OsaamisenOsoittamisetCollapsed = ({
   </>
 )
 
-const PreviouslyConfirmedOrganization = ({
-  organizationName
-}: {
-  organizationName?: string
-}) => (
-  <React.Fragment>
-    <FormattedMessage
-      id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
-      defaultMessage="Aiemman osaamisen todentanut"
-    />{" "}
-    {organizationName}
-  </React.Fragment>
-)
-
 const AiemmanOsaamisenTodentanutOrganisaatio = ({
   isAiempiOsaaminen,
   koulutuksenJarjestaja
@@ -294,9 +280,11 @@ const AiemmanOsaamisenTodentanutOrganisaatio = ({
   <>
     {isAiempiOsaaminen && (
       <TodentamisenProsessiTitleExpanded data-testid="StudyInfo.AssessmentVerificationOrganisation">
-        <PreviouslyConfirmedOrganization
-          organizationName={koulutuksenJarjestaja?.organizationName}
-        />
+        <FormattedMessage
+          id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
+          defaultMessage="Aiemman osaamisen todentanut"
+        />{" "}
+        {koulutuksenJarjestaja?.organizationName}
       </TodentamisenProsessiTitleExpanded>
     )}
   </>
