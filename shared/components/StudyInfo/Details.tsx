@@ -102,6 +102,30 @@ const CollapseIcon = ({
   </>
 )
 
+const ExpandIcon = ({
+  showExpand,
+  toggle,
+  intl
+}: {
+  showExpand: boolean
+  toggle: (name: ToggleableItems) => () => void
+  intl: InjectedIntl
+}) => (
+  <>
+    {showExpand && (
+      <IconContainer
+        onClick={toggle("details")}
+        aria-label={intl.formatMessage({
+          id: "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel"
+        })}
+        data-testid="StudyInfo.ExpandDetails"
+      >
+        <Expand size={40} />
+      </IconContainer>
+    )}
+  </>
+)
+
 const OsaamisenHankkimistavatExpanded = ({
   hasActiveShare,
   shareType,
@@ -138,6 +162,122 @@ const OsaamisenHankkimistavatExpanded = ({
   </ShareDialog>
 )
 
+const OsaamisenHankkimistavatCollapsed = ({
+  osaamisenHankkimistavat
+}: {
+  osaamisenHankkimistavat: Array<IOsaamisenHankkimistapa>
+}) => (
+  <>
+    {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => {
+      return (
+        <LearningEvent
+          key={i}
+          title={
+            <CompetenceAquirementTitle
+              hankkimistapaType={osaamisenHankkimistapa.tyyppi}
+            />
+          }
+          description={osaamisenHankkimistapa.selite}
+          startDate={osaamisenHankkimistapa.alku}
+          endDate={osaamisenHankkimistapa.loppu}
+        />
+      )
+    })}
+  </>
+)
+
+const OsaamisenOsoittamisetExpanded = ({
+  osaamisenOsoittamiset,
+  hasActiveShare,
+  shareType,
+  fadedColor,
+  koodiUri,
+  verificationProcess
+}: {
+  osaamisenOsoittamiset: Array<IOsaamisenOsoittaminen>
+  hasActiveShare: boolean
+  shareType?: ShareType | ""
+  fadedColor: string
+  koodiUri?: string
+  verificationProcess?: TodentamisenProsessi
+}) => (
+  <>
+    {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => {
+      return (
+        <ShareDialog
+          active={hasActiveShare && shareType === "naytto"}
+          background={fadedColor}
+          koodiUri={koodiUri || ""}
+          type="naytto"
+          defaultPeriod={{
+            start: osaamisenOsoittaminen.alku,
+            end: osaamisenOsoittaminen.loppu
+          }}
+          key={i}
+        >
+          <OsaamisenOsoittaminen
+            osaamisenOsoittaminen={osaamisenOsoittaminen}
+            verificationProcess={verificationProcess}
+            koodiUri={koodiUri}
+            hasActiveShare={hasActiveShare && shareType === "naytto"}
+          />
+        </ShareDialog>
+      )
+    })}
+  </>
+)
+
+const OsaamisenOsoittamisetCollapsed = ({
+  osaamisenOsoittamiset,
+  verification,
+  koulutuksenJarjestaja
+}: {
+  osaamisenOsoittamiset: Array<IOsaamisenOsoittaminen>
+  verification?: string
+  koulutuksenJarjestaja?: IOrganisaatio
+}) => (
+  <>
+    {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => {
+      const title =
+        verification === VerificationProcess.OHJAUS_NAYTTOON ? (
+          <FormattedMessage
+            id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
+            defaultMessage="Osaaminen osoitetaan näytössä"
+          >
+            {msg => (
+              <span data-testid="StudyInfo.DemonstrationVerification">
+                {msg}
+              </span>
+            )}
+          </FormattedMessage>
+        ) : (
+          <FormattedMessage
+            id="opiskelusuunnitelma.nayttoTitle"
+            defaultMessage="Näyttö"
+          />
+        )
+      return (
+        <React.Fragment key={i}>
+          <LearningEvent
+            title={title}
+            description={osaamisenOsoittaminen?.nayttoymparisto?.nimi}
+            startDate={osaamisenOsoittaminen.alku}
+            endDate={osaamisenOsoittaminen.loppu}
+          />
+          {verification === VerificationProcess.OHJAUS_NAYTTOON &&
+            !!koulutuksenJarjestaja?.organizationName && (
+              <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
+                <PreviouslyConfirmedOrganization
+                  organizationName={koulutuksenJarjestaja?.organizationName}
+                />
+              </VerificationTitle>
+            )}
+        </React.Fragment>
+      )
+    })}
+  </>
+)
+
 const PreviouslyConfirmedOrganization = ({
   organizationName
 }: {
@@ -150,6 +290,58 @@ const PreviouslyConfirmedOrganization = ({
     />{" "}
     {organizationName}
   </React.Fragment>
+)
+
+const VerificationCollapsed = ({
+  verification,
+  koulutuksenJarjestaja,
+  verificationProcess
+}: {
+  verification?: string
+  koulutuksenJarjestaja?: IOrganisaatio
+  verificationProcess?: TodentamisenProsessi
+}) => (
+  <>
+    {verification === VerificationProcess.SUORAAN && (
+      <React.Fragment>
+        <VerificationTitle>
+          <FormattedMessage
+            id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
+            defaultMessage="Osaaminen tunnistettu suoraan"
+          />
+        </VerificationTitle>
+        <VerificationTitle data-testid="StudyInfo.DirectVerification">
+          <PreviouslyConfirmedOrganization
+            organizationName={koulutuksenJarjestaja?.organizationName}
+          />
+        </VerificationTitle>
+      </React.Fragment>
+    )}
+    {verification === VerificationProcess.ARVIOIJIEN_KAUTTA && (
+      <VerificationTitle data-testid="StudyInfo.AssessmentVerification">
+        <FormattedMessage
+          id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
+          defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
+          values={{
+            date:
+              verificationProcess && verificationProcess.lahetettyArvioitavaksi
+                ? format(
+                    parseISO(verificationProcess.lahetettyArvioitavaksi),
+                    "d.M.yyyy"
+                  )
+                : ""
+          }}
+        />
+        {!!koulutuksenJarjestaja?.organizationName && (
+          <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
+            <PreviouslyConfirmedOrganization
+              organizationName={koulutuksenJarjestaja?.organizationName}
+            />
+          </VerificationTitle>
+        )}
+      </VerificationTitle>
+    )}
+  </>
 )
 
 interface DetailsProps {
@@ -186,11 +378,10 @@ export class Details extends React.Component<DetailsProps> {
     const { intl } = this.context
 
     const verification = verificationProcess && verificationProcess.koodiUri
-    const { SUORAAN, ARVIOIJIEN_KAUTTA, OHJAUS_NAYTTOON } = VerificationProcess
     const showExpand =
-      osaamisenOsoittamiset.length ||
-      osaamisenHankkimistavat.length ||
-      verification === OHJAUS_NAYTTOON
+      !!osaamisenOsoittamiset.length ||
+      !!osaamisenHankkimistavat.length ||
+      verification === VerificationProcess.OHJAUS_NAYTTOON
     const isAiempiOsaaminen = !!verification
     const hasActiveShare =
       typeof share !== "undefined" && koodiUri === share.koodiUri
@@ -232,34 +423,22 @@ export class Details extends React.Component<DetailsProps> {
 
           <OsaamisenHankkimistavatExpanded
             hasActiveShare={hasActiveShare}
+            shareType={shareType}
             fadedColor={fadedColor}
+            koodiUri={koodiUri}
             instructor={instructor}
             defaultPeriod={defaultPeriod}
             osaamisenHankkimistavat={osaamisenHankkimistavat}
           />
 
-          {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => {
-            return (
-              <ShareDialog
-                active={hasActiveShare && shareType === "naytto"}
-                background={fadedColor}
-                koodiUri={koodiUri || ""}
-                type="naytto"
-                defaultPeriod={{
-                  start: osaamisenOsoittaminen.alku,
-                  end: osaamisenOsoittaminen.loppu
-                }}
-                key={i}
-              >
-                <OsaamisenOsoittaminen
-                  osaamisenOsoittaminen={osaamisenOsoittaminen}
-                  verificationProcess={verificationProcess}
-                  koodiUri={koodiUri}
-                  hasActiveShare={hasActiveShare && shareType === "naytto"}
-                />
-              </ShareDialog>
-            )
-          })}
+          <OsaamisenOsoittamisetExpanded
+            osaamisenOsoittamiset={osaamisenOsoittamiset}
+            hasActiveShare={hasActiveShare}
+            shareType={shareType}
+            fadedColor={fadedColor}
+            koodiUri={koodiUri}
+            verificationProcess={verificationProcess}
+          />
 
           {olennainenSeikka}
 
@@ -279,113 +458,23 @@ export class Details extends React.Component<DetailsProps> {
       >
         <LocationsContainer>
           <DetailsContent>
-            {verification === SUORAAN && (
-              <React.Fragment>
-                <VerificationTitle>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
-                    defaultMessage="Osaaminen tunnistettu suoraan"
-                  />
-                </VerificationTitle>
-                <VerificationTitle data-testid="StudyInfo.DirectVerification">
-                  <PreviouslyConfirmedOrganization
-                    organizationName={koulutuksenJarjestaja?.organizationName}
-                  />
-                </VerificationTitle>
-              </React.Fragment>
-            )}
-            {verification === ARVIOIJIEN_KAUTTA && (
-              <VerificationTitle data-testid="StudyInfo.AssessmentVerification">
-                <FormattedMessage
-                  id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
-                  defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
-                  values={{
-                    date:
-                      verificationProcess &&
-                      verificationProcess.lahetettyArvioitavaksi
-                        ? format(
-                            parseISO(
-                              verificationProcess.lahetettyArvioitavaksi
-                            ),
-                            "d.M.yyyy"
-                          )
-                        : ""
-                  }}
-                />
-                {!!koulutuksenJarjestaja?.organizationName && (
-                  <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
-                    <PreviouslyConfirmedOrganization
-                      organizationName={koulutuksenJarjestaja?.organizationName}
-                    />
-                  </VerificationTitle>
-                )}
-              </VerificationTitle>
-            )}
-            {osaamisenHankkimistavat.map((lp, i) => {
-              return (
-                <LearningEvent
-                  key={i}
-                  title={
-                    <CompetenceAquirementTitle hankkimistapaType={lp.tyyppi} />
-                  }
-                  description={lp.selite}
-                  startDate={lp.alku}
-                  endDate={lp.loppu}
-                />
-              )
-            })}
-            {osaamisenOsoittamiset.map((d, i) => {
-              const title =
-                verification === OHJAUS_NAYTTOON ? (
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
-                    defaultMessage="Osaaminen osoitetaan näytössä"
-                  >
-                    {msg => (
-                      <span data-testid="StudyInfo.DemonstrationVerification">
-                        {msg}
-                      </span>
-                    )}
-                  </FormattedMessage>
-                ) : (
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.nayttoTitle"
-                    defaultMessage="Näyttö"
-                  />
-                )
-              return (
-                <React.Fragment key={i}>
-                  <LearningEvent
-                    title={title}
-                    description={d?.nayttoymparisto?.nimi}
-                    startDate={d.alku}
-                    endDate={d.loppu}
-                  />
-                  {verification === OHJAUS_NAYTTOON &&
-                    !!koulutuksenJarjestaja?.organizationName && (
-                      <VerificationTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
-                        <PreviouslyConfirmedOrganization
-                          organizationName={
-                            koulutuksenJarjestaja?.organizationName
-                          }
-                        />
-                      </VerificationTitle>
-                    )}
-                </React.Fragment>
-              )
-            })}
+            <VerificationCollapsed
+              koulutuksenJarjestaja={koulutuksenJarjestaja}
+              verification={verification}
+              verificationProcess={verificationProcess}
+            />
+
+            <OsaamisenHankkimistavatCollapsed
+              osaamisenHankkimistavat={osaamisenHankkimistavat}
+            />
+
+            <OsaamisenOsoittamisetCollapsed
+              osaamisenOsoittamiset={osaamisenOsoittamiset}
+              verification={verification}
+              koulutuksenJarjestaja={koulutuksenJarjestaja}
+            />
           </DetailsContent>
-          {showExpand && (
-            <IconContainer
-              onClick={toggle("details")}
-              aria-label={intl.formatMessage({
-                id: "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel"
-              })}
-              data-testid="StudyInfo.ExpandDetails"
-            >
-              <Expand size={40} />
-            </IconContainer>
-          )}
+          <ExpandIcon showExpand={showExpand} toggle={toggle} intl={intl} />
         </LocationsContainer>
       </DetailsCollapsed>
     )
