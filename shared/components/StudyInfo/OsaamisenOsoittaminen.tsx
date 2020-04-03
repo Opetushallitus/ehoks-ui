@@ -152,7 +152,7 @@ export class OsaamisenOsoittaminen extends React.Component<
             startDate={osaamisenOsoittaminen.alku}
             endDate={osaamisenOsoittaminen.loppu}
             size="large"
-            nayttoYmparistoDescription={nayttoymparisto.kuvaus}
+            description={nayttoymparisto.kuvaus}
           />
           {showShareButton && (
             <ButtonContainer>

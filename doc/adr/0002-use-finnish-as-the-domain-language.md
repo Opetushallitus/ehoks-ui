@@ -52,7 +52,7 @@ interface LearningEventProps {
   startDate?: string
   endDate?: string
   ajanjaksonTarkenne?: string
-  nayttoYmparistoDescription?: string
+  nayttoymparistoDescription?: string
 }
 ```
 
