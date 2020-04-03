@@ -279,13 +279,13 @@ const AiemmanOsaamisenTodentanutOrganisaatio = ({
 }) => (
   <>
     {isAiempiOsaaminen && (
-      <TodentamisenProsessiTitleExpanded data-testid="StudyInfo.AssessmentVerificationOrganisation">
+      <>
         <FormattedMessage
           id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
           defaultMessage="Aiemman osaamisen todentanut"
         />{" "}
         {koulutuksenJarjestaja?.organizationName}
-      </TodentamisenProsessiTitleExpanded>
+      </>
     )}
   </>
 )
