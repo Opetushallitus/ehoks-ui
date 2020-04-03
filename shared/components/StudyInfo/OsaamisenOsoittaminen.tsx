@@ -146,11 +146,13 @@ export class OsaamisenOsoittaminen extends React.Component<
           <FlexLearningEvent
             title={title}
             isOsaamisenOsoittaminen={true}
-            description={nayttoymparisto.nimi}
+            nayttoymparistoDetails={
+              osaamisenOsoittaminen.nayttoymparistoDetails
+            }
             startDate={osaamisenOsoittaminen.alku}
             endDate={osaamisenOsoittaminen.loppu}
             size="large"
-            nayttoYmparistoDescription={nayttoymparisto.kuvaus}
+            description={nayttoymparisto.kuvaus}
           />
           {showShareButton && (
             <ButtonContainer>
