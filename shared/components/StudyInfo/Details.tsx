@@ -230,8 +230,7 @@ const OsaamisenOsoittamisetExpanded = ({
 
 const OsaamisenOsoittamisetCollapsed = ({
   osaamisenOsoittamiset,
-  todentamisenProsessiKoodi,
-  koulutuksenJarjestaja
+  todentamisenProsessiKoodi
 }: {
   osaamisenOsoittamiset: Array<IOsaamisenOsoittaminen>
   todentamisenProsessiKoodi?: string
@@ -266,15 +265,6 @@ const OsaamisenOsoittamisetCollapsed = ({
             startDate={osaamisenOsoittaminen.alku}
             endDate={osaamisenOsoittaminen.loppu}
           />
-          {todentamisenProsessiKoodi ===
-            TodentamisenProsessiKoodi.OHJAUS_NAYTTOON &&
-            !!koulutuksenJarjestaja?.organizationName && (
-              <TodentamisenProsessiTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
-                <PreviouslyConfirmedOrganization
-                  organizationName={koulutuksenJarjestaja?.organizationName}
-                />
-              </TodentamisenProsessiTitle>
-            )}
         </React.Fragment>
       )
     })}
@@ -297,42 +287,27 @@ const PreviouslyConfirmedOrganization = ({
 
 const TodentamisenProsessiCollapsed = ({
   todentamisenProsessiKoodi,
-  koulutuksenJarjestaja,
   todentamisenProsessi
 }: {
   todentamisenProsessiKoodi?: string
-  koulutuksenJarjestaja?: IOrganisaatio
   todentamisenProsessi?: TodentamisenProsessi
 }) => (
   <>
     <TodentamisenProsessiSuoraan
       todentamisenProsessiKoodi={todentamisenProsessiKoodi}
-      koulutuksenJarjestaja={koulutuksenJarjestaja}
     />
 
     <TodentamisenProsessiArvioijienKautta
       todentamisenProsessiKoodi={todentamisenProsessiKoodi}
       todentamisenProsessi={todentamisenProsessi}
     />
-
-    {todentamisenProsessiKoodi ===
-      TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA &&
-      !!koulutuksenJarjestaja?.organizationName && (
-        <TodentamisenProsessiTitle data-testid="StudyInfo.AssessmentVerificationOrganisation">
-          <PreviouslyConfirmedOrganization
-            organizationName={koulutuksenJarjestaja?.organizationName}
-          />
-        </TodentamisenProsessiTitle>
-      )}
   </>
 )
 
 const TodentamisenProsessiSuoraan = ({
-  todentamisenProsessiKoodi,
-  koulutuksenJarjestaja
+  todentamisenProsessiKoodi
 }: {
   todentamisenProsessiKoodi?: string
-  koulutuksenJarjestaja?: IOrganisaatio
 }) => (
   <>
     {todentamisenProsessiKoodi === TodentamisenProsessiKoodi.SUORAAN && (
@@ -341,11 +316,6 @@ const TodentamisenProsessiSuoraan = ({
           <FormattedMessage
             id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
             defaultMessage="Osaaminen tunnistettu suoraan"
-          />
-        </TodentamisenProsessiTitle>
-        <TodentamisenProsessiTitle data-testid="StudyInfo.DirectVerification">
-          <PreviouslyConfirmedOrganization
-            organizationName={koulutuksenJarjestaja?.organizationName}
           />
         </TodentamisenProsessiTitle>
       </React.Fragment>
@@ -500,7 +470,6 @@ export class Details extends React.Component<DetailsProps> {
         <LocationsContainer>
           <DetailsContent>
             <TodentamisenProsessiCollapsed
-              koulutuksenJarjestaja={koulutuksenJarjestaja}
               todentamisenProsessiKoodi={todentamisenProsessiKoodi}
               todentamisenProsessi={todentamisenProsessi}
             />
@@ -512,9 +481,17 @@ export class Details extends React.Component<DetailsProps> {
             <OsaamisenOsoittamisetCollapsed
               osaamisenOsoittamiset={osaamisenOsoittamiset}
               todentamisenProsessiKoodi={todentamisenProsessiKoodi}
-              koulutuksenJarjestaja={koulutuksenJarjestaja}
             />
+
+            {isAiempiOsaaminen && (
+              <TodentamisenProsessiTitleExpanded data-testid="StudyInfo.AssessmentVerificationOrganisation">
+                <PreviouslyConfirmedOrganization
+                  organizationName={koulutuksenJarjestaja?.organizationName}
+                />
+              </TodentamisenProsessiTitleExpanded>
+            )}
           </DetailsContent>
+
           <ExpandIcon showExpand={showExpand} toggle={toggle} intl={intl} />
         </LocationsContainer>
       </DetailsCollapsed>
