@@ -305,21 +305,11 @@ const TodentamisenProsessiCollapsed = ({
   todentamisenProsessi?: TodentamisenProsessi
 }) => (
   <>
-    {todentamisenProsessiKoodi === TodentamisenProsessiKoodi.SUORAAN && (
-      <React.Fragment>
-        <TodentamisenProsessiTitle>
-          <FormattedMessage
-            id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
-            defaultMessage="Osaaminen tunnistettu suoraan"
-          />
-        </TodentamisenProsessiTitle>
-        <TodentamisenProsessiTitle data-testid="StudyInfo.DirectVerification">
-          <PreviouslyConfirmedOrganization
-            organizationName={koulutuksenJarjestaja?.organizationName}
-          />
-        </TodentamisenProsessiTitle>
-      </React.Fragment>
-    )}
+    <TodentamisenProsessiSuoraan
+      todentamisenProsessiKoodi={todentamisenProsessiKoodi}
+      koulutuksenJarjestaja={koulutuksenJarjestaja}
+    />
+
     {todentamisenProsessiKoodi ===
       TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA && (
       <TodentamisenProsessiTitle data-testid="StudyInfo.AssessmentVerification">
@@ -345,6 +335,32 @@ const TodentamisenProsessiCollapsed = ({
           </TodentamisenProsessiTitle>
         )}
       </TodentamisenProsessiTitle>
+    )}
+  </>
+)
+
+const TodentamisenProsessiSuoraan = ({
+  todentamisenProsessiKoodi,
+  koulutuksenJarjestaja
+}: {
+  todentamisenProsessiKoodi?: string
+  koulutuksenJarjestaja?: IOrganisaatio
+}) => (
+  <>
+    {todentamisenProsessiKoodi === TodentamisenProsessiKoodi.SUORAAN && (
+      <React.Fragment>
+        <TodentamisenProsessiTitle>
+          <FormattedMessage
+            id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
+            defaultMessage="Osaaminen tunnistettu suoraan"
+          />
+        </TodentamisenProsessiTitle>
+        <TodentamisenProsessiTitle data-testid="StudyInfo.DirectVerification">
+          <PreviouslyConfirmedOrganization
+            organizationName={koulutuksenJarjestaja?.organizationName}
+          />
+        </TodentamisenProsessiTitle>
+      </React.Fragment>
     )}
   </>
 )
