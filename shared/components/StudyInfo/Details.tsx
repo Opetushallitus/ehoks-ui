@@ -310,25 +310,10 @@ const TodentamisenProsessiCollapsed = ({
       koulutuksenJarjestaja={koulutuksenJarjestaja}
     />
 
-    {todentamisenProsessiKoodi ===
-      TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA && (
-      <TodentamisenProsessiTitle data-testid="StudyInfo.AssessmentVerification">
-        <FormattedMessage
-          id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
-          defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
-          values={{
-            date:
-              todentamisenProsessi &&
-              todentamisenProsessi.lahetettyArvioitavaksi
-                ? format(
-                    parseISO(todentamisenProsessi.lahetettyArvioitavaksi),
-                    "d.M.yyyy"
-                  )
-                : ""
-          }}
-        />
-      </TodentamisenProsessiTitle>
-    )}
+    <TodentamisenProsessiArvioijienKautta
+      todentamisenProsessiKoodi={todentamisenProsessiKoodi}
+      todentamisenProsessi={todentamisenProsessi}
+    />
 
     {todentamisenProsessiKoodi ===
       TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA &&
@@ -364,6 +349,36 @@ const TodentamisenProsessiSuoraan = ({
           />
         </TodentamisenProsessiTitle>
       </React.Fragment>
+    )}
+  </>
+)
+
+const TodentamisenProsessiArvioijienKautta = ({
+  todentamisenProsessiKoodi,
+  todentamisenProsessi
+}: {
+  todentamisenProsessiKoodi?: string
+  todentamisenProsessi?: TodentamisenProsessi
+}) => (
+  <>
+    {todentamisenProsessiKoodi ===
+      TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA && (
+      <TodentamisenProsessiTitle data-testid="StudyInfo.AssessmentVerification">
+        <FormattedMessage
+          id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
+          defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
+          values={{
+            date:
+              todentamisenProsessi &&
+              todentamisenProsessi.lahetettyArvioitavaksi
+                ? format(
+                    parseISO(todentamisenProsessi.lahetettyArvioitavaksi),
+                    "d.M.yyyy"
+                  )
+                : ""
+          }}
+        />
+      </TodentamisenProsessiTitle>
     )}
   </>
 )
