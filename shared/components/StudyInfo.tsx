@@ -6,7 +6,8 @@ import {
   TodentamisenProsessi,
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
-  IOrganisaatio
+  IOrganisaatio,
+  ITarkentavatTiedotOsaamisenArvioija
 } from "models/helpers/TutkinnonOsa"
 import { ShareType } from "stores/NotificationStore"
 import { MdShare } from "react-icons/md"
@@ -131,6 +132,7 @@ export interface StudyInfoProps {
   width?: string
   objectives?: string
   koulutuksenJarjestaja?: IOrganisaatio
+  tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
 }
 
 export interface StudyInfoState {
