@@ -270,6 +270,36 @@ const OsaamisenOsoittamisetCollapsed = ({
   </>
 )
 
+const AiemmanOsaamisenTodentanutOrganisaatioCollapsed = ({
+  isAiempiOsaaminen,
+  koulutuksenJarjestaja
+}: {
+  isAiempiOsaaminen: boolean
+  koulutuksenJarjestaja?: IOrganisaatio
+}) => (
+  <CollapsedDetailsTitle>
+    <AiemmanOsaamisenTodentanutOrganisaatio
+      isAiempiOsaaminen={isAiempiOsaaminen}
+      koulutuksenJarjestaja={koulutuksenJarjestaja}
+    />
+  </CollapsedDetailsTitle>
+)
+
+const AiemmanOsaamisenTodentanutOrganisaatioExpanded = ({
+  isAiempiOsaaminen,
+  koulutuksenJarjestaja
+}: {
+  isAiempiOsaaminen: boolean
+  koulutuksenJarjestaja?: IOrganisaatio
+}) => (
+  <AiemmanOsaamisenTitleExpanded data-testid="StudyInfo.AssessmentVerificationOrganisation">
+    <AiemmanOsaamisenTodentanutOrganisaatio
+      isAiempiOsaaminen={isAiempiOsaaminen}
+      koulutuksenJarjestaja={koulutuksenJarjestaja}
+    />
+  </AiemmanOsaamisenTitleExpanded>
+)
+
 const AiemmanOsaamisenTodentanutOrganisaatio = ({
   isAiempiOsaaminen,
   koulutuksenJarjestaja
@@ -458,7 +488,7 @@ export class Details extends React.Component<DetailsProps> {
 
           {olennainenSeikka}
 
-          <AiemmanOsaamisenTodentanutOrganisaatio
+          <AiemmanOsaamisenTodentanutOrganisaatioExpanded
             isAiempiOsaaminen={isAiempiOsaaminen}
             koulutuksenJarjestaja={koulutuksenJarjestaja}
           />
@@ -485,7 +515,7 @@ export class Details extends React.Component<DetailsProps> {
               todentamisenProsessiKoodi={todentamisenProsessiKoodi}
             />
 
-            <AiemmanOsaamisenTodentanutOrganisaatio
+            <AiemmanOsaamisenTodentanutOrganisaatioCollapsed
               isAiempiOsaaminen={isAiempiOsaaminen}
               koulutuksenJarjestaja={koulutuksenJarjestaja}
             />
