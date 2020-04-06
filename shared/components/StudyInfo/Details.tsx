@@ -356,14 +356,14 @@ const TodentamisenProsessiExpanded = ({
 }) => (
   <>
     {todentamisenProsessiKoodi === TodentamisenProsessiKoodi.SUORAAN && (
-      <AiemmanOsaamisenTitleExpanded data-testid="StudyInfo.TodentamisenProsessiSuoraan">
+      <AiemmanOsaamisenTitleExpanded>
         <TodentamisenProsessiSuoraan />
       </AiemmanOsaamisenTitleExpanded>
     )}
 
     {todentamisenProsessiKoodi ===
       TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA && (
-      <AiemmanOsaamisenTitleExpanded data-testid="StudyInfo.TodentamisenProsessiArvioijienKautta">
+      <AiemmanOsaamisenTitleExpanded>
         <TodentamisenProsessiArvioijienKautta
           todentamisenProsessi={todentamisenProsessi}
         />
