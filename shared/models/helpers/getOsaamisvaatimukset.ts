@@ -1,6 +1,29 @@
-import flattenDeep from "lodash.flattendeep"
 import { Locale } from "../../stores/TranslationStore"
 
+function groupOsaamistasot(
+  osaamistasonKriteerit: {
+    osaamistaso: string
+    kriteerit: {
+      fi: string
+      sv: string
+    }[]
+  }[],
+  activeLocale: Locale.FI | Locale.SV
+) {
+  const records = osaamistasonKriteerit.reduce((acc, tasoKriteeri) => {
+    const { osaamistaso } = tasoKriteeri
+    acc[osaamistaso] = (acc[osaamistaso] || []).concat(
+      tasoKriteeri.kriteerit.map(kriteeri => kriteeri[activeLocale])
+    )
+    return acc
+  }, {} as Record<string, string[]>)
+  return (
+    Object.entries(records).map(([key, value]) => ({
+      osaamistaso: key,
+      kriteerit: value
+    })) || []
+  )
+}
 export function getOsaamisvaatimukset(
   arviointi: {
     arvioinninKohdealueet: Array<{
@@ -28,14 +51,11 @@ export function getOsaamisvaatimukset(
           kuvaus: arvioinninKohde.otsikko
             ? arvioinninKohde.otsikko[activeLocale]
             : "",
-          kriteerit: flattenDeep<string>(
-            arvioinninKohde.osaamistasonKriteerit.map(tasoKriteeri => {
-              return tasoKriteeri.kriteerit.map(
-                kriteeri =>
-                  `${tasoKriteeri.osaamistaso}: ${kriteeri[activeLocale]}`
-              )
-            })
-          ).sort()
+          osaamistasonKriteerit: groupOsaamistasot(
+            arvioinninKohde.osaamistasonKriteerit,
+            activeLocale
+          ),
+          arviointiAsteikko: arvioinninKohde.arviointiAsteikko
         }
       })
     }

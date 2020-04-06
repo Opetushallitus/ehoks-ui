@@ -98,20 +98,31 @@ export class CompetenceRequirement extends React.Component<
         </TitleRow>
         {expanded ? (
           <Assessment data-testid="Assessment">
-            {kriteerit.map(arviointikriteeri => {
-              return (
-                <AssessmentItem key={arviointikriteeri.kuvaus}>
-                  <AssessmentHeader>
-                    {arviointikriteeri.kuvaus}
-                  </AssessmentHeader>
-                  {(arviointikriteeri.kriteerit || []).map((kriteeri, i) => {
-                    return (
-                      <AssessmentContent key={i}>{kriteeri}</AssessmentContent>
-                    )
-                  })}
-                </AssessmentItem>
-              )
-            })}
+            {kriteerit.map(arviointikriteeri => (
+              <AssessmentItem key={arviointikriteeri.kuvaus}>
+                <AssessmentHeader>{arviointikriteeri.kuvaus}</AssessmentHeader>
+                <AssessmentContent>
+                  <Assessment>
+                    {arviointikriteeri.osaamistasonKriteerit?.map(
+                      osaamistasonKriteeri => (
+                        <AssessmentItem key={osaamistasonKriteeri.osaamistaso}>
+                          <AssessmentHeader>
+                            {osaamistasonKriteeri.osaamistaso}
+                          </AssessmentHeader>
+                          <AssessmentContent>
+                            {osaamistasonKriteeri.kriteerit?.map(
+                              (kriteeri, i) => (
+                                <div key={i}>{kriteeri}</div>
+                              )
+                            )}
+                          </AssessmentContent>
+                        </AssessmentItem>
+                      )
+                    )}
+                  </Assessment>
+                </AssessmentContent>
+              </AssessmentItem>
+            ))}
           </Assessment>
         ) : null}
       </Container>
