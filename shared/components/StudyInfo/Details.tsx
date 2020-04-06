@@ -347,6 +347,31 @@ const TodentamisenProsessiCollapsed = ({
   </>
 )
 
+const TodentamisenProsessiExpanded = ({
+  todentamisenProsessiKoodi,
+  todentamisenProsessi
+}: {
+  todentamisenProsessiKoodi?: string
+  todentamisenProsessi?: TodentamisenProsessi
+}) => (
+  <>
+    {todentamisenProsessiKoodi === TodentamisenProsessiKoodi.SUORAAN && (
+      <AiemmanOsaamisenTitleExpanded data-testid="StudyInfo.TodentamisenProsessiSuoraan">
+        <TodentamisenProsessiSuoraan />
+      </AiemmanOsaamisenTitleExpanded>
+    )}
+
+    {todentamisenProsessiKoodi ===
+      TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA && (
+      <AiemmanOsaamisenTitleExpanded data-testid="StudyInfo.TodentamisenProsessiArvioijienKautta">
+        <TodentamisenProsessiArvioijienKautta
+          todentamisenProsessi={todentamisenProsessi}
+        />
+      </AiemmanOsaamisenTitleExpanded>
+    )}
+  </>
+)
+
 const TodentamisenProsessiSuoraan = () => (
   <FormattedMessage
     id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
@@ -404,7 +429,8 @@ export class Details extends React.Component<DetailsProps> {
       share,
       toggle,
       todentamisenProsessi,
-      koulutuksenJarjestaja
+      koulutuksenJarjestaja,
+      tarkentavatTiedotOsaamisenArvioija
     } = this.props
     const { intl } = this.context
 
@@ -413,7 +439,8 @@ export class Details extends React.Component<DetailsProps> {
     const showExpand =
       !!osaamisenOsoittamiset.length ||
       !!osaamisenHankkimistavat.length ||
-      todentamisenProsessiKoodi === TodentamisenProsessiKoodi.OHJAUS_NAYTTOON
+      todentamisenProsessiKoodi === TodentamisenProsessiKoodi.OHJAUS_NAYTTOON ||
+      !!tarkentavatTiedotOsaamisenArvioija
     const isAiempiOsaaminen = !!todentamisenProsessiKoodi
     const hasActiveShare =
       typeof share !== "undefined" && koodiUri === share.koodiUri
@@ -451,6 +478,11 @@ export class Details extends React.Component<DetailsProps> {
             hasActiveShare={hasActiveShare}
             toggle={toggle}
             intl={intl}
+          />
+
+          <TodentamisenProsessiExpanded
+            todentamisenProsessiKoodi={todentamisenProsessiKoodi}
+            todentamisenProsessi={todentamisenProsessi}
           />
 
           <OsaamisenHankkimistavatExpanded
