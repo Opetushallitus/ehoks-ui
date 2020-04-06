@@ -76,7 +76,8 @@ const CollapsedDetailsTitle = styled("strong")`
 
 const ExpandedDetailsTitle = styled("strong")`
   display: block;
-  margin: 10px 0 8px 20px;
+  margin: 10px 0 8px;
+  margin-left: ${props => props.theme.spacing.l};
 `
 
 const ArvioijatTable = styled(Table)`
