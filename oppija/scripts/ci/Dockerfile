@@ -5,7 +5,7 @@ ARG name
 RUN apk update \
         # install nginx
         && apk add nginx \
-        # make stdout and stderr point to nginx logs
+        # link stdout and stderr to http block level nginx logs
         && ln -sf /dev/stdout /var/log/nginx/access.log \
         && ln -sf /dev/stderr /var/log/nginx/error.log \
         # make directory for nginx pid file
@@ -31,6 +31,7 @@ RUN mkdir -p /opt/oph/scripts
 COPY run run.sh /usr/local/bin/
 
 RUN chown -R nginx:nginx /var/www/html/public
+RUN mkdir -p /home/oph/logs
 
 EXPOSE 8080
 
