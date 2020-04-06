@@ -330,64 +330,48 @@ const TodentamisenProsessiCollapsed = ({
   todentamisenProsessi?: TodentamisenProsessi
 }) => (
   <>
-    <TodentamisenProsessiSuoraan
-      todentamisenProsessiKoodi={todentamisenProsessiKoodi}
-    />
-
-    <TodentamisenProsessiArvioijienKautta
-      todentamisenProsessiKoodi={todentamisenProsessiKoodi}
-      todentamisenProsessi={todentamisenProsessi}
-    />
-  </>
-)
-
-const TodentamisenProsessiSuoraan = ({
-  todentamisenProsessiKoodi
-}: {
-  todentamisenProsessiKoodi?: string
-}) => (
-  <>
     {todentamisenProsessiKoodi === TodentamisenProsessiKoodi.SUORAAN && (
-      <React.Fragment>
-        <CollapsedDetailsTitle data-testid="StudyInfo.TodentamisenProsessiSuoraan">
-          <FormattedMessage
-            id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
-            defaultMessage="Osaaminen tunnistettu suoraan"
-          />
-        </CollapsedDetailsTitle>
-      </React.Fragment>
+      <CollapsedDetailsTitle data-testid="StudyInfo.TodentamisenProsessiSuoraan">
+        <TodentamisenProsessiSuoraan />
+      </CollapsedDetailsTitle>
     )}
-  </>
-)
 
-const TodentamisenProsessiArvioijienKautta = ({
-  todentamisenProsessiKoodi,
-  todentamisenProsessi
-}: {
-  todentamisenProsessiKoodi?: string
-  todentamisenProsessi?: TodentamisenProsessi
-}) => (
-  <>
     {todentamisenProsessiKoodi ===
       TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA && (
       <CollapsedDetailsTitle data-testid="StudyInfo.TodentamisenProsessiArvioijienKautta">
-        <FormattedMessage
-          id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
-          defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
-          values={{
-            date:
-              todentamisenProsessi &&
-              todentamisenProsessi.lahetettyArvioitavaksi
-                ? format(
-                    parseISO(todentamisenProsessi.lahetettyArvioitavaksi),
-                    "d.M.yyyy"
-                  )
-                : ""
-          }}
+        <TodentamisenProsessiArvioijienKautta
+          todentamisenProsessi={todentamisenProsessi}
         />
       </CollapsedDetailsTitle>
     )}
   </>
+)
+
+const TodentamisenProsessiSuoraan = () => (
+  <FormattedMessage
+    id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
+    defaultMessage="Osaaminen tunnistettu suoraan"
+  />
+)
+
+const TodentamisenProsessiArvioijienKautta = ({
+  todentamisenProsessi
+}: {
+  todentamisenProsessi?: TodentamisenProsessi
+}) => (
+  <FormattedMessage
+    id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
+    defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
+    values={{
+      date:
+        todentamisenProsessi && todentamisenProsessi.lahetettyArvioitavaksi
+          ? format(
+              parseISO(todentamisenProsessi.lahetettyArvioitavaksi),
+              "d.M.yyyy"
+            )
+          : ""
+    }}
+  />
 )
 
 interface DetailsProps {
