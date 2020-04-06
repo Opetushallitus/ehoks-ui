@@ -24,6 +24,7 @@ import ShareDialog, {
 import { ToggleableItems } from "./StudyInfoHelpers"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
+import { Table, TBody, TD, TH } from "./Shared"
 
 interface ColorProps {
   fadedColor: string
@@ -76,6 +77,10 @@ const CollapsedDetailsTitle = styled("strong")`
 const ExpandedDetailsTitle = styled("strong")`
   display: block;
   margin: 10px 0 8px 20px;
+`
+
+const ArvioijatTable = styled(Table)`
+  margin-left: ${props => props.theme.spacing.l};
 `
 
 const CollapseIcon = ({
@@ -349,10 +354,12 @@ const TodentamisenProsessiCollapsed = ({
 
 const TodentamisenProsessiExpanded = ({
   todentamisenProsessiKoodi,
-  todentamisenProsessi
+  todentamisenProsessi,
+  tarkentavatTiedotOsaamisenArvioija
 }: {
   todentamisenProsessiKoodi?: string
   todentamisenProsessi?: TodentamisenProsessi
+  tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
 }) => (
   <>
     {todentamisenProsessiKoodi === TodentamisenProsessiKoodi.SUORAAN && (
@@ -368,6 +375,26 @@ const TodentamisenProsessiExpanded = ({
           todentamisenProsessi={todentamisenProsessi}
         />
       </ExpandedDetailsTitle>
+    )}
+
+    {!!tarkentavatTiedotOsaamisenArvioija?.aiemminHankitunOsaamisenArvioijat
+      .length && (
+      <ArvioijatTable>
+        <TBody>
+          <tr>
+            <TH>Arvioijat</TH>
+            <TD>
+              {tarkentavatTiedotOsaamisenArvioija.aiemminHankitunOsaamisenArvioijat.map(
+                (arvioija, i) => (
+                  <span key={i}>
+                    {arvioija.koulutuksenJarjestajaArvioijaDescription} <br />
+                  </span>
+                )
+              )}
+            </TD>
+          </tr>
+        </TBody>
+      </ArvioijatTable>
     )}
   </>
 )
@@ -483,6 +510,9 @@ export class Details extends React.Component<DetailsProps> {
           <TodentamisenProsessiExpanded
             todentamisenProsessiKoodi={todentamisenProsessiKoodi}
             todentamisenProsessi={todentamisenProsessi}
+            tarkentavatTiedotOsaamisenArvioija={
+              tarkentavatTiedotOsaamisenArvioija
+            }
           />
 
           <OsaamisenHankkimistavatExpanded
