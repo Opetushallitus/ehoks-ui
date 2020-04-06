@@ -73,7 +73,7 @@ const CollapsedDetailsTitle = styled("strong")`
   margin: 10px 0 8px 0;
 `
 
-const AiemmanOsaamisenTitleExpanded = styled("strong")`
+const ExpandedDetailsTitle = styled("strong")`
   display: block;
   margin: 10px 0 8px 20px;
 `
@@ -294,12 +294,12 @@ const AiemmanOsaamisenTodentanutOrganisaatioExpanded = ({
   isAiempiOsaaminen: boolean
   koulutuksenJarjestaja?: IOrganisaatio
 }) => (
-  <AiemmanOsaamisenTitleExpanded>
+  <ExpandedDetailsTitle>
     <AiemmanOsaamisenTodentanutOrganisaatio
       isAiempiOsaaminen={isAiempiOsaaminen}
       koulutuksenJarjestaja={koulutuksenJarjestaja}
     />
-  </AiemmanOsaamisenTitleExpanded>
+  </ExpandedDetailsTitle>
 )
 
 const AiemmanOsaamisenTodentanutOrganisaatio = ({
@@ -356,18 +356,18 @@ const TodentamisenProsessiExpanded = ({
 }) => (
   <>
     {todentamisenProsessiKoodi === TodentamisenProsessiKoodi.SUORAAN && (
-      <AiemmanOsaamisenTitleExpanded>
+      <ExpandedDetailsTitle>
         <TodentamisenProsessiSuoraan />
-      </AiemmanOsaamisenTitleExpanded>
+      </ExpandedDetailsTitle>
     )}
 
     {todentamisenProsessiKoodi ===
       TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA && (
-      <AiemmanOsaamisenTitleExpanded>
+      <ExpandedDetailsTitle>
         <TodentamisenProsessiArvioijienKautta
           todentamisenProsessi={todentamisenProsessi}
         />
-      </AiemmanOsaamisenTitleExpanded>
+      </ExpandedDetailsTitle>
     )}
   </>
 )
