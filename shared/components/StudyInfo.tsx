@@ -6,7 +6,8 @@ import {
   TodentamisenProsessi,
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
-  IOrganisaatio
+  IOrganisaatio,
+  ITarkentavatTiedotOsaamisenArvioija
 } from "models/helpers/TutkinnonOsa"
 import { ShareType } from "stores/NotificationStore"
 import { MdShare } from "react-icons/md"
@@ -123,7 +124,7 @@ export interface StudyInfoProps {
   /**
    * Verification process details
    */
-  verificationProcess?: TodentamisenProsessi
+  todentamisenProsessi?: TodentamisenProsessi
   /**
    * Width of the element for desktop resolutions
    * @default 25%
@@ -131,6 +132,7 @@ export interface StudyInfoProps {
   width?: string
   objectives?: string
   koulutuksenJarjestaja?: IOrganisaatio
+  tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
 }
 
 export interface StudyInfoState {
@@ -248,10 +250,11 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
       koodiUri,
       share,
       title,
-      verificationProcess,
+      todentamisenProsessi,
       width = "25%",
       objectives,
-      koulutuksenJarjestaja
+      koulutuksenJarjestaja,
+      tarkentavatTiedotOsaamisenArvioija
     } = this.props
     const { featureFlags } = this.context
     const { expandedCompetences, expanded } = this.state
@@ -260,7 +263,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
     const hasDetails =
       hasOsaamisenHakkimistavat ||
       osaamisenOsoittamiset.length > 0 ||
-      verificationProcess
+      todentamisenProsessi
     const hasActiveShare =
       typeof share !== "undefined" &&
       koodiUri === share.koodiUri &&
@@ -314,11 +317,14 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
               olennainenSeikka={olennainenSeikka}
               expanded={detailsExpanded}
               osaamisenHankkimistavat={osaamisenHankkimistavat}
-              verificationProcess={verificationProcess}
+              todentamisenProsessi={todentamisenProsessi}
               koodiUri={koodiUri}
               share={share}
               toggle={this.toggle}
               koulutuksenJarjestaja={koulutuksenJarjestaja}
+              tarkentavatTiedotOsaamisenArvioija={
+                tarkentavatTiedotOsaamisenArvioija
+              }
             />
           )}
           <Competences

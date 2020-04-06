@@ -246,22 +246,30 @@ describe("StudyInfo", () => {
   })
 
   test("render verification processes", () => {
-    const { queryByTestId, queryAllByTestId, rerender } = renderWithContext(
+    const {
+      queryByTestId,
+      queryAllByTestId,
+      rerender,
+      getByText
+    } = renderWithContext(
       <StudyInfo
         title="Title"
-        verificationProcess={{
+        todentamisenProsessi={{
           koodiUri: "osaamisentodentamisenprosessi_0001"
         }}
       />
     )
 
     expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
-    expect(queryByTestId("StudyInfo.DirectVerification")).toBeInTheDocument()
+    expect(
+      queryByTestId("StudyInfo.TodentamisenProsessiSuoraan")
+    ).toBeInTheDocument()
+    expect(getByText("Aiemman osaamisen todentanut")).toBeInTheDocument()
 
     rerender(
       <StudyInfo
         title="Title"
-        verificationProcess={{
+        todentamisenProsessi={{
           koodiUri: "osaamisentodentamisenprosessi_0002",
           lahetettyArvioitavaksi: "2019-04-15"
         }}
@@ -275,17 +283,15 @@ describe("StudyInfo", () => {
 
     expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
     expect(
-      queryByTestId("StudyInfo.AssessmentVerification")
+      queryByTestId("StudyInfo.TodentamisenProsessiArvioijienKautta")
     ).toBeInTheDocument()
-    expect(
-      queryByTestId("StudyInfo.AssessmentVerificationOrganisation")
-    ).toBeInTheDocument()
+    expect(getByText("Aiemman osaamisen todentanut")).toBeInTheDocument()
 
     rerender(
       <StudyInfo
         title="Title"
         osaamisenOsoittamiset={naytot3}
-        verificationProcess={{
+        todentamisenProsessi={{
           koodiUri: "osaamisentodentamisenprosessi_0003"
         }}
       />
@@ -293,7 +299,8 @@ describe("StudyInfo", () => {
 
     expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
     expect(
-      queryByTestId("StudyInfo.DemonstrationVerification")
+      queryByTestId("StudyInfo.TodentamisenProsessiOhjausNayttoon")
     ).toBeInTheDocument()
+    expect(getByText("Aiemman osaamisen todentanut")).toBeInTheDocument()
   })
 })

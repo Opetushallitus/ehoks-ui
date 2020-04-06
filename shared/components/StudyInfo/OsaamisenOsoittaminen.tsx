@@ -9,7 +9,7 @@ import {
   TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/StudyInfo/LearningEvent"
-import { VerificationProcess } from "types/VerificationProcess"
+import { TodentamisenProsessiKoodi } from "types/TodentamisenProsessiKoodi"
 import { HeroButton } from "components/Button"
 import { MdShare } from "react-icons/md"
 import { navigate } from "@reach/router"
@@ -70,7 +70,7 @@ interface OsaamisenOsoittaminenState {
 
 interface OsaamisenOsoittaminenProps {
   osaamisenOsoittaminen: IOsaamisenOsoittaminen
-  verificationProcess?: TodentamisenProsessi
+  todentamisenProsessi?: TodentamisenProsessi
   koodiUri?: string
   hasActiveShare?: boolean
 }
@@ -109,14 +109,15 @@ export class OsaamisenOsoittaminen extends React.Component<
     const {
       osaamisenOsoittaminen,
       hasActiveShare = false,
-      verificationProcess
+      todentamisenProsessi
     } = this.props
     const { featureFlags } = this.context
     const { requirementsAndDeviationsExpanded } = this.state
 
     const title =
-      verificationProcess &&
-      verificationProcess.koodiUri === VerificationProcess.OHJAUS_NAYTTOON ? (
+      todentamisenProsessi &&
+      todentamisenProsessi.koodiUri ===
+        TodentamisenProsessiKoodi.OHJAUS_NAYTTOON ? (
         <FormattedMessage
           id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
           defaultMessage="Osaaminen osoitetaan näytössä"
