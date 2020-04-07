@@ -250,7 +250,8 @@ describe("StudyInfo", () => {
       queryByTestId,
       queryAllByTestId,
       rerender,
-      getByText
+      getByText,
+      queryByText
     } = renderWithContext(
       <StudyInfo
         title="Title"
@@ -264,7 +265,7 @@ describe("StudyInfo", () => {
     expect(
       queryByTestId("StudyInfo.TodentamisenProsessiSuoraan")
     ).toBeInTheDocument()
-    expect(getByText("Aiemman osaamisen todentanut")).toBeInTheDocument()
+    expect(queryByText("Aiemman osaamisen todentanut")).toBeNull()
 
     rerender(
       <StudyInfo
@@ -301,6 +302,6 @@ describe("StudyInfo", () => {
     expect(
       queryByTestId("StudyInfo.TodentamisenProsessiOhjausNayttoon")
     ).toBeInTheDocument()
-    expect(getByText("Aiemman osaamisen todentanut")).toBeInTheDocument()
+    expect(queryByText("Aiemman osaamisen todentanut")).toBeNull()
   })
 })
