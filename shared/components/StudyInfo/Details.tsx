@@ -372,6 +372,18 @@ const TodentamisenProsessiExpanded = ({
       </ExpandedDetailsTitle>
     )}
 
+    <AiemminHankitunOsaamisenArvioijat
+      tarkentavatTiedotOsaamisenArvioija={tarkentavatTiedotOsaamisenArvioija}
+    />
+  </>
+)
+
+const AiemminHankitunOsaamisenArvioijat = ({
+  tarkentavatTiedotOsaamisenArvioija
+}: {
+  tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
+}) => (
+  <>
     {!!tarkentavatTiedotOsaamisenArvioija?.aiemminHankitunOsaamisenArvioijat
       .length && (
       <ArvioijatTable>
