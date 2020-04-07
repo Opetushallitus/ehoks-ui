@@ -377,7 +377,12 @@ const TodentamisenProsessiExpanded = ({
       <ArvioijatTable>
         <TBody>
           <tr>
-            <TH>Arvioijat</TH>
+            <TH>
+              <FormattedMessage
+                id="opiskelusuunnitelma.aiemminHankitunOsaamisenArvioijatTitle"
+                defaultMessage="Arvioijat"
+              />
+            </TH>
             <TD>
               {tarkentavatTiedotOsaamisenArvioija.aiemminHankitunOsaamisenArvioijat.map(
                 (arvioija, i) => (
