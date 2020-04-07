@@ -308,19 +308,16 @@ const AiemmanOsaamisenTodentanutOrganisaatio = ({
 }: {
   isAiempiOsaaminen: boolean
   koulutuksenJarjestaja?: IOrganisaatio
-}) => (
-  <>
-    {isAiempiOsaaminen && (
-      <>
-        <FormattedMessage
-          id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
-          defaultMessage="Aiemman osaamisen todentanut"
-        />{" "}
-        {koulutuksenJarjestaja?.organizationName}
-      </>
-    )}
-  </>
-)
+}) =>
+  isAiempiOsaaminen && koulutuksenJarjestaja?.organizationName ? (
+    <>
+      <FormattedMessage
+        id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
+        defaultMessage="Aiemman osaamisen todentanut"
+      />{" "}
+      {koulutuksenJarjestaja?.organizationName}
+    </>
+  ) : null
 
 const TodentamisenProsessiCollapsed = ({
   todentamisenProsessiKoodi,
