@@ -131,6 +131,12 @@ const osaamisenHankkimistapa2 = [
   } as IOsaamisenHankkimistapa
 ]
 
+function expandDetails(getByTestId: any, queryByTestId: any) {
+  fireEvent.click(getByTestId("StudyInfo.ExpandDetails"))
+  expect(queryByTestId("StudyInfo.DetailsCollapsed")).not.toBeInTheDocument()
+  expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
+}
+
 describe("StudyInfo", () => {
   beforeEach(() => {
     // mockFetch will load JSONs from shared/stores/mocks/*.json
@@ -201,11 +207,7 @@ describe("StudyInfo", () => {
 
     await wait(() => {
       expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
-      fireEvent.click(getByTestId("StudyInfo.ExpandDetails"))
-      expect(
-        queryByTestId("StudyInfo.DetailsCollapsed")
-      ).not.toBeInTheDocument()
-      expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
+      expandDetails(getByTestId, queryByTestId)
       expect(getAllByTestId("StudyInfo.OsaamisenOsoittaminen").length).toBe(2)
     })
   })
@@ -236,11 +238,7 @@ describe("StudyInfo", () => {
 
     await wait(() => {
       expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
-      fireEvent.click(getByTestId("StudyInfo.ExpandDetails"))
-      expect(
-        queryByTestId("StudyInfo.DetailsCollapsed")
-      ).not.toBeInTheDocument()
-      expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
+      expandDetails(getByTestId, queryByTestId)
       expect(getAllByTestId("StudyInfo.OsaamisenHankkimistapa").length).toBe(2)
     })
   })
