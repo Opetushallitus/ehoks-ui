@@ -4,7 +4,8 @@ import { StudyInfo as StudyInfoWithoutTheme } from "../StudyInfo"
 import { renderWithContext, withTheme } from "testUtils"
 import {
   IOsaamisenHankkimistapa,
-  IOsaamisenOsoittaminen
+  IOsaamisenOsoittaminen,
+  ITarkentavatTiedotOsaamisenArvioija
 } from "models/helpers/TutkinnonOsa"
 import { mockFetch } from "fetchUtils"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
@@ -243,7 +244,7 @@ describe("StudyInfo", () => {
     })
   })
 
-  test("render verification processes", () => {
+  test("render verification processes collapsed", () => {
     const { queryAllByTestId, rerender, getByText } = renderWithContext(
       <StudyInfo
         title="Title"
@@ -292,5 +293,38 @@ describe("StudyInfo", () => {
     expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
     expect(getByText("Osaaminen osoitetaan näytössä")).toBeInTheDocument()
     expect(getByText("Aiemman osaamisen todentanut")).toBeInTheDocument()
+  })
+
+  test("render verification processes expanded", async () => {
+    const {
+      queryAllByTestId,
+      queryByTestId,
+      getByTestId,
+      getByText
+    } = renderWithContext(
+      <StudyInfo
+        title="Title"
+        todentamisenProsessi={{
+          koodiUri: "osaamisentodentamisenprosessi_0001"
+        }}
+        tarkentavatTiedotOsaamisenArvioija={
+          {
+            aiemminHankitunOsaamisenArvioijat: [
+              {
+                koulutuksenJarjestajaArvioijaDescription:
+                  "Testi Teuvo, Organisaatio"
+              }
+            ]
+          } as ITarkentavatTiedotOsaamisenArvioija
+        }
+      />
+    )
+
+    await wait(() => {
+      expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
+      expandDetails(getByTestId, queryByTestId)
+      expect(getByText("Osaaminen tunnistettu suoraan")).toBeInTheDocument()
+      expect(getByText("Testi Teuvo, Organisaatio")).toBeInTheDocument()
+    })
   })
 })
