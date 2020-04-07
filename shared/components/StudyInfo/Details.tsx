@@ -249,13 +249,7 @@ const OsaamisenOsoittamisetCollapsed = ({
           <FormattedMessage
             id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
             defaultMessage="Osaaminen osoitetaan näytössä"
-          >
-            {msg => (
-              <span data-testid="StudyInfo.TodentamisenProsessiOhjausNayttoon">
-                {msg}
-              </span>
-            )}
-          </FormattedMessage>
+          />
         ) : (
           <FormattedMessage
             id="opiskelusuunnitelma.nayttoTitle"
@@ -344,7 +338,7 @@ const TodentamisenProsessiCollapsed = ({
 
     {todentamisenProsessiKoodi ===
       TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA && (
-      <CollapsedDetailsTitle data-testid="StudyInfo.TodentamisenProsessiArvioijienKautta">
+      <CollapsedDetailsTitle>
         <TodentamisenProsessiArvioijienKautta
           todentamisenProsessi={todentamisenProsessi}
         />
