@@ -310,7 +310,7 @@ const AiemmanOsaamisenTodentanutOrganisaatio = ({
   koulutuksenJarjestaja?: IOrganisaatio
 }) => (
   <>
-    {isAiempiOsaaminen && (
+    {isAiempiOsaaminen && koulutuksenJarjestaja && (
       <>
         <FormattedMessage
           id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"

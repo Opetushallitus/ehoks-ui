@@ -245,7 +245,12 @@ describe("StudyInfo", () => {
   })
 
   test("render verification processes collapsed", () => {
-    const { queryAllByTestId, rerender, getByText } = renderWithContext(
+    const {
+      queryAllByTestId,
+      rerender,
+      getByText,
+      queryByText
+    } = renderWithContext(
       <StudyInfo
         title="Title"
         todentamisenProsessi={{
@@ -256,7 +261,7 @@ describe("StudyInfo", () => {
 
     expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
     expect(getByText("Osaaminen tunnistettu suoraan")).toBeInTheDocument()
-    expect(getByText("Aiemman osaamisen todentanut")).toBeInTheDocument()
+    expect(queryByText("Aiemman osaamisen todentanut")).not.toBeInTheDocument()
 
     rerender(
       <StudyInfo
@@ -292,7 +297,7 @@ describe("StudyInfo", () => {
 
     expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
     expect(getByText("Osaaminen osoitetaan näytössä")).toBeInTheDocument()
-    expect(getByText("Aiemman osaamisen todentanut")).toBeInTheDocument()
+    expect(queryByText("Aiemman osaamisen todentanut")).not.toBeInTheDocument()
   })
 
   test("render verification processes expanded", async () => {
