@@ -261,9 +261,7 @@ describe("StudyInfo", () => {
     )
 
     expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
-    expect(
-      queryByTestId("StudyInfo.TodentamisenProsessiSuoraan")
-    ).toBeInTheDocument()
+    expect(getByText("Osaaminen tunnistettu suoraan")).toBeInTheDocument()
     expect(getByText("Aiemman osaamisen todentanut")).toBeInTheDocument()
 
     rerender(

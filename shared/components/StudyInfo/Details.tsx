@@ -337,7 +337,7 @@ const TodentamisenProsessiCollapsed = ({
 }) => (
   <>
     {todentamisenProsessiKoodi === TodentamisenProsessiKoodi.SUORAAN && (
-      <CollapsedDetailsTitle data-testid="StudyInfo.TodentamisenProsessiSuoraan">
+      <CollapsedDetailsTitle>
         <TodentamisenProsessiSuoraan />
       </CollapsedDetailsTitle>
     )}
