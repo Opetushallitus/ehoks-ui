@@ -92,22 +92,19 @@ const CollapseIcon = ({
   hasActiveShare: boolean
   toggle: (name: ToggleableItems) => () => void
   intl: InjectedIntl
-}) => (
-  <>
-    {!hasActiveShare && (
-      <LocationsContainerExpanded>
-        <IconContainer
-          onClick={toggle("details")}
-          aria-label={intl.formatMessage({
-            id: "opiskelusuunnitelma.piilotaTyossaOppiminenAriaLabel"
-          })}
-        >
-          <Collapse size={40} />
-        </IconContainer>
-      </LocationsContainerExpanded>
-    )}
-  </>
-)
+}) =>
+  !hasActiveShare ? (
+    <LocationsContainerExpanded>
+      <IconContainer
+        onClick={toggle("details")}
+        aria-label={intl.formatMessage({
+          id: "opiskelusuunnitelma.piilotaTyossaOppiminenAriaLabel"
+        })}
+      >
+        <Collapse size={40} />
+      </IconContainer>
+    </LocationsContainerExpanded>
+  ) : null
 
 const ExpandIcon = ({
   showExpand,
@@ -117,21 +114,18 @@ const ExpandIcon = ({
   showExpand: boolean
   toggle: (name: ToggleableItems) => () => void
   intl: InjectedIntl
-}) => (
-  <>
-    {showExpand && (
-      <IconContainer
-        onClick={toggle("details")}
-        aria-label={intl.formatMessage({
-          id: "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel"
-        })}
-        data-testid="StudyInfo.ExpandDetails"
-      >
-        <Expand size={40} />
-      </IconContainer>
-    )}
-  </>
-)
+}) =>
+  showExpand ? (
+    <IconContainer
+      onClick={toggle("details")}
+      aria-label={intl.formatMessage({
+        id: "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel"
+      })}
+      data-testid="StudyInfo.ExpandDetails"
+    >
+      <Expand size={40} />
+    </IconContainer>
+  ) : null
 
 const OsaamisenHankkimistavatExpanded = ({
   hasActiveShare,
@@ -308,19 +302,16 @@ const AiemmanOsaamisenTodentanutOrganisaatio = ({
 }: {
   isAiempiOsaaminen: boolean
   koulutuksenJarjestaja?: IOrganisaatio
-}) => (
-  <>
-    {isAiempiOsaaminen && koulutuksenJarjestaja && (
-      <>
-        <FormattedMessage
-          id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
-          defaultMessage="Aiemman osaamisen todentanut"
-        />{" "}
-        {koulutuksenJarjestaja?.organizationName}
-      </>
-    )}
-  </>
-)
+}) =>
+  isAiempiOsaaminen && koulutuksenJarjestaja?.organizationName ? (
+    <>
+      <FormattedMessage
+        id="opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle"
+        defaultMessage="Aiemman osaamisen todentanut"
+      />{" "}
+      {koulutuksenJarjestaja?.organizationName}
+    </>
+  ) : null
 
 const TodentamisenProsessiCollapsed = ({
   todentamisenProsessiKoodi,
