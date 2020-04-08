@@ -8,7 +8,7 @@ import {
   toArray,
   getDefaultValueForSchema
 } from "./utils"
-const selectn = require("./selectn.min")
+import selectn from "./selectn.min"
 
 import { DefaultLabel } from "./Label"
 import { FieldProps } from "react-jsonschema-form"
