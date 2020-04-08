@@ -95,7 +95,11 @@ export class Accordion extends React.Component<AccordionProps, AccordionState> {
       document.activeElement &&
       id === document.activeElement.id
     ) {
-      typeof onToggle === "function" ? onToggle() : this.defaultOnToggle(event)
+      if (typeof onToggle === "function") {
+        onToggle()
+      } else {
+        this.defaultOnToggle(event)
+      }
     }
   }
 

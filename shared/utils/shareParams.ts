@@ -28,4 +28,3 @@ export function stringifyShareParams({
 }): string {
   return queryString.stringify({ share, type })
 }
-queryString.stringify

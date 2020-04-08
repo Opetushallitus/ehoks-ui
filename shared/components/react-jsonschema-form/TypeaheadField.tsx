@@ -274,9 +274,8 @@ class BaseTypeaheadField extends Component<
       this.setState({
         selected: []
       })
-      if (this.refs.typeahead) {
-        this.refs.typeahead.getInstance() &&
-          this.refs.typeahead.getInstance().clear()
+      if (this.refs.typeahead && this.refs.typeahead.getInstance()) {
+        this.refs.typeahead.getInstance().clear()
       }
       // let onChangeValue = getDefaultValueForSchema(schema);
       // remove the field if the value is empty
