@@ -34,7 +34,8 @@ export function DefaultLabel({
 }: any) {
   const { fields = {} } = registry
   const uiOptions = getUiOptions(uiSchema)
-  let { label: displayLabel = true, forceLabelDisplay } = uiOptions
+  let { label: displayLabel = true } = uiOptions
+  const { forceLabelDisplay } = uiOptions
   if (schema.type === "array") {
     displayLabel =
       isMultiSelect(schema, definitions) ||
