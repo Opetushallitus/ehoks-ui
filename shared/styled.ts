@@ -1,5 +1,7 @@
-import * as StyledComponents from "styled-components"
-import { ThemedStyledComponentsModule } from "styled-components"
+import {
+  default as StyledComponents,
+  ThemedStyledComponentsModule
+} from "styled-components"
 import { TypeOfTheme } from "./theme"
 const {
   default: baseStyled,
