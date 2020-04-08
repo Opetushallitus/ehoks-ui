@@ -19,7 +19,7 @@ export const TableContext = React.createContext<TableContextProps>({
     return
   },
   onUpdateSearchText: (_: string) => (
-    _: React.ChangeEvent<HTMLInputElement>
+    __: React.ChangeEvent<HTMLInputElement>
   ) => {
     return
   }
