@@ -69,16 +69,19 @@ const LocationsContainerExpanded = styled("div")`
   padding-right: 14px;
 `
 
-const CollapsedDetailsTitle = styled("strong")`
+const CollapsedDetailsTitle = styled("strong")(
+  ({ theme: { spacing } }) => `
   display: block;
-  margin: 10px 0 8px 0;
+  margin: ${spacing.s} 0px ${spacing.xs} 0px;
 `
+)
 
-const ExpandedDetailsTitle = styled("strong")`
+const ExpandedDetailsTitle = styled("strong")(
+  ({ theme: { spacing } }) => `
   display: block;
-  margin: 10px 0 8px;
-  margin-left: ${props => props.theme.spacing.l};
+  margin: ${spacing.s} 0px ${spacing.xs} ${spacing.l};
 `
+)
 
 const ArvioijatTable = styled(Table)`
   margin-left: ${props => props.theme.spacing.l};
