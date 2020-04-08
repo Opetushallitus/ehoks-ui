@@ -11,7 +11,7 @@ interface StepperProps {
   currentStep: number
   updateStep: (index: number) => void
   completed: () => { [index: string]: boolean }
-  children?: Array<React.ReactElement<StepProps>>
+  children?: React.ReactElement<StepProps>[]
   disabled?: boolean
 }
 
