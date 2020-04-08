@@ -6,5 +6,4 @@ export const EducationProviderInfo = types.model("EducationProviderInfo", {
   hoksProcess: types.optional(LanguageVersion, {})
 })
 
-export interface IEducationProviderInfo
-  extends Instance<typeof EducationProviderInfo> {}
+export type IEducationProviderInfo = Instance<typeof EducationProviderInfo>

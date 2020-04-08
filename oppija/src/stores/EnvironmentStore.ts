@@ -69,4 +69,4 @@ export const EnvironmentStore = types
     return { getEnvironment, fetchSwaggerJSON }
   })
 
-export interface IEnvironmentStore extends Instance<typeof EnvironmentStore> {}
+export type IEnvironmentStore = Instance<typeof EnvironmentStore>

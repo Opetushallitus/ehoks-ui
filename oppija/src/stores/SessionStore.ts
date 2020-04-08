@@ -117,4 +117,4 @@ export const SessionStore = types
     }
   })
 
-export interface ISessionStore extends Instance<typeof SessionStore> {}
+export type ISessionStore = Instance<typeof SessionStore>
