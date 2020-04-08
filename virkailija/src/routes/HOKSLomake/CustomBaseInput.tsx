@@ -40,7 +40,7 @@ function CustomBaseInput(props: CustomBaseInputProps) {
     ...inputProps
   } = props
 
-  const _onChange = ({ target }: { target: { value: string } }) => {
+  const onChange = ({ target }: { target: { value: string } }) => {
     return props.onChange(target.value === "" ? "" : target.value)
   }
 
@@ -57,7 +57,7 @@ function CustomBaseInput(props: CustomBaseInputProps) {
           value={value == null ? "" : value}
           {...inputProps}
           list={schema.examples ? `examples_${inputProps.id}` : undefined}
-          onChange={_onChange}
+          onChange={onChange}
           onBlur={
             onBlur && (event => onBlur(inputProps.id, event.target.value))
           }
