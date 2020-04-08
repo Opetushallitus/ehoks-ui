@@ -132,7 +132,7 @@ export const Oppija = types
     }
   }))
 
-export interface IOppija extends Instance<typeof Oppija> {}
+export type IOppija = Instance<typeof Oppija>
 
 const SortBy = types.enumeration("sortBy", [...sortKeys])
 

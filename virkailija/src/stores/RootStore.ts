@@ -25,4 +25,4 @@ export const RootStore = types
     }
   })
 
-export interface IRootStore extends Instance<typeof RootStore> {}
+export type IRootStore = Instance<typeof RootStore>
