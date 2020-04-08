@@ -92,7 +92,7 @@ export const removeLink = async function({
 }: {
   eid: string
   koodiUri: string
-  uuid: String
+  uuid: string
   apiConfig: APIConfig
 }) {
   const { apiUrl, apiPrefix } = apiConfig
