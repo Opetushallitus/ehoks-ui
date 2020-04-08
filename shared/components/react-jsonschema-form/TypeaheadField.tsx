@@ -72,7 +72,7 @@ function mapToObject(event: any, mapping: any, defVal: any) {
       agg[field] = selectn(eventField, event)
     }
     return agg
-  }, Object.assign({}, defVal))
+  }, { ...defVal})
   return schemaEvent
 }
 
@@ -329,13 +329,11 @@ export class TypeaheadField extends BaseTypeaheadField {
     // if something is already selected and is a string - removing the label key so that the labelKey function can be ignored.
     labelKey = transformLabelKey(labelKey, schema, this.state.selected)
 
-    const typeConf = Object.assign({}, DEFAULT_OPTIONS, typeahead, {
-      onChange: this.handleSelectionChange(typeahead),
+    const typeConf = { ...DEFAULT_OPTIONS, ...typeahead, onChange: this.handleSelectionChange(typeahead),
       labelKey,
       selected: this.state.selected,
       id: $id,
-      onBlur: this.handleBlur
-    })
+      onBlur: this.handleBlur}
 
     return (
       <div id={$id}>
@@ -423,16 +421,14 @@ export class AsyncTypeaheadField extends BaseTypeaheadField {
     // if something is already selected and is a string - removing the label key so that the labelKey function can be ignored.
     labelKey = transformLabelKey(labelKey, schema, this.state.selected)
 
-    const typeConf = Object.assign({}, DEFAULT_OPTIONS, asyncTypeahead, {
-      selected: this.state.selected,
+    const typeConf = { ...DEFAULT_OPTIONS, ...asyncTypeahead, selected: this.state.selected,
       isLoading: this.state.isLoading,
       labelKey,
       onChange: this.handleSelectionChange(asyncTypeahead),
       onSearch: this.handleSearch,
       options: this.state.options,
       onFocus: this.handleOnFocus,
-      onBlur: this.handleBlur
-    })
+      onBlur: this.handleBlur}
 
     if (asyncTypeahead.overrideOptions) {
       typeConf.onInputChange = this.props.onChange
