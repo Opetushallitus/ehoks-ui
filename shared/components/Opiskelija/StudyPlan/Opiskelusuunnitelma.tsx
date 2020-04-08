@@ -335,7 +335,7 @@ export class Opiskelusuunnitelma extends React.Component<
           <StatBoxes>
             <ProgressPie
               value={
-                totalStudiesLength != 0
+                totalStudiesLength !== 0
                   ? Math.round(
                       (suunnitellutOpinnot.length / totalStudiesLength) * 100
                     )
@@ -352,7 +352,7 @@ export class Opiskelusuunnitelma extends React.Component<
             />
             <ProgressPie
               value={
-                totalStudiesLength != 0
+                totalStudiesLength !== 0
                   ? Math.round(
                       (aikataulutetutOpinnot.length / totalStudiesLength) * 100
                     )
@@ -369,7 +369,7 @@ export class Opiskelusuunnitelma extends React.Component<
             />
             <ProgressPie
               value={
-                totalStudiesLength != 0
+                totalStudiesLength !== 0
                   ? Math.round(
                       (valmiitOpinnot.length / totalStudiesLength) * 100
                     )
