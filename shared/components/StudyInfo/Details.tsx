@@ -24,6 +24,7 @@ import ShareDialog, {
 import { ToggleableItems } from "./StudyInfoHelpers"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
+import { Table, TBody, TD, TH } from "./Shared"
 
 interface ColorProps {
   fadedColor: string
@@ -68,14 +69,22 @@ const LocationsContainerExpanded = styled("div")`
   padding-right: 14px;
 `
 
-const CollapsedDetailsTitle = styled("strong")`
+const CollapsedDetailsTitle = styled("strong")(
+  ({ theme: { spacing } }) => `
   display: block;
-  margin: 10px 0 8px 0;
+  margin: ${spacing.s} 0px ${spacing.xs} 0px;
 `
+)
 
-const AiemmanOsaamisenTitleExpanded = styled("strong")`
+const ExpandedDetailsTitle = styled("strong")(
+  ({ theme: { spacing } }) => `
   display: block;
-  margin: 10px 0 8px 20px;
+  margin: ${spacing.s} 0px ${spacing.xs} ${spacing.l};
+`
+)
+
+const ArvioijatTable = styled(Table)`
+  margin-left: ${props => props.theme.spacing.l};
 `
 
 const CollapseIcon = ({
@@ -86,22 +95,19 @@ const CollapseIcon = ({
   hasActiveShare: boolean
   toggle: (name: ToggleableItems) => () => void
   intl: InjectedIntl
-}) => (
-  <>
-    {!hasActiveShare && (
-      <LocationsContainerExpanded>
-        <IconContainer
-          onClick={toggle("details")}
-          aria-label={intl.formatMessage({
-            id: "opiskelusuunnitelma.piilotaTyossaOppiminenAriaLabel"
-          })}
-        >
-          <Collapse size={40} />
-        </IconContainer>
-      </LocationsContainerExpanded>
-    )}
-  </>
-)
+}) =>
+  !hasActiveShare ? (
+    <LocationsContainerExpanded>
+      <IconContainer
+        onClick={toggle("details")}
+        aria-label={intl.formatMessage({
+          id: "opiskelusuunnitelma.piilotaTyossaOppiminenAriaLabel"
+        })}
+      >
+        <Collapse size={40} />
+      </IconContainer>
+    </LocationsContainerExpanded>
+  ) : null
 
 const ExpandIcon = ({
   showExpand,
@@ -111,21 +117,18 @@ const ExpandIcon = ({
   showExpand: boolean
   toggle: (name: ToggleableItems) => () => void
   intl: InjectedIntl
-}) => (
-  <>
-    {showExpand && (
-      <IconContainer
-        onClick={toggle("details")}
-        aria-label={intl.formatMessage({
-          id: "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel"
-        })}
-        data-testid="StudyInfo.ExpandDetails"
-      >
-        <Expand size={40} />
-      </IconContainer>
-    )}
-  </>
-)
+}) =>
+  showExpand ? (
+    <IconContainer
+      onClick={toggle("details")}
+      aria-label={intl.formatMessage({
+        id: "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel"
+      })}
+      data-testid="StudyInfo.ExpandDetails"
+    >
+      <Expand size={40} />
+    </IconContainer>
+  ) : null
 
 const OsaamisenHankkimistavatExpanded = ({
   hasActiveShare,
@@ -243,13 +246,7 @@ const OsaamisenOsoittamisetCollapsed = ({
           <FormattedMessage
             id="opiskelusuunnitelma.osaaminenOsoitetaanNaytossaTitle"
             defaultMessage="Osaaminen osoitetaan näytössä"
-          >
-            {msg => (
-              <span data-testid="StudyInfo.TodentamisenProsessiOhjausNayttoon">
-                {msg}
-              </span>
-            )}
-          </FormattedMessage>
+          />
         ) : (
           <FormattedMessage
             id="opiskelusuunnitelma.nayttoTitle"
@@ -294,12 +291,12 @@ const AiemmanOsaamisenTodentanutOrganisaatioExpanded = ({
   isAiempiOsaaminen: boolean
   koulutuksenJarjestaja?: IOrganisaatio
 }) => (
-  <AiemmanOsaamisenTitleExpanded>
+  <ExpandedDetailsTitle>
     <AiemmanOsaamisenTodentanutOrganisaatio
       isAiempiOsaaminen={isAiempiOsaaminen}
       koulutuksenJarjestaja={koulutuksenJarjestaja}
     />
-  </AiemmanOsaamisenTitleExpanded>
+  </ExpandedDetailsTitle>
 )
 
 const AiemmanOsaamisenTodentanutOrganisaatio = ({
@@ -327,64 +324,112 @@ const TodentamisenProsessiCollapsed = ({
   todentamisenProsessi?: TodentamisenProsessi
 }) => (
   <>
-    <TodentamisenProsessiSuoraan
-      todentamisenProsessiKoodi={todentamisenProsessiKoodi}
-    />
-
-    <TodentamisenProsessiArvioijienKautta
-      todentamisenProsessiKoodi={todentamisenProsessiKoodi}
-      todentamisenProsessi={todentamisenProsessi}
-    />
-  </>
-)
-
-const TodentamisenProsessiSuoraan = ({
-  todentamisenProsessiKoodi
-}: {
-  todentamisenProsessiKoodi?: string
-}) => (
-  <>
     {todentamisenProsessiKoodi === TodentamisenProsessiKoodi.SUORAAN && (
-      <React.Fragment>
-        <CollapsedDetailsTitle data-testid="StudyInfo.TodentamisenProsessiSuoraan">
-          <FormattedMessage
-            id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
-            defaultMessage="Osaaminen tunnistettu suoraan"
-          />
-        </CollapsedDetailsTitle>
-      </React.Fragment>
+      <CollapsedDetailsTitle>
+        <TodentamisenProsessiSuoraan />
+      </CollapsedDetailsTitle>
     )}
-  </>
-)
 
-const TodentamisenProsessiArvioijienKautta = ({
-  todentamisenProsessiKoodi,
-  todentamisenProsessi
-}: {
-  todentamisenProsessiKoodi?: string
-  todentamisenProsessi?: TodentamisenProsessi
-}) => (
-  <>
     {todentamisenProsessiKoodi ===
       TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA && (
-      <CollapsedDetailsTitle data-testid="StudyInfo.TodentamisenProsessiArvioijienKautta">
-        <FormattedMessage
-          id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
-          defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
-          values={{
-            date:
-              todentamisenProsessi &&
-              todentamisenProsessi.lahetettyArvioitavaksi
-                ? format(
-                    parseISO(todentamisenProsessi.lahetettyArvioitavaksi),
-                    "d.M.yyyy"
-                  )
-                : ""
-          }}
+      <CollapsedDetailsTitle>
+        <TodentamisenProsessiArvioijienKautta
+          todentamisenProsessi={todentamisenProsessi}
         />
       </CollapsedDetailsTitle>
     )}
   </>
+)
+
+const TodentamisenProsessiExpanded = ({
+  todentamisenProsessiKoodi,
+  todentamisenProsessi,
+  tarkentavatTiedotOsaamisenArvioija
+}: {
+  todentamisenProsessiKoodi?: string
+  todentamisenProsessi?: TodentamisenProsessi
+  tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
+}) => (
+  <>
+    {todentamisenProsessiKoodi === TodentamisenProsessiKoodi.SUORAAN && (
+      <ExpandedDetailsTitle>
+        <TodentamisenProsessiSuoraan />
+      </ExpandedDetailsTitle>
+    )}
+
+    {todentamisenProsessiKoodi ===
+      TodentamisenProsessiKoodi.ARVIOIJIEN_KAUTTA && (
+      <ExpandedDetailsTitle>
+        <TodentamisenProsessiArvioijienKautta
+          todentamisenProsessi={todentamisenProsessi}
+        />
+      </ExpandedDetailsTitle>
+    )}
+
+    <AiemminHankitunOsaamisenArvioijat
+      tarkentavatTiedotOsaamisenArvioija={tarkentavatTiedotOsaamisenArvioija}
+    />
+  </>
+)
+
+const AiemminHankitunOsaamisenArvioijat = ({
+  tarkentavatTiedotOsaamisenArvioija
+}: {
+  tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
+}) => (
+  <>
+    {!!tarkentavatTiedotOsaamisenArvioija?.aiemminHankitunOsaamisenArvioijat
+      .length && (
+      <ArvioijatTable>
+        <TBody>
+          <tr>
+            <TH>
+              <FormattedMessage
+                id="opiskelusuunnitelma.aiemminHankitunOsaamisenArvioijatTitle"
+                defaultMessage="Arvioijat"
+              />
+            </TH>
+            <TD>
+              {tarkentavatTiedotOsaamisenArvioija.aiemminHankitunOsaamisenArvioijat.map(
+                (arvioija, i) => (
+                  <span key={i}>
+                    {arvioija.koulutuksenJarjestajaArvioijaDescription} <br />
+                  </span>
+                )
+              )}
+            </TD>
+          </tr>
+        </TBody>
+      </ArvioijatTable>
+    )}
+  </>
+)
+
+const TodentamisenProsessiSuoraan = () => (
+  <FormattedMessage
+    id="opiskelusuunnitelma.osaaminenTunnistettuSuoraanTitle"
+    defaultMessage="Osaaminen tunnistettu suoraan"
+  />
+)
+
+const TodentamisenProsessiArvioijienKautta = ({
+  todentamisenProsessi
+}: {
+  todentamisenProsessi?: TodentamisenProsessi
+}) => (
+  <FormattedMessage
+    id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
+    defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
+    values={{
+      date:
+        todentamisenProsessi && todentamisenProsessi.lahetettyArvioitavaksi
+          ? format(
+              parseISO(todentamisenProsessi.lahetettyArvioitavaksi),
+              "d.M.yyyy"
+            )
+          : ""
+    }}
+  />
 )
 
 interface DetailsProps {
@@ -417,7 +462,8 @@ export class Details extends React.Component<DetailsProps> {
       share,
       toggle,
       todentamisenProsessi,
-      koulutuksenJarjestaja
+      koulutuksenJarjestaja,
+      tarkentavatTiedotOsaamisenArvioija
     } = this.props
     const { intl } = this.context
 
@@ -426,7 +472,8 @@ export class Details extends React.Component<DetailsProps> {
     const showExpand =
       !!osaamisenOsoittamiset.length ||
       !!osaamisenHankkimistavat.length ||
-      todentamisenProsessiKoodi === TodentamisenProsessiKoodi.OHJAUS_NAYTTOON
+      todentamisenProsessiKoodi === TodentamisenProsessiKoodi.OHJAUS_NAYTTOON ||
+      !!tarkentavatTiedotOsaamisenArvioija
     const isAiempiOsaaminen = !!todentamisenProsessiKoodi
     const hasActiveShare =
       typeof share !== "undefined" && koodiUri === share.koodiUri
@@ -464,6 +511,14 @@ export class Details extends React.Component<DetailsProps> {
             hasActiveShare={hasActiveShare}
             toggle={toggle}
             intl={intl}
+          />
+
+          <TodentamisenProsessiExpanded
+            todentamisenProsessiKoodi={todentamisenProsessiKoodi}
+            todentamisenProsessi={todentamisenProsessi}
+            tarkentavatTiedotOsaamisenArvioija={
+              tarkentavatTiedotOsaamisenArvioija
+            }
           />
 
           <OsaamisenHankkimistavatExpanded

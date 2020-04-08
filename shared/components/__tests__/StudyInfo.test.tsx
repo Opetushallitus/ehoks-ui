@@ -4,7 +4,8 @@ import { StudyInfo as StudyInfoWithoutTheme } from "../StudyInfo"
 import { renderWithContext, withTheme } from "testUtils"
 import {
   IOsaamisenHankkimistapa,
-  IOsaamisenOsoittaminen
+  IOsaamisenOsoittaminen,
+  ITarkentavatTiedotOsaamisenArvioija
 } from "models/helpers/TutkinnonOsa"
 import { mockFetch } from "fetchUtils"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
@@ -131,6 +132,12 @@ const osaamisenHankkimistapa2 = [
   } as IOsaamisenHankkimistapa
 ]
 
+function expandDetails(getByTestId: any, queryByTestId: any) {
+  fireEvent.click(getByTestId("StudyInfo.ExpandDetails"))
+  expect(queryByTestId("StudyInfo.DetailsCollapsed")).not.toBeInTheDocument()
+  expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
+}
+
 describe("StudyInfo", () => {
   beforeEach(() => {
     // mockFetch will load JSONs from shared/stores/mocks/*.json
@@ -201,11 +208,7 @@ describe("StudyInfo", () => {
 
     await wait(() => {
       expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
-      fireEvent.click(getByTestId("StudyInfo.ExpandDetails"))
-      expect(
-        queryByTestId("StudyInfo.DetailsCollapsed")
-      ).not.toBeInTheDocument()
-      expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
+      expandDetails(getByTestId, queryByTestId)
       expect(getAllByTestId("StudyInfo.OsaamisenOsoittaminen").length).toBe(2)
     })
   })
@@ -236,18 +239,13 @@ describe("StudyInfo", () => {
 
     await wait(() => {
       expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
-      fireEvent.click(getByTestId("StudyInfo.ExpandDetails"))
-      expect(
-        queryByTestId("StudyInfo.DetailsCollapsed")
-      ).not.toBeInTheDocument()
-      expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
+      expandDetails(getByTestId, queryByTestId)
       expect(getAllByTestId("StudyInfo.OsaamisenHankkimistapa").length).toBe(2)
     })
   })
 
-  test("render verification processes", () => {
+  test("render verification processes collapsed", () => {
     const {
-      queryByTestId,
       queryAllByTestId,
       rerender,
       getByText,
@@ -262,10 +260,8 @@ describe("StudyInfo", () => {
     )
 
     expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
-    expect(
-      queryByTestId("StudyInfo.TodentamisenProsessiSuoraan")
-    ).toBeInTheDocument()
-    expect(queryByText("Aiemman osaamisen todentanut")).toBeNull()
+    expect(getByText("Osaaminen tunnistettu suoraan")).toBeInTheDocument()
+    expect(queryByText("Aiemman osaamisen todentanut")).not.toBeInTheDocument()
 
     rerender(
       <StudyInfo
@@ -284,9 +280,10 @@ describe("StudyInfo", () => {
 
     expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
     expect(
-      queryByTestId("StudyInfo.TodentamisenProsessiArvioijienKautta")
+      getByText("Osaaminen lähetetty arvioitavaksi 15.4.2019")
     ).toBeInTheDocument()
     expect(getByText("Aiemman osaamisen todentanut")).toBeInTheDocument()
+    expect(getByText("Koulutuksen järjestäjä-organisaatio")).toBeInTheDocument()
 
     rerender(
       <StudyInfo
@@ -299,9 +296,40 @@ describe("StudyInfo", () => {
     )
 
     expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
-    expect(
-      queryByTestId("StudyInfo.TodentamisenProsessiOhjausNayttoon")
-    ).toBeInTheDocument()
-    expect(queryByText("Aiemman osaamisen todentanut")).toBeNull()
+    expect(getByText("Osaaminen osoitetaan näytössä")).toBeInTheDocument()
+    expect(queryByText("Aiemman osaamisen todentanut")).not.toBeInTheDocument()
+  })
+
+  test("render verification processes expanded", async () => {
+    const {
+      queryAllByTestId,
+      queryByTestId,
+      getByTestId,
+      getByText
+    } = renderWithContext(
+      <StudyInfo
+        title="Title"
+        todentamisenProsessi={{
+          koodiUri: "osaamisentodentamisenprosessi_0001"
+        }}
+        tarkentavatTiedotOsaamisenArvioija={
+          {
+            aiemminHankitunOsaamisenArvioijat: [
+              {
+                koulutuksenJarjestajaArvioijaDescription:
+                  "Testi Teuvo, Organisaatio"
+              }
+            ]
+          } as ITarkentavatTiedotOsaamisenArvioija
+        }
+      />
+    )
+
+    await wait(() => {
+      expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
+      expandDetails(getByTestId, queryByTestId)
+      expect(getByText("Osaaminen tunnistettu suoraan")).toBeInTheDocument()
+      expect(getByText("Testi Teuvo, Organisaatio")).toBeInTheDocument()
+    })
   })
 })

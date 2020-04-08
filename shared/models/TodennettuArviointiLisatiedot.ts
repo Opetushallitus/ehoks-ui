@@ -5,6 +5,8 @@ export const TodennettuArviointiLisatiedot = types.model(
   "TodennettuArviointiLisatiedot",
   {
     lahetettyArvioitavaksi: types.optional(types.string, ""),
-    aiemminHankitunOsaamisenArvioija: types.array(KoulutuksenJarjestajaArvioija)
+    aiemminHankitunOsaamisenArvioijat: types.array(
+      KoulutuksenJarjestajaArvioija
+    )
   }
 )
