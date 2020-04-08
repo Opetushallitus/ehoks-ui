@@ -48,4 +48,4 @@ export const SessionUser = types
     }
   })
 
-export interface ISessionUser extends Instance<typeof SessionUser> {}
+export type ISessionUser = Instance<typeof SessionUser>

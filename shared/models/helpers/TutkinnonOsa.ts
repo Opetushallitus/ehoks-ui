@@ -26,16 +26,13 @@ export interface Osaamisvaatimus {
   kriteerit?: Arviointikriteeri[]
 }
 
-export interface ITarkentavatTiedotOsaamisenArvioija
-  extends Instance<typeof TodennettuArviointiLisatiedot> {}
+export type ITarkentavatTiedotOsaamisenArvioija = Instance<typeof TodennettuArviointiLisatiedot>
 
-export interface IOrganisaatio extends Instance<typeof Organisaatio> {}
+export type IOrganisaatio = Instance<typeof Organisaatio>
 
-export interface IOsaamisenHankkimistapa
-  extends Instance<typeof OsaamisenHankkimistapa> {}
+export type IOsaamisenHankkimistapa = Instance<typeof OsaamisenHankkimistapa>
 
-export interface IOsaamisenOsoittaminen
-  extends Instance<typeof OsaamisenOsoittaminen> {}
+export type IOsaamisenOsoittaminen = Instance<typeof OsaamisenOsoittaminen>
 
 const HankittavaTutkinnonOsa = types
   .compose(

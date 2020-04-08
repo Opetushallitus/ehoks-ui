@@ -223,7 +223,7 @@ function transformLabelKey(labelKey: any, schema: any, selected: any) {
   }
 }
 
-interface TypeaheadFieldProps extends FieldProps {}
+type TypeaheadFieldProps = FieldProps
 
 class BaseTypeaheadField extends Component<
   TypeaheadFieldProps,

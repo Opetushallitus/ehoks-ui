@@ -172,5 +172,4 @@ export const NotificationStore = types
     }
   })
 
-export interface INotificationStore
-  extends Instance<typeof NotificationStore> {}
+export type INotificationStore = Instance<typeof NotificationStore>

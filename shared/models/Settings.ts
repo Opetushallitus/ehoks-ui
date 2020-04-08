@@ -64,4 +64,4 @@ export const Settings = types.model("Settings", {
   introDialog: types.optional(IntroDialog, {})
 })
 
-export interface ISettings extends Instance<typeof Settings> {}
+export type ISettings = Instance<typeof Settings>

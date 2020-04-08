@@ -8,7 +8,7 @@ export const ShareLink = types.model("ShareLink", {
   url: types.string
 })
 
-export interface IShareLink extends Instance<typeof ShareLink> {}
+export type IShareLink = Instance<typeof ShareLink>
 
 export const ShareLinkStore = types
   .model("ShareLinkStore", {})
@@ -54,4 +54,4 @@ export const ShareLinkStore = types
     return { fetchLinks }
   })
 
-export interface IShareLinkStore extends Instance<typeof ShareLinkStore> {}
+export type IShareLinkStore = Instance<typeof ShareLinkStore>

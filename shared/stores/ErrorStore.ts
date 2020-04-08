@@ -36,5 +36,5 @@ export const ErrorStore = types
     }
   })
 
-export interface IErrorStore extends Instance<typeof ErrorStore> {}
+export type IErrorStore = Instance<typeof ErrorStore>
 export type IAppError = Instance<typeof AppError>
