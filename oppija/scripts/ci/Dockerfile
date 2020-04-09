@@ -18,7 +18,7 @@ COPY nginx-server.conf /etc/nginx/conf.d/default.conf
 WORKDIR /root
 
 COPY public /var/www/html/public
-COPY config.json.template escape-html.py /opt/ehoks/
+COPY config.json.template escape-html.py piwik.js /opt/ehoks/
 RUN ln -s /var/www/html/public/ehoks/index.html /home/oph/index.html
 RUN rm -rf /var/tmp
 RUN rm -rf /run
