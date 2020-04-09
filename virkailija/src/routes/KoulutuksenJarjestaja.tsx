@@ -75,9 +75,7 @@ export class KoulutuksenJarjestaja extends React.Component<
     const { koulutuksenJarjestaja, session } = this.props.store!
 
     this.disposeLoginReaction = reaction(
-      () => {
-        return session.isLoggedIn && session.organisations.length > 0
-      },
+      () => session.isLoggedIn && session.organisations.length > 0,
       async hasLoggedIn => {
         if (hasLoggedIn) {
           await koulutuksenJarjestaja.search.fetchOppijat()
@@ -212,8 +210,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                   <col style={{ width: "5%" }} />
                 </colgroup>
                 <TableBody>
-                  {results.map((student, i) => {
-                    return (
+                  {results.map((student, i) => (
                       <TableRow key={i}>
                         <TableCell>
                           {student.lukumaara > 0 ? (
@@ -255,8 +252,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                           )}
                         </TableCell>
                       </TableRow>
-                    )
-                  })}
+                    ))}
                   {!results.length && (
                     <TableRow>
                       <TableCell colSpan={6}>

@@ -79,8 +79,7 @@ export class OmienOpintojenSuunnittelu extends React.Component<
     return (
       <HOKSEidContext.Provider value={id}>
         <Location>
-          {({ location }) => {
-            return (
+          {({ location }) => (
               <React.Fragment>
                 <NavigationContainer>
                   <Container>
@@ -195,8 +194,7 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                   </Container>
                 </BackgroundContainer>
               </React.Fragment>
-            )
-          }}
+            )}
         </Location>
       </HOKSEidContext.Provider>
     )

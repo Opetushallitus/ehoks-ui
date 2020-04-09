@@ -13,20 +13,16 @@ const messages = defaultMessages.reduce<{
   return result
 }, {})
 
-const Providers = ({ children }: { children: React.ReactElement }) => {
-  return (
+const Providers = ({ children }: { children: React.ReactElement }) => (
     <IntlProvider defaultLocale="fi" locale="fi" messages={messages}>
       <ThemeWrapper>{children}</ThemeWrapper>
     </IntlProvider>
   )
-}
 
 export const renderWithContext = (
   children: React.ReactElement,
   options?: any
-) => {
-  return render(children, { wrapper: Providers, ...options })
-}
+) => render(children, { wrapper: Providers, ...options })
 
 export const ThemeProviderWrapper = ({
   children

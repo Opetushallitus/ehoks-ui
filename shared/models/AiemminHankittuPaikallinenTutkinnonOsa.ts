@@ -34,13 +34,11 @@ export const AiemminHankittuPaikallinenTutkinnonOsa = types
     AiemminHankitutTutkinnonOsatViews,
     model
   )
-  .views(self => {
-    return {
+  .views(self => ({
       get otsikko() {
         return self.nimi
       },
       get osaamispisteet() {
         return self.laajuus
       }
-    }
-  })
+    }))

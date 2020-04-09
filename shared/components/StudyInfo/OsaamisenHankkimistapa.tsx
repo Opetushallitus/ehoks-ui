@@ -136,22 +136,17 @@ export class OsaamisenHankkimistapa extends React.Component<
           <React.Fragment>
             <HMediaQuery.MaxWidth breakpoint="Tablet">
               <CustomSlider>
-                {keskeisetTyotehtavat.map((tyotehtava, i) => {
-                  return <Slide key={i}>{tyotehtava}</Slide>
-                })}
+                {keskeisetTyotehtavat.map((tyotehtava, i) => <Slide key={i}>{tyotehtava}</Slide>)}
               </CustomSlider>
             </HMediaQuery.MaxWidth>
             <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
               <OsaamisenHankkimistapaTasks>
-                {keskeisetTyotehtavat.map((tyotehtava, i) => {
-                  return <li key={i}>{tyotehtava}</li>
-                })}
+                {keskeisetTyotehtavat.map((tyotehtava, i) => <li key={i}>{tyotehtava}</li>)}
               </OsaamisenHankkimistapaTasks>
             </HMediaQuery.MaxWidth>
           </React.Fragment>
         )}
-        {muutOppimisymparistot.map((environment, i) => {
-          return (
+        {muutOppimisymparistot.map((environment, i) => (
             <OsaamisenHankkimistapaTitle key={i}>
               <LearningEvent
                 title={environment.oppimisymparisto.nimi}
@@ -160,8 +155,7 @@ export class OsaamisenHankkimistapa extends React.Component<
                 size="large"
               />
             </OsaamisenHankkimistapaTitle>
-          )
-        })}
+          ))}
       </Container>
     )
   }

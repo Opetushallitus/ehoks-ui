@@ -40,9 +40,7 @@ function CustomBaseInput(props: CustomBaseInputProps) {
     ...inputProps
   } = props
 
-  const onChange = ({ target }: { target: { value: string } }) => {
-    return props.onChange(target.value === "" ? "" : target.value)
-  }
+  const onChange = ({ target }: { target: { value: string } }) => props.onChange(target.value === "" ? "" : target.value)
 
   return (
     <>

@@ -22,8 +22,7 @@ const DEFAULT_OPTIONS = {
 }
 
 function optionToString(fields: any, separator: any) {
-  return (option: any) => {
-    return fields
+  return (option: any) => fields
       .map((field: any) => selectn(field, option))
       .filter((fieldVal: any) => fieldVal)
       .reduce((agg: any, fieldVal: any, i: number) => {
@@ -36,7 +35,6 @@ function optionToString(fields: any, separator: any) {
           return `${agg}${separator}${fieldVal}`
         }
       }, "")
-  }
 }
 
 function mapLabelKey(labelKey: any) {
@@ -106,9 +104,7 @@ function mapEvents(
         ? items.properties
         : {}
     )
-    const mappedEvents = events.map(event => {
-      return mapToObject(event, mapping, defVal)
-    })
+    const mappedEvents = events.map(event => mapToObject(event, mapping, defVal))
 
     return mappedEvents
   }
@@ -174,13 +170,11 @@ export function toSelected(
     typeof mapping === "string"
   ) {
     return normFormData
-      .map(dataItem => {
-        return options.find((option: any) => {
+      .map(dataItem => options.find((option: any) => {
           if (option[mapping] === dataItem) {
             return option
           }
-        })
-      })
+        }))
       .filter(x => x !== undefined)
   } else if (isArraySchema(schema)) {
     return normFormData

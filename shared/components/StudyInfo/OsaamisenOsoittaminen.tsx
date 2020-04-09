@@ -210,16 +210,12 @@ export class OsaamisenOsoittaminen extends React.Component<
         </DemonstrationTasksTitle>
         <HMediaQuery.MaxWidth breakpoint="Tablet">
           <CustomSlider>
-            {sisallonKuvaus.map((tyotehtava, i) => {
-              return <Slide key={i}>{tyotehtava}</Slide>
-            })}
+            {sisallonKuvaus.map((tyotehtava, i) => <Slide key={i}>{tyotehtava}</Slide>)}
           </CustomSlider>
         </HMediaQuery.MaxWidth>
         <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
           <OsaamisenOsoittaminenTasks>
-            {sisallonKuvaus.map((tyotehtava, i) => {
-              return <li key={i}>{tyotehtava}</li>
-            })}
+            {sisallonKuvaus.map((tyotehtava, i) => <li key={i}>{tyotehtava}</li>)}
           </OsaamisenOsoittaminenTasks>
         </HMediaQuery.MaxWidth>
 

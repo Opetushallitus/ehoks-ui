@@ -30,8 +30,7 @@ export const SessionUser = types
     surname: types.optional(types.string, ""),
     fullName: types.optional(types.string, "")
   })
-  .views(self => {
-    return {
+  .views(self => ({
       get yhteystiedot(): Yhteystiedot {
         if (
           !self.contactValuesGroup.length ||
@@ -45,7 +44,6 @@ export const SessionUser = types
           return result
         }, {} as Yhteystiedot)
       }
-    }
-  })
+    }))
 
 export type ISessionUser = Instance<typeof SessionUser>

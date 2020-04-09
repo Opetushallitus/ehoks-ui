@@ -34,8 +34,7 @@ const Main = styled("main")``
 
 const ModalContainer = styled("div")``
 
-const MainApp = (_: { path: string }) => {
-  return (
+const MainApp = (_: { path: string }) => (
     <Container>
       <AppHeader />
       <AppNotifications />
@@ -53,7 +52,6 @@ const MainApp = (_: { path: string }) => {
       <ModalContainer id="modal-root" />
     </Container>
   )
-}
 
 export interface AppProps {
   store?: IRootStore

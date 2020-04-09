@@ -9,8 +9,7 @@ interface DynamicObject {
 // dumb cache for preventing multiple fetches for the same koodi-uri's
 const cachedResponses: DynamicObject = {}
 
-export const EnrichOrganisaatioOid = (fieldPostfix: string) => {
-  return (
+export const EnrichOrganisaatioOid = (fieldPostfix: string) => (
     types
       .model({})
       // we need this typing to avoid 'missing index signature' error
@@ -67,4 +66,3 @@ export const EnrichOrganisaatioOid = (fieldPostfix: string) => {
         return { afterCreate }
       })
   )
-}

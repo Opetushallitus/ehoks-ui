@@ -48,8 +48,7 @@ const competenceAreas = [
 ]
 
 export const mockStudents: MockStudent[] = Array.from(Array(100).keys()).map(
-  key => {
-    return {
+  key => ({
       oid: key.toString(),
       nimi: `${lastNames[Math.floor(Math.random() * lastNames.length)]} ${
         firstNames[Math.floor(Math.random() * firstNames.length)]
@@ -59,6 +58,5 @@ export const mockStudents: MockStudent[] = Array.from(Array(100).keys()).map(
       osaamisala:
         competenceAreas[Math.floor(Math.random() * competenceAreas.length)],
       suunnitelmat: []
-    }
-  }
+    })
 )

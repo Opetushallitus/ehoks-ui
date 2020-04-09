@@ -31,8 +31,7 @@ export const AiemminHankitunYTOOsaAlue = types
     AiemminHankitutTutkinnonOsatViews,
     Model
   )
-  .views(self => {
-    return {
+  .views(self => ({
       get otsikko() {
         return self.osaAlue ? self.osaAlue.nimi : ""
       },
@@ -40,5 +39,4 @@ export const AiemminHankitunYTOOsaAlue = types
         // TODO: where do we get this? Fix this also to YhteisenTutkinnonOsanOsaAlue.ts
         return 0
       }
-    }
-  })
+    }))

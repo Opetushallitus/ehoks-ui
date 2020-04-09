@@ -84,8 +84,6 @@ export const Opiskeluoikeus = types
   })
   .views(self => ({
     get perustutkinto() {
-      return find(self.suoritukset, suoritus => {
-        return suoritus.suoritustapa.isAmmatillinenPerustutkinto
-      })
+      return find(self.suoritukset, suoritus => suoritus.suoritustapa.isAmmatillinenPerustutkinto)
     }
   }))

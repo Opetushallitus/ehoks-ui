@@ -26,8 +26,7 @@ export const YhteisenTutkinnonOsanOsaAlue = types
     EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
     HankittavatTutkinnonOsatViews
   )
-  .views(self => {
-    return {
+  .views(self => ({
       get otsikko() {
         return self.osaAlue ? self.osaAlue.nimi : ""
       },
@@ -35,5 +34,4 @@ export const YhteisenTutkinnonOsanOsaAlue = types
         // TODO: where do we get this? Fix this also to AiemminHankitunYTOOsaAlue.ts
         return 0
       }
-    }
-  })
+    }))

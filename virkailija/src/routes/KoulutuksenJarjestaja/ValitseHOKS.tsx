@@ -62,8 +62,7 @@ export class ValitseHOKS extends React.Component<ValitseHOKSProps> {
                   />
                 </Heading>
 
-                {voimassaOlevat.map((suunnitelma, i) => {
-                  return (
+                {voimassaOlevat.map((suunnitelma, i) => (
                     <Suunnitelma
                       hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
                       suunnitelma={suunnitelma}
@@ -71,8 +70,7 @@ export class ValitseHOKS extends React.Component<ValitseHOKSProps> {
                       showEditIcon={isHoksEditIconVisible(suunnitelma)}
                       key={i}
                     />
-                  )
-                })}
+                  ))}
               </PaddedContent>
             )}
             {paattyneet.length > 0 && (
@@ -84,8 +82,7 @@ export class ValitseHOKS extends React.Component<ValitseHOKSProps> {
                   />
                 </Heading>
 
-                {paattyneet.map((suunnitelma, i) => {
-                  return (
+                {paattyneet.map((suunnitelma, i) => (
                     <Suunnitelma
                       hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
                       suunnitelma={suunnitelma}
@@ -93,8 +90,7 @@ export class ValitseHOKS extends React.Component<ValitseHOKSProps> {
                       showEditIcon={isHoksEditIconVisible(suunnitelma)}
                       key={i}
                     />
-                  )
-                })}
+                  ))}
               </PaddedContent>
             )}
           </Container>

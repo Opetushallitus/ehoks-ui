@@ -3,8 +3,7 @@ import { getOtsikko } from "./getOtsikko"
 
 export const AiemminHankitutTutkinnonOsatViews = types
   .model({})
-  .views((self: any) => {
-    return {
+  .views((self: any) => ({
       get todentamisenProsessi() {
         return {
           koodiUri: self.valittuTodentamisenProsessiKoodiUri,
@@ -15,5 +14,4 @@ export const AiemminHankitutTutkinnonOsatViews = types
       opintoOtsikko(ospLyhenne: string): string {
         return getOtsikko(self, ospLyhenne)
       }
-    }
-  })
+    }))

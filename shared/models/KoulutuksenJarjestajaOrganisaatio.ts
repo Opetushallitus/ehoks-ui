@@ -32,13 +32,11 @@ export const KoulutuksenJarjestajaOrganisaatio = types
 
     return { fetchOrganisation }
   })
-  .actions(self => {
-    return {
+  .actions(self => ({
       afterCreate() {
         self.fetchOrganisation()
       }
-    }
-  })
+    }))
   .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {

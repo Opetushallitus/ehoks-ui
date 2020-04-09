@@ -20,24 +20,18 @@ export function getOsaamisvaatimukset(
   if (!arviointi) {
     return []
   }
-  return arviointi.arvioinninKohdealueet.map(kohdeAlue => {
-    return {
+  return arviointi.arvioinninKohdealueet.map(kohdeAlue => ({
       kuvaus: kohdeAlue.otsikko[activeLocale],
-      kriteerit: kohdeAlue.arvioinninKohteet.map(arvioinninKohde => {
-        return {
+      kriteerit: kohdeAlue.arvioinninKohteet.map(arvioinninKohde => ({
           kuvaus: arvioinninKohde.otsikko
             ? arvioinninKohde.otsikko[activeLocale]
             : "",
           kriteerit: flattenDeep<string>(
-            arvioinninKohde.osaamistasonKriteerit.map(tasoKriteeri => {
-              return tasoKriteeri.kriteerit.map(
+            arvioinninKohde.osaamistasonKriteerit.map(tasoKriteeri => tasoKriteeri.kriteerit.map(
                 kriteeri =>
                   `${tasoKriteeri.osaamistaso}: ${kriteeri[activeLocale]}`
-              )
-            })
+              ))
           ).sort()
-        }
-      })
-    }
-  })
+        }))
+    }))
 }

@@ -27,8 +27,7 @@ const Model = types.model("OsaamisenHankkimistapaModel", {
 
 export const OsaamisenHankkimistapa = types
   .compose("OsaamisenHankkimistapa", EnrichKoodiUri, Model)
-  .views(self => {
-    return {
+  .views(self => ({
       get selite() {
         return self.tyyppi === OsaamisenHankkimistapaType.Workplace
           ? self.tyopaikallaJarjestettavaKoulutus?.tyopaikanNimi
@@ -56,5 +55,4 @@ export const OsaamisenHankkimistapa = types
           ? OsaamisenHankkimistapaType.Workplace
           : OsaamisenHankkimistapaType.Other
       }
-    }
-  })
+    }))

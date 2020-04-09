@@ -32,8 +32,7 @@ export const StudyPoints = (props: {
   osaamispisteet?: number
   titleTranslationId: string
   pointsTranslationId: string
-}) => {
-  return (
+}) => (
     <LabeledColumn id={props.titleTranslationId}>
       <Points
         osaamispisteet={props.osaamispisteet}
@@ -41,4 +40,3 @@ export const StudyPoints = (props: {
       />
     </LabeledColumn>
   )
-}

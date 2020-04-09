@@ -1,7 +1,6 @@
 import React from "react"
 
-export default ({ size = 16 }: { size?: number }) => {
-  return (
+export default ({ size = 16 }: { size?: number }) => (
     <svg width={size} height={size} viewBox="0 0 334 511" version="1.1">
       <g
         id="Page-1"
@@ -57,4 +56,3 @@ export default ({ size = 16 }: { size?: number }) => {
       </g>
     </svg>
   )
-}

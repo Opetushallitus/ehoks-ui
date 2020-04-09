@@ -133,26 +133,23 @@ export const NotificationStore = types
     }: { session: { settings: ISettings } } = getRoot(self)
     return {
       get retainedNotifications() {
-        return self.notifications.filter(notification => {
+        return self.notifications.filter(notification => 
           // NOTE: investigate why settings.hiddenNotifications.exists
           // is not reactive here (does not trigger re-render)
-          return !find(
+           !find(
             settings.hiddenNotifications.notifications,
-            hiddenNotification => {
-              return (
+            hiddenNotification => (
                 hiddenNotification.hoksId === notification.hoksId &&
                 hiddenNotification.tutkinnonOsaKoodiUri ===
                   notification.tutkinnonOsaKoodiUri &&
                 hiddenNotification.tyyppi === notification.tyyppi
               )
-            }
           )
-        })
+        )
       }
     }
   })
-  .views(self => {
-    return {
+  .views(self => ({
       get hasUnanswaredFeedbackLinks() {
         return self.studentFeedbackLinks?.length !== 0
       },
@@ -169,7 +166,6 @@ export const NotificationStore = types
           )
         })
       }
-    }
-  })
+    }))
 
 export type INotificationStore = Instance<typeof NotificationStore>

@@ -80,12 +80,10 @@ export const SessionStore = types
           }),
           { headers: callerId() }
         )
-        self.organisations = organisationsData.data.map((o: IOrganisation) => {
-          return {
+        self.organisations = organisationsData.data.map((o: IOrganisation) => ({
             nimi: o.nimi,
             oid: o.oid
-          }
-        })
+          }))
         if (self.user && self.organisations.length > 0) {
           if (self.organisations.findIndex(p => p.oid === storedOid) === -1) {
             changeSelectedOrganisationOid(self.organisations[0].oid)
@@ -127,8 +125,7 @@ export const SessionStore = types
       changeSelectedOrganisationOid
     }
   })
-  .views(self => {
-    return {
+  .views(self => ({
       get isLoggedIn() {
         return !!self.user
       },
@@ -141,10 +138,8 @@ export const SessionStore = types
           )
         )
       }
-    }
-  })
-  .views(self => {
-    return {
+    }))
+  .views(self => ({
       get hasWritePrivilege() {
         return (
           self.selectedOrganisation &&
@@ -158,13 +153,10 @@ export const SessionStore = types
           self.selectedOrganisation.roles.indexOf("oph-super-user") > -1
         )
       }
-    }
-  })
-  .views(self => {
-    return {
+    }))
+  .views(self => ({
       get hasEditPrivilege() {
         return self.hasWritePrivilege || self.hasSuperUserPrivilege
       }
-    }
-  })
+    }))
 export type ISessionStore = Instance<typeof SessionStore>

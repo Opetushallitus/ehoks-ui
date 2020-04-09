@@ -27,12 +27,10 @@ export const stripUnsupportedFormat = (schema: any) => {
   return schema
 }
 
-export const stripUnsupportedFormats = (definitions: any) => {
-  return Object.keys(definitions).reduce((defs: any, def) => {
+export const stripUnsupportedFormats = (definitions: any) => Object.keys(definitions).reduce((defs: any, def) => {
     defs[def] = stripUnsupportedFormat(definitions[def])
     return defs
   }, {})
-}
 
 export function transformErrors(errors: AjvError[]) {
   return errors.map(error => {

@@ -319,8 +319,7 @@ export function ShareDialog(props: ShareDialogProps) {
             )}
           </ShareDescription>
           <SharedLinks>
-            {sharedLinks.map((link, i) => {
-              return (
+            {sharedLinks.map((link, i) => (
                 <SharedLink key={i}>
                   <LinkItem>
                     <FormattedMessage
@@ -349,8 +348,7 @@ export function ShareDialog(props: ShareDialogProps) {
                     </a>
                   </LinkAnchor>
                 </SharedLink>
-              )
-            })}
+              ))}
           </SharedLinks>
           <div>
             <div>

@@ -61,14 +61,10 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
   disposeReaction: IReactionDisposer
   componentDidMount() {
     this.disposeReaction = reaction(
-      () => {
-        return this.props.suunnitelmat.length > 0
-      },
+      () => this.props.suunnitelmat.length > 0,
       async (hasSuunnitelmat: boolean) => {
         if (hasSuunnitelmat) {
-          const suunnitelma = find(this.props.suunnitelmat, h => {
-            return h.eid === this.props.hoksId
-          })
+          const suunnitelma = find(this.props.suunnitelmat, h => h.eid === this.props.hoksId)
           if (suunnitelma) {
             await suunnitelma.fetchDetails()
           }
@@ -90,9 +86,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
   render() {
     const { hoksId, location, suunnitelmat, oppija } = this.props
 
-    const suunnitelma = find(suunnitelmat, h => {
-      return h.eid === hoksId
-    })
+    const suunnitelma = find(suunnitelmat, h => h.eid === hoksId)
 
     if (!oppija || !suunnitelma) {
       return null

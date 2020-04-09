@@ -155,14 +155,12 @@ const OsaamisenHankkimistavatExpanded = ({
     instructor={instructor}
     defaultPeriod={defaultPeriod}
   >
-    {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => {
-      return (
+    {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => (
         <OsaamisenHankkimistapa
           key={i}
           osaamisenHankkimistapa={osaamisenHankkimistapa}
         />
-      )
-    })}
+      ))}
   </ShareDialog>
 )
 
@@ -172,8 +170,7 @@ const OsaamisenHankkimistavatCollapsed = ({
   osaamisenHankkimistavat: IOsaamisenHankkimistapa[]
 }) => (
   <>
-    {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => {
-      return (
+    {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => (
         <LearningEvent
           key={i}
           title={
@@ -185,8 +182,7 @@ const OsaamisenHankkimistavatCollapsed = ({
           startDate={osaamisenHankkimistapa.alku}
           endDate={osaamisenHankkimistapa.loppu}
         />
-      )
-    })}
+      ))}
   </>
 )
 
@@ -206,8 +202,7 @@ const OsaamisenOsoittamisetExpanded = ({
   todentamisenProsessi?: TodentamisenProsessi
 }) => (
   <>
-    {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => {
-      return (
+    {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => (
         <ShareDialog
           active={hasActiveShare && shareType === "naytto"}
           background={fadedColor}
@@ -226,8 +221,7 @@ const OsaamisenOsoittamisetExpanded = ({
             hasActiveShare={hasActiveShare && shareType === "naytto"}
           />
         </ShareDialog>
-      )
-    })}
+      ))}
   </>
 )
 

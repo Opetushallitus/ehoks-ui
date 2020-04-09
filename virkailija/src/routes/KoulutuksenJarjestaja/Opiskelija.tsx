@@ -55,9 +55,7 @@ export class Opiskelija extends React.Component<
     const { search } = koulutuksenJarjestaja
 
     this.disposeLoginReaction = reaction(
-      () => {
-        return session.isLoggedIn && session.organisations.length > 0
-      },
+      () => session.isLoggedIn && session.organisations.length > 0,
       async hasLoggedIn => {
         if (hasLoggedIn) {
           if (!search.results.length) {

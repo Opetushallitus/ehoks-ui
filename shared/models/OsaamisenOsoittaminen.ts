@@ -25,8 +25,7 @@ export const OsaamisenOsoittaminen = types
     vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
     yksilollisetKriteerit: types.optional(types.array(types.string), [])
   })
-  .views(self => {
-    return {
+  .views(self => ({
       get koulutuksenJarjestajaArvioijat() {
         return self.koulutuksenJarjestajaOsaamisenArvioijat.map(a =>
           [a.nimi, a.organisaatio.oppilaitosNimi].filter(Boolean).join(", ")
@@ -44,5 +43,4 @@ export const OsaamisenOsoittaminen = types
           .filter(Boolean)
           .join(", ")
       }
-    }
-  })
+    }))

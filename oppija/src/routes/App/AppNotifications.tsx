@@ -46,8 +46,7 @@ const NotificationLink = styled(Link)`
 
 const NotificationAnchor = NotificationLink.withComponent("a")
 
-const AlertType = ({ type }: { type: string }) => {
-  return type === "naytto" ? (
+const AlertType = ({ type }: { type: string }) => type === "naytto" ? (
     <FormattedMessage id="muistutukset.naytto" defaultMessage="Näyttö" />
   ) : (
     <FormattedMessage
@@ -55,7 +54,6 @@ const AlertType = ({ type }: { type: string }) => {
       defaultMessage="Työssäoppiminen"
     />
   )
-}
 
 export interface AppNotificationsProps {
   store?: IRootStore
@@ -82,8 +80,7 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
     } = store!
     return (
       <Container>
-        {unhandled.map((error: IAppError, i: number) => {
-          return (
+        {unhandled.map((error: IAppError, i: number) => (
             <AppNotification key={i} type="error">
               <Content>
                 <Text>
@@ -103,8 +100,7 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
                 </IconContainer>
               </Content>
             </AppNotification>
-          )
-        })}
+          ))}
         {featureFlags.shareNotifications &&
           notifications.visible.map((notification, i) => {
             const message = notification.message

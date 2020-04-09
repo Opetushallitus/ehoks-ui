@@ -130,15 +130,13 @@ export class AmmattitutkintoHaku extends React.Component<
                       this.state.activePage * this.state.perPage
                     ),
                     this.state.perPage
-                  ).map(peruste => {
-                    return (
+                  ).map(peruste => (
                       <SearchResult
                         key={peruste.id}
                         result={peruste}
                         intl={intl}
                       />
-                    )
-                  })}
+                    ))}
                 </SearchResultsList>
               </SearchResultsContainer>
 
@@ -149,8 +147,7 @@ export class AmmattitutkintoHaku extends React.Component<
                       "ammattitutkinto.hakutuloksienSivutuksenNavigaatioAriaLabel"
                   })}
                 >
-                  {range(totalPages).map(index => {
-                    return (
+                  {range(totalPages).map(index => (
                       <Page
                         key={index}
                         active={this.state.activePage === index}
@@ -168,8 +165,7 @@ export class AmmattitutkintoHaku extends React.Component<
                       >
                         {index + 1}
                       </Page>
-                    )
-                  })}
+                    ))}
                 </PagingContainer>
               )}
             </React.Fragment>

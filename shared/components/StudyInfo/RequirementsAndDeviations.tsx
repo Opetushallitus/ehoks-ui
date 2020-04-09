@@ -150,9 +150,7 @@ export class RequirementsAndDeviations extends React.Component<
                 </Prefix>
                 <Requirements>
                   {requirements &&
-                    requirements.map((requirement, i) => {
-                      return <li key={i}>{requirement}</li>
-                    })}
+                    requirements.map((requirement, i) => <li key={i}>{requirement}</li>)}
                 </Requirements>
               </>
             )}

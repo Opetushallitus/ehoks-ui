@@ -15,14 +15,10 @@ export const TableContext = React.createContext<TableContextProps>({
   sortDirection: "asc",
   sortTitle: "Sort",
   searchTexts: {},
-  onSort: () => {
-    return
-  },
+  onSort: () => false,
   onUpdateSearchText: (_: string) => (
     __: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    return
-  }
+  ) => false
 })
 
 const Container = styled("table")`
