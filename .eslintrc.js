@@ -12,10 +12,10 @@ module.exports = {
     ],
     sourceType: "module"
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "prefer-arrow"],
   rules: {
     "@typescript-eslint/adjacent-overload-signatures": "error",
-    "@typescript-eslint/array-type": "warn",
+    "@typescript-eslint/array-type": "error",
     "@typescript-eslint/ban-types": "error",
     "@typescript-eslint/class-name-casing": "error",
     "@typescript-eslint/consistent-type-assertions": "error",
@@ -66,18 +66,18 @@ module.exports = {
     "eol-last": "off",
     eqeqeq: ["error", "smart"],
     "guard-for-in": "error",
-    // "id-blacklist": [
-    //   "error",
-    //   "any",
-    //   "Number",
-    //   "number",
-    //   "String",
-    //   "string",
-    //   "Boolean",
-    //   "boolean",
-    //   "Undefined",
-    //   "undefined"
-    // ],
+    "id-blacklist": [
+      "warn",
+      "any",
+      "Number",
+      "number",
+      // "String", TODO: might fix this: https://github.com/eslint/eslint/pull/12987
+      "string",
+      "Boolean",
+      "boolean",
+      "Undefined"
+      // "undefined" TODO: might fix this: https://github.com/eslint/eslint/pull/12987
+    ],
     "id-match": "error",
     "import/no-extraneous-dependencies": "off",
     "import/no-internal-modules": "off",
@@ -129,14 +129,21 @@ module.exports = {
     "no-var": "error",
     "object-shorthand": "error",
     "one-var": ["off", "never"],
-    // "prefer-arrow/prefer-arrow-functions": "error",
+    "arrow-body-style": ["error", "as-needed"],
+    "prefer-arrow/prefer-arrow-functions": [
+      "error",
+      {
+        disallowPrototype: false,
+        singleReturnOnly: true,
+        classPropertiesAllowed: true
+      }
+    ],
     "prefer-const": "error",
     "prefer-object-spread": "error",
     "quote-props": "off",
     radix: "error",
     "space-before-function-paren": "off",
     "space-in-parens": ["off", "never"],
-    "spaced-comment": "error",
     "use-isnan": "error",
     "valid-typeof": "off"
   }
