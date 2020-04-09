@@ -2,13 +2,6 @@ declare module "*.jpg"
 declare module "*.png"
 declare module "*.svg"
 
-declare module "react-jsonschema-form/lib/components/fields/SchemaField" {
-  import * as React from "react"
-  // @ts-ignore
-  import { FormProps } from "react-jsonschema-form"
-  export default class SchemaField<T> extends React.Component<FormProps<T>> {}
-}
-
 declare module "react-jsonschema-form/lib/components/AddButton" {
   import * as React from "react" // eslint-disable-line no-duplicate-imports
   const AddButton: React.SFC<{
