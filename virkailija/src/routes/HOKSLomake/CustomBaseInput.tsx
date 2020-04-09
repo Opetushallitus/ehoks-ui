@@ -6,7 +6,7 @@ import {
 } from "react-jsonschema-form"
 
 interface CustomBaseInputProps
-  extends WidgetProps,
+  extends Omit<WidgetProps, "rawErrors">,
     Partial<
       Pick<FieldProps, "registry"> & Pick<FieldTemplateProps, "rawErrors">
     > {
