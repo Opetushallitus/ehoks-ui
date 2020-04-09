@@ -391,7 +391,7 @@ export class AsyncTypeaheadField extends BaseTypeaheadField {
     search(url, query)
       .then((json: any) => (optionsPath ? selectn(optionsPath, json) : json))
       .then((options: any) =>
-        this.setState({ options: options, isLoading: false })
+        this.setState({ options, isLoading: false })
       )
   }
 
