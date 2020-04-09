@@ -23,7 +23,7 @@
     "prepush:virkailija": "npm run prepush --prefix virkailija",
     "prepush:oppija": "npm run prepush --prefix oppija",
     "prepush": "npm-run-all prepush:*",
-    "travis": "npm-run-all prettier:check lint:* test:* build:*"
+    "travis": "npm-run-all prettier:check lint test:* build:*"
   },
   "private": true,
   "license": "",
