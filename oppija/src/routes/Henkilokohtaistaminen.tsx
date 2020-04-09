@@ -54,8 +54,7 @@ export class Henkilokohtaistaminen extends React.Component<
     })
   }
 
-  render() {
-    return (
+  render = () => (
       <Container>
         <PaddedContainer>
           <HomeLink to="../">
@@ -320,6 +319,5 @@ export class Henkilokohtaistaminen extends React.Component<
           </Section>
         </PaddedContainer>
       </Container>
-    )
-  }
+    );
 }

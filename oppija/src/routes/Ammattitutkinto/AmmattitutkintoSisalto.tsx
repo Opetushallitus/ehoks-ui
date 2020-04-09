@@ -10,8 +10,7 @@ const OpintopolkuLink = styled("a")`
 `
 
 export class AmmattitutkintoSisalto extends React.Component<{}> {
-  render() {
-    return (
+  render = () => (
       <Section>
         <SectionTitle>
           <FormattedMessage
@@ -44,6 +43,5 @@ export class AmmattitutkintoSisalto extends React.Component<{}> {
           </OpintopolkuLink>
         </p>
       </Section>
-    )
-  }
+    );
 }

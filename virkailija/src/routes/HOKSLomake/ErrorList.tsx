@@ -11,16 +11,13 @@ const ErrorMessage = styled("li")`
   }
 `
 
-function generateFieldId(path: string) {
-  return `root_${path
+const generateFieldId = (path: string) => `root_${path
     .split(/\]|\./)
     .filter(Boolean)
     .join("_")
-    .replace(/\[|'|\./g, "")}`
-}
+    .replace(/\[|'|\./g, "")}`;
 
-function scrollToError(error: AjvError) {
-  return (event: React.MouseEvent) => {
+const scrollToError = (error: AjvError) => (event: React.MouseEvent) => {
     event.preventDefault()
     const element: any = document.querySelector(
       `#${generateFieldId(error.property)}`
@@ -38,8 +35,7 @@ function scrollToError(error: AjvError) {
 
       focusElement.focus()
     }
-  }
-}
+  };
 
 interface ErrorListProps {
   errors: AjvError[]

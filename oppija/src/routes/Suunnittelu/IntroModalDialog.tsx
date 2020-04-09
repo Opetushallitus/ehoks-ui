@@ -183,8 +183,7 @@ class IntroPage1 extends React.Component {
 }
 
 class IntroPage2 extends React.Component {
-  render() {
-    return (
+  render = () => (
       <>
         <IntroPageTitle>
           <FormattedMessage
@@ -226,13 +225,11 @@ class IntroPage2 extends React.Component {
           </ListContainer>
         </VerticallyCentered>
       </>
-    )
-  }
+    );
 }
 
 class IntroPage3 extends React.Component {
-  render() {
-    return (
+  render = () => (
       <>
         <IntroPageTitle>
           <FormattedMessage
@@ -250,8 +247,7 @@ class IntroPage3 extends React.Component {
           </IntroPageTextContainer>
         </VerticallyCentered>
       </>
-    )
-  }
+    );
 }
 
 interface IntroPageContentProps {

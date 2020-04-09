@@ -1,8 +1,6 @@
-export function getOtsikko(
+export const getOtsikko = (
   model: { otsikko: string; osaamispisteet: number },
   ospLyhenne: string
-): string {
-  return `${model.otsikko}${
+): string => `${model.otsikko}${
     model.osaamispisteet ? ` ${model.osaamispisteet} ${ospLyhenne}` : ""
-  }`
-}
+  }`;

@@ -32,14 +32,12 @@ export class ValitseHOKS extends React.Component<ValitseHOKSProps> {
       suunnitelma => !!suunnitelma.paattymispaiva
     )
 
-    function isHoksEditIconVisible(suunnitelma: Instance<typeof HOKS>) {
-      return (
+    const isHoksEditIconVisible = (suunnitelma: Instance<typeof HOKS>) => (
         app === "virkailija" &&
         oppijaId !== "" &&
         suunnitelma.manuaalisyotto &&
         session.hasEditPrivilege === true
-      )
-    }
+      );
 
     return (
       <React.Fragment>

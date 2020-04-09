@@ -21,9 +21,7 @@ export enum Locale {
   SV = "sv"
 }
 
-function mapTranslations(translations: ApiTranslation[]) {
-  return translations.map(({ key, locale, value }) => ({ key, locale, value }))
-}
+const mapTranslations = (translations: ApiTranslation[]) => translations.map(({ key, locale, value }) => ({ key, locale, value }));
 
 const Localization = types.model("LocalizationModel", {
   key: types.string,

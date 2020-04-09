@@ -4,15 +4,13 @@ import mapObj from "map-obj"
 import queryString from "query-string"
 import { APIResponse } from "types/APIResponse"
 
-function camelCaseDeep(model: any) {
-  return mapObj(model, (key: string, value: any) => [camelCase(key), value], {
+const camelCaseDeep = (model: any) =>
+  mapObj(model, (key: string, value: any) => [camelCase(key), value], {
     deep: true
   })
-}
 
-export function withQueryString(url: string, queryParams: any) {
-  return `${url}?${queryString.stringify(queryParams)}`
-}
+export const withQueryString = (url: string, queryParams: any) =>
+  `${url}?${queryString.stringify(queryParams)}`
 
 export function fetchUtils(
   fetchImplementation: WindowOrWorkerGlobalScope["fetch"]
@@ -36,19 +34,15 @@ export function fetchUtils(
     }
   }
 
-  async function fetchPrimitiveCollection<D = any, M = any>(
+  const fetchPrimitiveCollection = async <D = any, M = any>(
     url: string,
     init?: RequestInit
-  ): Promise<APIResponse<D, M>> {
-    return getCollection(url, true, init)
-  }
+  ): Promise<APIResponse<D, M>> => getCollection(url, true, init)
 
-  async function fetchCollection<D = any, M = any>(
+  const fetchCollection = async <D = any, M = any>(
     url: string,
     init?: RequestInit
-  ): Promise<APIResponse<D, M>> {
-    return getCollection(url, false, init)
-  }
+  ): Promise<APIResponse<D, M>> => getCollection(url, false, init)
 
   return {
     fetchSingle: async (url: string, init?: RequestInit) => {
@@ -119,9 +113,8 @@ export const mockFetch = (apiUrl: (path: string) => string, version = 0) => (
     body: null,
     bodyUsed: false,
     clone: () => mockResponse,
-    json: () => import(
-        `stores/mocks/${path.replace(/\/|\-/g, "_")}${version}.json`
-      ),
+    json: () =>
+      import(`stores/mocks/${path.replace(/\/|\-/g, "_")}${version}.json`),
     ok: true,
     statusText: "Error"
   }

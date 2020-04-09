@@ -81,12 +81,10 @@ interface RequirementsAndDeviationsProps {
   deviations?: string
 }
 
-function doesntHaveRequirementsAndDeviations(
+const doesntHaveRequirementsAndDeviations = (
   requirements: string[] | undefined,
   deviations: string | undefined
-) {
-  return !((requirements && requirements.length > 0) || deviations)
-}
+) => !((requirements && requirements.length > 0) || deviations);
 
 export class RequirementsAndDeviations extends React.Component<
   RequirementsAndDeviationsProps

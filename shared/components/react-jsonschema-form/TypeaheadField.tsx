@@ -21,8 +21,7 @@ const DEFAULT_OPTIONS = {
   ref: "typeahead"
 }
 
-function optionToString(fields: any, separator: any) {
-  return (option: any) => fields
+const optionToString = (fields: any, separator: any) => (option: any) => fields
       .map((field: any) => selectn(field, option))
       .filter((fieldVal: any) => fieldVal)
       .reduce((agg: any, fieldVal: any, i: number) => {
@@ -34,8 +33,7 @@ function optionToString(fields: any, separator: any) {
           }
           return `${agg}${separator}${fieldVal}`
         }
-      }, "")
-}
+      }, "");
 
 function mapLabelKey(labelKey: any) {
   if (Array.isArray(labelKey)) {
@@ -115,8 +113,7 @@ export function mapToSchema(events: any[], schema: any, mapping: any) {
   return isArraySchema(schema) ? schemaEvents : schemaEvents[0]
 }
 
-function mapFromObject(data: any, mapping: any, defVal: any) {
-  return Object.keys(mapping).reduce((agg, field) => {
+const mapFromObject = (data: any, mapping: any, defVal: any) => Object.keys(mapping).reduce((agg, field) => {
     const eventField = mapping[field]
     if (typeof eventField === "object") {
       Object.assign(agg, mapFromObject(data[field], mapping, {}))
@@ -126,8 +123,7 @@ function mapFromObject(data: any, mapping: any, defVal: any) {
       }
     }
     return agg
-  }, defVal)
-}
+  }, defVal);
 /**
  *
  * @param {*} data
@@ -149,9 +145,7 @@ export function mapFromSchema(data: any, mapping: any) {
   }
 }
 
-function isEmpty(obj: any) {
-  return Object.keys(obj).length === 0 && obj.constructor === Object
-}
+const isEmpty = (obj: any) => Object.keys(obj).length === 0 && obj.constructor === Object;
 
 export function toSelected(
   formData: any,
@@ -198,9 +192,7 @@ export function toSelected(
   }
 }
 
-function isFunction(functionToCheck: any) {
-  return functionToCheck instanceof Function
-}
+const isFunction = (functionToCheck: any) => functionToCheck instanceof Function;
 
 /*
  this is done to prevent an edge case with a typeahead wrapped inside a table that has an item selected & uses a function as a labelKey
@@ -281,9 +273,7 @@ class BaseTypeaheadField extends Component<
   }
 }
 
-function isValidFormData(data: any) {
-  return data && !isEmpty(data)
-}
+const isValidFormData = (data: any) => data && !isEmpty(data);
 
 export class TypeaheadField extends BaseTypeaheadField {
   constructor(props: TypeaheadFieldProps) {

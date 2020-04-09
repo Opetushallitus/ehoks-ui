@@ -39,14 +39,12 @@ import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
 
 const disallowedKeys = ["eid", "manuaalisyotto"]
 
-function trimDisallowedKeys(formData: any) {
-  return Object.keys(formData).reduce((result, key) => {
+const trimDisallowedKeys = (formData: any) => Object.keys(formData).reduce((result, key) => {
     if (disallowedKeys.indexOf(key) === -1) {
       result[key] = formData[key]
     }
     return result
-  }, {} as any)
-}
+  }, {} as any);
 
 interface MuokkaaHOKSProps extends RouteComponentProps {
   store?: IRootStore

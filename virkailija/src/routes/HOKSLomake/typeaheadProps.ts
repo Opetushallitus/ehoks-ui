@@ -1,5 +1,4 @@
-export function typeaheadProps(options: any[]) {
-  return {
+export const typeaheadProps = (options: any[]) => ({
     options: options.sort((a: any, b: any) => {
       if (a.koodiUri > b.koodiUri) {
         return 1
@@ -15,5 +14,4 @@ export function typeaheadProps(options: any[]) {
     minLength: 0,
     clearButton: true,
     placeholder: "Valitse..."
-  }
-}
+  });

@@ -19,12 +19,10 @@ export function parseShareParams(
   }
 }
 
-export function stringifyShareParams({
+export const stringifyShareParams = ({
   share,
   type
 }: {
   share: string
   type: ShareType
-}): string {
-  return queryString.stringify({ share, type })
-}
+}): string => queryString.stringify({ share, type });

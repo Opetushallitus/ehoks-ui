@@ -247,9 +247,7 @@ const Search = types
     }
   })
   .views(self => ({
-      oppija(oid: string) {
-        return self.results.find(result => result.oid === oid)
-      }
+      oppija: (oid: string) => self.results.find(result => result.oid === oid)
     }))
 
 const KoulutuksenJarjestajaModel = {

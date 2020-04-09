@@ -28,8 +28,7 @@ export class Ammatillinentutkinto extends React.Component<
     })
   }
 
-  render() {
-    return (
+  render = () => (
       <Container>
         <PaddedContainer>
           <HomeLink to="../">
@@ -47,6 +46,5 @@ export class Ammatillinentutkinto extends React.Component<
           </SectionContainer>
         </PaddedContainer>
       </Container>
-    )
-  }
+    );
 }
