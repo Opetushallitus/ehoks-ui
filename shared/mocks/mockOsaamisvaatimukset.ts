@@ -1,9 +1,9 @@
 import { Osaamisvaatimus } from "models/Osaamisvaatimus"
 import { SnapshotOrInstance } from "mobx-state-tree"
 
-export const osaamisvaatimukset: Array<SnapshotOrInstance<
+export const osaamisvaatimukset: SnapshotOrInstance<
   typeof Osaamisvaatimus
->> = [
+>[] = [
   {
     kuvaus:
       "työskennellä sosiaali- ja terveysalan työn säädösten, toimintaperiaatteiden, arvojen ja eettisten periaatteiden mukaan",

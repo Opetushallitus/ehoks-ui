@@ -99,9 +99,9 @@ export interface StudyInfoProps {
    * List of competence requirements
    * @default []
    */
-  competenceRequirements?: Array<Osaamisvaatimus>
+  competenceRequirements?: Osaamisvaatimus[]
   /** List of competence demonstrations */
-  osaamisenOsoittamiset?: Array<IOsaamisenOsoittaminen>
+  osaamisenOsoittamiset?: IOsaamisenOsoittaminen[]
   /** olennainenSeikka is passed through to Details component */
   olennainenSeikka?: React.ReactNode
   /** Color of additional info container */
@@ -114,7 +114,7 @@ export interface StudyInfoProps {
    * List of learning periods.
    * @default []
    */
-  osaamisenHankkimistavat?: Array<IOsaamisenHankkimistapa>
+  osaamisenHankkimistavat?: IOsaamisenHankkimistapa[]
   /**
    * Current share state from url
    */

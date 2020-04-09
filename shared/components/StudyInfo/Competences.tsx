@@ -100,7 +100,7 @@ const Prefix = styled("div")`
 
 interface CompetencesProps {
   collapseAll: () => void
-  competenceRequirements?: Array<SnapshotOrInstance<typeof Osaamisvaatimus>>
+  competenceRequirements?: SnapshotOrInstance<typeof Osaamisvaatimus>[]
   expandAll: () => void
   expandCompetence: (index: number) => () => void
   expanded?: boolean

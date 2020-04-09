@@ -30,7 +30,7 @@ export const ErrorStore = types
   })
   .views(self => {
     return {
-      get unhandled(): Array<IAppError> {
+      get unhandled(): IAppError[] {
         return self.errors.filter(error => !error.handled)
       }
     }

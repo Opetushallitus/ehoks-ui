@@ -145,7 +145,7 @@ const OsaamisenHankkimistavatExpanded = ({
   koodiUri?: string
   instructor?: Instructor
   defaultPeriod?: ShareLinkValidityPeriod
-  osaamisenHankkimistavat: Array<IOsaamisenHankkimistapa>
+  osaamisenHankkimistavat: IOsaamisenHankkimistapa[]
 }) => (
   <ShareDialog
     active={hasActiveShare && shareType === "tyossaoppiminen"}
@@ -169,7 +169,7 @@ const OsaamisenHankkimistavatExpanded = ({
 const OsaamisenHankkimistavatCollapsed = ({
   osaamisenHankkimistavat
 }: {
-  osaamisenHankkimistavat: Array<IOsaamisenHankkimistapa>
+  osaamisenHankkimistavat: IOsaamisenHankkimistapa[]
 }) => (
   <>
     {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => {
@@ -198,7 +198,7 @@ const OsaamisenOsoittamisetExpanded = ({
   koodiUri,
   todentamisenProsessi
 }: {
-  osaamisenOsoittamiset: Array<IOsaamisenOsoittaminen>
+  osaamisenOsoittamiset: IOsaamisenOsoittaminen[]
   hasActiveShare: boolean
   shareType?: ShareType | ""
   fadedColor: string
@@ -235,7 +235,7 @@ const OsaamisenOsoittamisetCollapsed = ({
   osaamisenOsoittamiset,
   todentamisenProsessiKoodi
 }: {
-  osaamisenOsoittamiset: Array<IOsaamisenOsoittaminen>
+  osaamisenOsoittamiset: IOsaamisenOsoittaminen[]
   todentamisenProsessiKoodi?: string
 }) => (
   <>
@@ -434,11 +434,11 @@ const TodentamisenProsessiArvioijienKautta = ({
 
 interface DetailsProps {
   fadedColor?: string
-  osaamisenOsoittamiset?: Array<IOsaamisenOsoittaminen>
+  osaamisenOsoittamiset?: IOsaamisenOsoittaminen[]
   olennainenSeikka?: React.ReactNode
   expanded?: boolean
   koodiUri?: string
-  osaamisenHankkimistavat?: Array<IOsaamisenHankkimistapa>
+  osaamisenHankkimistavat?: IOsaamisenHankkimistapa[]
   share?: { koodiUri: string; type: ShareType | "" }
   toggle: (name: ToggleableItems) => () => void
   todentamisenProsessi?: TodentamisenProsessi

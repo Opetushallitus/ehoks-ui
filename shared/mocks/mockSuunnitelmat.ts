@@ -1,7 +1,7 @@
 import { SnapshotOrInstance } from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
 
-export const suunnitelmat: Array<SnapshotOrInstance<typeof HOKS>> = [
+export const suunnitelmat: SnapshotOrInstance<typeof HOKS>[] = [
   {
     eid: "123",
     opiskeluoikeusOid: "1.2.246.562.15.76811932037",

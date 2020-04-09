@@ -77,7 +77,7 @@ export const NotificationStore = types
   }))
   .actions(self => {
     const addNotifications = (
-      notifications: Array<SnapshotOrInstance<typeof Notification>>
+      notifications: SnapshotOrInstance<typeof Notification>[]
     ) => {
       self.notifications.replace([
         ...self.notifications,

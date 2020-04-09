@@ -175,7 +175,7 @@ export function ShareDialog(props: ShareDialogProps) {
   }
 
   const ref = useRef<HTMLDivElement>(null)
-  const [sharedLinks, setSharedLinks] = useState<Array<ShareLink>>([])
+  const [sharedLinks, setSharedLinks] = useState<ShareLink[]>([])
   const [startDate, setStartDate] = useState(
     defaultPeriod ? defaultPeriod.start || "" : ""
   )

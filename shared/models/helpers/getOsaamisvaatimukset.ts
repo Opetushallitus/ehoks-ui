@@ -3,17 +3,17 @@ import { Locale } from "../../stores/TranslationStore"
 
 export function getOsaamisvaatimukset(
   arviointi: {
-    arvioinninKohdealueet: Array<{
+    arvioinninKohdealueet: {
       otsikko: { fi: string; sv: string }
-      arvioinninKohteet: Array<{
+      arvioinninKohteet: {
         otsikko: { fi: string; sv: string } | null
         arviointiAsteikko: string
-        osaamistasonKriteerit: Array<{
+        osaamistasonKriteerit: {
           osaamistaso: string
-          kriteerit: Array<{ fi: string; sv: string }>
-        }>
-      }>
-    }>
+          kriteerit: { fi: string; sv: string }[]
+        }[]
+      }[]
+    }[]
   } | null,
   activeLocale: Locale.FI | Locale.SV
 ) {

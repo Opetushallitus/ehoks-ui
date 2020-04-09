@@ -28,7 +28,7 @@ const MobileSliderToggle = styled("div")`
 `
 
 interface MobileCompetencesProps {
-  competenceRequirements: Array<SnapshotOrInstance<typeof Osaamisvaatimus>>
+  competenceRequirements: SnapshotOrInstance<typeof Osaamisvaatimus>[]
 }
 
 interface MobileCompetencesState {
