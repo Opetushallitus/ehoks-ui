@@ -46,12 +46,12 @@ export class ValitseHOKS extends React.Component<
               </Heading>
 
               {suunnitelmat.map((suunnitelma, i) => (
-                  <Suunnitelma
-                    hoksPath="/ehoks/suunnittelu/"
-                    suunnitelma={suunnitelma}
-                    key={i}
-                  />
-                ))}
+                <Suunnitelma
+                  hoksPath="/ehoks/suunnittelu/"
+                  suunnitelma={suunnitelma}
+                  key={i}
+                />
+              ))}
             </PaddedContent>
           </Container>
         </BackgroundContainer>

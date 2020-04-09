@@ -26,7 +26,9 @@ export interface Osaamisvaatimus {
   kriteerit?: Arviointikriteeri[]
 }
 
-export type ITarkentavatTiedotOsaamisenArvioija = Instance<typeof TodennettuArviointiLisatiedot>
+export type ITarkentavatTiedotOsaamisenArvioija = Instance<
+  typeof TodennettuArviointiLisatiedot
+>
 
 export type IOrganisaatio = Instance<typeof Organisaatio>
 

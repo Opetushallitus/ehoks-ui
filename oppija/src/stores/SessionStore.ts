@@ -110,9 +110,9 @@ export const SessionStore = types
     }
   })
   .views(self => ({
-      get isLoggedIn() {
-        return !!self.user
-      }
-    }))
+    get isLoggedIn() {
+      return !!self.user
+    }
+  }))
 
 export type ISessionStore = Instance<typeof SessionStore>

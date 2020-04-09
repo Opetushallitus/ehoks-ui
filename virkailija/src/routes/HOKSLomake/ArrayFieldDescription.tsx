@@ -9,13 +9,13 @@ const RootDescriptionField = ({
   id: string
   description: string
 }) => (
-    <h3 id={id} className="field-description">
-      <FormattedMessage
-        id={idToTranslationKey(id)}
-        defaultMessage={description}
-      />
-    </h3>
-  );
+  <h3 id={id} className="field-description">
+    <FormattedMessage
+      id={idToTranslationKey(id)}
+      defaultMessage={description}
+    />
+  </h3>
+)
 
 interface ArrayFieldDescriptionProps {
   DescriptionField: any

@@ -169,14 +169,14 @@ export function ArrayFieldTemplate(props: ArrayFieldTemplateProps) {
         <ItemButtonsContainer active={items.length > 0}>
           <ItemButtons>
             {range(items.length).map(index => (
-                <ItemButton
-                  key={index}
-                  active={activeStep === index}
-                  onClick={() => setActiveStep(index)}
-                >
-                  {index + 1}
-                </ItemButton>
-              ))}
+              <ItemButton
+                key={index}
+                active={activeStep === index}
+                onClick={() => setActiveStep(index)}
+              >
+                {index + 1}
+              </ItemButton>
+            ))}
           </ItemButtons>
           {items.length > 0 && (
             <RemoveButton

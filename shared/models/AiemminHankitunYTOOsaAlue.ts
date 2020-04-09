@@ -32,11 +32,11 @@ export const AiemminHankitunYTOOsaAlue = types
     Model
   )
   .views(self => ({
-      get otsikko() {
-        return self.osaAlue ? self.osaAlue.nimi : ""
-      },
-      get osaamispisteet() {
-        // TODO: where do we get this? Fix this also to YhteisenTutkinnonOsanOsaAlue.ts
-        return 0
-      }
-    }))
+    get otsikko() {
+      return self.osaAlue ? self.osaAlue.nimi : ""
+    },
+    get osaamispisteet() {
+      // TODO: where do we get this? Fix this also to YhteisenTutkinnonOsanOsaAlue.ts
+      return 0
+    }
+  }))

@@ -14,10 +14,10 @@ const messages = defaultMessages.reduce<{
 }, {})
 
 const Providers = ({ children }: { children: React.ReactElement }) => (
-    <IntlProvider defaultLocale="fi" locale="fi" messages={messages}>
-      <ThemeWrapper>{children}</ThemeWrapper>
-    </IntlProvider>
-  )
+  <IntlProvider defaultLocale="fi" locale="fi" messages={messages}>
+    <ThemeWrapper>{children}</ThemeWrapper>
+  </IntlProvider>
+)
 
 export const renderWithContext = (
   children: React.ReactElement,

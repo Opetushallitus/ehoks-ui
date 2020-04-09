@@ -26,9 +26,9 @@ const RootStoreModel = {
 export const RootStore = types
   .model("RootStore", RootStoreModel)
   .views(self => ({
-      get errors(): IErrorStore {
-        return getEnv(self).errors
-      }
-    }))
+    get errors(): IErrorStore {
+      return getEnv(self).errors
+    }
+  }))
 
 export type IRootStore = Instance<typeof RootStore>

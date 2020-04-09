@@ -211,48 +211,44 @@ export class KoulutuksenJarjestaja extends React.Component<
                 </colgroup>
                 <TableBody>
                   {results.map((student, i) => (
-                      <TableRow key={i}>
-                        <TableCell>
-                          {student.lukumaara > 0 ? (
-                            <Link
-                              to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${student.oid}`}
-                            >
-                              {student.nimi}
-                            </Link>
-                          ) : (
-                            student.nimi
-                          )}
-                        </TableCell>
-                        <TableCell>{student.tutkinto}</TableCell>
-                        <TableCell>{student.osaamisala}</TableCell>
-                        <TableCell>
-                          <FormattedDate
-                            date={
-                              student.hyvaksytty
-                                ? student.hyvaksytty
-                                : undefined
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <FormattedDate
-                            date={
-                              student.paivitetty
-                                ? student.paivitetty
-                                : undefined
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>{student.lukumaara}</TableCell>
-                        <TableCell>
-                          {session.hasEditPrivilege && student.editLink && (
-                            <Link to={student.editLink}>
-                              <MdEdit size={24} color="#000" />
-                            </Link>
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                    <TableRow key={i}>
+                      <TableCell>
+                        {student.lukumaara > 0 ? (
+                          <Link
+                            to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${student.oid}`}
+                          >
+                            {student.nimi}
+                          </Link>
+                        ) : (
+                          student.nimi
+                        )}
+                      </TableCell>
+                      <TableCell>{student.tutkinto}</TableCell>
+                      <TableCell>{student.osaamisala}</TableCell>
+                      <TableCell>
+                        <FormattedDate
+                          date={
+                            student.hyvaksytty ? student.hyvaksytty : undefined
+                          }
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <FormattedDate
+                          date={
+                            student.paivitetty ? student.paivitetty : undefined
+                          }
+                        />
+                      </TableCell>
+                      <TableCell>{student.lukumaara}</TableCell>
+                      <TableCell>
+                        {session.hasEditPrivilege && student.editLink && (
+                          <Link to={student.editLink}>
+                            <MdEdit size={24} color="#000" />
+                          </Link>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
                   {!results.length && (
                     <TableRow>
                       <TableCell colSpan={6}>

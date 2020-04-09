@@ -156,11 +156,11 @@ const OsaamisenHankkimistavatExpanded = ({
     defaultPeriod={defaultPeriod}
   >
     {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => (
-        <OsaamisenHankkimistapa
-          key={i}
-          osaamisenHankkimistapa={osaamisenHankkimistapa}
-        />
-      ))}
+      <OsaamisenHankkimistapa
+        key={i}
+        osaamisenHankkimistapa={osaamisenHankkimistapa}
+      />
+    ))}
   </ShareDialog>
 )
 
@@ -171,18 +171,18 @@ const OsaamisenHankkimistavatCollapsed = ({
 }) => (
   <>
     {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => (
-        <LearningEvent
-          key={i}
-          title={
-            <CompetenceAquirementTitle
-              hankkimistapaType={osaamisenHankkimistapa.tyyppi}
-            />
-          }
-          description={osaamisenHankkimistapa.selite}
-          startDate={osaamisenHankkimistapa.alku}
-          endDate={osaamisenHankkimistapa.loppu}
-        />
-      ))}
+      <LearningEvent
+        key={i}
+        title={
+          <CompetenceAquirementTitle
+            hankkimistapaType={osaamisenHankkimistapa.tyyppi}
+          />
+        }
+        description={osaamisenHankkimistapa.selite}
+        startDate={osaamisenHankkimistapa.alku}
+        endDate={osaamisenHankkimistapa.loppu}
+      />
+    ))}
   </>
 )
 
@@ -203,25 +203,25 @@ const OsaamisenOsoittamisetExpanded = ({
 }) => (
   <>
     {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => (
-        <ShareDialog
-          active={hasActiveShare && shareType === "naytto"}
-          background={fadedColor}
-          koodiUri={koodiUri || ""}
-          type="naytto"
-          defaultPeriod={{
-            start: osaamisenOsoittaminen.alku,
-            end: osaamisenOsoittaminen.loppu
-          }}
-          key={i}
-        >
-          <OsaamisenOsoittaminen
-            osaamisenOsoittaminen={osaamisenOsoittaminen}
-            todentamisenProsessi={todentamisenProsessi}
-            koodiUri={koodiUri}
-            hasActiveShare={hasActiveShare && shareType === "naytto"}
-          />
-        </ShareDialog>
-      ))}
+      <ShareDialog
+        active={hasActiveShare && shareType === "naytto"}
+        background={fadedColor}
+        koodiUri={koodiUri || ""}
+        type="naytto"
+        defaultPeriod={{
+          start: osaamisenOsoittaminen.alku,
+          end: osaamisenOsoittaminen.loppu
+        }}
+        key={i}
+      >
+        <OsaamisenOsoittaminen
+          osaamisenOsoittaminen={osaamisenOsoittaminen}
+          todentamisenProsessi={todentamisenProsessi}
+          koodiUri={koodiUri}
+          hasActiveShare={hasActiveShare && shareType === "naytto"}
+        />
+      </ShareDialog>
+    ))}
   </>
 )
 

@@ -33,10 +33,10 @@ export const StudyPoints = (props: {
   titleTranslationId: string
   pointsTranslationId: string
 }) => (
-    <LabeledColumn id={props.titleTranslationId}>
-      <Points
-        osaamispisteet={props.osaamispisteet}
-        pointsTranslationId={props.pointsTranslationId}
-      />
-    </LabeledColumn>
-  )
+  <LabeledColumn id={props.titleTranslationId}>
+    <Points
+      osaamispisteet={props.osaamispisteet}
+      pointsTranslationId={props.pointsTranslationId}
+    />
+  </LabeledColumn>
+)

@@ -2,7 +2,8 @@ import styled from "styled"
 
 const defaultSize = 30
 const defaultBorderWidth = 5
-const getBorderWidth = (size: number, borderSize: number) => size + Math.round(borderSize * Math.cos(Math.PI / 4) * 2)
+const getBorderWidth = (size: number, borderSize: number) =>
+  size + Math.round(borderSize * Math.cos(Math.PI / 4) * 2)
 
 interface ChartArrowProps {
   backgroundColor?: string

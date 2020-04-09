@@ -8,9 +8,9 @@ export const KoulutuksenJarjestajaArvioija = types
     organisaatio: types.optional(KoulutuksenJarjestajaOrganisaatio, {})
   })
   .views(self => ({
-      get koulutuksenJarjestajaArvioijaDescription() {
-        return [self.nimi, self.organisaatio.oppilaitosNimi]
-          .filter(Boolean)
-          .join(", ")
-      }
-    }))
+    get koulutuksenJarjestajaArvioijaDescription() {
+      return [self.nimi, self.organisaatio.oppilaitosNimi]
+        .filter(Boolean)
+        .join(", ")
+    }
+  }))

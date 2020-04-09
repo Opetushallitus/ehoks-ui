@@ -6,15 +6,15 @@ export function toArray(el: any) {
   }
 }
 
-export const isObjectSchema = (schema: any) => (
-    schema.type === "object" || (schema.items && schema.items.type === "object")
-  );
+export const isObjectSchema = (schema: any) =>
+  schema.type === "object" || (schema.items && schema.items.type === "object")
 
-export const isArraySchema = (schema: any) => schema.type === "array";
+export const isArraySchema = (schema: any) => schema.type === "array"
 
-export const isStringSchema = (schema: any) => schema.type === "string";
+export const isStringSchema = (schema: any) => schema.type === "string"
 
-export const isNumberSchema = (schema: any) => schema.type === "number" || schema.type === "integer";
+export const isNumberSchema = (schema: any) =>
+  schema.type === "number" || schema.type === "integer"
 
 export function getDefaultValueForSchema(schema: any) {
   if (isArraySchema(schema)) {

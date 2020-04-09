@@ -46,7 +46,8 @@ const NotificationLink = styled(Link)`
 
 const NotificationAnchor = NotificationLink.withComponent("a")
 
-const AlertType = ({ type }: { type: string }) => type === "naytto" ? (
+const AlertType = ({ type }: { type: string }) =>
+  type === "naytto" ? (
     <FormattedMessage id="muistutukset.naytto" defaultMessage="Näyttö" />
   ) : (
     <FormattedMessage
@@ -81,26 +82,26 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
     return (
       <Container>
         {unhandled.map((error: IAppError, i: number) => (
-            <AppNotification key={i} type="error">
-              <Content>
-                <Text>
-                  <FormattedMessage id={`errors.${error.id}`} />:{" "}
-                  <FormattedMessage
-                    id={`errors.${error.errorText}`}
-                    defaultMessage={error.errorText}
-                  />
-                </Text>
-                <IconContainer
-                  onClick={error.handle}
-                  aria-label={intl.formatMessage({
-                    id: "errors.piilotaVirheAriaLabel"
-                  })}
-                >
-                  <MdClose size={20} />
-                </IconContainer>
-              </Content>
-            </AppNotification>
-          ))}
+          <AppNotification key={i} type="error">
+            <Content>
+              <Text>
+                <FormattedMessage id={`errors.${error.id}`} />:{" "}
+                <FormattedMessage
+                  id={`errors.${error.errorText}`}
+                  defaultMessage={error.errorText}
+                />
+              </Text>
+              <IconContainer
+                onClick={error.handle}
+                aria-label={intl.formatMessage({
+                  id: "errors.piilotaVirheAriaLabel"
+                })}
+              >
+                <MdClose size={20} />
+              </IconContainer>
+            </Content>
+          </AppNotification>
+        ))}
         {featureFlags.shareNotifications &&
           notifications.visible.map((notification, i) => {
             const message = notification.message

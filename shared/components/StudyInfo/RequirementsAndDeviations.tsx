@@ -84,7 +84,7 @@ interface RequirementsAndDeviationsProps {
 const doesntHaveRequirementsAndDeviations = (
   requirements: string[] | undefined,
   deviations: string | undefined
-) => !((requirements && requirements.length > 0) || deviations);
+) => !((requirements && requirements.length > 0) || deviations)
 
 export class RequirementsAndDeviations extends React.Component<
   RequirementsAndDeviationsProps
@@ -148,7 +148,9 @@ export class RequirementsAndDeviations extends React.Component<
                 </Prefix>
                 <Requirements>
                   {requirements &&
-                    requirements.map((requirement, i) => <li key={i}>{requirement}</li>)}
+                    requirements.map((requirement, i) => (
+                      <li key={i}>{requirement}</li>
+                    ))}
                 </Requirements>
               </>
             )}

@@ -16,11 +16,14 @@ const HiddenNotifications = types
       hoksId: string,
       tutkinnonOsaKoodiUri: string,
       tyyppi: string
-    ) => find(self.notifications, hidden => (
+    ) =>
+      find(
+        self.notifications,
+        hidden =>
           hidden.hoksId === hoksId &&
           hidden.tutkinnonOsaKoodiUri === tutkinnonOsaKoodiUri &&
           hidden.tyyppi === tyyppi
-        ))
+      )
     return { exists }
   })
   .actions(self => {

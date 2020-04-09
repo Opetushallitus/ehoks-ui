@@ -27,10 +27,10 @@ export const HankittavaPaikallinenTutkinnonOsa = types
     HankittavatTutkinnonOsatViews
   )
   .views(self => ({
-      get otsikko() {
-        return self.nimi
-      },
-      get osaamispisteet() {
-        return self.laajuus
-      }
-    }))
+    get otsikko() {
+      return self.nimi
+    },
+    get osaamispisteet() {
+      return self.laajuus
+    }
+  }))

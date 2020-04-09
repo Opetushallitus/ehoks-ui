@@ -33,10 +33,10 @@ export const KoulutuksenJarjestajaOrganisaatio = types
     return { fetchOrganisation }
   })
   .actions(self => ({
-      afterCreate() {
-        self.fetchOrganisation()
-      }
-    }))
+    afterCreate() {
+      self.fetchOrganisation()
+    }
+  }))
   .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {

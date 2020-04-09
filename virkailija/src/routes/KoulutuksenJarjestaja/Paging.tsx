@@ -75,23 +75,23 @@ export function Paging(props: PagingProps) {
         </PageButton>
       )}
       {firstPages.map(index => (
-          <Page
-            key={index}
-            active={activePage === index}
-            aria-current={activePage === index}
-            onClick={goToPage(index)}
-            onKeyPress={onPaginationResultEnter(index)}
-            tabIndex={0}
-            aria-label={intl.formatMessage(
-              {
-                id: "koulutuksenJarjestaja.meneHakutuloksienSivulleAriaLabel"
-              },
-              { page: index + 1 }
-            )}
-          >
-            {index + 1}
-          </Page>
-        ))}
+        <Page
+          key={index}
+          active={activePage === index}
+          aria-current={activePage === index}
+          onClick={goToPage(index)}
+          onKeyPress={onPaginationResultEnter(index)}
+          tabIndex={0}
+          aria-label={intl.formatMessage(
+            {
+              id: "koulutuksenJarjestaja.meneHakutuloksienSivulleAriaLabel"
+            },
+            { page: index + 1 }
+          )}
+        >
+          {index + 1}
+        </Page>
+      ))}
       {longPagination && totalPages > 10 && <DotsContainer>…</DotsContainer>}
       {middlePages.map(index => {
         const offsetIndex = activePage - 2 + index

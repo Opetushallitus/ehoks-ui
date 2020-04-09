@@ -14,36 +14,38 @@ const HOKSStoreModel = {
 export const HOKSStore = types
   .model("HOKSStore", HOKSStoreModel)
   .views(self => ({
-      // shown as notification banners about current and upcoming OsaamisenOsoittamiset/OsaamisenHankkimistavat
-      get notifications() {
-        return flattenDeep<SnapshotIn<typeof Notification>>(
-          self.suunnitelmat.map(s => s.hankittavatTutkinnonOsat
-              .filter(t => t.tutkinnonOsaKoodiUri)
-              .map(to => [
-                  ...(!!to.osaamisenOsoittaminen
-                    ? to.osaamisenOsoittaminen.map(naytto => ({
-                          hoksId: s.eid,
-                          tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
-                          tyyppi: "naytto",
-                          alku: naytto.alku,
-                          loppu: naytto.loppu,
-                          paikka: naytto.nayttoymparisto?.kuvaus
-                        }))
-                    : []),
-                  ...(!!to.osaamisenHankkimistavat
-                    ? to.osaamisenHankkimistavat.map(oh => ({
-                          hoksId: s.eid,
-                          tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
-                          tyyppi: "tyossaoppiminen",
-                          alku: oh.alku,
-                          loppu: oh.loppu,
-                          paikka: oh.selite
-                        }))
-                    : [])
-                ]))
+    // shown as notification banners about current and upcoming OsaamisenOsoittamiset/OsaamisenHankkimistavat
+    get notifications() {
+      return flattenDeep<SnapshotIn<typeof Notification>>(
+        self.suunnitelmat.map(s =>
+          s.hankittavatTutkinnonOsat
+            .filter(t => t.tutkinnonOsaKoodiUri)
+            .map(to => [
+              ...(!!to.osaamisenOsoittaminen
+                ? to.osaamisenOsoittaminen.map(naytto => ({
+                    hoksId: s.eid,
+                    tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
+                    tyyppi: "naytto",
+                    alku: naytto.alku,
+                    loppu: naytto.loppu,
+                    paikka: naytto.nayttoymparisto?.kuvaus
+                  }))
+                : []),
+              ...(!!to.osaamisenHankkimistavat
+                ? to.osaamisenHankkimistavat.map(oh => ({
+                    hoksId: s.eid,
+                    tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
+                    tyyppi: "tyossaoppiminen",
+                    alku: oh.alku,
+                    loppu: oh.loppu,
+                    paikka: oh.selite
+                  }))
+                : [])
+            ])
         )
-      }
-    }))
+      )
+    }
+  }))
   .actions(self => {
     const root: IRootStore = getRoot(self)
     const { apiUrl, fetchCollection, errors, callerId } = getEnv<
@@ -60,7 +62,9 @@ export const HOKSStore = types
         self.suunnitelmat = response.data
 
         yield Promise.all(
-          self.suunnitelmat.map(suunnitelma => suunnitelma.fetchOpiskeluoikeudet())
+          self.suunnitelmat.map(suunnitelma =>
+            suunnitelma.fetchOpiskeluoikeudet()
+          )
         )
 
         // add computed notifications to notifications store

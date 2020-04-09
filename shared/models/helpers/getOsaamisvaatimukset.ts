@@ -21,17 +21,18 @@ export function getOsaamisvaatimukset(
     return []
   }
   return arviointi.arvioinninKohdealueet.map(kohdeAlue => ({
-      kuvaus: kohdeAlue.otsikko[activeLocale],
-      kriteerit: kohdeAlue.arvioinninKohteet.map(arvioinninKohde => ({
-          kuvaus: arvioinninKohde.otsikko
-            ? arvioinninKohde.otsikko[activeLocale]
-            : "",
-          kriteerit: flattenDeep<string>(
-            arvioinninKohde.osaamistasonKriteerit.map(tasoKriteeri => tasoKriteeri.kriteerit.map(
-                kriteeri =>
-                  `${tasoKriteeri.osaamistaso}: ${kriteeri[activeLocale]}`
-              ))
-          ).sort()
-        }))
+    kuvaus: kohdeAlue.otsikko[activeLocale],
+    kriteerit: kohdeAlue.arvioinninKohteet.map(arvioinninKohde => ({
+      kuvaus: arvioinninKohde.otsikko
+        ? arvioinninKohde.otsikko[activeLocale]
+        : "",
+      kriteerit: flattenDeep<string>(
+        arvioinninKohde.osaamistasonKriteerit.map(tasoKriteeri =>
+          tasoKriteeri.kriteerit.map(
+            kriteeri => `${tasoKriteeri.osaamistaso}: ${kriteeri[activeLocale]}`
+          )
+        )
+      ).sort()
     }))
+  }))
 }

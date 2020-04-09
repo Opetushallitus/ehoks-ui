@@ -206,13 +206,13 @@ export class Competences extends React.Component<CompetencesProps> {
 
               <InfoContainer data-testid="StudyInfo.Competences.CompetenceRequirements">
                 {competenceRequirements.map((competenceRequirement, i) => (
-                    <CompetenceRequirement
-                      key={i}
-                      competenceRequirement={competenceRequirement}
-                      expanded={expandedCompetences.indexOf(i) > -1}
-                      expand={expandCompetence(i)}
-                    />
-                  ))}
+                  <CompetenceRequirement
+                    key={i}
+                    competenceRequirement={competenceRequirement}
+                    expanded={expandedCompetences.indexOf(i) > -1}
+                    expand={expandCompetence(i)}
+                  />
+                ))}
               </InfoContainer>
             </HMediaQuery.SmallTablet>
           </React.Fragment>

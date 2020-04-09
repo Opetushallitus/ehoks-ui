@@ -9,12 +9,13 @@ interface DynamicObject {
 
 export const EnrichTutkinnonOsa = (
   fieldName: string = "tutkinnonOsaViitteet"
-) => types
+) =>
+  types
     .model({})
     .volatile(
       (_): DynamicObject => ({
-          disposeTutkinnonOsaFetcher: undefined as IReactionDisposer | undefined
-        })
+        disposeTutkinnonOsaFetcher: undefined as IReactionDisposer | undefined
+      })
     )
     .actions(self => {
       const { apiUrl, apiPrefix, errors, fetchCollection } = getEnv<

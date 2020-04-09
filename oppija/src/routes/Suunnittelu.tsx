@@ -44,10 +44,10 @@ export class Suunnittelu extends React.Component<
 
     this.disposeLoginReaction = reaction(
       () => ({
-          isLoggedIn: session.isLoggedIn,
-          userDidLogout: session.userDidLogout,
-          error: session.error
-        }),
+        isLoggedIn: session.isLoggedIn,
+        userDidLogout: session.userDidLogout,
+        error: session.error
+      }),
       async ({ isLoggedIn, userDidLogout, error }) => {
         // navigate to Opintopolku logout url after logging out
         if (!isLoggedIn) {

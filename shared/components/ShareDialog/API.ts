@@ -34,11 +34,11 @@ export const fetchLinks = async function(
   return json.data
     .filter(link => link.tyyppi === type)
     .map(link => ({
-        uuid: link.uuid,
-        validFrom: link["voimassaolo-alku"],
-        validTo: link["voimassaolo-loppu"],
-        type: link.tyyppi
-      }))
+      uuid: link.uuid,
+      validFrom: link["voimassaolo-alku"],
+      validTo: link["voimassaolo-loppu"],
+      type: link.tyyppi
+    }))
 }
 
 export const createLink = async function({

@@ -184,70 +184,70 @@ class IntroPage1 extends React.Component {
 
 class IntroPage2 extends React.Component {
   render = () => (
-      <>
-        <IntroPageTitle>
-          <FormattedMessage
-            id="introDialog.page2Title"
-            defaultMessage="Tietosi ovat eHOKSissa kolmessa osassa:"
-          />
-        </IntroPageTitle>
-        <VerticallyCentered>
-          <ListContainer>
-            <div>
-              <ListItemWithIcon>
-                <IconContainer>
-                  <Flag size={24} />
-                </IconContainer>
-                <FormattedMessage
-                  id="introDialog.page2item1"
-                  defaultMessage="Oma tavoitteesi"
-                />
-              </ListItemWithIcon>
-              <ListItemWithIcon>
-                <IconContainer>
-                  <MdExtension size={24} />
-                </IconContainer>
-                <FormattedMessage
-                  id="introDialog.page2item2"
-                  defaultMessage="Aiempi osaamisesi"
-                />
-              </ListItemWithIcon>
-              <ListItemWithIcon>
-                <IconContainer>
-                  <MdEventNote size={24} />
-                </IconContainer>
-                <FormattedMessage
-                  id="introDialog.page2item3"
-                  defaultMessage="Opintosuunnitelmasi"
-                />
-              </ListItemWithIcon>
-            </div>
-          </ListContainer>
-        </VerticallyCentered>
-      </>
-    );
+    <>
+      <IntroPageTitle>
+        <FormattedMessage
+          id="introDialog.page2Title"
+          defaultMessage="Tietosi ovat eHOKSissa kolmessa osassa:"
+        />
+      </IntroPageTitle>
+      <VerticallyCentered>
+        <ListContainer>
+          <div>
+            <ListItemWithIcon>
+              <IconContainer>
+                <Flag size={24} />
+              </IconContainer>
+              <FormattedMessage
+                id="introDialog.page2item1"
+                defaultMessage="Oma tavoitteesi"
+              />
+            </ListItemWithIcon>
+            <ListItemWithIcon>
+              <IconContainer>
+                <MdExtension size={24} />
+              </IconContainer>
+              <FormattedMessage
+                id="introDialog.page2item2"
+                defaultMessage="Aiempi osaamisesi"
+              />
+            </ListItemWithIcon>
+            <ListItemWithIcon>
+              <IconContainer>
+                <MdEventNote size={24} />
+              </IconContainer>
+              <FormattedMessage
+                id="introDialog.page2item3"
+                defaultMessage="Opintosuunnitelmasi"
+              />
+            </ListItemWithIcon>
+          </div>
+        </ListContainer>
+      </VerticallyCentered>
+    </>
+  )
 }
 
 class IntroPage3 extends React.Component {
   render = () => (
-      <>
-        <IntroPageTitle>
+    <>
+      <IntroPageTitle>
+        <FormattedMessage
+          id="introDialog.page3Title"
+          defaultMessage="eHOKS-tiedoistasi vastaa oma oppilaitoksesi"
+        />
+      </IntroPageTitle>
+      <VerticallyCentered>
+        <IntroPageTextContainer>
           <FormattedMessage
-            id="introDialog.page3Title"
-            defaultMessage="eHOKS-tiedoistasi vastaa oma oppilaitoksesi"
-          />
-        </IntroPageTitle>
-        <VerticallyCentered>
-          <IntroPageTextContainer>
-            <FormattedMessage
-              id="introDialog.page3paragraph1"
-              defaultMessage="Ole yhteydessä omaan opettajaasi, jos tietosi eivät ole ajan tasalla
+            id="introDialog.page3paragraph1"
+            defaultMessage="Ole yhteydessä omaan opettajaasi, jos tietosi eivät ole ajan tasalla
                 palvelussa."
-            />
-          </IntroPageTextContainer>
-        </VerticallyCentered>
-      </>
-    );
+          />
+        </IntroPageTextContainer>
+      </VerticallyCentered>
+    </>
+  )
 }
 
 interface IntroPageContentProps {

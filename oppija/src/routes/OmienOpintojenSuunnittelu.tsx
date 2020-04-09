@@ -80,107 +80,70 @@ export class OmienOpintojenSuunnittelu extends React.Component<
       <HOKSEidContext.Provider value={id}>
         <Location>
           {({ location }) => (
-              <React.Fragment>
-                <NavigationContainer>
-                  <Container>
-                    <PaddedContent>
-                      <MainHeading>
-                        <FormattedMessage
-                          id="kirjautunut.title"
-                          defaultMessage="Omien opintojen suunnittelu"
-                        />
-                      </MainHeading>
-                      <Section>
-                        <SectionItems>
-                          <SectionItem
-                            selected={
-                              location.pathname === `/ehoks/suunnittelu/${id}`
-                            }
-                            onClick={this.setActiveTab(
-                              `/ehoks/suunnittelu/${id}`
-                            )}
-                            title={
-                              <FormattedMessage
-                                id="kirjautunut.omaTavoitteeniTitle"
-                                defaultMessage="Oma tavoitteeni"
-                              />
-                            }
-                          >
-                            <Flag />
-                          </SectionItem>
-                          <SectionItem
-                            selected={
-                              location.pathname ===
-                              `/ehoks/suunnittelu/${id}/osaamiseni`
-                            }
-                            onClick={this.setActiveTab(
-                              `/ehoks/suunnittelu/${id}/osaamiseni`
-                            )}
-                            title={
-                              <FormattedMessage
-                                id="kirjautunut.aiempiOsaamiseniTitle"
-                                defaultMessage="Aiempi osaamiseni"
-                              />
-                            }
-                          >
-                            <MdExtension />
-                          </SectionItem>
-                          <SectionItem
-                            selected={
-                              location.pathname ===
-                              `/ehoks/suunnittelu/${id}/opiskelusuunnitelmani`
-                            }
-                            onClick={this.setActiveTab(
-                              `/ehoks/suunnittelu/${id}/opiskelusuunnitelmani`
-                            )}
-                            title={
-                              <FormattedMessage
-                                id="kirjautunut.opiskelusuunnitelmaniTitle"
-                                defaultMessage="Opiskelu&shy;suunnitelmani"
-                              />
-                            }
-                          >
-                            <MdEventNote />
-                          </SectionItem>
-                        </SectionItems>
-                        <HMediaQuery.MinWidth breakpoint="Tablet">
-                          <SectionContainer>
-                            <HOKSButton to="/ehoks/suunnittelu">
-                              <FormattedMessage
-                                id="kirjautunut.suljeHOKSLink"
-                                defaultMessage="Sulje HOKS"
-                              />
-                            </HOKSButton>
-                          </SectionContainer>
-                        </HMediaQuery.MinWidth>
-                      </Section>
-                    </PaddedContent>
-                  </Container>
-                </NavigationContainer>
-
-                <BackgroundContainer>
-                  <Container>
-                    <PaddedContent>
-                      <Router basepath={`/ehoks/suunnittelu/${id}`}>
-                        <Tavoitteet
-                          path="/"
-                          student={student}
-                          hoks={suunnitelma}
-                        />
-                        <AiempiOsaaminen
-                          path="osaamiseni"
-                          studies={
-                            suunnitelma
-                              ? suunnitelma.aiemminHankitutTutkinnonOsat
-                              : []
+            <React.Fragment>
+              <NavigationContainer>
+                <Container>
+                  <PaddedContent>
+                    <MainHeading>
+                      <FormattedMessage
+                        id="kirjautunut.title"
+                        defaultMessage="Omien opintojen suunnittelu"
+                      />
+                    </MainHeading>
+                    <Section>
+                      <SectionItems>
+                        <SectionItem
+                          selected={
+                            location.pathname === `/ehoks/suunnittelu/${id}`
                           }
-                        />
-                        <Opiskelusuunnitelma
-                          path="opiskelusuunnitelmani"
-                          plan={suunnitelma}
-                        />
-                      </Router>
-                      <HMediaQuery.MinWidth breakpoint="Tablet" notMatch={true}>
+                          onClick={this.setActiveTab(
+                            `/ehoks/suunnittelu/${id}`
+                          )}
+                          title={
+                            <FormattedMessage
+                              id="kirjautunut.omaTavoitteeniTitle"
+                              defaultMessage="Oma tavoitteeni"
+                            />
+                          }
+                        >
+                          <Flag />
+                        </SectionItem>
+                        <SectionItem
+                          selected={
+                            location.pathname ===
+                            `/ehoks/suunnittelu/${id}/osaamiseni`
+                          }
+                          onClick={this.setActiveTab(
+                            `/ehoks/suunnittelu/${id}/osaamiseni`
+                          )}
+                          title={
+                            <FormattedMessage
+                              id="kirjautunut.aiempiOsaamiseniTitle"
+                              defaultMessage="Aiempi osaamiseni"
+                            />
+                          }
+                        >
+                          <MdExtension />
+                        </SectionItem>
+                        <SectionItem
+                          selected={
+                            location.pathname ===
+                            `/ehoks/suunnittelu/${id}/opiskelusuunnitelmani`
+                          }
+                          onClick={this.setActiveTab(
+                            `/ehoks/suunnittelu/${id}/opiskelusuunnitelmani`
+                          )}
+                          title={
+                            <FormattedMessage
+                              id="kirjautunut.opiskelusuunnitelmaniTitle"
+                              defaultMessage="Opiskelu&shy;suunnitelmani"
+                            />
+                          }
+                        >
+                          <MdEventNote />
+                        </SectionItem>
+                      </SectionItems>
+                      <HMediaQuery.MinWidth breakpoint="Tablet">
                         <SectionContainer>
                           <HOKSButton to="/ehoks/suunnittelu">
                             <FormattedMessage
@@ -190,11 +153,48 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                           </HOKSButton>
                         </SectionContainer>
                       </HMediaQuery.MinWidth>
-                    </PaddedContent>
-                  </Container>
-                </BackgroundContainer>
-              </React.Fragment>
-            )}
+                    </Section>
+                  </PaddedContent>
+                </Container>
+              </NavigationContainer>
+
+              <BackgroundContainer>
+                <Container>
+                  <PaddedContent>
+                    <Router basepath={`/ehoks/suunnittelu/${id}`}>
+                      <Tavoitteet
+                        path="/"
+                        student={student}
+                        hoks={suunnitelma}
+                      />
+                      <AiempiOsaaminen
+                        path="osaamiseni"
+                        studies={
+                          suunnitelma
+                            ? suunnitelma.aiemminHankitutTutkinnonOsat
+                            : []
+                        }
+                      />
+                      <Opiskelusuunnitelma
+                        path="opiskelusuunnitelmani"
+                        plan={suunnitelma}
+                      />
+                    </Router>
+                    <HMediaQuery.MinWidth breakpoint="Tablet" notMatch={true}>
+                      <SectionContainer>
+                        <HOKSButton to="/ehoks/suunnittelu">
+                          <FormattedMessage
+                            id="kirjautunut.suljeHOKSLink"
+                            defaultMessage="Sulje HOKS"
+                          />
+                        </HOKSButton>
+                      </SectionContainer>
+                    </HMediaQuery.MinWidth>
+                  </PaddedContent>
+                </Container>
+              </BackgroundContainer>
+            </React.Fragment>
+          )}
         </Location>
       </HOKSEidContext.Provider>
     )

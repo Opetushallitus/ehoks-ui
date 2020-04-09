@@ -6,6 +6,8 @@ export const injectSession = (stores: InjectedStores) => ({
   session: stores.store.session
 })
 
-export const getTranslations = (root: IRootStore): ITranslationStore => root.translations
+export const getTranslations = (root: IRootStore): ITranslationStore =>
+  root.translations
 
-export const getEnvironment = (root: IRootStore): IEnvironmentStore => root.environment
+export const getEnvironment = (root: IRootStore): IEnvironmentStore =>
+  root.environment

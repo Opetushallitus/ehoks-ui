@@ -4,7 +4,8 @@ import React from "react"
 
 export const CompetenceAquirementTitle = (props: {
   hankkimistapaType: OsaamisenHankkimistapaType
-}) => props.hankkimistapaType === OsaamisenHankkimistapaType.Workplace ? (
+}) =>
+  props.hankkimistapaType === OsaamisenHankkimistapaType.Workplace ? (
     <FormattedMessage
       id="opiskelusuunnitelma.tyossaoppiminenTitle"
       defaultMessage="Työpaikalla oppiminen"
@@ -14,4 +15,4 @@ export const CompetenceAquirementTitle = (props: {
       id="opiskelusuunnitelma.muuKuinTyossaOppiminenTitle"
       defaultMessage="Muualla kuin työpaikalla tapahtuva osaamisen hankkiminen"
     />
-  );
+  )

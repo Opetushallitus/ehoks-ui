@@ -131,12 +131,12 @@ export class AmmattitutkintoHaku extends React.Component<
                     ),
                     this.state.perPage
                   ).map(peruste => (
-                      <SearchResult
-                        key={peruste.id}
-                        result={peruste}
-                        intl={intl}
-                      />
-                    ))}
+                    <SearchResult
+                      key={peruste.id}
+                      result={peruste}
+                      intl={intl}
+                    />
+                  ))}
                 </SearchResultsList>
               </SearchResultsContainer>
 
@@ -148,24 +148,24 @@ export class AmmattitutkintoHaku extends React.Component<
                   })}
                 >
                   {range(totalPages).map(index => (
-                      <Page
-                        key={index}
-                        active={this.state.activePage === index}
-                        aria-current={this.state.activePage === index}
-                        onClick={this.goToPage(index)}
-                        onKeyPress={this.onPaginationResultEnter(index)}
-                        tabIndex={0}
-                        aria-label={intl.formatMessage(
-                          {
-                            id:
-                              "ammattitutkinto.meneHakutuloksienSivulleAriaLabel"
-                          },
-                          { page: index + 1 }
-                        )}
-                      >
-                        {index + 1}
-                      </Page>
-                    ))}
+                    <Page
+                      key={index}
+                      active={this.state.activePage === index}
+                      aria-current={this.state.activePage === index}
+                      onClick={this.goToPage(index)}
+                      onKeyPress={this.onPaginationResultEnter(index)}
+                      tabIndex={0}
+                      aria-label={intl.formatMessage(
+                        {
+                          id:
+                            "ammattitutkinto.meneHakutuloksienSivulleAriaLabel"
+                        },
+                        { page: index + 1 }
+                      )}
+                    >
+                      {index + 1}
+                    </Page>
+                  ))}
                 </PagingContainer>
               )}
             </React.Fragment>

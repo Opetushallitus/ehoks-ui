@@ -21,19 +21,20 @@ const DEFAULT_OPTIONS = {
   ref: "typeahead"
 }
 
-const optionToString = (fields: any, separator: any) => (option: any) => fields
-      .map((field: any) => selectn(field, option))
-      .filter((fieldVal: any) => fieldVal)
-      .reduce((agg: any, fieldVal: any, i: number) => {
-        if (i === 0) {
-          return fieldVal
-        } else {
-          if (Array.isArray(separator)) {
-            return `${agg}${separator[i - 1]}${fieldVal}`
-          }
-          return `${agg}${separator}${fieldVal}`
+const optionToString = (fields: any, separator: any) => (option: any) =>
+  fields
+    .map((field: any) => selectn(field, option))
+    .filter((fieldVal: any) => fieldVal)
+    .reduce((agg: any, fieldVal: any, i: number) => {
+      if (i === 0) {
+        return fieldVal
+      } else {
+        if (Array.isArray(separator)) {
+          return `${agg}${separator[i - 1]}${fieldVal}`
         }
-      }, "");
+        return `${agg}${separator}${fieldVal}`
+      }
+    }, "")
 
 function mapLabelKey(labelKey: any) {
   if (Array.isArray(labelKey)) {
@@ -102,7 +103,9 @@ function mapEvents(
         ? items.properties
         : {}
     )
-    const mappedEvents = events.map(event => mapToObject(event, mapping, defVal))
+    const mappedEvents = events.map(event =>
+      mapToObject(event, mapping, defVal)
+    )
 
     return mappedEvents
   }
@@ -113,7 +116,8 @@ export function mapToSchema(events: any[], schema: any, mapping: any) {
   return isArraySchema(schema) ? schemaEvents : schemaEvents[0]
 }
 
-const mapFromObject = (data: any, mapping: any, defVal: any) => Object.keys(mapping).reduce((agg, field) => {
+const mapFromObject = (data: any, mapping: any, defVal: any) =>
+  Object.keys(mapping).reduce((agg, field) => {
     const eventField = mapping[field]
     if (typeof eventField === "object") {
       Object.assign(agg, mapFromObject(data[field], mapping, {}))
@@ -123,7 +127,7 @@ const mapFromObject = (data: any, mapping: any, defVal: any) => Object.keys(mapp
       }
     }
     return agg
-  }, defVal);
+  }, defVal)
 /**
  *
  * @param {*} data
@@ -145,7 +149,8 @@ export function mapFromSchema(data: any, mapping: any) {
   }
 }
 
-const isEmpty = (obj: any) => Object.keys(obj).length === 0 && obj.constructor === Object;
+const isEmpty = (obj: any) =>
+  Object.keys(obj).length === 0 && obj.constructor === Object
 
 export function toSelected(
   formData: any,
@@ -164,11 +169,13 @@ export function toSelected(
     typeof mapping === "string"
   ) {
     return normFormData
-      .map(dataItem => options.find((option: any) => {
+      .map(dataItem =>
+        options.find((option: any) => {
           if (option[mapping] === dataItem) {
             return option
           }
-        }))
+        })
+      )
       .filter(x => x !== undefined)
   } else if (isArraySchema(schema)) {
     return normFormData
@@ -192,7 +199,7 @@ export function toSelected(
   }
 }
 
-const isFunction = (functionToCheck: any) => functionToCheck instanceof Function;
+const isFunction = (functionToCheck: any) => functionToCheck instanceof Function
 
 /*
  this is done to prevent an edge case with a typeahead wrapped inside a table that has an item selected & uses a function as a labelKey
@@ -273,7 +280,7 @@ class BaseTypeaheadField extends Component<
   }
 }
 
-const isValidFormData = (data: any) => data && !isEmpty(data);
+const isValidFormData = (data: any) => data && !isEmpty(data)
 
 export class TypeaheadField extends BaseTypeaheadField {
   constructor(props: TypeaheadFieldProps) {
@@ -374,9 +381,7 @@ export class AsyncTypeaheadField extends BaseTypeaheadField {
 
     search(url, query)
       .then((json: any) => (optionsPath ? selectn(optionsPath, json) : json))
-      .then((options: any) =>
-        this.setState({ options, isLoading: false })
-      )
+      .then((options: any) => this.setState({ options, isLoading: false }))
   }
 
   handleOnFocus = () => {

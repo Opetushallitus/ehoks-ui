@@ -8,9 +8,9 @@ export const createEnvironment = (
   apiPrefix: string,
   callerId: (headers?: Headers) => Headers
 ): StoreEnvironment => ({
-    ...fetchUtils(fetchFn),
-    errors: ErrorStore.create({}),
-    apiUrl,
-    apiPrefix,
-    callerId
-  });
+  ...fetchUtils(fetchFn),
+  errors: ErrorStore.create({}),
+  apiUrl,
+  apiPrefix,
+  callerId
+})

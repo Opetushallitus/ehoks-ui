@@ -64,7 +64,10 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
       () => this.props.suunnitelmat.length > 0,
       async (hasSuunnitelmat: boolean) => {
         if (hasSuunnitelmat) {
-          const suunnitelma = find(this.props.suunnitelmat, h => h.eid === this.props.hoksId)
+          const suunnitelma = find(
+            this.props.suunnitelmat,
+            h => h.eid === this.props.hoksId
+          )
           if (suunnitelma) {
             await suunnitelma.fetchDetails()
           }

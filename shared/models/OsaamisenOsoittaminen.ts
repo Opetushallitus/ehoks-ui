@@ -26,21 +26,21 @@ export const OsaamisenOsoittaminen = types
     yksilollisetKriteerit: types.optional(types.array(types.string), [])
   })
   .views(self => ({
-      get koulutuksenJarjestajaArvioijat() {
-        return self.koulutuksenJarjestajaOsaamisenArvioijat.map(a =>
-          [a.nimi, a.organisaatio.oppilaitosNimi].filter(Boolean).join(", ")
-        )
-      },
-      get tyoelamaArvioijat() {
-        return self.tyoelamaOsaamisenArvioijat.map(a =>
-          [a.nimi, a.organisaatio.nimi, a.organisaatio.yTunnus]
-            .filter(Boolean)
-            .join(", ")
-        )
-      },
-      get nayttoymparistoDetails() {
-        return [self.nayttoymparisto.nimi, self.nayttoymparisto.yTunnus]
+    get koulutuksenJarjestajaArvioijat() {
+      return self.koulutuksenJarjestajaOsaamisenArvioijat.map(a =>
+        [a.nimi, a.organisaatio.oppilaitosNimi].filter(Boolean).join(", ")
+      )
+    },
+    get tyoelamaArvioijat() {
+      return self.tyoelamaOsaamisenArvioijat.map(a =>
+        [a.nimi, a.organisaatio.nimi, a.organisaatio.yTunnus]
           .filter(Boolean)
           .join(", ")
-      }
-    }))
+      )
+    },
+    get nayttoymparistoDetails() {
+      return [self.nayttoymparisto.nimi, self.nayttoymparisto.yTunnus]
+        .filter(Boolean)
+        .join(", ")
+    }
+  }))

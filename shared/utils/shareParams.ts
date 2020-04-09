@@ -25,4 +25,4 @@ export const stringifyShareParams = ({
 }: {
   share: string
   type: ShareType
-}): string => queryString.stringify({ share, type });
+}): string => queryString.stringify({ share, type })

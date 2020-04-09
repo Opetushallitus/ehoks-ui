@@ -39,12 +39,13 @@ import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
 
 const disallowedKeys = ["eid", "manuaalisyotto"]
 
-const trimDisallowedKeys = (formData: any) => Object.keys(formData).reduce((result, key) => {
+const trimDisallowedKeys = (formData: any) =>
+  Object.keys(formData).reduce((result, key) => {
     if (disallowedKeys.indexOf(key) === -1) {
       result[key] = formData[key]
     }
     return result
-  }, {} as any);
+  }, {} as any)
 
 interface MuokkaaHOKSProps extends RouteComponentProps {
   store?: IRootStore
@@ -159,11 +160,11 @@ export class MuokkaaHOKS extends React.Component<
 
   setStep = (index: number) => {
     this.setState(state => ({
-        ...state,
-        schema: schemaByStep(state.rawSchema, propertiesByStep, index),
-        uiSchema: uiSchemaByStep(state.koodiUris, index),
-        currentStep: index
-      }))
+      ...state,
+      schema: schemaByStep(state.rawSchema, propertiesByStep, index),
+      uiSchema: uiSchemaByStep(state.koodiUris, index),
+      currentStep: index
+    }))
   }
 
   setErrors = (errors: AjvError[]) => {
@@ -223,7 +224,8 @@ export class MuokkaaHOKS extends React.Component<
     }
   }
 
-  completedSteps = () => Object.keys(this.state.errorsByStep).reduce<{
+  completedSteps = () =>
+    Object.keys(this.state.errorsByStep).reduce<{
       [index: string]: boolean
     }>((steps, index) => {
       steps[index] = this.state.errorsByStep[index].length === 0
@@ -232,7 +234,9 @@ export class MuokkaaHOKS extends React.Component<
 
   isValid = () => {
     const completedSteps = this.completedSteps()
-    return Object.keys(completedSteps).every(stepIndex => completedSteps[stepIndex])
+    return Object.keys(completedSteps).every(
+      stepIndex => completedSteps[stepIndex]
+    )
   }
 
   formContext = () => {

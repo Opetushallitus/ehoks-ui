@@ -21,7 +21,8 @@ export enum Locale {
   SV = "sv"
 }
 
-const mapTranslations = (translations: ApiTranslation[]) => translations.map(({ key, locale, value }) => ({ key, locale, value }));
+const mapTranslations = (translations: ApiTranslation[]) =>
+  translations.map(({ key, locale, value }) => ({ key, locale, value }))
 
 const Localization = types.model("LocalizationModel", {
   key: types.string,
@@ -73,13 +74,13 @@ export const TranslationStore = types
     return { fetchLocales, setActiveLocale }
   })
   .views(self => ({
-      get messages() {
-        return self.translations.reduce<Translations>((result, translation) => {
-          result[translation.locale] = result[translation.locale] || {}
-          result[translation.locale][translation.key] = translation.value
-          return result
-        }, {})
-      }
-    }))
+    get messages() {
+      return self.translations.reduce<Translations>((result, translation) => {
+        result[translation.locale] = result[translation.locale] || {}
+        result[translation.locale][translation.key] = translation.value
+        return result
+      }, {})
+    }
+  }))
 
 export type ITranslationStore = Instance<typeof TranslationStore>
