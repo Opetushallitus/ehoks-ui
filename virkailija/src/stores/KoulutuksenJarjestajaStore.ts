@@ -219,10 +219,7 @@ const Search = types
     return { fetchOppijat, resetActivePage }
   })
   .actions(self => {
-    const changeSearchText = (
-      field: SearchSortKey,
-      searchText: string = ""
-    ) => {
+    const changeSearchText = (field: SearchSortKey, searchText = "") => {
       self.activePage = 0
       // create new object ref as volatile data is not mobx observable
       self.searchTexts = { ...self.searchTexts, [field]: searchText }
