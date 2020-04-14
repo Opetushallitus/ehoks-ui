@@ -25,10 +25,11 @@ module.exports = {
     }
   },
   rules: {
-    "@typescript-eslint/explicit-function-return-type": "warn", // TODO
+    "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
-    "@typescript-eslint/ban-ts-comment": "warn", // TODO
-    "@typescript-eslint/no-non-null-assertion": "warn", // TODO
+    "@typescript-eslint/ban-ts-comment": "warn",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     "@typescript-eslint/adjacent-overload-signatures": "error",
     "@typescript-eslint/array-type": "error",
