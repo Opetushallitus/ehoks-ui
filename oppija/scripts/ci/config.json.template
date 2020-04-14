@@ -1,2 +1,1 @@
-{"backendUrl": "{{ehoks_ui_backend_url}}"
-"siteId": "{{ehoks_piwik_site_id}}"}
+{"backendUrl": "{{ehoks_ui_backend_url}}","siteId": "{{ehoks_piwik_site_id}}"}
