@@ -14,7 +14,7 @@ export const EnrichOrganisaatioOid = (fieldPostfix: string) =>
     .model({})
     // we need this typing to avoid 'missing index signature' error
     // when assigning to self[dynamicKey]
-    .volatile((_): DynamicObject => ({}))
+    .volatile((): DynamicObject => ({}))
     .actions(self => {
       const { apiUrl, apiPrefix, errors, fetchSingle, callerId } = getEnv<
         StoreEnvironment

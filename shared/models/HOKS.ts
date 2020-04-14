@@ -60,7 +60,7 @@ const Model = types.model("HOKSModel", {
 
 export const HOKS = types
   .compose("HOKS", EnrichKoodiUri, Model)
-  .volatile(_ => ({
+  .volatile(() => ({
     osaamispisteet: 0
   }))
   .actions(self => {

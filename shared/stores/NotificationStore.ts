@@ -72,7 +72,7 @@ export const NotificationStore = types
     notifications: types.array(Notification),
     studentFeedbackLinks: types.array(types.string)
   })
-  .volatile(_ => ({
+  .volatile(() => ({
     showFeedbackModal: true
   }))
   .actions(self => {

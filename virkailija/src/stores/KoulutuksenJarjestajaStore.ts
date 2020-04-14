@@ -146,7 +146,7 @@ const Search = types
     sortDirection: "asc",
     perPage: 10
   })
-  .volatile((_): { searchTexts: { [key in SearchSortKey]: string } } => ({
+  .volatile((): { searchTexts: { [key in SearchSortKey]: string } } => ({
     searchTexts: {
       nimi: "",
       tutkinto: "",

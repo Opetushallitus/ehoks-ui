@@ -95,8 +95,7 @@ export function fetchUtils(
  * stores/mocks/[path_with_underscores][version number or 0].json
  */
 export const mockFetch = (apiUrl: (path: string) => string, version = 0) => (
-  url: string,
-  _init?: RequestInit
+  url: string
 ): Promise<Response> => {
   const path = url.replace(apiUrl(""), "")
   const mockResponse = {

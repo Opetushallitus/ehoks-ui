@@ -32,11 +32,7 @@ function CustomBaseInput(props: CustomBaseInputProps) {
     autofocus,
     onBlur,
     onFocus,
-    options,
     schema,
-    formContext,
-    registry,
-    rawErrors,
     ...inputProps
   } = props
 

@@ -13,7 +13,7 @@ export const EnrichTutkinnonOsa = (
   types
     .model({})
     .volatile(
-      (_): DynamicObject => ({
+      (): DynamicObject => ({
         disposeTutkinnonOsaFetcher: undefined as IReactionDisposer | undefined
       })
     )

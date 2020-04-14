@@ -34,7 +34,7 @@ const Main = styled("main")``
 
 const ModalContainer = styled("div")``
 
-const MainApp = (_: { path: string }) => (
+const MainApp = () => (
   <Container>
     <AppHeader />
     <AppNotifications />
