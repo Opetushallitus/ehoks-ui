@@ -26,8 +26,6 @@ EOF
 ) -i /home/oph/index.html
 unset config_json
 
-cp /opt/ehoks/piwik.js /var/www/html/public/ehoks/piwik.js
-
 echo "Insert siteId for Piwik for this env into /home/oph/piwik.js …"
 config_json=$(python /opt/ehoks/escape-html.py < /home/oph/config.json)
 piwik_value=$(echo $config_json | sed 's/.*siteId&quot;: &quot;//; s/&quot;.*//')
