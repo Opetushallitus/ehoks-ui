@@ -7,9 +7,7 @@ interface DynamicObject {
   [name: string]: any
 }
 
-export const EnrichTutkinnonOsa = (
-  fieldName: string = "tutkinnonOsaViitteet"
-) =>
+export const EnrichTutkinnonOsa = (fieldName = "tutkinnonOsaViitteet") =>
   types
     .model({})
     .volatile(
