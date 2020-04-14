@@ -83,7 +83,7 @@ export const MobileMenu: React.FunctionComponent<MobileMenuProps> = ({
   toggleMenu,
   logout,
   session
-}) => {
+}: MobileMenuProps) => {
   const ref = React.useRef(null)
   useOnClickOutside(ref, toggleMenu)
 
