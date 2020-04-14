@@ -1,4 +1,5 @@
 import * as StyledComponents from "styled-components"
+// eslint-disable-next-line no-duplicate-imports
 import { ThemedStyledComponentsModule } from "styled-components"
 import { TypeOfTheme } from "./theme"
 const {

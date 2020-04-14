@@ -250,4 +250,4 @@ export const HOKS = types
     }
   })
 
-export interface IHOKS extends Instance<typeof HOKS> {}
+export type IHOKS = Instance<typeof HOKS>

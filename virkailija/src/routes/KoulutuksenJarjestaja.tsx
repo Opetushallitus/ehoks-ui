@@ -75,9 +75,7 @@ export class KoulutuksenJarjestaja extends React.Component<
     const { koulutuksenJarjestaja, session } = this.props.store!
 
     this.disposeLoginReaction = reaction(
-      () => {
-        return session.isLoggedIn && session.organisations.length > 0
-      },
+      () => session.isLoggedIn && session.organisations.length > 0,
       async hasLoggedIn => {
         if (hasLoggedIn) {
           await koulutuksenJarjestaja.search.fetchOppijat()
@@ -212,51 +210,45 @@ export class KoulutuksenJarjestaja extends React.Component<
                   <col style={{ width: "5%" }} />
                 </colgroup>
                 <TableBody>
-                  {results.map((student, i) => {
-                    return (
-                      <TableRow key={i}>
-                        <TableCell>
-                          {student.lukumaara > 0 ? (
-                            <Link
-                              to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${student.oid}`}
-                            >
-                              {student.nimi}
-                            </Link>
-                          ) : (
-                            student.nimi
-                          )}
-                        </TableCell>
-                        <TableCell>{student.tutkinto}</TableCell>
-                        <TableCell>{student.osaamisala}</TableCell>
-                        <TableCell>
-                          <FormattedDate
-                            date={
-                              student.hyvaksytty
-                                ? student.hyvaksytty
-                                : undefined
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <FormattedDate
-                            date={
-                              student.paivitetty
-                                ? student.paivitetty
-                                : undefined
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>{student.lukumaara}</TableCell>
-                        <TableCell>
-                          {session.hasEditPrivilege && student.editLink && (
-                            <Link to={student.editLink}>
-                              <MdEdit size={24} color="#000" />
-                            </Link>
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    )
-                  })}
+                  {results.map((student, i) => (
+                    <TableRow key={i}>
+                      <TableCell>
+                        {student.lukumaara > 0 ? (
+                          <Link
+                            to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${student.oid}`}
+                          >
+                            {student.nimi}
+                          </Link>
+                        ) : (
+                          student.nimi
+                        )}
+                      </TableCell>
+                      <TableCell>{student.tutkinto}</TableCell>
+                      <TableCell>{student.osaamisala}</TableCell>
+                      <TableCell>
+                        <FormattedDate
+                          date={
+                            student.hyvaksytty ? student.hyvaksytty : undefined
+                          }
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <FormattedDate
+                          date={
+                            student.paivitetty ? student.paivitetty : undefined
+                          }
+                        />
+                      </TableCell>
+                      <TableCell>{student.lukumaara}</TableCell>
+                      <TableCell>
+                        {session.hasEditPrivilege && student.editLink && (
+                          <Link to={student.editLink}>
+                            <MdEdit size={24} color="#000" />
+                          </Link>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
                   {!results.length && (
                     <TableRow>
                       <TableCell colSpan={6}>

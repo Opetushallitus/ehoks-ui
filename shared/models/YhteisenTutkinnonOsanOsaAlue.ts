@@ -26,14 +26,12 @@ export const YhteisenTutkinnonOsanOsaAlue = types
     EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
     HankittavatTutkinnonOsatViews
   )
-  .views(self => {
-    return {
-      get otsikko() {
-        return self.osaAlue ? self.osaAlue.nimi : ""
-      },
-      get osaamispisteet() {
-        // TODO: where do we get this? Fix this also to AiemminHankitunYTOOsaAlue.ts
-        return 0
-      }
+  .views(self => ({
+    get otsikko() {
+      return self.osaAlue ? self.osaAlue.nimi : ""
+    },
+    get osaamispisteet() {
+      // TODO: where do we get this? Fix this also to AiemminHankitunYTOOsaAlue.ts
+      return 0
     }
-  })
+  }))

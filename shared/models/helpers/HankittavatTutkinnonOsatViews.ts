@@ -28,9 +28,8 @@ export const HankittavatTutkinnonOsatViews = types
       get osaamispisteet() {
         return getOsaamispisteet(self.tutkinnonOsaViitteet)
       },
-      opintoOtsikko(ospLyhenne: string): string {
-        return getOtsikko(self, ospLyhenne)
-      },
+      opintoOtsikko: (ospLyhenne: string): string =>
+        getOtsikko(self, ospLyhenne),
       hasNayttoOrHarjoittelujakso(koodiUri: string, type: ShareType | "") {
         if (koodiUri === "" && type === "") {
           return false

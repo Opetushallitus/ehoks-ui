@@ -31,14 +31,12 @@ export const AiemminHankitunYTOOsaAlue = types
     AiemminHankitutTutkinnonOsatViews,
     Model
   )
-  .views(self => {
-    return {
-      get otsikko() {
-        return self.osaAlue ? self.osaAlue.nimi : ""
-      },
-      get osaamispisteet() {
-        // TODO: where do we get this? Fix this also to YhteisenTutkinnonOsanOsaAlue.ts
-        return 0
-      }
+  .views(self => ({
+    get otsikko() {
+      return self.osaAlue ? self.osaAlue.nimi : ""
+    },
+    get osaamispisteet() {
+      // TODO: where do we get this? Fix this also to YhteisenTutkinnonOsanOsaAlue.ts
+      return 0
     }
-  })
+  }))

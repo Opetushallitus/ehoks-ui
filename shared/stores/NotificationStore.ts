@@ -77,7 +77,7 @@ export const NotificationStore = types
   }))
   .actions(self => {
     const addNotifications = (
-      notifications: Array<SnapshotOrInstance<typeof Notification>>
+      notifications: SnapshotOrInstance<typeof Notification>[]
     ) => {
       self.notifications.replace([
         ...self.notifications,
@@ -133,44 +133,39 @@ export const NotificationStore = types
     }: { session: { settings: ISettings } } = getRoot(self)
     return {
       get retainedNotifications() {
-        return self.notifications.filter(notification => {
-          // NOTE: investigate why settings.hiddenNotifications.exists
-          // is not reactive here (does not trigger re-render)
-          return !find(
-            settings.hiddenNotifications.notifications,
-            hiddenNotification => {
-              return (
+        return self.notifications.filter(
+          notification =>
+            // NOTE: investigate why settings.hiddenNotifications.exists
+            // is not reactive here (does not trigger re-render)
+            !find(
+              settings.hiddenNotifications.notifications,
+              hiddenNotification =>
                 hiddenNotification.hoksId === notification.hoksId &&
                 hiddenNotification.tutkinnonOsaKoodiUri ===
                   notification.tutkinnonOsaKoodiUri &&
                 hiddenNotification.tyyppi === notification.tyyppi
-              )
-            }
-          )
-        })
+            )
+        )
       }
     }
   })
-  .views(self => {
-    return {
-      get hasUnanswaredFeedbackLinks() {
-        return self.studentFeedbackLinks?.length != 0
-      },
+  .views(self => ({
+    get hasUnanswaredFeedbackLinks() {
+      return self.studentFeedbackLinks?.length !== 0
+    },
 
-      get visible() {
-        return self.retainedNotifications.filter(notification => {
-          const notificationInterval = {
-            start: subMonths(parseISO(notification.alku), 1),
-            end: parseISO(notification.loppu)
-          }
-          return (
-            notification.visible &&
-            isWithinInterval(new Date(), notificationInterval)
-          )
-        })
-      }
+    get visible() {
+      return self.retainedNotifications.filter(notification => {
+        const notificationInterval = {
+          start: subMonths(parseISO(notification.alku), 1),
+          end: parseISO(notification.loppu)
+        }
+        return (
+          notification.visible &&
+          isWithinInterval(new Date(), notificationInterval)
+        )
+      })
     }
-  })
+  }))
 
-export interface INotificationStore
-  extends Instance<typeof NotificationStore> {}
+export type INotificationStore = Instance<typeof NotificationStore>

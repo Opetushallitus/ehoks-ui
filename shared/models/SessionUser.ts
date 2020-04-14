@@ -30,22 +30,20 @@ export const SessionUser = types
     surname: types.optional(types.string, ""),
     fullName: types.optional(types.string, "")
   })
-  .views(self => {
-    return {
-      get yhteystiedot(): Yhteystiedot {
-        if (
-          !self.contactValuesGroup.length ||
-          !self.contactValuesGroup[0].contact
-        ) {
-          return {}
-        }
-        return self.contactValuesGroup[0].contact.reduce((result, contact) => {
-          const key = ContactFields[contact.type as keyof typeof ContactFields]
-          result[key] = contact.value
-          return result
-        }, {} as Yhteystiedot)
+  .views(self => ({
+    get yhteystiedot(): Yhteystiedot {
+      if (
+        !self.contactValuesGroup.length ||
+        !self.contactValuesGroup[0].contact
+      ) {
+        return {}
       }
+      return self.contactValuesGroup[0].contact.reduce((result, contact) => {
+        const key = ContactFields[contact.type as keyof typeof ContactFields]
+        result[key] = contact.value
+        return result
+      }, {} as Yhteystiedot)
     }
-  })
+  }))
 
-export interface ISessionUser extends Instance<typeof SessionUser> {}
+export type ISessionUser = Instance<typeof SessionUser>

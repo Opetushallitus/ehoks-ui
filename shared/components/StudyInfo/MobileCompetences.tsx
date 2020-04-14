@@ -28,7 +28,7 @@ const MobileSliderToggle = styled("div")`
 `
 
 interface MobileCompetencesProps {
-  competenceRequirements: Array<SnapshotOrInstance<typeof Osaamisvaatimus>>
+  competenceRequirements: SnapshotOrInstance<typeof Osaamisvaatimus>[]
 }
 
 interface MobileCompetencesState {
@@ -84,29 +84,25 @@ export class MobileCompetences extends React.Component<
           }
           onSlideChange={this.changeSlide}
         >
-          {competenceRequirements.map((competenceRequirement, i) => {
-            return (
-              <Slide key={i}>
-                <FormattedMessage
-                  id="opiskelusuunnitelma.opiskelijaOsaaPrefix"
-                  defaultMessage="Opiskelija osaa"
-                />{" "}
-                {competenceRequirement.kuvaus}
-              </Slide>
-            )
-          })}
+          {competenceRequirements.map((competenceRequirement, i) => (
+            <Slide key={i}>
+              <FormattedMessage
+                id="opiskelusuunnitelma.opiskelijaOsaaPrefix"
+                defaultMessage="Opiskelija osaa"
+              />{" "}
+              {competenceRequirement.kuvaus}
+            </Slide>
+          ))}
         </MobileSlider>
         {showAssessment &&
-          kriteerit.map((arviointikriteeri, ai) => {
-            return (
-              <AssessmentItem key={ai}>
-                <h2>{arviointikriteeri.kuvaus}</h2>
-                {(arviointikriteeri.kriteerit || []).map((kriteeri, ki) => {
-                  return <p key={ki}>{kriteeri}</p>
-                })}
-              </AssessmentItem>
-            )
-          })}
+          kriteerit.map((arviointikriteeri, ai) => (
+            <AssessmentItem key={ai}>
+              <h2>{arviointikriteeri.kuvaus}</h2>
+              {(arviointikriteeri.kriteerit || []).map((kriteeri, ki) => (
+                <p key={ki}>{kriteeri}</p>
+              ))}
+            </AssessmentItem>
+          ))}
       </SliderContainer>
     )
   }

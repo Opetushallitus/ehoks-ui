@@ -1,5 +1,2 @@
-export function isRoot(rootKeys: string[]) {
-  return (title: string) => {
-    return rootKeys.indexOf(title) > -1
-  }
-}
+export const isRoot = (rootKeys: string[]) => (title: string) =>
+  rootKeys.indexOf(title) > -1

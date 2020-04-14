@@ -27,34 +27,31 @@ const Model = types.model("OsaamisenHankkimistapaModel", {
 
 export const OsaamisenHankkimistapa = types
   .compose("OsaamisenHankkimistapa", EnrichKoodiUri, Model)
-  .views(self => {
-    return {
-      get selite() {
-        return self.tyyppi === OsaamisenHankkimistapaType.Workplace
-          ? self.tyopaikallaJarjestettavaKoulutus?.tyopaikanNimi
-          : ""
-      },
-      get workplaceSelite() {
-        if (
-          self.tyyppi !== OsaamisenHankkimistapaType.Workplace ||
-          !self.tyopaikallaJarjestettavaKoulutus
-        ) {
-          return ""
-        }
-
-        return [
-          self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi,
-          self.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus
-        ]
-          .filter(Boolean)
-          .join(", ")
-      },
-      get tyyppi() {
-        return self.osaamisenHankkimistapaKoodiUri.includes(
-          "koulutussopimus"
-        ) || self.osaamisenHankkimistapaKoodiUri.includes("oppisopimus")
-          ? OsaamisenHankkimistapaType.Workplace
-          : OsaamisenHankkimistapaType.Other
+  .views(self => ({
+    get selite() {
+      return self.tyyppi === OsaamisenHankkimistapaType.Workplace
+        ? self.tyopaikallaJarjestettavaKoulutus?.tyopaikanNimi
+        : ""
+    },
+    get workplaceSelite() {
+      if (
+        self.tyyppi !== OsaamisenHankkimistapaType.Workplace ||
+        !self.tyopaikallaJarjestettavaKoulutus
+      ) {
+        return ""
       }
+
+      return [
+        self.tyopaikallaJarjestettavaKoulutus.tyopaikanNimi,
+        self.tyopaikallaJarjestettavaKoulutus.tyopaikanYTunnus
+      ]
+        .filter(Boolean)
+        .join(", ")
+    },
+    get tyyppi() {
+      return self.osaamisenHankkimistapaKoodiUri.includes("koulutussopimus") ||
+        self.osaamisenHankkimistapaKoodiUri.includes("oppisopimus")
+        ? OsaamisenHankkimistapaType.Workplace
+        : OsaamisenHankkimistapaType.Other
     }
-  })
+  }))

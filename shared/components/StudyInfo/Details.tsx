@@ -145,7 +145,7 @@ const OsaamisenHankkimistavatExpanded = ({
   koodiUri?: string
   instructor?: Instructor
   defaultPeriod?: ShareLinkValidityPeriod
-  osaamisenHankkimistavat: Array<IOsaamisenHankkimistapa>
+  osaamisenHankkimistavat: IOsaamisenHankkimistapa[]
 }) => (
   <ShareDialog
     active={hasActiveShare && shareType === "tyossaoppiminen"}
@@ -155,38 +155,34 @@ const OsaamisenHankkimistavatExpanded = ({
     instructor={instructor}
     defaultPeriod={defaultPeriod}
   >
-    {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => {
-      return (
-        <OsaamisenHankkimistapa
-          key={i}
-          osaamisenHankkimistapa={osaamisenHankkimistapa}
-        />
-      )
-    })}
+    {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => (
+      <OsaamisenHankkimistapa
+        key={i}
+        osaamisenHankkimistapa={osaamisenHankkimistapa}
+      />
+    ))}
   </ShareDialog>
 )
 
 const OsaamisenHankkimistavatCollapsed = ({
   osaamisenHankkimistavat
 }: {
-  osaamisenHankkimistavat: Array<IOsaamisenHankkimistapa>
+  osaamisenHankkimistavat: IOsaamisenHankkimistapa[]
 }) => (
   <>
-    {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => {
-      return (
-        <LearningEvent
-          key={i}
-          title={
-            <CompetenceAquirementTitle
-              hankkimistapaType={osaamisenHankkimistapa.tyyppi}
-            />
-          }
-          description={osaamisenHankkimistapa.selite}
-          startDate={osaamisenHankkimistapa.alku}
-          endDate={osaamisenHankkimistapa.loppu}
-        />
-      )
-    })}
+    {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => (
+      <LearningEvent
+        key={i}
+        title={
+          <CompetenceAquirementTitle
+            hankkimistapaType={osaamisenHankkimistapa.tyyppi}
+          />
+        }
+        description={osaamisenHankkimistapa.selite}
+        startDate={osaamisenHankkimistapa.alku}
+        endDate={osaamisenHankkimistapa.loppu}
+      />
+    ))}
   </>
 )
 
@@ -198,7 +194,7 @@ const OsaamisenOsoittamisetExpanded = ({
   koodiUri,
   todentamisenProsessi
 }: {
-  osaamisenOsoittamiset: Array<IOsaamisenOsoittaminen>
+  osaamisenOsoittamiset: IOsaamisenOsoittaminen[]
   hasActiveShare: boolean
   shareType?: ShareType | ""
   fadedColor: string
@@ -206,28 +202,26 @@ const OsaamisenOsoittamisetExpanded = ({
   todentamisenProsessi?: TodentamisenProsessi
 }) => (
   <>
-    {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => {
-      return (
-        <ShareDialog
-          active={hasActiveShare && shareType === "naytto"}
-          background={fadedColor}
-          koodiUri={koodiUri || ""}
-          type="naytto"
-          defaultPeriod={{
-            start: osaamisenOsoittaminen.alku,
-            end: osaamisenOsoittaminen.loppu
-          }}
-          key={i}
-        >
-          <OsaamisenOsoittaminen
-            osaamisenOsoittaminen={osaamisenOsoittaminen}
-            todentamisenProsessi={todentamisenProsessi}
-            koodiUri={koodiUri}
-            hasActiveShare={hasActiveShare && shareType === "naytto"}
-          />
-        </ShareDialog>
-      )
-    })}
+    {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => (
+      <ShareDialog
+        active={hasActiveShare && shareType === "naytto"}
+        background={fadedColor}
+        koodiUri={koodiUri || ""}
+        type="naytto"
+        defaultPeriod={{
+          start: osaamisenOsoittaminen.alku,
+          end: osaamisenOsoittaminen.loppu
+        }}
+        key={i}
+      >
+        <OsaamisenOsoittaminen
+          osaamisenOsoittaminen={osaamisenOsoittaminen}
+          todentamisenProsessi={todentamisenProsessi}
+          koodiUri={koodiUri}
+          hasActiveShare={hasActiveShare && shareType === "naytto"}
+        />
+      </ShareDialog>
+    ))}
   </>
 )
 
@@ -235,7 +229,7 @@ const OsaamisenOsoittamisetCollapsed = ({
   osaamisenOsoittamiset,
   todentamisenProsessiKoodi
 }: {
-  osaamisenOsoittamiset: Array<IOsaamisenOsoittaminen>
+  osaamisenOsoittamiset: IOsaamisenOsoittaminen[]
   todentamisenProsessiKoodi?: string
 }) => (
   <>
@@ -434,11 +428,11 @@ const TodentamisenProsessiArvioijienKautta = ({
 
 interface DetailsProps {
   fadedColor?: string
-  osaamisenOsoittamiset?: Array<IOsaamisenOsoittaminen>
+  osaamisenOsoittamiset?: IOsaamisenOsoittaminen[]
   olennainenSeikka?: React.ReactNode
   expanded?: boolean
   koodiUri?: string
-  osaamisenHankkimistavat?: Array<IOsaamisenHankkimistapa>
+  osaamisenHankkimistavat?: IOsaamisenHankkimistapa[]
   share?: { koodiUri: string; type: ShareType | "" }
   toggle: (name: ToggleableItems) => () => void
   todentamisenProsessi?: TodentamisenProsessi

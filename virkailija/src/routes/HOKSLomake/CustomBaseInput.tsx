@@ -6,7 +6,7 @@ import {
 } from "react-jsonschema-form"
 
 interface CustomBaseInputProps
-  extends WidgetProps,
+  extends Omit<WidgetProps, "rawErrors">,
     Partial<
       Pick<FieldProps, "registry"> & Pick<FieldTemplateProps, "rawErrors">
     > {
@@ -40,9 +40,8 @@ function CustomBaseInput(props: CustomBaseInputProps) {
     ...inputProps
   } = props
 
-  const _onChange = ({ target }: { target: { value: string } }) => {
-    return props.onChange(target.value === "" ? "" : target.value)
-  }
+  const onChange = ({ target }: { target: { value: string } }) =>
+    props.onChange(target.value === "" ? "" : target.value)
 
   return (
     <>
@@ -57,7 +56,7 @@ function CustomBaseInput(props: CustomBaseInputProps) {
           value={value == null ? "" : value}
           {...inputProps}
           list={schema.examples ? `examples_${inputProps.id}` : undefined}
-          onChange={_onChange}
+          onChange={onChange}
           onBlur={
             onBlur && (event => onBlur(inputProps.id, event.target.value))
           }

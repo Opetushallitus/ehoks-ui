@@ -2,22 +2,20 @@ import React from "react"
 import { FormattedMessage } from "react-intl"
 import { idToTranslationKey } from "./helpers/idToTranslationKey"
 
-function RootDescriptionField({
+const RootDescriptionField = ({
   id,
   description
 }: {
   id: string
   description: string
-}) {
-  return (
-    <h3 id={id} className="field-description">
-      <FormattedMessage
-        id={idToTranslationKey(id)}
-        defaultMessage={description}
-      />
-    </h3>
-  )
-}
+}) => (
+  <h3 id={id} className="field-description">
+    <FormattedMessage
+      id={idToTranslationKey(id)}
+      defaultMessage={description}
+    />
+  </h3>
+)
 
 interface ArrayFieldDescriptionProps {
   DescriptionField: any

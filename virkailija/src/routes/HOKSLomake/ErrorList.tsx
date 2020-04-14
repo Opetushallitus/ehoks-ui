@@ -11,33 +11,30 @@ const ErrorMessage = styled("li")`
   }
 `
 
-function generateFieldId(path: string) {
-  return `root_${path
+const generateFieldId = (path: string) =>
+  `root_${path
     .split(/\]|\./)
     .filter(Boolean)
     .join("_")
     .replace(/\[|'|\./g, "")}`
-}
 
-function scrollToError(error: AjvError) {
-  return (event: React.MouseEvent) => {
-    event.preventDefault()
-    const element: any = document.querySelector(
-      `#${generateFieldId(error.property)}`
-    )
-    const topToolbar: any = document.getElementById("topToolbar")
-    if (element) {
-      window.scroll(0, element.offsetTop - topToolbar ? topToolbar.height : 0)
+const scrollToError = (error: AjvError) => (event: React.MouseEvent) => {
+  event.preventDefault()
+  const element: any = document.querySelector(
+    `#${generateFieldId(error.property)}`
+  )
+  const topToolbar: any = document.getElementById("topToolbar")
+  if (element) {
+    window.scroll(0, element.offsetTop - topToolbar ? topToolbar.height : 0)
 
-      const focusElement =
-        element.tagName === "INPUT"
-          ? element
-          : document.querySelectorAll(
-              `#${generateFieldId(error.property)} input:first-child`
-            )[0]
+    const focusElement =
+      element.tagName === "INPUT"
+        ? element
+        : document.querySelectorAll(
+            `#${generateFieldId(error.property)} input:first-child`
+          )[0]
 
-      focusElement.focus()
-    }
+    focusElement.focus()
   }
 }
 

@@ -9,5 +9,5 @@ export interface MockStudent {
   hyvaksytty?: string
   paivitetty?: string
   lukumaara?: number
-  suunnitelmat?: Array<Instance<typeof HOKS>>
+  suunnitelmat?: Instance<typeof HOKS>[]
 }

@@ -34,4 +34,4 @@ export const Peruste = types
     }
   })
 
-export interface IPeruste extends Instance<typeof Peruste> {}
+export type IPeruste = Instance<typeof Peruste>

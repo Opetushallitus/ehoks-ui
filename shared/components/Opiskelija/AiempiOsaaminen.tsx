@@ -18,7 +18,7 @@ const Container = styled(StudiesContainer)`
 export interface AiempiOsaaminenProps {
   children?: React.ReactChildren
   heading?: React.ReactNode
-  studies: Array<IAiemminHankittuTutkinnonOsa>
+  studies: IAiemminHankittuTutkinnonOsa[]
 }
 
 export interface AiempiOsaaminenState {

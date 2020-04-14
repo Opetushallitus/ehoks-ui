@@ -32,14 +32,11 @@ export class ValitseHOKS extends React.Component<ValitseHOKSProps> {
       suunnitelma => !!suunnitelma.paattymispaiva
     )
 
-    function isHoksEditIconVisible(suunnitelma: Instance<typeof HOKS>) {
-      return (
-        app === "virkailija" &&
-        oppijaId !== "" &&
-        suunnitelma.manuaalisyotto &&
-        session.hasEditPrivilege === true
-      )
-    }
+    const isHoksEditIconVisible = (suunnitelma: Instance<typeof HOKS>) =>
+      app === "virkailija" &&
+      oppijaId !== "" &&
+      suunnitelma.manuaalisyotto &&
+      session.hasEditPrivilege === true
 
     return (
       <React.Fragment>
@@ -62,17 +59,15 @@ export class ValitseHOKS extends React.Component<ValitseHOKSProps> {
                   />
                 </Heading>
 
-                {voimassaOlevat.map((suunnitelma, i) => {
-                  return (
-                    <Suunnitelma
-                      hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
-                      suunnitelma={suunnitelma}
-                      oppijaId={oppijaId}
-                      showEditIcon={isHoksEditIconVisible(suunnitelma)}
-                      key={i}
-                    />
-                  )
-                })}
+                {voimassaOlevat.map((suunnitelma, i) => (
+                  <Suunnitelma
+                    hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
+                    suunnitelma={suunnitelma}
+                    oppijaId={oppijaId}
+                    showEditIcon={isHoksEditIconVisible(suunnitelma)}
+                    key={i}
+                  />
+                ))}
               </PaddedContent>
             )}
             {paattyneet.length > 0 && (
@@ -84,17 +79,15 @@ export class ValitseHOKS extends React.Component<ValitseHOKSProps> {
                   />
                 </Heading>
 
-                {paattyneet.map((suunnitelma, i) => {
-                  return (
-                    <Suunnitelma
-                      hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
-                      suunnitelma={suunnitelma}
-                      oppijaId={oppijaId}
-                      showEditIcon={isHoksEditIconVisible(suunnitelma)}
-                      key={i}
-                    />
-                  )
-                })}
+                {paattyneet.map((suunnitelma, i) => (
+                  <Suunnitelma
+                    hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
+                    suunnitelma={suunnitelma}
+                    oppijaId={oppijaId}
+                    showEditIcon={isHoksEditIconVisible(suunnitelma)}
+                    key={i}
+                  />
+                ))}
               </PaddedContent>
             )}
           </Container>

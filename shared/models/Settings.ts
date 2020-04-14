@@ -16,15 +16,14 @@ const HiddenNotifications = types
       hoksId: string,
       tutkinnonOsaKoodiUri: string,
       tyyppi: string
-    ) => {
-      return find(self.notifications, hidden => {
-        return (
+    ) =>
+      find(
+        self.notifications,
+        hidden =>
           hidden.hoksId === hoksId &&
           hidden.tutkinnonOsaKoodiUri === tutkinnonOsaKoodiUri &&
           hidden.tyyppi === tyyppi
-        )
-      })
-    }
+      )
     return { exists }
   })
   .actions(self => {
@@ -64,4 +63,4 @@ export const Settings = types.model("Settings", {
   introDialog: types.optional(IntroDialog, {})
 })
 
-export interface ISettings extends Instance<typeof Settings> {}
+export type ISettings = Instance<typeof Settings>

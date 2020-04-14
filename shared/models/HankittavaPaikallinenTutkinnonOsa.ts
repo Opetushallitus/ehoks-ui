@@ -26,13 +26,11 @@ export const HankittavaPaikallinenTutkinnonOsa = types
     Model,
     HankittavatTutkinnonOsatViews
   )
-  .views(self => {
-    return {
-      get otsikko() {
-        return self.nimi
-      },
-      get osaamispisteet() {
-        return self.laajuus
-      }
+  .views(self => ({
+    get otsikko() {
+      return self.nimi
+    },
+    get osaamispisteet() {
+      return self.laajuus
     }
-  })
+  }))

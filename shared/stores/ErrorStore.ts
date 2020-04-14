@@ -28,13 +28,11 @@ export const ErrorStore = types
     }
     return { logError }
   })
-  .views(self => {
-    return {
-      get unhandled(): Array<IAppError> {
-        return self.errors.filter(error => !error.handled)
-      }
+  .views(self => ({
+    get unhandled(): IAppError[] {
+      return self.errors.filter(error => !error.handled)
     }
-  })
+  }))
 
-export interface IErrorStore extends Instance<typeof ErrorStore> {}
+export type IErrorStore = Instance<typeof ErrorStore>
 export type IAppError = Instance<typeof AppError>

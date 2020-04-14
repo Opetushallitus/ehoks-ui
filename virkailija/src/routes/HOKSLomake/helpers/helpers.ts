@@ -27,28 +27,25 @@ export const stripUnsupportedFormat = (schema: any) => {
   return schema
 }
 
-export const stripUnsupportedFormats = (definitions: any) => {
-  return Object.keys(definitions).reduce((defs: any, def) => {
+export const stripUnsupportedFormats = (definitions: any) =>
+  Object.keys(definitions).reduce((defs: any, def) => {
     defs[def] = stripUnsupportedFormat(definitions[def])
     return defs
   }, {})
-}
 
-export function transformErrors(errors: AjvError[]) {
-  return errors.map(error => {
+export const transformErrors = (errors: AjvError[]) =>
+  errors.map(error => {
     if (error.name === "required") {
       error.message = "pakollinen kenttä"
     }
     return error
   })
-}
 
-export function buildKoodiUris() {
-  return Object.keys(koodistoUrls).reduce((urls, key) => {
+export const buildKoodiUris = () =>
+  Object.keys(koodistoUrls).reduce((urls, key) => {
     urls[key] = []
     return urls
   }, {} as any)
-}
 
 export function mapKoodiUri({ koodiUri, versio, metadata }: any) {
   const meta = find(metadata, md => md.kieli === "FI")

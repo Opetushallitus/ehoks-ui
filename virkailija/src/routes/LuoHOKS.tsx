@@ -134,14 +134,12 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
   }
 
   setStep = (index: number) => {
-    this.setState(state => {
-      return {
-        ...state,
-        schema: schemaByStep(state.rawSchema, propertiesByStep, index),
-        uiSchema: uiSchemaByStep(state.koodiUris, index),
-        currentStep: index
-      }
-    })
+    this.setState(state => ({
+      ...state,
+      schema: schemaByStep(state.rawSchema, propertiesByStep, index),
+      uiSchema: uiSchemaByStep(state.koodiUris, index),
+      currentStep: index
+    }))
   }
 
   setErrors = (errors: AjvError[]) => {
@@ -219,20 +217,19 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     this.setState({ isLoading: false })
   }
 
-  completedSteps = () => {
-    return Object.keys(this.state.errorsByStep).reduce<{
+  completedSteps = () =>
+    Object.keys(this.state.errorsByStep).reduce<{
       [index: string]: boolean
     }>((steps, index) => {
       steps[index] = this.state.errorsByStep[index].length === 0
       return steps
     }, {})
-  }
 
   isValid = () => {
     const completedSteps = this.completedSteps()
-    return Object.keys(completedSteps).every(stepIndex => {
-      return completedSteps[stepIndex]
-    })
+    return Object.keys(completedSteps).every(
+      stepIndex => completedSteps[stepIndex]
+    )
   }
 
   formContext = () => {

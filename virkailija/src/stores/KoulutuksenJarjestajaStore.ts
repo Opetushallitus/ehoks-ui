@@ -78,9 +78,9 @@ export const Oppija = types
 
     const fetchOpiskeluoikeudet = flow(function*(): any {
       return Promise.all(
-        self.suunnitelmat.map(suunnitelma => {
-          return suunnitelma.fetchOpiskeluoikeudet()
-        })
+        self.suunnitelmat.map(suunnitelma =>
+          suunnitelma.fetchOpiskeluoikeudet()
+        )
       )
     })
 
@@ -101,9 +101,9 @@ export const Oppija = types
       return self.suunnitelmat.length
     },
     get editLink(): string {
-      const manualPlans = self.suunnitelmat.filter(suunnitelma => {
-        return suunnitelma.manuaalisyotto
-      })
+      const manualPlans = self.suunnitelmat.filter(
+        suunnitelma => suunnitelma.manuaalisyotto
+      )
       return manualPlans.length
         ? manualPlans.length > 1
           ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${self.oid}`
@@ -132,7 +132,7 @@ export const Oppija = types
     }
   }))
 
-export interface IOppija extends Instance<typeof Oppija> {}
+export type IOppija = Instance<typeof Oppija>
 
 const SortBy = types.enumeration("sortBy", [...sortKeys])
 
@@ -146,15 +146,13 @@ const Search = types
     sortDirection: "asc",
     perPage: 10
   })
-  .volatile((_): { searchTexts: { [key in SearchSortKey]: string } } => {
-    return {
-      searchTexts: {
-        nimi: "",
-        tutkinto: "",
-        osaamisala: ""
-      }
+  .volatile((_): { searchTexts: { [key in SearchSortKey]: string } } => ({
+    searchTexts: {
+      nimi: "",
+      tutkinto: "",
+      osaamisala: ""
     }
-  })
+  }))
   .actions(self => {
     const { fetchCollection, apiUrl, callerId } = getEnv<StoreEnvironment>(self)
 
@@ -252,15 +250,9 @@ const Search = types
       changeSearchText
     }
   })
-  .views(self => {
-    return {
-      oppija(oid: string) {
-        return self.results.find(result => {
-          return result.oid === oid
-        })
-      }
-    }
-  })
+  .views(self => ({
+    oppija: (oid: string) => self.results.find(result => result.oid === oid)
+  }))
 
 const KoulutuksenJarjestajaModel = {
   search: types.optional(Search, {})

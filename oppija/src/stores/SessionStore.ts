@@ -109,12 +109,10 @@ export const SessionStore = types
       saveSettings
     }
   })
-  .views(self => {
-    return {
-      get isLoggedIn() {
-        return !!self.user
-      }
+  .views(self => ({
+    get isLoggedIn() {
+      return !!self.user
     }
-  })
+  }))
 
-export interface ISessionStore extends Instance<typeof SessionStore> {}
+export type ISessionStore = Instance<typeof SessionStore>

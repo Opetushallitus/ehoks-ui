@@ -69,13 +69,11 @@ export const EnrichKoodiUri = types
       }
     })
 
-    function keyShouldBeFetchedFromEperusteet(key: string) {
-      return key.match(/tutkinnonOsaKoodiUri/) && self[key]
-    }
+    const keyShouldBeFetchedFromEperusteet = (key: string) =>
+      key.match(/tutkinnonOsaKoodiUri/) && self[key]
 
-    function keyShouldBeFetchedFromKoodisto(key: string) {
-      return key.match(/KoodiUri/) && self[key]
-    }
+    const keyShouldBeFetchedFromKoodisto = (key: string) =>
+      key.match(/KoodiUri/) && self[key]
 
     function getCodes(key: string) {
       const codes: string[] = Array.isArray(self[key]) ? self[key] : [self[key]]

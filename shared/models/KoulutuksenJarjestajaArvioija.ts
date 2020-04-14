@@ -7,12 +7,10 @@ export const KoulutuksenJarjestajaArvioija = types
     nimi: types.optional(types.string, ""),
     organisaatio: types.optional(KoulutuksenJarjestajaOrganisaatio, {})
   })
-  .views(self => {
-    return {
-      get koulutuksenJarjestajaArvioijaDescription() {
-        return [self.nimi, self.organisaatio.oppilaitosNimi]
-          .filter(Boolean)
-          .join(", ")
-      }
+  .views(self => ({
+    get koulutuksenJarjestajaArvioijaDescription() {
+      return [self.nimi, self.organisaatio.oppilaitosNimi]
+        .filter(Boolean)
+        .join(", ")
     }
-  })
+  }))

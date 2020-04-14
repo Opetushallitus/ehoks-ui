@@ -38,6 +38,7 @@ export const CustomSchemaField = (props: any) => {
     errorSchema: props.errorSchema
       ? {
           ...props.errorSchema,
+          // eslint-disable-next-line no-underscore-dangle
           __errors: (props.errorSchema.__errors || []).filter(
             (e: string) => e !== "pakollinen kenttä"
           )

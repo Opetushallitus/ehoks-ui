@@ -114,8 +114,8 @@ export class Opiskelusuunnitelma extends React.Component<
     )
   }
 
-  showShareDialog = (share: string, type: ShareType | "") => {
-    return new Promise(resolve => {
+  showShareDialog = (share: string, type: ShareType | "") =>
+    new Promise(resolve => {
       this.setState(
         state => ({
           ...state,
@@ -126,7 +126,6 @@ export class Opiskelusuunnitelma extends React.Component<
         }
       )
     })
-  }
 
   setInitialExpanded = (share: string, type: ShareType | "") => {
     this.setState(state => ({
@@ -335,7 +334,7 @@ export class Opiskelusuunnitelma extends React.Component<
           <StatBoxes>
             <ProgressPie
               value={
-                totalStudiesLength != 0
+                totalStudiesLength !== 0
                   ? Math.round(
                       (suunnitellutOpinnot.length / totalStudiesLength) * 100
                     )
@@ -352,7 +351,7 @@ export class Opiskelusuunnitelma extends React.Component<
             />
             <ProgressPie
               value={
-                totalStudiesLength != 0
+                totalStudiesLength !== 0
                   ? Math.round(
                       (aikataulutetutOpinnot.length / totalStudiesLength) * 100
                     )
@@ -369,7 +368,7 @@ export class Opiskelusuunnitelma extends React.Component<
             />
             <ProgressPie
               value={
-                totalStudiesLength != 0
+                totalStudiesLength !== 0
                   ? Math.round(
                       (valmiitOpinnot.length / totalStudiesLength) * 100
                     )
@@ -485,20 +484,18 @@ export class Opiskelusuunnitelma extends React.Component<
                   />
                 </th>
               </tr>
-              {plan.opiskeluvalmiuksiaTukevatOpinnot.map((study, i) => {
-                return (
-                  <tr key={`study_${i}`}>
-                    <td>{study.nimi}</td>
-                    <td>{study.kuvaus}</td>
-                    <td>
-                      <FormattedDate date={study.alku} />
-                    </td>
-                    <td>
-                      <FormattedDate date={study.loppu} />
-                    </td>
-                  </tr>
-                )
-              })}
+              {plan.opiskeluvalmiuksiaTukevatOpinnot.map((study, i) => (
+                <tr key={`study_${i}`}>
+                  <td>{study.nimi}</td>
+                  <td>{study.kuvaus}</td>
+                  <td>
+                    <FormattedDate date={study.alku} />
+                  </td>
+                  <td>
+                    <FormattedDate date={study.loppu} />
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </InfoTable>
         </Accordion>

@@ -5,4 +5,4 @@ export const Ajankohta = types.model("Ajankohta", {
   loppu: types.optional(types.string, "")
 })
 
-export interface IAjankohta extends Instance<typeof Ajankohta> {}
+export type IAjankohta = Instance<typeof Ajankohta>

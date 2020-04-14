@@ -4,10 +4,9 @@ import { StoreEnvironment } from "types/StoreEnvironment"
 
 // this allows us to proxy http://localhost:3000/auth-dev/ calls
 // using webpack-development-server proxy
-const devBackendWithoutHost = (url: string) => {
+const devBackendWithoutHost = (url: string) =>
   // return url
-  return url.replace("http://localhost:3000", "")
-}
+  url.replace("http://localhost:3000", "")
 
 const EnvironmentStoreModel = {
   virkailijaLoginUrl: types.optional(types.string, ""),
@@ -46,4 +45,4 @@ export const EnvironmentStore = types
     return { getEnvironment, fetchSwaggerJSON }
   })
 
-export interface IEnvironmentStore extends Instance<typeof EnvironmentStore> {}
+export type IEnvironmentStore = Instance<typeof EnvironmentStore>

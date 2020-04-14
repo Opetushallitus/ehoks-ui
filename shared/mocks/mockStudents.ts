@@ -48,17 +48,14 @@ const competenceAreas = [
 ]
 
 export const mockStudents: MockStudent[] = Array.from(Array(100).keys()).map(
-  key => {
-    return {
-      oid: key.toString(),
-      nimi: `${lastNames[Math.floor(Math.random() * lastNames.length)]} ${
-        firstNames[Math.floor(Math.random() * firstNames.length)]
-      }`,
-      tutkinto:
-        qualifications[Math.floor(Math.random() * qualifications.length)],
-      osaamisala:
-        competenceAreas[Math.floor(Math.random() * competenceAreas.length)],
-      suunnitelmat: []
-    }
-  }
+  key => ({
+    oid: key.toString(),
+    nimi: `${lastNames[Math.floor(Math.random() * lastNames.length)]} ${
+      firstNames[Math.floor(Math.random() * firstNames.length)]
+    }`,
+    tutkinto: qualifications[Math.floor(Math.random() * qualifications.length)],
+    osaamisala:
+      competenceAreas[Math.floor(Math.random() * competenceAreas.length)],
+    suunnitelmat: []
+  })
 )

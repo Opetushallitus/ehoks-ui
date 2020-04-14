@@ -32,17 +32,13 @@ export const fetchLinks = async function(
   }
   const json: { data: BackendShareLink[] } = await response.json()
   return json.data
-    .filter(link => {
-      return link.tyyppi === type
-    })
-    .map(link => {
-      return {
-        uuid: link.uuid,
-        validFrom: link["voimassaolo-alku"],
-        validTo: link["voimassaolo-loppu"],
-        type: link.tyyppi
-      }
-    })
+    .filter(link => link.tyyppi === type)
+    .map(link => ({
+      uuid: link.uuid,
+      validFrom: link["voimassaolo-alku"],
+      validTo: link["voimassaolo-loppu"],
+      type: link.tyyppi
+    }))
 }
 
 export const createLink = async function({
@@ -92,7 +88,7 @@ export const removeLink = async function({
 }: {
   eid: string
   koodiUri: string
-  uuid: String
+  uuid: string
   apiConfig: APIConfig
 }) {
   const { apiUrl, apiPrefix } = apiConfig

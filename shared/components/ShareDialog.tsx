@@ -175,7 +175,7 @@ export function ShareDialog(props: ShareDialogProps) {
   }
 
   const ref = useRef<HTMLDivElement>(null)
-  const [sharedLinks, setSharedLinks] = useState<Array<ShareLink>>([])
+  const [sharedLinks, setSharedLinks] = useState<ShareLink[]>([])
   const [startDate, setStartDate] = useState(
     defaultPeriod ? defaultPeriod.start || "" : ""
   )
@@ -319,38 +319,36 @@ export function ShareDialog(props: ShareDialogProps) {
             )}
           </ShareDescription>
           <SharedLinks>
-            {sharedLinks.map((link, i) => {
-              return (
-                <SharedLink key={i}>
-                  <LinkItem>
+            {sharedLinks.map((link, i) => (
+              <SharedLink key={i}>
+                <LinkItem>
+                  <FormattedMessage
+                    id="jakaminen.linkki"
+                    defaultMessage="Linkki"
+                  />{" "}
+                  <FormattedMessage
+                    id="jakaminen.voimassa"
+                    defaultMessage="voimassa"
+                  />{" "}
+                  <FormattedDate date={link.validFrom} /> -{" "}
+                  <FormattedDate date={link.validTo} />
+                </LinkItem>
+                <LinkItem>{link.uuid}</LinkItem>
+                <LinkAnchor>
+                  <a
+                    href=""
+                    onClick={(event: React.MouseEvent) =>
+                      remove(event, link.uuid)
+                    }
+                  >
                     <FormattedMessage
-                      id="jakaminen.linkki"
-                      defaultMessage="Linkki"
-                    />{" "}
-                    <FormattedMessage
-                      id="jakaminen.voimassa"
-                      defaultMessage="voimassa"
-                    />{" "}
-                    <FormattedDate date={link.validFrom} /> -{" "}
-                    <FormattedDate date={link.validTo} />
-                  </LinkItem>
-                  <LinkItem>{link.uuid}</LinkItem>
-                  <LinkAnchor>
-                    <a
-                      href=""
-                      onClick={(event: React.MouseEvent) =>
-                        remove(event, link.uuid)
-                      }
-                    >
-                      <FormattedMessage
-                        id="jakaminen.poistaLinkki"
-                        defaultMessage="Poista linkki"
-                      />
-                    </a>
-                  </LinkAnchor>
-                </SharedLink>
-              )
-            })}
+                      id="jakaminen.poistaLinkki"
+                      defaultMessage="Poista linkki"
+                    />
+                  </a>
+                </LinkAnchor>
+              </SharedLink>
+            ))}
           </SharedLinks>
           <div>
             <div>

@@ -28,25 +28,23 @@ export class Ammatillinentutkinto extends React.Component<
     })
   }
 
-  render() {
-    return (
-      <Container>
-        <PaddedContainer>
-          <HomeLink to="../">
-            <HomeOrb>
-              <MdHome size="24" color="#fff" />
-            </HomeOrb>
-            <FormattedMessage
-              id="navigaatio.palaaAloitussivulleLink"
-              defaultMessage="Palaa aloitussivulle"
-            />
-          </HomeLink>
-          <SectionContainer>
-            <AmmattitutkintoSisalto />
-            <AmmattitutkintoHaku />
-          </SectionContainer>
-        </PaddedContainer>
-      </Container>
-    )
-  }
+  render = () => (
+    <Container>
+      <PaddedContainer>
+        <HomeLink to="../">
+          <HomeOrb>
+            <MdHome size="24" color="#fff" />
+          </HomeOrb>
+          <FormattedMessage
+            id="navigaatio.palaaAloitussivulleLink"
+            defaultMessage="Palaa aloitussivulle"
+          />
+        </HomeLink>
+        <SectionContainer>
+          <AmmattitutkintoSisalto />
+          <AmmattitutkintoHaku />
+        </SectionContainer>
+      </PaddedContainer>
+    </Container>
+  )
 }

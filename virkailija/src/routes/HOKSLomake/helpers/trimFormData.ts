@@ -24,20 +24,18 @@ function trimObject(object: any) {
   }, undefined)
 }
 
-function trimArray(array: any[]) {
-  return array.reduce((acc, value) => {
+const trimArray = (array: any[]) =>
+  array.reduce((acc, value) => {
     const trimmed = trimEmptyValues(value)
     if (trimmed || trimmed === false || trimmed === null) {
       acc.push(trimmed)
     }
     return acc
   }, [])
-}
 
-export function trimEmptyValues(value: any) {
-  return Array.isArray(value)
+export const trimEmptyValues = (value: any) =>
+  Array.isArray(value)
     ? trimArray(value)
     : typeof value === "object"
     ? trimObject(value)
     : value
-}

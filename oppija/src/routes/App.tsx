@@ -34,26 +34,24 @@ const Main = styled("main")``
 
 const ModalContainer = styled("div")``
 
-const MainApp = (_: { path: string }) => {
-  return (
-    <Container>
-      <AppHeader />
-      <AppNotifications />
-      <Main id="main" role="main">
-        <Router basepath="/ehoks">
-          <Etusivu path="/" />
-          <Suunnittelu path="suunnittelu/*" />
-          <Henkilokohtaistaminen path="henkilokohtaistaminen" />
-          <Ammatillinentutkinto path="ammatillinentutkinto" />
-          <Saavutettavuusseloste path="saavutettavuusseloste" />
-        </Router>
-      </Main>
-      <AppFooter />
-      <GlobalStyles />
-      <ModalContainer id="modal-root" />
-    </Container>
-  )
-}
+const MainApp = (_: { path: string }) => (
+  <Container>
+    <AppHeader />
+    <AppNotifications />
+    <Main id="main" role="main">
+      <Router basepath="/ehoks">
+        <Etusivu path="/" />
+        <Suunnittelu path="suunnittelu/*" />
+        <Henkilokohtaistaminen path="henkilokohtaistaminen" />
+        <Ammatillinentutkinto path="ammatillinentutkinto" />
+        <Saavutettavuusseloste path="saavutettavuusseloste" />
+      </Router>
+    </Main>
+    <AppFooter />
+    <GlobalStyles />
+    <ModalContainer id="modal-root" />
+  </Container>
+)
 
 export interface AppProps {
   store?: IRootStore

@@ -80,12 +80,10 @@ export const SessionStore = types
           }),
           { headers: callerId() }
         )
-        self.organisations = organisationsData.data.map((o: IOrganisation) => {
-          return {
-            nimi: o.nimi,
-            oid: o.oid
-          }
-        })
+        self.organisations = organisationsData.data.map((o: IOrganisation) => ({
+          nimi: o.nimi,
+          oid: o.oid
+        }))
         if (self.user && self.organisations.length > 0) {
           if (self.organisations.findIndex(p => p.oid === storedOid) === -1) {
             changeSelectedOrganisationOid(self.organisations[0].oid)
@@ -127,44 +125,38 @@ export const SessionStore = types
       changeSelectedOrganisationOid
     }
   })
-  .views(self => {
-    return {
-      get isLoggedIn() {
-        return !!self.user
-      },
-      get selectedOrganisation() {
-        return (
-          self.user &&
-          self.user.organisationPrivileges &&
-          self.user.organisationPrivileges.find(
-            o => o.oid === self.selectedOrganisationOid
-          )
+  .views(self => ({
+    get isLoggedIn() {
+      return !!self.user
+    },
+    get selectedOrganisation() {
+      return (
+        self.user &&
+        self.user.organisationPrivileges &&
+        self.user.organisationPrivileges.find(
+          o => o.oid === self.selectedOrganisationOid
         )
-      }
+      )
     }
-  })
-  .views(self => {
-    return {
-      get hasWritePrivilege() {
-        return (
-          self.selectedOrganisation &&
-          self.selectedOrganisation.privileges &&
-          self.selectedOrganisation.privileges.indexOf("write") > -1
-        )
-      },
-      get hasSuperUserPrivilege() {
-        return (
-          self.selectedOrganisation &&
-          self.selectedOrganisation.roles.indexOf("oph-super-user") > -1
-        )
-      }
+  }))
+  .views(self => ({
+    get hasWritePrivilege() {
+      return (
+        self.selectedOrganisation &&
+        self.selectedOrganisation.privileges &&
+        self.selectedOrganisation.privileges.indexOf("write") > -1
+      )
+    },
+    get hasSuperUserPrivilege() {
+      return (
+        self.selectedOrganisation &&
+        self.selectedOrganisation.roles.indexOf("oph-super-user") > -1
+      )
     }
-  })
-  .views(self => {
-    return {
-      get hasEditPrivilege() {
-        return self.hasWritePrivilege || self.hasSuperUserPrivilege
-      }
+  }))
+  .views(self => ({
+    get hasEditPrivilege() {
+      return self.hasWritePrivilege || self.hasSuperUserPrivilege
     }
-  })
-export interface ISessionStore extends Instance<typeof SessionStore> {}
+  }))
+export type ISessionStore = Instance<typeof SessionStore>

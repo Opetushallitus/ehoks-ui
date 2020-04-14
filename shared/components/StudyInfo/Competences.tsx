@@ -100,7 +100,7 @@ const Prefix = styled("div")`
 
 interface CompetencesProps {
   collapseAll: () => void
-  competenceRequirements?: Array<SnapshotOrInstance<typeof Osaamisvaatimus>>
+  competenceRequirements?: SnapshotOrInstance<typeof Osaamisvaatimus>[]
   expandAll: () => void
   expandCompetence: (index: number) => () => void
   expanded?: boolean
@@ -205,16 +205,14 @@ export class Competences extends React.Component<CompetencesProps> {
               </Prefix>
 
               <InfoContainer data-testid="StudyInfo.Competences.CompetenceRequirements">
-                {competenceRequirements.map((competenceRequirement, i) => {
-                  return (
-                    <CompetenceRequirement
-                      key={i}
-                      competenceRequirement={competenceRequirement}
-                      expanded={expandedCompetences.indexOf(i) > -1}
-                      expand={expandCompetence(i)}
-                    />
-                  )
-                })}
+                {competenceRequirements.map((competenceRequirement, i) => (
+                  <CompetenceRequirement
+                    key={i}
+                    competenceRequirement={competenceRequirement}
+                    expanded={expandedCompetences.indexOf(i) > -1}
+                    expand={expandCompetence(i)}
+                  />
+                ))}
               </InfoContainer>
             </HMediaQuery.SmallTablet>
           </React.Fragment>

@@ -130,15 +130,13 @@ export class AmmattitutkintoHaku extends React.Component<
                       this.state.activePage * this.state.perPage
                     ),
                     this.state.perPage
-                  ).map(peruste => {
-                    return (
-                      <SearchResult
-                        key={peruste.id}
-                        result={peruste}
-                        intl={intl}
-                      />
-                    )
-                  })}
+                  ).map(peruste => (
+                    <SearchResult
+                      key={peruste.id}
+                      result={peruste}
+                      intl={intl}
+                    />
+                  ))}
                 </SearchResultsList>
               </SearchResultsContainer>
 
@@ -149,27 +147,25 @@ export class AmmattitutkintoHaku extends React.Component<
                       "ammattitutkinto.hakutuloksienSivutuksenNavigaatioAriaLabel"
                   })}
                 >
-                  {range(totalPages).map(index => {
-                    return (
-                      <Page
-                        key={index}
-                        active={this.state.activePage === index}
-                        aria-current={this.state.activePage === index}
-                        onClick={this.goToPage(index)}
-                        onKeyPress={this.onPaginationResultEnter(index)}
-                        tabIndex={0}
-                        aria-label={intl.formatMessage(
-                          {
-                            id:
-                              "ammattitutkinto.meneHakutuloksienSivulleAriaLabel"
-                          },
-                          { page: index + 1 }
-                        )}
-                      >
-                        {index + 1}
-                      </Page>
-                    )
-                  })}
+                  {range(totalPages).map(index => (
+                    <Page
+                      key={index}
+                      active={this.state.activePage === index}
+                      aria-current={this.state.activePage === index}
+                      onClick={this.goToPage(index)}
+                      onKeyPress={this.onPaginationResultEnter(index)}
+                      tabIndex={0}
+                      aria-label={intl.formatMessage(
+                        {
+                          id:
+                            "ammattitutkinto.meneHakutuloksienSivulleAriaLabel"
+                        },
+                        { page: index + 1 }
+                      )}
+                    >
+                      {index + 1}
+                    </Page>
+                  ))}
                 </PagingContainer>
               )}
             </React.Fragment>
