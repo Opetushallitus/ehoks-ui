@@ -12,9 +12,7 @@ const Content = styled("div")`
   }
 `
 
-type SaavutettavuusselosteProps = RouteComponentProps
-
-export const Saavutettavuusseloste = (_: SaavutettavuusselosteProps) => (
+export const Saavutettavuusseloste = (_: RouteComponentProps) => (
   <Container>
     <Content>
       <h1>

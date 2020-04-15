@@ -118,7 +118,7 @@ export function ArrayFieldTemplate(props: ArrayFieldTemplateProps) {
   const onAdd = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       onAddClick(event)
-      setActiveStep(_ => items.length)
+      setActiveStep(() => items.length)
     },
     [onAddClick, setActiveStep, items]
   )

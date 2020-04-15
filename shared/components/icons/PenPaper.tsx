@@ -1,6 +1,6 @@
 import React from "react"
 
-export default ({
+const PenPaper = ({
   size = 16,
   color = "#fff"
 }: {
@@ -28,3 +28,5 @@ export default ({
     </g>
   </svg>
 )
+
+export default PenPaper

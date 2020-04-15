@@ -243,7 +243,10 @@ class BaseTypeaheadField extends Component<
       this.props.onChange(schemaEvents)
       if (cleanAfterSelection) {
         setTimeout(() => {
+          // TODO Using this.refs is deprecated
+          // eslint-disable-next-line react/no-string-refs
           if (this.refs.typeahead) {
+            // eslint-disable-next-line react/no-string-refs
             this.refs.typeahead.getInstance().clear()
           }
         }, 0)
@@ -260,6 +263,7 @@ class BaseTypeaheadField extends Component<
       uiSchema: { focusOnMount = false }
     } = this.props
     if (focusOnMount) {
+      // eslint-disable-next-line react/no-string-refs
       this.refs.typeahead.getInstance().focus()
     }
   }
@@ -271,7 +275,9 @@ class BaseTypeaheadField extends Component<
       this.setState({
         selected: []
       })
+      // eslint-disable-next-line react/no-string-refs
       if (this.refs.typeahead && this.refs.typeahead.getInstance()) {
+        // eslint-disable-next-line react/no-string-refs
         this.refs.typeahead.getInstance().clear()
       }
       // let onChangeValue = getDefaultValueForSchema(schema);

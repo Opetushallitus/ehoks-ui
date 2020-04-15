@@ -1,6 +1,6 @@
 import React from "react"
 
-export default ({ size = 16 }: { size?: number }) => (
+const Flag = ({ size = 16 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 334 511" version="1.1">
     <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g id="Flag" transform="translate(14.000000, -16.000000)">
@@ -50,3 +50,5 @@ export default ({ size = 16 }: { size?: number }) => (
     </g>
   </svg>
 )
+
+export default Flag

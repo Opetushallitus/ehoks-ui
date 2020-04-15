@@ -23,7 +23,7 @@ export function CustomBooleanRadioButtonWidget(props: WidgetProps) {
               required={required}
               value={option.value}
               autoFocus={autofocus && i === 0}
-              onChange={_ => onChange(option.value)}
+              onChange={() => onChange(option.value)}
             />
             <span>{option.label}</span>
           </span>

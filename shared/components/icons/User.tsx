@@ -1,6 +1,6 @@
 import React from "react"
 
-export default ({
+const User = ({
   size = 16,
   color = "#fff"
 }: {
@@ -37,3 +37,5 @@ export default ({
     </g>
   </svg>
 )
+
+export default User

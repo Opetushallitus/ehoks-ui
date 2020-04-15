@@ -1,4 +1,4 @@
-import { Router } from "@reach/router"
+import { Router, RouteComponentProps } from "@reach/router"
 import { ThemeWrapper } from "components/ThemeWrapper"
 import {
   cleanLocaleParam,
@@ -34,7 +34,7 @@ const Main = styled("main")``
 
 const ModalContainer = styled("div")``
 
-const MainApp = (_: { path: string }) => (
+const MainApp = (_: RouteComponentProps) => (
   <Container>
     <AppHeader />
     <AppNotifications />

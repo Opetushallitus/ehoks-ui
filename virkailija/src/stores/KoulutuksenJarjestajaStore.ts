@@ -146,7 +146,7 @@ const Search = types
     sortDirection: "asc",
     perPage: 10
   })
-  .volatile((_): { searchTexts: { [key in SearchSortKey]: string } } => ({
+  .volatile((): { searchTexts: { [key in SearchSortKey]: string } } => ({
     searchTexts: {
       nimi: "",
       tutkinto: "",
@@ -219,10 +219,7 @@ const Search = types
     return { fetchOppijat, resetActivePage }
   })
   .actions(self => {
-    const changeSearchText = (
-      field: SearchSortKey,
-      searchText: string = ""
-    ) => {
+    const changeSearchText = (field: SearchSortKey, searchText = "") => {
       self.activePage = 0
       // create new object ref as volatile data is not mobx observable
       self.searchTexts = { ...self.searchTexts, [field]: searchText }

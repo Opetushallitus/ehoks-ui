@@ -11,9 +11,10 @@ interface MediaQueryProps extends ComponentWithTheme {
   breakpoint?: Breakpoints
   breakpointType?: "max" | "min"
   notMatch?: boolean
+  children: React.ReactNode
 }
 
-const MediaQuery: React.SFC<MediaQueryProps> = props => {
+const MediaQuery: React.SFC<MediaQueryProps> = (props: MediaQueryProps) => {
   const {
     theme,
     maxWidth,

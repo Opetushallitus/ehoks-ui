@@ -1,7 +1,7 @@
 import camelCase from "lodash.camelcase"
 import { idToPathArray } from "./idToPathArray"
 
-export function idToTranslationKey(id: string = "") {
+export function idToTranslationKey(id = "") {
   const key = idToPathArray(id)
     .map(part => {
       if (!isNaN(Number(part))) {

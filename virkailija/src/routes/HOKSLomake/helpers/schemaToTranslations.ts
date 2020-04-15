@@ -7,7 +7,7 @@ import { idToTranslationKey } from "./idToTranslationKey"
 // formatted for localisation service
 export function schemaToTranslations(
   schema: any,
-  prevPath: string = "",
+  prevPath = "",
   definitions?: any
 ) {
   const defs = definitions || schema.definitions

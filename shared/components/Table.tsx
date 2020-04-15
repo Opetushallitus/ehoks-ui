@@ -16,9 +16,7 @@ export const TableContext = React.createContext<TableContextProps>({
   sortTitle: "Sort",
   searchTexts: {},
   onSort: () => false,
-  onUpdateSearchText: (_: string) => (
-    __: React.ChangeEvent<HTMLInputElement>
-  ) => false
+  onUpdateSearchText: () => () => false
 })
 
 const Container = styled("table")`

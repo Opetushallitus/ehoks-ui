@@ -60,7 +60,7 @@ const Model = types.model("HOKSModel", {
 
 export const HOKS = types
   .compose("HOKS", EnrichKoodiUri, Model)
-  .volatile(_ => ({
+  .volatile(() => ({
     osaamispisteet: 0
   }))
   .actions(self => {
@@ -114,7 +114,7 @@ export const HOKS = types
 
     const fetchRakenne = flow(function*(
       id: string,
-      suoritustapa: string = "reformi"
+      suoritustapa = "reformi"
     ): any {
       const response: APIResponse = yield fetchSingle(
         apiUrl(
