@@ -1,3 +1,11 @@
+if (document.URL.indexOf("testiopintopolku.fi") != -1) {
+  var siteId = "23"
+} else if (document.URL.indexOf("opintopolku.fi") != -1) {
+  var siteId = "22"
+} else {
+  console.log("No siteId for Matomo, hence no data collection")
+}
+
 var _paq = window._paq || []
 /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
 _paq.push(["trackPageView"])
@@ -5,7 +13,7 @@ _paq.push(["enableLinkTracking"])
 ;(function() {
   var u = "//analytiikka.opintopolku.fi/matomo/"
   _paq.push(["setTrackerUrl", u + "matomo.php"])
-  _paq.push(["setSiteId", "SITEID"])
+  _paq.push(["setSiteId", siteId])
   var d = document,
     g = d.createElement("script"),
     s = d.getElementsByTagName("script")[0]
