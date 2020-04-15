@@ -20,6 +20,8 @@ WORKDIR /root
 COPY public /var/www/html/public
 COPY config.json.template escape-html.py piwik.js /opt/ehoks/
 RUN ln -s /var/www/html/public/ehoks/index.html /home/oph/index.html
+RUN ln -s /var/www/html/public/ehoks/no.matomo.js /home/oph/no.matomo.js
+RUN ln -s /var/www/html/public/ehoks/piwik.js /home/oph/piwik.js
 RUN rm -rf /var/tmp
 RUN rm -rf /run
 RUN rm -rf /var/lib/nginx/tmp

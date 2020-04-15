@@ -26,6 +26,8 @@ EOF
 ) -i /home/oph/index.html
 unset config_json
 
+cp /opt/ehoks/piwik.js /home/oph/piwik.js
+
 echo "Insert siteId for Piwik for this env into /home/oph/piwik.js …"
 config_json=$(python /opt/ehoks/escape-html.py < /home/oph/config.json)
 piwik_value=$(echo $config_json | sed 's/.*siteId&quot;: &quot;//; s/&quot;.*//')
@@ -33,13 +35,13 @@ backend_url=$(echo $config_json | sed 's/.*backendUrl&quot;: &quot;//; s/&quot;.
 sed -f <(cat <<EOF
 s|SITEID|${piwik_value//&/\\&}|
 EOF
-) -i /var/www/html/public/ehoks/piwik.js
+) -i /home/oph/piwik.js
 
 if [[ "$backend_url" =~ "opintopolku" && -n "$piwik_value"  ]]; then
 sed -f <(cat <<EOF
 s|no.matomo.js|piwik.js|
 EOF
-) -i /var/www/html/public/ehoks/index.html
+) -i /home/oph/index.html
 else
    echo "console.log('No Matomo present at this environment')"> no.matomo.js
 fi
