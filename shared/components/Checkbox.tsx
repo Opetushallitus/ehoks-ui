@@ -43,6 +43,7 @@ export interface CheckboxProps {
 
 /**
  * Accessible checkbox component
+ * TODO this is not accessible, should use label with input type="checkbox" opacity: 0
  */
 export class Checkbox extends React.Component<CheckboxProps> {
   checkboxRef = React.createRef<HTMLDivElement>()
@@ -84,7 +85,12 @@ export class Checkbox extends React.Component<CheckboxProps> {
             </Check>
           )}
         </Box>
-        <label id={id} onClick={this.focusCheckbox} role="button">
+        <label
+          id={id}
+          onClick={this.focusCheckbox}
+          onKeyPress={this.focusCheckbox}
+          role="button" // eslint-disable-line
+        >
           {children}
         </label>
       </Container>

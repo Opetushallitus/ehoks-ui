@@ -48,6 +48,8 @@ function CustomBaseInput(props: CustomBaseInputProps) {
           className="form-control"
           readOnly={readonly}
           disabled={disabled}
+          // The autoFocus prop should not be used, as it can reduce usability and accessibility for users
+          // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus={autofocus}
           value={value == null ? "" : value}
           {...inputProps}

@@ -71,3 +71,13 @@ export const HeroButton = styled(Button)`
     padding: 15px 0;
   }
 `
+
+export const LinkButton = styled(Button)`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  display: inline;
+  margin: 0;
+  padding: 0;
+`
