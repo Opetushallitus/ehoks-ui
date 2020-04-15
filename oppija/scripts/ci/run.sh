@@ -37,13 +37,8 @@ s|SITEID|${piwik_value//&/\\&}|
 EOF
 ) -i /home/oph/piwik.js
 
-if [[ "$backend_url" =~ "opintopolku" && -n "$piwik_value"  ]]; then
-sed -f <(cat <<EOF
-s|no.matomo.js|piwik.js|
-EOF
-) -i /home/oph/index.html
-else
-   echo "console.log('No Matomo present at this environment')"> no.matomo.js
+if ! [ [ "$backend_url" =~ "opintopolku" && -n "$piwik_value"  ]]; then
+echo "console.log('No Matomo present at this environment')"> piwik.js
 fi
 unset piwik_value
 unset config_json
