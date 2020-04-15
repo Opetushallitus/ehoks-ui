@@ -28,6 +28,8 @@ unset config_json
 
 cp /opt/ehoks/piwik.js /home/oph/piwik.js
 
+echo $(cat /home/oph/piwik.js)
+
 echo "Insert siteId for Piwik for this env into /home/oph/piwik.js …"
 config_json=$(python /opt/ehoks/escape-html.py < /home/oph/config.json)
 piwik_value=$(echo $config_json | sed 's/.*siteId&quot;: &quot;//; s/&quot;.*//')
@@ -42,6 +44,8 @@ echo "console.log('No Matomo present at this environment')"> piwik.js
 fi
 unset piwik_value
 unset config_json
+
+echo $(cat /home/oph/piwik.js)
 
 echo "Starting Prometheus node_exporter…"
 nohup /usr/local/bin/node_exporter > /root/node_exporter.log 2>&1 &
