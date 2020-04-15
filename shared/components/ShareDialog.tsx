@@ -9,7 +9,7 @@ import { navigate } from "@reach/router"
 import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl"
 import styled from "styled"
 import { ShareType } from "stores/NotificationStore"
-import { HeroButton } from "components/Button"
+import { HeroButton, LinkButton } from "components/Button"
 import { ModalWithBackground } from "components/ModalDialogs/Modal"
 import {
   fetchLinks,
@@ -335,8 +335,7 @@ export function ShareDialog(props: ShareDialogProps) {
                 </LinkItem>
                 <LinkItem>{link.uuid}</LinkItem>
                 <LinkAnchor>
-                  <a
-                    href=""
+                  <LinkButton
                     onClick={(event: React.MouseEvent) =>
                       remove(event, link.uuid)
                     }
@@ -345,7 +344,7 @@ export function ShareDialog(props: ShareDialogProps) {
                       id="jakaminen.poistaLinkki"
                       defaultMessage="Poista linkki"
                     />
-                  </a>
+                  </LinkButton>
                 </LinkAnchor>
               </SharedLink>
             ))}
