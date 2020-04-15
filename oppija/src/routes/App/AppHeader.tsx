@@ -10,6 +10,7 @@ import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 import ehoksLogo from "./ehoks_logo.png"
 import { FeedbackReminder } from "./FeedbackReminder"
+import { LinkButton } from "components/Button"
 
 interface TopLinkProps {
   active?: boolean
@@ -258,19 +259,19 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
 
           <LanguageSelector loggedIn={isLoggedIn}>
             {activeLocale === Locale.FI ? (
-              <a onClick={this.changeLocale(Locale.SV)} role="button">
+              <LinkButton onClick={this.changeLocale(Locale.SV)}>
                 <FormattedMessage
                   id="header.swedishLocaleLink"
                   defaultMessage="På svenska"
                 />
-              </a>
+              </LinkButton>
             ) : (
-              <a onClick={this.changeLocale(Locale.FI)} role="button">
+              <LinkButton onClick={this.changeLocale(Locale.FI)}>
                 <FormattedMessage
                   id="header.finnishLocaleLink"
                   defaultMessage="Suomeksi"
                 />
-              </a>
+              </LinkButton>
             )}
           </LanguageSelector>
 
