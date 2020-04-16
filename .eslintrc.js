@@ -1,6 +1,7 @@
 module.exports = {
   env: {
-    browser: true
+    browser: true,
+    es6: true
   },
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -14,6 +15,7 @@ module.exports = {
   },
   plugins: ["@typescript-eslint", "prefer-arrow", "jsx-a11y"],
   extends: [
+    "eslint:recommended",
     "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
     "plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
     "prettier/@typescript-eslint", // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
@@ -26,6 +28,7 @@ module.exports = {
     }
   },
   rules: {
+    "no-extra-boolean-cast": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/ban-ts-comment": "warn",
