@@ -19,9 +19,9 @@ function piwik(siteId) {
 }
 
 if (document.URL.indexOf("testiopintopolku.fi") != -1) {
-  piwik("23")
+  piwik('23')
 } else if (document.URL.indexOf("opintopolku.fi") != -1) {
-  piwik("22")
+  piwik('22')
 } else {
   console.log("No siteId for Matomo, hence no data collection")
 }
