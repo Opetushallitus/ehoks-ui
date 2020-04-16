@@ -169,11 +169,6 @@ export function ShareDialog(props: ShareDialogProps) {
 
   const { featureFlags } = useContext(AppContext)
 
-  // disable share dialog if feature flag is set to non-truthy value
-  if (!featureFlags.shareDialog) {
-    return children
-  }
-
   const ref = useRef<HTMLDivElement>(null)
   const [sharedLinks, setSharedLinks] = useState<ShareLink[]>([])
   const [startDate, setStartDate] = useState(
@@ -206,6 +201,11 @@ export function ShareDialog(props: ShareDialogProps) {
     }
     fetchData()
   }, [])
+
+  // disable share dialog if feature flag is set to non-truthy value
+  if (!featureFlags.shareDialog) {
+    return children
+  }
 
   const addLink = async () => {
     const createdUuid = await createLink({
