@@ -1,27 +1,43 @@
-function piwik(siteId) {
-  var _paq = window._paq || []
-  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-  _paq.push(["trackPageView"])
-  _paq.push(["enableLinkTracking"])
-  ;(function() {
-    var u = "//analytiikka.opintopolku.fi/matomo/"
-    _paq.push(["setTrackerUrl", u + "matomo.php"])
-    _paq.push(["setSiteId", siteId])
-    var d = document,
-      g = d.createElement("script"),
-      s = d.getElementsByTagName("script")[0]
-    g.type = "text/javascript"
-    g.async = true
-    g.defer = true
-    g.src = u + "matomo.js"
-    s.parentNode.insertBefore(g, s)
-  })()
+var siteDomain = document.domain
+var piwikSiteId
+var pathArray = window.location.pathname.split("/")[4]
+var ehoksPart = pathArray ? pathArray : "tavoitteeni"
+
+switch (siteDomain) {
+  case "opintopolku.fi":
+    piwikSiteId = 22
+    break
+  case "studieinfo.fi":
+    piwikSiteId = 22
+    break
+  case "studyinfo.fi":
+    piwikSiteId = 22
+    break
+  case "testiopintopolku.fi":
+    piwikSiteId = 23
+    break
+  default:
+    piwikSiteId = "" // Kehitys
 }
 
-if (document.URL.indexOf("testiopintopolku.fi") != -1) {
-  piwik('23')
-} else if (document.URL.indexOf("opintopolku.fi") != -1) {
-  piwik('22')
-} else {
-  console.log("No siteId for Matomo, hence no data collection")
-}
+var _paq = window._paq || []
+/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+_paq.push([
+  "setDocumentTitle",
+  document.domain + "/" + document.title + "/" + ehoksPart
+])
+_paq.push(["trackPageView"])
+_paq.push(["enableLinkTracking"])
+;(function() {
+  var u = "//analytiikka.opintopolku.fi/piwik/"
+  _paq.push(["setTrackerUrl", u + "matomo.php"])
+  _paq.push(["setSiteId", piwikSiteId])
+  var d = document,
+    g = d.createElement("script"),
+    s = d.getElementsByTagName("script")[0]
+  g.type = "text/javascript"
+  g.async = true
+  g.defer = true
+  g.src = u + "matomo.js"
+  s.parentNode.insertBefore(g, s)
+})()
