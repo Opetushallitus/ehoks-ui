@@ -76,6 +76,7 @@ export const Oppija = types
       }
     })
 
+    // eslint-disable-next-line require-yield
     const fetchOpiskeluoikeudet = flow(function*(): any {
       return Promise.all(
         self.suunnitelmat.map(suunnitelma =>
