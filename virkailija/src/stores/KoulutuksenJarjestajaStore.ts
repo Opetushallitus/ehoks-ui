@@ -76,6 +76,7 @@ export const Oppija = types
       }
     })
 
+    // eslint-disable-next-line require-yield
     const fetchOpiskeluoikeudet = flow(function*(): any {
       return Promise.all(
         self.suunnitelmat.map(suunnitelma =>
@@ -118,6 +119,8 @@ export const Oppija = types
           return self.tutkintoNimi.fi
         case Locale.SV:
           return self.tutkintoNimi.sv
+        default:
+          return ""
       }
     },
     get osaamisala(): string {
@@ -128,6 +131,8 @@ export const Oppija = types
           return self.osaamisalaNimi.fi
         case Locale.SV:
           return self.osaamisalaNimi.sv
+        default:
+          return ""
       }
     }
   }))

@@ -113,7 +113,7 @@ export const mockFetch = (apiUrl: (path: string) => string, version = 0) => (
     bodyUsed: false,
     clone: () => mockResponse,
     json: () =>
-      import(`stores/mocks/${path.replace(/\/|\-/g, "_")}${version}.json`),
+      import(`stores/mocks/${path.replace(/\/|-/g, "_")}${version}.json`),
     ok: true,
     statusText: "Error"
   }

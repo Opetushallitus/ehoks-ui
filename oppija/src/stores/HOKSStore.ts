@@ -21,26 +21,22 @@ export const HOKSStore = types
           s.hankittavatTutkinnonOsat
             .filter(t => t.tutkinnonOsaKoodiUri)
             .map(to => [
-              ...(!!to.osaamisenOsoittaminen
-                ? to.osaamisenOsoittaminen.map(naytto => ({
-                    hoksId: s.eid,
-                    tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
-                    tyyppi: "naytto",
-                    alku: naytto.alku,
-                    loppu: naytto.loppu,
-                    paikka: naytto.nayttoymparisto?.kuvaus
-                  }))
-                : []),
-              ...(!!to.osaamisenHankkimistavat
-                ? to.osaamisenHankkimistavat.map(oh => ({
-                    hoksId: s.eid,
-                    tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
-                    tyyppi: "tyossaoppiminen",
-                    alku: oh.alku,
-                    loppu: oh.loppu,
-                    paikka: oh.selite
-                  }))
-                : [])
+              ...(to.osaamisenOsoittaminen?.map(naytto => ({
+                hoksId: s.eid,
+                tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
+                tyyppi: "naytto",
+                alku: naytto.alku,
+                loppu: naytto.loppu,
+                paikka: naytto.nayttoymparisto?.kuvaus
+              })) || []),
+              ...(to.osaamisenHankkimistavat?.map(oh => ({
+                hoksId: s.eid,
+                tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
+                tyyppi: "tyossaoppiminen",
+                alku: oh.alku,
+                loppu: oh.loppu,
+                paikka: oh.selite
+              })) || [])
             ])
         )
       )

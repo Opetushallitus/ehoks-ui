@@ -73,7 +73,7 @@ export function CustomCheckboxWidget(props: any) {
           aria-checked={typeof value === "undefined" ? false : value}
           required={required}
           disabled={disabled || readonly}
-          // The autoFocus prop should not be used, as it can reduce usability and accessibility for users
+          // TODO The autoFocus prop should not be used, as it can reduce usability and accessibility for users
           // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus={autofocus}
           onChange={event => onChange(event.target.checked)}

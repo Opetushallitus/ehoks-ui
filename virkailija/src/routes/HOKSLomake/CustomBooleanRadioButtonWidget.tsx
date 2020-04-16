@@ -22,7 +22,7 @@ export function CustomBooleanRadioButtonWidget(props: WidgetProps) {
               name={name}
               required={required}
               value={option.value}
-              // The autoFocus prop should not be used, as it can reduce usability and accessibility for users
+              // TODO The autoFocus prop should not be used, as it can reduce usability and accessibility for users
               // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus={autofocus && i === 0}
               onChange={() => onChange(option.value)}
