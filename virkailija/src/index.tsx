@@ -39,8 +39,11 @@ ReactDOM.render(
 )
 
 // setup webpack hot module replacement support
+// eslint-disable-next-line no-undef
 if (module.hot) {
+  // eslint-disable-next-line no-undef
   module.hot.accept("./routes/App", () => {
+    // eslint-disable-next-line no-undef
     const NextApp = require("./routes/App").App
     ReactDOM.render(
       <AppContext.Provider value={appContext}>
