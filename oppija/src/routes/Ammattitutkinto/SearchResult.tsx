@@ -1,9 +1,8 @@
 import { IPeruste } from "models/Peruste"
 import React from "react"
 import { MdLaunch } from "react-icons/md"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, InjectedIntl } from "react-intl"
 import styled from "styled"
-import InjectedIntl = ReactIntl.InjectedIntl
 
 const Container = styled("div")`
   margin: 15px 0 0 0;
