@@ -48,7 +48,7 @@ function CustomBaseInput(props: CustomBaseInputProps) {
           className="form-control"
           readOnly={readonly}
           disabled={disabled}
-          // The autoFocus prop should not be used, as it can reduce usability and accessibility for users
+          // TODO The autoFocus prop should not be used, as it can reduce usability and accessibility for users
           // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus={autofocus}
           value={value == null ? "" : value}
@@ -65,6 +65,7 @@ function CustomBaseInput(props: CustomBaseInputProps) {
         schema.examples ? (
           <datalist id={`examples_${inputProps.id}`}>
             {[
+              // TODO Type 'Set<JSONSchema6Type>' is not an array type or a string type
               // @ts-ignore
               ...new Set(
                 schema.examples.concat(schema.default ? [schema.default] : [])
