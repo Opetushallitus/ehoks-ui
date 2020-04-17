@@ -11,7 +11,6 @@ cp -r \
    scripts/ci/Dockerfile \
    scripts/ci/config.json.template \
    scripts/ci/escape-html.py \
-   scripts/ci/piwik.js \
    scripts/ci/nginx-server.conf \
    scripts/ci/run \
    scripts/ci/run.sh \
