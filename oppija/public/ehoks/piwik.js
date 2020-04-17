@@ -1,7 +1,12 @@
 var siteDomain = document.domain
 var piwikSiteId
 var pathArray = window.location.pathname.split("/")[4]
-var ehoksPart = pathArray ? pathArray : "tavoitteeni"
+
+if ("https://" + document.domain + "/ehoks/" == document.URL) {
+  var ehoksTitle = "Ehoks etusivu"
+} else {
+  var ehoksTitle = pathArray ? pathArray : "tavoitteeni"
+}
 
 switch (siteDomain) {
   case "opintopolku.fi":
@@ -22,7 +27,7 @@ switch (siteDomain) {
 
 var _paq = window._paq || []
 /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-_paq.push(["setDocumentTitle", ehoksPart])
+_paq.push(["setDocumentTitle", ehoksTitle])
 _paq.push(["trackPageView"])
 _paq.push(["enableLinkTracking"])
 ;(function() {
