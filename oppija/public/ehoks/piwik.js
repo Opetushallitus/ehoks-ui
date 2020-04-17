@@ -4,8 +4,10 @@ var pathArray = window.location.pathname.split("/")[4]
 
 if ("https://" + document.domain + "/ehoks/" == document.URL) {
   var ehoksTitle = "Ehoks etusivu"
-} else {
+} else if (document.URL.includes("suunnittelu")) {
   var ehoksTitle = pathArray ? pathArray : "tavoitteeni"
+} else {
+  var ehoksTitle = "Ehoks " + window.location.pathname.split("/")[2]
 }
 
 switch (siteDomain) {
