@@ -133,9 +133,9 @@ const osaamisenHankkimistapa2 = [
 ]
 
 function expandDetails(getByTestId: any, queryByTestId: any) {
-  fireEvent.click(getByTestId("StudyInfo.ExpandDetails"))
-  expect(queryByTestId("StudyInfo.DetailsCollapsed")).not.toBeInTheDocument()
-  expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
+  fireEvent.click(getByTestId("TutkinnonOsa.ExpandDetails"))
+  expect(queryByTestId("TutkinnonOsa.DetailsCollapsed")).not.toBeInTheDocument()
+  expect(getByTestId("TutkinnonOsa.DetailsExpanded")).toBeInTheDocument()
 }
 
 describe("TutkinnonOsa", () => {
@@ -147,8 +147,8 @@ describe("TutkinnonOsa", () => {
   test("render without params", () => {
     const { getByTestId, queryByTestId } = render(<TutkinnonOsa />)
     expect(getByTestId("Title")).toBeEmpty()
-    expect(getByTestId("StudyInfo.EmptyCompetences")).toBeInTheDocument()
-    expect(queryByTestId("StudyInfo.Competences")).not.toBeInTheDocument()
+    expect(getByTestId("TutkinnonOsa.EmptyCompetences")).toBeInTheDocument()
+    expect(queryByTestId("TutkinnonOsa.Competences")).not.toBeInTheDocument()
   })
 
   test("render title", () => {
@@ -162,23 +162,23 @@ describe("TutkinnonOsa", () => {
     )
 
     const expandCompetences = getByTestId(
-      "StudyInfo.Competences.ExpandCompetences"
+      "TutkinnonOsa.Competences.ExpandCompetences"
     )
 
     expect(
-      queryByTestId("StudyInfo.Competences.CollapseCompetences")
+      queryByTestId("TutkinnonOsa.Competences.CollapseCompetences")
     ).not.toBeInTheDocument()
     expect(expandCompetences).toBeInTheDocument()
 
     fireEvent.click(expandCompetences)
 
     expect(
-      getByTestId("StudyInfo.Competences.CompetenceRequirements").children
+      getByTestId("TutkinnonOsa.Competences.CompetenceRequirements").children
         .length
     ).toBe(1)
 
     const collapseCompetences = getByTestId(
-      "StudyInfo.Competences.CollapseCompetences"
+      "TutkinnonOsa.Competences.CollapseCompetences"
     )
     expect(collapseCompetences).toBeInTheDocument()
     expect(expandCompetences).not.toBeInTheDocument()
@@ -186,7 +186,7 @@ describe("TutkinnonOsa", () => {
     fireEvent.click(collapseCompetences)
 
     expect(
-      queryByTestId("StudyInfo.Competences.CompetenceRequirements")
+      queryByTestId("TutkinnonOsa.Competences.CompetenceRequirements")
     ).not.toBeInTheDocument()
   })
 
@@ -200,16 +200,20 @@ describe("TutkinnonOsa", () => {
       <TutkinnonOsa title="Test" osaamisenOsoittamiset={naytot1} />
     )
 
-    expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
-    expect(queryByTestId("StudyInfo.DetailsExpanded")).not.toBeInTheDocument()
-    expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
+    expect(getByTestId("TutkinnonOsa.DetailsCollapsed")).toBeInTheDocument()
+    expect(
+      queryByTestId("TutkinnonOsa.DetailsExpanded")
+    ).not.toBeInTheDocument()
+    expect(getAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(1)
 
     rerender(<TutkinnonOsa title="Test" osaamisenOsoittamiset={naytot2} />)
 
     await wait(() => {
-      expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
+      expect(getAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(2)
       expandDetails(getByTestId, queryByTestId)
-      expect(getAllByTestId("StudyInfo.OsaamisenOsoittaminen").length).toBe(2)
+      expect(getAllByTestId("TutkinnonOsa.OsaamisenOsoittaminen").length).toBe(
+        2
+      )
     })
   })
 
@@ -226,9 +230,11 @@ describe("TutkinnonOsa", () => {
       />
     )
 
-    expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
-    expect(queryByTestId("StudyInfo.DetailsExpanded")).not.toBeInTheDocument()
-    expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
+    expect(getByTestId("TutkinnonOsa.DetailsCollapsed")).toBeInTheDocument()
+    expect(
+      queryByTestId("TutkinnonOsa.DetailsExpanded")
+    ).not.toBeInTheDocument()
+    expect(getAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(1)
 
     rerender(
       <TutkinnonOsa
@@ -238,9 +244,11 @@ describe("TutkinnonOsa", () => {
     )
 
     await wait(() => {
-      expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
+      expect(getAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(2)
       expandDetails(getByTestId, queryByTestId)
-      expect(getAllByTestId("StudyInfo.OsaamisenHankkimistapa").length).toBe(2)
+      expect(getAllByTestId("TutkinnonOsa.OsaamisenHankkimistapa").length).toBe(
+        2
+      )
     })
   })
 
@@ -259,7 +267,7 @@ describe("TutkinnonOsa", () => {
       />
     )
 
-    expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
+    expect(queryAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(0)
     expect(getByText("Osaaminen tunnistettu suoraan")).toBeInTheDocument()
     expect(queryByText("Aiemman osaamisen todentanut")).not.toBeInTheDocument()
 
@@ -278,7 +286,7 @@ describe("TutkinnonOsa", () => {
       />
     )
 
-    expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
+    expect(queryAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(0)
     expect(
       getByText("Osaaminen lähetetty arvioitavaksi 15.4.2019")
     ).toBeInTheDocument()
@@ -295,7 +303,7 @@ describe("TutkinnonOsa", () => {
       />
     )
 
-    expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
+    expect(queryAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(1)
     expect(getByText("Osaaminen osoitetaan näytössä")).toBeInTheDocument()
     expect(queryByText("Aiemman osaamisen todentanut")).not.toBeInTheDocument()
   })
@@ -326,7 +334,7 @@ describe("TutkinnonOsa", () => {
     )
 
     await wait(() => {
-      expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
+      expect(queryAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(0)
       expandDetails(getByTestId, queryByTestId)
       expect(getByText("Osaaminen tunnistettu suoraan")).toBeInTheDocument()
       expect(getByText("Testi Teuvo, Organisaatio")).toBeInTheDocument()

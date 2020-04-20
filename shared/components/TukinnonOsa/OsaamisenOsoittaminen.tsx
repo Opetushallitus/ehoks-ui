@@ -142,7 +142,7 @@ export class OsaamisenOsoittaminen extends React.Component<
     const jarjestajaOppilaitos = jarjestaja.oppilaitosNimi
 
     return (
-      <Container data-testid="StudyInfo.OsaamisenOsoittaminen">
+      <Container data-testid="TutkinnonOsa.OsaamisenOsoittaminen">
         <OsaamisenOsoittaminenTitle>
           <FlexLearningEvent
             title={title}

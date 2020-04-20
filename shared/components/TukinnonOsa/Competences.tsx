@@ -127,14 +127,14 @@ export class Competences extends React.Component<CompetencesProps> {
       expandedCompetences.length === competenceRequirements.length
 
     if (!competenceRequirements.length) {
-      return <Container data-testid="StudyInfo.EmptyCompetences" />
+      return <Container data-testid="TutkinnonOsa.EmptyCompetences" />
     }
 
     return (
-      <Container data-testid="StudyInfo.Competences">
+      <Container data-testid="TutkinnonOsa.Competences">
         {expanded ? (
           <React.Fragment>
-            <CollapseContainer data-testid="StudyInfo.Competences.CollapseContainer">
+            <CollapseContainer data-testid="TutkinnonOsa.Competences.CollapseContainer">
               <CollapseHeaderContainer>
                 <CollapseHeader>
                   <FormattedMessage
@@ -162,7 +162,7 @@ export class Competences extends React.Component<CompetencesProps> {
                   id:
                     "opiskelusuunnitelma.piilotaAmmattitaitovaatimuksetAriaLabel"
                 })}
-                data-testid="StudyInfo.Competences.CollapseCompetences"
+                data-testid="TutkinnonOsa.Competences.CollapseCompetences"
               >
                 <Collapse size={40} />
               </IconContainer>
@@ -182,7 +182,7 @@ export class Competences extends React.Component<CompetencesProps> {
               aria-label={intl.formatMessage({
                 id: "opiskelusuunnitelma.naytaAmmattitaitovaatimuksetAriaLabel"
               })}
-              data-testid="StudyInfo.Competences.ExpandCompetences"
+              data-testid="TutkinnonOsa.Competences.ExpandCompetences"
             >
               <Expand size={40} />
             </IconContainer>
@@ -204,7 +204,7 @@ export class Competences extends React.Component<CompetencesProps> {
                 />
               </Prefix>
 
-              <InfoContainer data-testid="StudyInfo.Competences.CompetenceRequirements">
+              <InfoContainer data-testid="TutkinnonOsa.Competences.CompetenceRequirements">
                 {competenceRequirements.map((competenceRequirement, i) => (
                   <CompetenceRequirement
                     key={i}

@@ -63,7 +63,7 @@ export class OsaamisenHankkimistapa extends React.Component<
       tyopaikallaJarjestettavaKoulutus || {}
 
     return (
-      <Container data-testid="StudyInfo.OsaamisenHankkimistapa">
+      <Container data-testid="TutkinnonOsa.OsaamisenHankkimistapa">
         {(alku || loppu) && (
           <OsaamisenHankkimistapaTitle>
             <LearningEvent
