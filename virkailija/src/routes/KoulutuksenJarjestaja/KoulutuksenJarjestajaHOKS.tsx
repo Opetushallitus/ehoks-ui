@@ -205,7 +205,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                 />
                 <AiempiOsaaminen
                   path="osaaminen"
-                  studies={
+                  aiemminHankitutTutkinnonOsat={
                     suunnitelma ? suunnitelma.aiemminHankitutTutkinnonOsat : []
                   }
                   heading={
@@ -213,6 +213,22 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                       id="koulutuksenJarjestaja.aiempiOsaaminen.title"
                       defaultMessage="Aiempi osaaminen"
                     />
+                  }
+                  essentialFactor={
+                    <EssentialFactorContainer>
+                      <FormattedMessage
+                        id="koulutuksenJarjestaja.opiskelusuunnitelma.aiemminHankittuOlennainenSeikkaVirkailijaDescription"
+                        defaultMessage="Tämän tutkinnon osan osaamisen tunnistamiseen ja tunnustamiseen liittyy olennaista tietoa. "
+                      />
+                      <HelpButton
+                        helpContent={
+                          <FormattedMessage
+                            id="koulutuksenJarjestaja.opiskelusuunnitelma.aiemminHankittuOlennainenSeikkaVirkailijaHelpLabel"
+                            defaultMessage="Olennainen seikka aputeksti virkailija"
+                          />
+                        }
+                      />
+                    </EssentialFactorContainer>
                   }
                 />
                 <Opiskelusuunnitelma

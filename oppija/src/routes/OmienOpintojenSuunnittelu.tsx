@@ -20,6 +20,7 @@ import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import { HMediaQuery } from "responsive"
 import styled from "styled"
+import { HelpPopup } from "components/HelpPopup"
 
 const Section = styled("div")`
   display: flex;
@@ -45,6 +46,14 @@ const SectionContainer = styled("div")`
 
 const SectionItems = styled(ProgressPies)`
   flex: 2;
+`
+
+const EssentialFactorContainer = styled("div")`
+  margin: 10px 20px 20px 20px;
+`
+
+const HelpButton = styled(HelpPopup)`
+  margin: 0 0 0 20px;
 `
 
 export interface OmienOpintojenSuunnitteluProps extends RouteComponentProps {
@@ -169,10 +178,26 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                       />
                       <AiempiOsaaminen
                         path="osaamiseni"
-                        studies={
+                        aiemminHankitutTutkinnonOsat={
                           suunnitelma
                             ? suunnitelma.aiemminHankitutTutkinnonOsat
                             : []
+                        }
+                        essentialFactor={
+                          <EssentialFactorContainer>
+                            <FormattedMessage
+                              id="koulutuksenJarjestaja.opiskelusuunnitelma.aiemminHankittuOlennainenSeikkaOppijaDescription"
+                              defaultMessage="Tämän tutkinnon osan osaamisen tunnistamiseen ja tunnustamiseen liittyy olennaista tietoa, jonka sisällön voit tarkistaa oppilaitoksestasi."
+                            />
+                            <HelpButton
+                              helpContent={
+                                <FormattedMessage
+                                  id="koulutuksenJarjestaja.opiskelusuunnitelma.aiemminHankittuOlennainenSeikkaOppijaHelpLabel"
+                                  defaultMessage="Olennainen seikka aputeksti oppija"
+                                />
+                              }
+                            />
+                          </EssentialFactorContainer>
                         }
                       />
                       <Opiskelusuunnitelma

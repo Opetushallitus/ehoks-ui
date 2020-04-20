@@ -18,7 +18,8 @@ const Container = styled(StudiesContainer)`
 export interface AiempiOsaaminenProps {
   children?: React.ReactChildren
   heading?: React.ReactNode
-  studies: IAiemminHankittuTutkinnonOsa[]
+  aiemminHankitutTutkinnonOsat: IAiemminHankittuTutkinnonOsa[]
+  essentialFactor?: React.ReactNode
 }
 
 export interface AiempiOsaaminenState {
@@ -53,13 +54,14 @@ export class AiempiOsaaminen extends React.Component<
 
   render() {
     const {
-      studies,
+      aiemminHankitutTutkinnonOsat,
       heading = (
         <FormattedMessage
           id="aiempiOsaaminen.title"
           defaultMessage="Aiempi osaamiseni"
         />
-      )
+      ),
+      essentialFactor
     } = this.props
     const { intl } = this.context
     const competencePointsTitle = intl.formatMessage({
@@ -82,7 +84,7 @@ export class AiempiOsaaminen extends React.Component<
 
         <ContentArea>
           <Container>
-            {studies.map((study, i) => {
+            {aiemminHankitutTutkinnonOsat.map((study, i) => {
               const renderExtraItem = (i + 1) % 4 === 0
               return (
                 <React.Fragment key={i}>
@@ -97,12 +99,15 @@ export class AiempiOsaaminen extends React.Component<
                     tarkentavatTiedotOsaamisenArvioija={
                       study.tarkentavatTiedotOsaamisenArvioija
                     }
+                    olennainenSeikka={
+                      study.olennainenSeikka ? essentialFactor : undefined
+                    }
                   />
                   {renderExtraItem && <EmptyItem />}
                 </React.Fragment>
               )
             })}
-            {!studies.length && (
+            {!aiemminHankitutTutkinnonOsat.length && (
               <div>
                 <FormattedMessage
                   id="aiempiOsaaminen.eiAiempaaOsaamista"
