@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled"
-import { Competences } from "./StudyInfo/Competences"
+import { Competences } from "./TukinnonOsa/Competences"
 import {
   Osaamisvaatimus,
   TodentamisenProsessi,
@@ -16,10 +16,10 @@ import { FormattedMessage } from "react-intl"
 import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
-import { ToggleableItems } from "./StudyInfo/StudyInfoHelpers"
-import { Objectives } from "./StudyInfo/Objectives"
-import { Details } from "./StudyInfo/Details"
-import { OneRowTable } from "./StudyInfo/Shared"
+import { ToggleableItems } from "./TukinnonOsa/TutkinnonOsaHelpers"
+import { Objectives } from "./TukinnonOsa/Objectives"
+import { Details } from "./TukinnonOsa/Details"
+import { OneRowTable } from "./TukinnonOsa/Shared"
 import { ColorType } from "theme"
 
 interface ContainerProps {
@@ -92,7 +92,7 @@ const ShareButton = styled("div")`
   padding: 10px 70px 10px 0;
 `
 
-export interface StudyInfoProps {
+export interface TutkinnonOsaProps {
   /** Color of top border */
   accentColor?: ColorType
   /**
@@ -135,7 +135,7 @@ export interface StudyInfoProps {
   tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
 }
 
-export interface StudyInfoState {
+export interface TutkinnonOsaState {
   expanded: {
     competences: boolean
     details: boolean
@@ -147,11 +147,14 @@ export interface StudyInfoState {
 /**
  * Shows information about single study
  */
-export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
+export class TutkinnonOsa extends React.Component<
+  TutkinnonOsaProps,
+  TutkinnonOsaState
+> {
   static contextType = AppContext
   declare context: React.ContextType<typeof AppContext>
 
-  state: StudyInfoState = {
+  state: TutkinnonOsaState = {
     expanded: {
       competences: false,
       details: false,
@@ -174,8 +177,8 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
   }
 
   static getDerivedStateFromProps(
-    nextProps: StudyInfoProps,
-    prevState: StudyInfoState
+    nextProps: TutkinnonOsaProps,
+    prevState: TutkinnonOsaState
   ) {
     const { koodiUri, share } = nextProps
     if (typeof share !== "undefined" && koodiUri === share.koodiUri) {
@@ -199,7 +202,7 @@ export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
   }
 
   expandCompetence = (index: number) => () => {
-    this.setState((state: StudyInfoState) => ({
+    this.setState((state: TutkinnonOsaState) => ({
       expandedCompetences:
         state.expandedCompetences.indexOf(index) > -1
           ? state.expandedCompetences.filter(i => i !== index)

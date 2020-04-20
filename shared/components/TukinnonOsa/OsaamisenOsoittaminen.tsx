@@ -8,7 +8,7 @@ import {
   IOsaamisenOsoittaminen,
   TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
-import { LearningEvent } from "components/StudyInfo/LearningEvent"
+import { LearningEvent } from "components/TukinnonOsa/LearningEvent"
 import { TodentamisenProsessiKoodi } from "types/TodentamisenProsessiKoodi"
 import { HeroButton } from "components/Button"
 import { MdShare } from "react-icons/md"
@@ -142,7 +142,7 @@ export class OsaamisenOsoittaminen extends React.Component<
     const jarjestajaOppilaitos = jarjestaja.oppilaitosNimi
 
     return (
-      <Container data-testid="StudyInfo.OsaamisenOsoittaminen">
+      <Container data-testid="TutkinnonOsa.OsaamisenOsoittaminen">
         <OsaamisenOsoittaminenTitle>
           <FlexLearningEvent
             title={title}

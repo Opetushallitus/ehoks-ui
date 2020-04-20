@@ -14,7 +14,7 @@ import {
   Title
 } from "./Shared"
 import { IOsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
-import { LearningEvent } from "components/StudyInfo/LearningEvent"
+import { LearningEvent } from "components/TukinnonOsa/LearningEvent"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
 import { observer } from "mobx-react"
 import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
@@ -63,7 +63,7 @@ export class OsaamisenHankkimistapa extends React.Component<
       tyopaikallaJarjestettavaKoulutus || {}
 
     return (
-      <Container data-testid="StudyInfo.OsaamisenHankkimistapa">
+      <Container data-testid="TutkinnonOsa.OsaamisenHankkimistapa">
         {(alku || loppu) && (
           <OsaamisenHankkimistapaTitle>
             <LearningEvent

@@ -1,6 +1,6 @@
 import React from "react"
 import { render, fireEvent, wait } from "@testing-library/react"
-import { StudyInfo as StudyInfoWithoutTheme } from "../StudyInfo"
+import { TutkinnonOsa as TutkinnonOsaWithoutTheme } from "../TutkinnonOsa"
 import { renderWithContext, withTheme } from "testUtils"
 import {
   IOsaamisenHankkimistapa,
@@ -9,7 +9,7 @@ import {
 } from "models/helpers/TutkinnonOsa"
 import { mockFetch } from "fetchUtils"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
-const StudyInfo = withTheme(StudyInfoWithoutTheme)
+const TutkinnonOsa = withTheme(TutkinnonOsaWithoutTheme)
 
 const osaamisvaatimukset = [
   {
@@ -133,52 +133,52 @@ const osaamisenHankkimistapa2 = [
 ]
 
 function expandDetails(getByTestId: any, queryByTestId: any) {
-  fireEvent.click(getByTestId("StudyInfo.ExpandDetails"))
-  expect(queryByTestId("StudyInfo.DetailsCollapsed")).not.toBeInTheDocument()
-  expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
+  fireEvent.click(getByTestId("TutkinnonOsa.ExpandDetails"))
+  expect(queryByTestId("TutkinnonOsa.DetailsCollapsed")).not.toBeInTheDocument()
+  expect(getByTestId("TutkinnonOsa.DetailsExpanded")).toBeInTheDocument()
 }
 
-describe("StudyInfo", () => {
+describe("TutkinnonOsa", () => {
   beforeEach(() => {
     // mockFetch will load JSONs from shared/stores/mocks/*.json
     window.fetch = mockFetch((path: string) => `/${path}`)
   })
 
   test("render without params", () => {
-    const { getByTestId, queryByTestId } = render(<StudyInfo />)
+    const { getByTestId, queryByTestId } = render(<TutkinnonOsa />)
     expect(getByTestId("Title")).toBeEmpty()
-    expect(getByTestId("StudyInfo.EmptyCompetences")).toBeInTheDocument()
-    expect(queryByTestId("StudyInfo.Competences")).not.toBeInTheDocument()
+    expect(getByTestId("TutkinnonOsa.EmptyCompetences")).toBeInTheDocument()
+    expect(queryByTestId("TutkinnonOsa.Competences")).not.toBeInTheDocument()
   })
 
   test("render title", () => {
-    const { getByTestId } = render(<StudyInfo title="Test" />)
+    const { getByTestId } = render(<TutkinnonOsa title="Test" />)
     expect(getByTestId("Title").textContent).toBe("Test")
   })
 
   test("render competence requirements", async () => {
     const { getByTestId, queryByTestId } = renderWithContext(
-      <StudyInfo title="Test" competenceRequirements={osaamisvaatimukset} />
+      <TutkinnonOsa title="Test" competenceRequirements={osaamisvaatimukset} />
     )
 
     const expandCompetences = getByTestId(
-      "StudyInfo.Competences.ExpandCompetences"
+      "TutkinnonOsa.Competences.ExpandCompetences"
     )
 
     expect(
-      queryByTestId("StudyInfo.Competences.CollapseCompetences")
+      queryByTestId("TutkinnonOsa.Competences.CollapseCompetences")
     ).not.toBeInTheDocument()
     expect(expandCompetences).toBeInTheDocument()
 
     fireEvent.click(expandCompetences)
 
     expect(
-      getByTestId("StudyInfo.Competences.CompetenceRequirements").children
+      getByTestId("TutkinnonOsa.Competences.CompetenceRequirements").children
         .length
     ).toBe(1)
 
     const collapseCompetences = getByTestId(
-      "StudyInfo.Competences.CollapseCompetences"
+      "TutkinnonOsa.Competences.CollapseCompetences"
     )
     expect(collapseCompetences).toBeInTheDocument()
     expect(expandCompetences).not.toBeInTheDocument()
@@ -186,7 +186,7 @@ describe("StudyInfo", () => {
     fireEvent.click(collapseCompetences)
 
     expect(
-      queryByTestId("StudyInfo.Competences.CompetenceRequirements")
+      queryByTestId("TutkinnonOsa.Competences.CompetenceRequirements")
     ).not.toBeInTheDocument()
   })
 
@@ -197,19 +197,23 @@ describe("StudyInfo", () => {
       queryByTestId,
       rerender
     } = renderWithContext(
-      <StudyInfo title="Test" osaamisenOsoittamiset={naytot1} />
+      <TutkinnonOsa title="Test" osaamisenOsoittamiset={naytot1} />
     )
 
-    expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
-    expect(queryByTestId("StudyInfo.DetailsExpanded")).not.toBeInTheDocument()
-    expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
+    expect(getByTestId("TutkinnonOsa.DetailsCollapsed")).toBeInTheDocument()
+    expect(
+      queryByTestId("TutkinnonOsa.DetailsExpanded")
+    ).not.toBeInTheDocument()
+    expect(getAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(1)
 
-    rerender(<StudyInfo title="Test" osaamisenOsoittamiset={naytot2} />)
+    rerender(<TutkinnonOsa title="Test" osaamisenOsoittamiset={naytot2} />)
 
     await wait(() => {
-      expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
+      expect(getAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(2)
       expandDetails(getByTestId, queryByTestId)
-      expect(getAllByTestId("StudyInfo.OsaamisenOsoittaminen").length).toBe(2)
+      expect(getAllByTestId("TutkinnonOsa.OsaamisenOsoittaminen").length).toBe(
+        2
+      )
     })
   })
 
@@ -220,27 +224,31 @@ describe("StudyInfo", () => {
       queryByTestId,
       rerender
     } = renderWithContext(
-      <StudyInfo
+      <TutkinnonOsa
         title="Test"
         osaamisenHankkimistavat={osaamisenHankkimistapa1}
       />
     )
 
-    expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
-    expect(queryByTestId("StudyInfo.DetailsExpanded")).not.toBeInTheDocument()
-    expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
+    expect(getByTestId("TutkinnonOsa.DetailsCollapsed")).toBeInTheDocument()
+    expect(
+      queryByTestId("TutkinnonOsa.DetailsExpanded")
+    ).not.toBeInTheDocument()
+    expect(getAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(1)
 
     rerender(
-      <StudyInfo
+      <TutkinnonOsa
         title="Test"
         osaamisenHankkimistavat={osaamisenHankkimistapa2}
       />
     )
 
     await wait(() => {
-      expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
+      expect(getAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(2)
       expandDetails(getByTestId, queryByTestId)
-      expect(getAllByTestId("StudyInfo.OsaamisenHankkimistapa").length).toBe(2)
+      expect(getAllByTestId("TutkinnonOsa.OsaamisenHankkimistapa").length).toBe(
+        2
+      )
     })
   })
 
@@ -251,7 +259,7 @@ describe("StudyInfo", () => {
       getByText,
       queryByText
     } = renderWithContext(
-      <StudyInfo
+      <TutkinnonOsa
         title="Title"
         todentamisenProsessi={{
           koodiUri: "osaamisentodentamisenprosessi_0001"
@@ -259,12 +267,12 @@ describe("StudyInfo", () => {
       />
     )
 
-    expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
+    expect(queryAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(0)
     expect(getByText("Osaaminen tunnistettu suoraan")).toBeInTheDocument()
     expect(queryByText("Aiemman osaamisen todentanut")).not.toBeInTheDocument()
 
     rerender(
-      <StudyInfo
+      <TutkinnonOsa
         title="Title"
         todentamisenProsessi={{
           koodiUri: "osaamisentodentamisenprosessi_0002",
@@ -278,7 +286,7 @@ describe("StudyInfo", () => {
       />
     )
 
-    expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
+    expect(queryAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(0)
     expect(
       getByText("Osaaminen lähetetty arvioitavaksi 15.4.2019")
     ).toBeInTheDocument()
@@ -286,7 +294,7 @@ describe("StudyInfo", () => {
     expect(getByText("Koulutuksen järjestäjä-organisaatio")).toBeInTheDocument()
 
     rerender(
-      <StudyInfo
+      <TutkinnonOsa
         title="Title"
         osaamisenOsoittamiset={naytot3}
         todentamisenProsessi={{
@@ -295,7 +303,7 @@ describe("StudyInfo", () => {
       />
     )
 
-    expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
+    expect(queryAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(1)
     expect(getByText("Osaaminen osoitetaan näytössä")).toBeInTheDocument()
     expect(queryByText("Aiemman osaamisen todentanut")).not.toBeInTheDocument()
   })
@@ -307,7 +315,7 @@ describe("StudyInfo", () => {
       getByTestId,
       getByText
     } = renderWithContext(
-      <StudyInfo
+      <TutkinnonOsa
         title="Title"
         todentamisenProsessi={{
           koodiUri: "osaamisentodentamisenprosessi_0001"
@@ -326,7 +334,7 @@ describe("StudyInfo", () => {
     )
 
     await wait(() => {
-      expect(queryAllByTestId("StudyInfo.LearningEvent").length).toBe(0)
+      expect(queryAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(0)
       expandDetails(getByTestId, queryByTestId)
       expect(getByText("Osaaminen tunnistettu suoraan")).toBeInTheDocument()
       expect(getByText("Testi Teuvo, Organisaatio")).toBeInTheDocument()

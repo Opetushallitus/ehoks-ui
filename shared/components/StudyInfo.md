@@ -1,7 +1,7 @@
 ### Planned study
 
 ```js
-<StudyInfo
+<TutkinnonOsa
   accentColor="#5BAC13"
   fadedColor="#ECF6ED"
   title="Elintarviketuotannossa toimiminen"
@@ -56,7 +56,7 @@
 ### Completed study
 
 ```js
-<StudyInfo
+<TutkinnonOsa
   accentColor="#43A047"
   fadedColor="#ECF6ED"
   title="Valmis opinto"
@@ -80,7 +80,7 @@
 ### Unscheduled study
 
 ```js
-<StudyInfo
+<TutkinnonOsa
   accentColor="#E2A626"
   fadedColor="#FDF6E9"
   title="Aikatauluttamaton opinto"

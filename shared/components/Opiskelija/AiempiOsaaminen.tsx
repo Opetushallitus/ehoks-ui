@@ -4,7 +4,7 @@ import { EmptyItem } from "components/EmptyItem"
 import { HeadingContainer, HelpHeading } from "components/Heading"
 import { HelpPopup } from "components/HelpPopup"
 import { StudiesContainer } from "components/StudiesContainer"
-import { StudyInfo } from "components/StudyInfo"
+import { TutkinnonOsa } from "components/TutkinnonOsa"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
@@ -88,7 +88,7 @@ export class AiempiOsaaminen extends React.Component<
               const renderExtraItem = (i + 1) % 4 === 0
               return (
                 <React.Fragment key={i}>
-                  <StudyInfo
+                  <TutkinnonOsa
                     accentColor="midGreen"
                     fadedColor="#ECF6ED"
                     title={study.opintoOtsikko(competencePointsTitle)}

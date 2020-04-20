@@ -2,7 +2,7 @@ import React from "react"
 import { AccordionTitle } from "../../AccordionTitle"
 import { FormattedMessage } from "react-intl"
 import { StudiesContainer } from "../../StudiesContainer"
-import { StudyInfo } from "../../StudyInfo"
+import { TutkinnonOsa } from "../../TutkinnonOsa"
 import { EmptyItem } from "../../EmptyItem"
 import { Accordion } from "../../Accordion"
 import { ShareType } from "../../../stores/NotificationStore"
@@ -63,7 +63,7 @@ export class PlannedStudies extends React.Component<PlannedStudiesProps> {
             const renderExtraItem = (i + 1) % 4 === 0
             return (
               <React.Fragment key={`${study.id}_${i}`}>
-                <StudyInfo
+                <TutkinnonOsa
                   accentColor="planned"
                   competenceRequirements={study.osaamisvaatimukset}
                   osaamisenOsoittamiset={study.osaamisenOsoittaminen}

@@ -32,7 +32,7 @@ module.exports = {
     "**/shared/components/ProgressPies.tsx",
     "**/shared/components/SectionContainer.tsx",
     "**/shared/components/StudiesContainer.tsx",
-    "**/shared/components/StudyInfo/*.tsx",
+    "**/shared/components/TutkinnonOsa/*.tsx",
     "**/shared/components/StyleguidistWrapper.tsx",
     "**/shared/components/SubHeader.tsx",
     "**/shared/components/Table.tsx",

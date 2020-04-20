@@ -21,7 +21,7 @@ import ShareDialog, {
   Instructor,
   ShareLinkValidityPeriod
 } from "components/ShareDialog"
-import { ToggleableItems } from "./StudyInfoHelpers"
+import { ToggleableItems } from "./TutkinnonOsaHelpers"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
 import { Table, TBody, TD, TH } from "./Shared"
@@ -124,7 +124,7 @@ const ExpandIcon = ({
       aria-label={intl.formatMessage({
         id: "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel"
       })}
-      data-testid="StudyInfo.ExpandDetails"
+      data-testid="TutkinnonOsa.ExpandDetails"
     >
       <Expand size={40} />
     </IconContainer>
@@ -498,7 +498,7 @@ export class Details extends React.Component<DetailsProps> {
     return expanded ? (
       <DetailsExpanded
         fadedColor={fadedColor}
-        data-testid="StudyInfo.DetailsExpanded"
+        data-testid="TutkinnonOsa.DetailsExpanded"
       >
         <DetailsContent>
           <CollapseIcon
@@ -545,7 +545,7 @@ export class Details extends React.Component<DetailsProps> {
     ) : (
       <DetailsCollapsed
         fadedColor={fadedColor}
-        data-testid="StudyInfo.DetailsCollapsed"
+        data-testid="TutkinnonOsa.DetailsCollapsed"
       >
         <LocationsContainer>
           <DetailsContent>

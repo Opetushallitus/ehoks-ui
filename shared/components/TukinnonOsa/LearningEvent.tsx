@@ -69,7 +69,7 @@ export class LearningEvent extends React.Component<LearningEventProps> {
     } = this.props
     const iconSize = size === "small" ? 24 : 32
     return (
-      <Container className={className} data-testid="StudyInfo.LearningEvent">
+      <Container className={className} data-testid="TutkinnonOsa.LearningEvent">
         <Title size={size}>{title}</Title>
         <ContentContainer>
           <Icon isOsaamisenOsoittaminen={isOsaamisenOsoittaminen}>
