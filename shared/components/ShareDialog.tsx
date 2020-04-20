@@ -183,7 +183,7 @@ export function ShareDialog(props: ShareDialogProps) {
   const apiConfig = useContext(APIConfigContext)
 
   // NOTE: we use HOKSEidContext to prevent passing `eid` prop all the way
-  // from OmienOpintojenSuunnittelu -> OpiskeluSuunnitelma -> StudyInfo -> Details -> ShareDialog
+  // from OmienOpintojenSuunnittelu -> OpiskeluSuunnitelma -> TutkinnonOsa -> Details -> ShareDialog
   const eid = useContext(HOKSEidContext) || ""
 
   useLayoutEffect(() => {
