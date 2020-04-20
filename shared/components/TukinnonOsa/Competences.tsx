@@ -11,7 +11,7 @@ import { MobileCompetences } from "./MobileCompetences"
 import { ToggleLink } from "./ToggleLink"
 import { Osaamisvaatimus } from "models/Osaamisvaatimus"
 import { SnapshotOrInstance } from "mobx-state-tree"
-import { ToggleableItems } from "./StudyInfoHelpers"
+import { ToggleableItems } from "./TutkinnonOsaHelpers"
 
 const Container = styled("div")`
   background: #fff;

@@ -21,7 +21,7 @@ import ShareDialog, {
   Instructor,
   ShareLinkValidityPeriod
 } from "components/ShareDialog"
-import { ToggleableItems } from "./StudyInfoHelpers"
+import { ToggleableItems } from "./TutkinnonOsaHelpers"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
 import { Table, TBody, TD, TH } from "./Shared"
