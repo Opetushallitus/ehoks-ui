@@ -92,7 +92,7 @@ const ShareButton = styled("div")`
   padding: 10px 70px 10px 0;
 `
 
-export interface StudyInfoProps {
+export interface TutkinnonOsaProps {
   /** Color of top border */
   accentColor?: ColorType
   /**
@@ -135,7 +135,7 @@ export interface StudyInfoProps {
   tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
 }
 
-export interface StudyInfoState {
+export interface TutkinnonOsaState {
   expanded: {
     competences: boolean
     details: boolean
@@ -148,13 +148,13 @@ export interface StudyInfoState {
  * Shows information about single study
  */
 export class TutkinnonOsa extends React.Component<
-  StudyInfoProps,
-  StudyInfoState
+  TutkinnonOsaProps,
+  TutkinnonOsaState
 > {
   static contextType = AppContext
   declare context: React.ContextType<typeof AppContext>
 
-  state: StudyInfoState = {
+  state: TutkinnonOsaState = {
     expanded: {
       competences: false,
       details: false,
@@ -177,8 +177,8 @@ export class TutkinnonOsa extends React.Component<
   }
 
   static getDerivedStateFromProps(
-    nextProps: StudyInfoProps,
-    prevState: StudyInfoState
+    nextProps: TutkinnonOsaProps,
+    prevState: TutkinnonOsaState
   ) {
     const { koodiUri, share } = nextProps
     if (typeof share !== "undefined" && koodiUri === share.koodiUri) {
@@ -202,7 +202,7 @@ export class TutkinnonOsa extends React.Component<
   }
 
   expandCompetence = (index: number) => () => {
-    this.setState((state: StudyInfoState) => ({
+    this.setState((state: TutkinnonOsaState) => ({
       expandedCompetences:
         state.expandedCompetences.indexOf(index) > -1
           ? state.expandedCompetences.filter(i => i !== index)
