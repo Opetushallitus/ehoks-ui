@@ -87,6 +87,8 @@
     "koulutuksenJarjestaja.opiskelija.tavoiteTitle": "Opiskelijan tavoite ja perustiedot",
     "koulutuksenJarjestaja.opiskelija.voimassaOlevatSuunnitelmatTitle": "Voimassa olevat suunnitelmat",
     "koulutuksenJarjestaja.opiskelijaTitle": "Opiskelijan nimi",
+    "koulutuksenJarjestaja.opiskelusuunnitelma.aiemminHankittuOlennainenSeikkaVirkailijaDescription": "Tämän tutkinnon osan osaamisen tunnistamiseen ja tunnustamiseen liittyy olennaista tietoa. ",
+    "koulutuksenJarjestaja.opiskelusuunnitelma.aiemminHankittuOlennainenSeikkaVirkailijaHelpLabel": "Olennainen seikka aputeksti virkailija",
     "koulutuksenJarjestaja.opiskelusuunnitelma.olennainenSeikkaDescription": "Tämän tutkinnon osan toteutukseen liittyy olennaista tietoa.",
     "koulutuksenJarjestaja.opiskelusuunnitelma.olennainenSeikkaHelpLabel": "Olennainen seikka aputeksti virkailija",
     "koulutuksenJarjestaja.opiskelusuunnitelma.tavoitteetTitle": "Opiskelijan tavoitteet ja opintojen eteneminen",

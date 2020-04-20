@@ -133,6 +133,8 @@
     "koulutuksenJarjestaja.haunSivutuksenAriaLabel": "Hakutuloksien sivutuksen navigaatio",
     "koulutuksenJarjestaja.jarjestaTitle": "Järjestä",
     "koulutuksenJarjestaja.meneHakutuloksienSivulleAriaLabel": "Mene hakutuloksien sivulle {page}",
+    "koulutuksenJarjestaja.opiskelusuunnitelma.aiemminHankittuOlennainenSeikkaOppijaDescription": "Tämän tutkinnon osan osaamisen tunnistamiseen ja tunnustamiseen liittyy olennaista tietoa, jonka sisällön voit tarkistaa oppilaitoksestasi.",
+    "koulutuksenJarjestaja.opiskelusuunnitelma.aiemminHankittuOlennainenSeikkaOppijaHelpLabel": "Olennainen seikka aputeksti oppija",
     "koulutuksenJarjestaja.tavoite.etunimiSukunimiTitle": "Etunimi Sukunimi",
     "koulutuksenJarjestaja.tavoite.kotikuntaTitle": "Kotikunta",
     "koulutuksenJarjestaja.tavoite.kutsumanimiTitle": "Kutsumanimi",
