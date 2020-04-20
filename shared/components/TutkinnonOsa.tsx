@@ -147,7 +147,10 @@ export interface StudyInfoState {
 /**
  * Shows information about single study
  */
-export class StudyInfo extends React.Component<StudyInfoProps, StudyInfoState> {
+export class TutkinnonOsa extends React.Component<
+  StudyInfoProps,
+  StudyInfoState
+> {
   static contextType = AppContext
   declare context: React.ContextType<typeof AppContext>
 

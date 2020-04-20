@@ -1,6 +1,6 @@
 import React from "react"
 import { render, fireEvent, wait } from "@testing-library/react"
-import { StudyInfo as StudyInfoWithoutTheme } from "../StudyInfo"
+import { TutkinnonOsa as TutkinnonOsaWithoutTheme } from "../TutkinnonOsa"
 import { renderWithContext, withTheme } from "testUtils"
 import {
   IOsaamisenHankkimistapa,
@@ -9,7 +9,7 @@ import {
 } from "models/helpers/TutkinnonOsa"
 import { mockFetch } from "fetchUtils"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
-const StudyInfo = withTheme(StudyInfoWithoutTheme)
+const TutkinnonOsa = withTheme(TutkinnonOsaWithoutTheme)
 
 const osaamisvaatimukset = [
   {
@@ -138,27 +138,27 @@ function expandDetails(getByTestId: any, queryByTestId: any) {
   expect(getByTestId("StudyInfo.DetailsExpanded")).toBeInTheDocument()
 }
 
-describe("StudyInfo", () => {
+describe("TutkinnonOsa", () => {
   beforeEach(() => {
     // mockFetch will load JSONs from shared/stores/mocks/*.json
     window.fetch = mockFetch((path: string) => `/${path}`)
   })
 
   test("render without params", () => {
-    const { getByTestId, queryByTestId } = render(<StudyInfo />)
+    const { getByTestId, queryByTestId } = render(<TutkinnonOsa />)
     expect(getByTestId("Title")).toBeEmpty()
     expect(getByTestId("StudyInfo.EmptyCompetences")).toBeInTheDocument()
     expect(queryByTestId("StudyInfo.Competences")).not.toBeInTheDocument()
   })
 
   test("render title", () => {
-    const { getByTestId } = render(<StudyInfo title="Test" />)
+    const { getByTestId } = render(<TutkinnonOsa title="Test" />)
     expect(getByTestId("Title").textContent).toBe("Test")
   })
 
   test("render competence requirements", async () => {
     const { getByTestId, queryByTestId } = renderWithContext(
-      <StudyInfo title="Test" competenceRequirements={osaamisvaatimukset} />
+      <TutkinnonOsa title="Test" competenceRequirements={osaamisvaatimukset} />
     )
 
     const expandCompetences = getByTestId(
@@ -197,14 +197,14 @@ describe("StudyInfo", () => {
       queryByTestId,
       rerender
     } = renderWithContext(
-      <StudyInfo title="Test" osaamisenOsoittamiset={naytot1} />
+      <TutkinnonOsa title="Test" osaamisenOsoittamiset={naytot1} />
     )
 
     expect(getByTestId("StudyInfo.DetailsCollapsed")).toBeInTheDocument()
     expect(queryByTestId("StudyInfo.DetailsExpanded")).not.toBeInTheDocument()
     expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
 
-    rerender(<StudyInfo title="Test" osaamisenOsoittamiset={naytot2} />)
+    rerender(<TutkinnonOsa title="Test" osaamisenOsoittamiset={naytot2} />)
 
     await wait(() => {
       expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(2)
@@ -220,7 +220,7 @@ describe("StudyInfo", () => {
       queryByTestId,
       rerender
     } = renderWithContext(
-      <StudyInfo
+      <TutkinnonOsa
         title="Test"
         osaamisenHankkimistavat={osaamisenHankkimistapa1}
       />
@@ -231,7 +231,7 @@ describe("StudyInfo", () => {
     expect(getAllByTestId("StudyInfo.LearningEvent").length).toBe(1)
 
     rerender(
-      <StudyInfo
+      <TutkinnonOsa
         title="Test"
         osaamisenHankkimistavat={osaamisenHankkimistapa2}
       />
@@ -251,7 +251,7 @@ describe("StudyInfo", () => {
       getByText,
       queryByText
     } = renderWithContext(
-      <StudyInfo
+      <TutkinnonOsa
         title="Title"
         todentamisenProsessi={{
           koodiUri: "osaamisentodentamisenprosessi_0001"
@@ -264,7 +264,7 @@ describe("StudyInfo", () => {
     expect(queryByText("Aiemman osaamisen todentanut")).not.toBeInTheDocument()
 
     rerender(
-      <StudyInfo
+      <TutkinnonOsa
         title="Title"
         todentamisenProsessi={{
           koodiUri: "osaamisentodentamisenprosessi_0002",
@@ -286,7 +286,7 @@ describe("StudyInfo", () => {
     expect(getByText("Koulutuksen järjestäjä-organisaatio")).toBeInTheDocument()
 
     rerender(
-      <StudyInfo
+      <TutkinnonOsa
         title="Title"
         osaamisenOsoittamiset={naytot3}
         todentamisenProsessi={{
@@ -307,7 +307,7 @@ describe("StudyInfo", () => {
       getByTestId,
       getByText
     } = renderWithContext(
-      <StudyInfo
+      <TutkinnonOsa
         title="Title"
         todentamisenProsessi={{
           koodiUri: "osaamisentodentamisenprosessi_0001"
