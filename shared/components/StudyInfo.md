@@ -56,7 +56,7 @@
 ### Completed study
 
 ```js
-<StudyInfo
+<TutkinnonOsa
   accentColor="#43A047"
   fadedColor="#ECF6ED"
   title="Valmis opinto"
