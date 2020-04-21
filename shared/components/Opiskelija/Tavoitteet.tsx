@@ -142,7 +142,7 @@ const StudentContactInfo = ({
 }) => (
   <>
     <tr>
-      {(student.yhteystiedot.sahkoposti || hoks.sahkoposti) && (
+      {(student.yhteystiedot.sahkoposti || !!hoks.sahkoposti) && (
         <th>
           <FormattedMessage
             id="tavoitteet.sahkopostiTitle"
@@ -161,7 +161,7 @@ const StudentContactInfo = ({
       )}
     </tr>
     <tr>
-      {(student.yhteystiedot.sahkoposti || hoks.sahkoposti) && (
+      {(student.yhteystiedot.sahkoposti || !!hoks.sahkoposti) && (
         <LabeledColumn id="tavoitteet.sahkopostiTitle">
           {student.yhteystiedot.sahkoposti
             ? student.yhteystiedot.sahkoposti
