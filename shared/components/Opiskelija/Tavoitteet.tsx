@@ -41,6 +41,98 @@ const OsaamisenHankkimisenTarveMessage = ({
   )
 }
 
+const StudentPersonalInfo = ({ student }: { student: ISessionUser }) => (
+  <>
+    <tr>
+      <th>
+        <FormattedMessage
+          id="tavoitteet.etunimiSukunimiTitle"
+          defaultMessage="Etunimi Sukunimi"
+        />
+      </th>
+
+      <th>
+        {student.commonName && (
+          <FormattedMessage
+            id="tavoitteet.kutsumanimiTitle"
+            defaultMessage="Kutsumanimi"
+          />
+        )}
+      </th>
+
+      <th>
+        <FormattedMessage
+          id="tavoitteet.oppijanumeroTitle"
+          defaultMessage="Oppijanumero"
+        />
+      </th>
+    </tr>
+    <tr>
+      <LabeledColumn id="tavoitteet.etunimiSukunimiTitle">
+        {student.firstName && student.surname
+          ? `${student.firstName} ${student.surname}`
+          : student.fullName}
+      </LabeledColumn>
+
+      <LabeledColumn id="tavoitteet.kutsumanimiTitle">
+        {student.commonName}
+      </LabeledColumn>
+
+      <LabeledColumn id="tavoitteet.oppijanumeroTitle">
+        {student.oid}
+      </LabeledColumn>
+    </tr>
+  </>
+)
+
+const StudentAddressInfo = ({ student }: { student: ISessionUser }) => (
+  <>
+    <tr>
+      {student.yhteystiedot.katuosoite && (
+        <th>
+          <FormattedMessage
+            id="tavoitteet.osoiteTitle"
+            defaultMessage="Osoite"
+          />
+        </th>
+      )}
+      {(student.yhteystiedot.postinumero || student.yhteystiedot.kunta) && (
+        <th>
+          <FormattedMessage
+            id="tavoitteet.postiosoiteTitle"
+            defaultMessage="Postiosoite"
+          />
+        </th>
+      )}
+      {student.yhteystiedot.kunta && (
+        <th>
+          <FormattedMessage
+            id="tavoitteet.kotikuntaTitle"
+            defaultMessage="Kotikunta"
+          />
+        </th>
+      )}
+    </tr>
+    <tr>
+      {student.yhteystiedot.katuosoite && (
+        <LabeledColumn id="tavoitteet.osoiteTitle">
+          {student.yhteystiedot.katuosoite}
+        </LabeledColumn>
+      )}
+      {(student.yhteystiedot.postinumero || student.yhteystiedot.kunta) && (
+        <LabeledColumn id="tavoitteet.postiosoiteTitle">
+          {student.yhteystiedot.postinumero} {student.yhteystiedot.kunta}
+        </LabeledColumn>
+      )}
+      {student.yhteystiedot.kunta && (
+        <LabeledColumn id="tavoitteet.kotikuntaTitle">
+          {student.yhteystiedot.kunta}
+        </LabeledColumn>
+      )}
+    </tr>
+  </>
+)
+
 export interface TavoitteetProps {
   children?: React.ReactChildren
   student: ISessionUser
@@ -260,36 +352,9 @@ export class Tavoitteet extends React.Component<
         >
           <InfoTable>
             <tbody>
-              <tr>
-                <th>
-                  <FormattedMessage
-                    id="tavoitteet.etunimiSukunimiTitle"
-                    defaultMessage="Etunimi Sukunimi"
-                  />
-                </th>
+              <StudentPersonalInfo student={student} />
 
-                <th>
-                  {student.commonName && (
-                    <FormattedMessage
-                      id="tavoitteet.kutsumanimiTitle"
-                      defaultMessage="Kutsumanimi"
-                    />
-                  )}
-                </th>
-
-                <th>
-                  <FormattedMessage
-                    id="tavoitteet.oppijanumeroTitle"
-                    defaultMessage="Oppijanumero"
-                  />
-                </th>
-              </tr>
-              <tr>
-                <LabeledColumn id="tavoitteet.etunimiSukunimiTitle">
-                  {student.firstName && student.surname
-                    ? `${student.firstName} ${student.surname}`
-                    : student.fullName}
-                </LabeledColumn>
+              <StudentAddressInfo student={student} />
 
                 <LabeledColumn id="tavoitteet.kutsumanimiTitle">
                   {student.commonName}
