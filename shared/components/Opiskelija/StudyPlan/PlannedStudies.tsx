@@ -12,8 +12,8 @@ import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
 export interface PlannedStudiesProps {
   accordionIsOpen: boolean
   share: {
-    koodiUri: string
-    type: ShareType | ""
+    moduleId: string
+    type: ShareType
   }
   hasActiveShare: boolean
   toggleAccordion: (

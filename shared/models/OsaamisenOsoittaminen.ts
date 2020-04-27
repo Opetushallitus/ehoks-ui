@@ -8,6 +8,7 @@ import { KoodistoKoodi } from "./KoodistoKoodi"
 export const OsaamisenOsoittaminen = types
   .model("OsaamisenOsoittaminen", {
     id: types.optional(types.number, 0),
+    moduleId: types.optional(types.string, ""),
     jarjestaja: types.optional(NaytonJarjestaja, {}),
     osaAlueet: types.optional(types.array(KoodistoKoodi), []),
     nayttoymparisto: types.optional(Nayttoymparisto, {}),

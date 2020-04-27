@@ -1,14 +1,15 @@
 import { APIConfig } from "components/APIConfigContext"
 
 interface BackendShareLink {
-  uuid: string
+  "jako-uuid": string
+  "module-id": string
   "voimassaolo-alku": string
   "voimassaolo-loppu": string
   tyyppi: string
 }
 
 export interface ShareLink {
-  uuid: string
+  jakoUuid: string
   validFrom: string
   validTo: string
   type: string
@@ -16,13 +17,13 @@ export interface ShareLink {
 
 export const fetchLinks = async function(
   eid: string,
-  koodiUri: string,
+  moduleId: string,
   type: string,
   apiConfig: APIConfig
 ): Promise<ShareLink[]> {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/hoksit/${eid}/share/${koodiUri}`),
+    apiUrl(`${apiPrefix}/hoksit/${eid}/share/${moduleId}`),
     {
       credentials: "include"
     }
@@ -34,7 +35,7 @@ export const fetchLinks = async function(
   return json.data
     .filter(link => link.tyyppi === type)
     .map(link => ({
-      uuid: link.uuid,
+      jakoUuid: link["jako-uuid"],
       validFrom: link["voimassaolo-alku"],
       validTo: link["voimassaolo-loppu"],
       type: link.tyyppi
@@ -43,22 +44,22 @@ export const fetchLinks = async function(
 
 export const createLink = async function({
   eid,
-  koodiUri,
   startDate,
   endDate,
+  moduleId,
   type,
   apiConfig
 }: {
   eid: string
-  koodiUri: string
   startDate: string
   endDate: string
+  moduleId: string
   type: string
   apiConfig: APIConfig
 }): Promise<string> {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/hoksit/${eid}/share/${koodiUri}`),
+    apiUrl(`${apiPrefix}/hoksit/share/${eid}`),
     {
       credentials: "include",
       method: "POST",
@@ -68,7 +69,8 @@ export const createLink = async function({
       body: JSON.stringify({
         "voimassaolo-alku": startDate,
         "voimassaolo-loppu": endDate,
-        tyyppi: type
+        tyyppi: type,
+        moduleId: moduleId
       })
     }
   )

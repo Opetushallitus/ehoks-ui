@@ -10,6 +10,7 @@ export const AiemminHankittuYhteinenTutkinnonOsa = types.model(
   "AiemminHankittuYhteinenTutkinnonOsa",
   {
     id: types.optional(types.number, 0),
+    moduleId: types.optional(types.string, ""),
     tutkinnonOsaKoodiUri: types.optional(types.string, ""),
     tutkinnonOsa: types.optional(EPerusteetVastaus, {}),
     tutkinnonOsaViitteet: types.array(TutkinnonOsaViite),

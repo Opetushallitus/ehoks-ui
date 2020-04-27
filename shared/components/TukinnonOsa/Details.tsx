@@ -135,23 +135,26 @@ const OsaamisenHankkimistavatExpanded = ({
   shareType,
   fadedColor,
   koodiUri,
+  moduleId,
   instructor,
   defaultPeriod,
   osaamisenHankkimistavat
 }: {
   hasActiveShare: boolean
-  shareType?: ShareType | ""
+  shareType?: ShareType
   fadedColor: string
   koodiUri?: string
+  moduleId?: string
   instructor?: Instructor
   defaultPeriod?: ShareLinkValidityPeriod
   osaamisenHankkimistavat: IOsaamisenHankkimistapa[]
 }) => (
   <ShareDialog
-    active={hasActiveShare && shareType === "tyossaoppiminen"}
+    active={hasActiveShare && shareType === "osaamisenhankkimistapa"}
     background={fadedColor}
     koodiUri={koodiUri || ""}
-    type="tyossaoppiminen"
+    type="osaamisenhankkimistapa"
+    moduleId={moduleId || ""}
     instructor={instructor}
     defaultPeriod={defaultPeriod}
   >
@@ -192,6 +195,7 @@ const OsaamisenOsoittamisetExpanded = ({
   shareType,
   fadedColor,
   koodiUri,
+  moduleId,
   todentamisenProsessi
 }: {
   osaamisenOsoittamiset: IOsaamisenOsoittaminen[]
@@ -199,15 +203,17 @@ const OsaamisenOsoittamisetExpanded = ({
   shareType?: ShareType | ""
   fadedColor: string
   koodiUri?: string
+  moduleId?: string
   todentamisenProsessi?: TodentamisenProsessi
 }) => (
   <>
     {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => (
       <ShareDialog
-        active={hasActiveShare && shareType === "naytto"}
+        active={hasActiveShare && shareType === "osaamisenosoittaminen"}
         background={fadedColor}
         koodiUri={koodiUri || ""}
-        type="naytto"
+        type="osaamisenosoittaminen"
+        moduleId={moduleId || ""}
         defaultPeriod={{
           start: osaamisenOsoittaminen.alku,
           end: osaamisenOsoittaminen.loppu
@@ -217,8 +223,10 @@ const OsaamisenOsoittamisetExpanded = ({
         <OsaamisenOsoittaminen
           osaamisenOsoittaminen={osaamisenOsoittaminen}
           todentamisenProsessi={todentamisenProsessi}
-          koodiUri={koodiUri}
-          hasActiveShare={hasActiveShare && shareType === "naytto"}
+          moduleId={moduleId}
+          hasActiveShare={
+            hasActiveShare && shareType === "osaamisenosoittaminen"
+          }
         />
       </ShareDialog>
     ))}
@@ -433,11 +441,12 @@ interface DetailsProps {
   expanded?: boolean
   koodiUri?: string
   osaamisenHankkimistavat?: IOsaamisenHankkimistapa[]
-  share?: { koodiUri: string; type: ShareType | "" }
+  share?: { moduleId: string; type: ShareType | "" }
   toggle: (name: ToggleableItems) => () => void
   todentamisenProsessi?: TodentamisenProsessi
   koulutuksenJarjestaja?: IOrganisaatio
   tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
+  moduleId?: string
 }
 
 export class Details extends React.Component<DetailsProps> {
@@ -454,6 +463,7 @@ export class Details extends React.Component<DetailsProps> {
       koodiUri,
       osaamisenHankkimistavat = [],
       share,
+      moduleId,
       toggle,
       todentamisenProsessi,
       koulutuksenJarjestaja,
@@ -470,10 +480,10 @@ export class Details extends React.Component<DetailsProps> {
       !!tarkentavatTiedotOsaamisenArvioija
     const isAiempiOsaaminen = !!todentamisenProsessiKoodi
     const hasActiveShare =
-      typeof share !== "undefined" && koodiUri === share.koodiUri
+      typeof share !== "undefined" && moduleId === share.moduleId
     const shareType = typeof share !== "undefined" ? share.type : undefined
     const firstOsaamisenHankkimistapa =
-      shareType === "tyossaoppiminen" && osaamisenHankkimistavat[0]
+      shareType === "osaamisenhankkimistapa" && osaamisenHankkimistavat[0]
         ? osaamisenHankkimistavat[0]
         : undefined
 

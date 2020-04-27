@@ -5,24 +5,21 @@ import { ShareType } from "stores/NotificationStore"
 export function parseShareParams(
   location: WindowLocation | undefined
 ): {
-  share: string
-  type: ShareType | ""
+  share: { type: ShareType; moduleId: string | "" }
 } {
   const qs = queryString.parse(location ? location.search : "")
   return {
-    share: typeof qs.share === "string" ? qs.share : "",
-    type:
-      typeof qs.type === "string" &&
-      (qs.type === "naytto" || qs.type === "tyossaoppiminen")
-        ? qs.type
-        : ""
+    share: {
+      type: "osaamisenosoittaminen", //TODO typeof qs.type === "string" ? qs.type : "",
+      moduleId: typeof qs.moduleId === "string" ? qs.moduleId : ""
+    }
   }
 }
 
 export const stringifyShareParams = ({
-  share,
-  type
+  type,
+  moduleId
 }: {
-  share: string
   type: ShareType
-}): string => queryString.stringify({ share, type })
+  moduleId: string
+}): string => queryString.stringify({ type, moduleId })

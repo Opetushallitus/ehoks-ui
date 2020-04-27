@@ -110,6 +110,7 @@ export interface TutkinnonOsaProps {
    * KoodiURI for this study
    */
   koodiUri?: string
+  moduleId?: string
   /**
    * List of learning periods.
    * @default []
@@ -118,7 +119,7 @@ export interface TutkinnonOsaProps {
   /**
    * Current share state from url
    */
-  share?: { koodiUri: string; type: ShareType | "" }
+  share?: { moduleId: string; type: ShareType }
   /** Title of the study, always visible */
   title?: React.ReactNode
   /**
@@ -164,8 +165,8 @@ export class TutkinnonOsa extends React.Component<
   }
 
   componentDidMount() {
-    const { koodiUri, share } = this.props
-    if (typeof share !== "undefined" && koodiUri === share.koodiUri) {
+    const { share, moduleId } = this.props
+    if (typeof share !== "undefined" && moduleId === share.moduleId) {
       this.setState(state => ({
         ...state,
         expanded: {
@@ -180,8 +181,8 @@ export class TutkinnonOsa extends React.Component<
     nextProps: TutkinnonOsaProps,
     prevState: TutkinnonOsaState
   ) {
-    const { koodiUri, share } = nextProps
-    if (typeof share !== "undefined" && koodiUri === share.koodiUri) {
+    const { moduleId, share } = nextProps
+    if (typeof share !== "undefined" && moduleId === share.moduleId) {
       return {
         ...prevState,
         expanded: {
@@ -223,12 +224,12 @@ export class TutkinnonOsa extends React.Component<
   }
 
   share = () => {
-    const { koodiUri } = this.props
-    if (koodiUri) {
+    const { moduleId } = this.props
+    if (moduleId) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
-          share: koodiUri,
-          type: "tyossaoppiminen"
+          moduleId: moduleId,
+          type: "osaamisenhankkimistapa"
         })}`
       )
     }
@@ -251,6 +252,7 @@ export class TutkinnonOsa extends React.Component<
       fadedColor,
       osaamisenHankkimistavat = [],
       koodiUri,
+      moduleId,
       share,
       title,
       todentamisenProsessi,
@@ -269,8 +271,8 @@ export class TutkinnonOsa extends React.Component<
       todentamisenProsessi
     const hasActiveShare =
       typeof share !== "undefined" &&
-      koodiUri === share.koodiUri &&
-      share.type === "tyossaoppiminen"
+      moduleId === share.moduleId &&
+      share.type === "osaamisenhankkimistapa"
     const detailsExpanded = expanded.details || hasActiveShare
     const showShareButton =
       expanded.details &&

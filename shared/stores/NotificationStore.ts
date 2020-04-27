@@ -17,7 +17,7 @@ import find from "lodash.find"
 import { StoreEnvironment } from "../types/StoreEnvironment"
 import { APIResponse } from "../types/APIResponse"
 
-export type ShareType = "naytto" | "tyossaoppiminen"
+export type ShareType = "osaamisenosoittaminen" | "osaamisenhankkimistapa" | ""
 
 export const NotificationModel = types.model("NotificationModel", {
   hoksId: types.optional(types.string, ""),
@@ -27,7 +27,8 @@ export const NotificationModel = types.model("NotificationModel", {
   alku: types.optional(types.string, ""),
   loppu: types.optional(types.string, ""),
   paikka: types.optional(types.string, ""),
-  visible: types.optional(types.boolean, true)
+  visible: types.optional(types.boolean, true),
+  moduleId: types.optional(types.string, "")
 })
 
 export const Notification = types

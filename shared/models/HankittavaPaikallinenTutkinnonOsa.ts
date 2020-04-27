@@ -7,6 +7,7 @@ import { Organisaatio } from "./Organisaatio"
 
 const Model = types.model("HankittavaPaikallinenTutkinnonOsaModel", {
   id: types.optional(types.number, 0),
+  moduleId: types.optional(types.string, ""),
   tavoitteetJaSisallot: types.optional(types.string, ""),
   osaamisenOsoittaminen: types.array(OsaamisenOsoittaminen),
   olennainenSeikka: types.optional(types.boolean, false),

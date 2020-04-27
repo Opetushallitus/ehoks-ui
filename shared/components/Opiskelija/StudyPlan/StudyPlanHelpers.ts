@@ -1,4 +1,4 @@
-import { ShareType } from "../../../stores/NotificationStore"
+import { ShareType } from "stores/NotificationStore"
 
 export interface OpiskelusuunnitelmaState {
   activeAccordions: {
@@ -12,8 +12,8 @@ export interface OpiskelusuunnitelmaState {
     tukevatOpinnot: boolean
   }
   share: {
-    koodiUri: string
-    type: ShareType | ""
+    type: ShareType
+    moduleId: string
   }
 }
 

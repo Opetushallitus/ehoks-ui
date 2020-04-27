@@ -71,30 +71,30 @@ export class Opiskelusuunnitelma extends React.Component<
       tukevatOpinnot: false
     },
     share: {
-      koodiUri: "",
-      type: ""
+      type: "",
+      moduleId: ""
     }
   }
 
   async componentDidMount() {
     const { location } = this.props
-    const { share, type } = parseShareParams(location)
-    await this.showShareDialog(share, type)
-    this.setInitialExpanded(share, type)
+    const { share } = parseShareParams(location)
+    await this.showShareDialog(share.type, share.moduleId)
+    this.setInitialExpanded(share)
   }
 
   componentDidUpdate(prevProps: OpiskelusuunnitelmaProps) {
     if (this.props.location !== prevProps.location) {
       // TODO: set proper share state when opening another dialog
       // previous dialog should close and new dialog should open
-      const { share, type } = parseShareParams(this.props.location)
-      this.showShareDialog(share, type)
+      const { share } = parseShareParams(this.props.location)
+      this.showShareDialog(share.type, share.moduleId)
     }
   }
 
   isShareActive = () => {
     const { share } = this.state
-    return share.koodiUri !== "" && share.type !== ""
+    return share.type !== "" && share.moduleId !== ""
   }
 
   hasActiveShare = (type: StudyPartType) => {
@@ -110,16 +110,16 @@ export class Opiskelusuunnitelma extends React.Component<
       valmiit: valmiitOpinnot
     }
     return !!find(studies[type], s =>
-      s.hasNayttoOrHarjoittelujakso(share.koodiUri, share.type)
+      s.hasNayttoOrHarjoittelujakso(share.type, share.moduleId)
     )
   }
 
-  showShareDialog = (share: string, type: ShareType | "") =>
+  showShareDialog = (type: ShareType, moduleId: string | "") =>
     new Promise(resolve => {
       this.setState(
         state => ({
           ...state,
-          share: { koodiUri: share, type }
+          share: { type, moduleId }
         }),
         () => {
           resolve()
@@ -127,12 +127,12 @@ export class Opiskelusuunnitelma extends React.Component<
       )
     })
 
-  setInitialExpanded = (share: string, type: ShareType | "") => {
+  setInitialExpanded = (share: { type: ShareType; moduleId: string | "" }) => {
     this.setState(state => ({
       ...state,
       activeAccordions: {
         ...state.activeAccordions,
-        suunnitelma: Boolean(share && type),
+        suunnitelma: Boolean(share),
         suunnitelmat: {
           aikataulutetut: this.hasActiveShare("aikataulutetut"),
           suunnitellut: this.hasActiveShare("suunnitellut"),

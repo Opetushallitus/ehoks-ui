@@ -36,7 +36,7 @@ export const HankittavatTutkinnonOsatViews = types
         }
         const koodiUriMatch = self.tutkinnonOsaKoodiUri === koodiUri
         const typeMatch =
-          type === "naytto"
+          type === "osaamisenosoittaminen"
             ? self.osaamisenOsoittaminen?.length > 0
             : !!find(
                 self.osaamisenHankkimistavat,

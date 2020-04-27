@@ -150,6 +150,7 @@ interface ShareDialogProps extends InjectedIntlProps {
   /* Used version of react-intl cannot handle React.ReactNode here */
   children: any
   koodiUri: string
+  moduleId: string
   type: ShareType
   defaultPeriod?: ShareLinkValidityPeriod
   instructor?: Instructor
@@ -163,6 +164,7 @@ export function ShareDialog(props: ShareDialogProps) {
     defaultPeriod,
     instructor,
     koodiUri,
+    moduleId,
     type,
     intl
   } = props
@@ -210,13 +212,13 @@ export function ShareDialog(props: ShareDialogProps) {
   const addLink = async () => {
     const createdUuid = await createLink({
       eid,
-      koodiUri,
       startDate,
       endDate,
+      moduleId,
       type,
       apiConfig
     })
-    setSharedLinks(await fetchLinks(eid, koodiUri, type, apiConfig))
+    setSharedLinks(await fetchLinks(eid, moduleId, type, apiConfig))
     setCreatedUrl(`https://not.implemented.yet/jako/${createdUuid}`)
   }
 
@@ -268,7 +270,7 @@ export function ShareDialog(props: ShareDialogProps) {
           <ShareHeaderContainer>
             <ShareHeader>
               <ShareTitle>
-                {type === "naytto" ? (
+                {type === "osaamisenosoittaminen" ? (
                   <FormattedMessage
                     id="jakaminen.naytonTietojenJakaminenTitle "
                     defaultMessage="Näytön tietojen jakaminen"
@@ -282,7 +284,7 @@ export function ShareDialog(props: ShareDialogProps) {
               </ShareTitle>
 
               <ShareDescription>
-                {type === "naytto" ? (
+                {type === "osaamisenosoittaminen" ? (
                   <FormattedMessage
                     id="jakaminen.naytonJakoDescription"
                     defaultMessage="Olet jakamassa näitä näytön tietoja"
@@ -306,7 +308,7 @@ export function ShareDialog(props: ShareDialogProps) {
           </ShareHeaderContainer>
           <ChildContainer background={background}>{children}</ChildContainer>
           <ShareDescription>
-            {type === "naytto" ? (
+            {type === "osaamisenosoittaminen" ? (
               <FormattedMessage
                 id="jakaminen.aiemmatNaytonJaotDescription"
                 defaultMessage="Aiemmin tekemäsi näytön jakolinkit"
@@ -333,11 +335,11 @@ export function ShareDialog(props: ShareDialogProps) {
                   <FormattedDate date={link.validFrom} /> -{" "}
                   <FormattedDate date={link.validTo} />
                 </LinkItem>
-                <LinkItem>{link.uuid}</LinkItem>
+                <LinkItem>{link.jakoUuid}</LinkItem>
                 <LinkAnchor>
                   <LinkButton
                     onClick={(event: React.MouseEvent) =>
-                      remove(event, link.uuid)
+                      remove(event, link.jakoUuid)
                     }
                   >
                     <FormattedMessage
@@ -357,7 +359,7 @@ export function ShareDialog(props: ShareDialogProps) {
                     <ShareColumns>
                       <ShareColumn>
                         <Subtitle>
-                          {type === "naytto" ? (
+                          {type === "osaamisenosoittaminen" ? (
                             <FormattedMessage
                               id="jakaminen.linkkiNaytonTietoihin"
                               defaultMessage="Linkki näytön tietoihin"

@@ -71,7 +71,7 @@ interface OsaamisenOsoittaminenState {
 interface OsaamisenOsoittaminenProps {
   osaamisenOsoittaminen: IOsaamisenOsoittaminen
   todentamisenProsessi?: TodentamisenProsessi
-  koodiUri?: string
+  moduleId?: string
   hasActiveShare?: boolean
 }
 
@@ -94,12 +94,12 @@ export class OsaamisenOsoittaminen extends React.Component<
   }
 
   share = () => {
-    const { koodiUri } = this.props
-    if (koodiUri) {
+    const { moduleId } = this.props
+    if (moduleId) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
-          share: koodiUri,
-          type: "naytto"
+          type: "osaamisenosoittaminen",
+          moduleId: moduleId
         })}`
       )
     }

@@ -9,6 +9,7 @@ import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
 
 const model = types.model({
   id: types.optional(types.number, 0),
+  moduleId: types.optional(types.string, ""),
   tavoitteetJaSisallot: types.optional(types.string, ""),
   vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
   nimi: types.optional(types.string, ""),
