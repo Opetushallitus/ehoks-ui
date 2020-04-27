@@ -15,14 +15,13 @@ export interface ShareLink {
 }
 
 export const fetchLinks = async function(
-  eid: string,
   koodiUri: string,
   type: string,
   apiConfig: APIConfig
 ): Promise<ShareLink[]> {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/hoksit/${eid}/share/${koodiUri}`),
+    apiUrl(`${apiPrefix}/hoksit/share/${koodiUri}`),
     {
       credentials: "include"
     }
@@ -42,14 +41,12 @@ export const fetchLinks = async function(
 }
 
 export const createLink = async function({
-  eid,
   koodiUri,
   startDate,
   endDate,
   type,
   apiConfig
 }: {
-  eid: string
   koodiUri: string
   startDate: string
   endDate: string
@@ -58,7 +55,7 @@ export const createLink = async function({
 }): Promise<string> {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/hoksit/${eid}/share/${koodiUri}`),
+    apiUrl(`${apiPrefix}/hoksit/share/${koodiUri}`),
     {
       credentials: "include",
       method: "POST",
@@ -81,19 +78,17 @@ export const createLink = async function({
 }
 
 export const removeLink = async function({
-  eid,
   koodiUri,
   uuid,
   apiConfig
 }: {
-  eid: string
   koodiUri: string
   uuid: string
   apiConfig: APIConfig
 }) {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/hoksit/${eid}/share/${koodiUri}/${uuid}`),
+    apiUrl(`${apiPrefix}/hoksit/share/${koodiUri}/${uuid}`),
     {
       credentials: "include",
       method: "DELETE",
