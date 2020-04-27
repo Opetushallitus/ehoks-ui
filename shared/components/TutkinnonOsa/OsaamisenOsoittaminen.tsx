@@ -8,7 +8,7 @@ import {
   IOsaamisenOsoittaminen,
   TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
-import { LearningEvent } from "components/TukinnonOsa/LearningEvent"
+import { LearningEvent } from "components/TutkinnonOsa/LearningEvent"
 import { TodentamisenProsessiKoodi } from "types/TodentamisenProsessiKoodi"
 import { HeroButton } from "components/Button"
 import { MdShare } from "react-icons/md"
