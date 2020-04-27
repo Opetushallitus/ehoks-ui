@@ -70,7 +70,7 @@ export const createLink = async function({
         "voimassaolo-alku": startDate,
         "voimassaolo-loppu": endDate,
         tyyppi: type,
-        moduleId: moduleId
+        moduleId
       })
     }
   )

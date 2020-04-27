@@ -228,7 +228,7 @@ export class TutkinnonOsa extends React.Component<
     if (moduleId) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
-          moduleId: moduleId,
+          moduleId,
           type: "osaamisenhankkimistapa"
         })}`
       )

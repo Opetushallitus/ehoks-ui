@@ -99,7 +99,7 @@ export class OsaamisenOsoittaminen extends React.Component<
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
           type: "osaamisenosoittaminen",
-          moduleId: moduleId
+          moduleId
         })}`
       )
     }
