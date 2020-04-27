@@ -24,11 +24,15 @@ interface ArrowProps {
   active: boolean
 }
 
-const ArrowUp = styled(rest => <MdArrowDropUp {...rest} />)<ArrowProps>`
+const ArrowUp = styled(({ active: _active, ...rest }) => (
+  <MdArrowDropUp {...rest} />
+))<ArrowProps>`
   color: ${props => (props.active ? "#229FC9" : "#84898C")};
 `
 
-const ArrowDown = styled(rest => <MdArrowDropDown {...rest} />)<ArrowProps>`
+const ArrowDown = styled(({ active: _active, ...rest }) => (
+  <MdArrowDropDown {...rest} />
+))<ArrowProps>`
   color: ${props => (props.active ? "#229FC9" : "#84898C")};
   margin-top: -24px;
 `
