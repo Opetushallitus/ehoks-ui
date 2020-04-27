@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import styled from "styled"
 
-const modalRoot = document.getElementById("modal-root")
+const getModalRoot = () => document.getElementById("modal-root")
 const modalRootError = () => {
   throw new Error(`modal-root not found`)
 }
@@ -25,6 +25,7 @@ export class Modal extends React.Component<{}> {
   }
 
   componentDidMount() {
+    const modalRoot = getModalRoot()
     if (modalRoot) {
       modalRoot.appendChild(this.el)
     } else {
@@ -33,6 +34,7 @@ export class Modal extends React.Component<{}> {
   }
 
   componentWillUnmount() {
+    const modalRoot = getModalRoot()
     if (modalRoot) {
       modalRoot.removeChild(this.el)
     } else {

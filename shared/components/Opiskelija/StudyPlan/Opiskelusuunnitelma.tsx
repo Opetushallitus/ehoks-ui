@@ -115,6 +115,7 @@ export class Opiskelusuunnitelma extends React.Component<
   }
 
   showShareDialog = (share: string, type: ShareType | "") =>
+    // Is this promise because when state.share is used component needs to have DOM generated?
     new Promise(resolve => {
       this.setState(
         state => ({
