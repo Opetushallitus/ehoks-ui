@@ -257,6 +257,7 @@ export function ShareDialog(props: ShareDialogProps) {
     <React.Fragment>
       {active ? (
         <ShareContainer ref={ref}>
+          {/* Invision designs do not have modal, but it was decided to use */}
           <ModalWithBackground />
           <ShareHeaderContainer>
             <ShareHeader>
