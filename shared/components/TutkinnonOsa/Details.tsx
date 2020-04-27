@@ -132,7 +132,6 @@ const ExpandIcon = ({
 
 const OsaamisenHankkimistavatExpanded = ({
   hasActiveShare,
-  shareType,
   fadedColor,
   koodiUri,
   instructor,
@@ -140,7 +139,6 @@ const OsaamisenHankkimistavatExpanded = ({
   osaamisenHankkimistavat
 }: {
   hasActiveShare: boolean
-  shareType?: ShareType | ""
   fadedColor: string
   koodiUri?: string
   instructor?: Instructor
@@ -148,7 +146,7 @@ const OsaamisenHankkimistavatExpanded = ({
   osaamisenHankkimistavat: IOsaamisenHankkimistapa[]
 }) => (
   <ShareDialog
-    active={hasActiveShare && shareType === "tyossaoppiminen"}
+    active={hasActiveShare}
     background={fadedColor}
     koodiUri={koodiUri || ""}
     type="tyossaoppiminen"
@@ -189,14 +187,12 @@ const OsaamisenHankkimistavatCollapsed = ({
 const OsaamisenOsoittamisetExpanded = ({
   osaamisenOsoittamiset,
   hasActiveShare,
-  shareType,
   fadedColor,
   koodiUri,
   todentamisenProsessi
 }: {
   osaamisenOsoittamiset: IOsaamisenOsoittaminen[]
   hasActiveShare: boolean
-  shareType?: ShareType | ""
   fadedColor: string
   koodiUri?: string
   todentamisenProsessi?: TodentamisenProsessi
@@ -204,7 +200,7 @@ const OsaamisenOsoittamisetExpanded = ({
   <>
     {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => (
       <ShareDialog
-        active={hasActiveShare && shareType === "naytto"}
+        active={hasActiveShare}
         background={fadedColor}
         koodiUri={koodiUri || ""}
         type="naytto"
@@ -218,7 +214,7 @@ const OsaamisenOsoittamisetExpanded = ({
           osaamisenOsoittaminen={osaamisenOsoittaminen}
           todentamisenProsessi={todentamisenProsessi}
           koodiUri={koodiUri}
-          hasActiveShare={hasActiveShare && shareType === "naytto"}
+          hasActiveShare={hasActiveShare}
         />
       </ShareDialog>
     ))}
@@ -469,6 +465,7 @@ export class Details extends React.Component<DetailsProps> {
       todentamisenProsessiKoodi === TodentamisenProsessiKoodi.OHJAUS_NAYTTOON ||
       !!tarkentavatTiedotOsaamisenArvioija
     const isAiempiOsaaminen = !!todentamisenProsessiKoodi
+    // TODO hasActiveShare matches now for koodiUri and might show multiple share modals, should use module-id and check per module
     const hasActiveShare =
       typeof share !== "undefined" && koodiUri === share.koodiUri
     const shareType = typeof share !== "undefined" ? share.type : undefined
@@ -516,8 +513,7 @@ export class Details extends React.Component<DetailsProps> {
           />
 
           <OsaamisenHankkimistavatExpanded
-            hasActiveShare={hasActiveShare}
-            shareType={shareType}
+            hasActiveShare={hasActiveShare && shareType === "tyossaoppiminen"}
             fadedColor={fadedColor}
             koodiUri={koodiUri}
             instructor={instructor}
@@ -527,8 +523,7 @@ export class Details extends React.Component<DetailsProps> {
 
           <OsaamisenOsoittamisetExpanded
             osaamisenOsoittamiset={osaamisenOsoittamiset}
-            hasActiveShare={hasActiveShare}
-            shareType={shareType}
+            hasActiveShare={hasActiveShare && shareType === "naytto"}
             fadedColor={fadedColor}
             koodiUri={koodiUri}
             todentamisenProsessi={todentamisenProsessi}
