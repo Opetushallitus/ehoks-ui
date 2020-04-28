@@ -67,8 +67,6 @@ React's Context API is used for several features as it provides easy way to prov
 
 `AppContext` is used for providing current app name ( `oppija` or `virkailija` ) and feature flags to shared components.
 
-`HOKSEidContext` is used for providing HOKS eid to `ShareDialog` .
-
 ### Hooks
 
 `ShareDialog` uses React hooks extensively but they're not used elsewhere yet.

@@ -20,7 +20,6 @@ import {
 import { APIConfigContext } from "components/APIConfigContext"
 import CopyToClipboard from "react-copy-to-clipboard"
 import { FormattedDate } from "components/FormattedDate"
-import { HOKSEidContext } from "components/HOKSEidContext"
 import { AppContext } from "components/AppContext"
 
 interface ColorProps {
@@ -182,10 +181,6 @@ export function ShareDialog(props: ShareDialogProps) {
   const [instructorCopied, setInstructorCopied] = useState(false)
   const apiConfig = useContext(APIConfigContext)
 
-  // NOTE: we use HOKSEidContext to prevent passing `eid` prop all the way
-  // from OmienOpintojenSuunnittelu -> OpiskeluSuunnitelma -> TutkinnonOsa -> Details -> ShareDialog
-  const eid = useContext(HOKSEidContext) || ""
-
   useLayoutEffect(() => {
     window.requestAnimationFrame(() => {
       if (ref && ref.current) {
@@ -197,7 +192,7 @@ export function ShareDialog(props: ShareDialogProps) {
 
   useEffect(() => {
     const fetchData = async () => {
-      setSharedLinks(await fetchLinks(eid, koodiUri, type, apiConfig))
+      setSharedLinks(await fetchLinks(koodiUri, type, apiConfig))
     }
     fetchData()
   }, [])
@@ -209,14 +204,13 @@ export function ShareDialog(props: ShareDialogProps) {
 
   const addLink = async () => {
     const createdUuid = await createLink({
-      eid,
       koodiUri,
       startDate,
       endDate,
       type,
       apiConfig
     })
-    setSharedLinks(await fetchLinks(eid, koodiUri, type, apiConfig))
+    setSharedLinks(await fetchLinks(koodiUri, type, apiConfig))
     setCreatedUrl(`https://not.implemented.yet/jako/${createdUuid}`)
   }
 
@@ -236,12 +230,11 @@ export function ShareDialog(props: ShareDialogProps) {
       )
     ) {
       await removeLink({
-        eid,
         koodiUri,
         uuid,
         apiConfig
       })
-      setSharedLinks(await fetchLinks(eid, koodiUri, type, apiConfig))
+      setSharedLinks(await fetchLinks(koodiUri, type, apiConfig))
       setCreatedUrl("")
     }
   }
@@ -264,6 +257,7 @@ export function ShareDialog(props: ShareDialogProps) {
     <React.Fragment>
       {active ? (
         <ShareContainer ref={ref}>
+          {/* Invision designs do not have modal, but it was decided to use */}
           <ModalWithBackground />
           <ShareHeaderContainer>
             <ShareHeader>

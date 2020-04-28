@@ -2,7 +2,6 @@ import { Location, navigate, RouteComponentProps, Router } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import { MainHeading } from "components/Heading"
 import { HOKSButton } from "components/HOKSButton"
-import { HOKSEidContext } from "components/HOKSEidContext"
 import Flag from "components/icons/Flag"
 import { NavigationContainer } from "components/NavigationContainer"
 import { AiempiOsaaminen } from "components/Opiskelija/AiempiOsaaminen"
@@ -86,126 +85,70 @@ export class OmienOpintojenSuunnittelu extends React.Component<
     }
 
     return (
-      <HOKSEidContext.Provider value={id}>
-        <Location>
-          {({ location }) => (
-            <React.Fragment>
-              <NavigationContainer>
-                <Container>
-                  <PaddedContent>
-                    <MainHeading>
-                      <FormattedMessage
-                        id="kirjautunut.title"
-                        defaultMessage="Omien opintojen suunnittelu"
-                      />
-                    </MainHeading>
-                    <Section>
-                      <SectionItems>
-                        <SectionItem
-                          selected={
-                            location.pathname === `/ehoks/suunnittelu/${id}`
-                          }
-                          onClick={this.setActiveTab(
-                            `/ehoks/suunnittelu/${id}`
-                          )}
-                          title={
-                            <FormattedMessage
-                              id="kirjautunut.omaTavoitteeniTitle"
-                              defaultMessage="Oma tavoitteeni"
-                            />
-                          }
-                        >
-                          <Flag />
-                        </SectionItem>
-                        <SectionItem
-                          selected={
-                            location.pathname ===
-                            `/ehoks/suunnittelu/${id}/osaamiseni`
-                          }
-                          onClick={this.setActiveTab(
-                            `/ehoks/suunnittelu/${id}/osaamiseni`
-                          )}
-                          title={
-                            <FormattedMessage
-                              id="kirjautunut.aiempiOsaamiseniTitle"
-                              defaultMessage="Aiempi osaamiseni"
-                            />
-                          }
-                        >
-                          <MdExtension />
-                        </SectionItem>
-                        <SectionItem
-                          selected={
-                            location.pathname ===
-                            `/ehoks/suunnittelu/${id}/opiskelusuunnitelmani`
-                          }
-                          onClick={this.setActiveTab(
-                            `/ehoks/suunnittelu/${id}/opiskelusuunnitelmani`
-                          )}
-                          title={
-                            <FormattedMessage
-                              id="kirjautunut.opiskelusuunnitelmaniTitle"
-                              defaultMessage="Opiskelu&shy;suunnitelmani"
-                            />
-                          }
-                        >
-                          <MdEventNote />
-                        </SectionItem>
-                      </SectionItems>
-                      <HMediaQuery.MinWidth breakpoint="Tablet">
-                        <SectionContainer>
-                          <HOKSButton to="/ehoks/suunnittelu">
-                            <FormattedMessage
-                              id="kirjautunut.suljeHOKSLink"
-                              defaultMessage="Sulje HOKS"
-                            />
-                          </HOKSButton>
-                        </SectionContainer>
-                      </HMediaQuery.MinWidth>
-                    </Section>
-                  </PaddedContent>
-                </Container>
-              </NavigationContainer>
-
-              <BackgroundContainer>
-                <Container>
-                  <PaddedContent>
-                    <Router basepath={`/ehoks/suunnittelu/${id}`}>
-                      <Tavoitteet
-                        path="/"
-                        student={student}
-                        hoks={suunnitelma}
-                      />
-                      <AiempiOsaaminen
-                        path="osaamiseni"
-                        aiemminHankitutTutkinnonOsat={
-                          suunnitelma
-                            ? suunnitelma.aiemminHankitutTutkinnonOsat
-                            : []
+      <Location>
+        {({ location }) => (
+          <React.Fragment>
+            <NavigationContainer>
+              <Container>
+                <PaddedContent>
+                  <MainHeading>
+                    <FormattedMessage
+                      id="kirjautunut.title"
+                      defaultMessage="Omien opintojen suunnittelu"
+                    />
+                  </MainHeading>
+                  <Section>
+                    <SectionItems>
+                      <SectionItem
+                        selected={
+                          location.pathname === `/ehoks/suunnittelu/${id}`
                         }
-                        essentialFactor={
-                          <EssentialFactorContainer>
-                            <FormattedMessage
-                              id="koulutuksenJarjestaja.opiskelusuunnitelma.aiemminHankittuOlennainenSeikkaOppijaDescription"
-                              defaultMessage="Tämän tutkinnon osan osaamisen tunnistamiseen ja tunnustamiseen liittyy olennaista tietoa, jonka sisällön voit tarkistaa oppilaitoksestasi."
-                            />
-                            <HelpButton
-                              helpContent={
-                                <FormattedMessage
-                                  id="koulutuksenJarjestaja.opiskelusuunnitelma.aiemminHankittuOlennainenSeikkaOppijaHelpLabel"
-                                  defaultMessage="Olennainen seikka aputeksti oppija"
-                                />
-                              }
-                            />
-                          </EssentialFactorContainer>
+                        onClick={this.setActiveTab(`/ehoks/suunnittelu/${id}`)}
+                        title={
+                          <FormattedMessage
+                            id="kirjautunut.omaTavoitteeniTitle"
+                            defaultMessage="Oma tavoitteeni"
+                          />
                         }
-                      />
-                      <Opiskelusuunnitelma
-                        path="opiskelusuunnitelmani"
-                        plan={suunnitelma}
-                      />
-                    </Router>
-                    <HMediaQuery.MinWidth breakpoint="Tablet" notMatch={true}>
+                      >
+                        <Flag />
+                      </SectionItem>
+                      <SectionItem
+                        selected={
+                          location.pathname ===
+                          `/ehoks/suunnittelu/${id}/osaamiseni`
+                        }
+                        onClick={this.setActiveTab(
+                          `/ehoks/suunnittelu/${id}/osaamiseni`
+                        )}
+                        title={
+                          <FormattedMessage
+                            id="kirjautunut.aiempiOsaamiseniTitle"
+                            defaultMessage="Aiempi osaamiseni"
+                          />
+                        }
+                      >
+                        <MdExtension />
+                      </SectionItem>
+                      <SectionItem
+                        selected={
+                          location.pathname ===
+                          `/ehoks/suunnittelu/${id}/opiskelusuunnitelmani`
+                        }
+                        onClick={this.setActiveTab(
+                          `/ehoks/suunnittelu/${id}/opiskelusuunnitelmani`
+                        )}
+                        title={
+                          <FormattedMessage
+                            id="kirjautunut.opiskelusuunnitelmaniTitle"
+                            defaultMessage="Opiskelu&shy;suunnitelmani"
+                          />
+                        }
+                      >
+                        <MdEventNote />
+                      </SectionItem>
+                    </SectionItems>
+                    <HMediaQuery.MinWidth breakpoint="Tablet">
                       <SectionContainer>
                         <HOKSButton to="/ehoks/suunnittelu">
                           <FormattedMessage
@@ -215,13 +158,61 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                         </HOKSButton>
                       </SectionContainer>
                     </HMediaQuery.MinWidth>
-                  </PaddedContent>
-                </Container>
-              </BackgroundContainer>
-            </React.Fragment>
-          )}
-        </Location>
-      </HOKSEidContext.Provider>
+                  </Section>
+                </PaddedContent>
+              </Container>
+            </NavigationContainer>
+
+            <BackgroundContainer>
+              <Container>
+                <PaddedContent>
+                  <Router basepath={`/ehoks/suunnittelu/${id}`}>
+                    <Tavoitteet path="/" student={student} hoks={suunnitelma} />
+                    <AiempiOsaaminen
+                      path="osaamiseni"
+                      aiemminHankitutTutkinnonOsat={
+                        suunnitelma
+                          ? suunnitelma.aiemminHankitutTutkinnonOsat
+                          : []
+                      }
+                      essentialFactor={
+                        <EssentialFactorContainer>
+                          <FormattedMessage
+                            id="koulutuksenJarjestaja.opiskelusuunnitelma.aiemminHankittuOlennainenSeikkaOppijaDescription"
+                            defaultMessage="Tämän tutkinnon osan osaamisen tunnistamiseen ja tunnustamiseen liittyy olennaista tietoa, jonka sisällön voit tarkistaa oppilaitoksestasi."
+                          />
+                          <HelpButton
+                            helpContent={
+                              <FormattedMessage
+                                id="koulutuksenJarjestaja.opiskelusuunnitelma.aiemminHankittuOlennainenSeikkaOppijaHelpLabel"
+                                defaultMessage="Olennainen seikka aputeksti oppija"
+                              />
+                            }
+                          />
+                        </EssentialFactorContainer>
+                      }
+                    />
+                    <Opiskelusuunnitelma
+                      path="opiskelusuunnitelmani"
+                      plan={suunnitelma}
+                    />
+                  </Router>
+                  <HMediaQuery.MinWidth breakpoint="Tablet" notMatch={true}>
+                    <SectionContainer>
+                      <HOKSButton to="/ehoks/suunnittelu">
+                        <FormattedMessage
+                          id="kirjautunut.suljeHOKSLink"
+                          defaultMessage="Sulje HOKS"
+                        />
+                      </HOKSButton>
+                    </SectionContainer>
+                  </HMediaQuery.MinWidth>
+                </PaddedContent>
+              </Container>
+            </BackgroundContainer>
+          </React.Fragment>
+        )}
+      </Location>
     )
   }
 }
