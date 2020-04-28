@@ -133,7 +133,6 @@ const ExpandIcon = ({
 const OsaamisenHankkimistavatExpanded = ({
   hasActiveShare,
   fadedColor,
-  koodiUri,
   moduleId,
   instructor,
   defaultPeriod,
@@ -141,7 +140,6 @@ const OsaamisenHankkimistavatExpanded = ({
 }: {
   hasActiveShare: boolean
   fadedColor: string
-  koodiUri?: string
   moduleId?: string
   instructor?: Instructor
   defaultPeriod?: ShareLinkValidityPeriod
@@ -150,7 +148,6 @@ const OsaamisenHankkimistavatExpanded = ({
   <ShareDialog
     active={hasActiveShare}
     background={fadedColor}
-    koodiUri={koodiUri || ""}
     type="osaamisenhankkimistapa"
     moduleId={moduleId || ""}
     instructor={instructor}
@@ -207,7 +204,6 @@ const OsaamisenOsoittamisetExpanded = ({
       <ShareDialog
         active={hasActiveShare}
         background={fadedColor}
-        koodiUri={koodiUri || ""}
         type="osaamisenosoittaminen"
         moduleId={moduleId || ""}
         defaultPeriod={{
@@ -525,7 +521,6 @@ export class Details extends React.Component<DetailsProps> {
               hasActiveShare && shareType === "osaamisenhankkimistapa"
             }
             fadedColor={fadedColor}
-            koodiUri={koodiUri}
             instructor={instructor}
             defaultPeriod={defaultPeriod}
             osaamisenHankkimistavat={osaamisenHankkimistavat}

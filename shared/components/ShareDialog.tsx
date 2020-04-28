@@ -148,7 +148,6 @@ interface ShareDialogProps extends InjectedIntlProps {
   background: string
   /* Used version of react-intl cannot handle React.ReactNode here */
   children: any
-  koodiUri: string
   moduleId: string
   type: ShareType
   defaultPeriod?: ShareLinkValidityPeriod
@@ -162,7 +161,6 @@ export function ShareDialog(props: ShareDialogProps) {
     children,
     defaultPeriod,
     instructor,
-    koodiUri,
     moduleId,
     type,
     intl
@@ -194,7 +192,7 @@ export function ShareDialog(props: ShareDialogProps) {
 
   useEffect(() => {
     const fetchData = async () => {
-      setSharedLinks(await fetchLinks(koodiUri, type, apiConfig))
+      setSharedLinks(await fetchLinks(moduleId, type, apiConfig))
     }
     fetchData()
   }, [])
@@ -222,7 +220,11 @@ export function ShareDialog(props: ShareDialogProps) {
     navigate(window.location.pathname)
   }
 
-  const remove = async (event: React.MouseEvent, uuid: string) => {
+  const remove = async (
+    event: React.MouseEvent,
+    uuid: string,
+    moduleId: string
+  ) => {
     event.preventDefault()
     if (
       confirm(
@@ -232,11 +234,10 @@ export function ShareDialog(props: ShareDialogProps) {
       )
     ) {
       await removeLink({
-        koodiUri,
         uuid,
         apiConfig
       })
-      setSharedLinks(await fetchLinks(koodiUri, type, apiConfig))
+      setSharedLinks(await fetchLinks(moduleId, type, apiConfig))
       setCreatedUrl("")
     }
   }
@@ -333,7 +334,7 @@ export function ShareDialog(props: ShareDialogProps) {
                 <LinkAnchor>
                   <LinkButton
                     onClick={(event: React.MouseEvent) =>
-                      remove(event, link.jakoUuid)
+                      remove(event, link.jakoUuid, moduleId)
                     }
                   >
                     <FormattedMessage

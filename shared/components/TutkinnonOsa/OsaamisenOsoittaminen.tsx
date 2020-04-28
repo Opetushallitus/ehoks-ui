@@ -72,6 +72,7 @@ interface OsaamisenOsoittaminenProps {
   osaamisenOsoittaminen: IOsaamisenOsoittaminen
   todentamisenProsessi?: TodentamisenProsessi
   moduleId?: string
+  koodiUri?: string
   hasActiveShare?: boolean
 }
 

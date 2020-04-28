@@ -78,17 +78,15 @@ export const createLink = async function({
 }
 
 export const removeLink = async function({
-  koodiUri,
   uuid,
   apiConfig
 }: {
-  koodiUri: string
   uuid: string
   apiConfig: APIConfig
 }) {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/hoksit/share/${koodiUri}/${uuid}`),
+    apiUrl(`${apiPrefix}/hoksit/share//${uuid}`),
     {
       credentials: "include",
       method: "DELETE",
