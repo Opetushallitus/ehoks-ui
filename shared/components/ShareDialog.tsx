@@ -220,11 +220,7 @@ export function ShareDialog(props: ShareDialogProps) {
     navigate(window.location.pathname)
   }
 
-  const remove = async (
-    event: React.MouseEvent,
-    uuid: string,
-    moduleId: string
-  ) => {
+  const remove = async (event: React.MouseEvent, uuid: string) => {
     event.preventDefault()
     if (
       confirm(
@@ -334,7 +330,7 @@ export function ShareDialog(props: ShareDialogProps) {
                 <LinkAnchor>
                   <LinkButton
                     onClick={(event: React.MouseEvent) =>
-                      remove(event, link.jakoUuid, moduleId)
+                      remove(event, link.jakoUuid)
                     }
                   >
                     <FormattedMessage
