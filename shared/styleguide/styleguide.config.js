@@ -16,7 +16,6 @@ module.exports = {
     "**/shared/components/Header.tsx",
     "**/shared/components/Heading.tsx",
     "**/shared/components/HelpPopup.tsx",
-    "**/shared/components/HOKSEidContext.tsx",
     "**/shared/components/HoksInfo.tsx",
     "**/shared/components/HomeLink.tsx",
     "**/shared/components/HomeOrb.tsx",

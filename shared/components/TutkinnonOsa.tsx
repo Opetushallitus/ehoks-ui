@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled"
-import { Competences } from "./TukinnonOsa/Competences"
+import { Competences } from "./TutkinnonOsa/Competences"
 import {
   Osaamisvaatimus,
   TodentamisenProsessi,
@@ -16,10 +16,10 @@ import { FormattedMessage } from "react-intl"
 import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
-import { ToggleableItems } from "./TukinnonOsa/TutkinnonOsaHelpers"
-import { Objectives } from "./TukinnonOsa/Objectives"
-import { Details } from "./TukinnonOsa/Details"
-import { OneRowTable } from "./TukinnonOsa/Shared"
+import { ToggleableItems } from "./TutkinnonOsa/TutkinnonOsaHelpers"
+import { Objectives } from "./TutkinnonOsa/Objectives"
+import { Details } from "./TutkinnonOsa/Details"
+import { OneRowTable } from "./TutkinnonOsa/Shared"
 import { ColorType } from "theme"
 
 interface ContainerProps {

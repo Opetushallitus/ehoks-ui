@@ -79,7 +79,7 @@ export class Opiskelusuunnitelma extends React.Component<
   async componentDidMount() {
     const { location } = this.props
     const { share } = parseShareParams(location)
-    await this.showShareDialog(share.type, share.moduleId)
+    await this.showShareDialog(share.moduleId, share.type)
     this.setInitialExpanded(share)
   }
 
@@ -88,7 +88,7 @@ export class Opiskelusuunnitelma extends React.Component<
       // TODO: set proper share state when opening another dialog
       // previous dialog should close and new dialog should open
       const { share } = parseShareParams(this.props.location)
-      this.showShareDialog(share.type, share.moduleId)
+      this.showShareDialog(share.moduleId, share.type)
     }
   }
 
@@ -114,7 +114,8 @@ export class Opiskelusuunnitelma extends React.Component<
     )
   }
 
-  showShareDialog = (type: ShareType, moduleId: string | "") =>
+  showShareDialog = (moduleId: string | "", type: ShareType | "") =>
+    // Is this promise because when state.share is used component needs to have DOM generated?
     new Promise(resolve => {
       this.setState(
         state => ({

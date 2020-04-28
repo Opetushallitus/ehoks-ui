@@ -16,14 +16,13 @@ export interface ShareLink {
 }
 
 export const fetchLinks = async function(
-  eid: string,
   moduleId: string,
   type: string,
   apiConfig: APIConfig
 ): Promise<ShareLink[]> {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/hoksit/${eid}/share/${moduleId}`),
+    apiUrl(`${apiPrefix}/hoksit/share/${moduleId}`),
     {
       credentials: "include"
     }
@@ -38,19 +37,18 @@ export const fetchLinks = async function(
       jakoUuid: link["jako-uuid"],
       validFrom: link["voimassaolo-alku"],
       validTo: link["voimassaolo-loppu"],
-      type: link.tyyppi
+      type: link.tyyppi,
+      moduleId: link["module-id"]
     }))
 }
 
 export const createLink = async function({
-  eid,
   startDate,
   endDate,
   moduleId,
   type,
   apiConfig
 }: {
-  eid: string
   startDate: string
   endDate: string
   moduleId: string
@@ -58,22 +56,19 @@ export const createLink = async function({
   apiConfig: APIConfig
 }): Promise<string> {
   const { apiUrl, apiPrefix } = apiConfig
-  const response = await window.fetch(
-    apiUrl(`${apiPrefix}/hoksit/share/${eid}`),
-    {
-      credentials: "include",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        "voimassaolo-alku": startDate,
-        "voimassaolo-loppu": endDate,
-        tyyppi: type,
-        moduleId
-      })
-    }
-  )
+  const response = await window.fetch(apiUrl(`${apiPrefix}/hoksit/share`), {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      "voimassaolo-alku": startDate,
+      "voimassaolo-loppu": endDate,
+      tyyppi: type,
+      "module-id": moduleId
+    })
+  })
 
   if (!response.ok) {
     throw new Error(response.statusText)
@@ -83,19 +78,17 @@ export const createLink = async function({
 }
 
 export const removeLink = async function({
-  eid,
   koodiUri,
   uuid,
   apiConfig
 }: {
-  eid: string
   koodiUri: string
   uuid: string
   apiConfig: APIConfig
 }) {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/hoksit/${eid}/share/${koodiUri}/${uuid}`),
+    apiUrl(`${apiPrefix}/hoksit/share/${koodiUri}/${uuid}`),
     {
       credentials: "include",
       method: "DELETE",

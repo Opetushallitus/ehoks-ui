@@ -14,7 +14,7 @@ import {
   Title
 } from "./Shared"
 import { IOsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
-import { LearningEvent } from "components/TukinnonOsa/LearningEvent"
+import { LearningEvent } from "components/TutkinnonOsa/LearningEvent"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
 import { observer } from "mobx-react"
 import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
