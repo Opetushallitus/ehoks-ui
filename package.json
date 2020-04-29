@@ -28,6 +28,7 @@
   "private": true,
   "license": "",
   "devDependencies": {
+    "@babel/preset-typescript": "^7.9.0",
     "@testing-library/react": "^9.5.0",
     "@types/jest": "^25.1.4",
     "@types/lodash.camelcase": "^4.3.6",
