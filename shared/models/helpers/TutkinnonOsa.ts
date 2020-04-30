@@ -49,7 +49,7 @@ export interface IHankittavaTutkinnonOsa
   opintoOtsikko(ospLyhenne: string): string
   /** YhteisenTutkinnonOsanOsaAlue does not contain this but it is defined after flattenDeep */
 
-  hasNayttoOrHarjoittelujakso(type: ShareType, moduleId: string): boolean
+  hasNayttoOrHarjoittelujakso(type?: ShareType, moduleId?: string): boolean
 }
 
 const AiemminHankittuTutkinnonOsa = types

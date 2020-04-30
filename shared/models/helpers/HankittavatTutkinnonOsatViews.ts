@@ -30,11 +30,11 @@ export const HankittavatTutkinnonOsatViews = types
       },
       opintoOtsikko: (ospLyhenne: string): string =>
         getOtsikko(self, ospLyhenne),
-      hasNayttoOrHarjoittelujakso(koodiUri: string, type: ShareType | "") {
-        if (koodiUri === "" && type === "") {
+      hasNayttoOrHarjoittelujakso(type?: ShareType, moduleId?: string) {
+        if (moduleId === undefined && type === undefined) {
           return false
         }
-        const koodiUriMatch = self.tutkinnonOsaKoodiUri === koodiUri
+        const moduleIdMatch = self.moduleId === moduleId
         const typeMatch =
           type === "osaamisenosoittaminen"
             ? self.osaamisenOsoittaminen?.length > 0
@@ -42,7 +42,7 @@ export const HankittavatTutkinnonOsatViews = types
                 self.osaamisenHankkimistavat,
                 oh => oh.tyyppi === OsaamisenHankkimistapaType.Workplace
               )
-        return koodiUriMatch && typeMatch
+        return moduleIdMatch && typeMatch
       }
     }
   })

@@ -12,8 +12,8 @@ import React from "react"
 export interface ScheduledStudiesProps {
   accordionIsOpen: boolean
   share: {
-    moduleId: string
-    type: ShareType
+    type?: ShareType
+    moduleId?: string
   }
   hasActiveShare: boolean
   toggleAccordion: (

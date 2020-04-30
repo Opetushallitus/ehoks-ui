@@ -12,8 +12,8 @@ export interface OpiskelusuunnitelmaState {
     tukevatOpinnot: boolean
   }
   share: {
-    type: ShareType
-    moduleId: string
+    type?: ShareType
+    moduleId?: string
   }
 }
 

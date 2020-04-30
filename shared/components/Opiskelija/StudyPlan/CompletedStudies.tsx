@@ -12,8 +12,8 @@ import { Accordion } from "../../Accordion"
 export interface CompletedStudiesProps {
   accordionIsOpen: boolean
   share: {
-    moduleId: string
-    type: ShareType
+    type?: ShareType
+    moduleId?: string
   }
   hasActiveShare: boolean
   toggleAccordion: (

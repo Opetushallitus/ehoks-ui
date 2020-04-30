@@ -86,7 +86,7 @@ export const removeLink = async function({
 }) {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/hoksit/share//${uuid}`),
+    apiUrl(`${apiPrefix}/hoksit/share/${uuid}`),
     {
       credentials: "include",
       method: "DELETE",

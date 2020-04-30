@@ -431,7 +431,7 @@ interface DetailsProps {
   expanded?: boolean
   koodiUri?: string
   osaamisenHankkimistavat?: IOsaamisenHankkimistapa[]
-  share?: { moduleId: string; type: ShareType | "" }
+  share?: { type?: ShareType; moduleId?: string }
   toggle: (name: ToggleableItems) => () => void
   todentamisenProsessi?: TodentamisenProsessi
   koulutuksenJarjestaja?: IOrganisaatio

@@ -4,7 +4,7 @@ import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 
 export const Model = types.model({
-  moduleId: types.optional(types.string, ""),
+  moduleId: types.maybe(types.string),
   tutkinnonOsaKoodiUri: types.optional(types.string, ""),
   tutkinnonOsa: types.optional(EPerusteetVastaus, {}),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),

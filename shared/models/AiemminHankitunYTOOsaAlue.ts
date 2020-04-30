@@ -9,7 +9,7 @@ import { Organisaatio } from "./Organisaatio"
 
 export const Model = types.model("AiemminHankitunYTOOsaAlue", {
   id: types.optional(types.number, 0),
-  moduleId: types.optional(types.string, ""),
+  moduleId: types.maybe(types.string),
   olennainenSeikka: types.optional(types.boolean, false),
   osaAlueKoodiUri: types.optional(types.string, ""),
   osaAlue: types.optional(KoodistoVastaus, {}),

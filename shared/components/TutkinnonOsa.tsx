@@ -119,7 +119,7 @@ export interface TutkinnonOsaProps {
   /**
    * Current share state from url
    */
-  share?: { moduleId: string; type: ShareType }
+  share?: { type?: ShareType; moduleId?: string }
   /** Title of the study, always visible */
   title?: React.ReactNode
   /**

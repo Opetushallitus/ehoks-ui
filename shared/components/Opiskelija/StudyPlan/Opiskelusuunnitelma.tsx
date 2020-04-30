@@ -71,8 +71,8 @@ export class Opiskelusuunnitelma extends React.Component<
       tukevatOpinnot: false
     },
     share: {
-      type: "",
-      moduleId: ""
+      type: undefined,
+      moduleId: undefined
     }
   }
 
@@ -94,7 +94,7 @@ export class Opiskelusuunnitelma extends React.Component<
 
   isShareActive = () => {
     const { share } = this.state
-    return share.type !== "" && share.moduleId !== ""
+    return share.type !== undefined && share.moduleId !== undefined
   }
 
   hasActiveShare = (type: StudyPartType) => {
@@ -114,7 +114,7 @@ export class Opiskelusuunnitelma extends React.Component<
     )
   }
 
-  showShareDialog = (moduleId: string | "", type: ShareType | "") =>
+  showShareDialog = (moduleId: string, type: ShareType) =>
     // Is this promise because when state.share is used component needs to have DOM generated?
     new Promise(resolve => {
       this.setState(

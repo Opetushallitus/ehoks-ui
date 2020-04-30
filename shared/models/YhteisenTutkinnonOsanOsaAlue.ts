@@ -9,6 +9,7 @@ import { Organisaatio } from "./Organisaatio"
 
 const Model = types.model("YhteisenTutkinnonOsanOsaAlue", {
   id: types.optional(types.number, 0),
+  moduleId: types.maybe(types.string),
   osaAlueKoodiUri: types.optional(types.string, ""),
   osaAlue: types.optional(KoodistoVastaus, {}),
   osaamisenHankkimistavat: types.array(OsaamisenHankkimistapa),
