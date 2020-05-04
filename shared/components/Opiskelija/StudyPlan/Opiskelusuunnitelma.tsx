@@ -94,7 +94,7 @@ export class Opiskelusuunnitelma extends React.Component<
 
   isShareActive = () => {
     const { share } = this.state
-    return share.type !== undefined && share.moduleId !== undefined
+    return !!share.type && !!share.moduleId
   }
 
   hasActiveShare = (type: StudyPartType) => {
