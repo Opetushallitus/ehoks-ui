@@ -31,7 +31,7 @@ export const HankittavatTutkinnonOsatViews = types
       opintoOtsikko: (ospLyhenne: string): string =>
         getOtsikko(self, ospLyhenne),
       hasNayttoOrHarjoittelujakso(type?: ShareType, moduleId?: string) {
-        if (moduleId === undefined && type === undefined) {
+        if (!moduleId && !type) {
           return false
         }
         const moduleIdMatch = self.moduleId === moduleId
