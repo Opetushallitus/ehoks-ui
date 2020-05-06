@@ -166,8 +166,6 @@ export function ShareDialog(props: ShareDialogProps) {
     intl
   } = props
 
-  const { featureFlags } = useContext(AppContext)
-
   const ref = useRef<HTMLDivElement>(null)
   const [sharedLinks, setSharedLinks] = useState<ShareLink[]>([])
   const [startDate, setStartDate] = useState(
@@ -196,11 +194,6 @@ export function ShareDialog(props: ShareDialogProps) {
     }
     fetchData()
   }, [])
-
-  // disable share dialog if feature flag is set to non-truthy value
-  if (!featureFlags.shareDialog) {
-    return children
-  }
 
   const addLink = async () => {
     const createdUuid = await createLink({
@@ -473,4 +466,13 @@ export function ShareDialog(props: ShareDialogProps) {
   )
 }
 
-export default injectIntl(ShareDialog)
+const TestForFeatureFlagShareDialog = (props: ShareDialogProps) => {
+  const { featureFlags } = useContext(AppContext)
+  // disable share dialog if feature flag is set to non-truthy value
+  if (!featureFlags.shareDialog) {
+    return props.children
+  }
+  return <ShareDialog {...props} />
+}
+
+export default injectIntl(TestForFeatureFlagShareDialog)
