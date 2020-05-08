@@ -37,15 +37,43 @@ import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
 
-const disallowedKeys = ["eid", "manuaalisyotto"]
+const disallowedKeys = ["eid", "manuaalisyotto", "module-id"]
 
-const trimDisallowedKeys = (formData: any) =>
-  Object.keys(formData).reduce((result, key) => {
-    if (disallowedKeys.indexOf(key) === -1) {
-      result[key] = formData[key]
+function trimDisallowedKeys(formData: any) {
+  if (typeof formData !== "object") {
+    return formData
+  }
+
+  return Object.keys(formData).reduce((result: object, key) => {
+    if (propertyIsObject(formData[key])) {
+      trimObject(key, result, formData)
+    } else {
+      trimPrimitive(key, result, formData)
     }
+
     return result
   }, {} as any)
+}
+
+const propertyIsObject = (property: any) =>
+  property !== null && typeof property === "object"
+
+function trimObject(key: string, result: any, formData: any) {
+  result[key] = Array.isArray(formData[key])
+    ? trimArray(key, formData)
+    : trimDisallowedKeys(formData[key])
+}
+
+const trimArray = (key: string, formData: any) =>
+  formData[key].map((element: any) => trimDisallowedKeys(element))
+
+function trimPrimitive(key: string, result: any, formData: any) {
+  if (disallowedKeys.includes(key)) {
+    return
+  } else {
+    result[key] = formData[key]
+  }
+}
 
 interface MuokkaaHOKSProps extends RouteComponentProps {
   store?: IRootStore
