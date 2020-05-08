@@ -1,15 +1,8 @@
 import React from "react"
-import {
-  WidgetProps,
-  FieldProps,
-  FieldTemplateProps
-} from "react-jsonschema-form"
+import { WidgetProps } from "react-jsonschema-form"
 
 interface CustomBaseInputProps
-  extends Omit<WidgetProps, "rawErrors">,
-    Partial<
-      Pick<FieldProps, "registry"> & Pick<FieldTemplateProps, "rawErrors">
-    > {
+  extends Omit<WidgetProps, "rawErrors" | "formContext"> {
   placeholder?: string
 }
 

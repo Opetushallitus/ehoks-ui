@@ -39,12 +39,31 @@ function localDateToUTC(dateString: string) {
  * and modified to TS and needs
  */
 export function CustomDatetimeWidget(props: WidgetProps) {
-  // const { value, required, autofocus, onChange, id } = props
-  const { value, onChange } = props
+  const {
+    value,
+    onChange,
+    readonly,
+    disabled,
+    autofocus,
+    onBlur,
+    onFocus,
+    schema,
+    id,
+    label,
+    options
+  } = props
   return (
     <CustomBaseInput
-      {...props}
+      readonly={readonly}
+      disabled={disabled}
+      autofocus={autofocus}
+      onBlur={onBlur}
+      onFocus={onFocus}
+      schema={schema}
       value={utcToLocalDate(value)}
+      id={id}
+      label={label}
+      options={options}
       onChange={changedValue => onChange(localDateToUTC(changedValue))}
     />
   )
