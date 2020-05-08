@@ -68,7 +68,9 @@ const trimArray = (key: string, formData: any) =>
   formData[key].map((element: any) => trimDisallowedKeys(element))
 
 function trimPrimitive(key: string, result: any, formData: any) {
-  if (disallowedKeys.indexOf(key) === -1) {
+  if (disallowedKeys.includes(key)) {
+    return
+  } else {
     result[key] = formData[key]
   }
 }
