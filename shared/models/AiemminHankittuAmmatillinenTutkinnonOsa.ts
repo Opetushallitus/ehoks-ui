@@ -27,6 +27,7 @@ const Model = types.model({
     TodennettuArviointiLisatiedot,
     {}
   ),
+  tutkinnonOsaTyyppi: types.maybe(types.string),
   olennainenSeikka: types.optional(types.boolean, false)
 })
 

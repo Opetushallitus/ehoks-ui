@@ -47,12 +47,16 @@ export const createLink = async function({
   endDate,
   moduleId,
   type,
+  tutkinnonOsaTyyppi,
+  tutkinnonOsaId,
   apiConfig
 }: {
   startDate: string
   endDate: string
   moduleId: string
   type: string
+  tutkinnonOsaTyyppi: string
+  tutkinnonOsaId: string
   apiConfig: APIConfig
 }): Promise<string> {
   const { apiUrl, apiPrefix } = apiConfig
@@ -66,7 +70,9 @@ export const createLink = async function({
       "voimassaolo-alku": startDate,
       "voimassaolo-loppu": endDate,
       tyyppi: type,
-      "module-id": moduleId
+      "module-id": moduleId,
+      "tutkinnonosa-tyyppi": tutkinnonOsaTyyppi,
+      "tutkinnonosa-id": tutkinnonOsaId
     })
   })
 

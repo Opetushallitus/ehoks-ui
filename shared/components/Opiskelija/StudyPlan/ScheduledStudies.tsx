@@ -14,6 +14,8 @@ export interface ScheduledStudiesProps {
   share: {
     type?: ShareType
     moduleId?: string
+    tutkinnonOsaTyyppi?: string
+    tutkinnonOsaId?: string
   }
   hasActiveShare: boolean
   toggleAccordion: (
@@ -74,6 +76,8 @@ export class ScheduledStudies extends React.Component<ScheduledStudiesProps> {
                   }
                   fadedColor="#FDF6E9"
                   koodiUri={study.tutkinnonOsaKoodiUri}
+                  moduleId={study.moduleId}
+                  tutkinnonOsaTyyppi={study.tutkinnonOsaTyyppi}
                   osaamisenHankkimistavat={study.osaamisenHankkimistavat}
                   share={share}
                   title={study.opintoOtsikko(competencePointsTitle)}

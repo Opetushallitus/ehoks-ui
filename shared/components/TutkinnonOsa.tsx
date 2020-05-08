@@ -126,6 +126,8 @@ export interface TutkinnonOsaProps {
    * Verification process details
    */
   todentamisenProsessi?: TodentamisenProsessi
+  tutkinnonOsaId?: string
+  tutkinnonOsaTyyppi?: string
   /**
    * Width of the element for desktop resolutions
    * @default 25%
@@ -224,12 +226,14 @@ export class TutkinnonOsa extends React.Component<
   }
 
   share = () => {
-    const { moduleId } = this.props
-    if (moduleId) {
+    const { moduleId, tutkinnonOsaTyyppi } = this.props
+    if (moduleId && tutkinnonOsaTyyppi) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
           moduleId,
-          type: "osaamisenhankkimistapa"
+          type: "osaamisenhankkimistapa",
+          tutkinnonOsaTyyppi,
+          tutkinnonOsaId: moduleId
         })}`
       )
     }
@@ -253,6 +257,7 @@ export class TutkinnonOsa extends React.Component<
       osaamisenHankkimistavat = [],
       koodiUri,
       moduleId,
+      tutkinnonOsaTyyppi,
       share,
       title,
       todentamisenProsessi,
@@ -325,6 +330,8 @@ export class TutkinnonOsa extends React.Component<
               todentamisenProsessi={todentamisenProsessi}
               koodiUri={koodiUri}
               share={share}
+              moduleId={moduleId}
+              tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
               toggle={this.toggle}
               koulutuksenJarjestaja={koulutuksenJarjestaja}
               tarkentavatTiedotOsaamisenArvioija={
