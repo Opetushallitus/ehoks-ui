@@ -11,9 +11,10 @@
     "experimentalDecorators": true,
     "strictNullChecks": true,
     "resolveJsonModule": true,
+    "noErrorTruncation": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "target": "es5",
+    "target": "es6",
     "jsx": "react",
     "lib": [
       "es5",
