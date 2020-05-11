@@ -275,9 +275,7 @@ export class TutkinnonOsa extends React.Component<
       osaamisenOsoittamiset.length > 0 ||
       todentamisenProsessi
     const hasActiveShare =
-      typeof share !== "undefined" &&
-      moduleId === share.moduleId &&
-      share.type === "osaamisenhankkimistapa"
+      typeof share !== "undefined" && moduleId === share.moduleId
     const detailsExpanded = expanded.details || hasActiveShare
     const showShareButton =
       expanded.details &&

@@ -13,13 +13,11 @@ export const Model = types.model({
 
 export const HankittavaYhteinenTutkinnonOsa = types
   .compose("HankittavaYhteinenTutkinnonOsa", EnrichKoodiUri, Model)
-  .views(self => {
-    return {
-      get tutkinnonOsaTyyppi() {
-        return `HankittavaAmmatillinenTutkinnonOsa`
-      },
-      get tutkinnonOsaId() {
-        return self.moduleId
-      }
+  .views(self => ({
+    get tutkinnonOsaTyyppi() {
+      return `HankittavaAmmatillinenTutkinnonOsa`
+    },
+    get tutkinnonOsaId() {
+      return self.moduleId
     }
-  })
+  }))

@@ -98,14 +98,13 @@ export class OsaamisenOsoittaminen extends React.Component<
 
   share = () => {
     const { moduleId, tutkinnonOsaTyyppi, tutkinnonOsaId } = this.props
-    console.log(moduleId)
     if (moduleId && tutkinnonOsaTyyppi && tutkinnonOsaId) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
           type: "osaamisenosoittaminen",
           moduleId,
-          tutkinnonOsaTyyppi: tutkinnonOsaTyyppi,
-          tutkinnonOsaId: tutkinnonOsaId
+          tutkinnonOsaTyyppi,
+          tutkinnonOsaId
         })}`
       )
     }
