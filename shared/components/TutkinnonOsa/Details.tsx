@@ -195,6 +195,7 @@ const OsaamisenOsoittamisetExpanded = ({
   hasActiveShare,
   fadedColor,
   koodiUri,
+  shareModuleId,
   tutkinnonOsaTyyppi,
   tutkinnonOsaId,
   todentamisenProsessi
@@ -203,6 +204,7 @@ const OsaamisenOsoittamisetExpanded = ({
   hasActiveShare: boolean
   fadedColor: string
   koodiUri?: string
+  shareModuleId?: string
   tutkinnonOsaTyyppi?: string
   tutkinnonOsaId?: string
   todentamisenProsessi?: TodentamisenProsessi
@@ -210,7 +212,7 @@ const OsaamisenOsoittamisetExpanded = ({
   <>
     {osaamisenOsoittamiset.map((osaamisenOsoittaminen, i) => (
       <ShareDialog
-        active={hasActiveShare}
+        active={osaamisenOsoittaminen.moduleId === shareModuleId}
         background={fadedColor}
         type="osaamisenosoittaminen"
         moduleId={osaamisenOsoittaminen.moduleId || ""}
@@ -553,6 +555,7 @@ export class Details extends React.Component<DetailsProps> {
             }
             fadedColor={fadedColor}
             koodiUri={koodiUri}
+            shareModuleId={share ? share.moduleId : ""}
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
             tutkinnonOsaId={moduleId}
             todentamisenProsessi={todentamisenProsessi}
