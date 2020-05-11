@@ -143,6 +143,7 @@ const OsaamisenHankkimistavatExpanded = ({
   hasActiveShare: boolean
   fadedColor: string
   moduleId?: string
+  shareModuleId?: string
   tutkinnonOsaTyyppi?: string
   tutkinnonOsaId?: string
   instructor?: Instructor
@@ -546,6 +547,7 @@ export class Details extends React.Component<DetailsProps> {
             instructor={instructor}
             defaultPeriod={defaultPeriod}
             osaamisenHankkimistavat={osaamisenHankkimistavat}
+            shareModuleId={share ? share.moduleId : ""}
           />
 
           <OsaamisenOsoittamisetExpanded
