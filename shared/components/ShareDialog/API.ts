@@ -60,19 +60,19 @@ export const createLink = async function({
   apiConfig: APIConfig
 }): Promise<string> {
   const { apiUrl, apiPrefix } = apiConfig
-  const response = await window.fetch(apiUrl(`${apiPrefix}/hoksit/share`), {
+  const response = await window.fetch(apiUrl(`${apiPrefix}/jakolinkit`), {
     credentials: "include",
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      "voimassaolo-alku": startDate,
-      "voimassaolo-loppu": endDate,
-      tyyppi: type,
-      "module-id": moduleId,
+      "tutkinnonosa-module-uuid": tutkinnonOsaId,
       "tutkinnonosa-tyyppi": tutkinnonOsaTyyppi,
-      "tutkinnonosa-id": tutkinnonOsaId
+      "shared-module-uuid": moduleId,
+      "shared-module-tyyppi": type,
+      "voimassaolo-alku": startDate,
+      "voimassaolo-loppu": endDate
     })
   })
 
