@@ -25,6 +25,7 @@ import { ToggleableItems } from "./TutkinnonOsaHelpers"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
 import { Table, TBody, TD, TH } from "./Shared"
+import { observer } from "mobx-react"
 
 interface ColorProps {
   fadedColor: string
@@ -364,37 +365,39 @@ const TodentamisenProsessiExpanded = ({
   </>
 )
 
-const AiemminHankitunOsaamisenArvioijat = ({
-  tarkentavatTiedotOsaamisenArvioija
-}: {
-  tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
-}) => (
-  <>
-    {!!tarkentavatTiedotOsaamisenArvioija?.aiemminHankitunOsaamisenArvioijat
-      .length && (
-      <ArvioijatTable>
-        <TBody>
-          <tr>
-            <TH>
-              <FormattedMessage
-                id="opiskelusuunnitelma.aiemminHankitunOsaamisenArvioijatTitle"
-                defaultMessage="Arvioijat"
-              />
-            </TH>
-            <TD>
-              {tarkentavatTiedotOsaamisenArvioija.aiemminHankitunOsaamisenArvioijat.map(
-                (arvioija, i) => (
-                  <span key={i}>
-                    {arvioija.koulutuksenJarjestajaArvioijaDescription} <br />
-                  </span>
-                )
-              )}
-            </TD>
-          </tr>
-        </TBody>
-      </ArvioijatTable>
-    )}
-  </>
+const AiemminHankitunOsaamisenArvioijat = observer(
+  ({
+    tarkentavatTiedotOsaamisenArvioija
+  }: {
+    tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
+  }) => (
+    <>
+      {!!tarkentavatTiedotOsaamisenArvioija?.aiemminHankitunOsaamisenArvioijat
+        .length && (
+        <ArvioijatTable>
+          <TBody>
+            <tr>
+              <TH>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.aiemminHankitunOsaamisenArvioijatTitle"
+                  defaultMessage="Arvioijat"
+                />
+              </TH>
+              <TD>
+                {tarkentavatTiedotOsaamisenArvioija.aiemminHankitunOsaamisenArvioijat.map(
+                  (arvioija, i) => (
+                    <span key={i}>
+                      {arvioija.koulutuksenJarjestajaArvioijaDescription} <br />
+                    </span>
+                  )
+                )}
+              </TD>
+            </tr>
+          </TBody>
+        </ArvioijatTable>
+      )}
+    </>
+  )
 )
 
 const TodentamisenProsessiSuoraan = () => (
