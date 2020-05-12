@@ -407,27 +407,24 @@ const TodentamisenProsessiSuoraan = () => (
   />
 )
 
-const TodentamisenProsessiArvioijienKautta = observer(
-  ({
-    todentamisenProsessi
-  }: {
-    todentamisenProsessi?: TodentamisenProsessi
-  }) => (
-    <FormattedMessage
-      id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
-      defaultMessage="Osaaminen {testing} lähetetty arvioitavaksi {date}"
-      values={{
-        date:
-          todentamisenProsessi && todentamisenProsessi.lahetettyArvioitavaksi
-            ? format(
-                parseISO(todentamisenProsessi.lahetettyArvioitavaksi),
-                "d.M.yyyy"
-              )
-            : "",
-        testing: "JepJep"
-      }}
-    />
-  )
+const TodentamisenProsessiArvioijienKautta = ({
+  todentamisenProsessi
+}: {
+  todentamisenProsessi?: TodentamisenProsessi
+}) => (
+  <FormattedMessage
+    id="opiskelusuunnitelma.osaaminenLahetettyArvioitavaksiTitle"
+    defaultMessage="Osaaminen lähetetty arvioitavaksi {date}"
+    values={{
+      date:
+        todentamisenProsessi && todentamisenProsessi.lahetettyArvioitavaksi
+          ? format(
+              parseISO(todentamisenProsessi.lahetettyArvioitavaksi),
+              "d.M.yyyy"
+            )
+          : ""
+    }}
+  />
 )
 
 interface DetailsProps {
