@@ -50,6 +50,63 @@ export interface OpiskelusuunnitelmaProps extends RouteComponentProps {
   }
 }
 
+const TutkinnonTiedot = ({ plan }: { plan: IHOKS }) => (
+  <InfoTable>
+    <tbody>
+      <tr>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.tutkinnonNimiTitle"
+            defaultMessage="Tutkinnon nimi"
+          />
+        </th>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.laajuusTitle"
+            defaultMessage="Laajuus"
+          />
+        </th>
+        <th />
+      </tr>
+      <tr>
+        <LabeledColumn id="opiskelusuunnitelma.tutkinnonNimiTitle">
+          {plan.tutkinnonNimi}
+        </LabeledColumn>
+        <StudyPoints
+          osaamispisteet={plan.osaamispisteet}
+          titleTranslationId={"opiskelusuunnitelma.laajuusTitle"}
+          pointsTranslationId={"opiskelusuunnitelma.osaamispistettaPostfix"}
+        />
+        <td />
+      </tr>
+      <tr>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.osaamisalaTitle"
+            defaultMessage="Osaamisala"
+          />
+        </th>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.tutkintonimikeTitle"
+            defaultMessage="Tutkintonimike"
+          />
+        </th>
+        <th />
+      </tr>
+      <tr>
+        <LabeledColumn id="opiskelusuunnitelma.osaamisalaTitle">
+          {plan.osaamisala}
+        </LabeledColumn>
+        <LabeledColumn id="opiskelusuunnitelma.tutkintonimikeTitle">
+          {plan.tutkintonimike}
+        </LabeledColumn>
+        <td />
+      </tr>
+    </tbody>
+  </InfoTable>
+)
+
 @observer
 export class Opiskelusuunnitelma extends React.Component<
   OpiskelusuunnitelmaProps,
@@ -267,62 +324,7 @@ export class Opiskelusuunnitelma extends React.Component<
             />
           }
         >
-          <InfoTable>
-            <tbody>
-              <tr>
-                <th>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.tutkinnonNimiTitle"
-                    defaultMessage="Tutkinnon nimi"
-                  />
-                </th>
-                <th>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.laajuusTitle"
-                    defaultMessage="Laajuus"
-                  />
-                </th>
-                <th />
-              </tr>
-              <tr>
-                <LabeledColumn id="opiskelusuunnitelma.tutkinnonNimiTitle">
-                  {plan.tutkinnonNimi}
-                </LabeledColumn>
-                <StudyPoints
-                  osaamispisteet={plan.osaamispisteet}
-                  titleTranslationId={"opiskelusuunnitelma.laajuusTitle"}
-                  pointsTranslationId={
-                    "opiskelusuunnitelma.osaamispistettaPostfix"
-                  }
-                />
-                <td />
-              </tr>
-              <tr>
-                <th>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.osaamisalaTitle"
-                    defaultMessage="Osaamisala"
-                  />
-                </th>
-                <th>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.tutkintonimikeTitle"
-                    defaultMessage="Tutkintonimike"
-                  />
-                </th>
-                <th />
-              </tr>
-              <tr>
-                <LabeledColumn id="opiskelusuunnitelma.osaamisalaTitle">
-                  {plan.osaamisala}
-                </LabeledColumn>
-                <LabeledColumn id="opiskelusuunnitelma.tutkintonimikeTitle">
-                  {plan.tutkintonimike}
-                </LabeledColumn>
-                <td />
-              </tr>
-            </tbody>
-          </InfoTable>
+          <TutkinnonTiedot plan={plan} />
 
           <ProgressTitle>
             <FormattedMessage
