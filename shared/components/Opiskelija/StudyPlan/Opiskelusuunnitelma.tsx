@@ -7,8 +7,7 @@ import { LabeledColumn } from "components/LabeledColumn"
 import { ProgressPie } from "components/ProgressPie"
 import { StatBoxes } from "components/StatBox"
 import { observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
-import { HOKS } from "models/HOKS"
+import { IHOKS } from "models/HOKS"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
@@ -43,7 +42,7 @@ const HelpButton = styled(HelpPopup)`
 
 export interface OpiskelusuunnitelmaProps extends RouteComponentProps {
   children?: React.ReactChildren
-  plan: Instance<typeof HOKS>
+  plan: IHOKS
   elements?: {
     heading?: React.ReactNode
     goals?: React.ReactNode
@@ -215,7 +214,7 @@ export class Opiskelusuunnitelma extends React.Component<
       heading: customElements.heading || (
         <FormattedMessage
           id="opiskelusuunnitelma.title"
-          defaultMessage="Opiskelusuunnitelmani"
+          defaultMessage="Osaamisen hankkiminen"
         />
       ),
       goals: (

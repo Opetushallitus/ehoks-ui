@@ -141,7 +141,7 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                         title={
                           <FormattedMessage
                             id="kirjautunut.opiskelusuunnitelmaniTitle"
-                            defaultMessage="Opiskelu&shy;suunnitelmani"
+                            defaultMessage="Osaamisen hankkiminen"
                           />
                         }
                       >
