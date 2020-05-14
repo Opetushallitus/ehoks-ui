@@ -27,7 +27,6 @@ const Model = types.model({
     TodennettuArviointiLisatiedot,
     {}
   ),
-  tutkinnonOsaTyyppi: types.maybe(types.string),
   olennainenSeikka: types.optional(types.boolean, false)
 })
 
@@ -50,6 +49,12 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
       },
       get osaamispisteet() {
         return getOsaamispisteet(self.tutkinnonOsaViitteet)
+      },
+      get tutkinnonOsaTyyppi() {
+        return "AiemminHankittuAmmatillinenTutkinnonOsa"
+      },
+      get tutkinnonOsaId() {
+        return self.moduleId
       }
     }
   })

@@ -42,7 +42,7 @@ export const HankittavaAmmatillinenTutkinnonOsa = types
           : ""
       },
       get tutkinnonOsaTyyppi() {
-        return `AiemminHankittuAmmatillinenTutkinnonOsa`
+        return `HankittavaAmmatillinenTutkinnonOsa`
       },
       get tutkinnonOsaId() {
         return self.moduleId

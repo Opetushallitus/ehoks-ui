@@ -7,14 +7,17 @@ import { EmptyItem } from "../../EmptyItem"
 import { Accordion } from "../../Accordion"
 import { ShareType } from "../../../stores/NotificationStore"
 import { ActiveAccordions, StudyPartSubAccordions } from "./StudyPlanHelpers"
-import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
+import {
+  IHankittavaTutkinnonOsa,
+  TutkinnonOsaType
+} from "../../../models/helpers/TutkinnonOsa"
 
 export interface PlannedStudiesProps {
   accordionIsOpen: boolean
   share: {
     type?: ShareType
     moduleId?: string
-    tutkinnonOsaTyyppi?: string
+    tutkinnonOsaTyyppi?: TutkinnonOsaType
     tutkinnonOsaId?: string
   }
   hasActiveShare: boolean
@@ -77,7 +80,15 @@ export class PlannedStudies extends React.Component<PlannedStudiesProps> {
                   fadedColor="#FDF1E6"
                   koodiUri={study.tutkinnonOsaKoodiUri}
                   moduleId={study.moduleId}
-                  tutkinnonOsaTyyppi={study.tutkinnonOsaTyyppi}
+                  tutkinnonOsaTyyppi={
+                    TutkinnonOsaType[
+                      study.tutkinnonOsaTyyppi as TutkinnonOsaType
+                    ] != null
+                      ? TutkinnonOsaType[
+                          study.tutkinnonOsaTyyppi as TutkinnonOsaType
+                        ]
+                      : undefined
+                  }
                   tutkinnonOsaId={study.tutkinnonOsaId}
                   osaamisenHankkimistavat={study.osaamisenHankkimistavat}
                   share={share}

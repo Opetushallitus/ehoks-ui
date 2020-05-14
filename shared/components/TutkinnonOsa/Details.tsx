@@ -10,7 +10,8 @@ import {
   IOsaamisenOsoittaminen,
   TodentamisenProsessi,
   IOrganisaatio,
-  ITarkentavatTiedotOsaamisenArvioija
+  ITarkentavatTiedotOsaamisenArvioija,
+  TutkinnonOsaType
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "./LearningEvent"
 import { TodentamisenProsessiKoodi } from "types/TodentamisenProsessiKoodi"
@@ -144,7 +145,7 @@ const OsaamisenHankkimistavatExpanded = ({
   fadedColor: string
   moduleId?: string
   shareModuleId?: string
-  tutkinnonOsaTyyppi?: string
+  tutkinnonOsaTyyppi?: TutkinnonOsaType
   tutkinnonOsaId?: string
   instructor?: Instructor
   defaultPeriod?: ShareLinkValidityPeriod
@@ -153,11 +154,11 @@ const OsaamisenHankkimistavatExpanded = ({
   <ShareDialog
     active={hasActiveShare}
     background={fadedColor}
-    type="osaamisenhankkimistapa"
+    type={ShareType.osaamisenhankkimistapa}
     moduleId={moduleId || ""}
     instructor={instructor}
     defaultPeriod={defaultPeriod}
-    tutkinnonOsaTyyppi={tutkinnonOsaTyyppi || ""}
+    tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
     tutkinnonOsaId={tutkinnonOsaId || ""}
   >
     {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => (
@@ -206,7 +207,7 @@ const OsaamisenOsoittamisetExpanded = ({
   fadedColor: string
   koodiUri?: string
   shareModuleId?: string
-  tutkinnonOsaTyyppi?: string
+  tutkinnonOsaTyyppi?: TutkinnonOsaType
   tutkinnonOsaId?: string
   todentamisenProsessi?: TodentamisenProsessi
 }) => (
@@ -215,13 +216,13 @@ const OsaamisenOsoittamisetExpanded = ({
       <ShareDialog
         active={osaamisenOsoittaminen.moduleId === shareModuleId}
         background={fadedColor}
-        type="osaamisenosoittaminen"
+        type={ShareType.osaamisenosoittaminen}
         moduleId={osaamisenOsoittaminen.moduleId || ""}
         defaultPeriod={{
           start: osaamisenOsoittaminen.alku,
           end: osaamisenOsoittaminen.loppu
         }}
-        tutkinnonOsaTyyppi={tutkinnonOsaTyyppi || ""}
+        tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
         tutkinnonOsaId={tutkinnonOsaId || ""}
         key={i}
       >
@@ -450,7 +451,7 @@ interface DetailsProps {
   share?: {
     type?: ShareType
     moduleId?: string
-    tutkinnonOsaTyyppi?: string
+    tutkinnonOsaTyyppi?: TutkinnonOsaType
     tutkinnonOsaId?: string
   }
   toggle: (name: ToggleableItems) => () => void
@@ -458,7 +459,7 @@ interface DetailsProps {
   koulutuksenJarjestaja?: IOrganisaatio
   tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
   moduleId?: string
-  tutkinnonOsaTyyppi?: string
+  tutkinnonOsaTyyppi?: TutkinnonOsaType
 }
 
 export class Details extends React.Component<DetailsProps> {
@@ -547,6 +548,7 @@ export class Details extends React.Component<DetailsProps> {
             instructor={instructor}
             defaultPeriod={defaultPeriod}
             osaamisenHankkimistavat={osaamisenHankkimistavat}
+            tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
             shareModuleId={share ? share.moduleId : ""}
           />
 

@@ -1,4 +1,5 @@
 import { APIConfig } from "components/APIConfigContext"
+import { TutkinnonOsaType } from "models/helpers/TutkinnonOsa"
 
 interface BackendShareLink {
   "jako-uuid": string
@@ -55,7 +56,7 @@ export const createLink = async function({
   endDate: string
   moduleId: string
   type: string
-  tutkinnonOsaTyyppi: string
+  tutkinnonOsaTyyppi: TutkinnonOsaType
   tutkinnonOsaId: string
   apiConfig: APIConfig
 }): Promise<string> {

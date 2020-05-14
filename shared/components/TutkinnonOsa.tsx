@@ -7,7 +7,8 @@ import {
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
   IOrganisaatio,
-  ITarkentavatTiedotOsaamisenArvioija
+  ITarkentavatTiedotOsaamisenArvioija,
+  TutkinnonOsaType
 } from "models/helpers/TutkinnonOsa"
 import { ShareType } from "stores/NotificationStore"
 import { MdShare } from "react-icons/md"
@@ -119,7 +120,12 @@ export interface TutkinnonOsaProps {
   /**
    * Current share state from url
    */
-  share?: { type?: ShareType; moduleId?: string }
+  share?: {
+    type?: ShareType
+    moduleId?: string
+    tutkinnonOsaTyyppi?: TutkinnonOsaType
+    tutkinnonOsaId?: string
+  }
   /** Title of the study, always visible */
   title?: React.ReactNode
   /**
@@ -127,7 +133,7 @@ export interface TutkinnonOsaProps {
    */
   todentamisenProsessi?: TodentamisenProsessi
   tutkinnonOsaId?: string
-  tutkinnonOsaTyyppi?: string
+  tutkinnonOsaTyyppi?: TutkinnonOsaType
   /**
    * Width of the element for desktop resolutions
    * @default 25%

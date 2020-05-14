@@ -65,3 +65,22 @@ export interface IAiemminHankittuTutkinnonOsa
   /** AiemminHankitunYTOOsaAlue does not contain this but it is defined after flattenDeep */
   opintoOtsikko(ospLyhenne: string): string
 }
+
+// export type TutkinnonOsaType =
+//   | "HankittavaAmmatillinenTutkinnonOsa"
+//   | "HankittavaPaikallinenTutkinnonOsa"
+//   | "HankittavaYhteinenTutkinnonOsa"
+//   | "AiemminHankittuAmmatillinenTutkinnonOsa"
+//   | "AiemminHankittuPaikallinenTutkinnonOsa"
+//   | "AiemminHankittuYhteinenTutkinnonOsa"
+//   | "AiemminHankittuYTOOsaAlue"
+//   | undefined
+export enum TutkinnonOsaType {
+  "HankittavaAmmatillinenTutkinnonOsa" = "HankittavaAmmatillinenTutkinnonOsa",
+  "HankittavaPaikallinenTutkinnonOsa" = "HankittavaPaikallinenTutkinnonOsa",
+  "HankittavaYhteinenTutkinnonOsa" = "HankittavaYhteinenTutkinnonOsa",
+  "AiemminHankittuAmmatillinenTutkinnonOsa" = "AiemminHankittuAmmatillinenTutkinnonOsa",
+  "AiemminHankittuPaikallinenTutkinnonOsa" = "AiemminHankittuPaikallinenTutkinnonOsa",
+  "AiemminHankittuYhteinenTutkinnonOsa" = "AiemminHankittuYhteinenTutkinnonOsa",
+  "AiemminHankittuYTOOsaAlue" = "AiemminHankittuYTOOsaAlue"
+}

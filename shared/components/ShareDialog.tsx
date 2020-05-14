@@ -9,6 +9,7 @@ import { navigate } from "@reach/router"
 import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl"
 import styled from "styled"
 import { ShareType } from "stores/NotificationStore"
+import { TutkinnonOsaType } from "models/helpers/TutkinnonOsa"
 import { HeroButton, LinkButton } from "components/Button"
 import { ModalWithBackground } from "components/ModalDialogs/Modal"
 import {
@@ -152,7 +153,7 @@ interface ShareDialogProps extends InjectedIntlProps {
   type: ShareType
   defaultPeriod?: ShareLinkValidityPeriod
   instructor?: Instructor
-  tutkinnonOsaTyyppi: string
+  tutkinnonOsaTyyppi?: TutkinnonOsaType
   tutkinnonOsaId: string
 }
 
@@ -207,17 +208,19 @@ export function ShareDialog(props: ShareDialogProps) {
   }
 
   const addLink = async () => {
-    const createdUuid = await createLink({
-      moduleId,
-      startDate,
-      endDate,
-      type,
-      tutkinnonOsaTyyppi,
-      tutkinnonOsaId,
-      apiConfig
-    })
-    setSharedLinks(await fetchLinks(moduleId, type, apiConfig))
-    setCreatedUrl(`https://not.implemented.yet/jako/${createdUuid}`)
+    if (tutkinnonOsaTyyppi) {
+      const createdUuid = await createLink({
+        moduleId,
+        startDate,
+        endDate,
+        type,
+        tutkinnonOsaTyyppi,
+        tutkinnonOsaId,
+        apiConfig
+      })
+      setSharedLinks(await fetchLinks(moduleId, type, apiConfig))
+      setCreatedUrl(`https://not.implemented.yet/jako/${createdUuid}`)
+    }
   }
 
   const close = () => {

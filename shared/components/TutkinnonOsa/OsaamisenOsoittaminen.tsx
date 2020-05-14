@@ -6,7 +6,8 @@ import styled from "styled"
 import { Container, InfoContainer, Table, TBody, TD, TH, Title } from "./Shared"
 import {
   IOsaamisenOsoittaminen,
-  TodentamisenProsessi
+  TodentamisenProsessi,
+  TutkinnonOsaType
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/TutkinnonOsa/LearningEvent"
 import { TodentamisenProsessiKoodi } from "types/TodentamisenProsessiKoodi"
@@ -74,7 +75,7 @@ interface OsaamisenOsoittaminenProps {
   moduleId?: string
   koodiUri?: string
   hasActiveShare?: boolean
-  tutkinnonOsaTyyppi?: string
+  tutkinnonOsaTyyppi?: TutkinnonOsaType
   tutkinnonOsaId?: string
 }
 

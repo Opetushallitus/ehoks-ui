@@ -1,24 +1,30 @@
 import { WindowLocation } from "@reach/router"
 import queryString from "query-string"
 import { ShareType } from "stores/NotificationStore"
+import { TutkinnonOsaType } from "models/helpers/TutkinnonOsa"
 
 export function parseShareParams(
   location: WindowLocation | undefined
 ): {
   share: {
-    type: ShareType
+    type?: ShareType
     moduleId: string | ""
-    tutkinnonOsaTyyppi: string | ""
+    tutkinnonOsaTyyppi?: TutkinnonOsaType
     tutkinnonOsaId: string | ""
   }
 } {
   const qs = queryString.parse(location ? location.search : "")
   return {
     share: {
-      type: "osaamisenosoittaminen", //TODO typeof qs.type === "string" ? qs.type : "",
+      type:
+        ShareType[qs.type as ShareType] != null
+          ? ShareType[qs.type as ShareType]
+          : undefined,
       moduleId: typeof qs.moduleId === "string" ? qs.moduleId : "",
       tutkinnonOsaTyyppi:
-        typeof qs.tutkinnonOsaTyyppi === "string" ? qs.tutkinnonOsaTyyppi : "",
+        TutkinnonOsaType[qs.tutkinnonOsaTyyppi as TutkinnonOsaType] != null
+          ? TutkinnonOsaType[qs.tutkinnonOsaTyyppi as TutkinnonOsaType]
+          : undefined,
       tutkinnonOsaId:
         typeof qs.tutkinnonOsaId === "string" ? qs.tutkinnonOsaId : ""
     }
@@ -31,9 +37,9 @@ export const stringifyShareParams = ({
   tutkinnonOsaTyyppi,
   tutkinnonOsaId
 }: {
-  type: ShareType
+  type: string
   moduleId: string
-  tutkinnonOsaTyyppi: string
+  tutkinnonOsaTyyppi: TutkinnonOsaType
   tutkinnonOsaId: string
 }): string =>
   queryString.stringify({ type, moduleId, tutkinnonOsaTyyppi, tutkinnonOsaId })
