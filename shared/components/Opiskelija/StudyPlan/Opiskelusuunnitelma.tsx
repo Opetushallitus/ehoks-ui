@@ -3,7 +3,6 @@ import { Accordion } from "components/Accordion"
 import { AccordionTitle } from "components/AccordionTitle"
 import { Heading } from "components/Heading"
 import { InfoTable } from "components/InfoTable"
-import { LabeledColumn } from "components/LabeledColumn"
 import { ProgressPie } from "components/ProgressPie"
 import { StatBoxes } from "components/StatBox"
 import { observer } from "mobx-react"
@@ -16,7 +15,6 @@ import find from "lodash.find"
 import { ShareType } from "stores/NotificationStore"
 import { parseShareParams } from "utils/shareParams"
 import { FormattedDate } from "components/FormattedDate"
-import { StudyPoints } from "../../StudyPoints"
 import {
   ActiveAccordions,
   OpiskelusuunnitelmaState,
@@ -50,63 +48,6 @@ export interface OpiskelusuunnitelmaProps extends RouteComponentProps {
     essentialFactor?: React.ReactNode
   }
 }
-
-const DegreeInfo = ({ plan }: { plan: IHOKS }) => (
-  <InfoTable>
-    <tbody>
-      <tr>
-        <th>
-          <FormattedMessage
-            id="opiskelusuunnitelma.tutkinnonNimiTitle"
-            defaultMessage="Tutkinnon nimi"
-          />
-        </th>
-        <th>
-          <FormattedMessage
-            id="opiskelusuunnitelma.laajuusTitle"
-            defaultMessage="Laajuus"
-          />
-        </th>
-        <th />
-      </tr>
-      <tr>
-        <LabeledColumn id="opiskelusuunnitelma.tutkinnonNimiTitle">
-          {plan.tutkinnonNimi}
-        </LabeledColumn>
-        <StudyPoints
-          osaamispisteet={plan.osaamispisteet}
-          titleTranslationId={"opiskelusuunnitelma.laajuusTitle"}
-          pointsTranslationId={"opiskelusuunnitelma.osaamispistettaPostfix"}
-        />
-        <td />
-      </tr>
-      <tr>
-        <th>
-          <FormattedMessage
-            id="opiskelusuunnitelma.osaamisalaTitle"
-            defaultMessage="Osaamisala"
-          />
-        </th>
-        <th>
-          <FormattedMessage
-            id="opiskelusuunnitelma.tutkintonimikeTitle"
-            defaultMessage="Tutkintonimike"
-          />
-        </th>
-        <th />
-      </tr>
-      <tr>
-        <LabeledColumn id="opiskelusuunnitelma.osaamisalaTitle">
-          {plan.osaamisala}
-        </LabeledColumn>
-        <LabeledColumn id="opiskelusuunnitelma.tutkintonimikeTitle">
-          {plan.tutkintonimike}
-        </LabeledColumn>
-        <td />
-      </tr>
-    </tbody>
-  </InfoTable>
-)
 
 const DegreeProgress = ({
   totalStudiesLength,
@@ -449,7 +390,6 @@ export class Opiskelusuunnitelma extends React.Component<
             />
           }
         >
-          <DegreeInfo plan={plan} />
           <DegreeProgress
             totalStudiesLength={totalStudiesLength}
             suunnitellutOpinnot={suunnitellutOpinnot}
