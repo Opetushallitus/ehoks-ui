@@ -7,8 +7,7 @@ import { LabeledColumn } from "components/LabeledColumn"
 import { ProgressPie } from "components/ProgressPie"
 import { StatBoxes } from "components/StatBox"
 import { observer } from "mobx-react"
-import { Instance } from "mobx-state-tree"
-import { HOKS } from "models/HOKS"
+import { IHOKS } from "models/HOKS"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
@@ -27,6 +26,7 @@ import {
 import { PlannedStudies } from "./PlannedStudies"
 import { ScheduledStudies } from "./ScheduledStudies"
 import { CompletedStudies } from "./CompletedStudies"
+import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
 
 const ProgressTitle = styled("h2")`
   margin-left: 4px;
@@ -43,13 +43,194 @@ const HelpButton = styled(HelpPopup)`
 
 export interface OpiskelusuunnitelmaProps extends RouteComponentProps {
   children?: React.ReactChildren
-  plan: Instance<typeof HOKS>
+  plan: IHOKS
   elements?: {
     heading?: React.ReactNode
     goals?: React.ReactNode
     essentialFactor?: React.ReactNode
   }
 }
+
+const DegreeInfo = ({ plan }: { plan: IHOKS }) => (
+  <InfoTable>
+    <tbody>
+      <tr>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.tutkinnonNimiTitle"
+            defaultMessage="Tutkinnon nimi"
+          />
+        </th>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.laajuusTitle"
+            defaultMessage="Laajuus"
+          />
+        </th>
+        <th />
+      </tr>
+      <tr>
+        <LabeledColumn id="opiskelusuunnitelma.tutkinnonNimiTitle">
+          {plan.tutkinnonNimi}
+        </LabeledColumn>
+        <StudyPoints
+          osaamispisteet={plan.osaamispisteet}
+          titleTranslationId={"opiskelusuunnitelma.laajuusTitle"}
+          pointsTranslationId={"opiskelusuunnitelma.osaamispistettaPostfix"}
+        />
+        <td />
+      </tr>
+      <tr>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.osaamisalaTitle"
+            defaultMessage="Osaamisala"
+          />
+        </th>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.tutkintonimikeTitle"
+            defaultMessage="Tutkintonimike"
+          />
+        </th>
+        <th />
+      </tr>
+      <tr>
+        <LabeledColumn id="opiskelusuunnitelma.osaamisalaTitle">
+          {plan.osaamisala}
+        </LabeledColumn>
+        <LabeledColumn id="opiskelusuunnitelma.tutkintonimikeTitle">
+          {plan.tutkintonimike}
+        </LabeledColumn>
+        <td />
+      </tr>
+    </tbody>
+  </InfoTable>
+)
+
+const DegreeProgress = ({
+  totalStudiesLength,
+  suunnitellutOpinnot,
+  aikataulutetutOpinnot,
+  valmiitOpinnot,
+  showSuunnitellut,
+  showAikataulutetut,
+  showValmiit
+}: {
+  totalStudiesLength: number
+  suunnitellutOpinnot: IHankittavaTutkinnonOsa[]
+  aikataulutetutOpinnot: IHankittavaTutkinnonOsa[]
+  valmiitOpinnot: IHankittavaTutkinnonOsa[]
+  showSuunnitellut: () => void
+  showAikataulutetut: () => void
+  showValmiit: () => void
+}) => (
+  <>
+    <ProgressTitle>
+      <FormattedMessage
+        id="opiskelusuunnitelma.opintosiTitle"
+        defaultMessage="Opintojen eteneminen"
+      />
+    </ProgressTitle>
+
+    <StatBoxes>
+      <ProgressPie
+        value={
+          totalStudiesLength !== 0
+            ? Math.round(
+                (suunnitellutOpinnot.length / totalStudiesLength) * 100
+              )
+            : 0
+        }
+        stroke="planned"
+        title={
+          <FormattedMessage
+            id="opiskelusuunnitelma.suunniteltunaTitle"
+            defaultMessage="Suunniteltuna"
+          />
+        }
+        onClick={showSuunnitellut}
+      />
+      <ProgressPie
+        value={
+          totalStudiesLength !== 0
+            ? Math.round(
+                (aikataulutetutOpinnot.length / totalStudiesLength) * 100
+              )
+            : 0
+        }
+        stroke="scheduled"
+        title={
+          <FormattedMessage
+            id="opiskelusuunnitelma.aikataulutettunaTitle"
+            defaultMessage="Aikataulutettuna"
+          />
+        }
+        onClick={showAikataulutetut}
+      />
+      <ProgressPie
+        value={
+          totalStudiesLength !== 0
+            ? Math.round((valmiitOpinnot.length / totalStudiesLength) * 100)
+            : 0
+        }
+        stroke="ready"
+        title={
+          <FormattedMessage
+            id="opiskelusuunnitelma.valmiinaTitle"
+            defaultMessage="Valmiina"
+          />
+        }
+        onClick={showValmiit}
+      />
+    </StatBoxes>
+  </>
+)
+
+const OpiskeluvalmiuksiaTukevatOpinnot = ({ plan }: { plan: IHOKS }) => (
+  <InfoTable>
+    <tbody>
+      <tr>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.opintoTitle"
+            defaultMessage="Opinto"
+          />
+        </th>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.kuvausTitle"
+            defaultMessage="Kuvaus"
+          />
+        </th>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.aloituspaivaTitle"
+            defaultMessage="Aloituspäivä"
+          />
+        </th>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.lopetuspaivaTitle"
+            defaultMessage="Lopetuspäivä"
+          />
+        </th>
+      </tr>
+      {plan.opiskeluvalmiuksiaTukevatOpinnot.map((study, i) => (
+        <tr key={`study_${i}`}>
+          <td>{study.nimi}</td>
+          <td>{study.kuvaus}</td>
+          <td>
+            <FormattedDate date={study.alku} />
+          </td>
+          <td>
+            <FormattedDate date={study.loppu} />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </InfoTable>
+)
 
 @observer
 export class Opiskelusuunnitelma extends React.Component<
@@ -215,7 +396,7 @@ export class Opiskelusuunnitelma extends React.Component<
       heading: customElements.heading || (
         <FormattedMessage
           id="opiskelusuunnitelma.title"
-          defaultMessage="Opiskelusuunnitelmani"
+          defaultMessage="Osaamisen hankkiminen"
         />
       ),
       goals: (
@@ -268,123 +449,16 @@ export class Opiskelusuunnitelma extends React.Component<
             />
           }
         >
-          <InfoTable>
-            <tbody>
-              <tr>
-                <th>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.tutkinnonNimiTitle"
-                    defaultMessage="Tutkinnon nimi"
-                  />
-                </th>
-                <th>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.laajuusTitle"
-                    defaultMessage="Laajuus"
-                  />
-                </th>
-                <th />
-              </tr>
-              <tr>
-                <LabeledColumn id="opiskelusuunnitelma.tutkinnonNimiTitle">
-                  {plan.tutkinnonNimi}
-                </LabeledColumn>
-                <StudyPoints
-                  osaamispisteet={plan.osaamispisteet}
-                  titleTranslationId={"opiskelusuunnitelma.laajuusTitle"}
-                  pointsTranslationId={
-                    "opiskelusuunnitelma.osaamispistettaPostfix"
-                  }
-                />
-                <td />
-              </tr>
-              <tr>
-                <th>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.osaamisalaTitle"
-                    defaultMessage="Osaamisala"
-                  />
-                </th>
-                <th>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.tutkintonimikeTitle"
-                    defaultMessage="Tutkintonimike"
-                  />
-                </th>
-                <th />
-              </tr>
-              <tr>
-                <LabeledColumn id="opiskelusuunnitelma.osaamisalaTitle">
-                  {plan.osaamisala}
-                </LabeledColumn>
-                <LabeledColumn id="opiskelusuunnitelma.tutkintonimikeTitle">
-                  {plan.tutkintonimike}
-                </LabeledColumn>
-                <td />
-              </tr>
-            </tbody>
-          </InfoTable>
-
-          <ProgressTitle>
-            <FormattedMessage
-              id="opiskelusuunnitelma.opintosiTitle"
-              defaultMessage="Opintojen eteneminen"
-            />
-          </ProgressTitle>
-
-          <StatBoxes>
-            <ProgressPie
-              value={
-                totalStudiesLength !== 0
-                  ? Math.round(
-                      (suunnitellutOpinnot.length / totalStudiesLength) * 100
-                    )
-                  : 0
-              }
-              stroke="planned"
-              title={
-                <FormattedMessage
-                  id="opiskelusuunnitelma.suunniteltunaTitle"
-                  defaultMessage="Suunniteltuna"
-                />
-              }
-              onClick={this.showPlanSubAccordion("suunnitellut")}
-            />
-            <ProgressPie
-              value={
-                totalStudiesLength !== 0
-                  ? Math.round(
-                      (aikataulutetutOpinnot.length / totalStudiesLength) * 100
-                    )
-                  : 0
-              }
-              stroke="scheduled"
-              title={
-                <FormattedMessage
-                  id="opiskelusuunnitelma.aikataulutettunaTitle"
-                  defaultMessage="Aikataulutettuna"
-                />
-              }
-              onClick={this.showPlanSubAccordion("aikataulutetut")}
-            />
-            <ProgressPie
-              value={
-                totalStudiesLength !== 0
-                  ? Math.round(
-                      (valmiitOpinnot.length / totalStudiesLength) * 100
-                    )
-                  : 0
-              }
-              stroke="ready"
-              title={
-                <FormattedMessage
-                  id="opiskelusuunnitelma.valmiinaTitle"
-                  defaultMessage="Valmiina"
-                />
-              }
-              onClick={this.showPlanSubAccordion("valmiit")}
-            />
-          </StatBoxes>
+          <DegreeInfo plan={plan} />
+          <DegreeProgress
+            totalStudiesLength={totalStudiesLength}
+            suunnitellutOpinnot={suunnitellutOpinnot}
+            aikataulutetutOpinnot={aikataulutetutOpinnot}
+            valmiitOpinnot={valmiitOpinnot}
+            showSuunnitellut={this.showPlanSubAccordion("suunnitellut")}
+            showAikataulutetut={this.showPlanSubAccordion("aikataulutetut")}
+            showValmiit={this.showPlanSubAccordion("valmiit")}
+          />
         </Accordion>
 
         <Accordion
@@ -457,48 +531,7 @@ export class Opiskelusuunnitelma extends React.Component<
             />
           }
         >
-          <InfoTable>
-            <tbody>
-              <tr>
-                <th>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.opintoTitle"
-                    defaultMessage="Opinto"
-                  />
-                </th>
-                <th>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.kuvausTitle"
-                    defaultMessage="Kuvaus"
-                  />
-                </th>
-                <th>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.aloituspaivaTitle"
-                    defaultMessage="Aloituspäivä"
-                  />
-                </th>
-                <th>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.lopetuspaivaTitle"
-                    defaultMessage="Lopetuspäivä"
-                  />
-                </th>
-              </tr>
-              {plan.opiskeluvalmiuksiaTukevatOpinnot.map((study, i) => (
-                <tr key={`study_${i}`}>
-                  <td>{study.nimi}</td>
-                  <td>{study.kuvaus}</td>
-                  <td>
-                    <FormattedDate date={study.alku} />
-                  </td>
-                  <td>
-                    <FormattedDate date={study.loppu} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </InfoTable>
+          <OpiskeluvalmiuksiaTukevatOpinnot plan={plan} />
         </Accordion>
       </React.Fragment>
     )
