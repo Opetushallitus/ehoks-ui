@@ -187,6 +187,51 @@ const DegreeProgress = ({
   </>
 )
 
+const OpiskeluvalmiuksiaTukevatOpinnot = ({ plan }: { plan: IHOKS }) => (
+  <InfoTable>
+    <tbody>
+      <tr>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.opintoTitle"
+            defaultMessage="Opinto"
+          />
+        </th>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.kuvausTitle"
+            defaultMessage="Kuvaus"
+          />
+        </th>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.aloituspaivaTitle"
+            defaultMessage="Aloituspäivä"
+          />
+        </th>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.lopetuspaivaTitle"
+            defaultMessage="Lopetuspäivä"
+          />
+        </th>
+      </tr>
+      {plan.opiskeluvalmiuksiaTukevatOpinnot.map((study, i) => (
+        <tr key={`study_${i}`}>
+          <td>{study.nimi}</td>
+          <td>{study.kuvaus}</td>
+          <td>
+            <FormattedDate date={study.alku} />
+          </td>
+          <td>
+            <FormattedDate date={study.loppu} />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </InfoTable>
+)
+
 @observer
 export class Opiskelusuunnitelma extends React.Component<
   OpiskelusuunnitelmaProps,
@@ -486,48 +531,7 @@ export class Opiskelusuunnitelma extends React.Component<
             />
           }
         >
-          <InfoTable>
-            <tbody>
-              <tr>
-                <th>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.opintoTitle"
-                    defaultMessage="Opinto"
-                  />
-                </th>
-                <th>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.kuvausTitle"
-                    defaultMessage="Kuvaus"
-                  />
-                </th>
-                <th>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.aloituspaivaTitle"
-                    defaultMessage="Aloituspäivä"
-                  />
-                </th>
-                <th>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.lopetuspaivaTitle"
-                    defaultMessage="Lopetuspäivä"
-                  />
-                </th>
-              </tr>
-              {plan.opiskeluvalmiuksiaTukevatOpinnot.map((study, i) => (
-                <tr key={`study_${i}`}>
-                  <td>{study.nimi}</td>
-                  <td>{study.kuvaus}</td>
-                  <td>
-                    <FormattedDate date={study.alku} />
-                  </td>
-                  <td>
-                    <FormattedDate date={study.loppu} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </InfoTable>
+          <OpiskeluvalmiuksiaTukevatOpinnot plan={plan} />
         </Accordion>
       </React.Fragment>
     )
