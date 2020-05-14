@@ -494,8 +494,7 @@ export class Details extends React.Component<DetailsProps> {
       !!tarkentavatTiedotOsaamisenArvioija
     const isAiempiOsaaminen = !!todentamisenProsessiKoodi
     // TODO hasActiveShare matches now for koodiUri and might show multiple share modals, should use module-id and check per module
-    const hasActiveShare =
-      typeof share !== "undefined" && moduleId === share.tutkinnonOsaId
+    const hasActiveShare = moduleId === share?.tutkinnonOsaId
     const shareType = typeof share !== "undefined" ? share.type : undefined
     const firstOsaamisenHankkimistapa =
       shareType === "osaamisenhankkimistapa" && osaamisenHankkimistavat[0]

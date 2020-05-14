@@ -23,13 +23,11 @@ export const AiemminHankittuYhteinenTutkinnonOsa = types
       {}
     )
   })
-  .views(self => {
-    return {
-      get tutkinnonOsaTyyppi() {
-        return `AiemminHankittuYhteinenTutkinnonOsa`
-      },
-      get tutkinnonOsaId() {
-        return self.moduleId
-      }
+  .views(self => ({
+    get tutkinnonOsaTyyppi() {
+      return `AiemminHankittuYhteinenTutkinnonOsa`
+    },
+    get tutkinnonOsaId() {
+      return self.moduleId
     }
-  })
+  }))
