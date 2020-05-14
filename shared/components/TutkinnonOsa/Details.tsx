@@ -548,7 +548,7 @@ export class Details extends React.Component<DetailsProps> {
             defaultPeriod={defaultPeriod}
             osaamisenHankkimistavat={osaamisenHankkimistavat}
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
-            shareModuleId={share ? share.moduleId : ""}
+            shareModuleId={share?.moduleId}
           />
 
           <OsaamisenOsoittamisetExpanded
@@ -558,7 +558,7 @@ export class Details extends React.Component<DetailsProps> {
             }
             fadedColor={fadedColor}
             koodiUri={koodiUri}
-            shareModuleId={share ? share.moduleId : ""}
+            shareModuleId={share?.moduleId}
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
             tutkinnonOsaId={moduleId}
             todentamisenProsessi={todentamisenProsessi}
