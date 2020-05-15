@@ -26,11 +26,6 @@ import { ScheduledStudies } from "./ScheduledStudies"
 import { CompletedStudies } from "./CompletedStudies"
 import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
 
-const ProgressTitle = styled("h2")`
-  margin-left: 4px;
-  ${props => props.theme.typography.heading3}
-`
-
 const EssentialFactorContainer = styled("div")`
   margin: 10px 20px 20px 20px;
 `
@@ -66,66 +61,55 @@ const DegreeProgress = ({
   showAikataulutetut: () => void
   showValmiit: () => void
 }) => (
-  <>
-    <ProgressTitle>
-      <FormattedMessage
-        id="opiskelusuunnitelma.opintosiTitle"
-        defaultMessage="Opintojen eteneminen"
-      />
-    </ProgressTitle>
-
-    <StatBoxes>
-      <ProgressPie
-        value={
-          totalStudiesLength !== 0
-            ? Math.round(
-                (suunnitellutOpinnot.length / totalStudiesLength) * 100
-              )
-            : 0
-        }
-        stroke="planned"
-        title={
-          <FormattedMessage
-            id="opiskelusuunnitelma.suunniteltunaTitle"
-            defaultMessage="Suunniteltuna"
-          />
-        }
-        onClick={showSuunnitellut}
-      />
-      <ProgressPie
-        value={
-          totalStudiesLength !== 0
-            ? Math.round(
-                (aikataulutetutOpinnot.length / totalStudiesLength) * 100
-              )
-            : 0
-        }
-        stroke="scheduled"
-        title={
-          <FormattedMessage
-            id="opiskelusuunnitelma.aikataulutettunaTitle"
-            defaultMessage="Aikataulutettuna"
-          />
-        }
-        onClick={showAikataulutetut}
-      />
-      <ProgressPie
-        value={
-          totalStudiesLength !== 0
-            ? Math.round((valmiitOpinnot.length / totalStudiesLength) * 100)
-            : 0
-        }
-        stroke="ready"
-        title={
-          <FormattedMessage
-            id="opiskelusuunnitelma.valmiinaTitle"
-            defaultMessage="Valmiina"
-          />
-        }
-        onClick={showValmiit}
-      />
-    </StatBoxes>
-  </>
+  <StatBoxes>
+    <ProgressPie
+      value={
+        totalStudiesLength !== 0
+          ? Math.round((suunnitellutOpinnot.length / totalStudiesLength) * 100)
+          : 0
+      }
+      stroke="planned"
+      title={
+        <FormattedMessage
+          id="opiskelusuunnitelma.suunniteltunaTitle"
+          defaultMessage="Suunniteltuna"
+        />
+      }
+      onClick={showSuunnitellut}
+    />
+    <ProgressPie
+      value={
+        totalStudiesLength !== 0
+          ? Math.round(
+              (aikataulutetutOpinnot.length / totalStudiesLength) * 100
+            )
+          : 0
+      }
+      stroke="scheduled"
+      title={
+        <FormattedMessage
+          id="opiskelusuunnitelma.aikataulutettunaTitle"
+          defaultMessage="Aikataulutettuna"
+        />
+      }
+      onClick={showAikataulutetut}
+    />
+    <ProgressPie
+      value={
+        totalStudiesLength !== 0
+          ? Math.round((valmiitOpinnot.length / totalStudiesLength) * 100)
+          : 0
+      }
+      stroke="ready"
+      title={
+        <FormattedMessage
+          id="opiskelusuunnitelma.valmiinaTitle"
+          defaultMessage="Valmiina"
+        />
+      }
+      onClick={showValmiit}
+    />
+  </StatBoxes>
 )
 
 const OpiskeluvalmiuksiaTukevatOpinnot = ({ plan }: { plan: IHOKS }) => (
