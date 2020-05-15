@@ -12,6 +12,7 @@ import { FormattedMessage } from "react-intl"
 import { IHOKS } from "models/HOKS"
 import { AppContext } from "components/AppContext"
 import { FormattedDate } from "components/FormattedDate"
+import { StudyPoints } from "../StudyPoints"
 
 interface OsaamisenHankkimisenTarveProps {
   osaamisenHankkimisenTarve: boolean | null
@@ -40,6 +41,63 @@ const OsaamisenHankkimisenTarveMessage = ({
     />
   )
 }
+
+const DegreeInfo = ({ plan }: { plan: IHOKS }) => (
+  <InfoTable>
+    <tbody>
+      <tr>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.tutkinnonNimiTitle"
+            defaultMessage="Tutkinnon nimi"
+          />
+        </th>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.laajuusTitle"
+            defaultMessage="Laajuus"
+          />
+        </th>
+        <th />
+      </tr>
+      <tr>
+        <LabeledColumn id="opiskelusuunnitelma.tutkinnonNimiTitle">
+          {plan.tutkinnonNimi}
+        </LabeledColumn>
+        <StudyPoints
+          osaamispisteet={plan.osaamispisteet}
+          titleTranslationId={"opiskelusuunnitelma.laajuusTitle"}
+          pointsTranslationId={"opiskelusuunnitelma.osaamispistettaPostfix"}
+        />
+        <td />
+      </tr>
+      <tr>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.osaamisalaTitle"
+            defaultMessage="Osaamisala"
+          />
+        </th>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.tutkintonimikeTitle"
+            defaultMessage="Tutkintonimike"
+          />
+        </th>
+        <th />
+      </tr>
+      <tr>
+        <LabeledColumn id="opiskelusuunnitelma.osaamisalaTitle">
+          {plan.osaamisala}
+        </LabeledColumn>
+        <LabeledColumn id="opiskelusuunnitelma.tutkintonimikeTitle">
+          {plan.tutkintonimike}
+        </LabeledColumn>
+        <td />
+      </tr>
+    </tbody>
+  </InfoTable>
+)
 
 const StudentPersonalInfo = ({ student }: { student: ISessionUser }) => (
   <>
@@ -386,7 +444,7 @@ export class Tavoitteet extends React.Component<
           title={titles.degreeOrEducation}
           onToggle={this.toggleAccordion("degreeOrEducation")}
         >
-          {hoks.tutkinnonNimi}
+          <DegreeInfo plan={hoks} />
         </Accordion>
 
         <Accordion
