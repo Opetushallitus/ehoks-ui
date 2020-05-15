@@ -1,4 +1,5 @@
 import { APIConfig } from "components/APIConfigContext"
+import { TutkinnonOsaType } from "models/helpers/TutkinnonOsa"
 
 interface BackendShareLink {
   "jako-uuid": string
@@ -47,26 +48,32 @@ export const createLink = async function({
   endDate,
   moduleId,
   type,
+  tutkinnonOsaTyyppi,
+  tutkinnonOsaId,
   apiConfig
 }: {
   startDate: string
   endDate: string
   moduleId: string
   type: string
+  tutkinnonOsaTyyppi: TutkinnonOsaType
+  tutkinnonOsaId: string
   apiConfig: APIConfig
 }): Promise<string> {
   const { apiUrl, apiPrefix } = apiConfig
-  const response = await window.fetch(apiUrl(`${apiPrefix}/hoksit/share`), {
+  const response = await window.fetch(apiUrl(`${apiPrefix}/jakolinkit`), {
     credentials: "include",
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
+      "tutkinnonosa-module-uuid": tutkinnonOsaId,
+      "tutkinnonosa-tyyppi": tutkinnonOsaTyyppi,
+      "shared-module-uuid": moduleId,
+      "shared-module-tyyppi": type,
       "voimassaolo-alku": startDate,
-      "voimassaolo-loppu": endDate,
-      tyyppi: type,
-      "module-id": moduleId
+      "voimassaolo-loppu": endDate
     })
   })
 

@@ -17,7 +17,10 @@ import find from "lodash.find"
 import { StoreEnvironment } from "../types/StoreEnvironment"
 import { APIResponse } from "../types/APIResponse"
 
-export type ShareType = "osaamisenosoittaminen" | "osaamisenhankkimistapa"
+export enum ShareType {
+  "osaamisenosoittaminen" = "osaamisenosoittaminen",
+  "osaamisenhankkimistapa" = "osaamisenhankkimistapa"
+}
 
 export const NotificationModel = types.model("NotificationModel", {
   hoksId: types.optional(types.string, ""),

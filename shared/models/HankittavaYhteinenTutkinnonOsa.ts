@@ -11,8 +11,13 @@ export const Model = types.model({
   osaAlueet: types.array(YhteisenTutkinnonOsanOsaAlue)
 })
 
-export const HankittavaYhteinenTutkinnonOsa = types.compose(
-  "HankittavaYhteinenTutkinnonOsa",
-  EnrichKoodiUri,
-  Model
-)
+export const HankittavaYhteinenTutkinnonOsa = types
+  .compose("HankittavaYhteinenTutkinnonOsa", EnrichKoodiUri, Model)
+  .views(self => ({
+    get tutkinnonOsaTyyppi() {
+      return `HankittavaYhteinenTutkinnonOsa`
+    },
+    get tutkinnonOsaId() {
+      return self.moduleId
+    }
+  }))

@@ -6,7 +6,8 @@ import styled from "styled"
 import { Container, InfoContainer, Table, TBody, TD, TH, Title } from "./Shared"
 import {
   IOsaamisenOsoittaminen,
-  TodentamisenProsessi
+  TodentamisenProsessi,
+  TutkinnonOsaType
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/TutkinnonOsa/LearningEvent"
 import { TodentamisenProsessiKoodi } from "types/TodentamisenProsessiKoodi"
@@ -74,6 +75,8 @@ interface OsaamisenOsoittaminenProps {
   moduleId?: string
   koodiUri?: string
   hasActiveShare?: boolean
+  tutkinnonOsaTyyppi?: TutkinnonOsaType
+  tutkinnonOsaId?: string
 }
 
 @observer
@@ -95,12 +98,14 @@ export class OsaamisenOsoittaminen extends React.Component<
   }
 
   share = () => {
-    const { moduleId } = this.props
-    if (moduleId) {
+    const { moduleId, tutkinnonOsaTyyppi, tutkinnonOsaId } = this.props
+    if (moduleId && tutkinnonOsaTyyppi && tutkinnonOsaId) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
           type: "osaamisenosoittaminen",
-          moduleId
+          moduleId,
+          tutkinnonOsaTyyppi,
+          tutkinnonOsaId
         })}`
       )
     }

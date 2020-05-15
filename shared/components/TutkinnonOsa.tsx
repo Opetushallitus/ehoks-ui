@@ -7,7 +7,8 @@ import {
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
   IOrganisaatio,
-  ITarkentavatTiedotOsaamisenArvioija
+  ITarkentavatTiedotOsaamisenArvioija,
+  TutkinnonOsaType
 } from "models/helpers/TutkinnonOsa"
 import { ShareType } from "stores/NotificationStore"
 import { MdShare } from "react-icons/md"
@@ -119,13 +120,20 @@ export interface TutkinnonOsaProps {
   /**
    * Current share state from url
    */
-  share?: { type?: ShareType; moduleId?: string }
+  share?: {
+    type?: ShareType
+    moduleId?: string
+    tutkinnonOsaTyyppi?: TutkinnonOsaType
+    tutkinnonOsaId?: string
+  }
   /** Title of the study, always visible */
   title?: React.ReactNode
   /**
    * Verification process details
    */
   todentamisenProsessi?: TodentamisenProsessi
+  tutkinnonOsaId?: string
+  tutkinnonOsaTyyppi?: TutkinnonOsaType
   /**
    * Width of the element for desktop resolutions
    * @default 25%
@@ -224,12 +232,14 @@ export class TutkinnonOsa extends React.Component<
   }
 
   share = () => {
-    const { moduleId } = this.props
-    if (moduleId) {
+    const { moduleId, tutkinnonOsaTyyppi } = this.props
+    if (moduleId && tutkinnonOsaTyyppi) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
           moduleId,
-          type: "osaamisenhankkimistapa"
+          type: "osaamisenhankkimistapa",
+          tutkinnonOsaTyyppi,
+          tutkinnonOsaId: moduleId
         })}`
       )
     }
@@ -253,6 +263,7 @@ export class TutkinnonOsa extends React.Component<
       osaamisenHankkimistavat = [],
       koodiUri,
       moduleId,
+      tutkinnonOsaTyyppi,
       share,
       title,
       todentamisenProsessi,
@@ -270,9 +281,7 @@ export class TutkinnonOsa extends React.Component<
       osaamisenOsoittamiset.length > 0 ||
       todentamisenProsessi
     const hasActiveShare =
-      typeof share !== "undefined" &&
-      moduleId === share.moduleId &&
-      share.type === "osaamisenhankkimistapa"
+      typeof share !== "undefined" && moduleId === share.moduleId
     const detailsExpanded = expanded.details || hasActiveShare
     const showShareButton =
       expanded.details &&
@@ -325,6 +334,8 @@ export class TutkinnonOsa extends React.Component<
               todentamisenProsessi={todentamisenProsessi}
               koodiUri={koodiUri}
               share={share}
+              moduleId={moduleId}
+              tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
               toggle={this.toggle}
               koulutuksenJarjestaja={koulutuksenJarjestaja}
               tarkentavatTiedotOsaamisenArvioija={

@@ -6,9 +6,8 @@ import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 
-export const AiemminHankittuYhteinenTutkinnonOsa = types.model(
-  "AiemminHankittuYhteinenTutkinnonOsa",
-  {
+export const AiemminHankittuYhteinenTutkinnonOsa = types
+  .model("AiemminHankittuYhteinenTutkinnonOsa", {
     id: types.optional(types.number, 0),
     moduleId: types.maybe(types.string),
     tutkinnonOsaKoodiUri: types.optional(types.string, ""),
@@ -23,5 +22,12 @@ export const AiemminHankittuYhteinenTutkinnonOsa = types.model(
       TodennettuArviointiLisatiedot,
       {}
     )
-  }
-)
+  })
+  .views(self => ({
+    get tutkinnonOsaTyyppi() {
+      return `AiemminHankittuYhteinenTutkinnonOsa`
+    },
+    get tutkinnonOsaId() {
+      return self.moduleId
+    }
+  }))
