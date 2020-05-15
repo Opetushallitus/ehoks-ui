@@ -27,6 +27,7 @@ import { PlannedStudies } from "./PlannedStudies"
 import { ScheduledStudies } from "./ScheduledStudies"
 import { CompletedStudies } from "./CompletedStudies"
 import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
+import { TutkinnonOsaType } from "models/helpers/TutkinnonOsa"
 
 const ProgressTitle = styled("h2")`
   margin-left: 4px;
@@ -253,15 +254,24 @@ export class Opiskelusuunnitelma extends React.Component<
     },
     share: {
       type: undefined,
-      moduleId: undefined
+      moduleId: undefined,
+      tutkinnonOsaTyyppi: undefined,
+      tutkinnonOsaId: undefined
     }
   }
 
   async componentDidMount() {
     const { location } = this.props
     const { share } = parseShareParams(location)
-    await this.showShareDialog(share.moduleId, share.type)
-    this.setInitialExpanded(share)
+    if (share.type && share.tutkinnonOsaTyyppi) {
+      await this.showShareDialog(
+        share.moduleId,
+        share.type,
+        share.tutkinnonOsaTyyppi,
+        share.tutkinnonOsaId
+      )
+      this.setInitialExpanded(share)
+    }
   }
 
   componentDidUpdate(prevProps: OpiskelusuunnitelmaProps) {
@@ -269,7 +279,14 @@ export class Opiskelusuunnitelma extends React.Component<
       // TODO: set proper share state when opening another dialog
       // previous dialog should close and new dialog should open
       const { share } = parseShareParams(this.props.location)
-      this.showShareDialog(share.moduleId, share.type)
+      if (share.type && share.tutkinnonOsaTyyppi) {
+        this.showShareDialog(
+          share.moduleId,
+          share.type,
+          share.tutkinnonOsaTyyppi,
+          share.tutkinnonOsaId
+        )
+      }
     }
   }
 
@@ -295,13 +312,18 @@ export class Opiskelusuunnitelma extends React.Component<
     )
   }
 
-  showShareDialog = (moduleId: string, type: ShareType) =>
+  showShareDialog = (
+    moduleId: string,
+    type: ShareType,
+    tutkinnonOsaTyyppi: TutkinnonOsaType,
+    tutkinnonOsaId: string
+  ) =>
     // Is this promise because when state.share is used component needs to have DOM generated?
     new Promise(resolve => {
       this.setState(
         state => ({
           ...state,
-          share: { type, moduleId }
+          share: { type, moduleId, tutkinnonOsaTyyppi, tutkinnonOsaId }
         }),
         () => {
           resolve()
@@ -309,7 +331,7 @@ export class Opiskelusuunnitelma extends React.Component<
       )
     })
 
-  setInitialExpanded = (share: { type: ShareType; moduleId: string | "" }) => {
+  setInitialExpanded = (share: { type?: ShareType; moduleId: string | "" }) => {
     this.setState(state => ({
       ...state,
       activeAccordions: {

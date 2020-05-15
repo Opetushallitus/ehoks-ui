@@ -41,5 +41,11 @@ export const AiemminHankittuPaikallinenTutkinnonOsa = types
     },
     get osaamispisteet() {
       return self.laajuus
+    },
+    get tutkinnonOsaTyyppi() {
+      return `AiemminHankittuPaikallinenTutkinnonOsa`
+    },
+    get tutkinnonOsaId() {
+      return self.moduleId
     }
   }))

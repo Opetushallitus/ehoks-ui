@@ -1,7 +1,10 @@
 import React from "react"
 import { ShareType } from "../../../stores/NotificationStore"
 import { ActiveAccordions, StudyPartSubAccordions } from "./StudyPlanHelpers"
-import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
+import {
+  IHankittavaTutkinnonOsa,
+  TutkinnonOsaType
+} from "../../../models/helpers/TutkinnonOsa"
 import { AccordionTitle } from "../../AccordionTitle"
 import { FormattedMessage } from "react-intl"
 import { StudiesContainer } from "../../StudiesContainer"
@@ -14,6 +17,8 @@ export interface CompletedStudiesProps {
   share: {
     type?: ShareType
     moduleId?: string
+    tutkinnonOsaTyyppi?: TutkinnonOsaType
+    tutkinnonOsaId?: string
   }
   hasActiveShare: boolean
   toggleAccordion: (
@@ -74,6 +79,17 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
                   }
                   fadedColor="#ECF6ED"
                   koodiUri={study.tutkinnonOsaKoodiUri}
+                  moduleId={study.moduleId}
+                  tutkinnonOsaTyyppi={
+                    TutkinnonOsaType[
+                      study.tutkinnonOsaTyyppi as TutkinnonOsaType
+                    ] != null
+                      ? TutkinnonOsaType[
+                          study.tutkinnonOsaTyyppi as TutkinnonOsaType
+                        ]
+                      : undefined
+                  }
+                  tutkinnonOsaId={study.tutkinnonOsaId}
                   osaamisenHankkimistavat={study.osaamisenHankkimistavat}
                   share={share}
                   title={study.opintoOtsikko(competencePointsTitle)}

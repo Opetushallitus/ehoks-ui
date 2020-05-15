@@ -1,4 +1,5 @@
 import { ShareType } from "stores/NotificationStore"
+import { TutkinnonOsaType } from "models/helpers/TutkinnonOsa"
 
 export interface OpiskelusuunnitelmaState {
   activeAccordions: {
@@ -14,6 +15,8 @@ export interface OpiskelusuunnitelmaState {
   share: {
     type?: ShareType
     moduleId?: string
+    tutkinnonOsaTyyppi?: TutkinnonOsaType
+    tutkinnonOsaId?: string
   }
 }
 

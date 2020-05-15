@@ -39,5 +39,11 @@ export const AiemminHankitunYTOOsaAlue = types
     get osaamispisteet() {
       // TODO: where do we get this? Fix this also to YhteisenTutkinnonOsanOsaAlue.ts
       return 0
+    },
+    get tutkinnonOsaTyyppi() {
+      return `AiemminHankittuYTOOsaAlue`
+    },
+    get tutkinnonOsaId() {
+      return self.moduleId
     }
   }))
