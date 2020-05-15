@@ -329,7 +329,7 @@ export class Opiskelusuunnitelma extends React.Component<
           {customElements.goals || (
             <FormattedMessage
               id="opiskelusuunnitelma.tavoitteetTitle"
-              defaultMessage="Tavoitteeni ja opintojen eteneminen"
+              defaultMessage="Opintojen eteneminen"
             />
           )}
         </AccordionTitle>

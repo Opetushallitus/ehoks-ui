@@ -244,7 +244,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                     goals: (
                       <FormattedMessage
                         id="koulutuksenJarjestaja.opiskelusuunnitelma.tavoitteetTitle"
-                        defaultMessage="Opiskelijan tavoitteet ja opintojen eteneminen"
+                        defaultMessage="Opintojen eteneminen"
                       />
                     ),
                     essentialFactor: (
