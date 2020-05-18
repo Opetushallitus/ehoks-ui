@@ -11,8 +11,6 @@ import {
   TutkinnonOsaType
 } from "models/helpers/TutkinnonOsa"
 import { ShareType } from "stores/NotificationStore"
-import { MdShare } from "react-icons/md"
-import { HeroButton } from "components/Button"
 import { FormattedMessage } from "react-intl"
 import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
@@ -80,19 +78,6 @@ const Title = styled("h2")`
   margin: 10px 20px;
   ${props => props.theme.typography.heading3}
 `
-
-const ShareIcon = styled(MdShare)`
-  margin-left: 6px;
-`
-
-const Button = styled(HeroButton)`
-  display: inline-flex;
-`
-
-const ShareButton = styled("div")`
-  padding: 10px 70px 10px 0;
-`
-
 export interface TutkinnonOsaProps {
   /** Color of top border */
   accentColor?: ColorType
@@ -272,7 +257,6 @@ export class TutkinnonOsa extends React.Component<
       koulutuksenJarjestaja,
       tarkentavatTiedotOsaamisenArvioija
     } = this.props
-    const { featureFlags } = this.context
     const { expandedCompetences, expanded } = this.state
     const hasOsaamisenHakkimistavat =
       osaamisenHankkimistavat && osaamisenHankkimistavat.length > 0
@@ -283,11 +267,6 @@ export class TutkinnonOsa extends React.Component<
     const hasActiveShare =
       typeof share !== "undefined" && moduleId === share.moduleId
     const detailsExpanded = expanded.details || hasActiveShare
-    const showShareButton =
-      expanded.details &&
-      hasOsaamisenHakkimistavat &&
-      !hasActiveShare &&
-      featureFlags.shareDialog
 
     return (
       <Container
@@ -298,17 +277,6 @@ export class TutkinnonOsa extends React.Component<
         <InnerContainer>
           <TitleContainer>
             <Title data-testid="Title">{title}</Title>
-            {showShareButton && (
-              <ShareButton>
-                <Button onClick={this.share}>
-                  <FormattedMessage
-                    id="jakaminen.jaaTutkinnonosanTiedotButtonTitle"
-                    defaultMessage="Tutkinnonosan tietojen jakaminen"
-                  />
-                  <ShareIcon size={24} />
-                </Button>
-              </ShareButton>
-            )}
           </TitleContainer>
           {this.koulutuksenJarjestajaShouldBeShown() && (
             <SubTitleContainer>
