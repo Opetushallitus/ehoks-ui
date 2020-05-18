@@ -67,10 +67,20 @@ const Suoritus = types.model("Suoritus", {
   suoritustapa: types.optional(Suoritustapa, {})
 })
 
-const Oppilaitos = types.model("Oppilaitos", {
-  oid: types.optional(types.string, ""),
-  nimi: types.optional(Nimi, {})
-})
+const Oppilaitos = types
+  .model("Oppilaitos", {
+    oid: types.optional(types.string, ""),
+    nimi: types.optional(Nimi, {})
+  })
+  .views(self => {
+    const root: LocaleRoot = getRoot(self)
+
+    return {
+      get oppilaitosNimi() {
+        return self.nimi[root.translations.activeLocale] || ""
+      }
+    }
+  })
 
 export const Opiskeluoikeus = types
   .model("Opiskeluoikeus", {
@@ -88,5 +98,8 @@ export const Opiskeluoikeus = types
         self.suoritukset,
         suoritus => suoritus.suoritustapa.isAmmatillinenPerustutkinto
       )
+    },
+    get oppilaitosNimi() {
+      return self.oppilaitos.oppilaitosNimi
     }
   }))
