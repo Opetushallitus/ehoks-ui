@@ -43,6 +43,11 @@ const SectionContainer = styled("div")`
   }
 `
 
+const SubHeading = styled("h2")`
+  font-weight: 300;
+  margin-top: 0px;
+`
+
 const SectionItems = styled(ProgressPies)`
   flex: 2;
 `
@@ -94,9 +99,13 @@ export class OmienOpintojenSuunnittelu extends React.Component<
                   <MainHeading>
                     <FormattedMessage
                       id="kirjautunut.title"
-                      defaultMessage="Omien opintojen suunnittelu"
+                      defaultMessage="Osaamisen kehittämissuunnitelmani"
                     />
                   </MainHeading>
+                  <SubHeading>
+                    {suunnitelma.tutkinnonNimi},{" "}
+                    {suunnitelma.opiskeluOikeus.oppilaitosNimi}
+                  </SubHeading>
                   <Section>
                     <SectionItems>
                       <SectionItem
