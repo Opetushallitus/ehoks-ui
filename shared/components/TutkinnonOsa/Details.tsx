@@ -135,16 +135,14 @@ const ExpandIcon = ({
 const OsaamisenHankkimistavatExpanded = ({
   hasActiveShare,
   fadedColor,
-  moduleId,
+  shareModuleId,
   tutkinnonOsaTyyppi,
   tutkinnonOsaId,
   instructor,
-  defaultPeriod,
   osaamisenHankkimistavat
 }: {
   hasActiveShare: boolean
   fadedColor: string
-  moduleId?: string
   shareModuleId?: string
   tutkinnonOsaTyyppi?: TutkinnonOsaType
   tutkinnonOsaId?: string
@@ -152,23 +150,33 @@ const OsaamisenHankkimistavatExpanded = ({
   defaultPeriod?: ShareLinkValidityPeriod
   osaamisenHankkimistavat: IOsaamisenHankkimistapa[]
 }) => (
-  <ShareDialog
-    active={hasActiveShare}
-    background={fadedColor}
-    type={ShareType.osaamisenhankkimistapa}
-    moduleId={moduleId || ""}
-    instructor={instructor}
-    defaultPeriod={defaultPeriod}
-    tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
-    tutkinnonOsaId={tutkinnonOsaId || ""}
-  >
+  <>
     {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => (
-      <OsaamisenHankkimistapa
+      <ShareDialog
+        active={osaamisenHankkimistapa.moduleId === shareModuleId}
+        background={fadedColor}
+        type={ShareType.osaamisenhankkimistapa}
+        moduleId={osaamisenHankkimistapa.moduleId || ""}
+        defaultPeriod={{
+          start: osaamisenHankkimistapa.alku,
+          end: osaamisenHankkimistapa.loppu
+        }}
+        instructor={instructor}
+        tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
+        tutkinnonOsaId={tutkinnonOsaId || ""}
         key={i}
-        osaamisenHankkimistapa={osaamisenHankkimistapa}
-      />
+      >
+        <OsaamisenHankkimistapa
+          key={i}
+          osaamisenHankkimistapa={osaamisenHankkimistapa}
+          hasActiveShare={hasActiveShare}
+          moduleId={osaamisenHankkimistapa.moduleId}
+          tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
+          tutkinnonOsaId={tutkinnonOsaId}
+        />
+      </ShareDialog>
     ))}
-  </ShareDialog>
+  </>
 )
 
 const OsaamisenHankkimistavatCollapsed = ({
@@ -551,6 +559,7 @@ export class Details extends React.Component<DetailsProps> {
             defaultPeriod={defaultPeriod}
             osaamisenHankkimistavat={osaamisenHankkimistavat}
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
+            tutkinnonOsaId={moduleId}
             shareModuleId={share?.moduleId}
           />
 

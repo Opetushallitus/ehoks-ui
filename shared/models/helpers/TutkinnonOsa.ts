@@ -66,15 +66,6 @@ export interface IAiemminHankittuTutkinnonOsa
   opintoOtsikko(ospLyhenne: string): string
 }
 
-// export type TutkinnonOsaType =
-//   | "HankittavaAmmatillinenTutkinnonOsa"
-//   | "HankittavaPaikallinenTutkinnonOsa"
-//   | "HankittavaYhteinenTutkinnonOsa"
-//   | "AiemminHankittuAmmatillinenTutkinnonOsa"
-//   | "AiemminHankittuPaikallinenTutkinnonOsa"
-//   | "AiemminHankittuYhteinenTutkinnonOsa"
-//   | "AiemminHankittuYTOOsaAlue"
-//   | undefined
 export enum TutkinnonOsaType {
   "HankittavaAmmatillinenTutkinnonOsa" = "HankittavaAmmatillinenTutkinnonOsa",
   "HankittavaPaikallinenTutkinnonOsa" = "HankittavaPaikallinenTutkinnonOsa",

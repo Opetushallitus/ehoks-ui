@@ -270,8 +270,8 @@ export function ShareDialog(props: ShareDialogProps) {
                   />
                 ) : (
                   <FormattedMessage
-                    id="jakaminen.tutkinnonosanTietojenJakaminenTitle "
-                    defaultMessage="Tutkinnonosan tietojen jakaminen"
+                    id="jakaminen.osaamisenHankkimistavanTietojenJakaminenTitle "
+                    defaultMessage="Osaamisenhankkimistavan tietojen jakaminen"
                   />
                 )}
               </ShareTitle>
@@ -284,8 +284,8 @@ export function ShareDialog(props: ShareDialogProps) {
                   />
                 ) : (
                   <FormattedMessage
-                    id="jakaminen.tutkinnonosanJakoDescription"
-                    defaultMessage="Olet jakamassa näitä tutkinnonosan tietoja"
+                    id="jakaminen.osaamisenhankkimistavanJakoDescription"
+                    defaultMessage="Olet jakamassa näitä tietoja"
                   />
                 )}
               </ShareDescription>
@@ -308,8 +308,8 @@ export function ShareDialog(props: ShareDialogProps) {
               />
             ) : (
               <FormattedMessage
-                id="jakaminen.aiemmatTutkinnonosanJaotDescription"
-                defaultMessage="Aiemmin tekemäsi tutkinnonosan jakolinkit"
+                id="jakaminen.aiemmatOsaamisenHankkimistavanJaotDescription"
+                defaultMessage="Aiemmin tekemäsi jakolinkit"
               />
             )}
           </ShareDescription>
@@ -359,8 +359,8 @@ export function ShareDialog(props: ShareDialogProps) {
                             />
                           ) : (
                             <FormattedMessage
-                              id="jakaminen.linkkiTutkinnonosanTietoihin"
-                              defaultMessage="Linkki tutkinnonosan tietoihin"
+                              id="jakaminen.linkkiJaettuihinTietoihin"
+                              defaultMessage="Linkki jaettuihin tietoihin"
                             />
                           )}
                         </Subtitle>

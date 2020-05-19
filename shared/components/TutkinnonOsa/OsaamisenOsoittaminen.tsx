@@ -165,8 +165,8 @@ export class OsaamisenOsoittaminen extends React.Component<
             <ButtonContainer>
               <Button onClick={this.share}>
                 <FormattedMessage
-                  id="jakaminen.jaaNaytonTiedotButtonTitle"
-                  defaultMessage="Näytön tietojen jakaminen"
+                  id="jakaminen.jaaTiedotButtonTitle"
+                  defaultMessage="Jaa nämä tietosi"
                 />
                 <ShareIcon size={24} />
               </Button>
