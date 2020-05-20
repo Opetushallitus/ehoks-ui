@@ -22,7 +22,7 @@ export const fetchLinks = async function(
 ): Promise<ShareLink[]> {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/oppijat/jaot/moduulit/${moduleId}`),
+    apiUrl(`${apiPrefix}/jaot/moduulit/${moduleId}`),
     {
       credentials: "include"
     }
@@ -58,7 +58,7 @@ export const createLink = async function({
   apiConfig: APIConfig
 }): Promise<string> {
   const { apiUrl, apiPrefix } = apiConfig
-  const response = await window.fetch(apiUrl(`${apiPrefix}/jakolinkit`), {
+  const response = await window.fetch(apiUrl(`${apiPrefix}/jaot/jakolinkit`), {
     credentials: "include",
     method: "POST",
     headers: {
@@ -90,7 +90,7 @@ export const removeLink = async function({
 }) {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/hoksit/share/${uuid}`),
+    apiUrl(`${apiPrefix}/jaot/jakolinkit/${uuid}`),
     {
       credentials: "include",
       method: "DELETE",
