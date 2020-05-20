@@ -22,7 +22,7 @@ export const fetchLinks = async function(
 ): Promise<ShareLink[]> {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/oppija/oppijat/jaot/moduulit/${moduleId}`),
+    apiUrl(`${apiPrefix}/oppijat/jaot/moduulit/${moduleId}`),
     {
       credentials: "include"
     }
