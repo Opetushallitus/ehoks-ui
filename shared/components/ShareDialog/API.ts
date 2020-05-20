@@ -18,12 +18,11 @@ export interface ShareLink {
 
 export const fetchLinks = async function(
   moduleId: string,
-  type: string,
   apiConfig: APIConfig
 ): Promise<ShareLink[]> {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(
-    apiUrl(`${apiPrefix}/hoksit/share/${moduleId}`),
+    apiUrl(`${apiPrefix}/oppija/oppijat/jaot/moduulit/${moduleId}`),
     {
       credentials: "include"
     }
@@ -32,15 +31,13 @@ export const fetchLinks = async function(
     throw new Error(response.statusText)
   }
   const json: { data: BackendShareLink[] } = await response.json()
-  return json.data
-    .filter(link => link.tyyppi === type)
-    .map(link => ({
-      jakoUuid: link["jako-uuid"],
-      validFrom: link["voimassaolo-alku"],
-      validTo: link["voimassaolo-loppu"],
-      type: link.tyyppi,
-      moduleId: link["module-id"]
-    }))
+  return json.data.map(link => ({
+    jakoUuid: link["jako-uuid"],
+    validFrom: link["voimassaolo-alku"],
+    validTo: link["voimassaolo-loppu"],
+    type: link.tyyppi,
+    moduleId: link["module-id"]
+  }))
 }
 
 export const createLink = async function({

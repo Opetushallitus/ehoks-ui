@@ -195,7 +195,7 @@ export function ShareDialog(props: ShareDialogProps) {
 
   useEffect(() => {
     const fetchData = async () => {
-      setSharedLinks(await fetchLinks(moduleId, type, apiConfig))
+      setSharedLinks(await fetchLinks(moduleId, apiConfig))
     }
     fetchData()
   }, [])
@@ -211,7 +211,7 @@ export function ShareDialog(props: ShareDialogProps) {
         tutkinnonOsaId,
         apiConfig
       })
-      setSharedLinks(await fetchLinks(moduleId, type, apiConfig))
+      setSharedLinks(await fetchLinks(moduleId, apiConfig))
       setCreatedUrl(`https://not.implemented.yet/jako/${createdUuid}`)
     }
   }
@@ -235,7 +235,7 @@ export function ShareDialog(props: ShareDialogProps) {
         uuid,
         apiConfig
       })
-      setSharedLinks(await fetchLinks(moduleId, type, apiConfig))
+      setSharedLinks(await fetchLinks(moduleId, apiConfig))
       setCreatedUrl("")
     }
   }
