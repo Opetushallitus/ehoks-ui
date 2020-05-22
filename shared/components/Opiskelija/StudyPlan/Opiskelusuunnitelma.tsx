@@ -189,12 +189,15 @@ export class Opiskelusuunnitelma extends React.Component<
     const { location } = this.props
     const { share } = parseShareParams(location)
     if (share.type && share.tutkinnonOsaTyyppi) {
-      await this.showShareDialog(
-        share.moduleId,
-        share.type,
-        share.tutkinnonOsaTyyppi,
-        share.tutkinnonOsaId
-      )
+      this.setState(state => ({
+        ...state,
+        share: {
+          type: share.type,
+          moduleId: share.moduleId,
+          tutkinnonOsaTyyppi: share.tutkinnonOsaTyyppi,
+          tutkinnonOsaId: share.tutkinnonOsaId
+        }
+      }))
       this.setInitialExpanded(share)
     }
   }
@@ -205,16 +208,18 @@ export class Opiskelusuunnitelma extends React.Component<
       // previous dialog should close and new dialog should open
       const { share } = parseShareParams(this.props.location)
       if (share.type && share.tutkinnonOsaTyyppi) {
-        this.showShareDialog(
-          share.moduleId,
-          share.type,
-          share.tutkinnonOsaTyyppi,
-          share.tutkinnonOsaId
-        )
+        this.setState(state => ({
+          ...state,
+          share: {
+            type: share.type,
+            moduleId: share.moduleId,
+            tutkinnonOsaTyyppi: share.tutkinnonOsaTyyppi,
+            tutkinnonOsaId: share.tutkinnonOsaId
+          }
+        }))
       }
     }
   }
-
   isShareActive = () => {
     const { share } = this.state
     return !!share.type && !!share.moduleId
@@ -236,25 +241,6 @@ export class Opiskelusuunnitelma extends React.Component<
       s.hasNayttoOrHarjoittelujakso(share.type, share.moduleId)
     )
   }
-
-  showShareDialog = (
-    moduleId: string,
-    type: ShareType,
-    tutkinnonOsaTyyppi: TutkinnonOsaType,
-    tutkinnonOsaId: string
-  ) =>
-    // Is this promise because when state.share is used component needs to have DOM generated?
-    new Promise(resolve => {
-      this.setState(
-        state => ({
-          ...state,
-          share: { type, moduleId, tutkinnonOsaTyyppi, tutkinnonOsaId }
-        }),
-        () => {
-          resolve()
-        }
-      )
-    })
 
   setInitialExpanded = (share: { type?: ShareType; moduleId: string | "" }) => {
     this.setState(state => ({
