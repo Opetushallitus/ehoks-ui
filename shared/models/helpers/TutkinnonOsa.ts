@@ -70,6 +70,7 @@ export enum TutkinnonOsaType {
   "HankittavaAmmatillinenTutkinnonOsa" = "HankittavaAmmatillinenTutkinnonOsa",
   "HankittavaPaikallinenTutkinnonOsa" = "HankittavaPaikallinenTutkinnonOsa",
   "HankittavaYhteinenTutkinnonOsa" = "HankittavaYhteinenTutkinnonOsa",
+  "HankittavaYTOOsaAlue" = "HankittavaYTOOsaAlue",
   "AiemminHankittuAmmatillinenTutkinnonOsa" = "AiemminHankittuAmmatillinenTutkinnonOsa",
   "AiemminHankittuPaikallinenTutkinnonOsa" = "AiemminHankittuPaikallinenTutkinnonOsa",
   "AiemminHankittuYhteinenTutkinnonOsa" = "AiemminHankittuYhteinenTutkinnonOsa",
