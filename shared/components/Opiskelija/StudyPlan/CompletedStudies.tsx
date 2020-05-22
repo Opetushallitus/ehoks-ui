@@ -80,15 +80,7 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
                   fadedColor="#ECF6ED"
                   koodiUri={study.tutkinnonOsaKoodiUri}
                   moduleId={study.moduleId}
-                  tutkinnonOsaTyyppi={
-                    TutkinnonOsaType[
-                      study.tutkinnonOsaTyyppi as TutkinnonOsaType
-                    ] != null
-                      ? TutkinnonOsaType[
-                          study.tutkinnonOsaTyyppi as TutkinnonOsaType
-                        ]
-                      : undefined
-                  }
+                  tutkinnonOsaTyyppi={study.tutkinnonOsaTyyppi}
                   tutkinnonOsaId={study.tutkinnonOsaId}
                   osaamisenHankkimistavat={study.osaamisenHankkimistavat}
                   share={share}
