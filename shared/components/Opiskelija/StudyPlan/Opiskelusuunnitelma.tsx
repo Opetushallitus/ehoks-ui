@@ -207,7 +207,7 @@ export class Opiskelusuunnitelma extends React.Component<
       // TODO: set proper share state when opening another dialog
       // previous dialog should close and new dialog should open
       const { share } = parseShareParams(this.props.location)
-      if (share.type && share.tutkinnonOsaTyyppi) {
+      if (this.shareHasChanged(share)) {
         this.setState(state => ({
           ...state,
           share: {
@@ -220,6 +220,19 @@ export class Opiskelusuunnitelma extends React.Component<
       }
     }
   }
+
+  private shareHasChanged(share: {
+    type?: ShareType
+    moduleId: string | ""
+    tutkinnonOsaTyyppi?: TutkinnonOsaType
+    tutkinnonOsaId: string | ""
+  }) {
+    return (
+      share.type !== this.state.share.type ||
+      share.tutkinnonOsaTyyppi !== this.state.share.tutkinnonOsaTyyppi
+    )
+  }
+
   isShareActive = () => {
     const { share } = this.state
     return !!share.type && !!share.moduleId
