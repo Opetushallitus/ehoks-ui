@@ -1,4 +1,4 @@
-import { types, getRoot } from "mobx-state-tree"
+import { getRoot, types } from "mobx-state-tree"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
@@ -11,6 +11,7 @@ import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 import { Organisaatio } from "./Organisaatio"
 import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
+import { TutkinnonOsaType } from "./helpers/TutkinnonOsa"
 
 const Model = types.model({
   id: types.optional(types.number, 0),
@@ -50,8 +51,8 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
       get osaamispisteet() {
         return getOsaamispisteet(self.tutkinnonOsaViitteet)
       },
-      get tutkinnonOsaTyyppi() {
-        return "AiemminHankittuAmmatillinenTutkinnonOsa"
+      get tutkinnonOsaTyyppi(): TutkinnonOsaType {
+        return TutkinnonOsaType.AiemminHankittuAmmatillinenTutkinnonOsa
       },
       get tutkinnonOsaId() {
         return self.moduleId

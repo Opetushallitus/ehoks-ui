@@ -6,6 +6,7 @@ import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 import { Organisaatio } from "./Organisaatio"
 import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
+import { TutkinnonOsaType } from "./helpers/TutkinnonOsa"
 
 const model = types.model({
   id: types.optional(types.number, 0),
@@ -42,8 +43,8 @@ export const AiemminHankittuPaikallinenTutkinnonOsa = types
     get osaamispisteet() {
       return self.laajuus
     },
-    get tutkinnonOsaTyyppi() {
-      return `AiemminHankittuPaikallinenTutkinnonOsa`
+    get tutkinnonOsaTyyppi(): TutkinnonOsaType {
+      return TutkinnonOsaType.AiemminHankittuPaikallinenTutkinnonOsa
     },
     get tutkinnonOsaId() {
       return self.moduleId

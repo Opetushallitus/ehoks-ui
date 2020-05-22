@@ -6,6 +6,7 @@ import { KoodistoVastaus } from "./KoodistoVastaus"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
 import { Organisaatio } from "./Organisaatio"
+import { TutkinnonOsaType } from "./helpers/TutkinnonOsa"
 
 export const Model = types.model("AiemminHankitunYTOOsaAlue", {
   id: types.optional(types.number, 0),
@@ -40,8 +41,8 @@ export const AiemminHankitunYTOOsaAlue = types
       // TODO: where do we get this? Fix this also to YhteisenTutkinnonOsanOsaAlue.ts
       return 0
     },
-    get tutkinnonOsaTyyppi() {
-      return `AiemminHankittuYTOOsaAlue`
+    get tutkinnonOsaTyyppi(): TutkinnonOsaType {
+      return TutkinnonOsaType.AiemminHankittuYTOOsaAlue
     },
     get tutkinnonOsaId() {
       return self.moduleId

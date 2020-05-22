@@ -9,6 +9,7 @@ import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
 import { EnrichTutkinnonOsa } from "models/EnrichTutkinnonOsa"
 import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
 import { Organisaatio } from "./Organisaatio"
+import { TutkinnonOsaType } from "./helpers/TutkinnonOsa"
 
 export const Model = types.model({
   id: types.optional(types.number, 0),
@@ -41,8 +42,8 @@ export const HankittavaAmmatillinenTutkinnonOsa = types
           ? self.tutkinnonOsa.nimi[root.translations.activeLocale]
           : ""
       },
-      get tutkinnonOsaTyyppi() {
-        return `HankittavaAmmatillinenTutkinnonOsa`
+      get tutkinnonOsaTyyppi(): TutkinnonOsaType {
+        return TutkinnonOsaType.HankittavaAmmatillinenTutkinnonOsa
       },
       get tutkinnonOsaId() {
         return self.moduleId

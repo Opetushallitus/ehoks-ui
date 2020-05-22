@@ -6,6 +6,7 @@ import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
 import { Organisaatio } from "./Organisaatio"
+import { TutkinnonOsaType } from "./helpers/TutkinnonOsa"
 
 const Model = types.model("YhteisenTutkinnonOsanOsaAlue", {
   id: types.optional(types.number, 0),
@@ -35,7 +36,7 @@ export const YhteisenTutkinnonOsanOsaAlue = types
       // TODO: where do we get this? Fix this also to AiemminHankitunYTOOsaAlue.ts
       return 0
     },
-    get tutkinnonOsaTyyppi() {
-      return "HankittavaYTOOsaAlue"
+    get tutkinnonOsaTyyppi(): TutkinnonOsaType {
+      return TutkinnonOsaType.HankittavaYTOOsaAlue
     }
   }))
