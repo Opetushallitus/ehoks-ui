@@ -1,10 +1,10 @@
 import {
-  Instance,
-  types,
-  getRoot,
-  SnapshotOrInstance,
   flow,
-  getEnv
+  getEnv,
+  getRoot,
+  Instance,
+  SnapshotOrInstance,
+  types
 } from "mobx-state-tree"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
@@ -16,11 +16,6 @@ import { ISettings } from "models/Settings"
 import find from "lodash.find"
 import { StoreEnvironment } from "../types/StoreEnvironment"
 import { APIResponse } from "../types/APIResponse"
-
-export enum ShareType {
-  "osaamisenosoittaminen" = "osaamisenosoittaminen",
-  "osaamisenhankkimistapa" = "osaamisenhankkimistapa"
-}
 
 export const NotificationModel = types.model("NotificationModel", {
   hoksId: types.optional(types.string, ""),

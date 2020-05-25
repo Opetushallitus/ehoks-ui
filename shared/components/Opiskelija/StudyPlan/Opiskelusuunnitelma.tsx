@@ -12,7 +12,6 @@ import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
 import { HelpPopup } from "components/HelpPopup"
 import find from "lodash.find"
-import { ShareType } from "stores/NotificationStore"
 import { parseShareParams } from "utils/shareParams"
 import { FormattedDate } from "components/FormattedDate"
 import {
@@ -25,7 +24,7 @@ import { PlannedStudies } from "./PlannedStudies"
 import { ScheduledStudies } from "./ScheduledStudies"
 import { CompletedStudies } from "./CompletedStudies"
 import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
-import { TutkinnonOsaType } from "models/helpers/TutkinnonOsa"
+import { ShareType, TutkinnonOsaType } from "../../../models/helpers/ShareTypes"
 
 const EssentialFactorContainer = styled("div")`
   margin: 10px 20px 20px 20px;
@@ -189,12 +188,15 @@ export class Opiskelusuunnitelma extends React.Component<
     const { location } = this.props
     const { share } = parseShareParams(location)
     if (share.type && share.tutkinnonOsaTyyppi) {
-      await this.showShareDialog(
-        share.moduleId,
-        share.type,
-        share.tutkinnonOsaTyyppi,
-        share.tutkinnonOsaId
-      )
+      this.setState(state => ({
+        ...state,
+        share: {
+          type: share.type,
+          moduleId: share.moduleId,
+          tutkinnonOsaTyyppi: share.tutkinnonOsaTyyppi,
+          tutkinnonOsaId: share.tutkinnonOsaId
+        }
+      }))
       this.setInitialExpanded(share)
     }
   }
@@ -204,15 +206,30 @@ export class Opiskelusuunnitelma extends React.Component<
       // TODO: set proper share state when opening another dialog
       // previous dialog should close and new dialog should open
       const { share } = parseShareParams(this.props.location)
-      if (share.type && share.tutkinnonOsaTyyppi) {
-        this.showShareDialog(
-          share.moduleId,
-          share.type,
-          share.tutkinnonOsaTyyppi,
-          share.tutkinnonOsaId
-        )
+      if (this.shareHasChanged(share)) {
+        this.setState(state => ({
+          ...state,
+          share: {
+            type: share.type,
+            moduleId: share.moduleId,
+            tutkinnonOsaTyyppi: share.tutkinnonOsaTyyppi,
+            tutkinnonOsaId: share.tutkinnonOsaId
+          }
+        }))
       }
     }
+  }
+
+  private shareHasChanged(share: {
+    type?: ShareType
+    moduleId: string | ""
+    tutkinnonOsaTyyppi?: TutkinnonOsaType
+    tutkinnonOsaId: string | ""
+  }) {
+    return (
+      share.type !== this.state.share.type ||
+      share.tutkinnonOsaTyyppi !== this.state.share.tutkinnonOsaTyyppi
+    )
   }
 
   isShareActive = () => {
@@ -236,25 +253,6 @@ export class Opiskelusuunnitelma extends React.Component<
       s.hasNayttoOrHarjoittelujakso(share.type, share.moduleId)
     )
   }
-
-  showShareDialog = (
-    moduleId: string,
-    type: ShareType,
-    tutkinnonOsaTyyppi: TutkinnonOsaType,
-    tutkinnonOsaId: string
-  ) =>
-    // Is this promise because when state.share is used component needs to have DOM generated?
-    new Promise(resolve => {
-      this.setState(
-        state => ({
-          ...state,
-          share: { type, moduleId, tutkinnonOsaTyyppi, tutkinnonOsaId }
-        }),
-        () => {
-          resolve()
-        }
-      )
-    })
 
   setInitialExpanded = (share: { type?: ShareType; moduleId: string | "" }) => {
     this.setState(state => ({

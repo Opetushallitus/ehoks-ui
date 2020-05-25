@@ -1,7 +1,6 @@
 import { WindowLocation } from "@reach/router"
 import queryString from "query-string"
-import { ShareType } from "stores/NotificationStore"
-import { TutkinnonOsaType } from "models/helpers/TutkinnonOsa"
+import { ShareType, TutkinnonOsaType } from "../models/helpers/ShareTypes"
 
 export function parseShareParams(
   location: WindowLocation | undefined
@@ -21,10 +20,7 @@ export function parseShareParams(
           ? ShareType[qs.type as ShareType]
           : undefined,
       moduleId: typeof qs.moduleId === "string" ? qs.moduleId : "",
-      tutkinnonOsaTyyppi:
-        TutkinnonOsaType[qs.tutkinnonOsaTyyppi as TutkinnonOsaType] != null
-          ? TutkinnonOsaType[qs.tutkinnonOsaTyyppi as TutkinnonOsaType]
-          : undefined,
+      tutkinnonOsaTyyppi: qs.tutkinnonOsaTyyppi as TutkinnonOsaType,
       tutkinnonOsaId:
         typeof qs.tutkinnonOsaId === "string" ? qs.tutkinnonOsaId : ""
     }

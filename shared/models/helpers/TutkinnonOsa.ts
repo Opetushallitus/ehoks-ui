@@ -1,4 +1,4 @@
-import { types, Instance } from "mobx-state-tree"
+import { Instance, types } from "mobx-state-tree"
 import { OsaamisenHankkimistapa } from "../OsaamisenHankkimistapa"
 import { OsaamisenOsoittaminen } from "../OsaamisenOsoittaminen"
 import { AiemminHankittuAmmatillinenTutkinnonOsa } from "models/AiemminHankittuAmmatillinenTutkinnonOsa"
@@ -7,9 +7,9 @@ import { AiemminHankitunYTOOsaAlue } from "models/AiemminHankitunYTOOsaAlue"
 import { HankittavaAmmatillinenTutkinnonOsa } from "models/HankittavaAmmatillinenTutkinnonOsa"
 import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenTutkinnonOsa"
 import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
-import { ShareType } from "stores/NotificationStore"
 import { Organisaatio } from "../Organisaatio"
 import { TodennettuArviointiLisatiedot } from "../TodennettuArviointiLisatiedot"
+import { ShareType } from "./ShareTypes"
 
 interface Arviointikriteeri {
   kuvaus?: string
@@ -64,23 +64,4 @@ export interface IAiemminHankittuTutkinnonOsa
   extends Partial<Instance<typeof AiemminHankittuTutkinnonOsa>> {
   /** AiemminHankitunYTOOsaAlue does not contain this but it is defined after flattenDeep */
   opintoOtsikko(ospLyhenne: string): string
-}
-
-// export type TutkinnonOsaType =
-//   | "HankittavaAmmatillinenTutkinnonOsa"
-//   | "HankittavaPaikallinenTutkinnonOsa"
-//   | "HankittavaYhteinenTutkinnonOsa"
-//   | "AiemminHankittuAmmatillinenTutkinnonOsa"
-//   | "AiemminHankittuPaikallinenTutkinnonOsa"
-//   | "AiemminHankittuYhteinenTutkinnonOsa"
-//   | "AiemminHankittuYTOOsaAlue"
-//   | undefined
-export enum TutkinnonOsaType {
-  "HankittavaAmmatillinenTutkinnonOsa" = "HankittavaAmmatillinenTutkinnonOsa",
-  "HankittavaPaikallinenTutkinnonOsa" = "HankittavaPaikallinenTutkinnonOsa",
-  "HankittavaYhteinenTutkinnonOsa" = "HankittavaYhteinenTutkinnonOsa",
-  "AiemminHankittuAmmatillinenTutkinnonOsa" = "AiemminHankittuAmmatillinenTutkinnonOsa",
-  "AiemminHankittuPaikallinenTutkinnonOsa" = "AiemminHankittuPaikallinenTutkinnonOsa",
-  "AiemminHankittuYhteinenTutkinnonOsa" = "AiemminHankittuYhteinenTutkinnonOsa",
-  "AiemminHankittuYTOOsaAlue" = "AiemminHankittuYTOOsaAlue"
 }

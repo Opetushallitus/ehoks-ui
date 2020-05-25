@@ -4,6 +4,7 @@ import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { HankittavatTutkinnonOsatViews } from "./helpers/HankittavatTutkinnonOsatViews"
 import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
 import { Organisaatio } from "./Organisaatio"
+import { TutkinnonOsaType } from "./helpers/ShareTypes"
 
 const Model = types.model("HankittavaPaikallinenTutkinnonOsaModel", {
   id: types.optional(types.number, 0),
@@ -34,8 +35,8 @@ export const HankittavaPaikallinenTutkinnonOsa = types
     get osaamispisteet() {
       return self.laajuus
     },
-    get tutkinnonOsaTyyppi() {
-      return `HankittavaPaikallinenTutkinnonOsa`
+    get tutkinnonOsaTyyppi(): TutkinnonOsaType {
+      return TutkinnonOsaType.HankittavaPaikallinen
     },
     get tutkinnonOsaId() {
       return self.moduleId

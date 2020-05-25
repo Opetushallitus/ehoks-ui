@@ -10,14 +10,12 @@ import {
   IOsaamisenOsoittaminen,
   TodentamisenProsessi,
   IOrganisaatio,
-  ITarkentavatTiedotOsaamisenArvioija,
-  TutkinnonOsaType
+  ITarkentavatTiedotOsaamisenArvioija
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "./LearningEvent"
 import { TodentamisenProsessiKoodi } from "types/TodentamisenProsessiKoodi"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
-import { ShareType } from "stores/NotificationStore"
 import ShareDialog, {
   Instructor,
   ShareLinkValidityPeriod
@@ -27,6 +25,7 @@ import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
 import { Table, TBody, TD, TH } from "./Shared"
 import { observer } from "mobx-react"
+import { ShareType, TutkinnonOsaType } from "../../models/helpers/ShareTypes"
 
 interface ColorProps {
   fadedColor: string
@@ -135,16 +134,14 @@ const ExpandIcon = ({
 const OsaamisenHankkimistavatExpanded = ({
   hasActiveShare,
   fadedColor,
-  moduleId,
+  shareModuleId,
   tutkinnonOsaTyyppi,
   tutkinnonOsaId,
   instructor,
-  defaultPeriod,
   osaamisenHankkimistavat
 }: {
   hasActiveShare: boolean
   fadedColor: string
-  moduleId?: string
   shareModuleId?: string
   tutkinnonOsaTyyppi?: TutkinnonOsaType
   tutkinnonOsaId?: string
@@ -152,23 +149,33 @@ const OsaamisenHankkimistavatExpanded = ({
   defaultPeriod?: ShareLinkValidityPeriod
   osaamisenHankkimistavat: IOsaamisenHankkimistapa[]
 }) => (
-  <ShareDialog
-    active={hasActiveShare}
-    background={fadedColor}
-    type={ShareType.osaamisenhankkimistapa}
-    moduleId={moduleId || ""}
-    instructor={instructor}
-    defaultPeriod={defaultPeriod}
-    tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
-    tutkinnonOsaId={tutkinnonOsaId || ""}
-  >
+  <>
     {osaamisenHankkimistavat.map((osaamisenHankkimistapa, i) => (
-      <OsaamisenHankkimistapa
+      <ShareDialog
+        active={osaamisenHankkimistapa.moduleId === shareModuleId}
+        background={fadedColor}
+        type={ShareType.osaamisenhankkimistapa}
+        moduleId={osaamisenHankkimistapa.moduleId || ""}
+        defaultPeriod={{
+          start: osaamisenHankkimistapa.alku,
+          end: osaamisenHankkimistapa.loppu
+        }}
+        instructor={instructor}
+        tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
+        tutkinnonOsaId={tutkinnonOsaId || ""}
         key={i}
-        osaamisenHankkimistapa={osaamisenHankkimistapa}
-      />
+      >
+        <OsaamisenHankkimistapa
+          key={i}
+          osaamisenHankkimistapa={osaamisenHankkimistapa}
+          hasActiveShare={hasActiveShare}
+          moduleId={osaamisenHankkimistapa.moduleId}
+          tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
+          tutkinnonOsaId={tutkinnonOsaId}
+        />
+      </ShareDialog>
     ))}
-  </ShareDialog>
+  </>
 )
 
 const OsaamisenHankkimistavatCollapsed = ({
@@ -551,6 +558,7 @@ export class Details extends React.Component<DetailsProps> {
             defaultPeriod={defaultPeriod}
             osaamisenHankkimistavat={osaamisenHankkimistavat}
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
+            tutkinnonOsaId={moduleId}
             shareModuleId={share?.moduleId}
           />
 

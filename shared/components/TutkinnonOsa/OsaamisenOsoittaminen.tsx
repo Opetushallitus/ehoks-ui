@@ -6,8 +6,7 @@ import styled from "styled"
 import { Container, InfoContainer, Table, TBody, TD, TH, Title } from "./Shared"
 import {
   IOsaamisenOsoittaminen,
-  TodentamisenProsessi,
-  TutkinnonOsaType
+  TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/TutkinnonOsa/LearningEvent"
 import { TodentamisenProsessiKoodi } from "types/TodentamisenProsessiKoodi"
@@ -18,6 +17,7 @@ import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
 import { RequirementsAndDeviations } from "./RequirementsAndDeviations"
 import { observer } from "mobx-react"
+import { TutkinnonOsaType } from "../../models/helpers/ShareTypes"
 
 const OsaamisenOsoittaminenTitle = styled(Title)(
   props => `
@@ -165,8 +165,8 @@ export class OsaamisenOsoittaminen extends React.Component<
             <ButtonContainer>
               <Button onClick={this.share}>
                 <FormattedMessage
-                  id="jakaminen.jaaNaytonTiedotButtonTitle"
-                  defaultMessage="Näytön tietojen jakaminen"
+                  id="jakaminen.jaaTiedotButtonTitle"
+                  defaultMessage="Jaa nämä tietosi"
                 />
                 <ShareIcon size={24} />
               </Button>

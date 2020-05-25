@@ -8,8 +8,6 @@ import React, {
 import { navigate } from "@reach/router"
 import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl"
 import styled from "styled"
-import { ShareType } from "stores/NotificationStore"
-import { TutkinnonOsaType } from "models/helpers/TutkinnonOsa"
 import { HeroButton, LinkButton } from "components/Button"
 import { ModalWithBackground } from "components/ModalDialogs/Modal"
 import {
@@ -22,6 +20,7 @@ import { APIConfigContext } from "components/APIConfigContext"
 import CopyToClipboard from "react-copy-to-clipboard"
 import { FormattedDate } from "components/FormattedDate"
 import { AppContext } from "components/AppContext"
+import { ShareType, TutkinnonOsaType } from "../models/helpers/ShareTypes"
 
 interface ColorProps {
   background: string
@@ -195,7 +194,7 @@ export function ShareDialog(props: ShareDialogProps) {
 
   useEffect(() => {
     const fetchData = async () => {
-      setSharedLinks(await fetchLinks(moduleId, type, apiConfig))
+      setSharedLinks(await fetchLinks(moduleId, apiConfig))
     }
     fetchData()
   }, [])
@@ -211,7 +210,7 @@ export function ShareDialog(props: ShareDialogProps) {
         tutkinnonOsaId,
         apiConfig
       })
-      setSharedLinks(await fetchLinks(moduleId, type, apiConfig))
+      setSharedLinks(await fetchLinks(moduleId, apiConfig))
       setCreatedUrl(`https://not.implemented.yet/jako/${createdUuid}`)
     }
   }
@@ -235,7 +234,7 @@ export function ShareDialog(props: ShareDialogProps) {
         uuid,
         apiConfig
       })
-      setSharedLinks(await fetchLinks(moduleId, type, apiConfig))
+      setSharedLinks(await fetchLinks(moduleId, apiConfig))
       setCreatedUrl("")
     }
   }
@@ -270,8 +269,8 @@ export function ShareDialog(props: ShareDialogProps) {
                   />
                 ) : (
                   <FormattedMessage
-                    id="jakaminen.tutkinnonosanTietojenJakaminenTitle "
-                    defaultMessage="Tutkinnonosan tietojen jakaminen"
+                    id="jakaminen.osaamisenHankkimistavanTietojenJakaminenTitle "
+                    defaultMessage="Osaamisenhankkimistavan tietojen jakaminen"
                   />
                 )}
               </ShareTitle>
@@ -284,8 +283,8 @@ export function ShareDialog(props: ShareDialogProps) {
                   />
                 ) : (
                   <FormattedMessage
-                    id="jakaminen.tutkinnonosanJakoDescription"
-                    defaultMessage="Olet jakamassa näitä tutkinnonosan tietoja"
+                    id="jakaminen.osaamisenhankkimistavanJakoDescription"
+                    defaultMessage="Olet jakamassa näitä tietoja"
                   />
                 )}
               </ShareDescription>
@@ -308,8 +307,8 @@ export function ShareDialog(props: ShareDialogProps) {
               />
             ) : (
               <FormattedMessage
-                id="jakaminen.aiemmatTutkinnonosanJaotDescription"
-                defaultMessage="Aiemmin tekemäsi tutkinnonosan jakolinkit"
+                id="jakaminen.aiemmatOsaamisenHankkimistavanJaotDescription"
+                defaultMessage="Aiemmin tekemäsi jakolinkit"
               />
             )}
           </ShareDescription>
@@ -359,8 +358,8 @@ export function ShareDialog(props: ShareDialogProps) {
                             />
                           ) : (
                             <FormattedMessage
-                              id="jakaminen.linkkiTutkinnonosanTietoihin"
-                              defaultMessage="Linkki tutkinnonosan tietoihin"
+                              id="jakaminen.linkkiJaettuihinTietoihin"
+                              defaultMessage="Linkki jaettuihin tietoihin"
                             />
                           )}
                         </Subtitle>

@@ -5,6 +5,7 @@ import { AiemminHankitunYTOOsaAlue } from "./AiemminHankitunYTOOsaAlue"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
+import { TutkinnonOsaType } from "./helpers/ShareTypes"
 
 export const AiemminHankittuYhteinenTutkinnonOsa = types
   .model("AiemminHankittuYhteinenTutkinnonOsa", {
@@ -24,8 +25,8 @@ export const AiemminHankittuYhteinenTutkinnonOsa = types
     )
   })
   .views(self => ({
-    get tutkinnonOsaTyyppi() {
-      return `AiemminHankittuYhteinenTutkinnonOsa`
+    get tutkinnonOsaTyyppi(): TutkinnonOsaType {
+      return TutkinnonOsaType.AiemminHankittuYhteinen
     },
     get tutkinnonOsaId() {
       return self.moduleId

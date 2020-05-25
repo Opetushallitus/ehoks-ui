@@ -1,5 +1,4 @@
-import { ShareType } from "stores/NotificationStore"
-import { TutkinnonOsaType } from "models/helpers/TutkinnonOsa"
+import { ShareType, TutkinnonOsaType } from "../../../models/helpers/ShareTypes"
 
 export interface OpiskelusuunnitelmaState {
   activeAccordions: {

@@ -6,6 +6,7 @@ import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
 import { Organisaatio } from "./Organisaatio"
+import { TutkinnonOsaType } from "./helpers/ShareTypes"
 
 const Model = types.model("YhteisenTutkinnonOsanOsaAlue", {
   id: types.optional(types.number, 0),
@@ -34,5 +35,8 @@ export const YhteisenTutkinnonOsanOsaAlue = types
     get osaamispisteet() {
       // TODO: where do we get this? Fix this also to AiemminHankitunYTOOsaAlue.ts
       return 0
+    },
+    get tutkinnonOsaTyyppi(): TutkinnonOsaType {
+      return TutkinnonOsaType.HankittavanYhteisenTutkinnonOsanOsaAlue
     }
   }))

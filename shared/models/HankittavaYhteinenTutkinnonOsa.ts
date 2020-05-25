@@ -2,6 +2,7 @@ import { types } from "mobx-state-tree"
 import { YhteisenTutkinnonOsanOsaAlue } from "./YhteisenTutkinnonOsanOsaAlue"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
+import { TutkinnonOsaType } from "./helpers/ShareTypes"
 
 export const Model = types.model({
   moduleId: types.maybe(types.string),
@@ -14,8 +15,8 @@ export const Model = types.model({
 export const HankittavaYhteinenTutkinnonOsa = types
   .compose("HankittavaYhteinenTutkinnonOsa", EnrichKoodiUri, Model)
   .views(self => ({
-    get tutkinnonOsaTyyppi() {
-      return `HankittavaYhteinenTutkinnonOsa`
+    get tutkinnonOsaTyyppi(): TutkinnonOsaType {
+      return TutkinnonOsaType.HankittavaYhteinen
     },
     get tutkinnonOsaId() {
       return self.moduleId
