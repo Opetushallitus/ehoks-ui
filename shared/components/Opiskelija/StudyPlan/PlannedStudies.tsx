@@ -5,12 +5,9 @@ import { StudiesContainer } from "../../StudiesContainer"
 import { TutkinnonOsa } from "../../TutkinnonOsa"
 import { EmptyItem } from "../../EmptyItem"
 import { Accordion } from "../../Accordion"
-import { ShareType } from "../../../stores/NotificationStore"
 import { ActiveAccordions, StudyPartSubAccordions } from "./StudyPlanHelpers"
-import {
-  IHankittavaTutkinnonOsa,
-  TutkinnonOsaType
-} from "../../../models/helpers/TutkinnonOsa"
+import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
+import { ShareType, TutkinnonOsaType } from "../../../models/helpers/ShareTypes"
 
 export interface PlannedStudiesProps {
   accordionIsOpen: boolean

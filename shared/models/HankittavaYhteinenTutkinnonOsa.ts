@@ -2,7 +2,7 @@ import { types } from "mobx-state-tree"
 import { YhteisenTutkinnonOsanOsaAlue } from "./YhteisenTutkinnonOsanOsaAlue"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
-import { TutkinnonOsaType } from "./helpers/TutkinnonOsa"
+import { TutkinnonOsaType } from "./helpers/ShareTypes"
 
 export const Model = types.model({
   moduleId: types.maybe(types.string),

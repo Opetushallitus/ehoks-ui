@@ -12,7 +12,6 @@ import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
 import { HelpPopup } from "components/HelpPopup"
 import find from "lodash.find"
-import { ShareType } from "stores/NotificationStore"
 import { parseShareParams } from "utils/shareParams"
 import { FormattedDate } from "components/FormattedDate"
 import {
@@ -25,7 +24,7 @@ import { PlannedStudies } from "./PlannedStudies"
 import { ScheduledStudies } from "./ScheduledStudies"
 import { CompletedStudies } from "./CompletedStudies"
 import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
-import { TutkinnonOsaType } from "models/helpers/TutkinnonOsa"
+import { ShareType, TutkinnonOsaType } from "../../../models/helpers/ShareTypes"
 
 const EssentialFactorContainer = styled("div")`
   margin: 10px 20px 20px 20px;

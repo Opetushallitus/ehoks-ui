@@ -1,7 +1,6 @@
 import { WindowLocation } from "@reach/router"
 import queryString from "query-string"
-import { ShareType } from "stores/NotificationStore"
-import { TutkinnonOsaType } from "models/helpers/TutkinnonOsa"
+import { ShareType, TutkinnonOsaType } from "../models/helpers/ShareTypes"
 
 export function parseShareParams(
   location: WindowLocation | undefined

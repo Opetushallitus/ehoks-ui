@@ -8,8 +8,6 @@ import React, {
 import { navigate } from "@reach/router"
 import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl"
 import styled from "styled"
-import { ShareType } from "stores/NotificationStore"
-import { TutkinnonOsaType } from "models/helpers/TutkinnonOsa"
 import { HeroButton, LinkButton } from "components/Button"
 import { ModalWithBackground } from "components/ModalDialogs/Modal"
 import {
@@ -22,6 +20,7 @@ import { APIConfigContext } from "components/APIConfigContext"
 import CopyToClipboard from "react-copy-to-clipboard"
 import { FormattedDate } from "components/FormattedDate"
 import { AppContext } from "components/AppContext"
+import { ShareType, TutkinnonOsaType } from "../models/helpers/ShareTypes"
 
 interface ColorProps {
   background: string

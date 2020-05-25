@@ -10,14 +10,12 @@ import {
   IOsaamisenOsoittaminen,
   TodentamisenProsessi,
   IOrganisaatio,
-  ITarkentavatTiedotOsaamisenArvioija,
-  TutkinnonOsaType
+  ITarkentavatTiedotOsaamisenArvioija
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "./LearningEvent"
 import { TodentamisenProsessiKoodi } from "types/TodentamisenProsessiKoodi"
 import format from "date-fns/format"
 import parseISO from "date-fns/parseISO"
-import { ShareType } from "stores/NotificationStore"
 import ShareDialog, {
   Instructor,
   ShareLinkValidityPeriod
@@ -27,6 +25,7 @@ import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
 import { Table, TBody, TD, TH } from "./Shared"
 import { observer } from "mobx-react"
+import { ShareType, TutkinnonOsaType } from "../../models/helpers/ShareTypes"
 
 interface ColorProps {
   fadedColor: string

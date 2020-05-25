@@ -13,10 +13,7 @@ import {
   TH,
   Title
 } from "./Shared"
-import {
-  IOsaamisenHankkimistapa,
-  TutkinnonOsaType
-} from "models/helpers/TutkinnonOsa"
+import { IOsaamisenHankkimistapa } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "components/TutkinnonOsa/LearningEvent"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
 import { observer } from "mobx-react"
@@ -26,6 +23,7 @@ import { MdShare } from "react-icons/md"
 import { stringifyShareParams } from "utils/shareParams"
 import { navigate } from "@reach/router"
 import { AppContext } from "components/AppContext"
+import { TutkinnonOsaType } from "../../models/helpers/ShareTypes"
 
 const OsaamisenHankkimistapaTitle = styled(Title)(
   props => `

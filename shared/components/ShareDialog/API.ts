@@ -1,5 +1,5 @@
 import { APIConfig } from "components/APIConfigContext"
-import { TutkinnonOsaType } from "models/helpers/TutkinnonOsa"
+import { TutkinnonOsaType } from "../../models/helpers/ShareTypes"
 
 interface BackendShareLink {
   "jako-uuid": string

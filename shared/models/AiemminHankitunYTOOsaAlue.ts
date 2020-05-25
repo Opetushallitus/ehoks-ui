@@ -6,7 +6,7 @@ import { KoodistoVastaus } from "./KoodistoVastaus"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
 import { Organisaatio } from "./Organisaatio"
-import { TutkinnonOsaType } from "./helpers/TutkinnonOsa"
+import { TutkinnonOsaType } from "./helpers/ShareTypes"
 
 export const Model = types.model("AiemminHankitunYTOOsaAlue", {
   id: types.optional(types.number, 0),

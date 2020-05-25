@@ -4,9 +4,9 @@ import { getTila } from "./getTila"
 import { types, getRoot } from "mobx-state-tree"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import { getOsaamispisteet } from "./getOsaamispisteet"
-import { ShareType } from "stores/NotificationStore"
 import find from "lodash.find"
 import { OsaamisenHankkimistapaType } from "../OsaamisenHankkimistapa"
+import { ShareType } from "./ShareTypes"
 
 export const HankittavatTutkinnonOsatViews = types
   .model({})

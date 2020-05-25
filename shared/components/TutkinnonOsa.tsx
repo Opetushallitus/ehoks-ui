@@ -7,10 +7,8 @@ import {
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
   IOrganisaatio,
-  ITarkentavatTiedotOsaamisenArvioija,
-  TutkinnonOsaType
+  ITarkentavatTiedotOsaamisenArvioija
 } from "models/helpers/TutkinnonOsa"
-import { ShareType } from "stores/NotificationStore"
 import { FormattedMessage } from "react-intl"
 import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
@@ -20,6 +18,7 @@ import { Objectives } from "./TutkinnonOsa/Objectives"
 import { Details } from "./TutkinnonOsa/Details"
 import { OneRowTable } from "./TutkinnonOsa/Shared"
 import { ColorType } from "theme"
+import { ShareType, TutkinnonOsaType } from "../models/helpers/ShareTypes"
 
 interface ContainerProps {
   accentColor?: ColorType

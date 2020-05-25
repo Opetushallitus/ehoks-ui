@@ -6,7 +6,7 @@ import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 import { Organisaatio } from "./Organisaatio"
 import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
-import { TutkinnonOsaType } from "./helpers/TutkinnonOsa"
+import { TutkinnonOsaType } from "./helpers/ShareTypes"
 
 const model = types.model({
   id: types.optional(types.number, 0),

@@ -6,7 +6,7 @@ import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
 import { Organisaatio } from "./Organisaatio"
-import { TutkinnonOsaType } from "./helpers/TutkinnonOsa"
+import { TutkinnonOsaType } from "./helpers/ShareTypes"
 
 const Model = types.model("YhteisenTutkinnonOsanOsaAlue", {
   id: types.optional(types.number, 0),
