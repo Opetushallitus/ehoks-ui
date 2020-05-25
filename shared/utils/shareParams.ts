@@ -21,10 +21,7 @@ export function parseShareParams(
           ? ShareType[qs.type as ShareType]
           : undefined,
       moduleId: typeof qs.moduleId === "string" ? qs.moduleId : "",
-      tutkinnonOsaTyyppi:
-        TutkinnonOsaType[qs.tutkinnonOsaTyyppi as TutkinnonOsaType] != null
-          ? TutkinnonOsaType[qs.tutkinnonOsaTyyppi as TutkinnonOsaType]
-          : undefined,
+      tutkinnonOsaTyyppi: qs.tutkinnonOsaTyyppi as TutkinnonOsaType,
       tutkinnonOsaId:
         typeof qs.tutkinnonOsaId === "string" ? qs.tutkinnonOsaId : ""
     }

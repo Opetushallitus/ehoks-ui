@@ -5,7 +5,6 @@ import { HeadingContainer, HelpHeading } from "components/Heading"
 import { HelpPopup } from "components/HelpPopup"
 import { StudiesContainer } from "components/StudiesContainer"
 import { TutkinnonOsa } from "components/TutkinnonOsa"
-import { TutkinnonOsaType } from "models/helpers/TutkinnonOsa"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
@@ -95,15 +94,7 @@ export class AiempiOsaaminen extends React.Component<
                     title={study.opintoOtsikko(competencePointsTitle)}
                     osaamisenOsoittamiset={study.tarkentavatTiedotNaytto}
                     moduleId={study.moduleId}
-                    tutkinnonOsaTyyppi={
-                      TutkinnonOsaType[
-                        study.tutkinnonOsaTyyppi as TutkinnonOsaType
-                      ] != null
-                        ? TutkinnonOsaType[
-                            study.tutkinnonOsaTyyppi as TutkinnonOsaType
-                          ]
-                        : undefined
-                    }
+                    tutkinnonOsaTyyppi={study.tutkinnonOsaTyyppi}
                     todentamisenProsessi={study.todentamisenProsessi}
                     objectives={study.tavoitteetJaSisallot}
                     koulutuksenJarjestaja={study.koulutuksenJarjestaja}
