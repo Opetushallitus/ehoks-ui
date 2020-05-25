@@ -67,12 +67,12 @@ export interface IAiemminHankittuTutkinnonOsa
 }
 
 export enum TutkinnonOsaType {
-  "HankittavaAmmatillinenTutkinnonOsa" = "HankittavaAmmatillinenTutkinnonOsa",
-  "HankittavaPaikallinenTutkinnonOsa" = "HankittavaPaikallinenTutkinnonOsa",
-  "HankittavaYhteinenTutkinnonOsa" = "HankittavaYhteinenTutkinnonOsa",
-  "HankittavaYTOOsaAlue" = "HankittavaYTOOsaAlue",
-  "AiemminHankittuAmmatillinenTutkinnonOsa" = "AiemminHankittuAmmatillinenTutkinnonOsa",
-  "AiemminHankittuPaikallinenTutkinnonOsa" = "AiemminHankittuPaikallinenTutkinnonOsa",
-  "AiemminHankittuYhteinenTutkinnonOsa" = "AiemminHankittuYhteinenTutkinnonOsa",
-  "AiemminHankittuYTOOsaAlue" = "AiemminHankittuYTOOsaAlue"
+  HankittavaAmmatillinen = "HankittavaAmmatillinenTutkinnonOsa",
+  HankittavaPaikallinen = "HankittavaPaikallinenTutkinnonOsa",
+  HankittavaYhteinen = "HankittavaYhteinenTutkinnonOsa",
+  HankittavanYhteisenTutkinnonOsanOsaAlue = "HankittavaYTOOsaAlue",
+  AiemminHankittuAmmatillinen = "AiemminHankittuAmmatillinenTutkinnonOsa",
+  AiemminHankittuPaikallinen = "AiemminHankittuPaikallinenTutkinnonOsa",
+  AiemminHankittuYhteinen = "AiemminHankittuYhteinenTutkinnonOsa",
+  AiemminHankitunYhteisenTutkinnonOsanOsaAlue = "AiemminHankittuYTOOsaAlue"
 }

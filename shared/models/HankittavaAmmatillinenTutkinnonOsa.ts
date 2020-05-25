@@ -43,7 +43,7 @@ export const HankittavaAmmatillinenTutkinnonOsa = types
           : ""
       },
       get tutkinnonOsaTyyppi(): TutkinnonOsaType {
-        return TutkinnonOsaType.HankittavaAmmatillinenTutkinnonOsa
+        return TutkinnonOsaType.HankittavaAmmatillinen
       },
       get tutkinnonOsaId() {
         return self.moduleId

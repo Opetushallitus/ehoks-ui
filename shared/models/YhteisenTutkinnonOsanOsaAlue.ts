@@ -37,6 +37,6 @@ export const YhteisenTutkinnonOsanOsaAlue = types
       return 0
     },
     get tutkinnonOsaTyyppi(): TutkinnonOsaType {
-      return TutkinnonOsaType.HankittavaYTOOsaAlue
+      return TutkinnonOsaType.HankittavanYhteisenTutkinnonOsanOsaAlue
     }
   }))

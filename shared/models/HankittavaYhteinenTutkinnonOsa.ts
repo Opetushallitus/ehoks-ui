@@ -16,7 +16,7 @@ export const HankittavaYhteinenTutkinnonOsa = types
   .compose("HankittavaYhteinenTutkinnonOsa", EnrichKoodiUri, Model)
   .views(self => ({
     get tutkinnonOsaTyyppi(): TutkinnonOsaType {
-      return TutkinnonOsaType.HankittavaYhteinenTutkinnonOsa
+      return TutkinnonOsaType.HankittavaYhteinen
     },
     get tutkinnonOsaId() {
       return self.moduleId

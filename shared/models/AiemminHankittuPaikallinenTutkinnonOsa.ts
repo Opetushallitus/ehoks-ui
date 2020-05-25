@@ -44,7 +44,7 @@ export const AiemminHankittuPaikallinenTutkinnonOsa = types
       return self.laajuus
     },
     get tutkinnonOsaTyyppi(): TutkinnonOsaType {
-      return TutkinnonOsaType.AiemminHankittuPaikallinenTutkinnonOsa
+      return TutkinnonOsaType.AiemminHankittuPaikallinen
     },
     get tutkinnonOsaId() {
       return self.moduleId

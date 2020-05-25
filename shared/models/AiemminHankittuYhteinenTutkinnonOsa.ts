@@ -26,7 +26,7 @@ export const AiemminHankittuYhteinenTutkinnonOsa = types
   })
   .views(self => ({
     get tutkinnonOsaTyyppi(): TutkinnonOsaType {
-      return TutkinnonOsaType.AiemminHankittuYhteinenTutkinnonOsa
+      return TutkinnonOsaType.AiemminHankittuYhteinen
     },
     get tutkinnonOsaId() {
       return self.moduleId
