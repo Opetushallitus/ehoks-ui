@@ -88,6 +88,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       id: {
         "ui:widget": "hidden"
       },
+      "module-id": {
+        "ui:widget": "hidden"
+      },
       "tutkinnon-osa-koodi-uri": {
         "ui:field": "typeahead",
         typeahead: typeaheadProps(options.tutkinnonosat)
@@ -134,6 +137,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "*"
           ],
           id: {
+            "ui:widget": "hidden"
+          },
+          "module-id": {
             "ui:widget": "hidden"
           },
           jarjestaja: {
@@ -203,6 +209,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       id: {
         "ui:widget": "hidden"
       },
+      "module-id": {
+        "ui:widget": "hidden"
+      },
       "valittu-todentamisen-prosessi-koodi-uri": {
         "ui:field": "typeahead",
         typeahead: typeaheadProps(options.osaamisentodentamisenprosessi)
@@ -242,6 +251,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "*"
           ],
           id: {
+            "ui:widget": "hidden"
+          },
+          "module-id": {
             "ui:widget": "hidden"
           },
           jarjestaja: {
@@ -308,6 +320,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       id: {
         "ui:widget": "hidden"
       },
+      "module-id": {
+        "ui:widget": "hidden"
+      },
       "tutkinnon-osa-koodi-uri": {
         "ui:field": "typeahead",
         typeahead: typeaheadProps(options.tutkinnonosat)
@@ -354,6 +369,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "*"
           ],
           id: {
+            "ui:widget": "hidden"
+          },
+          "module-id": {
             "ui:widget": "hidden"
           },
           jarjestaja: {
@@ -417,6 +435,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           id: {
             "ui:widget": "hidden"
           },
+          "module-id": {
+            "ui:widget": "hidden"
+          },
           "osa-alue-koodi-uri": {
             "ui:field": "typeahead",
             typeahead: typeaheadProps(options.ammatillisenoppiaineet)
@@ -449,6 +470,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                 "*"
               ],
               id: {
+                "ui:widget": "hidden"
+              },
+              "module-id": {
                 "ui:widget": "hidden"
               },
               jarjestaja: {
@@ -516,6 +540,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       id: {
         "ui:widget": "hidden"
       },
+      "module-id": {
+        "ui:widget": "hidden"
+      },
       "tutkinnon-osa-koodi-uri": {
         "ui:field": "typeahead",
         typeahead: typeaheadProps(options.tutkinnonosat)
@@ -541,6 +568,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "*"
           ],
           id: {
+            "ui:widget": "hidden"
+          },
+          "module-id": {
             "ui:widget": "hidden"
           },
           "osaamisen-hankkimistapa-koodi-uri": {
@@ -623,6 +653,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           id: {
             "ui:widget": "hidden"
           },
+          "module-id": {
+            "ui:widget": "hidden"
+          },
           jarjestaja: {
             id: {
               "ui:widget": "hidden"
@@ -692,6 +725,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       id: {
         "ui:widget": "hidden"
       },
+      "module-id": {
+        "ui:widget": "hidden"
+      },
       "osaamisen-hankkimistavat": {
         "ui:options": {
           orderable: false
@@ -710,6 +746,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "*"
           ],
           id: {
+            "ui:widget": "hidden"
+          },
+          "module-id": {
             "ui:widget": "hidden"
           },
           "osaamisen-hankkimistapa-koodi-uri": {
@@ -796,6 +835,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           id: {
             "ui:widget": "hidden"
           },
+          "module-id": {
+            "ui:widget": "hidden"
+          },
           jarjestaja: {
             id: {
               "ui:widget": "hidden"
@@ -858,6 +900,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       id: {
         "ui:widget": "hidden"
       },
+      "module-id": {
+        "ui:widget": "hidden"
+      },
       "tutkinnon-osa-koodi-uri": {
         "ui:field": "typeahead",
         typeahead: typeaheadProps(options.tutkinnonosat)
@@ -881,6 +926,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "*"
           ],
           id: {
+            "ui:widget": "hidden"
+          },
+          "module-id": {
             "ui:widget": "hidden"
           },
           "osa-alue-koodi-uri": {
@@ -908,6 +956,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                 "*"
               ],
               id: {
+                "ui:widget": "hidden"
+              },
+              "module-id": {
                 "ui:widget": "hidden"
               },
               "osaamisen-hankkimistapa-koodi-uri": {
@@ -988,6 +1039,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                 "*"
               ],
               id: {
+                "ui:widget": "hidden"
+              },
+              "module-id": {
                 "ui:widget": "hidden"
               },
               jarjestaja: {
