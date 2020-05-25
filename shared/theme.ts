@@ -38,7 +38,7 @@ const fontBase = `
 const fontSizes = {
   base: "16px",
   lead: "20px",
-  routeButton: "20px",
+  subHeading: "20px",
   heading1: "30px",
   heading2: "20px",
   heading3: "20px",
@@ -47,11 +47,11 @@ const fontSizes = {
 const fontWeight = {
   base: "400",
   lead: "400",
-  routeButton: "300",
   heading1: "400",
   heading2: "400",
   heading3: "600",
-  heading4: "700"
+  heading4: "700",
+  subHeading: "300"
 }
 const typography = {
   body: `
@@ -63,11 +63,6 @@ const typography = {
     ${fontBase}
     font-size: ${fontSizes.lead};
     font-weight: ${fontWeight.lead};
-  `,
-  routeButton: `
-    ${fontBase}
-    font-size: ${fontSizes.routeButton};
-    font-weight: ${fontWeight.routeButton};
   `,
   heading1: `
     ${fontBase}
@@ -88,6 +83,11 @@ const typography = {
     ${fontBase}
     font-size: ${fontSizes.heading4};
     font-weight: ${fontWeight.heading4};
+  `,
+  subHeading: `
+    ${fontBase}
+    font-size: ${fontSizes.subHeading};
+    font-weight: ${fontWeight.subHeading};
   `
 }
 

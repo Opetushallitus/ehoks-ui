@@ -44,7 +44,7 @@ const SectionContainer = styled("div")`
 `
 
 const SubHeading = styled("h2")`
-  font-weight: 300;
+  ${props => props.theme.typography.subHeading}
   margin-top: 0px;
 `
 

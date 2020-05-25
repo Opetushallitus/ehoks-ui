@@ -52,7 +52,7 @@ interface TitleProps {
 const Title = styled("div")<TitleProps>`
   margin-top: 10px;
   color: ${props => props.theme.colors.battleshipGrey};
-  ${props => props.theme.typography.routeButton}
+  ${props => props.theme.typography.subHeading}
   ${props => props.selected && "font-weight: 600"};
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     display: none;
