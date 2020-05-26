@@ -39,7 +39,7 @@ import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
 
 const disallowedKeys = ["eid", "manuaalisyotto", "module-id"]
 
-function trimDisallowedKeys(formData: any) {
+function trimDisallowedKeysForPUTSchema(formData: any) {
   if (typeof formData !== "object") {
     return formData
   }
@@ -61,11 +61,11 @@ const propertyIsObject = (property: any) =>
 function trimObject(key: string, result: any, formData: any) {
   result[key] = Array.isArray(formData[key])
     ? trimArray(key, formData)
-    : trimDisallowedKeys(formData[key])
+    : trimDisallowedKeysForPUTSchema(formData[key])
 }
 
 const trimArray = (key: string, formData: any) =>
-  formData[key].map((element: any) => trimDisallowedKeys(element))
+  formData[key].map((element: any) => trimDisallowedKeysForPUTSchema(element))
 
 function trimPrimitive(key: string, result: any, formData: any) {
   if (disallowedKeys.includes(key)) {
@@ -126,7 +126,7 @@ export class MuokkaaHOKS extends React.Component<
     const hoks = await this.fetchHOKS()
     const rawSchema = {
       definitions: stripUnsupportedFormats(json.definitions),
-      ...json.definitions.HOKS
+      ...json.definitions.HOKSKorvaus
     }
     const koodiUris = await fetchKoodiUris()
     const schema = schemaByStep(
@@ -159,7 +159,7 @@ export class MuokkaaHOKS extends React.Component<
       }
     )
     const json = await request.json()
-    return json.data
+    return trimDisallowedKeysForPUTSchema(json.data)
   }
 
   nextStep = () => {
@@ -237,9 +237,7 @@ export class MuokkaaHOKS extends React.Component<
           Accept: "application/json; charset=utf-8",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(
-          trimDisallowedKeys(trimEmptyValues(fieldProps.formData))
-        )
+        body: JSON.stringify(trimEmptyValues(fieldProps.formData))
       }
     )
     if (request.status === 204) {
