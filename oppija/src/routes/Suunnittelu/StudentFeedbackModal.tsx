@@ -5,6 +5,7 @@ import { FormattedMessage } from "react-intl"
 import Modal from "react-modal"
 import styled from "../../../../shared/styled"
 import { IRootStore } from "../../stores/RootStore"
+import { INotificationStore } from "stores/NotificationStore"
 
 const StudentFeedbackTitle = styled("h1")``
 
@@ -70,9 +71,9 @@ const FeedbackModalContainer = styled("div")`
   height: 100%;
 `
 
-interface StudentFeedbackProps {
+interface StudentFeedbackProps
+  extends Pick<INotificationStore, "studentFeedbackLinks"> {
   store?: IRootStore
-  feedbackLinks: string[]
 }
 
 @inject("store")
@@ -89,10 +90,11 @@ export class StudentFeedbackModal extends React.Component<
   }
 
   render() {
-    const showFeedbackModal = this.props.store!.notifications.showFeedbackModal
+    const { store, studentFeedbackLinks } = this.props
+    const showFeedbackModal = store!.notifications.showFeedbackModal
 
-    const feedbackLink = this.props.feedbackLinks[0]
-    if (!feedbackLink) {
+    // always guard your array index based access with a .length check.
+    if (!Boolean(studentFeedbackLinks?.length)) {
       return null
     }
 
@@ -120,8 +122,11 @@ export class StudentFeedbackModal extends React.Component<
               />
             </CloseFeedbackModalButton>
             <StartFeedbackLink
-              href={feedbackLink}
-              onClick={this.removeFeedbackLink.bind(this, feedbackLink)}
+              href={studentFeedbackLinks[0]}
+              onClick={this.removeFeedbackLink.bind(
+                this,
+                studentFeedbackLinks[0]
+              )}
               target="_blank"
             >
               <FormattedMessage

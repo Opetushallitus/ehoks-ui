@@ -155,7 +155,7 @@ export const NotificationStore = types
   })
   .views(self => ({
     get hasUnanswaredFeedbackLinks() {
-      return self.studentFeedbackLinks?.length !== 0
+      return Boolean(self.studentFeedbackLinks?.length)
     },
 
     get visible() {
