@@ -96,7 +96,7 @@ export class Suunnittelu extends React.Component<
       <>
         <IntroModalDialog />
         <StudentFeedbackModal
-          feedbackLinks={notifications.studentFeedbackLinks}
+          studentFeedbackLinks={notifications.studentFeedbackLinks}
         />
         <Router basepath={`/ehoks/suunnittelu`}>
           <ValitseHOKS path="/" suunnitelmat={hoks.suunnitelmat} />
