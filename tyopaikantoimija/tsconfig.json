@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "outDir": "./public/ehoks-tyopaikantoimija-ui/dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es5",
+    "jsx": "react",
+    "lib": [
+      "es5",
+      "es6",
+      "dom",
+      "es2018" /* mobx - error TS2304: Cannot find name 'AsyncGenerator'*/
+    ],
+    "types": ["jest", "webpack-env"],
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["*", "../../shared/*"]
+    },
+    "skipLibCheck": true
+  },
+  "include": ["./**/*", "../shared/**/*"],
+  "exclude": ["node_modules", "./**/__tests__", "../shared/**/__tests__"]
+}

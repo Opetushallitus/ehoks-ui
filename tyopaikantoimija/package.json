@@ -1,0 +1,17 @@
+{
+  "name": "ehoks-ui-tyopaikantoimija",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "../node_modules/.bin/webpack-dev-server",
+    "test": "../node_modules/.bin/jest",
+    "build": "../node_modules/.bin/webpack --config webpack.config.production.js --mode production",
+    "prepush": "../node_modules/.bin/tsc --project tsconfig.json --skipLibCheck false",
+    "extract_translations": "node ../shared/extractMessages.js"
+  },
+  "private": true,
+  "license": "",
+  "devDependencies": {},
+  "dependencies": {}
+}

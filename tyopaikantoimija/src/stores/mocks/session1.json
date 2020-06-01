@@ -1,0 +1,12 @@
+{
+  "meta": {
+    "opintopolku-login-url": "http://localhost:3000/auth-dev/opintopolku-login/"
+  },
+  "data": [
+    {
+      "first-name": "Teuvo Taavetti",
+      "common-name": "Teuvo",
+      "surname": "Testaaja"
+    }
+  ]
+}
