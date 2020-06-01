@@ -30,12 +30,16 @@ script:
   - ./scripts/ci/build.sh ehoks-oppija-ui
   - cd ../virkailija
   - ./scripts/ci/build.sh ehoks-virkailija-ui
+  - cd ../tyopaikantoimija
+  - ./scripts/ci/build.sh ehoks-tyopaikantoimija-ui
 
 deploy:
   provider: script
   script: >-
     ../ci-tools/build/upload-image.sh ehoks-oppija-ui &&
     ../ci-tools/build/upload-image.sh ehoks-virkailija-ui
+    &&
+    ../ci-tools/build/upload-image.sh ehoks-tyopaikantoimija-ui
   on:
     all_branches: true
 
