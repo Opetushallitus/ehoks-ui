@@ -32,7 +32,7 @@ export const Oppija = types
     opiskeluoikeusOid: types.string,
     suunnitelmat: types.array(HOKS),
     suunnitelmaIndex: types.optional(types.integer, -1),
-    henkilotiedot: types.optional(SessionUser, { commonName: "", surname: "" })
+    henkilotiedot: types.optional(SessionUser, { surname: "" })
   })
   .actions(self => {
     const { fetchCollection, fetchSingle, apiUrl, callerId } = getEnv<
