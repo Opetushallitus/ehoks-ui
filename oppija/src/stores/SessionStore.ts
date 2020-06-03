@@ -32,14 +32,8 @@ export const SessionStore = types
         self.error = error.message
       }
 
-      // if logged in, call update-user-info API, which updates current session with 'oid'
-      // we don't need to deal with 'oid' in UI, this is just needed to obtain valid session cookie
       if (self.user) {
         try {
-          yield fetchSingle(apiUrl("oppija/session/update-user-info"), {
-            method: "POST",
-            headers: callerId()
-          })
           yield fetchUserInfo()
         } catch (error) {
           errors.logError("SessionStore.checkSession", error.message)
