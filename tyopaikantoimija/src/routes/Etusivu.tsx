@@ -28,7 +28,7 @@ export class Etusivu extends React.Component<EtusivuProps> {
         <Header>
           <FormattedMessage
             id="etusivu.tyopaikantoimijantitle"
-            defaultMessage="Työpaikantoimijan etusivu"
+            defaultMessage="Työpaikantoimijan Etusivu"
           />
         </Header>
 
