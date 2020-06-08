@@ -22,23 +22,21 @@ export interface EtusivuProps extends RouteComponentProps {
 @inject("store")
 @observer
 export class Etusivu extends React.Component<EtusivuProps> {
-  render() {
-    return (
-      <Container>
-        <Header>
-          <FormattedMessage
-            id="etusivu.tyopaikantoimijantitle"
-            defaultMessage="Työpaikantoimijan etusivu"
-          />
-        </Header>
+  render = () => (
+    <Container>
+      <Header>
+        <FormattedMessage
+          id="etusivu.tyopaikantoimijantitle"
+          defaultMessage="Työpaikantoimijan etusivu"
+        />
+      </Header>
 
-        <ContentContainer>
-          <FormattedMessage
-            id="etusivu.tyopaikantoimijansivu"
-            defaultMessage="Työpaikan toimijan ui:n placeholder"
-          />
-        </ContentContainer>
-      </Container>
-    )
-  }
+      <ContentContainer>
+        <FormattedMessage
+          id="etusivu.tyopaikantoimijansivu"
+          defaultMessage="Työpaikan toimijan ui:n placeholder"
+        />
+      </ContentContainer>
+    </Container>
+  )
 }
