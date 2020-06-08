@@ -9,6 +9,7 @@ module.exports = {
     project: [
       "./virkailija/tsconfig.json",
       "./oppija/tsconfig.json",
+      "./tyopaikantoimija/tsconfig.json",
       "./shared/tsconfig.json"
     ],
     sourceType: "module"
