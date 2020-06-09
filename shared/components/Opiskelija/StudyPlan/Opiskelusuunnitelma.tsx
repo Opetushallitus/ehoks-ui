@@ -332,6 +332,7 @@ export class Opiskelusuunnitelma extends React.Component<
             showSuunnitellut={this.showPlanSubAccordion("suunnitellut")}
             showAikataulutetut={this.showPlanSubAccordion("aikataulutetut")}
             showValmiit={this.showPlanSubAccordion("valmiit")}
+            competencePointsTitle={competencePointsTitle}
           />
         </Accordion>
 
