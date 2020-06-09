@@ -9,7 +9,6 @@ const Container = styled("div")`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  width: 150px;
 `
 
 const ProgressPieContainer = styled("div")`
@@ -17,7 +16,7 @@ const ProgressPieContainer = styled("div")`
   width: 90px;
   hyphens: manual;
   text-align: center;
-  margin-right: 40px;
+  margin-right: ${props => props.theme.spacing.xl};
 
   &:last-of-type {
     margin-right: 0;
@@ -43,7 +42,7 @@ const PercentageContainer = styled("div")<{
 
 const PercentageTitle = styled("div")`
   font-weight: bold;
-  font-size: 22px;
+  font-size: 22px; /*//TODO from theme*/
 `
 
 const Title = styled("span")`
