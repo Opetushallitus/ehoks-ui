@@ -1,6 +1,6 @@
 import React from "react"
 import { CircularProgressbar } from "react-circular-progressbar"
-import styled from "styled"
+import styled, { withTheme, ComponentWithTheme } from "styled"
 import { ColorType } from "theme"
 
 const Container = styled("div")`
@@ -54,7 +54,7 @@ const Title = styled("span")`
   }
 `
 
-export interface ProgressPieProps {
+export interface ProgressPieProps extends ComponentWithTheme {
   /**
    * Progress bar indicator fill percentage
    * @default 100
@@ -74,20 +74,22 @@ export interface ProgressPieProps {
 /**
  * Clickable circular progress button with title
  */
-export class ProgressPie extends React.Component<ProgressPieProps> {
+class ProgressPieWithTheme extends React.Component<ProgressPieProps> {
   render() {
-    const { value = 100, title, onClick, stroke, ...rest } = this.props
+    const { value = 100, title, onClick, stroke, theme, ...rest } = this.props
+    const strokeFromTheme = stroke ? theme.colors[stroke] : undefined
+    const path: React.CSSProperties = {
+      transform: "rotate(180deg)",
+      transformOrigin: "center center",
+      stroke: typeof strokeFromTheme === "string" ? strokeFromTheme : undefined
+    }
     const styles = {
       background: {
         fill: "#fff"
       },
-      path: {
-        transform: "rotate(180deg)",
-        transformOrigin: "center center",
-        stroke
-      }
+      path
     }
-    const props = {
+    const circularProgressbarProps = {
       background: true,
       backgroundPadding: 0,
       value,
@@ -99,7 +101,7 @@ export class ProgressPie extends React.Component<ProgressPieProps> {
     return (
       <Container onClick={onClick}>
         <ProgressPieContainer>
-          <CircularProgressbar {...props} />
+          <CircularProgressbar {...circularProgressbarProps} />
           <PercentageContainer color={stroke}>
             <PercentageTitle>{value}</PercentageTitle>%
           </PercentageContainer>
@@ -109,3 +111,5 @@ export class ProgressPie extends React.Component<ProgressPieProps> {
     )
   }
 }
+
+export const ProgressPie = withTheme(ProgressPieWithTheme)
