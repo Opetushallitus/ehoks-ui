@@ -1,4 +1,4 @@
-import { fetchUtils, mockFetch } from "fetchUtils"
+import { fetchUtils, mockFetch } from "../fetchUtils"
 const apiUrl = (path: string) => `/${path}`
 
 describe("fetchUtils", () => {
