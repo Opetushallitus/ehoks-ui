@@ -21,7 +21,7 @@
     "lint:fix": "npm-run-all \"lint:virkailija -- --fix\" \"lint:oppija -- --fix\" \"lint:shared -- --fix\" \"lint:tyopaikantoimija -- --fix\"",
     "test": "npm-run-all test:*",
     "styleguide": "styleguidist server --config shared/styleguide/styleguide.config.js",
-    "prettier:check": "prettier --parser typescript --list-different \"{oppija,virkailija,shared, tyopaikantoimija}/**/*.{ts,tsx}\"",
+    "prettier:check": "prettier --parser typescript --list-different \"{oppija,virkailija,shared,tyopaikantoimija}/**/*.{ts,tsx}\"",
     "prettier:fix": "prettier --parser typescript --write \"{oppija,virkailija,shared}/**/*.{ts,tsx}\"",
     "prettier:staged": "prettier --parser typescript --write",
     "prepush:virkailija": "npm run prepush --prefix virkailija",
