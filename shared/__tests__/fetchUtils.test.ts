@@ -9,7 +9,6 @@ describe("fetchUtils", () => {
     const result = await fetchSingle(apiUrl("session"))
     expect(result).toEqual({
       data: {
-        commonName: "Teuvo",
         firstName: "Teuvo Taavetti",
         surname: "Testaaja"
       },

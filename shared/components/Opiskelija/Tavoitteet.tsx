@@ -110,15 +110,6 @@ const StudentPersonalInfo = ({ student }: { student: ISessionUser }) => (
       </th>
 
       <th>
-        {student.commonName && (
-          <FormattedMessage
-            id="tavoitteet.kutsumanimiTitle"
-            defaultMessage="Kutsumanimi"
-          />
-        )}
-      </th>
-
-      <th>
         <FormattedMessage
           id="tavoitteet.oppijanumeroTitle"
           defaultMessage="Oppijanumero"
@@ -130,10 +121,6 @@ const StudentPersonalInfo = ({ student }: { student: ISessionUser }) => (
         {student.firstName && student.surname
           ? `${student.firstName} ${student.surname}`
           : student.fullName}
-      </LabeledColumn>
-
-      <LabeledColumn id="tavoitteet.kutsumanimiTitle">
-        {student.commonName}
       </LabeledColumn>
 
       <LabeledColumn id="tavoitteet.oppijanumeroTitle">

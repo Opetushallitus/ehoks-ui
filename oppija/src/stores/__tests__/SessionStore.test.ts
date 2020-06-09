@@ -43,7 +43,6 @@ describe("SessionStore", () => {
       () => !store.isLoading,
       () => {
         expect(store.user).toEqual({
-          commonName: "Teuvo",
           contactValuesGroup: [
             {
               contact: [
@@ -69,7 +68,6 @@ describe("SessionStore", () => {
     const store = SessionStore.create(
       {
         user: {
-          commonName: "Teuvo",
           firstName: "Teuvo Taavetti",
           surname: "Testaaja"
         }
@@ -77,7 +75,6 @@ describe("SessionStore", () => {
       createEnvironment(mockFetch(apiUrl, 2), apiUrl, "", callerId)
     )
     expect(store.user).toEqual({
-      commonName: "Teuvo",
       contactValuesGroup: [],
       firstName: "Teuvo Taavetti",
       fullName: "",
