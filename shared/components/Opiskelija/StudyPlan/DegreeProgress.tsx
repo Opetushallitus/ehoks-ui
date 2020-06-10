@@ -23,7 +23,47 @@ const DegreeBoxes = styled(StatBoxes)`
   max-width: 900px;
 `
 
-const StudiesCategory = styled("div")`
+const StudiesCategory = styled(
+  ({
+    className,
+    totalStudiesLength,
+    stroke,
+    color,
+    onClick,
+    opinnot,
+    children,
+    competencePointsTitle
+  }: {
+    totalStudiesLength: number
+    stroke: ColorType
+    color?: string
+    opinnot: IHankittavaTutkinnonOsa[]
+    competencePointsTitle: string
+    onClick?: () => void
+    children?: React.ReactNode
+    className?: string
+  }) => (
+    <div className={className}>
+      <ProgressPie
+        value={
+          totalStudiesLength !== 0
+            ? Math.round((opinnot.length / totalStudiesLength) * 100)
+            : 0
+        }
+        stroke={stroke}
+        onClick={onClick}
+      />
+      <StatBox borderTop={color}>
+        <StatNumber color={color}>{opinnot.length}</StatNumber>
+        <StatTitle>{children}</StatTitle>
+      </StatBox>
+      <StudiesList
+        opinnot={opinnot}
+        competencePointsTitle={competencePointsTitle}
+      />
+    </div>
+  )
+)`
   flex: 1;
   margin-right: ${props => props.theme.spacing.m};
   &:last-child {
@@ -85,90 +125,45 @@ export const DegreeProgressWithTheme = ({
   competencePointsTitle: string
 } & ComponentWithTheme) => {
   const themeColor = colorFromTheme(theme)
-  const plannedColor = themeColor("planned")
-  const scheduled = themeColor("scheduled")
-  const ready = themeColor("ready")
-
+  const planned = {
+    totalStudiesLength,
+    onClick: showSuunnitellut,
+    color: themeColor("planned"),
+    opinnot: suunnitellutOpinnot,
+    competencePointsTitle
+  }
+  const scheduled = {
+    totalStudiesLength,
+    onClick: showAikataulutetut,
+    color: themeColor("scheduled"),
+    opinnot: aikataulutetutOpinnot,
+    competencePointsTitle
+  }
+  const ready = {
+    totalStudiesLength,
+    onClick: showValmiit,
+    color: themeColor("ready"),
+    opinnot: valmiitOpinnot,
+    competencePointsTitle
+  }
   return (
     <DegreeBoxes>
-      <StudiesCategory>
-        <ProgressPie
-          value={
-            totalStudiesLength !== 0
-              ? Math.round(
-                  (suunnitellutOpinnot.length / totalStudiesLength) * 100
-                )
-              : 0
-          }
-          stroke="planned"
-          onClick={showSuunnitellut}
-        />
-        <StatBox borderTop={plannedColor}>
-          <StatNumber color={plannedColor}>
-            {suunnitellutOpinnot.length}
-          </StatNumber>
-          <StatTitle>
-            <FormattedMessage
-              id="opiskelusuunnitelma.suunniteltunaTitle"
-              defaultMessage="Suunniteltua tutkinnonosaa"
-            />
-          </StatTitle>
-        </StatBox>
-        <StudiesList
-          opinnot={suunnitellutOpinnot}
-          competencePointsTitle={competencePointsTitle}
+      <StudiesCategory {...planned} stroke="planned">
+        <FormattedMessage
+          id="opiskelusuunnitelma.suunniteltunaTitle"
+          defaultMessage="Suunniteltua tutkinnonosaa"
         />
       </StudiesCategory>
-      <StudiesCategory>
-        <ProgressPie
-          value={
-            totalStudiesLength !== 0
-              ? Math.round(
-                  (aikataulutetutOpinnot.length / totalStudiesLength) * 100
-                )
-              : 0
-          }
-          stroke="scheduled"
-          onClick={showAikataulutetut}
-        />
-        <StatBox borderTop={scheduled}>
-          <StatNumber color={scheduled}>
-            {aikataulutetutOpinnot.length}
-          </StatNumber>
-          <StatTitle>
-            <FormattedMessage
-              id="opiskelusuunnitelma.aikataulutettunaTitle"
-              defaultMessage="Aikataulutettua tutkinnonosaa"
-            />
-          </StatTitle>
-        </StatBox>
-        <StudiesList
-          opinnot={aikataulutetutOpinnot}
-          competencePointsTitle={competencePointsTitle}
+      <StudiesCategory {...scheduled} stroke="scheduled">
+        <FormattedMessage
+          id="opiskelusuunnitelma.aikataulutettunaTitle"
+          defaultMessage="Aikataulutettua tutkinnonosaa"
         />
       </StudiesCategory>
-      <StudiesCategory>
-        <ProgressPie
-          value={
-            totalStudiesLength !== 0
-              ? Math.round((valmiitOpinnot.length / totalStudiesLength) * 100)
-              : 0
-          }
-          stroke="ready"
-          onClick={showValmiit}
-        />
-        <StatBox borderTop={ready}>
-          <StatNumber color={ready}>{valmiitOpinnot.length}</StatNumber>
-          <StatTitle>
-            <FormattedMessage
-              id="opiskelusuunnitelma.valmiinaTitle"
-              defaultMessage="Valmista tutkinnonosaa"
-            />
-          </StatTitle>
-        </StatBox>
-        <StudiesList
-          opinnot={valmiitOpinnot}
-          competencePointsTitle={competencePointsTitle}
+      <StudiesCategory {...ready} stroke="ready">
+        <FormattedMessage
+          id="opiskelusuunnitelma.valmiinaTitle"
+          defaultMessage="Valmista tutkinnonosaa"
         />
       </StudiesCategory>
     </DegreeBoxes>
