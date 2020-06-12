@@ -68,10 +68,10 @@ export const EnrichKoodiUri = types
       }
     })
 
-    const keyShouldBeFetchedFromEperusteet = (key: string) =>
+    const keyShouldBeEnrichedFromEperusteet = (key: string) =>
       key.match(/tutkinnonOsaKoodiUri/) && self[key]
 
-    const keyShouldBeFetchedFromKoodisto = (key: string) =>
+    const keyShouldBeEnrichedFromKoodisto = (key: string) =>
       key.match(/KoodiUri/) && self[key]
 
     function getCodes(key: string) {
@@ -81,7 +81,7 @@ export const EnrichKoodiUri = types
 
     const afterCreate = () => {
       Object.keys(self).forEach(key => {
-        if (keyShouldBeFetchedFromEperusteet(key)) {
+        if (keyShouldBeEnrichedFromEperusteet(key)) {
           const codes = getCodes(key)
           codes.forEach(code => {
             fetchEPerusteet(key, code)
@@ -89,7 +89,7 @@ export const EnrichKoodiUri = types
           return
         }
 
-        if (keyShouldBeFetchedFromKoodisto(key)) {
+        if (keyShouldBeEnrichedFromKoodisto(key)) {
           const codes = getCodes(key)
           codes.forEach(code => {
             const [enrichedKey] = key.split("KoodiUri") // key without KoodiUri
