@@ -142,7 +142,8 @@ export class OsaamisenOsoittaminen extends React.Component<
       koulutuksenJarjestajaArvioijat,
       tyoelamaArvioijat,
       jarjestaja,
-      sisallonKuvaus
+      sisallonKuvaus,
+      osaAlueet
     } = osaamisenOsoittaminen
 
     const jarjestajaOppilaitos = jarjestaja.oppilaitosNimi
@@ -175,6 +176,23 @@ export class OsaamisenOsoittaminen extends React.Component<
         </OsaamisenOsoittaminenTitle>
         <OsaamisenOsoittaminenTable>
           <TBody>
+            {osaAlueet.length > 0 ? (
+              <tr>
+                <TH>
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.liittyvatTutkinnonOsat"
+                    defaultMessage="Muut tutkinnon osat"
+                  />
+                </TH>
+                <TD>
+                  {osaAlueet.map((osaAlue, i) => (
+                    <span key={i}>
+                      {osaAlue.koodiUri} <br />
+                    </span>
+                  ))}
+                </TD>
+              </tr>
+            ) : null}
             <tr>
               <TH>
                 <FormattedMessage
