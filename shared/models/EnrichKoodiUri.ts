@@ -44,7 +44,6 @@ export const EnrichKoodiUri = types
 
     const fetchKoodisto = flow(function*(key: string, code: string): any {
       try {
-        const [dynamicKey] = key.split("KoodiUri") // key without KoodiUri
         // check our global cache first
         cachedResponses[code] =
           cachedResponses[code] ||
@@ -53,15 +52,15 @@ export const EnrichKoodiUri = types
           })
         const { data }: APIResponse = yield cachedResponses[code]
         // we currently only need nimi from KoodistoKoodi
-        if (Object.keys(self).indexOf(dynamicKey) > -1) {
-          self[dynamicKey] = data.metadata.reduce((result: any, meta: any) => {
+        if (Object.keys(self).indexOf(key) > -1) {
+          self[key] = data.metadata.reduce((result: any, meta: any) => {
             result[meta.kieli.toLowerCase()] = meta
             return result
           }, {})
         } else {
           const { name } = getPropertyMembers(self)
           throw new Error(
-            `Your mobx-state-tree model '${name}' is missing definition for '${dynamicKey}'`
+            `Your mobx-state-tree model '${name}' is missing definition for '${key}'`
           )
         }
       } catch (error) {
@@ -90,7 +89,8 @@ export const EnrichKoodiUri = types
         } else if (keyShouldBeFetchedFromKoodisto(key)) {
           const codes = getCodes(key)
           codes.forEach(code => {
-            fetchKoodisto(key, code)
+            const [enrichedKey] = key.split("KoodiUri") // key without KoodiUri
+            fetchKoodisto(enrichedKey, code)
           })
         }
       })
