@@ -86,12 +86,16 @@ export const EnrichKoodiUri = types
           codes.forEach(code => {
             fetchEPerusteet(key, code)
           })
-        } else if (keyShouldBeFetchedFromKoodisto(key)) {
+          return
+        }
+
+        if (keyShouldBeFetchedFromKoodisto(key)) {
           const codes = getCodes(key)
           codes.forEach(code => {
             const [enrichedKey] = key.split("KoodiUri") // key without KoodiUri
             fetchKoodisto(enrichedKey, code)
           })
+          return
         }
       })
     }
