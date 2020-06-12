@@ -79,22 +79,30 @@ export const EnrichKoodiUri = types
       return codes
     }
 
+    function enrichFromEperusteet(key: string) {
+      const codes = getCodes(key)
+      codes.forEach(code => {
+        fetchEPerusteet(key, code)
+      })
+    }
+
+    function enrichFromKoodisto(key: string) {
+      const codes = getCodes(key)
+      codes.forEach(code => {
+        const [enrichedKey] = key.split("KoodiUri") // key without KoodiUri
+        fetchKoodisto(enrichedKey, code)
+      })
+    }
+
     const afterCreate = () => {
       Object.keys(self).forEach(key => {
         if (keyShouldBeEnrichedFromEperusteet(key)) {
-          const codes = getCodes(key)
-          codes.forEach(code => {
-            fetchEPerusteet(key, code)
-          })
+          enrichFromEperusteet(key)
           return
         }
 
         if (keyShouldBeEnrichedFromKoodisto(key)) {
-          const codes = getCodes(key)
-          codes.forEach(code => {
-            const [enrichedKey] = key.split("KoodiUri") // key without KoodiUri
-            fetchKoodisto(enrichedKey, code)
-          })
+          enrichFromKoodisto(key)
           return
         }
       })
