@@ -78,6 +78,8 @@ interface YllapitoState {
   hoksId?: number
   opiskeluoikeusOid?: string | ""
   oppijaOid?: string | ""
+  opiskeluoikeusHakuOid?: string | ""
+  hoksHakuId?: number
   systemInfo?: SystemInfo
 }
 
@@ -250,10 +252,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
 
   onGetOpiskeluoikeusOid = async (event: any) => {
     const { intl } = this.context
-    const { hoksId } = this.state
+    const { hoksHakuId } = this.state
     event.preventDefault()
     const request = await window.fetch(
-      `/ehoks-virkailija-backend/api/v1/virkailija/hoks/${hoksId}`,
+      `/ehoks-virkailija-backend/api/v1/virkailija/hoks/${hoksHakuId}`,
       {
         method: "GET",
         credentials: "include",
@@ -273,7 +275,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
           defaultMessage: ""
         }),
         isLoading: false,
-        opiskeluoikeusOid: json.data["opiskeluoikeus-oid"],
+        opiskeluoikeusHakuOid: json.data["opiskeluoikeus-oid"],
         oppijaOid: json.data["oppija-oid"]
       })
     } else {
@@ -291,7 +293,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
   handleHoksIdChange = (inputId: any) => {
     // const inputOid = event.target.value
     this.setState({
-      hoksId: inputId
+      hoksHakuId: inputId
     })
   }
   handleOidChange = (inputOid: any) => {
@@ -396,8 +398,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         <form>
                           <input
                             type="text"
-                            value={this.state.hoksId}
-                            onChange={e => this.handleOidChange(e.target.value)}
+                            value={this.state.hoksHakuId}
+                            onChange={e =>
+                              this.handleHoksIdChange(e.target.value)
+                            }
                           />
                         </form>
                       </ContentElement>
@@ -405,7 +409,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         <Button onClick={this.onGetOpiskeluoikeusOid}>
                           <FormattedMessage
                             id="yllapito.haeOpiskeluoikeusOidButton"
-                            defaultMessage="Hae opiskeluoikeus"
+                            defaultMessage="Hae opiskeluoikeus hoks-id:llä"
                           />
                         </Button>
                       </ContentElement>
@@ -415,7 +419,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                       defaultMessage="Opiskeluoikeus-oid on: {opiskeluoikeusOid},
                       Oppija-oid on {oppijaOid}"
                       values={{
-                        opiskeluoikeusOid: this.state.opiskeluoikeusOid,
+                        opiskeluoikeusOid: this.state.opiskeluoikeusHakuOid,
                         oppijaOid: this.state.oppijaOid
                       }}
                     />
