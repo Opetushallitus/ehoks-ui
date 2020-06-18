@@ -28,8 +28,10 @@ export function getOsaamisvaatimukset(
         : "",
       kriteerit: flattenDeep<string>(
         arvioinninKohde.osaamistasonKriteerit.map(tasoKriteeri =>
-          tasoKriteeri.kriteerit.map(
-            kriteeri => `${tasoKriteeri.osaamistaso}: ${kriteeri[activeLocale]}`
+          tasoKriteeri.kriteerit.map(kriteeri =>
+            arvioinninKohde.arviointiAsteikko == "1"
+              ? `${kriteeri[activeLocale]}`
+              : `${tasoKriteeri.osaamistaso}: ${kriteeri[activeLocale]}`
           )
         )
       ).sort()
