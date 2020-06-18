@@ -85,13 +85,7 @@ export class MobileCompetences extends React.Component<
           onSlideChange={this.changeSlide}
         >
           {competenceRequirements.map((competenceRequirement, i) => (
-            <Slide key={i}>
-              <FormattedMessage
-                id="opiskelusuunnitelma.opiskelijaOsaaPrefix"
-                defaultMessage="Opiskelija osaa"
-              />{" "}
-              {competenceRequirement.kuvaus}
-            </Slide>
+            <Slide key={i}>{competenceRequirement.kuvaus}</Slide>
           ))}
         </MobileSlider>
         {showAssessment &&

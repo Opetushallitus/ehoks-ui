@@ -94,10 +94,6 @@ const Line = styled(HorizontalLine)`
   }
 `
 
-const Prefix = styled("div")`
-  margin: 10px 0 10px 20px;
-`
-
 interface CompetencesProps {
   collapseAll: () => void
   competenceRequirements?: SnapshotOrInstance<typeof Osaamisvaatimus>[]
@@ -196,14 +192,6 @@ export class Competences extends React.Component<CompetencesProps> {
               />
             </HMediaQuery.SmallTablet>
             <HMediaQuery.SmallTablet notMatch>
-              <Prefix>
-                <FormattedMessage
-                  id="opiskelusuunnitelma.opiskelijaOsaaPrefix"
-                  defaultMessage="Opiskelija osaa"
-                  tagName="i"
-                />
-              </Prefix>
-
               <InfoContainer data-testid="TutkinnonOsa.Competences.CompetenceRequirements">
                 {competenceRequirements.map((competenceRequirement, i) => (
                   <CompetenceRequirement
