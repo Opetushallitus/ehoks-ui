@@ -77,6 +77,9 @@ interface YllapitoState {
   message: string
   hoksId?: number
   opiskeluoikeusOid?: string | ""
+  oppijaOid?: string | ""
+  opiskeluoikeusHakuOid?: string | ""
+  hoksHakuId?: number
   systemInfo?: SystemInfo
 }
 
@@ -96,6 +99,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     message: "",
     hoksId: undefined,
     opiskeluoikeusOid: "",
+    oppijaOid: "",
     systemInfo: undefined
   }
 
@@ -225,7 +229,6 @@ export class Yllapito extends React.Component<YllapitoProps> {
     )
     if (request.status === 200) {
       const json = await request.json()
-      console.log(json)
       this.setState({
         success: true,
         message: intl.formatMessage({
@@ -247,6 +250,52 @@ export class Yllapito extends React.Component<YllapitoProps> {
     }
   }
 
+  onGetOpiskeluoikeusOid = async (event: any) => {
+    const { intl } = this.context
+    const { hoksHakuId } = this.state
+    event.preventDefault()
+    const request = await window.fetch(
+      `/ehoks-virkailija-backend/api/v1/virkailija/hoks/${hoksHakuId}`,
+      {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json; charset=utf-8",
+          "Content-Type": "application/json"
+        }
+      }
+    )
+    if (request.status === 200) {
+      const json = await request.json()
+      console.log(json)
+      this.setState({
+        success: true,
+        message: intl.formatMessage({
+          id: "yllapito.hoksinHakuOnnistui",
+          defaultMessage: ""
+        }),
+        isLoading: false,
+        opiskeluoikeusHakuOid: json.data["opiskeluoikeus-oid"],
+        oppijaOid: json.data["oppija-oid"]
+      })
+    } else {
+      this.setState({
+        success: false,
+        message: intl.formatMessage({
+          id: "yllapito.hoksinHakuEpaonnistui",
+          defaultMessage: "Hoksin haku epäonnistui"
+        }),
+        isLoading: false
+      })
+    }
+  }
+
+  handleHoksIdChange = (inputId: any) => {
+    // const inputOid = event.target.value
+    this.setState({
+      hoksHakuId: inputId
+    })
+  }
   handleOidChange = (inputOid: any) => {
     // const inputOid = event.target.value
     this.setState({
@@ -334,6 +383,44 @@ export class Yllapito extends React.Component<YllapitoProps> {
                       defaultMessage="Hoks-id on: {hoksId}"
                       values={{
                         hoksId: this.state.hoksId
+                      }}
+                    />
+                  </ContentElement>
+                  <ContentElement>
+                    <Header>
+                      <FormattedMessage
+                        id="yllapito.opiskeluoikeusOidHaku"
+                        defaultMessage="Opiskeluoikeus-oid:n haku"
+                      />
+                    </Header>
+                    <ContentElement>
+                      <ContentElement>
+                        <form>
+                          <input
+                            type="text"
+                            value={this.state.hoksHakuId}
+                            onChange={e =>
+                              this.handleHoksIdChange(e.target.value)
+                            }
+                          />
+                        </form>
+                      </ContentElement>
+                      <ContentElement>
+                        <Button onClick={this.onGetOpiskeluoikeusOid}>
+                          <FormattedMessage
+                            id="yllapito.haeOpiskeluoikeusOidButton"
+                            defaultMessage="Hae opiskeluoikeus hoks-id:llä"
+                          />
+                        </Button>
+                      </ContentElement>
+                    </ContentElement>
+                    <FormattedMessage
+                      id="yllapito.OpiskeluoikeusOidTulos"
+                      defaultMessage="Opiskeluoikeus-oid on: {opiskeluoikeusOid},
+                      Oppija-oid on {oppijaOid}"
+                      values={{
+                        opiskeluoikeusOid: this.state.opiskeluoikeusHakuOid,
+                        oppijaOid: this.state.oppijaOid
                       }}
                     />
                   </ContentElement>
