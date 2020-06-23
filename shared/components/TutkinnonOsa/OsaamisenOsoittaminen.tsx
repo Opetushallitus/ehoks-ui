@@ -187,7 +187,7 @@ export class OsaamisenOsoittaminen extends React.Component<
                 <TD>
                   {osaAlueet.map((osaAlue, i) => (
                     <span key={i}>
-                      {osaAlue.koodiUri} <br />
+                      {osaAlue.osaAlueData.nimi} <br />
                     </span>
                   ))}
                 </TD>
