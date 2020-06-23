@@ -3,14 +3,14 @@ import { NaytonJarjestaja } from "./NaytonJarjestaja"
 import { Nayttoymparisto } from "./Nayttoymparisto"
 import { KoulutuksenJarjestajaArvioija } from "./KoulutuksenJarjestajaArvioija"
 import { TyoelamaOsaamisenArvioija } from "./TyoelamaOsaamisenArvioija"
-import { KoodistoKoodi } from "./KoodistoKoodi"
+import { OsaAlueReference } from "./OsaAlueReference"
 
 export const OsaamisenOsoittaminen = types
   .model("OsaamisenOsoittaminen", {
     id: types.optional(types.number, 0),
     moduleId: types.maybe(types.string),
     jarjestaja: types.optional(NaytonJarjestaja, {}),
-    osaAlueet: types.optional(types.array(KoodistoKoodi), []),
+    osaAlueet: types.optional(types.array(OsaAlueReference), []),
     nayttoymparisto: types.optional(Nayttoymparisto, {}),
     alku: types.optional(types.string, ""),
     loppu: types.optional(types.string, ""),

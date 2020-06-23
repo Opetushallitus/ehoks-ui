@@ -1,4 +1,4 @@
-import { types, getEnv, flow, getPropertyMembers } from "mobx-state-tree"
+import { flow, getEnv, getPropertyMembers, types } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { APIResponse } from "types/APIResponse"
 
@@ -94,8 +94,15 @@ export const EnrichKoodiUri = types
       })
     }
 
+    const enrichOsaAlueReference = (key: string) => key === "osaAlueData"
+
     const afterCreate = () => {
       Object.keys(self).forEach(key => {
+        if (enrichOsaAlueReference(key)) {
+          fetchKoodisto(key, self.koodiUri)
+          return
+        }
+
         if (keyShouldBeEnrichedFromEperusteet(key)) {
           enrichFromEperusteet(key)
           return
