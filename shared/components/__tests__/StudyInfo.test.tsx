@@ -9,6 +9,8 @@ import {
 } from "models/helpers/TutkinnonOsa"
 import { mockFetch } from "fetchUtils"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
+import { Instance } from "mobx-state-tree"
+import { OsaAlueReference } from "../../models/OsaAlueReference"
 const TutkinnonOsa = withTheme(TutkinnonOsaWithoutTheme)
 
 const osaamisvaatimukset = [
@@ -44,6 +46,8 @@ const naytot1 = [
   } as IOsaamisenOsoittaminen
 ]
 
+type osaAlueReference = Instance<typeof OsaAlueReference>
+
 const naytot2 = [
   {
     alku: "2017-10-25",
@@ -54,6 +58,7 @@ const naytot2 = [
     },
     jarjestaja: { oppilaitosNimi: "testi testi" },
     koulutuksenJarjestajaArvioijat: ["koulutuksen arvioija"],
+    osaAlueet: [] as osaAlueReference[],
     tyoelamaArvioijat: ["arvioija"],
     sisallonKuvaus: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"]
   } as IOsaamisenOsoittaminen,
@@ -66,6 +71,7 @@ const naytot2 = [
     },
     jarjestaja: { oppilaitosNimi: "testi testi" },
     koulutuksenJarjestajaArvioijat: ["koulutuksen arvioija"],
+    osaAlueet: [] as osaAlueReference[],
     tyoelamaArvioijat: ["arvioija"],
     sisallonKuvaus: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"]
   } as IOsaamisenOsoittaminen
@@ -81,6 +87,7 @@ const naytot3 = [
     },
     jarjestaja: { oppilaitosNimi: "testi testi" },
     koulutuksenJarjestajaArvioijat: ["koulutuksen arvioija"],
+    osaAlueet: [] as osaAlueReference[],
     tyoelamaArvioijat: ["arvioija"],
     sisallonKuvaus: ["Elintarvikkeiden valmistus", "Elintarvikkeiden pakkaus"]
   } as IOsaamisenOsoittaminen

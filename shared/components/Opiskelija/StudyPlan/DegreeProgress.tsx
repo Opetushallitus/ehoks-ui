@@ -6,6 +6,7 @@ import { IHankittavaTutkinnonOsa } from "../../../models/helpers/TutkinnonOsa"
 import { FormattedMessage } from "react-intl"
 import styled, { withTheme, ComponentWithTheme } from "styled"
 import { TypeOfTheme, ColorType } from "theme"
+import { LinkButton } from "components/Button"
 
 const colorFromTheme = (theme: TypeOfTheme) => (
   color?: ColorType
@@ -23,53 +24,54 @@ const DegreeBoxes = styled(StatBoxes)`
   max-width: 900px;
 `
 
-const StudiesCategory = styled(
-  ({
-    className,
-    totalStudiesLength,
-    stroke,
-    color,
-    onClick,
-    opinnot,
-    children,
-    competencePointsTitle
-  }: {
-    totalStudiesLength: number
-    stroke: ColorType
-    color?: string
-    opinnot: IHankittavaTutkinnonOsa[]
-    competencePointsTitle: string
-    onClick?: () => void
-    children?: React.ReactNode
-    className?: string
-  }) => (
-    <div className={className}>
-      <ProgressPie
-        value={
-          totalStudiesLength !== 0
-            ? Math.round((opinnot.length / totalStudiesLength) * 100)
-            : 0
-        }
-        stroke={stroke}
-        onClick={onClick}
-      />
-      <StatBox borderTop={color}>
-        <StatNumber color={color}>{opinnot.length}</StatNumber>
-        <StatTitle>{children}</StatTitle>
-      </StatBox>
-      <StudiesList
-        opinnot={opinnot}
-        competencePointsTitle={competencePointsTitle}
-      />
-    </div>
-  )
-)`
+const CategoryButton = styled(LinkButton)`
   flex: 1;
   margin-right: ${props => props.theme.spacing.m};
+  margin-bottom: auto;
+  background: transparent;
+  color: ${props => props.theme.colors.text};
+  text-decoration: none;
   &:last-child {
     margin-right: 0;
   }
 `
+
+const StudiesCategory = ({
+  totalStudiesLength,
+  stroke,
+  color,
+  onClick,
+  opinnot,
+  children,
+  competencePointsTitle
+}: {
+  totalStudiesLength: number
+  stroke: ColorType
+  color?: string
+  opinnot: IHankittavaTutkinnonOsa[]
+  competencePointsTitle: string
+  onClick?: () => void
+  children?: React.ReactNode
+}) => (
+  <CategoryButton onClick={onClick}>
+    <ProgressPie
+      value={
+        totalStudiesLength !== 0
+          ? Math.round((opinnot.length / totalStudiesLength) * 100)
+          : 0
+      }
+      stroke={stroke}
+    />
+    <StatBox borderTop={color}>
+      <StatNumber color={color}>{opinnot.length}</StatNumber>
+      <StatTitle>{children}</StatTitle>
+    </StatBox>
+    <StudiesList
+      opinnot={opinnot}
+      competencePointsTitle={competencePointsTitle}
+    />
+  </CategoryButton>
+)
 
 const StudiesListContainer = styled("ul")`
   list-style: none;
