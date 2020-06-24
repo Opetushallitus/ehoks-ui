@@ -1,4 +1,4 @@
-import { types, getEnv, flow, getPropertyMembers } from "mobx-state-tree"
+import { flow, getEnv, getPropertyMembers, types } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { APIResponse } from "types/APIResponse"
 
@@ -44,7 +44,6 @@ export const EnrichKoodiUri = types
 
     const fetchKoodisto = flow(function*(key: string, code: string): any {
       try {
-        const [dynamicKey] = key.split("KoodiUri") // key without KoodiUri
         // check our global cache first
         cachedResponses[code] =
           cachedResponses[code] ||
@@ -53,15 +52,15 @@ export const EnrichKoodiUri = types
           })
         const { data }: APIResponse = yield cachedResponses[code]
         // we currently only need nimi from KoodistoKoodi
-        if (Object.keys(self).indexOf(dynamicKey) > -1) {
-          self[dynamicKey] = data.metadata.reduce((result: any, meta: any) => {
+        if (Object.keys(self).indexOf(key) > -1) {
+          self[key] = data.metadata.reduce((result: any, meta: any) => {
             result[meta.kieli.toLowerCase()] = meta
             return result
           }, {})
         } else {
           const { name } = getPropertyMembers(self)
           throw new Error(
-            `Your mobx-state-tree model '${name}' is missing definition for '${dynamicKey}'`
+            `Your mobx-state-tree model '${name}' is missing definition for '${key}'`
           )
         }
       } catch (error) {
@@ -69,10 +68,10 @@ export const EnrichKoodiUri = types
       }
     })
 
-    const keyShouldBeFetchedFromEperusteet = (key: string) =>
+    const keyShouldBeEnrichedFromEperusteet = (key: string) =>
       key.match(/tutkinnonOsaKoodiUri/) && self[key]
 
-    const keyShouldBeFetchedFromKoodisto = (key: string) =>
+    const keyShouldBeEnrichedFromKoodisto = (key: string) =>
       key.match(/KoodiUri/) && self[key]
 
     function getCodes(key: string) {
@@ -80,18 +79,38 @@ export const EnrichKoodiUri = types
       return codes
     }
 
+    function enrichFromEperusteet(key: string) {
+      const codes = getCodes(key)
+      codes.forEach(code => {
+        fetchEPerusteet(key, code)
+      })
+    }
+
+    function enrichFromKoodisto(key: string) {
+      const codes = getCodes(key)
+      codes.forEach(code => {
+        const [enrichedKey] = key.split("KoodiUri") // key without KoodiUri
+        fetchKoodisto(enrichedKey, code)
+      })
+    }
+
+    const enrichOsaAlueReference = (key: string) => key === "osaAlueData"
+
     const afterCreate = () => {
       Object.keys(self).forEach(key => {
-        if (keyShouldBeFetchedFromEperusteet(key)) {
-          const codes = getCodes(key)
-          codes.forEach(code => {
-            fetchEPerusteet(key, code)
-          })
-        } else if (keyShouldBeFetchedFromKoodisto(key)) {
-          const codes = getCodes(key)
-          codes.forEach(code => {
-            fetchKoodisto(key, code)
-          })
+        if (enrichOsaAlueReference(key)) {
+          fetchKoodisto(key, self.koodiUri)
+          return
+        }
+
+        if (keyShouldBeEnrichedFromEperusteet(key)) {
+          enrichFromEperusteet(key)
+          return
+        }
+
+        if (keyShouldBeEnrichedFromKoodisto(key)) {
+          enrichFromKoodisto(key)
+          return
         }
       })
     }
