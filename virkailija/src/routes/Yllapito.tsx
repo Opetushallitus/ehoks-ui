@@ -51,7 +51,8 @@ const Header = styled(Heading)`
 `
 
 const HakuInput = styled("input")`
-  width: 11rem;
+  width: 100%;
+  max-width: 11rem;
 `
 
 interface YllapitoProps extends RouteComponentProps {
