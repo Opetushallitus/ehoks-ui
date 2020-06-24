@@ -1,7 +1,7 @@
 import { getRoot, types } from "mobx-state-tree"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
-import { EnrichKoodiUri } from "models/EnrichKoodiUri"
+import { EnrichKoodiUri } from "models/Enrichment/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import { getOsaamispisteet } from "models/helpers/getOsaamispisteet"

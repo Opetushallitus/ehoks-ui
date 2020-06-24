@@ -1,5 +1,5 @@
 import { types } from "mobx-state-tree"
-import { EnrichKoodiUri } from "./EnrichKoodiUri"
+import { EnrichKoodiUri } from "./Enrichment/EnrichKoodiUri"
 import { KoodistoVastaus } from "./KoodistoVastaus"
 
 export const Model = types.model({

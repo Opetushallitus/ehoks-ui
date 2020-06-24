@@ -11,7 +11,7 @@ import {
 } from "./helpers/TutkinnonOsa"
 import flattenDeep from "lodash.flattendeep"
 import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
-import { EnrichKoodiUri } from "models/EnrichKoodiUri"
+import { EnrichKoodiUri } from "models/Enrichment/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { Opiskeluoikeus } from "models/Opiskeluoikeus"
