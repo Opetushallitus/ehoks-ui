@@ -4,7 +4,7 @@ import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 import { EnrichKoodiUri } from "./EnrichKoodiUri"
 import { KoodistoVastaus } from "./KoodistoVastaus"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
-import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
+import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 import { Organisaatio } from "./Organisaatio"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 

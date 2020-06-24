@@ -7,7 +7,7 @@ import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
 import { EnrichTutkinnonOsa } from "models/Enrichment/EnrichTutkinnonOsa"
-import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
+import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 import { Organisaatio } from "./Organisaatio"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 

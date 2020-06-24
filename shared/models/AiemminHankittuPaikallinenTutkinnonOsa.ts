@@ -5,7 +5,7 @@ import { EnrichKoodiUri } from "./EnrichKoodiUri"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 import { Organisaatio } from "./Organisaatio"
-import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
+import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 
 const model = types.model({

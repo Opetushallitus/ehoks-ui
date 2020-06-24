@@ -10,7 +10,7 @@ import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 import { Organisaatio } from "./Organisaatio"
-import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
+import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 
 const Model = types.model({

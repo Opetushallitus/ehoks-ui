@@ -4,7 +4,7 @@ import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { HankittavatTutkinnonOsatViews } from "./helpers/HankittavatTutkinnonOsatViews"
 import { EnrichKoodiUri } from "models/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
-import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
+import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 import { Organisaatio } from "./Organisaatio"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 
