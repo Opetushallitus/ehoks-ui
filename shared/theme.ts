@@ -24,7 +24,8 @@ const themeColors = {
   waterBlue: "#1976d2",
   planned: "#FF5000",
   scheduled: "#FFCC33",
-  ready: "#5BAC13"
+  ready: "#5BAC13",
+  text: "#000"
 }
 
 const fontFamily = '"Source Sans Pro", sans-serif;'
