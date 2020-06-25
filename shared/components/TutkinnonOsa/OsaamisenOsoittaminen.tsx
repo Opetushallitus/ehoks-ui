@@ -176,7 +176,7 @@ export class OsaamisenOsoittaminen extends React.Component<
         </OsaamisenOsoittaminenTitle>
         <OsaamisenOsoittaminenTable>
           <TBody>
-            {osaAlueet.length > 0 ? (
+            {osaAlueet.length > 0 && (
               <tr>
                 <TH>
                   <FormattedMessage
@@ -192,7 +192,7 @@ export class OsaamisenOsoittaminen extends React.Component<
                   ))}
                 </TD>
               </tr>
-            ) : null}
+            )}
             <tr>
               <TH>
                 <FormattedMessage
