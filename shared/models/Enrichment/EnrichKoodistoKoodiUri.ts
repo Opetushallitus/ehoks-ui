@@ -25,6 +25,13 @@ export const EnrichKoodistoKoodiUri = (...fieldsToEnrich: string[]) =>
         koodiUri: string
       ): any {
         try {
+          if (Object.keys(self).indexOf(enrichedField) < 0) {
+            const { name } = getPropertyMembers(self)
+            throw new Error(
+              `Your mobx-state-tree model '${name}' is missing definition for '${enrichedField}'`
+            )
+          }
+
           // check our global cache first
           cachedResponses[koodiUri] =
             cachedResponses[koodiUri] ||
@@ -33,20 +40,13 @@ export const EnrichKoodistoKoodiUri = (...fieldsToEnrich: string[]) =>
             })
           const { data }: APIResponse = yield cachedResponses[koodiUri]
           // we currently only need nimi from KoodistoKoodi
-          if (Object.keys(self).indexOf(enrichedField) > -1) {
-            self[enrichedField] = data.metadata.reduce(
-              (result: any, meta: any) => {
-                result[meta.kieli.toLowerCase()] = meta
-                return result
-              },
-              {}
-            )
-          } else {
-            const { name } = getPropertyMembers(self)
-            throw new Error(
-              `Your mobx-state-tree model '${name}' is missing definition for '${enrichedField}'`
-            )
-          }
+          self[enrichedField] = data.metadata.reduce(
+            (result: any, meta: any) => {
+              result[meta.kieli.toLowerCase()] = meta
+              return result
+            },
+            {}
+          )
         } catch (error) {
           errors.logError("EnrichKoodiUri.fetchKoodisto", error.message)
         }
