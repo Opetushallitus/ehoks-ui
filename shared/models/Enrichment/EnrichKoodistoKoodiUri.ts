@@ -27,9 +27,11 @@ export const EnrichKoodistoKoodiUri = (...fieldsToEnrich: string[]) =>
         try {
           if (Object.keys(self).indexOf(enrichedField) < 0) {
             const { name } = getPropertyMembers(self)
-            throw new Error(
+            errors.logError(
+              "EnrichKoodiUri.fetchKoodisto",
               `Your mobx-state-tree model '${name}' is missing definition for '${enrichedField}'`
             )
+            return
           }
 
           // check our global cache first
