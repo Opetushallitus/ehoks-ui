@@ -71,6 +71,8 @@ function CustomBaseInput(props: CustomBaseInputProps) {
                 schema.examples.concat(schema.default ? [schema.default] : [])
               )
             ].map(example => (
+              // TODO Type 'JSONSchema6Type' is not assignable to type 'string | number | string[] | undefined'
+              // @ts-ignore
               <option key={example} value={example} />
             ))}
           </datalist>
