@@ -20,25 +20,31 @@ export const EnrichKoodistoKoodiUri = (...fieldsToEnrich: string[]) =>
         StoreEnvironment
       >(self)
 
-      const fetchKoodisto = flow(function*(key: string, code: string): any {
+      const fetchKoodisto = flow(function*(
+        enrichedField: string,
+        koodiUri: string
+      ): any {
         try {
           // check our global cache first
-          cachedResponses[code] =
-            cachedResponses[code] ||
-            fetchSingle(apiUrl(`${apiPrefix}/external/koodisto/${code}`), {
+          cachedResponses[koodiUri] =
+            cachedResponses[koodiUri] ||
+            fetchSingle(apiUrl(`${apiPrefix}/external/koodisto/${koodiUri}`), {
               headers: callerId()
             })
-          const { data }: APIResponse = yield cachedResponses[code]
+          const { data }: APIResponse = yield cachedResponses[koodiUri]
           // we currently only need nimi from KoodistoKoodi
-          if (Object.keys(self).indexOf(key) > -1) {
-            self[key] = data.metadata.reduce((result: any, meta: any) => {
-              result[meta.kieli.toLowerCase()] = meta
-              return result
-            }, {})
+          if (Object.keys(self).indexOf(enrichedField) > -1) {
+            self[enrichedField] = data.metadata.reduce(
+              (result: any, meta: any) => {
+                result[meta.kieli.toLowerCase()] = meta
+                return result
+              },
+              {}
+            )
           } else {
             const { name } = getPropertyMembers(self)
             throw new Error(
-              `Your mobx-state-tree model '${name}' is missing definition for '${key}'`
+              `Your mobx-state-tree model '${name}' is missing definition for '${enrichedField}'`
             )
           }
         } catch (error) {
