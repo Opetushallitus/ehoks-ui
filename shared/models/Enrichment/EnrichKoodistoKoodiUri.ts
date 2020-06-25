@@ -46,37 +46,11 @@ export const EnrichKoodistoKoodiUri = (...fieldsToEnrich: string[]) =>
         }
       })
 
-      const keyShouldBeEnrichedFromKoodisto = (key: string) =>
-        key.match(/KoodiUri/) && self[key]
-
-      function getCodes(key: string) {
-        const codes: string[] = Array.isArray(self[key])
-          ? self[key]
-          : [self[key]]
-        return codes
-      }
-
-      function enrichFromKoodisto(key: string) {
-        const codes = getCodes(key)
-        codes.forEach(code => {
-          const [enrichedKey] = key.split("KoodiUri") // key without KoodiUri
-          fetchKoodisto(enrichedKey, code)
-        })
-      }
-
-      const enrichOsaAlueReference = (key: string) => key === "osaAlueData"
+      const appendKoodiUri = (key: string) => key + "koodiUri"
 
       const afterCreate = () => {
-        Object.keys(self).forEach(key => {
-          if (enrichOsaAlueReference(key)) {
-            fetchKoodisto(key, self.koodiUri)
-            return
-          }
-
-          if (keyShouldBeEnrichedFromKoodisto(key)) {
-            enrichFromKoodisto(key)
-            return
-          }
+        fieldsToEnrich.forEach(key => {
+          fetchKoodisto(key, appendKoodiUri(key))
         })
       }
 
