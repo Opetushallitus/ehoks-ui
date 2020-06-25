@@ -13,7 +13,7 @@ export const EnrichKoodistoKoodiUri = (...fieldsToEnrich: string[]) =>
   types
     .model({})
     // we need this typing to avoid 'missing index signature' error
-    // when assigning to self[dynamicKey]
+    // when assigning to self[enrichedField]
     .volatile((): DynamicObject => ({}))
     .actions(self => {
       const { apiUrl, apiPrefix, errors, fetchSingle, callerId } = getEnv<
@@ -31,6 +31,17 @@ export const EnrichKoodistoKoodiUri = (...fieldsToEnrich: string[]) =>
         )
       }
 
+      const getFromKoodistoService = (koodiUri: string) =>
+        fetchSingle(apiUrl(`${apiPrefix}/external/koodisto/${koodiUri}`), {
+          headers: callerId()
+        })
+
+      const parseResponse = (data: any) =>
+        data.metadata.reduce((result: any, meta: any) => {
+          result[meta.kieli.toLowerCase()] = meta
+          return result
+        }, {})
+
       const fetchKoodisto = flow(function*(
         enrichedField: string,
         koodiUri: string
@@ -43,19 +54,9 @@ export const EnrichKoodistoKoodiUri = (...fieldsToEnrich: string[]) =>
 
           // check our global cache first
           cachedResponses[koodiUri] =
-            cachedResponses[koodiUri] ||
-            fetchSingle(apiUrl(`${apiPrefix}/external/koodisto/${koodiUri}`), {
-              headers: callerId()
-            })
+            cachedResponses[koodiUri] || getFromKoodistoService(koodiUri)
           const { data }: APIResponse = yield cachedResponses[koodiUri]
-          // we currently only need nimi from KoodistoKoodi
-          self[enrichedField] = data.metadata.reduce(
-            (result: any, meta: any) => {
-              result[meta.kieli.toLowerCase()] = meta
-              return result
-            },
-            {}
-          )
+          self[enrichedField] = parseResponse(data)
         } catch (error) {
           errors.logError("EnrichKoodiUri.fetchKoodisto", error.message)
         }
