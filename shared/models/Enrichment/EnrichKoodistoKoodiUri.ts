@@ -20,17 +20,24 @@ export const EnrichKoodistoKoodiUri = (...fieldsToEnrich: string[]) =>
         StoreEnvironment
       >(self)
 
+      const fieldDoesntExist = (enrichedField: string) =>
+        Object.keys(self).indexOf(enrichedField) < 0
+
+      function logMissingFieldError(enrichedField: string) {
+        const { name } = getPropertyMembers(self)
+        errors.logError(
+          "EnrichKoodiUri.fetchKoodisto",
+          `Your mobx-state-tree model '${name}' is missing definition for '${enrichedField}'`
+        )
+      }
+
       const fetchKoodisto = flow(function*(
         enrichedField: string,
         koodiUri: string
       ): any {
         try {
-          if (Object.keys(self).indexOf(enrichedField) < 0) {
-            const { name } = getPropertyMembers(self)
-            errors.logError(
-              "EnrichKoodiUri.fetchKoodisto",
-              `Your mobx-state-tree model '${name}' is missing definition for '${enrichedField}'`
-            )
+          if (fieldDoesntExist(enrichedField)) {
+            logMissingFieldError(enrichedField)
             return
           }
 
