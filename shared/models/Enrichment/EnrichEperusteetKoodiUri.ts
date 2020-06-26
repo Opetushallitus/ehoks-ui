@@ -19,25 +19,34 @@ export const EnrichEperusteetKoodiUri = types
       StoreEnvironment
     >(self)
 
+    const fieldDoesntExist = (dynamicKey: string) =>
+      Object.keys(self).indexOf(dynamicKey) < 0
+
+    function logMissingFieldError(dynamicKey: string) {
+      const { name } = getPropertyMembers(self)
+      errors.logError(
+        "EnrichKoodiUri.fetchEPerusteet",
+        `Your mobx-state-tree model '${name}' is missing definition for '${dynamicKey}'`
+      )
+    }
+
+    const getFromKoodistoService = (code: string) =>
+      fetchSingle(apiUrl(`${apiPrefix}/external/eperusteet/${code}`), {
+        headers: callerId()
+      })
+
     const fetchEPerusteet = flow(function*(key: string, code: string): any {
       try {
         const [dynamicKey] = key.split("KoodiUri") // key without KoodiUri
 
-        if (Object.keys(self).indexOf(dynamicKey) < 0) {
-          const { name } = getPropertyMembers(self)
-          errors.logError(
-            "EnrichKoodiUri.fetchEPerusteet",
-            `Your mobx-state-tree model '${name}' is missing definition for '${dynamicKey}'`
-          )
+        if (fieldDoesntExist(dynamicKey)) {
+          logMissingFieldError(dynamicKey)
           return
         }
 
         // check our global cache first
         cachedResponses[code] =
-          cachedResponses[code] ||
-          fetchSingle(apiUrl(`${apiPrefix}/external/eperusteet/${code}`), {
-            headers: callerId()
-          })
+          cachedResponses[code] || getFromKoodistoService(code)
         const response: APIResponse = yield cachedResponses[code]
         self[dynamicKey] = response.data
       } catch (error) {
