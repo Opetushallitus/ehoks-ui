@@ -22,6 +22,14 @@ export const EnrichEperusteetKoodiUri = types
     const fetchEPerusteet = flow(function*(key: string, code: string): any {
       try {
         const [dynamicKey] = key.split("KoodiUri") // key without KoodiUri
+
+        if (Object.keys(self).indexOf(dynamicKey) < 0) {
+          const { name } = getPropertyMembers(self)
+          throw new Error(
+            `Your mobx-state-tree model '${name}' is missing definition for '${dynamicKey}'`
+          )
+        }
+
         // check our global cache first
         cachedResponses[code] =
           cachedResponses[code] ||
@@ -29,14 +37,7 @@ export const EnrichEperusteetKoodiUri = types
             headers: callerId()
           })
         const response: APIResponse = yield cachedResponses[code]
-        if (Object.keys(self).indexOf(dynamicKey) > -1) {
-          self[dynamicKey] = response.data
-        } else {
-          const { name } = getPropertyMembers(self)
-          throw new Error(
-            `Your mobx-state-tree model '${name}' is missing definition for '${dynamicKey}'`
-          )
-        }
+        self[dynamicKey] = response.data
       } catch (error) {
         errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
       }
