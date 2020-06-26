@@ -154,19 +154,19 @@ export const DegreeProgressWithTheme = ({
       <StudiesCategory {...planned} stroke="planned">
         <FormattedMessage
           id="opiskelusuunnitelma.suunniteltunaTitle"
-          defaultMessage="Suunniteltua tutkinnonosaa"
+          defaultMessage="Suunniteltua tutkinnon osaa"
         />
       </StudiesCategory>
       <StudiesCategory {...scheduled} stroke="scheduled">
         <FormattedMessage
           id="opiskelusuunnitelma.aikataulutettunaTitle"
-          defaultMessage="Aikataulutettua tutkinnonosaa"
+          defaultMessage="Aikataulutettua tutkinnon osaa"
         />
       </StudiesCategory>
       <StudiesCategory {...ready} stroke="ready">
         <FormattedMessage
           id="opiskelusuunnitelma.valmiinaTitle"
-          defaultMessage="Valmista tutkinnonosaa"
+          defaultMessage="Valmista tutkinnon osaa"
         />
       </StudiesCategory>
     </DegreeBoxes>
