@@ -5,7 +5,7 @@ import { EnrichKoodiUri } from "models/Enrichment/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import { getOsaamispisteet } from "models/helpers/getOsaamispisteet"
-import { EnrichTutkinnonOsa } from "models/Enrichment/EnrichTutkinnonOsa"
+import { EnrichTutkinnonOsaViitteet } from "models/Enrichment/EnrichTutkinnonOsaViitteet"
 import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
@@ -35,7 +35,7 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
   .compose(
     "AiemminHankittuAmmatillinenTutkinnonOsa",
     EnrichKoodiUri,
-    EnrichTutkinnonOsa("tutkinnonOsaViitteet"),
+    EnrichTutkinnonOsaViitteet("tutkinnonOsaViitteet"),
     EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
     AiemminHankitutTutkinnonOsatViews,
     Model
