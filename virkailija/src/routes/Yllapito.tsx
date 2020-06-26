@@ -50,6 +50,11 @@ const Header = styled(Heading)`
   padding-right: 10px;
 `
 
+const HakuInput = styled("input")`
+  width: 100%;
+  max-width: 11rem;
+`
+
 interface YllapitoProps extends RouteComponentProps {
   store?: IRootStore
 }
@@ -233,7 +238,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
         success: true,
         message: intl.formatMessage({
           id: "yllapito.hoksinHakuOnnistui",
-          defaultMessage: ""
+          defaultMessage: "Hoksin haku onnistui"
         }),
         isLoading: false,
         hoksId: json.data.id
@@ -271,8 +276,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
       this.setState({
         success: true,
         message: intl.formatMessage({
-          id: "yllapito.hoksinHakuOnnistui",
-          defaultMessage: ""
+          id: "yllapito.opiskeluoikeudenHakuOnnistui",
+          defaultMessage: "Opiskeluoikeuden haku onnistui"
         }),
         isLoading: false,
         opiskeluoikeusHakuOid: json.data["opiskeluoikeus-oid"],
@@ -282,8 +287,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
       this.setState({
         success: false,
         message: intl.formatMessage({
-          id: "yllapito.hoksinHakuEpaonnistui",
-          defaultMessage: "Hoksin haku epäonnistui"
+          id: "yllapito.opiskeluoikeudenHakuEpaonnistui",
+          defaultMessage: "Opiskeluoikeuden haku epäonnistui"
         }),
         isLoading: false
       })
@@ -362,8 +367,9 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <ContentElement>
                       <ContentElement>
                         <form>
-                          <input
+                          <HakuInput
                             type="text"
+                            placeholder="1.2.345.678.98.76543212345"
                             value={this.state.opiskeluoikeusOid}
                             onChange={e => this.handleOidChange(e.target.value)}
                           />
@@ -373,7 +379,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         <Button onClick={this.onGetHoksId}>
                           <FormattedMessage
                             id="yllapito.haeHoksIdButton"
-                            defaultMessage="Hae hoks-id"
+                            defaultMessage="Hae hoks-id opiskeluoikeus-oid:llä"
                           />
                         </Button>
                       </ContentElement>
@@ -396,8 +402,9 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <ContentElement>
                       <ContentElement>
                         <form>
-                          <input
+                          <HakuInput
                             type="text"
+                            placeholder="12345"
                             value={this.state.hoksHakuId}
                             onChange={e =>
                               this.handleHoksIdChange(e.target.value)
@@ -416,12 +423,16 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     </ContentElement>
                     <FormattedMessage
                       id="yllapito.OpiskeluoikeusOidTulos"
-                      defaultMessage="Opiskeluoikeus-oid on: {opiskeluoikeusOid},
-                      Oppija-oid on {oppijaOid}"
+                      defaultMessage="Opiskeluoikeus-oid on: {opiskeluoikeusOid}"
                       values={{
-                        opiskeluoikeusOid: this.state.opiskeluoikeusHakuOid,
-                        oppijaOid: this.state.oppijaOid
+                        opiskeluoikeusOid: this.state.opiskeluoikeusHakuOid
                       }}
+                    />
+                    <br />
+                    <FormattedMessage
+                      id="yllapito.OppijaOidTulos"
+                      defaultMessage="Oppija-oid on: {oppijaOid}"
+                      values={{ oppijaOid: this.state.oppijaOid }}
                     />
                   </ContentElement>
                   <ContentElement>
