@@ -25,7 +25,6 @@ export const StatBox = styled("div")`
   }
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
-    margin-bottom: 20px;
     margin-right: 0;
   }
 `
