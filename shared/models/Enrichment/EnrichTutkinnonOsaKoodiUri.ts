@@ -9,7 +9,7 @@ interface DynamicObject {
 // dumb cache for preventing multiple fetches for the same koodi-uri's
 const cachedResponses: DynamicObject = {}
 
-export const EnrichEperusteetKoodiUri = types
+export const EnrichTutkinnonOsaKoodiUri = types
   .model({})
   // we need this typing to avoid 'missing index signature' error
   // when assigning to self[dynamicKey]
