@@ -35,47 +35,28 @@ export const EnrichTutkinnonOsaKoodiUri = types
         headers: callerId()
       })
 
-    const fetchEPerusteet = flow(function*(key: string, code: string): any {
+    const fetchEPerusteet = flow(function*(
+      enrichedField: string,
+      koodiUri: string
+    ): any {
       try {
-        const [dynamicKey] = key.split("KoodiUri") // key without KoodiUri
-
-        if (fieldDoesntExist(dynamicKey)) {
-          logMissingFieldError(dynamicKey)
+        if (fieldDoesntExist(enrichedField)) {
+          logMissingFieldError(enrichedField)
           return
         }
 
         // check our global cache first
-        cachedResponses[code] =
-          cachedResponses[code] || getFromKoodistoService(code)
-        const response: APIResponse = yield cachedResponses[code]
-        self[dynamicKey] = response.data
+        cachedResponses[koodiUri] =
+          cachedResponses[koodiUri] || getFromKoodistoService(koodiUri)
+        const response: APIResponse = yield cachedResponses[koodiUri]
+        self[enrichedField] = response.data
       } catch (error) {
         errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
       }
     })
 
-    const keyShouldBeEnrichedFromEperusteet = (key: string) =>
-      key.match(/tutkinnonOsaKoodiUri/) && self[key]
-
-    function getCodes(key: string) {
-      const codes: string[] = Array.isArray(self[key]) ? self[key] : [self[key]]
-      return codes
-    }
-
-    function enrichFromEperusteet(key: string) {
-      const codes = getCodes(key)
-      codes.forEach(code => {
-        fetchEPerusteet(key, code)
-      })
-    }
-
     const afterCreate = () => {
-      Object.keys(self).forEach(key => {
-        if (keyShouldBeEnrichedFromEperusteet(key)) {
-          enrichFromEperusteet(key)
-          return
-        }
-      })
+      fetchEPerusteet("tutkinnonOsa", self.tutkinnonOsaKoodiUri)
     }
 
     return { afterCreate }
