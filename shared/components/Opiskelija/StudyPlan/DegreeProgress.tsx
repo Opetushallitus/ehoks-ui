@@ -83,6 +83,7 @@ const StudiesItem = styled("li")`
   padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.s};
   border: 1px solid #979797; /*//TODO from theme*/
   border-top: none;
+  text-align: left;
   &:nth-child(odd) {
     background: #fafafa; /*//TODO from theme*/
   }
