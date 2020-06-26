@@ -25,9 +25,11 @@ export const EnrichEperusteetKoodiUri = types
 
         if (Object.keys(self).indexOf(dynamicKey) < 0) {
           const { name } = getPropertyMembers(self)
-          throw new Error(
+          errors.logError(
+            "EnrichKoodiUri.fetchEPerusteet",
             `Your mobx-state-tree model '${name}' is missing definition for '${dynamicKey}'`
           )
+          return
         }
 
         // check our global cache first
