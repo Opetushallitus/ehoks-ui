@@ -62,7 +62,7 @@ export const EnrichKoodistoKoodiUri = (...fieldsToEnrich: string[]) =>
         }
       })
 
-      const appendKoodiUri = (key: string) => key + "koodiUri"
+      const appendKoodiUri = (key: string) => key + "KoodiUri"
 
       const afterCreate = () => {
         fieldsToEnrich.forEach(key => {
