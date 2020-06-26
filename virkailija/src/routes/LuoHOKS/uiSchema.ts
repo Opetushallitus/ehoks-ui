@@ -10,7 +10,8 @@ export const propertiesByStep: { [index: number]: string[] } = {
     "sahkoposti",
     "urasuunnitelma-koodi-uri",
     "urasuunnitelma-koodi-versio",
-    "osaamisen-hankkimisen-tarve"
+    "osaamisen-hankkimisen-tarve",
+    "osaamisen-saavuttamisen-pvm"
   ],
   1: ["aiemmin-hankitut-ammat-tutkinnon-osat"],
   2: ["aiemmin-hankitut-paikalliset-tutkinnon-osat"],
@@ -31,6 +32,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
     "urasuunnitelma-koodi-uri",
     "urasuunnitelma-koodi-versio",
     "osaamisen-hankkimisen-tarve",
+    "osaamisen-saavuttamisen-pvm",
     "aiemmin-hankitut-ammat-tutkinnon-osat",
     "aiemmin-hankitut-paikalliset-tutkinnon-osat",
     "aiemmin-hankitut-yhteiset-tutkinnon-osat",
@@ -61,6 +63,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
   },
   "osaamisen-hankkimisen-tarve": {
     "ui:widget": "customBooleanRadioButtonWidget"
+  },
+  "osaamisen-saavuttamisen-pvm": {
+    "ui:widget": "DateWidget"
   },
   "aiemmin-hankitut-ammat-tutkinnon-osat": {
     "ui:options": {
