@@ -6,7 +6,7 @@ import {
   SnapshotOrInstance,
   types
 } from "mobx-state-tree"
-import { EnrichKoodiUri } from "models/EnrichKoodiUri"
+import { EnrichKoodiUri } from "models/Enrichment/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import parseISO from "date-fns/parseISO"

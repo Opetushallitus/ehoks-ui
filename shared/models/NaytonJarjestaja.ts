@@ -1,6 +1,6 @@
 import { getRoot, types } from "mobx-state-tree"
 import { Organisaatio } from "./Organisaatio"
-import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
+import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 import { LocaleRoot } from "./helpers/LocaleRoot"
 
 const Model = types.model("NaytonJarjestajaModel", {

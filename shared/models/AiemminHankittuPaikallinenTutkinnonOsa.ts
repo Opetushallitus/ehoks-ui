@@ -1,11 +1,11 @@
 import { types } from "mobx-state-tree"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { KoodistoVastaus } from "./KoodistoVastaus"
-import { EnrichKoodiUri } from "./EnrichKoodiUri"
+import { EnrichKoodiUri } from "./Enrichment/EnrichKoodiUri"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 import { Organisaatio } from "./Organisaatio"
-import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
+import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 
 const model = types.model({

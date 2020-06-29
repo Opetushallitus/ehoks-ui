@@ -1,5 +1,5 @@
 import { getRoot, types } from "mobx-state-tree"
-import { EnrichOrganisaatioOid } from "./EnrichOrganisaatioOid"
+import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 import { LocaleRoot } from "./helpers/LocaleRoot"
 import { Organisaatio } from "./Organisaatio"
 

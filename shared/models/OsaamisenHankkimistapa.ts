@@ -2,7 +2,7 @@ import { types } from "mobx-state-tree"
 import { Oppilaitoshenkilo } from "./Oppilaitoshenkilo"
 import { TyopaikallaJarjestettavaKoulutus } from "./TyopaikallaJarjestettavaKoulutus"
 import { MuuOppimisymparisto } from "./MuuOppimisymparisto"
-import { EnrichKoodiUri } from "models/EnrichKoodiUri"
+import { EnrichKoodiUri } from "models/Enrichment/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 
 export enum OsaamisenHankkimistapaType {

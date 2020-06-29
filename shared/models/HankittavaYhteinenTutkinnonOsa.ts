@@ -1,6 +1,6 @@
 import { types } from "mobx-state-tree"
 import { YhteisenTutkinnonOsanOsaAlue } from "./YhteisenTutkinnonOsanOsaAlue"
-import { EnrichKoodiUri } from "models/EnrichKoodiUri"
+import { EnrichKoodiUri } from "models/Enrichment/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 
