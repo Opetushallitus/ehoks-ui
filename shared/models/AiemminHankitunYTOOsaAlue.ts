@@ -18,7 +18,6 @@ export const Model = types.model("AiemminHankitunYTOOsaAlue", {
   koulutuksenJarjestaja: types.maybe(Organisaatio),
   vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
   valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
-  valittuTodentamisenProsessi: types.optional(KoodistoVastaus, {}),
   tarkentavatTiedotNaytto: types.array(OsaamisenOsoittaminen),
   tarkentavatTiedotOsaamisenArvioija: types.optional(
     TodennettuArviointiLisatiedot,
@@ -28,7 +27,7 @@ export const Model = types.model("AiemminHankitunYTOOsaAlue", {
 
 export const AiemminHankitunYTOOsaAlue = types
   .compose(
-    EnrichKoodistoKoodiUri("osaAlue", "valittuTodentamisenProsessi"),
+    EnrichKoodistoKoodiUri("osaAlue"),
     EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
     AiemminHankitutTutkinnonOsatViews,
     Model

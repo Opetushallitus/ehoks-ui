@@ -4,7 +4,6 @@ import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 import { AiemminHankitunYTOOsaAlue } from "./AiemminHankitunYTOOsaAlue"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
-import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 
 export const AiemminHankittuYhteinenTutkinnonOsa = types
@@ -17,7 +16,6 @@ export const AiemminHankittuYhteinenTutkinnonOsa = types
     koulutuksenJarjestajaOid: types.optional(types.string, ""),
     osaAlueet: types.array(AiemminHankitunYTOOsaAlue),
     valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
-    valittuTodentamisenProsessi: types.optional(KoodistoVastaus, {}),
     tarkentavatTiedotNaytto: types.array(OsaamisenOsoittaminen),
     tarkentavatTiedotOsaamisenArvioija: types.optional(
       TodennettuArviointiLisatiedot,
