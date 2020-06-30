@@ -86,7 +86,7 @@ interface YllapitoState {
   opiskeluoikeusHakuOid?: string | ""
   hoksHakuId?: number
   hoksDeleteId?: number
-  deleteId?: number
+  idToDelete?: number
   systemInfo?: SystemInfo
 }
 
@@ -107,7 +107,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     hoksId: undefined,
     opiskeluoikeusOid: "",
     oppijaOid: "",
-    deleteId: undefined,
+    idToDelete: undefined,
     systemInfo: undefined
   }
 
@@ -300,10 +300,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
 
   onDeleteHoks = async (event: any) => {
     const { intl } = this.context
-    const { deleteId } = this.state
+    const { idToDelete } = this.state
     event.preventDefault()
     const request = await window.fetch(
-      `/ehoks-virkailija-backend/api/v1/virkailija/hoks/${deleteId}`,
+      `/ehoks-virkailija-backend/api/v1/virkailija/hoks/${idToDelete}`,
       {
         method: "DELETE",
         credentials: "include",
@@ -348,7 +348,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
   }
   handleDeleteIdChange = (inputId: any) => {
     this.setState({
-      deleteId: inputId
+      idToDelete: inputId
     })
   }
 
@@ -616,7 +616,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                                     defaultMessage:
                                       "Oletko varma että haluat poistaa HOKSin id:llä {idToDelete} ?"
                                   },
-                                  { idToDelete: this.state.deleteId }
+                                  { idToDelete: this.state.idToDelete }
                                 )
                               )
                             ) {
