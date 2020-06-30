@@ -1,17 +1,16 @@
 import { getRoot, types } from "mobx-state-tree"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
-import { EnrichKoodiUri } from "models/Enrichment/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import { getOsaamispisteet } from "models/helpers/getOsaamispisteet"
 import { EnrichTutkinnonOsaViitteet } from "models/Enrichment/EnrichTutkinnonOsaViitteet"
 import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
-import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 import { Organisaatio } from "./Organisaatio"
 import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
+import { EnrichTutkinnonOsaKoodiUri } from "./Enrichment/EnrichTutkinnonOsaKoodiUri"
 
 const Model = types.model({
   id: types.optional(types.number, 0),
@@ -22,7 +21,6 @@ const Model = types.model({
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
   koulutuksenJarjestaja: types.maybe(Organisaatio),
   valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
-  valittuTodentamisenProsessi: types.optional(KoodistoVastaus, {}),
   tarkentavatTiedotNaytto: types.array(OsaamisenOsoittaminen),
   tarkentavatTiedotOsaamisenArvioija: types.optional(
     TodennettuArviointiLisatiedot,
@@ -34,7 +32,7 @@ const Model = types.model({
 export const AiemminHankittuAmmatillinenTutkinnonOsa = types
   .compose(
     "AiemminHankittuAmmatillinenTutkinnonOsa",
-    EnrichKoodiUri,
+    EnrichTutkinnonOsaKoodiUri,
     EnrichTutkinnonOsaViitteet("tutkinnonOsaViitteet"),
     EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
     AiemminHankitutTutkinnonOsatViews,
