@@ -28,7 +28,6 @@ const model = types.model({
 export const AiemminHankittuPaikallinenTutkinnonOsa = types
   .compose(
     "AiemminHankittuPaikallinenTutkinnonOsa",
-    EnrichKoodiUri,
     EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
     AiemminHankitutTutkinnonOsatViews,
     model
