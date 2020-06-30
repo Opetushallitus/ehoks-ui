@@ -85,6 +85,8 @@ interface YllapitoState {
   oppijaOid?: string | ""
   opiskeluoikeusHakuOid?: string | ""
   hoksHakuId?: number
+  hoksDeleteId?: number
+  deleteId?: number
   systemInfo?: SystemInfo
 }
 
@@ -105,6 +107,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     hoksId: undefined,
     opiskeluoikeusOid: "",
     oppijaOid: "",
+    deleteId: undefined,
     systemInfo: undefined
   }
 
@@ -295,6 +298,42 @@ export class Yllapito extends React.Component<YllapitoProps> {
     }
   }
 
+  onDeleteHoks = async (event: any) => {
+    const { intl } = this.context
+    const { deleteId } = this.state
+    event.preventDefault()
+    const request = await window.fetch(
+      `/ehoks-virkailija-backend/api/v1/virkailija/hoks/${deleteId}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          Accept: "application/json; charset=utf-8",
+          "Content-Type": "application/json"
+        }
+      }
+    )
+    if (request.status === 200) {
+      this.setState({
+        success: true,
+        message: intl.formatMessage({
+          id: "yllapito.hoksinPoistoOnnistui",
+          defaultMessage: "HOKSin poistaminen onnistui"
+        }),
+        isLoading: false
+      })
+    } else {
+      this.setState({
+        success: false,
+        message: intl.formatMessage({
+          id: "yllapito.hoksinPoistoEpaonnistui",
+          defaultMessage: "HOKSin poistaminen epäonnistui"
+        }),
+        isLoading: false
+      })
+    }
+  }
+
   handleHoksIdChange = (inputId: any) => {
     // const inputOid = event.target.value
     this.setState({
@@ -305,6 +344,11 @@ export class Yllapito extends React.Component<YllapitoProps> {
     // const inputOid = event.target.value
     this.setState({
       opiskeluoikeusOid: inputOid
+    })
+  }
+  handleDeleteIdChange = (inputId: any) => {
+    this.setState({
+      deleteId: inputId
     })
   }
 
@@ -540,6 +584,53 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         defaultMessage="Indeksoi oppijat ja opiskeluoikeudet"
                       />
                     </Button>
+                  </ContentElement>
+                  <ContentElement>
+                    <Header>
+                      <FormattedMessage
+                        id="yllapito.hoksPoisto"
+                        defaultMessage="Hoksin poistaminen"
+                      />
+                    </Header>
+                    <ContentElement>
+                      <ContentElement>
+                        <form>
+                          <HakuInput
+                            type="text"
+                            placeholder="12345"
+                            value={this.state.hoksDeleteId}
+                            onChange={e =>
+                              this.handleDeleteIdChange(e.target.value)
+                            }
+                          />
+                        </form>
+                      </ContentElement>
+                      <ContentElement>
+                        <Button
+                          onClick={e => {
+                            if (
+                              window.confirm(
+                                this.context.intl.formatMessage(
+                                  {
+                                    id: "yllapito.hoksinPoistoVarmistus",
+                                    defaultMessage:
+                                      "Oletko varma että haluat poistaa HOKSin id:llä {idToDelete} ?"
+                                  },
+                                  { idToDelete: this.state.deleteId }
+                                )
+                              )
+                            ) {
+                              this.onDeleteHoks(e)
+                            }
+                          }}
+                        >
+                          <FormattedMessage
+                            id="yllapito.poistaHoksButton"
+                            defaultMessage="Poista HOKS"
+                          />
+                        </Button>
+                      </ContentElement>
+                    </ContentElement>
                   </ContentElement>
                 </ContentElement>
               )}
