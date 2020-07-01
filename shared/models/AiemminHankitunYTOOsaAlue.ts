@@ -1,12 +1,12 @@
 import { types } from "mobx-state-tree"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
-import { EnrichKoodiUri } from "./Enrichment/EnrichKoodiUri"
 import { KoodistoVastaus } from "./KoodistoVastaus"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 import { Organisaatio } from "./Organisaatio"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
+import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 
 export const Model = types.model("AiemminHankitunYTOOsaAlue", {
   id: types.optional(types.number, 0),
@@ -18,7 +18,6 @@ export const Model = types.model("AiemminHankitunYTOOsaAlue", {
   koulutuksenJarjestaja: types.maybe(Organisaatio),
   vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
   valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
-  valittuTodentamisenProsessi: types.optional(KoodistoVastaus, {}),
   tarkentavatTiedotNaytto: types.array(OsaamisenOsoittaminen),
   tarkentavatTiedotOsaamisenArvioija: types.optional(
     TodennettuArviointiLisatiedot,
@@ -28,7 +27,10 @@ export const Model = types.model("AiemminHankitunYTOOsaAlue", {
 
 export const AiemminHankitunYTOOsaAlue = types
   .compose(
-    EnrichKoodiUri,
+    EnrichKoodistoKoodiUri({
+      enrichedProperty: "osaAlue",
+      koodiUriProperty: "osaAlueKoodiUri"
+    }),
     EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
     AiemminHankitutTutkinnonOsatViews,
     Model

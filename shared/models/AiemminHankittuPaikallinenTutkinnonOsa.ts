@@ -1,7 +1,5 @@
 import { types } from "mobx-state-tree"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
-import { KoodistoVastaus } from "./KoodistoVastaus"
-import { EnrichKoodiUri } from "./Enrichment/EnrichKoodiUri"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 import { Organisaatio } from "./Organisaatio"
@@ -18,7 +16,6 @@ const model = types.model({
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
   koulutuksenJarjestaja: types.maybe(Organisaatio),
   valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
-  valittuTodentamisenProsessi: types.optional(KoodistoVastaus, {}),
   tarkentavatTiedotNaytto: types.array(OsaamisenOsoittaminen),
   tarkentavatTiedotOsaamisenArvioija: types.optional(
     TodennettuArviointiLisatiedot,
@@ -31,7 +28,6 @@ const model = types.model({
 export const AiemminHankittuPaikallinenTutkinnonOsa = types
   .compose(
     "AiemminHankittuPaikallinenTutkinnonOsa",
-    EnrichKoodiUri,
     EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
     AiemminHankitutTutkinnonOsatViews,
     model

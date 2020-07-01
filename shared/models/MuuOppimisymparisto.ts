@@ -1,6 +1,6 @@
 import { types } from "mobx-state-tree"
-import { EnrichKoodiUri } from "models/Enrichment/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
+import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 
 const Model = types.model("MuuOppimisymparistoModel", {
   oppimisymparistoKoodiUri: types.optional(types.string, ""),
@@ -11,6 +11,9 @@ const Model = types.model("MuuOppimisymparistoModel", {
 
 export const MuuOppimisymparisto = types.compose(
   "MuuOppimisymparisto",
-  EnrichKoodiUri,
+  EnrichKoodistoKoodiUri({
+    enrichedProperty: "oppimisymparisto",
+    koodiUriProperty: "oppimisymparistoKoodiUri"
+  }),
   Model
 )

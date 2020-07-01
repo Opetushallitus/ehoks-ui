@@ -11,7 +11,6 @@ import {
 } from "./helpers/TutkinnonOsa"
 import flattenDeep from "lodash.flattendeep"
 import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
-import { EnrichKoodiUri } from "models/Enrichment/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { Opiskeluoikeus } from "models/Opiskeluoikeus"
@@ -20,6 +19,7 @@ import find from "lodash.find"
 import { APIResponse } from "types/APIResponse"
 import { OpiskeluvalmiuksiaTukevatOpinnot } from "./OpiskeluvalmiuksiaTukevatOpinnot"
 import { AiemminHankitunYTOOsaAlue } from "./AiemminHankitunYTOOsaAlue"
+import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 
 const Model = types.model("HOKSModel", {
   eid: types.optional(types.string, ""),
@@ -59,7 +59,14 @@ const Model = types.model("HOKSModel", {
 })
 
 export const HOKS = types
-  .compose("HOKS", EnrichKoodiUri, Model)
+  .compose(
+    "HOKS",
+    EnrichKoodistoKoodiUri({
+      enrichedProperty: "urasuunnitelma",
+      koodiUriProperty: "urasuunnitelmaKoodiUri"
+    }),
+    Model
+  )
   .volatile(() => ({
     osaamispisteet: 0
   }))
@@ -149,16 +156,20 @@ export const HOKS = types
           (oo: any) => oo.oid === self.opiskeluoikeusOid
         )
 
-        if (opiskeluOikeus !== undefined) {
-          if (opiskeluOikeus.tyyppi.koodiarvo !== "ammatillinenkoulutus") {
-            throw new Error("HOKS.fetchOpiskeluoikeudet.wrongType")
-          }
+        if (opiskeluOikeus === undefined) return
 
-          self.opiskeluOikeus = opiskeluOikeus
-          const tutkinto = yield fetchTutkinto()
-          const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
-          self.osaamispisteet = getOsaamispisteetFromRakenne(rakenne)
+        if (opiskeluOikeus.tyyppi.koodiarvo !== "ammatillinenkoulutus") {
+          errors.logError(
+            "HOKS.fetchOpiskeluoikeudet",
+            "HOKS.fetchOpiskeluoikeudet.wrongType"
+          )
+          return
         }
+
+        self.opiskeluOikeus = opiskeluOikeus
+        const tutkinto = yield fetchTutkinto()
+        const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
+        self.osaamispisteet = getOsaamispisteetFromRakenne(rakenne)
       } catch (error) {
         errors.logError("HOKS.fetchOpiskeluoikeudet", error.message)
       }

@@ -1,8 +1,8 @@
 import { types } from "mobx-state-tree"
 import { YhteisenTutkinnonOsanOsaAlue } from "./YhteisenTutkinnonOsanOsaAlue"
-import { EnrichKoodiUri } from "models/Enrichment/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
+import { EnrichTutkinnonOsaKoodiUri } from "./Enrichment/EnrichTutkinnonOsaKoodiUri"
 
 export const Model = types.model({
   moduleId: types.maybe(types.string),
@@ -13,7 +13,7 @@ export const Model = types.model({
 })
 
 export const HankittavaYhteinenTutkinnonOsa = types
-  .compose("HankittavaYhteinenTutkinnonOsa", EnrichKoodiUri, Model)
+  .compose("HankittavaYhteinenTutkinnonOsa", EnrichTutkinnonOsaKoodiUri, Model)
   .views(self => ({
     get tutkinnonOsaTyyppi(): TutkinnonOsaType {
       return TutkinnonOsaType.HankittavaYhteinen

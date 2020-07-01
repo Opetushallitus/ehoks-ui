@@ -2,7 +2,6 @@ import { types, getRoot } from "mobx-state-tree"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { OsaamisenHankkimistapa } from "./OsaamisenHankkimistapa"
 import { HankittavatTutkinnonOsatViews } from "./helpers/HankittavatTutkinnonOsatViews"
-import { EnrichKoodiUri } from "models/Enrichment/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
@@ -10,6 +9,7 @@ import { EnrichTutkinnonOsaViitteet } from "models/Enrichment/EnrichTutkinnonOsa
 import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 import { Organisaatio } from "./Organisaatio"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
+import { EnrichTutkinnonOsaKoodiUri } from "./Enrichment/EnrichTutkinnonOsaKoodiUri"
 
 export const Model = types.model({
   id: types.optional(types.number, 0),
@@ -28,7 +28,7 @@ export const Model = types.model({
 export const HankittavaAmmatillinenTutkinnonOsa = types
   .compose(
     "HankittavaAmmatillinenTutkinnonOsa",
-    EnrichKoodiUri,
+    EnrichTutkinnonOsaKoodiUri,
     EnrichTutkinnonOsaViitteet("tutkinnonOsaViitteet"),
     EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
     Model,

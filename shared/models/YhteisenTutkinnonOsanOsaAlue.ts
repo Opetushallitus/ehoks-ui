@@ -2,11 +2,11 @@ import { types } from "mobx-state-tree"
 import { OsaamisenHankkimistapa } from "./OsaamisenHankkimistapa"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { HankittavatTutkinnonOsatViews } from "./helpers/HankittavatTutkinnonOsatViews"
-import { EnrichKoodiUri } from "models/Enrichment/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 import { Organisaatio } from "./Organisaatio"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
+import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 
 const Model = types.model("YhteisenTutkinnonOsanOsaAlue", {
   id: types.optional(types.number, 0),
@@ -23,7 +23,10 @@ const Model = types.model("YhteisenTutkinnonOsanOsaAlue", {
 
 export const YhteisenTutkinnonOsanOsaAlue = types
   .compose(
-    EnrichKoodiUri,
+    EnrichKoodistoKoodiUri({
+      enrichedProperty: "osaAlue",
+      koodiUriProperty: "osaAlueKoodiUri"
+    }),
     Model,
     EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
     HankittavatTutkinnonOsatViews
