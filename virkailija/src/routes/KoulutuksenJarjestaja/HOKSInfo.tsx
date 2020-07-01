@@ -50,8 +50,8 @@ const OsaamisenHankkimisenTarveMessage = ({
 
 const OsaamisenSaavuttaminenMessage = ({
   osaamisenSaavuttamisenPvm
-}: Pick<IHOKS, "osaamisenSaavuttamisenPvm">) => {
-  return osaamisenSaavuttamisenPvm ? (
+}: Pick<IHOKS, "osaamisenSaavuttamisenPvm">) =>
+  osaamisenSaavuttamisenPvm ? (
     <Timestamp>
       <FormattedMessage
         id="koulutuksenJarjestaja.opiskelija.osaaminenSaavutettuTitle"
@@ -67,7 +67,6 @@ const OsaamisenSaavuttaminenMessage = ({
       />
     </Timestamp>
   )
-}
 
 export class HOKSInfo extends React.Component<HOKSInfoProps> {
   render() {
