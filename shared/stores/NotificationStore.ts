@@ -6,7 +6,6 @@ import {
   SnapshotOrInstance,
   types
 } from "mobx-state-tree"
-import { EnrichKoodiUri } from "models/Enrichment/EnrichKoodiUri"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import parseISO from "date-fns/parseISO"
@@ -16,6 +15,7 @@ import { ISettings } from "models/Settings"
 import find from "lodash.find"
 import { StoreEnvironment } from "../types/StoreEnvironment"
 import { APIResponse } from "../types/APIResponse"
+import { EnrichTutkinnonOsaKoodiUri } from "../models/Enrichment/EnrichTutkinnonOsaKoodiUri"
 
 export const NotificationModel = types.model("NotificationModel", {
   hoksId: types.optional(types.string, ""),
@@ -30,7 +30,7 @@ export const NotificationModel = types.model("NotificationModel", {
 })
 
 export const Notification = types
-  .compose("Notification", EnrichKoodiUri, NotificationModel)
+  .compose("Notification", EnrichTutkinnonOsaKoodiUri, NotificationModel)
   .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {

@@ -2,8 +2,8 @@ import { types } from "mobx-state-tree"
 import { Oppilaitoshenkilo } from "./Oppilaitoshenkilo"
 import { TyopaikallaJarjestettavaKoulutus } from "./TyopaikallaJarjestettavaKoulutus"
 import { MuuOppimisymparisto } from "./MuuOppimisymparisto"
-import { EnrichKoodiUri } from "models/Enrichment/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
+import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 
 export enum OsaamisenHankkimistapaType {
   Workplace = "WORKPLACE",
@@ -27,7 +27,14 @@ const Model = types.model("OsaamisenHankkimistapaModel", {
 })
 
 export const OsaamisenHankkimistapa = types
-  .compose("OsaamisenHankkimistapa", EnrichKoodiUri, Model)
+  .compose(
+    "OsaamisenHankkimistapa",
+    EnrichKoodistoKoodiUri({
+      enrichedProperty: "osaamisenHankkimistapa",
+      koodiUriProperty: "osaamisenHankkimistapaKoodiUri"
+    }),
+    Model
+  )
   .views(self => ({
     get selite() {
       return self.tyyppi === OsaamisenHankkimistapaType.Workplace

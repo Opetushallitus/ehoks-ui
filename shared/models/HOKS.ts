@@ -11,7 +11,6 @@ import {
 } from "./helpers/TutkinnonOsa"
 import flattenDeep from "lodash.flattendeep"
 import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
-import { EnrichKoodiUri } from "models/Enrichment/EnrichKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { Opiskeluoikeus } from "models/Opiskeluoikeus"
@@ -20,6 +19,7 @@ import find from "lodash.find"
 import { APIResponse } from "types/APIResponse"
 import { OpiskeluvalmiuksiaTukevatOpinnot } from "./OpiskeluvalmiuksiaTukevatOpinnot"
 import { AiemminHankitunYTOOsaAlue } from "./AiemminHankitunYTOOsaAlue"
+import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 
 const Model = types.model("HOKSModel", {
   eid: types.optional(types.string, ""),
@@ -59,7 +59,14 @@ const Model = types.model("HOKSModel", {
 })
 
 export const HOKS = types
-  .compose("HOKS", EnrichKoodiUri, Model)
+  .compose(
+    "HOKS",
+    EnrichKoodistoKoodiUri({
+      enrichedProperty: "urasuunnitelma",
+      koodiUriProperty: "urasuunnitelmaKoodiUri"
+    }),
+    Model
+  )
   .volatile(() => ({
     osaamispisteet: 0
   }))
