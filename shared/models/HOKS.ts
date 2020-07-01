@@ -156,16 +156,20 @@ export const HOKS = types
           (oo: any) => oo.oid === self.opiskeluoikeusOid
         )
 
-        if (opiskeluOikeus !== undefined) {
-          if (opiskeluOikeus.tyyppi.koodiarvo !== "ammatillinenkoulutus") {
-            throw new Error("HOKS.fetchOpiskeluoikeudet.wrongType")
-          }
+        if (opiskeluOikeus === undefined) return
 
-          self.opiskeluOikeus = opiskeluOikeus
-          const tutkinto = yield fetchTutkinto()
-          const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
-          self.osaamispisteet = getOsaamispisteetFromRakenne(rakenne)
+        if (opiskeluOikeus.tyyppi.koodiarvo !== "ammatillinenkoulutus") {
+          errors.logError(
+            "HOKS.fetchOpiskeluoikeudet",
+            "HOKS.fetchOpiskeluoikeudet.wrongType"
+          )
+          return
         }
+
+        self.opiskeluOikeus = opiskeluOikeus
+        const tutkinto = yield fetchTutkinto()
+        const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
+        self.osaamispisteet = getOsaamispisteetFromRakenne(rakenne)
       } catch (error) {
         errors.logError("HOKS.fetchOpiskeluoikeudet", error.message)
       }
