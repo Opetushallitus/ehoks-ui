@@ -315,24 +315,38 @@ export class Yllapito extends React.Component<YllapitoProps> {
     )
     if (confirmRequest.status === 200) {
       const json = await confirmRequest.json()
-      const { nimi, opiskeluoikeusOid, oppilaitosOid, hoksId } = json.data
+      const {
+        nimi,
+        tutkinnonNimi,
+        opiskeluoikeusOid,
+        oppilaitosOid,
+        oppilaitosNimi,
+        hoksId
+      } = json.data
       if (
         window.confirm(
           this.context.intl.formatMessage(
             {
               id: "yllapito.hoksinPoistoVarmistus",
               defaultMessage:
-                "Oletko varma että haluat poistaa seuraavan HOKSin:\n" +
-                "hoks-id: {idToDelete}\n" +
-                "oppijan nimi: {name}\n" +
+                "Oletko varma että haluat poistaa seuraavan HOKSin:\n\n" +
+                "hoks-id: {hoksId}\n" +
+                "oppijan nimi: {nimi}\n" +
+                "tutkinnon nimi: {tutkinnonNimi}\n" +
                 "opiskeluoikeus-oid: {opiskeluoikeusOid}\n" +
-                "oppilaitos-oid: {oppilaitosOid}"
+                "oppilaitoksen nimi: {oppilaitosNimi}\n" +
+                "oppilaitos-oid: {oppilaitosOid}\n\n" +
+                "Poistamisen jälkeen tietoja ei voi palauttaa."
             },
             {
-              idToDelete: hoksId,
-              name: nimi,
-              opiskeluoikeusOid: opiskeluoikeusOid,
-              oppilaitosOid: oppilaitosOid
+              hoksId,
+              nimi,
+              tutkinnonNimi:
+                tutkinnonNimi[this.props.store!.translations.activeLocale],
+              opiskeluoikeusOid,
+              oppilaitosNimi:
+                oppilaitosNimi[this.props.store!.translations.activeLocale],
+              oppilaitosOid
             }
           )
         )
@@ -636,7 +650,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <Header>
                       <FormattedMessage
                         id="yllapito.hoksPoisto"
-                        defaultMessage="Hoksin poistaminen"
+                        defaultMessage="Aiheettoman HOKSin poisto"
                       />
                     </Header>
                     <ContentElement>
