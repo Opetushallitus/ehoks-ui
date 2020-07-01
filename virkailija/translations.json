@@ -209,7 +209,7 @@
     "tyopaikanToimija.tutkinnonNimiTitle": "Tutkinnon nimi",
     "yllapito.hoksPoisto": "Hoksin poistaminen",
     "yllapito.poistaHoksButton": "Poista HOKS",
-    "yllapito.hoksinPoistoVarmistus": "Oletko varma että haluat poistaa HOKSin id:llä {idToDelete} ?",
+    "yllapito.hoksinPoistoVarmistus": "Oletko varma että haluat poistaa seuraavan HOKSin:\nhoks-id: {idToDelete}\noppijan nimi: {name}\nopiskeluoikeus-oid: {opiskeluoikeusOid}\noppilaitos-oid: {oppilaitosOid}",
     "yllapito.hoksinPoistoOnnistui": "HOKSin poistaminen onnistui",
     "yllapito.hoksinPoistoEpaonnistui": "HOKSin poistaminen epäonnistui",
     "yllapito.OpiskeluoikeusOidTulos": "Opiskeluoikeus-oid on: {opiskeluoikeusOid}",

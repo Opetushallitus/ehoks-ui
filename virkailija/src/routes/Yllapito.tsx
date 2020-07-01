@@ -302,10 +302,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
     const { intl } = this.context
     const { idToDelete } = this.state
     event.preventDefault()
-    const request = await window.fetch(
-      `/ehoks-virkailija-backend/api/v1/virkailija/hoks/${idToDelete}`,
+    const confirmRequest = await window.fetch(
+      `/ehoks-virkailija-backend/api/v1/virkailija/hoks/${idToDelete}/deletion-info`,
       {
-        method: "DELETE",
+        method: "GET",
         credentials: "include",
         headers: {
           Accept: "application/json; charset=utf-8",
@@ -313,15 +313,61 @@ export class Yllapito extends React.Component<YllapitoProps> {
         }
       }
     )
-    if (request.status === 200) {
-      this.setState({
-        success: true,
-        message: intl.formatMessage({
-          id: "yllapito.hoksinPoistoOnnistui",
-          defaultMessage: "HOKSin poistaminen onnistui"
-        }),
-        isLoading: false
-      })
+    if (confirmRequest.status === 200) {
+      const json = await confirmRequest.json()
+      const { nimi, opiskeluoikeusOid, oppilaitosOid, hoksId } = json.data
+      if (
+        window.confirm(
+          this.context.intl.formatMessage(
+            {
+              id: "yllapito.hoksinPoistoVarmistus",
+              defaultMessage:
+                "Oletko varma että haluat poistaa seuraavan HOKSin:\n" +
+                "hoks-id: {idToDelete}\n" +
+                "oppijan nimi: {name}\n" +
+                "opiskeluoikeus-oid: {opiskeluoikeusOid}\n" +
+                "oppilaitos-oid: {oppilaitosOid}"
+            },
+            {
+              idToDelete: hoksId,
+              name: nimi,
+              opiskeluoikeusOid: opiskeluoikeusOid,
+              oppilaitosOid: oppilaitosOid
+            }
+          )
+        )
+      ) {
+        const deleteRequest = await window.fetch(
+          `/ehoks-virkailija-backend/api/v1/virkailija/hoks/${idToDelete}`,
+          {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+              Accept: "application/json; charset=utf-8",
+              "Content-Type": "application/json"
+            }
+          }
+        )
+        if (deleteRequest.status === 200) {
+          this.setState({
+            success: true,
+            message: intl.formatMessage({
+              id: "yllapito.hoksinPoistoOnnistui",
+              defaultMessage: "HOKSin poistaminen onnistui"
+            }),
+            isLoading: false
+          })
+        } else {
+          this.setState({
+            success: false,
+            message: intl.formatMessage({
+              id: "yllapito.hoksinPoistoEpaonnistui",
+              defaultMessage: "HOKSin poistaminen epäonnistui"
+            }),
+            isLoading: false
+          })
+        }
+      }
     } else {
       this.setState({
         success: false,
@@ -606,24 +652,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         </form>
                       </ContentElement>
                       <ContentElement>
-                        <Button
-                          onClick={e => {
-                            if (
-                              window.confirm(
-                                this.context.intl.formatMessage(
-                                  {
-                                    id: "yllapito.hoksinPoistoVarmistus",
-                                    defaultMessage:
-                                      "Oletko varma että haluat poistaa HOKSin id:llä {idToDelete} ?"
-                                  },
-                                  { idToDelete: this.state.idToDelete }
-                                )
-                              )
-                            ) {
-                              this.onDeleteHoks(e)
-                            }
-                          }}
-                        >
+                        <Button onClick={this.onDeleteHoks}>
                           <FormattedMessage
                             id="yllapito.poistaHoksButton"
                             defaultMessage="Poista HOKS"
