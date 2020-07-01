@@ -210,6 +210,7 @@
     "yllapito.hoksPoisto": "Hoksin poistaminen",
     "yllapito.poistaHoksButton": "Poista HOKS",
     "yllapito.hoksinPoistoVarmistus": "Oletko varma että haluat poistaa seuraavan HOKSin:\nhoks-id: {idToDelete}\noppijan nimi: {name}\nopiskeluoikeus-oid: {opiskeluoikeusOid}\noppilaitos-oid: {oppilaitosOid}",
+    "yllapito.hoksinVahvistustietojenHakuEpaonnistui": "HOKSin poistamisen vahvistustietojen hakeminen epäonnistui",
     "yllapito.hoksinPoistoOnnistui": "HOKSin poistaminen onnistui",
     "yllapito.hoksinPoistoEpaonnistui": "HOKSin poistaminen epäonnistui",
     "yllapito.OpiskeluoikeusOidTulos": "Opiskeluoikeus-oid on: {opiskeluoikeusOid}",

@@ -372,8 +372,9 @@ export class Yllapito extends React.Component<YllapitoProps> {
       this.setState({
         success: false,
         message: intl.formatMessage({
-          id: "yllapito.hoksinPoistoEpaonnistui",
-          defaultMessage: "HOKSin poistaminen epäonnistui"
+          id: "yllapito.hoksinVahvistustietojenHakuEpaonnistui",
+          defaultMessage:
+            "HOKSin poistamisen vahvistustietojen hakeminen epäonnistui"
         }),
         isLoading: false
       })
