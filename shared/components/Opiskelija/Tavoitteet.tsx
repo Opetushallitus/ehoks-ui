@@ -355,6 +355,12 @@ export class Tavoitteet extends React.Component<
                   </th>
                   <th>
                     <FormattedMessage
+                      id="tavoitteet.osaaminenSaavutettuTitle"
+                      defaultMessage="Sovittu osaaminen saavutettu"
+                    />
+                  </th>
+                  <th>
+                    <FormattedMessage
                       id="tavoitteet.osaamisenHankkimisenTarveTitle"
                       defaultMessage="Osaamisen hankkimisen tarve"
                     />
@@ -379,6 +385,17 @@ export class Tavoitteet extends React.Component<
                         <FormattedMessage
                           id="tavoitteet.eiVielaPaivityksiaTitle"
                           defaultMessage="Ei vielä päivityksiä"
+                        />
+                      }
+                    />
+                  </LabeledColumn>
+                  <LabeledColumn id="tavoitteet.osaaminenSaavutettuTitle">
+                    <FormattedDate
+                      date={hoks.osaamisenSaavuttamisenPvm}
+                      dateNotSet={
+                        <FormattedMessage
+                          id="tavoitteet.osaaminenEiVielaSaavutettuTitle"
+                          defaultMessage="Sovittua osaamista ei vielä saavutettu"
                         />
                       }
                     />
