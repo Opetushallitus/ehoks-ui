@@ -1,6 +1,6 @@
 import { types } from "mobx-state-tree"
-import { EnrichKoodiUri } from "./Enrichment/EnrichKoodiUri"
 import { KoodistoVastaus } from "./KoodistoVastaus"
+import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 
 export const Model = types.model({
   koodiVersio: types.optional(types.number, 0),
@@ -11,5 +11,8 @@ export const Model = types.model({
 export const OsaAlueReference = types.compose(
   "OsaAlueReference",
   Model,
-  EnrichKoodiUri
+  EnrichKoodistoKoodiUri({
+    enrichedField: "osaAlueData",
+    koodiUriField: "koodiUri"
+  })
 )
