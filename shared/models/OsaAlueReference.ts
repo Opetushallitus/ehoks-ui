@@ -12,7 +12,7 @@ export const OsaAlueReference = types.compose(
   "OsaAlueReference",
   Model,
   EnrichKoodistoKoodiUri({
-    enrichedField: "osaAlueData",
-    koodiUriField: "koodiUri"
+    enrichedProperty: "osaAlueData",
+    koodiUriProperty: "koodiUri"
   })
 )

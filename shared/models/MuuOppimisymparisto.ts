@@ -12,8 +12,8 @@ const Model = types.model("MuuOppimisymparistoModel", {
 export const MuuOppimisymparisto = types.compose(
   "MuuOppimisymparisto",
   EnrichKoodistoKoodiUri({
-    enrichedField: "oppimisymparisto",
-    koodiUriField: "oppimisymparistoKoodiUri"
+    enrichedProperty: "oppimisymparisto",
+    koodiUriProperty: "oppimisymparistoKoodiUri"
   }),
   Model
 )

@@ -10,9 +10,9 @@ interface DynamicObject {
 const cachedResponses: DynamicObject = {}
 
 export const EnrichKoodistoKoodiUri = (
-  ...fieldsToEnrich: {
-    enrichedField: string
-    koodiUriField: string
+  ...propertiesToEnrich: {
+    enrichedProperty: string
+    koodiUriProperty: string
   }[]
 ) =>
   types
@@ -68,8 +68,8 @@ export const EnrichKoodistoKoodiUri = (
       })
 
       const afterCreate = () => {
-        fieldsToEnrich.forEach(key => {
-          fetchKoodisto(key.enrichedField, key.koodiUriField)
+        propertiesToEnrich.forEach(prop => {
+          fetchKoodisto(prop.enrichedProperty, prop.koodiUriProperty)
         })
       }
 

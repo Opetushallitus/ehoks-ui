@@ -28,8 +28,8 @@ export const Model = types.model("AiemminHankitunYTOOsaAlue", {
 export const AiemminHankitunYTOOsaAlue = types
   .compose(
     EnrichKoodistoKoodiUri({
-      enrichedField: "osaAlue",
-      koodiUriField: "osaAlueKoodiUri"
+      enrichedProperty: "osaAlue",
+      koodiUriProperty: "osaAlueKoodiUri"
     }),
     EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
     AiemminHankitutTutkinnonOsatViews,
