@@ -48,6 +48,27 @@ const OsaamisenHankkimisenTarveMessage = ({
   )
 }
 
+const OsaamisenSaavuttaminenMessage = ({
+  osaamisenSaavuttamisenPvm
+}: Pick<IHOKS, "osaamisenSaavuttamisenPvm">) => {
+  return osaamisenSaavuttamisenPvm ? (
+    <Timestamp>
+      <FormattedMessage
+        id="koulutuksenJarjestaja.opiskelija.osaaminenSaavutettuTitle"
+        defaultMessage="Sovittu osaaminen saavutettu"
+      />
+      &nbsp; <FormattedDate date={osaamisenSaavuttamisenPvm} />
+    </Timestamp>
+  ) : (
+    <Timestamp>
+      <FormattedMessage
+        id="koulutuksenJarjestaja.opiskelija.osaaminenEiVielaSaavutettuTitle"
+        defaultMessage="Sovittua osaamista ei vielä saavutettu"
+      />
+    </Timestamp>
+  )
+}
+
 export class HOKSInfo extends React.Component<HOKSInfoProps> {
   render() {
     const { suunnitelma, oppija } = this.props
@@ -75,6 +96,11 @@ export class HOKSInfo extends React.Component<HOKSInfoProps> {
             defaultMessage="Päivitetty"
           />
           &nbsp; <FormattedDate date={oppija.paivitetty} />
+        </Timestamp>
+        <Timestamp>
+          <OsaamisenSaavuttaminenMessage
+            osaamisenSaavuttamisenPvm={suunnitelma.osaamisenSaavuttamisenPvm}
+          />
         </Timestamp>
         <Timestamp>
           <OsaamisenHankkimisenTarveMessage
