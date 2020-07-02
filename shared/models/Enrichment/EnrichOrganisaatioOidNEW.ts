@@ -25,29 +25,39 @@ export const EnrichOrganisaatioOidNEW = (
         StoreEnvironment
       >(self)
 
+      const propertyDoesntExist = (enrichedProperty: string) =>
+        Object.keys(self).indexOf(enrichedProperty) < 0
+
+      function logMissingPropertyError(enrichedProperty: string) {
+        const { name } = getPropertyMembers(self)
+        errors.logError(
+          "EnrichOrganisaatioOid.fetchOrganisaatio",
+          `Your mobx-state-tree model '${name}' is missing definition for '${enrichedProperty}'`
+        )
+      }
+
+      const getFromOrganisaatioService = (organisaatioOid: string) =>
+        fetchSingle(
+          apiUrl(`${apiPrefix}/external/organisaatio/${organisaatioOid}`),
+          {
+            headers: callerId()
+          }
+        )
+
       const fetchOrganisaatio = flow(function*(
         enrichedProperty: string,
         organisaatioOid: string
       ): any {
         try {
-          if (Object.keys(self).indexOf(enrichedProperty) < 0) {
-            const { name } = getPropertyMembers(self)
-            errors.logError(
-              "EnrichOrganisaatioOid.fetchOrganisaatio",
-              `Your mobx-state-tree model '${name}' is missing definition for '${enrichedProperty}'`
-            )
+          if (propertyDoesntExist(enrichedProperty)) {
+            logMissingPropertyError(enrichedProperty)
             return
           }
 
           // check our global cache first
           cachedResponses[organisaatioOid] =
             cachedResponses[organisaatioOid] ||
-            fetchSingle(
-              apiUrl(`${apiPrefix}/external/organisaatio/${organisaatioOid}`),
-              {
-                headers: callerId()
-              }
-            )
+            getFromOrganisaatioService(organisaatioOid)
           const response: APIResponse = yield cachedResponses[organisaatioOid]
           self[enrichedProperty] = response.data
         } catch (error) {
