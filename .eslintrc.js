@@ -165,6 +165,7 @@ module.exports = {
     "prefer-object-spread": "error",
     "quote-props": "off",
     radix: "error",
+    "react/prop-types": ["error", {skipUndeclared: true}],
     "space-before-function-paren": "off",
     "space-in-parens": ["off", "never"],
     "use-isnan": "error",

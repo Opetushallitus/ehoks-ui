@@ -154,6 +154,7 @@ interface ShareDialogProps extends InjectedIntlProps {
   instructor?: Instructor
   tutkinnonOsaTyyppi?: TutkinnonOsaType
   tutkinnonOsaId: string
+  intl: ReactIntl.InjectedIntl
 }
 
 export function ShareDialog(props: ShareDialogProps) {
@@ -225,6 +226,7 @@ export function ShareDialog(props: ShareDialogProps) {
     event.preventDefault()
     if (
       confirm(
+        // eslint-disable-next-line react/prop-types
         intl.formatMessage({
           id: "jakaminen.haluatkoPoistaaConfirm"
         })

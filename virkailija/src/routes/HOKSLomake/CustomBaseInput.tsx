@@ -1,6 +1,7 @@
 import React from "react"
 import { WidgetProps } from "react-jsonschema-form"
 
+/* eslint-disable react/prop-types */
 interface CustomBaseInputProps
   extends Omit<WidgetProps, "rawErrors" | "formContext"> {
   placeholder?: string
