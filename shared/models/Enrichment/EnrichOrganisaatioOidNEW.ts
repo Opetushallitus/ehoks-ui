@@ -9,7 +9,7 @@ interface DynamicObject {
 // dumb cache for preventing multiple fetches for the same koodi-uri's
 const cachedResponses: DynamicObject = {}
 
-export const EnrichOrganisaatioOid = (
+export const EnrichOrganisaatioOidNEW = (
   ...propertiesToEnrich: {
     enrichedProperty: string
     organzationOidProperty: string
@@ -30,6 +30,13 @@ export const EnrichOrganisaatioOid = (
         organisaatioOid: string
       ): any {
         try {
+          if (Object.keys(self).indexOf(enrichedProperty) < 0) {
+            const { name } = getPropertyMembers(self)
+            throw new Error(
+              `Your mobx-state-tree model '${name}' is missing definition for '${enrichedProperty}'`
+            )
+          }
+
           // check our global cache first
           cachedResponses[organisaatioOid] =
             cachedResponses[organisaatioOid] ||
@@ -40,14 +47,7 @@ export const EnrichOrganisaatioOid = (
               }
             )
           const response: APIResponse = yield cachedResponses[organisaatioOid]
-          if (Object.keys(self).indexOf(enrichedProperty) > -1) {
-            self[enrichedProperty] = response.data
-          } else {
-            const { name } = getPropertyMembers(self)
-            throw new Error(
-              `Your mobx-state-tree model '${name}' is missing definition for '${enrichedProperty}'`
-            )
-          }
+          self[enrichedProperty] = response.data
         } catch (error) {
           errors.logError(
             "EnrichOrganisaatioOid.fetchOrganisaatio",
