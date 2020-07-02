@@ -12,7 +12,7 @@ const cachedResponses: DynamicObject = {}
 export const EnrichOrganisaatioOid = (
   ...propertiesToEnrich: {
     enrichedProperty: string
-    oidProperty: string
+    organzationOidProperty: string
   }[]
 ) =>
   types
@@ -25,16 +25,22 @@ export const EnrichOrganisaatioOid = (
         StoreEnvironment
       >(self)
 
-      const fetchOrganisaatio = flow(function*(key: string, code: string): any {
+      const fetchOrganisaatio = flow(function*(
+        enrichedProperty: string,
+        organisaatioOid: string
+      ): any {
         try {
-          const [dynamicKey] = key.split("Oid") // key without Oid
+          const [dynamicKey] = enrichedProperty.split("Oid") // key without Oid
           // check our global cache first
-          cachedResponses[code] =
-            cachedResponses[code] ||
-            fetchSingle(apiUrl(`${apiPrefix}/external/organisaatio/${code}`), {
-              headers: callerId()
-            })
-          const response: APIResponse = yield cachedResponses[code]
+          cachedResponses[organisaatioOid] =
+            cachedResponses[organisaatioOid] ||
+            fetchSingle(
+              apiUrl(`${apiPrefix}/external/organisaatio/${organisaatioOid}`),
+              {
+                headers: callerId()
+              }
+            )
+          const response: APIResponse = yield cachedResponses[organisaatioOid]
           if (Object.keys(self).indexOf(dynamicKey) > -1) {
             self[dynamicKey] = response.data
           } else {
@@ -53,7 +59,7 @@ export const EnrichOrganisaatioOid = (
 
       const afterCreate = () => {
         propertiesToEnrich.forEach(prop => {
-          fetchOrganisaatio(prop.enrichedProperty, prop.oidProperty)
+          fetchOrganisaatio(prop.enrichedProperty, prop.organzationOidProperty)
         })
       }
 
