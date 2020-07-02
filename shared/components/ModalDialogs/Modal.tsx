@@ -17,7 +17,7 @@ const ModalBackground = styled("div")`
   left: 0;
 `
 
-export class Modal extends React.Component<{}> {
+export class Modal extends React.Component<any> {
   el: HTMLDivElement
   constructor(props: any) {
     super(props)

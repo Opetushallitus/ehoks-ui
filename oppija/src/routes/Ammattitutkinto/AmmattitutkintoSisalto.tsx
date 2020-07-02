@@ -9,7 +9,7 @@ const OpintopolkuLink = styled("a")`
   color: ${props => props.theme.colors.waterBlue};
 `
 
-export class AmmattitutkintoSisalto extends React.Component<{}> {
+export class AmmattitutkintoSisalto extends React.Component<any> {
   render = () => (
     <Section>
       <SectionTitle>
