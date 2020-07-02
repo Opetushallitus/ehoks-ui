@@ -6,7 +6,7 @@ import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { Organisaatio } from "./Organisaatio"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
-import { EnrichOrganisaatioOidNEW } from "./Enrichment/EnrichOrganisaatioOidNEW"
+import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 
 const Model = types.model("YhteisenTutkinnonOsanOsaAlue", {
   id: types.optional(types.number, 0),
@@ -28,7 +28,7 @@ export const YhteisenTutkinnonOsanOsaAlue = types
       koodiUriProperty: "osaAlueKoodiUri"
     }),
     Model,
-    EnrichOrganisaatioOidNEW({
+    EnrichOrganisaatioOid({
       enrichedProperty: "koulutuksenJarjestaja",
       organzationOidProperty: "koulutuksenJarjestajaOid"
     }),

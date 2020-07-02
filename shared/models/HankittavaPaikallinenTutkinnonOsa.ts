@@ -4,7 +4,7 @@ import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { HankittavatTutkinnonOsatViews } from "./helpers/HankittavatTutkinnonOsatViews"
 import { Organisaatio } from "./Organisaatio"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
-import { EnrichOrganisaatioOidNEW } from "./Enrichment/EnrichOrganisaatioOidNEW"
+import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 
 const Model = types.model("HankittavaPaikallinenTutkinnonOsaModel", {
   id: types.optional(types.number, 0),
@@ -24,7 +24,7 @@ const Model = types.model("HankittavaPaikallinenTutkinnonOsaModel", {
 export const HankittavaPaikallinenTutkinnonOsa = types
   .compose(
     "HankittavaPaikallinenTutkinnonOsaModel",
-    EnrichOrganisaatioOidNEW({
+    EnrichOrganisaatioOid({
       enrichedProperty: "koulutuksenJarjestaja",
       organzationOidProperty: "koulutuksenJarjestajaOid"
     }),

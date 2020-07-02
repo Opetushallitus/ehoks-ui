@@ -1,7 +1,7 @@
 import { getRoot, types } from "mobx-state-tree"
 import { Organisaatio } from "./Organisaatio"
 import { LocaleRoot } from "./helpers/LocaleRoot"
-import { EnrichOrganisaatioOidNEW } from "./Enrichment/EnrichOrganisaatioOidNEW"
+import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 
 const Model = types.model("NaytonJarjestajaModel", {
   id: types.optional(types.number, 0),
@@ -12,7 +12,7 @@ const Model = types.model("NaytonJarjestajaModel", {
 export const NaytonJarjestaja = types
   .compose(
     "NaytonJarjestaja",
-    EnrichOrganisaatioOidNEW({
+    EnrichOrganisaatioOid({
       enrichedProperty: "oppilaitos",
       organzationOidProperty: "oppilaitosOid"
     }),

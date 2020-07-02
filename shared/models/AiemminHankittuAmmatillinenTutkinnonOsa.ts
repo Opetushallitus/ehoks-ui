@@ -10,7 +10,7 @@ import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutk
 import { Organisaatio } from "./Organisaatio"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 import { EnrichTutkinnonOsaKoodiUri } from "./Enrichment/EnrichTutkinnonOsaKoodiUri"
-import { EnrichOrganisaatioOidNEW } from "./Enrichment/EnrichOrganisaatioOidNEW"
+import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 
 const Model = types.model({
   id: types.optional(types.number, 0),
@@ -34,7 +34,7 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
     "AiemminHankittuAmmatillinenTutkinnonOsa",
     EnrichTutkinnonOsaKoodiUri,
     EnrichTutkinnonOsaViitteet("tutkinnonOsaViitteet"),
-    EnrichOrganisaatioOidNEW({
+    EnrichOrganisaatioOid({
       enrichedProperty: "koulutuksenJarjestaja",
       organzationOidProperty: "koulutuksenJarjestajaOid"
     }),

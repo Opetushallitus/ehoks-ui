@@ -6,7 +6,7 @@ import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutk
 import { Organisaatio } from "./Organisaatio"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
-import { EnrichOrganisaatioOidNEW } from "./Enrichment/EnrichOrganisaatioOidNEW"
+import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 
 export const Model = types.model("AiemminHankitunYTOOsaAlue", {
   id: types.optional(types.number, 0),
@@ -31,7 +31,7 @@ export const AiemminHankitunYTOOsaAlue = types
       enrichedProperty: "osaAlue",
       koodiUriProperty: "osaAlueKoodiUri"
     }),
-    EnrichOrganisaatioOidNEW({
+    EnrichOrganisaatioOid({
       enrichedProperty: "koulutuksenJarjestaja",
       organzationOidProperty: "koulutuksenJarjestajaOid"
     }),

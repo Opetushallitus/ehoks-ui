@@ -9,7 +9,7 @@ interface DynamicObject {
 // dumb cache for preventing multiple fetches for the same koodi-uri's
 const cachedResponses: DynamicObject = {}
 
-export const EnrichOrganisaatioOidNEW = (
+export const EnrichOrganisaatioOid = (
   ...propertiesToEnrich: {
     enrichedProperty: string
     organzationOidProperty: string

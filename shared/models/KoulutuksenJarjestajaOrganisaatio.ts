@@ -1,7 +1,7 @@
 import { types, getRoot } from "mobx-state-tree"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import { Organisaatio } from "./Organisaatio"
-import { EnrichOrganisaatioOidNEW } from "./Enrichment/EnrichOrganisaatioOidNEW"
+import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 
 const Model = types.model({
   oppilaitosOid: types.optional(types.string, ""),
@@ -11,7 +11,7 @@ const Model = types.model({
 export const KoulutuksenJarjestajaOrganisaatio = types
   .compose(
     "KoulutuksenJarjestajaOrganisaatio",
-    EnrichOrganisaatioOidNEW({
+    EnrichOrganisaatioOid({
       enrichedProperty: "oppilaitos",
       organzationOidProperty: "oppilaitosOid"
     }),
