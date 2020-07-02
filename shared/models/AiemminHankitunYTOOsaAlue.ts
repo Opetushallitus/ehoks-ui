@@ -3,10 +3,10 @@ import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 import { KoodistoVastaus } from "./KoodistoVastaus"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
-import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 import { Organisaatio } from "./Organisaatio"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
+import { EnrichOrganisaatioOidNEW } from "./Enrichment/EnrichOrganisaatioOidNEW"
 
 export const Model = types.model("AiemminHankitunYTOOsaAlue", {
   id: types.optional(types.number, 0),
@@ -31,7 +31,10 @@ export const AiemminHankitunYTOOsaAlue = types
       enrichedProperty: "osaAlue",
       koodiUriProperty: "osaAlueKoodiUri"
     }),
-    EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
+    EnrichOrganisaatioOidNEW({
+      enrichedProperty: "koulutuksenJarjestaja",
+      organzationOidProperty: "koulutuksenJarjestajaOid"
+    }),
     AiemminHankitutTutkinnonOsatViews,
     Model
   )

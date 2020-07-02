@@ -3,10 +3,10 @@ import { OsaamisenHankkimistapa } from "./OsaamisenHankkimistapa"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { HankittavatTutkinnonOsatViews } from "./helpers/HankittavatTutkinnonOsatViews"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
-import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 import { Organisaatio } from "./Organisaatio"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
+import { EnrichOrganisaatioOidNEW } from "./Enrichment/EnrichOrganisaatioOidNEW"
 
 const Model = types.model("YhteisenTutkinnonOsanOsaAlue", {
   id: types.optional(types.number, 0),
@@ -28,7 +28,10 @@ export const YhteisenTutkinnonOsanOsaAlue = types
       koodiUriProperty: "osaAlueKoodiUri"
     }),
     Model,
-    EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
+    EnrichOrganisaatioOidNEW({
+      enrichedProperty: "koulutuksenJarjestaja",
+      organzationOidProperty: "koulutuksenJarjestajaOid"
+    }),
     HankittavatTutkinnonOsatViews
   )
   .views(self => ({
