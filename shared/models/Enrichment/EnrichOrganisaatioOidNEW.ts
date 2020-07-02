@@ -32,9 +32,11 @@ export const EnrichOrganisaatioOidNEW = (
         try {
           if (Object.keys(self).indexOf(enrichedProperty) < 0) {
             const { name } = getPropertyMembers(self)
-            throw new Error(
+            errors.logError(
+              "EnrichOrganisaatioOid.fetchOrganisaatio",
               `Your mobx-state-tree model '${name}' is missing definition for '${enrichedProperty}'`
             )
+            return
           }
 
           // check our global cache first
