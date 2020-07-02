@@ -9,7 +9,12 @@ interface DynamicObject {
 // dumb cache for preventing multiple fetches for the same koodi-uri's
 const cachedResponses: DynamicObject = {}
 
-export const EnrichOrganisaatioOid = (fieldPostfix: string) =>
+export const EnrichOrganisaatioOid = (
+  ...propertiesToEnrich: {
+    enrichedProperty: string
+    oidProperty: string
+  }[]
+) =>
   types
     .model({})
     // we need this typing to avoid 'missing index signature' error
@@ -47,15 +52,8 @@ export const EnrichOrganisaatioOid = (fieldPostfix: string) =>
       })
 
       const afterCreate = () => {
-        Object.keys(self).forEach(key => {
-          if (key.match(new RegExp(fieldPostfix)) && self[key]) {
-            const codes: string[] = Array.isArray(self[key])
-              ? self[key]
-              : [self[key]]
-            codes.forEach(code => {
-              fetchOrganisaatio(key, code)
-            })
-          }
+        propertiesToEnrich.forEach(prop => {
+          fetchOrganisaatio(prop.enrichedProperty, prop.oidProperty)
         })
       }
 
