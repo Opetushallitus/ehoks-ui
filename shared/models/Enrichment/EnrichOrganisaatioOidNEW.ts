@@ -30,7 +30,6 @@ export const EnrichOrganisaatioOid = (
         organisaatioOid: string
       ): any {
         try {
-          const [dynamicKey] = enrichedProperty.split("Oid") // key without Oid
           // check our global cache first
           cachedResponses[organisaatioOid] =
             cachedResponses[organisaatioOid] ||
@@ -41,12 +40,12 @@ export const EnrichOrganisaatioOid = (
               }
             )
           const response: APIResponse = yield cachedResponses[organisaatioOid]
-          if (Object.keys(self).indexOf(dynamicKey) > -1) {
-            self[dynamicKey] = response.data
+          if (Object.keys(self).indexOf(enrichedProperty) > -1) {
+            self[enrichedProperty] = response.data
           } else {
             const { name } = getPropertyMembers(self)
             throw new Error(
-              `Your mobx-state-tree model '${name}' is missing definition for '${dynamicKey}'`
+              `Your mobx-state-tree model '${name}' is missing definition for '${enrichedProperty}'`
             )
           }
         } catch (error) {
