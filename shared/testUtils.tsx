@@ -30,9 +30,9 @@ export const ThemeProviderWrapper = ({
   children: React.ReactNode
 }) => <ThemeProvider theme={theme}>{children}</ThemeProvider>
 
-export const withTheme = <T extends any>(Component: React.ComponentType<T>) => (
-  props: T
-) => (
+export const withTheme = <T extends Record<string, unknown>>(
+  Component: React.ComponentType<T>
+) => (props: T) => (
   <ThemeProvider theme={theme}>
     <Component {...props} />
   </ThemeProvider>
