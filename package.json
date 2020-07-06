@@ -28,7 +28,9 @@
     "prepush:oppija": "npm run prepush --prefix oppija",
     "prepush:tyopaikantoimija": "npm run prepush --prefix tyopaikantoimija",
     "prepush": "npm-run-all prepush:*",
-    "travis": "npm-run-all prettier:check lint test:* build:*"
+    "travis": "npm-run-all prettier:check lint test:* build:*",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "private": true,
   "license": "",
@@ -133,7 +135,8 @@
     "reactjs-popup": "^1.5.0",
     "styled-components": "^5.1.1",
     "use-onclickoutside": "^0.3.1",
-    "whatwg-fetch": "^3.1.0"
+    "whatwg-fetch": "^3.1.0",
+    "snyk": "^1.360.0"
   },
   "husky": {
     "hooks": {
@@ -143,5 +146,6 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": "npm run prettier:staged --"
-  }
+  },
+  "snyk": true
 }
