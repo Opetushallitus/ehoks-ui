@@ -48,7 +48,7 @@ ReactDOM.render(
 if (module.hot) {
   // eslint-disable-next-line no-undef
   module.hot.accept("./routes/App", () => {
-    // eslint-disable-next-line no-undef
+    // eslint-disable-next-line
     const NextApp = require("./routes/App").App
     ReactDOM.render(
       <APIConfigContext.Provider value={apiConfig}>
