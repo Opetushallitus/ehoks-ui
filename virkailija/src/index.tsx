@@ -55,3 +55,11 @@ if (module.hot) {
     )
   })
 }
+
+// React-Axe accessibility errors in browser devtools console when not production build
+// eslint-disable-next-line no-undef
+if (process.env.NODE_ENV !== "production") {
+  // eslint-disable-next-line
+  const axe = require("react-axe")
+  axe(React, ReactDOM, 1000)
+}
