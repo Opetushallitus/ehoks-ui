@@ -11,7 +11,7 @@ import { Button } from "components/Button"
 
 export interface OpiskelijapalauteProps {
   open?: boolean
-  toggleAccordion: Function
+  toggleAccordion: (accordion: string) => () => void
   hoksID: number
   oppijaOid: string
   title: React.ReactNode
@@ -27,7 +27,7 @@ interface IResend {
 export class Opiskelijapalaute extends React.Component<
   OpiskelijapalauteProps & RouteComponentProps
 > {
-  resendPalaute = async (data: IResend) => {
+  resendPalaute = (data: IResend) => async () => {
     const { hoksID, oppijaOid } = this.props
 
     const request = await window.fetch(
@@ -123,12 +123,10 @@ export class Opiskelijapalaute extends React.Component<
                   </tbody>
                 </InfoTable>
                 <Button
-                  onClick={() => {
-                    this.resendPalaute({
-                      alkupvm: palauteTila.alkupvm,
-                      tyyppi: palauteTila.tyyppi
-                    })
-                  }}
+                  onClick={this.resendPalaute({
+                    alkupvm: palauteTila.alkupvm,
+                    tyyppi: palauteTila.tyyppi
+                  })}
                 >
                   Lähetä linkki opiskelijapalautekyselyyn uudestaan
                 </Button>
