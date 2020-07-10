@@ -20,6 +20,7 @@ import { APIResponse } from "types/APIResponse"
 import { OpiskeluvalmiuksiaTukevatOpinnot } from "./OpiskeluvalmiuksiaTukevatOpinnot"
 import { AiemminHankitunYTOOsaAlue } from "./AiemminHankitunYTOOsaAlue"
 import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
+import { OpiskelijapalauteTila } from "./OpiskelijapalauteTila"
 
 const Model = types.model("HOKSModel", {
   eid: types.optional(types.string, ""),
@@ -56,7 +57,8 @@ const Model = types.model("HOKSModel", {
   urasuunnitelma: types.optional(KoodistoVastaus, {}),
   versio: types.optional(types.number, 0),
   sahkoposti: types.optional(types.string, ""),
-  manuaalisyotto: types.optional(types.boolean, false)
+  manuaalisyotto: types.optional(types.boolean, false),
+  opiskelijapalauteTilat: types.array(OpiskelijapalauteTila)
 })
 
 export const HOKS = types
@@ -91,6 +93,17 @@ export const HOKS = types
       keys.forEach(key => {
         self[key] = response.data[key]
       })
+    })
+
+    // fetches opiskelijapalauteTilat for HOKS, only needed in virkailija app
+    const fetchOpiskelijapalauteTilat = flow(function*(): any {
+      const response: APIResponse = yield fetchCollection(
+        apiUrl(
+          `${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}/opiskelijapalaute`
+        ),
+        { headers: callerId() }
+      )
+      self.opiskelijapalauteTilat = response.data
     })
 
     const fetchTutkinto = flow(function*(): any {
@@ -176,7 +189,7 @@ export const HOKS = types
       }
     })
 
-    return { fetchDetails, fetchOpiskeluoikeudet }
+    return { fetchDetails, fetchOpiskeluoikeudet, fetchOpiskelijapalauteTilat }
   })
   .views(self => {
     const root: LocaleRoot = getRoot(self)

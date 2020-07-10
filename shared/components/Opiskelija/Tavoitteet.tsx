@@ -13,6 +13,7 @@ import { IHOKS } from "models/HOKS"
 import { AppContext } from "components/AppContext"
 import { FormattedDate } from "components/FormattedDate"
 import { StudyPoints } from "../StudyPoints"
+import { Opiskelijapalaute } from "../../../virkailija/src/routes/KoulutuksenJarjestaja/Opiskelijapalaute"
 
 interface OsaamisenHankkimisenTarveProps {
   osaamisenHankkimisenTarve: boolean | null
@@ -227,11 +228,13 @@ export interface TavoitteetProps {
   children?: React.ReactChildren
   student: ISessionUser
   hoks: IHOKS
+  opiskelijapalaute?: boolean
   titles?: {
     heading?: React.ReactNode
     goals?: React.ReactNode
     degreeOrEducation?: React.ReactNode
     personalDetails?: React.ReactNode
+    opiskelijapalaute?: React.ReactNode
   }
 }
 
@@ -253,7 +256,8 @@ export class Tavoitteet extends React.Component<
       hoksDates: false,
       degreeOrEducation: false,
       personalDetails: false,
-      personalGoal: false
+      personalGoal: false,
+      opiskelijapalaute: false
     }
   }
 
@@ -306,6 +310,14 @@ export class Tavoitteet extends React.Component<
               defaultMessage="Omat henkilötiedot"
             />
           )}
+        </AccordionTitle>
+      ),
+      opiskelijapalaute: (
+        <AccordionTitle>
+          <FormattedMessage
+            id="tavoitteet.OpiskelijapalauteTitle"
+            defaultMessage="Opiskelijapalaute"
+          />
         </AccordionTitle>
       )
     }
@@ -465,6 +477,16 @@ export class Tavoitteet extends React.Component<
             </tbody>
           </InfoTable>
         </Accordion>
+        {this.props.opiskelijapalaute && (
+          <Opiskelijapalaute
+            toggleAccordion={this.toggleAccordion}
+            open={this.state.activeAccordions.opiskelijapalaute}
+            title={titles.opiskelijapalaute}
+            palauteTilat={hoks.opiskelijapalauteTilat}
+            hoksID={hoks.id}
+            oppijaOid={student.oid}
+          />
+        )}
       </React.Fragment>
     )
   }
