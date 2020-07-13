@@ -44,15 +44,18 @@ function trimDisallowedKeysForPUTSchema(formData: any) {
     return formData
   }
 
-  return Object.keys(formData).reduce((result: object, key) => {
-    if (propertyIsObject(formData[key])) {
-      trimObject(key, result, formData)
-    } else {
-      trimPrimitive(key, result, formData)
-    }
+  return Object.keys(formData).reduce(
+    (result: Record<string, unknown>, key) => {
+      if (propertyIsObject(formData[key])) {
+        trimObject(key, result, formData)
+      } else {
+        trimPrimitive(key, result, formData)
+      }
 
-    return result
-  }, {} as any)
+      return result
+    },
+    {} as any
+  )
 }
 
 const propertyIsObject = (property: any) =>

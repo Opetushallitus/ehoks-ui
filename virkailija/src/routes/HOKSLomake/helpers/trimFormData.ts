@@ -12,7 +12,7 @@ function trimObject(object: any) {
   if (!Object.keys(object).length) {
     return undefined
   }
-  return Object.keys(object).reduce<{} | any>((acc, key) => {
+  return Object.keys(object).reduce<any>((acc, key) => {
     const trimmed = trimEmptyValues(object[key])
     if (trimmed || trimmed === false) {
       if (!acc) {

@@ -40,7 +40,7 @@ module.exports = {
     "@typescript-eslint/adjacent-overload-signatures": "error",
     "@typescript-eslint/array-type": "error",
     "@typescript-eslint/ban-types": "error",
-    "@typescript-eslint/class-name-casing": "error",
+    "@typescript-eslint/naming-convention": ["error", { "selector": "variable", "types": ["function"], "format": ["camelCase", "PascalCase"] }], // Custom for Mobx models
     "@typescript-eslint/consistent-type-assertions": "error",
     "@typescript-eslint/explicit-member-accessibility": [
       "off",
@@ -165,6 +165,7 @@ module.exports = {
     "prefer-object-spread": "error",
     "quote-props": "off",
     radix: "error",
+    "react/prop-types": ["error", {skipUndeclared: true}],
     "space-before-function-paren": "off",
     "space-in-parens": ["off", "never"],
     "use-isnan": "error",
