@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl"
 import Modal from "react-modal"
 import styled from "../../../../shared/styled"
 import { IRootStore } from "../../stores/RootStore"
-import { INotificationStore } from "stores/NotificationStore"
+import { INotificationStore } from "../../stores/NotificationStore"
 
 const StudentFeedbackTitle = styled("h1")``
 

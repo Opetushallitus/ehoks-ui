@@ -1,15 +1,17 @@
 import { Accordion } from "components/Accordion"
 import { InfoTable } from "components/InfoTable"
 import { LabeledColumn } from "components/LabeledColumn"
-import { observer } from "mobx-react"
+import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import { FormattedDate } from "components/FormattedDate"
 import { RouteComponentProps } from "@reach/router"
 import { IOpiskelijapalauteTila } from "models/OpiskelijapalauteTila"
 import { Button } from "components/Button"
+import { IRootStore } from "../../stores/RootStore"
 
 export interface OpiskelijapalauteProps {
+  store?: IRootStore
   open?: boolean
   toggleAccordion: (accordion: string) => () => void
   hoksID: number
@@ -23,14 +25,16 @@ interface IResend {
   tyyppi: string
 }
 
+@inject("store")
 @observer
 export class Opiskelijapalaute extends React.Component<
   OpiskelijapalauteProps & RouteComponentProps
 > {
   resendPalaute = (data: IResend) => async () => {
     const { hoksID, oppijaOid } = this.props
+    const { notifications } = this.props.store!
 
-    const request = await window.fetch(
+    const response: Response = await window.fetch(
       `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksID}/resend-palaute`,
       {
         method: "POST",
@@ -45,9 +49,29 @@ export class Opiskelijapalaute extends React.Component<
       }
     )
 
-    const json = await request.json()
+    if (response.ok) {
+      const json = await response.json()
+      notifications.addNotifications([
+        {
+          title: "opiskelijapalauteResendSuccess",
+          source: "Opiskelijapalaute",
+          sahkoposti: json.data.sahkoposti,
+          default:
+            "Sähköposti opiskelijapalautteesta lähetetään osoitteeseen {sahkoposti}.",
+          tyyppi: "success"
+        }
+      ])
+    } else {
+      notifications.addError(
+        "Opiskelijapalaute.resendPalaute",
+        response.statusText
+      )
+    }
+  }
 
-    console.log(json)
+  componentWillUnmount() {
+    const { notifications } = this.props.store!
+    notifications.removeNotificationsBySource("Opiskelijapalaute")
   }
 
   render() {

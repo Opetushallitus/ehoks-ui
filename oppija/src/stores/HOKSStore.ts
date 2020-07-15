@@ -1,7 +1,7 @@
 import flattenDeep from "lodash.flattendeep"
 import { flow, getEnv, getRoot, SnapshotIn, types } from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
-import { Notification } from "stores/NotificationStore"
+import { Notification } from "./NotificationStore"
 import { IRootStore } from "stores/RootStore"
 import { APIResponse } from "types/APIResponse"
 import { StoreEnvironment } from "types/StoreEnvironment"

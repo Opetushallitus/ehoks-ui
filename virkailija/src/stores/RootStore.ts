@@ -3,6 +3,7 @@ import { EnvironmentStore } from "stores/EnvironmentStore"
 import { SessionStore } from "stores/SessionStore"
 import { TranslationStore } from "stores/TranslationStore"
 import { KoulutuksenJarjestajaStore } from "./KoulutuksenJarjestajaStore"
+import { NotificationStore } from "./NotificationStore"
 
 export interface InjectedStores {
   store: IRootStore
@@ -12,7 +13,8 @@ const RootStoreModel = {
   environment: types.optional(EnvironmentStore, {}),
   koulutuksenJarjestaja: types.optional(KoulutuksenJarjestajaStore, {}),
   session: types.optional(SessionStore, {}),
-  translations: types.optional(TranslationStore, {})
+  translations: types.optional(TranslationStore, {}),
+  notifications: types.optional(NotificationStore, {})
 }
 
 export const RootStore = types

@@ -13,9 +13,9 @@ import subMonths from "date-fns/subMonths"
 import isWithinInterval from "date-fns/isWithinInterval"
 import { ISettings } from "models/Settings"
 import find from "lodash.find"
-import { StoreEnvironment } from "../types/StoreEnvironment"
-import { APIResponse } from "../types/APIResponse"
-import { EnrichTutkinnonOsaKoodiUri } from "../models/Enrichment/EnrichTutkinnonOsaKoodiUri"
+import { StoreEnvironment } from "types/StoreEnvironment"
+import { APIResponse } from "types/APIResponse"
+import { EnrichTutkinnonOsaKoodiUri } from "models/Enrichment/EnrichTutkinnonOsaKoodiUri"
 
 export const NotificationModel = types.model("NotificationModel", {
   hoksId: types.optional(types.string, ""),
