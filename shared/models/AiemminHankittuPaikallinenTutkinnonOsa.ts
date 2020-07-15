@@ -3,8 +3,8 @@ import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 import { Organisaatio } from "./Organisaatio"
-import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
+import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
 
 const model = types.model({
   id: types.optional(types.number, 0),
@@ -28,7 +28,10 @@ const model = types.model({
 export const AiemminHankittuPaikallinenTutkinnonOsa = types
   .compose(
     "AiemminHankittuPaikallinenTutkinnonOsa",
-    EnrichOrganisaatioOid("koulutuksenJarjestajaOid"),
+    EnrichOrganisaatioOid({
+      enrichedProperty: "koulutuksenJarjestaja",
+      organzationOidProperty: "koulutuksenJarjestajaOid"
+    }),
     AiemminHankitutTutkinnonOsatViews,
     model
   )

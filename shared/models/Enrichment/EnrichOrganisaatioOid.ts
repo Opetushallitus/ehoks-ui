@@ -9,7 +9,12 @@ interface DynamicObject {
 // dumb cache for preventing multiple fetches for the same koodi-uri's
 const cachedResponses: DynamicObject = {}
 
-export const EnrichOrganisaatioOid = (fieldPostfix: string) =>
+export const EnrichOrganisaatioOid = (
+  ...propertiesToEnrich: {
+    enrichedProperty: string
+    organzationOidProperty: string
+  }[]
+) =>
   types
     .model({})
     // we need this typing to avoid 'missing index signature' error
@@ -20,24 +25,41 @@ export const EnrichOrganisaatioOid = (fieldPostfix: string) =>
         StoreEnvironment
       >(self)
 
-      const fetchOrganisaatio = flow(function*(key: string, code: string): any {
-        try {
-          const [dynamicKey] = key.split("Oid") // key without Oid
-          // check our global cache first
-          cachedResponses[code] =
-            cachedResponses[code] ||
-            fetchSingle(apiUrl(`${apiPrefix}/external/organisaatio/${code}`), {
-              headers: callerId()
-            })
-          const response: APIResponse = yield cachedResponses[code]
-          if (Object.keys(self).indexOf(dynamicKey) > -1) {
-            self[dynamicKey] = response.data
-          } else {
-            const { name } = getPropertyMembers(self)
-            throw new Error(
-              `Your mobx-state-tree model '${name}' is missing definition for '${dynamicKey}'`
-            )
+      const propertyDoesntExist = (enrichedProperty: string) =>
+        Object.keys(self).indexOf(enrichedProperty) < 0
+
+      function logMissingPropertyError(enrichedProperty: string) {
+        const { name } = getPropertyMembers(self)
+        errors.logError(
+          "EnrichOrganisaatioOid.fetchOrganisaatio",
+          `Your mobx-state-tree model '${name}' is missing definition for '${enrichedProperty}'`
+        )
+      }
+
+      const getFromOrganisaatioService = (organisaatioOid: string) =>
+        fetchSingle(
+          apiUrl(`${apiPrefix}/external/organisaatio/${organisaatioOid}`),
+          {
+            headers: callerId()
           }
+        )
+
+      const fetchOrganisaatio = flow(function*(
+        enrichedProperty: string,
+        organisaatioOid: string
+      ): any {
+        try {
+          if (propertyDoesntExist(enrichedProperty)) {
+            logMissingPropertyError(enrichedProperty)
+            return
+          }
+
+          // check our global cache first
+          cachedResponses[organisaatioOid] =
+            cachedResponses[organisaatioOid] ||
+            getFromOrganisaatioService(organisaatioOid)
+          const response: APIResponse = yield cachedResponses[organisaatioOid]
+          self[enrichedProperty] = response.data
         } catch (error) {
           errors.logError(
             "EnrichOrganisaatioOid.fetchOrganisaatio",
@@ -47,15 +69,8 @@ export const EnrichOrganisaatioOid = (fieldPostfix: string) =>
       })
 
       const afterCreate = () => {
-        Object.keys(self).forEach(key => {
-          if (key.match(new RegExp(fieldPostfix)) && self[key]) {
-            const codes: string[] = Array.isArray(self[key])
-              ? self[key]
-              : [self[key]]
-            codes.forEach(code => {
-              fetchOrganisaatio(key, code)
-            })
-          }
+        propertiesToEnrich.forEach(prop => {
+          fetchOrganisaatio(prop.enrichedProperty, prop.organzationOidProperty)
         })
       }
 
