@@ -456,7 +456,12 @@
   },
   {
     "locale": "fi",
-    "key": "notification.opiskelijapalauteResendSuccess",
+    "key": "tavoitteet.opiskelijapalauteEiPalautteita",
+    "value": "Ei aktiivisia palautteita"
+  },
+  {
+    "locale": "fi",
+    "key": "notification.Opiskelijapalaute.resendPalaute.success",
     "value": "Sähköposti opiskelijapalautteesta lähetetään osoitteeseen {sahkoposti}."
   },
   {

@@ -53,7 +53,7 @@ export class Opiskelijapalaute extends React.Component<
       const json = await response.json()
       notifications.addNotifications([
         {
-          title: "opiskelijapalauteResendSuccess",
+          title: "Opiskelijapalaute.resendPalaute.success",
           source: "Opiskelijapalaute",
           sahkoposti: json.data.sahkoposti,
           default:
@@ -161,7 +161,10 @@ export class Opiskelijapalaute extends React.Component<
             )
           )
         ) : (
-          <p>Ei palautteita</p>
+          <FormattedMessage
+            id="tavoitteet.opiskelijapalauteEiPalautteita"
+            defaultMessage="Ei aktiivisia palautteita"
+          />
         )}
       </Accordion>
     )
