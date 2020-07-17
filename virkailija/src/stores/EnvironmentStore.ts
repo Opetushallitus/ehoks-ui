@@ -42,9 +42,7 @@ export const EnvironmentStore = types
       return yield fetch("/ehoks-virkailija-backend/doc/swagger.json")
     })
 
-    const getCallerId = flow(function*(headers?: Headers) {
-      return callerId(headers)
-    })
+    const getCallerId = (headers?: Headers) => callerId(headers)
 
     return { getEnvironment, fetchSwaggerJSON, getCallerId }
   })

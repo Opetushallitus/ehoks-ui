@@ -39,7 +39,7 @@ export class Opiskelijapalaute extends React.Component<
       {
         method: "POST",
         credentials: "include",
-        headers: await environment.getCallerId(
+        headers: environment.getCallerId(
           new Headers({
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json"

@@ -1,6 +1,6 @@
 import { getEnv, Instance, types } from "mobx-state-tree"
-import { EnvironmentStore } from "stores/EnvironmentStore"
-import { SessionStore } from "stores/SessionStore"
+import { EnvironmentStore } from "./EnvironmentStore"
+import { SessionStore } from "./SessionStore"
 import { TranslationStore } from "stores/TranslationStore"
 import { KoulutuksenJarjestajaStore } from "./KoulutuksenJarjestajaStore"
 import { NotificationStore } from "./NotificationStore"
