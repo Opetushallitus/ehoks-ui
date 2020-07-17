@@ -42,16 +42,11 @@ export const EnvironmentStore = types
       return yield fetch("/ehoks-virkailija-backend/doc/swagger.json")
     })
 
-    return { getEnvironment, fetchSwaggerJSON }
-  })
-  .views(self => {
-    const { callerId } = getEnv<StoreEnvironment>(self)
-
     const getCallerId = (headers?: Headers) => {
       return callerId(headers)
     }
 
-    return { getCallerId }
+    return { getEnvironment, fetchSwaggerJSON, getCallerId }
   })
 
 export type IEnvironmentStore = Instance<typeof EnvironmentStore>
