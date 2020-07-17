@@ -20,7 +20,7 @@ export interface OpiskelijapalauteProps {
   palauteTilat: IOpiskelijapalauteTila[]
 }
 
-interface IResend {
+interface ResendParameters {
   alkupvm: string
   tyyppi: string
 }
@@ -30,21 +30,21 @@ interface IResend {
 export class Opiskelijapalaute extends React.Component<
   OpiskelijapalauteProps & RouteComponentProps
 > {
-  resendPalaute = (data: IResend) => async (): Promise<void> => {
+  resendPalaute = (data: ResendParameters) => async (): Promise<void> => {
     const { hoksID, oppijaOid } = this.props
-    const { notifications } = this.props.store!
+    const { notifications, environment } = this.props.store!
 
     const response: Response = await window.fetch(
       `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksID}/resend-palaute`,
       {
         method: "POST",
         credentials: "include",
-        headers: {
-          Accept: "application/json; charset=utf-8",
-          // "Caller-Id": ""
-          "Content-Type": "application/json"
-          // ticket: """
-        },
+        headers: environment.getCallerId(
+          new Headers({
+            Accept: "application/json; charset=utf-8",
+            "Content-Type": "application/json"
+          })
+        ),
         body: JSON.stringify(data)
       }
     )

@@ -228,7 +228,7 @@ export interface TavoitteetProps {
   children?: React.ReactChildren
   student: ISessionUser
   hoks: IHOKS
-  opiskelijapalaute?: boolean
+  showOpiskelijapalaute?: boolean
   titles?: {
     heading?: React.ReactNode
     goals?: React.ReactNode
@@ -477,7 +477,7 @@ export class Tavoitteet extends React.Component<
             </tbody>
           </InfoTable>
         </Accordion>
-        {this.props.opiskelijapalaute && (
+        {this.props.showOpiskelijapalaute && (
           <Opiskelijapalaute
             toggleAccordion={this.toggleAccordion}
             open={this.state.activeAccordions.opiskelijapalaute}

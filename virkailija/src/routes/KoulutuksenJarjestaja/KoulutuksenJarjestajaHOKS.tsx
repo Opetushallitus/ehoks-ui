@@ -183,7 +183,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                   path="/"
                   student={oppija.henkilotiedot}
                   hoks={suunnitelma}
-                  opiskelijapalaute={true}
+                  showOpiskelijapalaute={true}
                   titles={{
                     heading: (
                       <FormattedMessage

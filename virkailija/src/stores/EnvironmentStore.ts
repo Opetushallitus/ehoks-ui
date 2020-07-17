@@ -44,5 +44,14 @@ export const EnvironmentStore = types
 
     return { getEnvironment, fetchSwaggerJSON }
   })
+  .views(self => {
+    const { callerId } = getEnv<StoreEnvironment>(self)
+
+    const getCallerId = (headers?: Headers) => {
+      return callerId(headers)
+    }
+
+    return { getCallerId }
+  })
 
 export type IEnvironmentStore = Instance<typeof EnvironmentStore>

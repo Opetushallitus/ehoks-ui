@@ -1,6 +1,6 @@
 import { types, Instance } from "mobx-state-tree"
 
-export const OpiskelijapalauteTila = types.model("Ajankohta", {
+export const OpiskelijapalauteTila = types.model("OpiskelijapalauteTila", {
   hoksId: types.integer,
   oppijaOid: types.string,
   alkupvm: types.string,
