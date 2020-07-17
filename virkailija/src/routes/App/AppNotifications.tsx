@@ -45,12 +45,7 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
   static contextType = AppContext
   declare context: React.ContextType<typeof AppContext>
 
-  ackNotification = (hide: () => void) => (event: React.MouseEvent) => {
-    event.preventDefault()
-    hide()
-  }
-
-  render() {
+  render(): React.ReactNode {
     const { intl } = this.props
     const {
       errors: { unhandled },
@@ -61,13 +56,15 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
       <Container>
         {unhandled.map((error: IAppError, i: number) => (
           <AppNotification key={i} type="error">
-            <Content>
+            <Content onClick={error.handle}>
               <Text>
                 <FormattedMessage id={`errors.${error.id}`} />:{" "}
-                <FormattedMessage
-                  id={`errors.${error.errorText}`}
-                  defaultMessage={error.errorText}
-                />
+                {!!error.errorText && (
+                  <FormattedMessage
+                    id={`errors.${error.errorText}`}
+                    defaultMessage={error.errorText}
+                  />
+                )}
               </Text>
               <IconContainer
                 onClick={error.handle}
@@ -97,6 +94,14 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
                     values={message.values}
                   />
                 </Text>
+                <IconContainer
+                  onClick={notification.hide}
+                  aria-label={intl.formatMessage({
+                    id: "notification.piilotaNotifikaatioAriaLabel"
+                  })}
+                >
+                  <MdClose size={20} />
+                </IconContainer>
               </Content>
             </AppNotification>
           )

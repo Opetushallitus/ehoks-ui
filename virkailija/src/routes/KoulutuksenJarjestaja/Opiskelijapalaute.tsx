@@ -30,7 +30,7 @@ interface IResend {
 export class Opiskelijapalaute extends React.Component<
   OpiskelijapalauteProps & RouteComponentProps
 > {
-  resendPalaute = (data: IResend) => async () => {
+  resendPalaute = (data: IResend) => async (): Promise<void> => {
     const { hoksID, oppijaOid } = this.props
     const { notifications } = this.props.store!
 
@@ -69,12 +69,12 @@ export class Opiskelijapalaute extends React.Component<
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     const { notifications } = this.props.store!
     notifications.removeNotificationsBySource("Opiskelijapalaute")
   }
 
-  render() {
+  render(): React.ReactNode {
     const { palauteTilat } = this.props
 
     return (
@@ -152,7 +152,10 @@ export class Opiskelijapalaute extends React.Component<
                     tyyppi: palauteTila.tyyppi
                   })}
                 >
-                  Lähetä linkki opiskelijapalautekyselyyn uudestaan
+                  <FormattedMessage
+                    id="tavoitteet.opiskelijapalauteResendButton"
+                    defaultMessage="Lähetä linkki opiskelijapalautekyselyyn uudestaan"
+                  />
                 </Button>
               </React.Fragment>
             )

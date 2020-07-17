@@ -3,11 +3,11 @@ import { StoreEnvironment } from "types/StoreEnvironment"
 
 export const Notification = types
   .model("Notification", {
-    tyyppi: types.optional(types.string, "success"),
+    tyyppi: types.optional(types.string, "success"), // NotificationType literaali
     visible: types.optional(types.boolean, true),
-    default: types.optional(types.string, ""),
-    title: types.optional(types.string, ""),
-    source: types.optional(types.string, ""),
+    default: types.optional(types.string, ""), // Default message
+    title: types.optional(types.string, ""), // käännösavain
+    source: types.optional(types.string, ""), // notifikaation lähde
     sahkoposti: types.optional(types.string, "")
   })
   .views(self => ({
