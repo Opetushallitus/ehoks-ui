@@ -227,13 +227,17 @@ export const HOKS = types
           : ""
       },
       get osaamisala() {
-        return self.opiskeluOikeus.suoritukset &&
+        const opiskeluOikeusHasOsaamisala = () =>
+          self.opiskeluOikeus.suoritukset &&
           self.opiskeluOikeus.suoritukset.length &&
           self.opiskeluOikeus.suoritukset[0].osaamisala.length
-          ? self.opiskeluOikeus.suoritukset[0].osaamisala[0].osaamisala.nimi[
-              root.translations.activeLocale
-            ]
-          : ""
+
+        if (opiskeluOikeusHasOsaamisala()) {
+          return self.opiskeluOikeus.suoritukset[0].osaamisala[0].osaamisala
+            .nimi[root.translations.activeLocale]
+        }
+
+        return ""
       },
       get tutkinnonNimi() {
         return self.opiskeluOikeus.suoritukset.length
