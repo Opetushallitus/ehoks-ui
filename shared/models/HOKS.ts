@@ -13,9 +13,10 @@ import flattenDeep from "lodash.flattendeep"
 import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { StoreEnvironment } from "types/StoreEnvironment"
-import { Opiskeluoikeus } from "models/Opiskeluoikeus"
+import { IOsaamisala, Opiskeluoikeus } from "models/Opiskeluoikeus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import find from "lodash.find"
+import maxBy from "lodash.maxby"
 import { APIResponse } from "types/APIResponse"
 import { OpiskeluvalmiuksiaTukevatOpinnot } from "./OpiskeluvalmiuksiaTukevatOpinnot"
 import { AiemminHankitunYTOOsaAlue } from "./AiemminHankitunYTOOsaAlue"
@@ -227,12 +228,24 @@ export const HOKS = types
           : ""
       },
       get osaamisala() {
-        return self.opiskeluOikeus.suoritukset &&
-          self.opiskeluOikeus.suoritukset.length &&
-          self.opiskeluOikeus.suoritukset[0].osaamisala.length
-          ? self.opiskeluOikeus.suoritukset[0].osaamisala[0].osaamisala.nimi[
-              root.translations.activeLocale
-            ]
+        const opiskeluOikeusDoesntHaveOsaamisala = () =>
+          !(
+            self.opiskeluOikeus.suoritukset &&
+            self.opiskeluOikeus.suoritukset.length &&
+            self.opiskeluOikeus.suoritukset[0].osaamisala.length
+          )
+
+        const getLatestOsaamisala = (osaamisalat: IOsaamisala[]) =>
+          maxBy(osaamisalat, (osaamisala: IOsaamisala) => osaamisala.alku)
+
+        if (opiskeluOikeusDoesntHaveOsaamisala()) return ""
+
+        const latestOsaamisala = getLatestOsaamisala(
+          self.opiskeluOikeus.suoritukset[0].osaamisala
+        )
+
+        return latestOsaamisala
+          ? latestOsaamisala.osaamisala.nimi[root.translations.activeLocale]
           : ""
       },
       get tutkinnonNimi() {
