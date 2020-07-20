@@ -55,7 +55,9 @@ const Osaamisala = types.model("Osaamisala", {
       nimi: types.optional(Nimi, {})
     }),
     {}
-  )
+  ),
+  alku: types.maybe(types.string),
+  loppu: types.maybe(types.string)
 })
 
 const Suoritus = types.model("Suoritus", {
