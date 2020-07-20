@@ -38,3 +38,44 @@ test("Osaamisala is read from opiskeluOikeus", () => {
     "Toimitilahuollon osaamisala"
   )
 })
+
+test("Last osaamisala is taken", () => {
+  const root = RootStore.create(
+    {
+      hoks: {
+        suunnitelmat: [
+          {
+            sahkoposti: "jep@jep.fi",
+            opiskeluOikeus: {
+              suoritukset: [
+                {
+                  osaamisala: [
+                    {
+                      alku: "2018-08-13",
+                      loppu: "2019-01-31",
+                      osaamisala: {
+                        nimi: { fi: "Kotityöpalvelujen osaamisala" }
+                      }
+                    },
+                    {
+                      alku: "2019-01-31",
+                      loppu: "2020-05-29",
+                      osaamisala: {
+                        nimi: { fi: "Toimitilahuollon osaamisala" }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    createEnvironment(mockFetch(apiUrl), apiUrl, "", callerId)
+  )
+
+  expect(root.hoks.suunnitelmat[0].osaamisala).toBe(
+    "Toimitilahuollon osaamisala"
+  )
+})

@@ -49,7 +49,7 @@ const Vahvistus = types.model("Vahvistus", {
   paiva: types.optional(types.string, "")
 })
 
-const Osaamisala = types.model("Osaamisala", {
+export const Osaamisala = types.model("Osaamisala", {
   osaamisala: types.optional(
     types.model({
       nimi: types.optional(Nimi, {})

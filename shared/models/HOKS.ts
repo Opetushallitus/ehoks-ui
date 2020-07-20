@@ -13,9 +13,10 @@ import flattenDeep from "lodash.flattendeep"
 import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { StoreEnvironment } from "types/StoreEnvironment"
-import { Opiskeluoikeus } from "models/Opiskeluoikeus"
+import { Opiskeluoikeus, Osaamisala } from "models/Opiskeluoikeus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import find from "lodash.find"
+import maxBy from "lodash.maxby"
 import { APIResponse } from "types/APIResponse"
 import { OpiskeluvalmiuksiaTukevatOpinnot } from "./OpiskeluvalmiuksiaTukevatOpinnot"
 import { AiemminHankitunYTOOsaAlue } from "./AiemminHankitunYTOOsaAlue"
@@ -233,8 +234,14 @@ export const HOKS = types
           self.opiskeluOikeus.suoritukset[0].osaamisala.length
 
         if (opiskeluOikeusHasOsaamisala()) {
-          return self.opiskeluOikeus.suoritukset[0].osaamisala[0].osaamisala
-            .nimi[root.translations.activeLocale]
+          const osaamisAlat = self.opiskeluOikeus.suoritukset[0].osaamisala
+          const latestOsaamisala = maxBy(
+            osaamisAlat,
+            (osaamisAla: Instance<typeof Osaamisala>) => osaamisAla.alku
+          )
+          return latestOsaamisala
+            ? latestOsaamisala.osaamisala.nimi[root.translations.activeLocale]
+            : ""
         }
 
         return ""
