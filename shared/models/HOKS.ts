@@ -13,7 +13,7 @@ import flattenDeep from "lodash.flattendeep"
 import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { StoreEnvironment } from "types/StoreEnvironment"
-import { Opiskeluoikeus, Osaamisala } from "models/Opiskeluoikeus"
+import { IOsaamisala, Opiskeluoikeus } from "models/Opiskeluoikeus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import find from "lodash.find"
 import maxBy from "lodash.maxby"
@@ -228,23 +228,25 @@ export const HOKS = types
           : ""
       },
       get osaamisala() {
-        const opiskeluOikeusHasOsaamisala = () =>
-          self.opiskeluOikeus.suoritukset &&
-          self.opiskeluOikeus.suoritukset.length &&
-          self.opiskeluOikeus.suoritukset[0].osaamisala.length
-
-        if (opiskeluOikeusHasOsaamisala()) {
-          const osaamisAlat = self.opiskeluOikeus.suoritukset[0].osaamisala
-          const latestOsaamisala = maxBy(
-            osaamisAlat,
-            (osaamisAla: Instance<typeof Osaamisala>) => osaamisAla.alku
+        const opiskeluOikeusDoesntHaveOsaamisala = () =>
+          !(
+            self.opiskeluOikeus.suoritukset &&
+            self.opiskeluOikeus.suoritukset.length &&
+            self.opiskeluOikeus.suoritukset[0].osaamisala.length
           )
-          return latestOsaamisala
-            ? latestOsaamisala.osaamisala.nimi[root.translations.activeLocale]
-            : ""
-        }
 
-        return ""
+        const getLatestOsaamisala = (osaamisalat: IOsaamisala[]) =>
+          maxBy(osaamisalat, (osaamisala: IOsaamisala) => osaamisala.alku)
+
+        if (opiskeluOikeusDoesntHaveOsaamisala()) return ""
+
+        const latestOsaamisala = getLatestOsaamisala(
+          self.opiskeluOikeus.suoritukset[0].osaamisala
+        )
+
+        return latestOsaamisala
+          ? latestOsaamisala.osaamisala.nimi[root.translations.activeLocale]
+          : ""
       },
       get tutkinnonNimi() {
         return self.opiskeluOikeus.suoritukset.length
