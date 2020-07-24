@@ -36,31 +36,31 @@ export const EnrichTutkinnonOsaAndOsaAlue = types
       }
     })
 
-    const getOsaAlueetFromEPerusteet = (tutkinnonOsaId: number) =>
-      fetchSingle(
-        apiUrl(
-          `${apiPrefix}/external/eperusteet/tutkinnonosat/${tutkinnonOsaId}/osaalueet`
-        ),
-        {
-          headers: callerId()
-        }
-      )
+    // const getOsaAlueetFromEPerusteet = (tutkinnonOsaId: number) =>
+    //   fetchSingle(
+    //     apiUrl(
+    //       `${apiPrefix}/external/eperusteet/tutkinnonosat/${tutkinnonOsaId}/osaalueet`
+    //     ),
+    //     {
+    //       headers: callerId()
+    //     }
+    //   )
 
-    const fetchOsaAlue = flow(function*(): any {
-      try {
-        const { data }: APIResponse = yield getOsaAlueetFromEPerusteet(
-          self.tutkinnonOsa.id
-        )
-      } catch (error) {
-        errors.logError("EnrichOsaAlue.fetchFromEPerusteet", error.message)
-      }
-    })
+    // const fetchOsaAlue = flow(function*(): any {
+    //   try {
+    //     const { data }: APIResponse = yield getOsaAlueetFromEPerusteet(
+    //       self.tutkinnonOsa.id
+    //     )
+    //   } catch (error) {
+    //     errors.logError("EnrichOsaAlue.fetchFromEPerusteet", error.message)
+    //   }
+    // })
 
     const fetchKAIKKITODORENAME = flow(function*(
       tutkinnonOsaKoodiUri: string
     ): any {
       yield fetchTutkinnonOsa(tutkinnonOsaKoodiUri)
-      yield fetchOsaAlue()
+      // yield fetchOsaAlue()
     })
 
     const afterCreate = () => {
