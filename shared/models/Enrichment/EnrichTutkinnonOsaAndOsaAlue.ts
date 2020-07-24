@@ -56,8 +56,15 @@ export const EnrichTutkinnonOsaAndOsaAlue = types
       }
     })
 
+    const fetchKAIKKITODORENAME = flow(function*(
+      tutkinnonOsaKoodiUri: string
+    ): any {
+      yield fetchTutkinnonOsa(tutkinnonOsaKoodiUri)
+      yield fetchOsaAlue()
+    })
+
     const afterCreate = () => {
-      fetchTutkinnonOsa(self.tutkinnonOsaKoodiUri)
+      fetchKAIKKITODORENAME(self.tutkinnonOsaKoodiUri)
     }
 
     return { afterCreate }
