@@ -30,7 +30,7 @@ export const EnrichTutkinnonOsaKoodiUri = types
       )
     }
 
-    const getFromKoodistoService = (code: string) =>
+    const getFromEPerusteetService = (code: string) =>
       fetchSingle(apiUrl(`${apiPrefix}/external/eperusteet/${code}`), {
         headers: callerId()
       })
@@ -47,7 +47,7 @@ export const EnrichTutkinnonOsaKoodiUri = types
 
         // check our global cache first
         cachedResponses[koodiUri] =
-          cachedResponses[koodiUri] || getFromKoodistoService(koodiUri)
+          cachedResponses[koodiUri] || getFromEPerusteetService(koodiUri)
         const response: APIResponse = yield cachedResponses[koodiUri]
         self[enrichedField] = response.data
       } catch (error) {
