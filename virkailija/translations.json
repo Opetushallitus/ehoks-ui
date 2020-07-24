@@ -13,6 +13,7 @@
     "errors.EnrichKoodiUri.fetchEPerusteet": "Tutkinnon osien haku ePerusteista epäonnistui",
     "errors.EnrichKoodiUri.fetchKoodisto": "Haku koodistosta epäonnistui",
     "errors.EnrichOrganisaatioOid.fetchOrganisaatio": "Organisaation tietojen haku epäonnistui",
+    "errors.EnrichOsaAlue.fetchFromEPerusteet": "Tutkinnon osan osa-alueiden haku ePerusteista epäonnistui",
     "errors.EnrichTutkinnonOsa.fetchViitteet": "Tutkinnon osan viitteiden haku epäonnistui",
     "errors.EnvironmentStore.getEnvironment": "Ympäristömuuttujien haku epäonnistui",
     "errors.HOKS.fetchOpiskeluoikeudet": "Opiskeluoikeuksien hakeminen epäonnistui",

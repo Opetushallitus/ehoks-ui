@@ -91,6 +91,11 @@
   },
   {
     "locale": "fi",
+    "key": "errors.EnrichOsaAlue.fetchFromEPerusteet",
+    "value": "Tutkinnon osan osa-alueiden haku ePerusteista epäonnistui"
+  },
+  {
+    "locale": "fi",
     "key": "errors.EnrichKoodiUri.fetchKoodisto",
     "value": "Haku koodistosta epäonnistui"
   },
