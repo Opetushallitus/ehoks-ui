@@ -74,7 +74,8 @@ module.exports = {
         // these packages have problems with their sourcemaps
         exclude: [
           /node_modules\/@opetushallitus\/virkailija-ui-components/,
-          /node_modules\/react-responsive/
+          /node_modules\/react-responsive/,
+          /node_modules\/react-axe/
         ]
       },
       {

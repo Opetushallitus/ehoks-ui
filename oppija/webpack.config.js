@@ -73,7 +73,7 @@ module.exports = {
         enforce: "pre",
         use: "source-map-loader",
         // these packages have problems with their sourcemaps
-        exclude: [/node_modules\/react-responsive/]
+        exclude: [/node_modules\/react-responsive/, /node_modules\/react-axe/]
       },
       // Load images with 'file-loader'.
       {
