@@ -1,10 +1,10 @@
-var webpack = require("webpack")
-var path = require("path")
-var ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
-var TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
-var createStyledComponentsTransformer = require("typescript-plugin-styled-components")
+const webpack = require("webpack")
+const path = require("path")
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
+const createStyledComponentsTransformer = require("typescript-plugin-styled-components")
   .default
-var styledComponentsTransformer = createStyledComponentsTransformer()
+const styledComponentsTransformer = createStyledComponentsTransformer()
 
 module.exports = {
   mode: "development",
