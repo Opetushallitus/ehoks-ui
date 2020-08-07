@@ -12,7 +12,7 @@ import styled from "styled"
 
 export const BackgroundContainer = styled("div")`
   background: #f8f8f8;
-  height: 100%;
+  min-height: 100%;
 `
 
 const TopContainer = styled("div")`
