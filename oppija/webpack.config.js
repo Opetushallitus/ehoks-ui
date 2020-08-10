@@ -1,9 +1,10 @@
-var webpack = require("webpack")
-var path = require("path")
-var ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
-var TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
-var createStyledComponentsTransformer = require('typescript-plugin-styled-components').default
-var styledComponentsTransformer = createStyledComponentsTransformer()
+const webpack = require("webpack")
+const path = require("path")
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
+const createStyledComponentsTransformer = require("typescript-plugin-styled-components")
+  .default
+const styledComponentsTransformer = createStyledComponentsTransformer()
 
 module.exports = {
   mode: "development",
@@ -59,7 +60,9 @@ module.exports = {
             options: {
               transpileOnly: true,
               experimentalWatchApi: true,
-              getCustomTransformers: () => ({ before: [styledComponentsTransformer] })
+              getCustomTransformers: () => ({
+                before: [styledComponentsTransformer]
+              })
             }
           }
         ]
@@ -70,8 +73,7 @@ module.exports = {
         enforce: "pre",
         use: "source-map-loader",
         // these packages have problems with their sourcemaps
-        exclude: [
-          /node_modules\/react-responsive/]
+        exclude: [/node_modules\/react-responsive/, /node_modules\/react-axe/]
       },
       // Load images with 'file-loader'.
       {
