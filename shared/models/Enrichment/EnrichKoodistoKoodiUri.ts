@@ -69,7 +69,10 @@ export const EnrichKoodistoKoodiUri = (
 
       const afterCreate = () => {
         propertiesToEnrich.forEach(prop => {
-          fetchKoodisto(prop.enrichedProperty, prop.koodiUriProperty)
+          const koodiUriValue = self[prop.koodiUriProperty]
+          if (koodiUriValue) {
+            fetchKoodisto(prop.enrichedProperty, koodiUriValue)
+          }
         })
       }
 
