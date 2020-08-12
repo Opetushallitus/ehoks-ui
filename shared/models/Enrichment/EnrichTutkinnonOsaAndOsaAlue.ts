@@ -50,14 +50,14 @@ export const EnrichTutkinnonOsaAndOsaAlue = types
         }
       )
 
-    const fetchOsaAlue = flow(function*(): any {
+    const fetchOsaAlue = flow(function*(tutkinnonOsaId: number): any {
       try {
-        cachedOsaAlueResponses[self.tutkinnonOsa.id] =
-          cachedOsaAlueResponses[self.tutkinnonOsa.id] ||
-          getOsaAlueetFromEPerusteet(self.tutkinnonOsa.id)
+        cachedOsaAlueResponses[tutkinnonOsaId] =
+          cachedOsaAlueResponses[tutkinnonOsaId] ||
+          getOsaAlueetFromEPerusteet(tutkinnonOsaId)
 
         const { data }: APIResponse = yield cachedOsaAlueResponses[
-          self.tutkinnonOsa.id
+          tutkinnonOsaId
         ]
       } catch (error) {
         errors.logError(
@@ -68,14 +68,15 @@ export const EnrichTutkinnonOsaAndOsaAlue = types
     })
 
     const fetchKAIKKITODORENAME = flow(function*(
-      tutkinnonOsaKoodiUri: string
+      tutkinnonOsaKoodiUri: string,
+      tutkinnonOsaId: number
     ): any {
       yield fetchTutkinnonOsa(tutkinnonOsaKoodiUri)
-      yield fetchOsaAlue()
+      yield fetchOsaAlue(tutkinnonOsaId)
     })
 
     const afterCreate = () => {
-      fetchKAIKKITODORENAME(self.tutkinnonOsaKoodiUri)
+      fetchKAIKKITODORENAME(self.tutkinnonOsaKoodiUri, self.tutkinnonOsa.id)
     }
 
     return { afterCreate }
