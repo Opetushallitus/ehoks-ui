@@ -8,6 +8,7 @@ interface DynamicObject {
 
 // dumb cache for preventing multiple fetches for the same koodi-uri's
 const cachedTutkinnonOsaResponses: DynamicObject = {}
+const cachedOsaAlueResponses: DynamicObject = {}
 
 export const EnrichTutkinnonOsaAndOsaAlue = types
   .model({})
@@ -51,11 +52,18 @@ export const EnrichTutkinnonOsaAndOsaAlue = types
 
     const fetchOsaAlue = flow(function*(): any {
       try {
-        const { data }: APIResponse = yield getOsaAlueetFromEPerusteet(
+        cachedOsaAlueResponses[self.tutkinnonOsa.id] =
+          cachedOsaAlueResponses[self.tutkinnonOsa.id] ||
+          getOsaAlueetFromEPerusteet(self.tutkinnonOsa.id)
+
+        const { data }: APIResponse = yield cachedOsaAlueResponses[
           self.tutkinnonOsa.id
-        )
+        ]
       } catch (error) {
-        errors.logError("EnrichOsaAlue.fetchFromEPerusteet", error.message)
+        errors.logError(
+          "EnrichOsaAlue.fetchOsaAlueFromEPerusteet",
+          error.message
+        )
       }
     })
 
