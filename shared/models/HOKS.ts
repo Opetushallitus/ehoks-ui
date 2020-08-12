@@ -4,7 +4,7 @@ import { AiemminHankittuPaikallinenTutkinnonOsa } from "models/AiemminHankittuPa
 import { AiemminHankittuYhteinenTutkinnonOsa } from "models/AiemminHankittuYhteinenTutkinnonOsa"
 import { HankittavaAmmatillinenTutkinnonOsa } from "models/HankittavaAmmatillinenTutkinnonOsa"
 import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenTutkinnonOsa"
-import { HankittavaYhteinenTutkinnonOsa } from "models/HankittavaYhteinenTutkinnonOsa"
+import { HankittavaYhteinenTutkinnonOsa } from "models/YhteinenTutkinnonOsa/HankittavaYhteinenTutkinnonOsa"
 import {
   IHankittavaTutkinnonOsa,
   IAiemminHankittuTutkinnonOsa
