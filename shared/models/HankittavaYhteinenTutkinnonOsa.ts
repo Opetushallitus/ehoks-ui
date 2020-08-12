@@ -1,5 +1,5 @@
 import { types } from "mobx-state-tree"
-import { YhteisenTutkinnonOsanOsaAlue } from "./YhteisenTutkinnonOsanOsaAlue"
+import { YhteisenTutkinnonOsanOsaAlue } from "./YhteinenTutkinnonOsa/YhteisenTutkinnonOsanOsaAlue"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 import { EnrichTutkinnonOsaKoodiUri } from "./Enrichment/EnrichTutkinnonOsaKoodiUri"

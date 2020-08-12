@@ -1,12 +1,12 @@
 import { types } from "mobx-state-tree"
-import { OsaamisenHankkimistapa } from "./OsaamisenHankkimistapa"
-import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
-import { HankittavatTutkinnonOsatViews } from "./helpers/HankittavatTutkinnonOsatViews"
+import { OsaamisenHankkimistapa } from "../OsaamisenHankkimistapa"
+import { OsaamisenOsoittaminen } from "../OsaamisenOsoittaminen"
+import { HankittavatTutkinnonOsatViews } from "../helpers/HankittavatTutkinnonOsatViews"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
-import { Organisaatio } from "./Organisaatio"
-import { TutkinnonOsaType } from "./helpers/ShareTypes"
-import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
-import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
+import { Organisaatio } from "../Organisaatio"
+import { TutkinnonOsaType } from "../helpers/ShareTypes"
+import { EnrichKoodistoKoodiUri } from "../Enrichment/EnrichKoodistoKoodiUri"
+import { EnrichOrganisaatioOid } from "../Enrichment/EnrichOrganisaatioOid"
 
 const Model = types.model("YhteisenTutkinnonOsanOsaAlue", {
   id: types.optional(types.number, 0),

@@ -6,7 +6,7 @@ import { AiemminHankittuPaikallinenTutkinnonOsa } from "models/AiemminHankittuPa
 import { AiemminHankitunYTOOsaAlue } from "models/AiemminHankitunYTOOsaAlue"
 import { HankittavaAmmatillinenTutkinnonOsa } from "models/HankittavaAmmatillinenTutkinnonOsa"
 import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenTutkinnonOsa"
-import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
+import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteinenTutkinnonOsa/YhteisenTutkinnonOsanOsaAlue"
 import { Organisaatio } from "../Organisaatio"
 import { TodennettuArviointiLisatiedot } from "../TodennettuArviointiLisatiedot"
 import { ShareType } from "./ShareTypes"

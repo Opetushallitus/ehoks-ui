@@ -10,7 +10,7 @@ import {
   IAiemminHankittuTutkinnonOsa
 } from "./helpers/TutkinnonOsa"
 import flattenDeep from "lodash.flattendeep"
-import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
+import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteinenTutkinnonOsa/YhteisenTutkinnonOsanOsaAlue"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { IOsaamisala, Opiskeluoikeus } from "models/Opiskeluoikeus"
