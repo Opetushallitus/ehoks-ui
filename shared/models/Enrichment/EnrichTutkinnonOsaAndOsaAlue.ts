@@ -7,7 +7,7 @@ interface DynamicObject {
 }
 
 // dumb cache for preventing multiple fetches for the same koodi-uri's
-const cachedResponses: DynamicObject = {}
+const cachedTutkinnonOsaResponses: DynamicObject = {}
 
 export const EnrichTutkinnonOsaAndOsaAlue = types
   .model({})
@@ -27,9 +27,12 @@ export const EnrichTutkinnonOsaAndOsaAlue = types
     const fetchTutkinnonOsa = flow(function*(koodiUri: string): any {
       try {
         // check our global cache first
-        cachedResponses[koodiUri] =
-          cachedResponses[koodiUri] || getTutkinnonOsaFromEPerusteet(koodiUri)
-        const response: APIResponse = yield cachedResponses[koodiUri]
+        cachedTutkinnonOsaResponses[koodiUri] =
+          cachedTutkinnonOsaResponses[koodiUri] ||
+          getTutkinnonOsaFromEPerusteet(koodiUri)
+        const response: APIResponse = yield cachedTutkinnonOsaResponses[
+          koodiUri
+        ]
         self.tutkinnonOsa = response.data
       } catch (error) {
         errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
