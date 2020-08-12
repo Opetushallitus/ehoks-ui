@@ -237,6 +237,10 @@
     "yllapito.title": "Ylläpito",
     "yllapito.tyhjennaValimuisti": "Tyhjennä välimuisti",
     "yllapito.valimuistiKoko": "Koko: {cacheSize}",
-    "yllapito.valimuistiTitle": "Välimuisti"
+    "yllapito.valimuistiTitle": "Välimuisti",
+    "yllapito.opiskeluoikeusPaivitys": "Päivitä opiskeluoikeus indeksiin Koskesta.",
+    "yllapito.updateOpiskeluoikeusButton": "Päivitä opiskeluoikeuden tiedot opiskeluoikeus-indeksiin.",
+    "yllapito.opiskeluoikeuksienPaivitys": "Päivitä koulutustoimijan opiskeluoikeudet indeksiin Koskesta.",
+    "yllapito.updateOpiskeluoikeudetButton": "Päivitä opiskeluoikeudet."
   }
 }
