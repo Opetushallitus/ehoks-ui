@@ -16,9 +16,14 @@ export const EnrichTutkinnonOsaAndOsaAlue = types
   // when assigning to self[dynamicKey]
   .volatile((): DynamicObject => ({}))
   .actions(self => {
-    const { apiUrl, apiPrefix, errors, fetchSingle, callerId } = getEnv<
-      StoreEnvironment
-    >(self)
+    const {
+      apiUrl,
+      apiPrefix,
+      errors,
+      fetchSingle,
+      fetchCollection,
+      callerId
+    } = getEnv<StoreEnvironment>(self)
 
     const getTutkinnonOsaFromEPerusteet = (code: string) =>
       fetchSingle(apiUrl(`${apiPrefix}/external/eperusteet/${code}`), {
@@ -41,7 +46,7 @@ export const EnrichTutkinnonOsaAndOsaAlue = types
     })
 
     const getOsaAlueetFromEPerusteet = (tutkinnonOsaId: number) =>
-      fetchSingle(
+      fetchCollection(
         apiUrl(
           `${apiPrefix}/external/eperusteet/tutkinnonosat/${tutkinnonOsaId}/osaalueet`
         ),
