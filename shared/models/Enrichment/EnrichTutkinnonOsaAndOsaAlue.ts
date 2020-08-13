@@ -69,7 +69,7 @@ export const EnrichTutkinnonOsaAndOsaAlue = types
         self.osaAlueet.forEach(function(
           osaAlue: Instance<typeof YhteisenTutkinnonOsanOsaAlue>
         ) {
-          osaAlue.osaAlueTEMP = data.find(
+          osaAlue.osaAlue = data.find(
             (x: Instance<typeof OsaAlueVastaus>) =>
               x.koodiUri === osaAlue.osaAlueKoodiUri
           )
