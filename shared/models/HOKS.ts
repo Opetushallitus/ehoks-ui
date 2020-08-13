@@ -1,16 +1,16 @@
 import { types, Instance, getEnv, flow, getRoot } from "mobx-state-tree"
 import { AiemminHankittuAmmatillinenTutkinnonOsa } from "models/AiemminHankittuAmmatillinenTutkinnonOsa"
 import { AiemminHankittuPaikallinenTutkinnonOsa } from "models/AiemminHankittuPaikallinenTutkinnonOsa"
-import { AiemminHankittuYhteinenTutkinnonOsa } from "models/AiemminHankittuYhteinenTutkinnonOsa"
+import { AiemminHankittuYhteinenTutkinnonOsa } from "models/YhteinenTutkinnonOsa/AiemminHankittuYhteinenTutkinnonOsa"
 import { HankittavaAmmatillinenTutkinnonOsa } from "models/HankittavaAmmatillinenTutkinnonOsa"
 import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenTutkinnonOsa"
-import { HankittavaYhteinenTutkinnonOsa } from "models/HankittavaYhteinenTutkinnonOsa"
+import { HankittavaYhteinenTutkinnonOsa } from "models/YhteinenTutkinnonOsa/HankittavaYhteinenTutkinnonOsa"
 import {
   IHankittavaTutkinnonOsa,
   IAiemminHankittuTutkinnonOsa
 } from "./helpers/TutkinnonOsa"
 import flattenDeep from "lodash.flattendeep"
-import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
+import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteinenTutkinnonOsa/YhteisenTutkinnonOsanOsaAlue"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { IOsaamisala, Opiskeluoikeus } from "models/Opiskeluoikeus"
@@ -19,7 +19,7 @@ import find from "lodash.find"
 import maxBy from "lodash.maxby"
 import { APIResponse } from "types/APIResponse"
 import { OpiskeluvalmiuksiaTukevatOpinnot } from "./OpiskeluvalmiuksiaTukevatOpinnot"
-import { AiemminHankitunYTOOsaAlue } from "./AiemminHankitunYTOOsaAlue"
+import { AiemminHankitunYTOOsaAlue } from "./YhteinenTutkinnonOsa/AiemminHankitunYTOOsaAlue"
 import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 
 const Model = types.model("HOKSModel", {

@@ -1,19 +1,18 @@
 import { types } from "mobx-state-tree"
-import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
-import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
-import { KoodistoVastaus } from "./KoodistoVastaus"
-import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
-import { Organisaatio } from "./Organisaatio"
-import { TutkinnonOsaType } from "./helpers/ShareTypes"
-import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
-import { EnrichOrganisaatioOid } from "./Enrichment/EnrichOrganisaatioOid"
+import { OsaamisenOsoittaminen } from "../OsaamisenOsoittaminen"
+import { TodennettuArviointiLisatiedot } from "../TodennettuArviointiLisatiedot"
+import { AiemminHankitutTutkinnonOsatViews } from "../helpers/AiemminHankitutTutkinnonOsatViews"
+import { Organisaatio } from "../Organisaatio"
+import { TutkinnonOsaType } from "../helpers/ShareTypes"
+import { EnrichOrganisaatioOid } from "../Enrichment/EnrichOrganisaatioOid"
+import { OsaAlueVastaus } from "./OsaAlueVastaus"
 
 export const Model = types.model("AiemminHankitunYTOOsaAlue", {
   id: types.optional(types.number, 0),
   moduleId: types.maybe(types.string),
   olennainenSeikka: types.optional(types.boolean, false),
   osaAlueKoodiUri: types.optional(types.string, ""),
-  osaAlue: types.optional(KoodistoVastaus, {}),
+  osaAlueEnrichedData: types.optional(OsaAlueVastaus, {}),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
   koulutuksenJarjestaja: types.maybe(Organisaatio),
   vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
@@ -27,10 +26,6 @@ export const Model = types.model("AiemminHankitunYTOOsaAlue", {
 
 export const AiemminHankitunYTOOsaAlue = types
   .compose(
-    EnrichKoodistoKoodiUri({
-      enrichedProperty: "osaAlue",
-      koodiUriProperty: "osaAlueKoodiUri"
-    }),
     EnrichOrganisaatioOid({
       enrichedProperty: "koulutuksenJarjestaja",
       organzationOidProperty: "koulutuksenJarjestajaOid"
@@ -40,11 +35,12 @@ export const AiemminHankitunYTOOsaAlue = types
   )
   .views(self => ({
     get otsikko() {
-      return self.osaAlue ? self.osaAlue.nimi : ""
+      return self.osaAlueEnrichedData
+        ? self.osaAlueEnrichedData.osaAlueNimi
+        : ""
     },
     get osaamispisteet() {
-      // TODO: where do we get this? Fix this also to YhteisenTutkinnonOsanOsaAlue.ts
-      return 0
+      return self.osaAlueEnrichedData.laajuus
     },
     get tutkinnonOsaTyyppi(): TutkinnonOsaType {
       return TutkinnonOsaType.AiemminHankitunYhteisenTutkinnonOsanOsaAlue
