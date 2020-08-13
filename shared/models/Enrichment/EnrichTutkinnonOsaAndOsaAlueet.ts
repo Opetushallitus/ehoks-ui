@@ -75,10 +75,7 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
           )
         })
       } catch (error) {
-        errors.logError(
-          "EnrichOsaAlue.fetchOsaAlueFromEPerusteet",
-          error.message
-        )
+        errors.logError("EnrichOsaAlue.fetchFromEPerusteet", error.message)
       }
     })
 
