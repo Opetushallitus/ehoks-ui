@@ -12,7 +12,7 @@ export const Model = types.model("AiemminHankitunYTOOsaAlue", {
   moduleId: types.maybe(types.string),
   olennainenSeikka: types.optional(types.boolean, false),
   osaAlueKoodiUri: types.optional(types.string, ""),
-  osaAlue: types.optional(OsaAlueVastaus, {}),
+  osaAlueEnrichedData: types.optional(OsaAlueVastaus, {}),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
   koulutuksenJarjestaja: types.maybe(Organisaatio),
   vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
@@ -35,10 +35,12 @@ export const AiemminHankitunYTOOsaAlue = types
   )
   .views(self => ({
     get otsikko() {
-      return self.osaAlue ? self.osaAlue.osaAlueNimi : ""
+      return self.osaAlueEnrichedData
+        ? self.osaAlueEnrichedData.osaAlueNimi
+        : ""
     },
     get osaamispisteet() {
-      return self.osaAlue.laajuus
+      return self.osaAlueEnrichedData.laajuus
     },
     get tutkinnonOsaTyyppi(): TutkinnonOsaType {
       return TutkinnonOsaType.AiemminHankitunYhteisenTutkinnonOsanOsaAlue

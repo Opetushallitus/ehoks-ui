@@ -68,10 +68,10 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
 
         self.osaAlueet.forEach(
           (osaAlueStoredToEhoks: {
-            osaAlue: IOsaAlueVastaus
+            osaAlueEnrichedData: IOsaAlueVastaus
             osaAlueKoodiUri: string
           }) => {
-            osaAlueStoredToEhoks.osaAlue = data.find(
+            osaAlueStoredToEhoks.osaAlueEnrichedData = data.find(
               (osaAlueFromEperusteet: IOsaAlueVastaus) =>
                 osaAlueFromEperusteet.koodiUri ===
                 osaAlueStoredToEhoks.osaAlueKoodiUri

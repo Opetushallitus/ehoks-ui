@@ -11,7 +11,7 @@ const Model = types.model("YhteisenTutkinnonOsanOsaAlue", {
   id: types.optional(types.number, 0),
   moduleId: types.maybe(types.string),
   osaAlueKoodiUri: types.optional(types.string, ""),
-  osaAlue: types.optional(OsaAlueVastaus, {}),
+  osaAlueEnrichedData: types.optional(OsaAlueVastaus, {}),
   osaamisenHankkimistavat: types.array(OsaamisenHankkimistapa),
   vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
   osaamisenOsoittaminen: types.array(OsaamisenOsoittaminen),
@@ -31,10 +31,12 @@ export const YhteisenTutkinnonOsanOsaAlue = types
   )
   .views(self => ({
     get otsikko() {
-      return self.osaAlue ? self.osaAlue.osaAlueNimi : ""
+      return self.osaAlueEnrichedData
+        ? self.osaAlueEnrichedData.osaAlueNimi
+        : ""
     },
     get osaamispisteet() {
-      return self.osaAlue.laajuus
+      return self.osaAlueEnrichedData.laajuus
     },
     get tutkinnonOsaTyyppi(): TutkinnonOsaType {
       return TutkinnonOsaType.HankittavanYhteisenTutkinnonOsanOsaAlue
