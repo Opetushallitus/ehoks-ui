@@ -5,14 +5,16 @@ import { HankittavatTutkinnonOsatViews } from "../helpers/HankittavatTutkinnonOs
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { Organisaatio } from "../Organisaatio"
 import { TutkinnonOsaType } from "../helpers/ShareTypes"
-import { EnrichKoodistoKoodiUri } from "../Enrichment/EnrichKoodistoKoodiUri"
 import { EnrichOrganisaatioOid } from "../Enrichment/EnrichOrganisaatioOid"
+import { OsaAlueVastaus } from "./OsaAlueVastaus"
+import { EnrichKoodistoKoodiUri } from "../Enrichment/EnrichKoodistoKoodiUri"
 
 const Model = types.model("YhteisenTutkinnonOsanOsaAlue", {
   id: types.optional(types.number, 0),
   moduleId: types.maybe(types.string),
   osaAlueKoodiUri: types.optional(types.string, ""),
   osaAlue: types.optional(KoodistoVastaus, {}),
+  osaAlueTEMP: types.optional(OsaAlueVastaus, {}),
   osaamisenHankkimistavat: types.array(OsaamisenHankkimistapa),
   vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
   osaamisenOsoittaminen: types.array(OsaamisenOsoittaminen),
