@@ -12,7 +12,7 @@ import styled from "styled"
 
 export const BackgroundContainer = styled("div")`
   background: #f8f8f8;
-  height: 100%;
+  min-height: 100%;
 `
 
 const TopContainer = styled("div")`
@@ -84,10 +84,12 @@ interface YllapitoState {
   opiskeluoikeusOid?: string | ""
   oppijaOid?: string | ""
   opiskeluoikeusHakuOid?: string | ""
+  opiskeluoikeusUpdateOid?: string | ""
   hoksHakuId?: number
   hoksDeleteId?: number
   idToDelete?: number
   systemInfo?: SystemInfo
+  koulutustoimijaOid?: string | ""
 }
 
 interface SystemInfoResponse {
@@ -108,7 +110,9 @@ export class Yllapito extends React.Component<YllapitoProps> {
     opiskeluoikeusOid: "",
     oppijaOid: "",
     idToDelete: undefined,
-    systemInfo: undefined
+    systemInfo: undefined,
+    opiskeluoikeusUpdateOid: "",
+    koulutustoimijaOid: ""
   }
 
   async loadSystemInfo() {
@@ -275,7 +279,6 @@ export class Yllapito extends React.Component<YllapitoProps> {
     )
     if (request.status === 200) {
       const json = await request.json()
-      console.log(json)
       this.setState({
         success: true,
         message: intl.formatMessage({
@@ -395,6 +398,121 @@ export class Yllapito extends React.Component<YllapitoProps> {
     }
   }
 
+  onUpdateOpiskeluoikeus = async (event: any) => {
+    const { intl } = this.context
+    const { opiskeluoikeusUpdateOid } = this.state
+    event.preventDefault()
+    const request = await window.fetch(
+      `/ehoks-virkailija-backend/api/v1/virkailija/opiskeluoikeus/${opiskeluoikeusUpdateOid}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          Accept: "application/json; charset=utf-8",
+          "Content-Type": "application/json"
+        }
+      }
+    )
+    if (request.status === 200) {
+      this.setState({
+        success: true,
+        message: intl.formatMessage({
+          id: "yllapito.opiskeluoikeudenPaivitysOnnistui",
+          defaultMessage: "Opiskeluoikeuden päivitys onnistui"
+        }),
+        isLoading: false
+      })
+    } else {
+      this.setState({
+        success: false,
+        message: intl.formatMessage({
+          id: "yllapito.opiskeluoikeudenPaivitysEpaonnistui",
+          defaultMessage: "Opiskeluoikeuden päivitys epäonnistui"
+        }),
+        isLoading: false
+      })
+    }
+  }
+
+  onUpdateOpiskeluoikeudet = async (event: any) => {
+    const { intl } = this.context
+    const { koulutustoimijaOid } = this.state
+    event.preventDefault()
+    const confirmRequest = await window.fetch(
+      `/ehoks-virkailija-backend/api/v1/virkailija/opiskeluoikeudet/${koulutustoimijaOid}/deletion-info`,
+      {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json; charset=utf-8",
+          "Content-Type": "application/json"
+        }
+      }
+    )
+    if (confirmRequest.status === 200) {
+      const json = await confirmRequest.json()
+      const amount = json.data
+      console.log(amount)
+      if (
+        window.confirm(
+          this.context.intl.formatMessage(
+            {
+              id: "yllapito.uudelleenIndeksointiVarmistus",
+              defaultMessage:
+                "Päivitettäviä opiskeluoikeuksia on yhteensä {amount} kappaletta.\n" +
+                "Oletko varma, että haluat poistaa ja hakea opiskeluoikeudet\n" +
+                "uudestaan?\n"
+            },
+            {
+              amount
+            }
+          )
+        )
+      ) {
+        const deleteRequest = await window.fetch(
+          `/ehoks-virkailija-backend/api/v1/virkailija/opiskeluoikeudet/${koulutustoimijaOid}`,
+          {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+              Accept: "application/json; charset=utf-8",
+              "Content-Type": "application/json"
+            }
+          }
+        )
+        if (deleteRequest.status === 200) {
+          this.setState({
+            success: true,
+            message: intl.formatMessage({
+              id: "yllapito.opiskeluoikeuksienPaivitysOnnistui",
+              defaultMessage: "Poisto ja uudelleenindeksointi aloitettu"
+            }),
+            isLoading: false
+          })
+        } else {
+          this.setState({
+            success: false,
+            message: intl.formatMessage({
+              id: "yllapito.opiskeluoikeuksienPaivitysEpaonnistui",
+              defaultMessage: "Poisto ja uudelleenindeksointi epäonnistui."
+            }),
+            isLoading: false
+          })
+        }
+      }
+    } else {
+      this.setState({
+        success: false,
+        message: intl.formatMessage({
+          id: "yllapito.opiskeluoikeuksienVahvistustietojenHakuEpaonnistui",
+          defaultMessage:
+            "Opikseluoikeuksien vahvistustietojen hakeminen epäonnistui"
+        }),
+        isLoading: false
+      })
+    }
+  }
+
   handleHoksIdChange = (inputId: any) => {
     // const inputOid = event.target.value
     this.setState({
@@ -407,9 +525,20 @@ export class Yllapito extends React.Component<YllapitoProps> {
       opiskeluoikeusOid: inputOid
     })
   }
+  handleUpdateOidChange = (inputOid: any) => {
+    this.setState({
+      opiskeluoikeusUpdateOid: inputOid
+    })
+  }
   handleDeleteIdChange = (inputId: any) => {
     this.setState({
       idToDelete: inputId
+    })
+  }
+
+  handlekoulutustoimijaOidChange = (inputOid: any) => {
+    this.setState({
+      koulutustoimijaOid: inputOid
     })
   }
 
@@ -671,6 +800,68 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           <FormattedMessage
                             id="yllapito.poistaHoksButton"
                             defaultMessage="Poista HOKS"
+                          />
+                        </Button>
+                      </ContentElement>
+                    </ContentElement>
+                  </ContentElement>
+                  <ContentElement>
+                    <Header>
+                      <FormattedMessage
+                        id="yllapito.opiskeluoikeusPaivitys"
+                        defaultMessage="Päivitä opiskeluoikeus indeksiin Koskesta."
+                      />
+                    </Header>
+                    <ContentElement>
+                      <ContentElement>
+                        <form>
+                          <HakuInput
+                            type="text"
+                            placeholder="1.2.345.678.98.76543212345"
+                            value={this.state.opiskeluoikeusUpdateOid}
+                            onChange={e =>
+                              this.handleUpdateOidChange(e.target.value)
+                            }
+                          />
+                        </form>
+                      </ContentElement>
+                      <ContentElement>
+                        <Button onClick={this.onUpdateOpiskeluoikeus}>
+                          <FormattedMessage
+                            id="yllapito.updateOpiskeluoikeusButton"
+                            defaultMessage="Päivitä opiskeluoikeuden tiedot opiskeluoikeus-indeksiin."
+                          />
+                        </Button>
+                      </ContentElement>
+                    </ContentElement>
+                  </ContentElement>
+                  <ContentElement>
+                    <Header>
+                      <FormattedMessage
+                        id="yllapito.opiskeluoikeuksienPaivitys"
+                        defaultMessage="Päivitä koulutustoimijan opiskeluoikeudet indeksiin Koskesta."
+                      />
+                    </Header>
+                    <ContentElement>
+                      <ContentElement>
+                        <form>
+                          <HakuInput
+                            type="text"
+                            placeholder="1.2.345.678.98.76543212345"
+                            value={this.state.koulutustoimijaOid}
+                            onChange={e =>
+                              this.handlekoulutustoimijaOidChange(
+                                e.target.value
+                              )
+                            }
+                          />
+                        </form>
+                      </ContentElement>
+                      <ContentElement>
+                        <Button onClick={this.onUpdateOpiskeluoikeudet}>
+                          <FormattedMessage
+                            id="yllapito.updateOpiskeluoikeudetButton"
+                            defaultMessage="Päivitä opiskeluoikeudet."
                           />
                         </Button>
                       </ContentElement>

@@ -70,7 +70,10 @@ export const EnrichOrganisaatioOid = (
 
       const afterCreate = () => {
         propertiesToEnrich.forEach(prop => {
-          fetchOrganisaatio(prop.enrichedProperty, prop.organzationOidProperty)
+          const organizationOid = self[prop.organzationOidProperty]
+          if (organizationOid) {
+            fetchOrganisaatio(prop.enrichedProperty, organizationOid)
+          }
         })
       }
 
