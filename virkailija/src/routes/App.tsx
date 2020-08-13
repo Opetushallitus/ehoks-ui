@@ -1,6 +1,6 @@
 import { Redirect, Router } from "@reach/router"
 import { ThemeWrapper } from "components/ThemeWrapper"
-import { parseLocaleParam } from "localeUtils"
+import { parseLocaleParam, setDocumentLocale } from "localeUtils"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { IntlProvider } from "react-intl"
@@ -53,6 +53,7 @@ export class App extends React.Component<AppProps> {
     const activeLocale = localeParam
       ? localeParam
       : store!.translations.activeLocale
+    setDocumentLocale(activeLocale)
     const translations = store!.translations.messages[activeLocale]
     const messages =
       activeLocale === Locale.FI
