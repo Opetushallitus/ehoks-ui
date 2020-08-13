@@ -19,7 +19,7 @@ import find from "lodash.find"
 import maxBy from "lodash.maxby"
 import { APIResponse } from "types/APIResponse"
 import { OpiskeluvalmiuksiaTukevatOpinnot } from "./OpiskeluvalmiuksiaTukevatOpinnot"
-import { AiemminHankitunYTOOsaAlue } from "./AiemminHankitunYTOOsaAlue"
+import { AiemminHankitunYTOOsaAlue } from "./YhteinenTutkinnonOsa/AiemminHankitunYTOOsaAlue"
 import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 
 const Model = types.model("HOKSModel", {

@@ -1,7 +1,7 @@
 import { types } from "mobx-state-tree"
 import { OsaamisenOsoittaminen } from "../OsaamisenOsoittaminen"
 import { TodennettuArviointiLisatiedot } from "../TodennettuArviointiLisatiedot"
-import { AiemminHankitunYTOOsaAlue } from "../AiemminHankitunYTOOsaAlue"
+import { AiemminHankitunYTOOsaAlue } from "./AiemminHankitunYTOOsaAlue"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
 import { TutkinnonOsaType } from "../helpers/ShareTypes"
