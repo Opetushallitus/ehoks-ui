@@ -1,10 +1,10 @@
 import { types } from "mobx-state-tree"
-import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
-import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
-import { AiemminHankitunYTOOsaAlue } from "./AiemminHankitunYTOOsaAlue"
+import { OsaamisenOsoittaminen } from "../OsaamisenOsoittaminen"
+import { TodennettuArviointiLisatiedot } from "../TodennettuArviointiLisatiedot"
+import { AiemminHankitunYTOOsaAlue } from "../AiemminHankitunYTOOsaAlue"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
-import { TutkinnonOsaType } from "./helpers/ShareTypes"
+import { TutkinnonOsaType } from "../helpers/ShareTypes"
 
 export const AiemminHankittuYhteinenTutkinnonOsa = types
   .model("AiemminHankittuYhteinenTutkinnonOsa", {
