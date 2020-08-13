@@ -56,6 +56,25 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
         }
       )
 
+    const findMatchingOsaAlueFromEperusteetResponse = (
+      ePerusteeReponse: any,
+      osaAlueKoodiUri: string
+    ) =>
+      ePerusteeReponse.find(
+        (osaAlueFromEperusteet: IOsaAlueVastaus) =>
+          osaAlueFromEperusteet.koodiUri === osaAlueKoodiUri
+      )
+
+    const getEnrichedDataForOsaAlue = (ePerusteeReponse: any) => (osaAlue: {
+      osaAlueEnrichedData: IOsaAlueVastaus
+      osaAlueKoodiUri: string
+    }) => {
+      osaAlue.osaAlueEnrichedData = findMatchingOsaAlueFromEperusteetResponse(
+        ePerusteeReponse,
+        osaAlue.osaAlueKoodiUri
+      )
+    }
+
     const fetchOsaAlue = flow(function*(tutkinnonOsaId: number): any {
       try {
         cachedOsaAlueResponses[tutkinnonOsaId] =
@@ -66,24 +85,13 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
           tutkinnonOsaId
         ]
 
-        self.osaAlueet.forEach(
-          (osaAlueStoredToEhoks: {
-            osaAlueEnrichedData: IOsaAlueVastaus
-            osaAlueKoodiUri: string
-          }) => {
-            osaAlueStoredToEhoks.osaAlueEnrichedData = data.find(
-              (osaAlueFromEperusteet: IOsaAlueVastaus) =>
-                osaAlueFromEperusteet.koodiUri ===
-                osaAlueStoredToEhoks.osaAlueKoodiUri
-            )
-          }
-        )
+        self.osaAlueet.forEach(getEnrichedDataForOsaAlue(data))
       } catch (error) {
         errors.logError("EnrichOsaAlue.fetchFromEPerusteet", error.message)
       }
     })
 
-    const fetchKAIKKITODORENAME = flow(function*(
+    const fetchTutkinnonOsaAndOsaAlueet = flow(function*(
       tutkinnonOsaKoodiUri: string
     ): any {
       yield fetchTutkinnonOsa(tutkinnonOsaKoodiUri)
@@ -91,7 +99,7 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
     })
 
     const afterCreate = () => {
-      fetchKAIKKITODORENAME(self.tutkinnonOsaKoodiUri)
+      fetchTutkinnonOsaAndOsaAlueet(self.tutkinnonOsaKoodiUri)
     }
 
     return { afterCreate }
