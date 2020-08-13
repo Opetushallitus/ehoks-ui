@@ -1,7 +1,6 @@
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { APIResponse } from "types/APIResponse"
-import { YhteisenTutkinnonOsanOsaAlue } from "../YhteinenTutkinnonOsa/YhteisenTutkinnonOsanOsaAlue"
 import { OsaAlueVastaus } from "../YhteinenTutkinnonOsa/OsaAlueVastaus"
 
 interface DynamicObject {
@@ -66,14 +65,20 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
         const { data }: APIResponse = yield cachedOsaAlueResponses[
           tutkinnonOsaId
         ]
-        self.osaAlueet.forEach(function(
-          osaAlue: Instance<typeof YhteisenTutkinnonOsanOsaAlue>
-        ) {
-          osaAlue.osaAlue = data.find(
-            (x: Instance<typeof OsaAlueVastaus>) =>
-              x.koodiUri === osaAlue.osaAlueKoodiUri
-          )
-        })
+
+        self.osaAlueet.forEach(
+          (osaAlueStoredToEhoks: {
+            osaAlue: Instance<typeof OsaAlueVastaus>
+            osaAlueKoodiUri: string
+          }) => {
+            // (osaAlue: Instance<typeof YhteisenTutkinnonOsanOsaAlue>) => {
+            osaAlueStoredToEhoks.osaAlue = data.find(
+              (osaAlueFromEperusteet: Instance<typeof OsaAlueVastaus>) =>
+                osaAlueFromEperusteet.koodiUri ===
+                osaAlueStoredToEhoks.osaAlueKoodiUri
+            )
+          }
+        )
       } catch (error) {
         errors.logError("EnrichOsaAlue.fetchFromEPerusteet", error.message)
       }
