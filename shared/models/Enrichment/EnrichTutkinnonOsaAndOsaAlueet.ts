@@ -1,7 +1,7 @@
-import { flow, getEnv, Instance, types } from "mobx-state-tree"
+import { flow, getEnv, types } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { APIResponse } from "types/APIResponse"
-import { OsaAlueVastaus } from "../YhteinenTutkinnonOsa/OsaAlueVastaus"
+import { IOsaAlueVastaus } from "../YhteinenTutkinnonOsa/OsaAlueVastaus"
 
 interface DynamicObject {
   [name: string]: any
@@ -68,12 +68,11 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
 
         self.osaAlueet.forEach(
           (osaAlueStoredToEhoks: {
-            osaAlue: Instance<typeof OsaAlueVastaus>
+            osaAlue: IOsaAlueVastaus
             osaAlueKoodiUri: string
           }) => {
-            // (osaAlue: Instance<typeof YhteisenTutkinnonOsanOsaAlue>) => {
             osaAlueStoredToEhoks.osaAlue = data.find(
-              (osaAlueFromEperusteet: Instance<typeof OsaAlueVastaus>) =>
+              (osaAlueFromEperusteet: IOsaAlueVastaus) =>
                 osaAlueFromEperusteet.koodiUri ===
                 osaAlueStoredToEhoks.osaAlueKoodiUri
             )

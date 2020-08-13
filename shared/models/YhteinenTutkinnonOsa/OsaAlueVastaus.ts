@@ -1,4 +1,4 @@
-import { getRoot, types } from "mobx-state-tree"
+import { getRoot, Instance, types } from "mobx-state-tree"
 import { LocaleRoot } from "../helpers/LocaleRoot"
 
 const EPerusteetNimi = types.model({
@@ -33,3 +33,5 @@ export const OsaAlueVastaus = types
       }
     }
   })
+
+export type IOsaAlueVastaus = Instance<typeof OsaAlueVastaus>
