@@ -38,11 +38,10 @@ export const YhteisenTutkinnonOsanOsaAlue = types
   )
   .views(self => ({
     get otsikko() {
-      return self.osaAlue ? self.osaAlue.nimi : ""
+      return self.osaAlue ? self.osaAlueTEMP.osaAlueNimi : ""
     },
     get osaamispisteet() {
-      // TODO: where do we get this? Fix this also to AiemminHankitunYTOOsaAlue.ts
-      return 0
+      return self.osaAlueTEMP.laajuus
     },
     get tutkinnonOsaTyyppi(): TutkinnonOsaType {
       return TutkinnonOsaType.HankittavanYhteisenTutkinnonOsanOsaAlue
