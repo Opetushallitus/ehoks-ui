@@ -12,7 +12,7 @@ interface DynamicObject {
 const cachedTutkinnonOsaResponses: DynamicObject = {}
 const cachedOsaAlueResponses: DynamicObject = {}
 
-export const EnrichTutkinnonOsaAndOsaAlue = types
+export const EnrichTutkinnonOsaAndOsaAlueet = types
   .model({})
   // we need this typing to avoid 'missing index signature' error
   // when assigning to self[dynamicKey]

@@ -5,7 +5,7 @@ import { AiemminHankitunYTOOsaAlue } from "./AiemminHankitunYTOOsaAlue"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
 import { TutkinnonOsaType } from "../helpers/ShareTypes"
-import { EnrichTutkinnonOsaAndOsaAlue } from "../Enrichment/EnrichTutkinnonOsaAndOsaAlue"
+import { EnrichTutkinnonOsaAndOsaAlueet } from "../Enrichment/EnrichTutkinnonOsaAndOsaAlueet"
 
 const Model = types.model({
   id: types.optional(types.number, 0),
@@ -26,7 +26,7 @@ const Model = types.model({
 export const AiemminHankittuYhteinenTutkinnonOsa = types
   .compose(
     "AiemminHankittuYhteinenTutkinnonOsa",
-    EnrichTutkinnonOsaAndOsaAlue,
+    EnrichTutkinnonOsaAndOsaAlueet,
     Model
   )
   .views(self => ({
