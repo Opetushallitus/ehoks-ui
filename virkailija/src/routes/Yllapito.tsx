@@ -477,7 +477,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
         const updateRequest = await window.fetch(
           `/ehoks-virkailija-backend/api/v1/virkailija/opiskeluoikeudet/update`,
           {
-            method: "UPDATE",
+            method: "PUT",
             credentials: "include",
             headers: {
               Accept: "application/json; charset=utf-8",
