@@ -110,7 +110,7 @@ export class Opiskelusuunnitelma extends React.Component<
       type: undefined,
       moduleId: undefined,
       tutkinnonOsaTyyppi: undefined,
-      tutkinnonOsaId: undefined
+      tutkinnonOsaModuleId: undefined
     }
   }
 
@@ -124,7 +124,7 @@ export class Opiskelusuunnitelma extends React.Component<
           type: share.type,
           moduleId: share.moduleId,
           tutkinnonOsaTyyppi: share.tutkinnonOsaTyyppi,
-          tutkinnonOsaId: share.tutkinnonOsaId
+          tutkinnonOsaModuleId: share.tutkinnonOsaModuleId
         }
       }))
       this.setInitialExpanded(share)
@@ -143,7 +143,7 @@ export class Opiskelusuunnitelma extends React.Component<
             type: share.type,
             moduleId: share.moduleId,
             tutkinnonOsaTyyppi: share.tutkinnonOsaTyyppi,
-            tutkinnonOsaId: share.tutkinnonOsaId
+            tutkinnonOsaModuleId: share.tutkinnonOsaModuleId
           }
         }))
       }
@@ -154,7 +154,7 @@ export class Opiskelusuunnitelma extends React.Component<
     type?: ShareType
     moduleId: string | ""
     tutkinnonOsaTyyppi?: TutkinnonOsaType
-    tutkinnonOsaId: string | ""
+    tutkinnonOsaModuleId: string | ""
   }) {
     return (
       share.type !== this.state.share.type ||

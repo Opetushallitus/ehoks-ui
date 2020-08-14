@@ -136,7 +136,7 @@ const OsaamisenHankkimistavatExpanded = ({
   fadedColor,
   shareModuleId,
   tutkinnonOsaTyyppi,
-  tutkinnonOsaId,
+  tutkinnonOsaModuleId,
   instructor,
   osaamisenHankkimistavat
 }: {
@@ -144,7 +144,7 @@ const OsaamisenHankkimistavatExpanded = ({
   fadedColor: string
   shareModuleId?: string
   tutkinnonOsaTyyppi?: TutkinnonOsaType
-  tutkinnonOsaId?: string
+  tutkinnonOsaModuleId?: string
   instructor?: Instructor
   defaultPeriod?: ShareLinkValidityPeriod
   osaamisenHankkimistavat: IOsaamisenHankkimistapa[]
@@ -162,7 +162,7 @@ const OsaamisenHankkimistavatExpanded = ({
         }}
         instructor={instructor}
         tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
-        tutkinnonOsaId={tutkinnonOsaId || ""}
+        tutkinnonOsaModuleId={tutkinnonOsaModuleId || ""}
         key={i}
       >
         <OsaamisenHankkimistapa
@@ -171,7 +171,7 @@ const OsaamisenHankkimistavatExpanded = ({
           hasActiveShare={hasActiveShare}
           moduleId={osaamisenHankkimistapa.moduleId}
           tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
-          tutkinnonOsaId={tutkinnonOsaId}
+          tutkinnonOsaModuleId={tutkinnonOsaModuleId}
         />
       </ShareDialog>
     ))}
@@ -207,7 +207,7 @@ const OsaamisenOsoittamisetExpanded = ({
   koodiUri,
   shareModuleId,
   tutkinnonOsaTyyppi,
-  tutkinnonOsaId,
+  tutkinnonOsaModuleId,
   todentamisenProsessi
 }: {
   osaamisenOsoittamiset: IOsaamisenOsoittaminen[]
@@ -216,7 +216,7 @@ const OsaamisenOsoittamisetExpanded = ({
   koodiUri?: string
   shareModuleId?: string
   tutkinnonOsaTyyppi?: TutkinnonOsaType
-  tutkinnonOsaId?: string
+  tutkinnonOsaModuleId?: string
   todentamisenProsessi?: TodentamisenProsessi
 }) => (
   <>
@@ -231,7 +231,7 @@ const OsaamisenOsoittamisetExpanded = ({
           end: osaamisenOsoittaminen.loppu
         }}
         tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
-        tutkinnonOsaId={tutkinnonOsaId || ""}
+        tutkinnonOsaModuleId={tutkinnonOsaModuleId || ""}
         key={i}
       >
         <OsaamisenOsoittaminen
@@ -241,7 +241,7 @@ const OsaamisenOsoittamisetExpanded = ({
           hasActiveShare={hasActiveShare}
           moduleId={osaamisenOsoittaminen.moduleId}
           tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
-          tutkinnonOsaId={tutkinnonOsaId}
+          tutkinnonOsaModuleId={tutkinnonOsaModuleId}
         />
       </ShareDialog>
     ))}
@@ -462,7 +462,7 @@ interface DetailsProps {
     type?: ShareType
     moduleId?: string
     tutkinnonOsaTyyppi?: TutkinnonOsaType
-    tutkinnonOsaId?: string
+    tutkinnonOsaModuleId?: string
   }
   toggle: (name: ToggleableItems) => () => void
   todentamisenProsessi?: TodentamisenProsessi
@@ -504,7 +504,7 @@ export class Details extends React.Component<DetailsProps> {
       !!tarkentavatTiedotOsaamisenArvioija
     const isAiempiOsaaminen = !!todentamisenProsessiKoodi
     // TODO hasActiveShare matches now for koodiUri and might show multiple share modals, should use module-id and check per module
-    const hasActiveShare = moduleId === share?.tutkinnonOsaId
+    const hasActiveShare = moduleId === share?.tutkinnonOsaModuleId
     const shareType = typeof share !== "undefined" ? share.type : undefined
     const firstOsaamisenHankkimistapa =
       shareType === "osaamisenhankkimistapa" && osaamisenHankkimistavat[0]
@@ -558,7 +558,7 @@ export class Details extends React.Component<DetailsProps> {
             defaultPeriod={defaultPeriod}
             osaamisenHankkimistavat={osaamisenHankkimistavat}
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
-            tutkinnonOsaId={moduleId}
+            tutkinnonOsaModuleId={moduleId}
             shareModuleId={share?.moduleId}
           />
 
@@ -571,7 +571,7 @@ export class Details extends React.Component<DetailsProps> {
             koodiUri={koodiUri}
             shareModuleId={share?.moduleId}
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
-            tutkinnonOsaId={moduleId}
+            tutkinnonOsaModuleId={moduleId}
             todentamisenProsessi={todentamisenProsessi}
           />
 

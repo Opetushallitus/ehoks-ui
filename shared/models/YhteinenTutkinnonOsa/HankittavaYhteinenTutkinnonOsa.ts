@@ -22,7 +22,7 @@ export const HankittavaYhteinenTutkinnonOsa = types
     get tutkinnonOsaTyyppi(): TutkinnonOsaType {
       return TutkinnonOsaType.HankittavaYhteinen
     },
-    get tutkinnonOsaId() {
+    get tutkinnonOsaModuleId() {
       return self.moduleId
     }
   }))
