@@ -46,7 +46,7 @@ export const createLink = async function({
   moduleId,
   type,
   tutkinnonOsaTyyppi,
-  tutkinnonOsaId,
+  tutkinnonOsaModuleId,
   apiConfig
 }: {
   startDate: string
@@ -54,7 +54,7 @@ export const createLink = async function({
   moduleId: string
   type: string
   tutkinnonOsaTyyppi: TutkinnonOsaType
-  tutkinnonOsaId: string
+  tutkinnonOsaModuleId: string
   apiConfig: APIConfig
 }): Promise<string> {
   const { apiUrl, apiPrefix } = apiConfig
@@ -65,7 +65,7 @@ export const createLink = async function({
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      "tutkinnonosa-module-uuid": tutkinnonOsaId,
+      "tutkinnonosa-module-uuid": tutkinnonOsaModuleId,
       "tutkinnonosa-tyyppi": tutkinnonOsaTyyppi,
       "shared-module-uuid": moduleId,
       "shared-module-tyyppi": type,

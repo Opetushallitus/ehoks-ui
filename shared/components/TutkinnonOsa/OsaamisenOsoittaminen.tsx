@@ -76,7 +76,7 @@ interface OsaamisenOsoittaminenProps {
   koodiUri?: string
   hasActiveShare?: boolean
   tutkinnonOsaTyyppi?: TutkinnonOsaType
-  tutkinnonOsaId?: string
+  tutkinnonOsaModuleId?: string
 }
 
 @observer
@@ -98,14 +98,14 @@ export class OsaamisenOsoittaminen extends React.Component<
   }
 
   share = () => {
-    const { moduleId, tutkinnonOsaTyyppi, tutkinnonOsaId } = this.props
-    if (moduleId && tutkinnonOsaTyyppi && tutkinnonOsaId) {
+    const { moduleId, tutkinnonOsaTyyppi, tutkinnonOsaModuleId } = this.props
+    if (moduleId && tutkinnonOsaTyyppi && tutkinnonOsaModuleId) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
           type: "osaamisenosoittaminen",
           moduleId,
           tutkinnonOsaTyyppi,
-          tutkinnonOsaId
+          tutkinnonOsaModuleId
         })}`
       )
     }

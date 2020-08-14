@@ -15,7 +15,7 @@ export interface CompletedStudiesProps {
     type?: ShareType
     moduleId?: string
     tutkinnonOsaTyyppi?: TutkinnonOsaType
-    tutkinnonOsaId?: string
+    tutkinnonOsaModuleId?: string
   }
   hasActiveShare: boolean
   toggleAccordion: (
@@ -78,7 +78,7 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
                   koodiUri={study.tutkinnonOsaKoodiUri}
                   moduleId={study.moduleId}
                   tutkinnonOsaTyyppi={study.tutkinnonOsaTyyppi}
-                  tutkinnonOsaId={study.tutkinnonOsaId}
+                  tutkinnonOsaModuleId={study.tutkinnonOsaModuleId}
                   osaamisenHankkimistavat={study.osaamisenHankkimistavat}
                   share={share}
                   title={study.opintoOtsikko(competencePointsTitle)}

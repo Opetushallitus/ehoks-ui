@@ -55,7 +55,7 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
       get tutkinnonOsaTyyppi(): TutkinnonOsaType {
         return TutkinnonOsaType.AiemminHankittuAmmatillinen
       },
-      get tutkinnonOsaId() {
+      get tutkinnonOsaModuleId() {
         return self.moduleId
       }
     }

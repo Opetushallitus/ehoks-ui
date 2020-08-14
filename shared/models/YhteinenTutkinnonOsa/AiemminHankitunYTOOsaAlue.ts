@@ -45,7 +45,7 @@ export const AiemminHankitunYTOOsaAlue = types
     get tutkinnonOsaTyyppi(): TutkinnonOsaType {
       return TutkinnonOsaType.AiemminHankitunYhteisenTutkinnonOsanOsaAlue
     },
-    get tutkinnonOsaId() {
+    get tutkinnonOsaModuleId() {
       return self.moduleId
     }
   }))

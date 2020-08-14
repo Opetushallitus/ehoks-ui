@@ -41,7 +41,7 @@ export const HankittavaPaikallinenTutkinnonOsa = types
     get tutkinnonOsaTyyppi(): TutkinnonOsaType {
       return TutkinnonOsaType.HankittavaPaikallinen
     },
-    get tutkinnonOsaId() {
+    get tutkinnonOsaModuleId() {
       return self.moduleId
     }
   }))
