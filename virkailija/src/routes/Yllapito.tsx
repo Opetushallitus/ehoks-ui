@@ -405,17 +405,20 @@ export class Yllapito extends React.Component<YllapitoProps> {
     const { opiskeluoikeusUpdateOid } = this.state
     event.preventDefault()
     const request = await window.fetch(
-      `/ehoks-virkailija-backend/api/v1/virkailija/opiskeluoikeus/${opiskeluoikeusUpdateOid}`,
+      `/ehoks-virkailija-backend/api/v1/virkailija/opiskeluoikeus/update`,
       {
-        method: "DELETE",
+        method: "PUT",
         credentials: "include",
         headers: {
           Accept: "application/json; charset=utf-8",
           "Content-Type": "application/json"
-        }
+        },
+        body: JSON.stringify({
+          "opiskeluoikeus-oid": opiskeluoikeusUpdateOid
+        })
       }
     )
-    if (request.status === 200) {
+    if (request.status === 204) {
       this.setState({
         success: true,
         message: intl.formatMessage({
@@ -471,18 +474,21 @@ export class Yllapito extends React.Component<YllapitoProps> {
           )
         )
       ) {
-        const deleteRequest = await window.fetch(
-          `/ehoks-virkailija-backend/api/v1/virkailija/opiskeluoikeudet/${koulutustoimijaOid}`,
+        const updateRequest = await window.fetch(
+          `/ehoks-virkailija-backend/api/v1/virkailija/opiskeluoikeudet/update`,
           {
-            method: "DELETE",
+            method: "UPDATE",
             credentials: "include",
             headers: {
               Accept: "application/json; charset=utf-8",
               "Content-Type": "application/json"
-            }
+            },
+            body: JSON.stringify({
+              "koulutustoimija-oid": koulutustoimijaOid
+            })
           }
         )
-        if (deleteRequest.status === 200) {
+        if (updateRequest.status === 204) {
           this.setState({
             success: true,
             message: intl.formatMessage({
