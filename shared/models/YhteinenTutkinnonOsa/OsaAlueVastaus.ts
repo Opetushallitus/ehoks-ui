@@ -12,7 +12,6 @@ const OsaamisTavoitteet = types.model({
 
 export const OsaAlueVastaus = types
   .model("OsaAlueVastaus", {
-    id: types.maybe(types.number),
     koodiUri: types.maybe(types.string),
     nimi: types.optional(EPerusteetNimi, {}),
     osaamistavoitteet: types.array(OsaamisTavoitteet)
