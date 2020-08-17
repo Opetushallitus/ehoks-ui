@@ -1,13 +1,12 @@
 import { types } from "mobx-state-tree"
 import { YhteisenTutkinnonOsanOsaAlue } from "./YhteisenTutkinnonOsanOsaAlue"
-import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { TutkinnonOsaType } from "../helpers/ShareTypes"
 import { EnrichTutkinnonOsaAndOsaAlueet } from "../Enrichment/EnrichTutkinnonOsaAndOsaAlueet"
 
 export const Model = types.model({
   moduleId: types.maybe(types.string),
   tutkinnonOsaKoodiUri: types.optional(types.string, ""),
-  tutkinnonOsa: types.optional(EPerusteetVastaus, {}),
+  tutkinnonOsaId: types.maybe(types.number),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
   osaAlueet: types.array(YhteisenTutkinnonOsanOsaAlue)
 })

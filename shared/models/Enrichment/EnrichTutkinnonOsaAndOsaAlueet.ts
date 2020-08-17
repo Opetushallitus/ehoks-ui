@@ -40,7 +40,7 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
         const response: APIResponse = yield cachedTutkinnonOsaResponses[
           koodiUri
         ]
-        self.tutkinnonOsa = response.data
+        self.tutkinnonOsaId = response.data.id
       } catch (error) {
         errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
       }
@@ -95,7 +95,7 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
       tutkinnonOsaKoodiUri: string
     ): any {
       yield fetchTutkinnonOsa(tutkinnonOsaKoodiUri)
-      yield fetchOsaAlue(self.tutkinnonOsa.id)
+      yield fetchOsaAlue(self.tutkinnonOsaId)
     })
 
     const afterCreate = () => {
