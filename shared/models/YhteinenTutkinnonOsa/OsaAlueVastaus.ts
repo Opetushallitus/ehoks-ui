@@ -7,7 +7,8 @@ const EPerusteetNimi = types.model({
 })
 
 const OsaamisTavoitteet = types.model({
-  laajuus: types.optional(types.number, 0)
+  laajuus: types.optional(types.number, 0),
+  pakollinen: types.maybe(types.boolean)
 })
 
 export const OsaAlueVastaus = types
@@ -25,10 +26,9 @@ export const OsaAlueVastaus = types
           : ""
       },
       get laajuus() {
-        return self.osaamistavoitteet.reduce(
-          (sum, osaamistavoite) => sum + osaamistavoite.laajuus,
-          0
-        )
+        return self.osaamistavoitteet
+          .filter(osaamistavoite => osaamistavoite.pakollinen)
+          .reduce((sum, osaamistavoite) => sum + osaamistavoite.laajuus, 0)
       }
     }
   })
