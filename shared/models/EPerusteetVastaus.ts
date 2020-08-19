@@ -26,7 +26,7 @@ const ArvioinninKohdealue = types.model({
   arvioinninKohteet: types.array(ArvioinninKohde)
 })
 
-const EPerusteetArviointi = types.model({
+export const EPerusteetArviointi = types.model({
   id: types.optional(types.number, 0),
   arvioinninKohdealueet: types.array(ArvioinninKohdealue)
 })
@@ -41,7 +41,7 @@ const EPerusteetAmmattitaidonOsoittamistavat = types.model({
   sv: types.optional(types.string, "")
 })
 
-const EPerusteetNimi = types.model({
+export const EPerusteetNimi = types.model({
   fi: types.optional(types.string, ""),
   sv: types.optional(types.string, "")
 })

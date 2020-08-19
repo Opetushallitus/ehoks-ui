@@ -1,14 +1,11 @@
 import { getRoot, Instance, types } from "mobx-state-tree"
 import { LocaleRoot } from "../helpers/LocaleRoot"
-
-const EPerusteetNimi = types.model({
-  fi: types.maybe(types.string),
-  sv: types.maybe(types.string)
-})
+import { EPerusteetArviointi, EPerusteetNimi } from "../EPerusteetVastaus"
 
 const OsaamisTavoitteet = types.model({
   laajuus: types.optional(types.number, 0),
-  pakollinen: types.maybe(types.boolean)
+  pakollinen: types.maybe(types.boolean),
+  arviointi: types.optional(EPerusteetArviointi, {})
 })
 
 export const OsaAlueVastaus = types
