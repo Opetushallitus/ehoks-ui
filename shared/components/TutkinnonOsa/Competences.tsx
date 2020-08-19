@@ -12,6 +12,7 @@ import { ToggleLink } from "./ToggleLink"
 import { Osaamisvaatimus } from "models/Osaamisvaatimus"
 import { SnapshotOrInstance } from "mobx-state-tree"
 import { ToggleableItems } from "./TutkinnonOsaHelpers"
+import { TutkinnonOsaType } from "../../models/helpers/ShareTypes"
 
 const Container = styled("div")`
   background: #fff;
@@ -101,6 +102,7 @@ interface CompetencesProps {
   expandCompetence: (index: number) => () => void
   expanded?: boolean
   expandedCompetences: number[]
+  tutkinnonOsaTyyppi: TutkinnonOsaType
   toggle: (name: ToggleableItems) => () => void
 }
 
@@ -116,6 +118,7 @@ export class Competences extends React.Component<CompetencesProps> {
       expandCompetence,
       expanded,
       expandedCompetences,
+      tutkinnonOsaTyyppi,
       toggle
     } = this.props
     const { intl } = this.context
@@ -168,10 +171,18 @@ export class Competences extends React.Component<CompetencesProps> {
         ) : (
           <ExpandContainer>
             <ExpandTitle onClick={toggle("competences")}>
-              <FormattedMessage
-                id="opiskelusuunnitelma.naytaAmmattitaitovaatimuksetLink"
-                defaultMessage="Ammattitaitovaatimukset ja arviointikriteerit"
-              />
+              {tutkinnonOsaTyyppi ===
+              TutkinnonOsaType.HankittavanYhteisenTutkinnonOsanOsaAlue ? (
+                <FormattedMessage
+                  id="opiskelusuunnitelma.naytaOsaamistavoitteetLink"
+                  defaultMessage="Osaamistavoitteet ja arviointikriteerit"
+                />
+              ) : (
+                <FormattedMessage
+                  id="opiskelusuunnitelma.naytaAmmattitaitovaatimuksetLink"
+                  defaultMessage="Ammattitaitovaatimukset ja arviointikriteerit"
+                />
+              )}
             </ExpandTitle>
             <IconContainer
               onClick={toggle("competences")}
