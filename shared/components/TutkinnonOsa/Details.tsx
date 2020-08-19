@@ -307,14 +307,15 @@ const AiemmanOsaamisenTodentanutOrganisaatioExpanded = ({
 }: {
   isAiempiOsaaminen: boolean
   koulutuksenJarjestaja?: IOrganisaatio
-}) => (
-  <ExpandedDetailsTitle>
-    <AiemmanOsaamisenTodentanutOrganisaatio
-      isAiempiOsaaminen={isAiempiOsaaminen}
-      koulutuksenJarjestaja={koulutuksenJarjestaja}
-    />
-  </ExpandedDetailsTitle>
-)
+}) =>
+  koulutuksenJarjestaja ? (
+    <ExpandedDetailsTitle>
+      <AiemmanOsaamisenTodentanutOrganisaatio
+        isAiempiOsaaminen={isAiempiOsaaminen}
+        koulutuksenJarjestaja={koulutuksenJarjestaja}
+      />
+    </ExpandedDetailsTitle>
+  ) : null
 
 const AiemmanOsaamisenTodentanutOrganisaatio = ({
   isAiempiOsaaminen,

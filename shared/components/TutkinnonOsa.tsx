@@ -317,6 +317,7 @@ export class TutkinnonOsa extends React.Component<
             expandCompetence={this.expandCompetence}
             expanded={expanded.competences}
             expandedCompetences={expandedCompetences}
+            tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
             toggle={this.toggle}
           />
           {objectives && (
