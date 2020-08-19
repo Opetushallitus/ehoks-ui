@@ -102,7 +102,7 @@ interface CompetencesProps {
   expandCompetence: (index: number) => () => void
   expanded?: boolean
   expandedCompetences: number[]
-  tutkinnonOsaTyyppi: TutkinnonOsaType
+  tutkinnonOsaTyyppi?: TutkinnonOsaType
   toggle: (name: ToggleableItems) => () => void
 }
 
