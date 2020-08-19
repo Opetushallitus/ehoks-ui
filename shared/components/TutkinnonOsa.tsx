@@ -117,7 +117,7 @@ export interface TutkinnonOsaProps {
    */
   todentamisenProsessi?: TodentamisenProsessi
   tutkinnonOsaModuleId?: string
-  tutkinnonOsaTyyppi?: TutkinnonOsaType
+  tutkinnonOsaTyyppi: TutkinnonOsaType
   /**
    * Width of the element for desktop resolutions
    * @default 25%
