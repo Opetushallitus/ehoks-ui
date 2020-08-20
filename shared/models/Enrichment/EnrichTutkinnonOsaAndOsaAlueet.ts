@@ -40,7 +40,7 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
         const response: APIResponse = yield cachedTutkinnonOsaResponses[
           koodiUri
         ]
-        self.tutkinnonOsaId = response.data.id
+        self.tutkinnonOsaId = response.data?.id
       } catch (error) {
         errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
       }
