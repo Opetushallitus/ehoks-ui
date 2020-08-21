@@ -32,15 +32,26 @@ module.exports = {
   rules: {
     "no-extra-boolean-cast": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
-    "@typescript-eslint/ban-ts-comment": "warn",
+    "@typescript-eslint/ban-ts-comment": [
+      "warn",
+      { "ts-ignore": "allow-with-description" }
+    ],
     "@typescript-eslint/no-non-null-assertion": "off",
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     "@typescript-eslint/adjacent-overload-signatures": "error",
     "@typescript-eslint/array-type": "error",
     "@typescript-eslint/ban-types": "error",
-    "@typescript-eslint/naming-convention": ["error", { "selector": "variable", "types": ["function"], "format": ["camelCase", "PascalCase"] }], // Custom for Mobx models
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        selector: "variable",
+        types: ["function"],
+        format: ["camelCase", "PascalCase"]
+      }
+    ], // Custom for Mobx models
     "@typescript-eslint/consistent-type-assertions": "error",
     "@typescript-eslint/explicit-member-accessibility": [
       "off",
@@ -165,7 +176,7 @@ module.exports = {
     "prefer-object-spread": "error",
     "quote-props": "off",
     radix: "error",
-    "react/prop-types": ["error", {skipUndeclared: true}],
+    "react/prop-types": ["error", { skipUndeclared: true }],
     "space-before-function-paren": "off",
     "space-in-parens": ["off", "never"],
     "use-isnan": "error",

@@ -198,7 +198,7 @@ export function ShareDialog(props: ShareDialogProps) {
       setSharedLinks(await fetchLinks(moduleId, apiConfig))
     }
     fetchData()
-  }, [])
+  }, [apiConfig, moduleId])
 
   const addLink = async () => {
     if (tutkinnonOsaTyyppi) {
