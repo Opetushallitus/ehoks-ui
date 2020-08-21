@@ -284,6 +284,35 @@ const TutkintoTaiKoulutus = ({
   </Accordion>
 )
 
+const Henkilotiedot = ({
+  title,
+  henkilotiedotOpen,
+  toggleHenkilotiedot,
+  hoks,
+  student
+}: {
+  title: React.ReactNode
+  henkilotiedotOpen: boolean
+  toggleHenkilotiedot: () => void
+  hoks: IHOKS
+  student: ISessionUser
+}) => (
+  <Accordion
+    id="henkilotiedot"
+    open={henkilotiedotOpen}
+    title={title}
+    onToggle={toggleHenkilotiedot}
+  >
+    <InfoTable>
+      <tbody>
+        <StudentPersonalInfo student={student} />
+        <StudentAddressInfo student={student} />
+        <StudentContactInfo student={student} hoks={hoks} />
+      </tbody>
+    </InfoTable>
+  </Accordion>
+)
+
 export interface TavoitteetProps {
   children?: React.ReactChildren
   student: ISessionUser
@@ -488,20 +517,13 @@ export class Tavoitteet extends React.Component<
           plan={hoks}
         />
 
-        <Accordion
-          id="henkilotiedot"
-          open={this.state.activeAccordions.personalDetails}
+        <Henkilotiedot
           title={titles.personalDetails}
-          onToggle={this.toggleAccordion("personalDetails")}
-        >
-          <InfoTable>
-            <tbody>
-              <StudentPersonalInfo student={student} />
-              <StudentAddressInfo student={student} />
-              <StudentContactInfo student={student} hoks={hoks} />
-            </tbody>
-          </InfoTable>
-        </Accordion>
+          henkilotiedotOpen={this.state.activeAccordions.personalDetails}
+          toggleHenkilotiedot={this.toggleAccordion("personalDetails")}
+          hoks={hoks}
+          student={student}
+        />
       </React.Fragment>
     )
   }
