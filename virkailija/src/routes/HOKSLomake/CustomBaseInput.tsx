@@ -60,7 +60,7 @@ function CustomBaseInput(props: CustomBaseInputProps) {
           <datalist id={`examples_${inputProps.id}`}>
             {[
               // TODO Type 'Set<JSONSchema6Type>' is not an array type or a string type
-              // @ts-ignore
+              // @ts-ignore Don't know what to do with this, not worthy problem to spend time on
               ...new Set(
                 schema.examples.concat(schema.default ? [schema.default] : [])
               )

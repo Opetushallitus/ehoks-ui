@@ -41,7 +41,7 @@ declare module "react-jsonschema-form/lib/components/fields/DescriptionField" {
 
 declare module "react-jsonschema-form/lib/utils" {
   import { JSONSchema6 } from "json-schema"
-  // @ts-ignore
+
   import { UiSchema } from "react-jsonschema-form" // eslint-disable-line no-duplicate-imports
 
   export function getUiOptions(schema: JSONSchema6): any
