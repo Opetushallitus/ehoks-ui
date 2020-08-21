@@ -313,6 +313,101 @@ const Henkilotiedot = ({
   </Accordion>
 )
 
+const HoksPaivamaarat = ({
+  hoksPaivamaaratOpen,
+  toggleHoksPaivamaarat,
+  hoks
+}: {
+  hoksPaivamaaratOpen: boolean
+  toggleHoksPaivamaarat: () => void
+  hoks: IHOKS
+}) => (
+  <Accordion
+    id="hoksDates"
+    open={hoksPaivamaaratOpen}
+    title={
+      <AccordionTitle>
+        <FormattedMessage
+          id="tavoitteet.hoksPaivamaaratTitle"
+          defaultMessage="HOKS päivämäärät"
+        />
+      </AccordionTitle>
+    }
+    onToggle={toggleHoksPaivamaarat}
+  >
+    <InfoTable>
+      <tbody>
+        <tr>
+          <th>
+            <FormattedMessage
+              id="tavoitteet.ensikertainenHyvaksyminenTitle"
+              defaultMessage="Ensikertainen hyväksyminen"
+            />
+          </th>
+          <th>
+            <FormattedMessage
+              id="tavoitteet.paivitettyTitle"
+              defaultMessage="Päivitetty"
+            />
+          </th>
+          <th>
+            <FormattedMessage
+              id="tavoitteet.osaaminenSaavutettuTitle"
+              defaultMessage="Sovittu osaaminen saavutettu"
+            />
+          </th>
+          <th>
+            <FormattedMessage
+              id="tavoitteet.osaamisenHankkimisenTarveTitle"
+              defaultMessage="Osaamisen hankkimisen tarve"
+            />
+          </th>
+        </tr>
+        <tr>
+          <LabeledColumn id="tavoitteet.ensikertainenHyvaksyminenTitle">
+            <FormattedDate
+              date={hoks.ensikertainenHyvaksyminen}
+              dateNotSet={
+                <FormattedMessage
+                  id="tavoitteet.eiVielaHyvaksyttyTitle"
+                  defaultMessage="Ei vielä hyväksytty"
+                />
+              }
+            />
+          </LabeledColumn>
+          <LabeledColumn id="tavoitteet.paivitettyTitle">
+            <FormattedDate
+              date={hoks.paivitetty}
+              dateNotSet={
+                <FormattedMessage
+                  id="tavoitteet.eiVielaPaivityksiaTitle"
+                  defaultMessage="Ei vielä päivityksiä"
+                />
+              }
+            />
+          </LabeledColumn>
+          <LabeledColumn id="tavoitteet.osaaminenSaavutettuTitle">
+            <FormattedDate
+              date={hoks.osaamisenSaavuttamisenPvm}
+              dateNotSet={
+                <FormattedMessage
+                  id="tavoitteet.osaaminenEiVielaSaavutettuTitle"
+                  defaultMessage="Sovittua osaamista ei vielä saavutettu"
+                />
+              }
+            />
+          </LabeledColumn>
+          <LabeledColumn id="tavoitteet.osaamisenHankkimisenTarveTitle">
+            <OsaamisenHankkimisenTarveMessage
+              osaamisenHankkimisenTarve={hoks.osaamisenHankkimisenTarve}
+            />
+          </LabeledColumn>
+        </tr>
+      </tbody>
+    </InfoTable>
+  </Accordion>
+)
+
 export interface TavoitteetProps {
   children?: React.ReactChildren
   student: ISessionUser
@@ -415,90 +510,11 @@ export class Tavoitteet extends React.Component<
         </HeadingContainer>
 
         {app === "oppija" && (
-          <Accordion
-            id="hoksDates"
-            open={this.state.activeAccordions.hoksDates}
-            title={
-              <AccordionTitle>
-                <FormattedMessage
-                  id="tavoitteet.hoksPaivamaaratTitle"
-                  defaultMessage="HOKS päivämäärät"
-                />
-              </AccordionTitle>
-            }
-            onToggle={this.toggleAccordion("hoksDates")}
-          >
-            <InfoTable>
-              <tbody>
-                <tr>
-                  <th>
-                    <FormattedMessage
-                      id="tavoitteet.ensikertainenHyvaksyminenTitle"
-                      defaultMessage="Ensikertainen hyväksyminen"
-                    />
-                  </th>
-                  <th>
-                    <FormattedMessage
-                      id="tavoitteet.paivitettyTitle"
-                      defaultMessage="Päivitetty"
-                    />
-                  </th>
-                  <th>
-                    <FormattedMessage
-                      id="tavoitteet.osaaminenSaavutettuTitle"
-                      defaultMessage="Sovittu osaaminen saavutettu"
-                    />
-                  </th>
-                  <th>
-                    <FormattedMessage
-                      id="tavoitteet.osaamisenHankkimisenTarveTitle"
-                      defaultMessage="Osaamisen hankkimisen tarve"
-                    />
-                  </th>
-                </tr>
-                <tr>
-                  <LabeledColumn id="tavoitteet.ensikertainenHyvaksyminenTitle">
-                    <FormattedDate
-                      date={hoks.ensikertainenHyvaksyminen}
-                      dateNotSet={
-                        <FormattedMessage
-                          id="tavoitteet.eiVielaHyvaksyttyTitle"
-                          defaultMessage="Ei vielä hyväksytty"
-                        />
-                      }
-                    />
-                  </LabeledColumn>
-                  <LabeledColumn id="tavoitteet.paivitettyTitle">
-                    <FormattedDate
-                      date={hoks.paivitetty}
-                      dateNotSet={
-                        <FormattedMessage
-                          id="tavoitteet.eiVielaPaivityksiaTitle"
-                          defaultMessage="Ei vielä päivityksiä"
-                        />
-                      }
-                    />
-                  </LabeledColumn>
-                  <LabeledColumn id="tavoitteet.osaaminenSaavutettuTitle">
-                    <FormattedDate
-                      date={hoks.osaamisenSaavuttamisenPvm}
-                      dateNotSet={
-                        <FormattedMessage
-                          id="tavoitteet.osaaminenEiVielaSaavutettuTitle"
-                          defaultMessage="Sovittua osaamista ei vielä saavutettu"
-                        />
-                      }
-                    />
-                  </LabeledColumn>
-                  <LabeledColumn id="tavoitteet.osaamisenHankkimisenTarveTitle">
-                    <OsaamisenHankkimisenTarveMessage
-                      osaamisenHankkimisenTarve={hoks.osaamisenHankkimisenTarve}
-                    />
-                  </LabeledColumn>
-                </tr>
-              </tbody>
-            </InfoTable>
-          </Accordion>
+          <HoksPaivamaarat
+            hoksPaivamaaratOpen={this.state.activeAccordions.hoksDates}
+            toggleHoksPaivamaarat={this.toggleAccordion("hoksDates")}
+            hoks={hoks}
+          />
         )}
 
         <Urasuunnitelma
