@@ -266,6 +266,11 @@
   },
   {
     "locale": "fi",
+    "key": "tavoitteet.osaaminenSaavutettuTitle",
+    "value": "Sovittu osaaminen saavutettu"
+  },
+  {
+    "locale": "fi",
     "key": "tavoitteet.suunnitelmaJatkoOpintoihinTitle",
     "value": "Suunnitelma jatko-opintoihin siirtymisestä"
   },
