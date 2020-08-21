@@ -13,6 +13,7 @@ import { IHOKS } from "models/HOKS"
 import { AppContext } from "components/AppContext"
 import { FormattedDate } from "components/FormattedDate"
 import { StudyPoints } from "../StudyPoints"
+import { IKoodistoVastaus } from "../../models/KoodistoVastaus"
 
 interface OsaamisenHankkimisenTarveProps {
   osaamisenHankkimisenTarve: boolean | null
@@ -223,6 +224,49 @@ const StudentContactInfo = ({
   </>
 )
 
+const Urasuunnitelma = ({
+  title,
+  urasuunnitelmaOpen,
+  toggleUrasuunnitelma,
+  urasuunnitelma
+}: {
+  title: React.ReactNode
+  urasuunnitelmaOpen: boolean
+  toggleUrasuunnitelma: () => void
+  urasuunnitelma?: IKoodistoVastaus
+}) => (
+  <Accordion
+    id="omaTavoitteeni"
+    open={urasuunnitelmaOpen}
+    title={title}
+    onToggle={toggleUrasuunnitelma}
+  >
+    {urasuunnitelma && urasuunnitelma.nimi && (
+      <InfoTable>
+        <tbody>
+          <tr>
+            <th>
+              <FormattedMessage
+                id="tavoitteet.suunnitelmaJatkoOpintoihinTitle"
+                defaultMessage="Suunnitelma jatko-opintoihin siirtymisestä"
+              />
+            </th>
+            <th />
+            <th />
+          </tr>
+          <tr>
+            <LabeledColumn id="tavoitteet.suunnitelmaJatkoOpintoihinTitle">
+              {urasuunnitelma.nimi}
+            </LabeledColumn>
+            <td />
+            <td />
+          </tr>
+        </tbody>
+      </InfoTable>
+    )}
+  </Accordion>
+)
+
 export interface TavoitteetProps {
   children?: React.ReactChildren
   student: ISessionUser
@@ -411,36 +455,12 @@ export class Tavoitteet extends React.Component<
           </Accordion>
         )}
 
-        <Accordion
-          id="omaTavoitteeni"
-          open={this.state.activeAccordions.personalGoal}
+        <Urasuunnitelma
           title={titles.goals}
-          onToggle={this.toggleAccordion("personalGoal")}
-        >
-          {hoks.urasuunnitelma && hoks.urasuunnitelma.nimi && (
-            <InfoTable>
-              <tbody>
-                <tr>
-                  <th>
-                    <FormattedMessage
-                      id="tavoitteet.suunnitelmaJatkoOpintoihinTitle"
-                      defaultMessage="Suunnitelma jatko-opintoihin siirtymisestä"
-                    />
-                  </th>
-                  <th />
-                  <th />
-                </tr>
-                <tr>
-                  <LabeledColumn id="tavoitteet.suunnitelmaJatkoOpintoihinTitle">
-                    {hoks.urasuunnitelma && hoks.urasuunnitelma.nimi}
-                  </LabeledColumn>
-                  <td />
-                  <td />
-                </tr>
-              </tbody>
-            </InfoTable>
-          )}
-        </Accordion>
+          urasuunnitelmaOpen={this.state.activeAccordions.personalGoal}
+          toggleUrasuunnitelma={this.toggleAccordion("personalGoal")}
+          urasuunnitelma={hoks.urasuunnitelma}
+        />
 
         <Accordion
           id="tutkintoTaiKoulutus"
