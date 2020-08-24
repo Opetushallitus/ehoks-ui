@@ -139,7 +139,6 @@ const StudentContactInfo = ({
           />
         </th>
       )}
-      <th />
       {student.yhteystiedot.puhelinnumero && (
         <th>
           <FormattedMessage
@@ -157,7 +156,6 @@ const StudentContactInfo = ({
             : hoks.sahkoposti}
         </LabeledColumn>
       )}
-      <td />
       {student.yhteystiedot.puhelinnumero && (
         <LabeledColumn id="tavoitteet.puhelinnumeroTitle">
           {student.yhteystiedot.puhelinnumero}
