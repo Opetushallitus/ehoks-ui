@@ -316,6 +316,16 @@
   },
   {
     "locale": "fi",
+    "key": "tavoitteet.opiskeluoikeudOidTitle",
+    "value": "Opiskeluoikeuden OID"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.idTitle",
+    "value": "eHOKS ID"
+  },
+  {
+    "locale": "fi",
     "key": "tyopaikanToimija.tutkinnonNimiTitle",
     "value": "Tutkinnon nimi"
   },

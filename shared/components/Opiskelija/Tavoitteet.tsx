@@ -165,6 +165,36 @@ const StudentContactInfo = ({
   </>
 )
 
+const StudentIdentifierInfo = ({ hoks }: { hoks: IHOKS }) => (
+  <>
+    <tr>
+      {hoks.opiskeluoikeusOid && (
+        <th>
+          <FormattedMessage
+            id="tavoitteet.opiskeluoikeudOidTitle"
+            defaultMessage="Opiskeluoikeuden OID"
+          />
+        </th>
+      )}
+      {hoks.id && (
+        <th>
+          <FormattedMessage id="tavoitteet.idTitle" defaultMessage="eHOKS ID" />
+        </th>
+      )}
+    </tr>
+    <tr>
+      {hoks.opiskeluoikeusOid && (
+        <LabeledColumn id="tavoitteet.opiskeluoikeudOidTitle">
+          {hoks.opiskeluoikeusOid}
+        </LabeledColumn>
+      )}
+      {hoks.id && (
+        <LabeledColumn id="tavoitteet.idTitle">{hoks.id}</LabeledColumn>
+      )}
+    </tr>
+  </>
+)
+
 const Urasuunnitelma = ({
   title,
   urasuunnitelmaOpen,
@@ -287,13 +317,15 @@ const Henkilotiedot = ({
   henkilotiedotOpen,
   toggleHenkilotiedot,
   hoks,
-  student
+  student,
+  app
 }: {
   title: React.ReactNode
   henkilotiedotOpen: boolean
   toggleHenkilotiedot: () => void
   hoks: IHOKS
   student: ISessionUser
+  app: string
 }) => (
   <Accordion
     id="henkilotiedot"
@@ -306,6 +338,7 @@ const Henkilotiedot = ({
         <StudentPersonalInfo student={student} />
         <StudentAddressInfo student={student} />
         <StudentContactInfo student={student} hoks={hoks} />
+        {app === "virkailija" && <StudentIdentifierInfo hoks={hoks} />}
       </tbody>
     </InfoTable>
   </Accordion>
@@ -537,6 +570,7 @@ export class Tavoitteet extends React.Component<
           toggleHenkilotiedot={this.toggleAccordion("personalDetails")}
           hoks={hoks}
           student={student}
+          app={app}
         />
       </React.Fragment>
     )
