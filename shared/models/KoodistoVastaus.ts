@@ -1,4 +1,4 @@
-import { types, getRoot } from "mobx-state-tree"
+import { types, getRoot, Instance } from "mobx-state-tree"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 
 const KoodistoMetadata = types.model("KoodistoMetadata", {
@@ -29,3 +29,5 @@ export const KoodistoVastaus = types
       }
     }
   })
+
+export type IKoodistoVastaus = Instance<typeof KoodistoVastaus>
