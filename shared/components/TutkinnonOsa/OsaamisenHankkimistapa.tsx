@@ -67,7 +67,7 @@ interface OsaamisenHankkimistapaProps {
   moduleId?: string
   hasActiveShare?: boolean
   tutkinnonOsaTyyppi?: TutkinnonOsaType
-  tutkinnonOsaId?: string
+  tutkinnonOsaModuleId?: string
 }
 
 @observer
@@ -77,14 +77,14 @@ export class OsaamisenHankkimistapa extends React.Component<
   static contextType = AppContext
   declare context: React.ContextType<typeof AppContext>
   share = () => {
-    const { moduleId, tutkinnonOsaTyyppi, tutkinnonOsaId } = this.props
-    if (moduleId && tutkinnonOsaTyyppi && tutkinnonOsaId) {
+    const { moduleId, tutkinnonOsaTyyppi, tutkinnonOsaModuleId } = this.props
+    if (moduleId && tutkinnonOsaTyyppi && tutkinnonOsaModuleId) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
           type: "osaamisenhankkimistapa",
           moduleId,
           tutkinnonOsaTyyppi,
-          tutkinnonOsaId
+          tutkinnonOsaModuleId
         })}`
       )
     }

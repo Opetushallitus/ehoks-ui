@@ -8,7 +8,8 @@ import {
   toArray,
   getDefaultValueForSchema
 } from "./utils"
-// @ts-ignore
+
+// @ts-ignore Not worthy problem to spend time on
 import selectn from "./selectn.min"
 
 import { DefaultLabel } from "./Label"

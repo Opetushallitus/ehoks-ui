@@ -153,7 +153,7 @@ interface ShareDialogProps extends InjectedIntlProps {
   defaultPeriod?: ShareLinkValidityPeriod
   instructor?: Instructor
   tutkinnonOsaTyyppi?: TutkinnonOsaType
-  tutkinnonOsaId: string
+  tutkinnonOsaModuleId: string
   intl: ReactIntl.InjectedIntl
 }
 
@@ -167,7 +167,7 @@ export function ShareDialog(props: ShareDialogProps) {
     moduleId,
     type,
     tutkinnonOsaTyyppi,
-    tutkinnonOsaId,
+    tutkinnonOsaModuleId,
     intl
   } = props
 
@@ -198,7 +198,7 @@ export function ShareDialog(props: ShareDialogProps) {
       setSharedLinks(await fetchLinks(moduleId, apiConfig))
     }
     fetchData()
-  }, [])
+  }, [apiConfig, moduleId])
 
   const addLink = async () => {
     if (tutkinnonOsaTyyppi) {
@@ -208,7 +208,7 @@ export function ShareDialog(props: ShareDialogProps) {
         endDate,
         type,
         tutkinnonOsaTyyppi,
-        tutkinnonOsaId,
+        tutkinnonOsaModuleId,
         apiConfig
       })
       setSharedLinks(await fetchLinks(moduleId, apiConfig))

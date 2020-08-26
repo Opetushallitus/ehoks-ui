@@ -108,7 +108,7 @@ export interface TutkinnonOsaProps {
     type?: ShareType
     moduleId?: string
     tutkinnonOsaTyyppi?: TutkinnonOsaType
-    tutkinnonOsaId?: string
+    tutkinnonOsaModuleId?: string
   }
   /** Title of the study, always visible */
   title?: React.ReactNode
@@ -116,7 +116,7 @@ export interface TutkinnonOsaProps {
    * Verification process details
    */
   todentamisenProsessi?: TodentamisenProsessi
-  tutkinnonOsaId?: string
+  tutkinnonOsaModuleId?: string
   tutkinnonOsaTyyppi?: TutkinnonOsaType
   /**
    * Width of the element for desktop resolutions
@@ -223,7 +223,7 @@ export class TutkinnonOsa extends React.Component<
           moduleId,
           type: "osaamisenhankkimistapa",
           tutkinnonOsaTyyppi,
-          tutkinnonOsaId: moduleId
+          tutkinnonOsaModuleId: moduleId
         })}`
       )
     }
@@ -317,6 +317,7 @@ export class TutkinnonOsa extends React.Component<
             expandCompetence={this.expandCompetence}
             expanded={expanded.competences}
             expandedCompetences={expandedCompetences}
+            tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
             toggle={this.toggle}
           />
           {objectives && (

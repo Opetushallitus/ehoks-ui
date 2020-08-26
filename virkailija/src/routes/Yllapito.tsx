@@ -83,6 +83,7 @@ interface YllapitoState {
   hoksId?: number
   opiskeluoikeusOid?: string | ""
   oppijaOid?: string | ""
+  updateOppijaOid?: string | ""
   opiskeluoikeusHakuOid?: string | ""
   opiskeluoikeusUpdateOid?: string | ""
   hoksHakuId?: number
@@ -109,6 +110,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     hoksId: undefined,
     opiskeluoikeusOid: "",
     oppijaOid: "",
+    updateOppijaOid: "",
     idToDelete: undefined,
     systemInfo: undefined,
     opiskeluoikeusUpdateOid: "",
@@ -403,17 +405,20 @@ export class Yllapito extends React.Component<YllapitoProps> {
     const { opiskeluoikeusUpdateOid } = this.state
     event.preventDefault()
     const request = await window.fetch(
-      `/ehoks-virkailija-backend/api/v1/virkailija/opiskeluoikeus/${opiskeluoikeusUpdateOid}`,
+      `/ehoks-virkailija-backend/api/v1/virkailija/opiskeluoikeus/update`,
       {
-        method: "DELETE",
+        method: "PUT",
         credentials: "include",
         headers: {
           Accept: "application/json; charset=utf-8",
           "Content-Type": "application/json"
-        }
+        },
+        body: JSON.stringify({
+          "opiskeluoikeus-oid": opiskeluoikeusUpdateOid
+        })
       }
     )
-    if (request.status === 200) {
+    if (request.status === 204) {
       this.setState({
         success: true,
         message: intl.formatMessage({
@@ -469,18 +474,21 @@ export class Yllapito extends React.Component<YllapitoProps> {
           )
         )
       ) {
-        const deleteRequest = await window.fetch(
-          `/ehoks-virkailija-backend/api/v1/virkailija/opiskeluoikeudet/${koulutustoimijaOid}`,
+        const updateRequest = await window.fetch(
+          `/ehoks-virkailija-backend/api/v1/virkailija/opiskeluoikeudet/update`,
           {
-            method: "DELETE",
+            method: "PUT",
             credentials: "include",
             headers: {
               Accept: "application/json; charset=utf-8",
               "Content-Type": "application/json"
-            }
+            },
+            body: JSON.stringify({
+              "koulutustoimija-oid": koulutustoimijaOid
+            })
           }
         )
-        if (deleteRequest.status === 200) {
+        if (updateRequest.status === 204) {
           this.setState({
             success: true,
             message: intl.formatMessage({
@@ -513,6 +521,44 @@ export class Yllapito extends React.Component<YllapitoProps> {
     }
   }
 
+  onUpdateOppija = async () => {
+    const { intl } = this.context
+    const { updateOppijaOid } = this.state
+    const updateRequest = await window.fetch(
+      `/ehoks-virkailija-backend/api/v1/virkailija/oppija/update`,
+      {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          Accept: "application/json; charset=utf-8",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "oppija-oid": updateOppijaOid
+        })
+      }
+    )
+    if (updateRequest.status === 204) {
+      this.setState({
+        success: true,
+        message: intl.formatMessage({
+          id: "yllapito.oppijaPaivitetty",
+          defaultMessage: "Opiskeluoikeuden päivitys onnistui"
+        }),
+        isLoading: false
+      })
+    } else {
+      this.setState({
+        success: false,
+        message: intl.formatMessage({
+          id: "yllapito.oppijanPaivitysEpaonnistui",
+          defaultMessage: "Oppijan päivitys epäonnistui"
+        }),
+        isLoading: false
+      })
+    }
+  }
+
   handleHoksIdChange = (inputId: any) => {
     // const inputOid = event.target.value
     this.setState({
@@ -539,6 +585,12 @@ export class Yllapito extends React.Component<YllapitoProps> {
   handlekoulutustoimijaOidChange = (inputOid: any) => {
     this.setState({
       koulutustoimijaOid: inputOid
+    })
+  }
+
+  handleUpdateOppijaOidChange = (inputOid: any) => {
+    this.setState({
+      updateOppijaOid: inputOid
     })
   }
 
@@ -862,6 +914,36 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           <FormattedMessage
                             id="yllapito.updateOpiskeluoikeudetButton"
                             defaultMessage="Päivitä opiskeluoikeudet."
+                          />
+                        </Button>
+                      </ContentElement>
+                    </ContentElement>
+                  </ContentElement>
+                  <ContentElement>
+                    <Header>
+                      <FormattedMessage
+                        id="yllapito.oppijanPaivitys"
+                        defaultMessage="Päivitä oppijan tiedot indeksiin Oppijanumerorekisteristä."
+                      />
+                    </Header>
+                    <ContentElement>
+                      <ContentElement>
+                        <form>
+                          <HakuInput
+                            type="text"
+                            placeholder="1.2.345.678.98.76543212345"
+                            value={this.state.updateOppijaOid}
+                            onChange={e =>
+                              this.handleUpdateOppijaOidChange(e.target.value)
+                            }
+                          />
+                        </form>
+                      </ContentElement>
+                      <ContentElement>
+                        <Button onClick={this.onUpdateOppija}>
+                          <FormattedMessage
+                            id="yllapito.paivitaOppija"
+                            defaultMessage="Paivita oppijan tiedot indeksiin."
                           />
                         </Button>
                       </ContentElement>
