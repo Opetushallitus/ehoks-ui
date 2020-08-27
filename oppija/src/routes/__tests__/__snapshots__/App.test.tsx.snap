@@ -804,7 +804,6 @@ exports[`App renders correctly 1`] = `
             >
               <div
                 class="c17"
-                role="banner"
               >
                 <div
                   class="c18"
