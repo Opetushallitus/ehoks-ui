@@ -163,7 +163,7 @@ export class Etusivu extends React.Component<EtusivuProps> {
         </Header>
 
         <ContentContainer>
-          <LoginBoxes role="banner">
+          <LoginBoxes>
             <LoginContainer>
               <LoginTitle>
                 <h2>
