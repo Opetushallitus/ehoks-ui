@@ -149,6 +149,7 @@ interface ShareDialogProps extends InjectedIntlProps {
   /* Used version of react-intl cannot handle React.ReactNode here */
   children: any
   moduleId: string
+  hoksEid: string
   type: ShareType
   defaultPeriod?: ShareLinkValidityPeriod
   instructor?: Instructor
@@ -165,6 +166,7 @@ export function ShareDialog(props: ShareDialogProps) {
     defaultPeriod,
     instructor,
     moduleId,
+    hoksEid,
     type,
     tutkinnonOsaTyyppi,
     tutkinnonOsaModuleId,
@@ -204,6 +206,7 @@ export function ShareDialog(props: ShareDialogProps) {
     if (tutkinnonOsaTyyppi) {
       const createdUuid = await createLink({
         moduleId,
+        hoksEid,
         startDate,
         endDate,
         type,

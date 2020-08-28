@@ -44,6 +44,7 @@ export const createLink = async function({
   startDate,
   endDate,
   moduleId,
+  hoksEid,
   type,
   tutkinnonOsaTyyppi,
   tutkinnonOsaModuleId,
@@ -52,6 +53,7 @@ export const createLink = async function({
   startDate: string
   endDate: string
   moduleId: string
+  hoksEid: string
   type: string
   tutkinnonOsaTyyppi: TutkinnonOsaType
   tutkinnonOsaModuleId: string
@@ -70,7 +72,8 @@ export const createLink = async function({
       "shared-module-uuid": moduleId,
       "shared-module-tyyppi": type,
       "voimassaolo-alku": startDate,
-      "voimassaolo-loppu": endDate
+      "voimassaolo-loppu": endDate,
+      "hoks-eid": hoksEid
     })
   })
 

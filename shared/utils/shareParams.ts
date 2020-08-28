@@ -10,6 +10,7 @@ export function parseShareParams(
     moduleId: string | ""
     tutkinnonOsaTyyppi?: TutkinnonOsaType
     tutkinnonOsaModuleId: string | ""
+    hoksEid: string | ""
   }
 } {
   const qs = queryString.parse(location ? location.search : "")
@@ -24,7 +25,8 @@ export function parseShareParams(
       tutkinnonOsaModuleId:
         typeof qs.tutkinnonOsaModuleId === "string"
           ? qs.tutkinnonOsaModuleId
-          : ""
+          : "",
+      hoksEid: typeof qs.hoksEid === "string" ? qs.hoksEid : ""
     }
   }
 }
@@ -33,16 +35,19 @@ export const stringifyShareParams = ({
   type,
   moduleId,
   tutkinnonOsaTyyppi,
-  tutkinnonOsaModuleId
+  tutkinnonOsaModuleId,
+  hoksEid
 }: {
   type: string
   moduleId: string
   tutkinnonOsaTyyppi: TutkinnonOsaType
   tutkinnonOsaModuleId: string
+  hoksEid: string
 }): string =>
   queryString.stringify({
     type,
     moduleId,
     tutkinnonOsaTyyppi,
-    tutkinnonOsaModuleId
+    tutkinnonOsaModuleId,
+    hoksEid
   })

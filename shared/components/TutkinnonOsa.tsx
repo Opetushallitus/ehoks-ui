@@ -109,6 +109,7 @@ export interface TutkinnonOsaProps {
     moduleId?: string
     tutkinnonOsaTyyppi?: TutkinnonOsaType
     tutkinnonOsaModuleId?: string
+    hoksEid?: string
   }
   /** Title of the study, always visible */
   title?: React.ReactNode
@@ -223,7 +224,8 @@ export class TutkinnonOsa extends React.Component<
           moduleId,
           type: "osaamisenhankkimistapa",
           tutkinnonOsaTyyppi,
-          tutkinnonOsaModuleId: moduleId
+          tutkinnonOsaModuleId: moduleId,
+          hoksEid: hoksEid
         })}`
       )
     }
