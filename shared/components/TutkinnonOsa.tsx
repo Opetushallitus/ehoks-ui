@@ -96,6 +96,7 @@ export interface TutkinnonOsaProps {
    */
   koodiUri?: string
   moduleId?: string
+  hoksEid?: string
   /**
    * List of learning periods.
    * @default []
@@ -217,8 +218,8 @@ export class TutkinnonOsa extends React.Component<
   }
 
   share = () => {
-    const { moduleId, tutkinnonOsaTyyppi } = this.props
-    if (moduleId && tutkinnonOsaTyyppi) {
+    const { moduleId, hoksEid, tutkinnonOsaTyyppi } = this.props
+    if (moduleId && hoksEid && tutkinnonOsaTyyppi) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
           moduleId,

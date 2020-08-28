@@ -498,6 +498,7 @@ export class Details extends React.Component<DetailsProps> {
       osaamisenHankkimistavat = [],
       share,
       moduleId,
+      hoksEid,
       tutkinnonOsaTyyppi,
       toggle,
       todentamisenProsessi,
@@ -571,6 +572,7 @@ export class Details extends React.Component<DetailsProps> {
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
             tutkinnonOsaModuleId={moduleId}
             shareModuleId={share?.moduleId}
+            hoksEid={hoksEid}
           />
 
           <OsaamisenOsoittamisetExpanded
