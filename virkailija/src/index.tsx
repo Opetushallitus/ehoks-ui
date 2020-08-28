@@ -11,6 +11,9 @@ import fi from "react-intl/locale-data/fi"
 import sv from "react-intl/locale-data/sv"
 import { App } from "./routes/App"
 import { RootStore } from "./stores/RootStore"
+// Need this remove "You haven't configured observer batching" warning
+// https://github.com/mobxjs/mobx-react/#observer-batching
+import "mobx-react/batchingForReactDom"
 
 // load finnish & swedish locale data (currency units, separators etc.)
 addLocaleData([...fi, ...sv])
