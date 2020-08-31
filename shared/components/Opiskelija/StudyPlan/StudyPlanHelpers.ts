@@ -18,6 +18,7 @@ export interface OpiskelusuunnitelmaState {
     tutkinnonOsaModuleId?: string
     hoksEid?: string
   }
+  hoksEid?: string
 }
 
 export type StudyPartType = "aikataulutetut" | "suunnitellut" | "valmiit"

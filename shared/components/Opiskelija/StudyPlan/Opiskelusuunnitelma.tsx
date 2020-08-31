@@ -111,8 +111,9 @@ export class Opiskelusuunnitelma extends React.Component<
       moduleId: undefined,
       tutkinnonOsaTyyppi: undefined,
       tutkinnonOsaModuleId: undefined,
-      hoksEid: this.props.plan.eid
-    }
+      hoksEid: undefined
+    },
+    hoksEid: this.props.plan.eid
   }
 
   async componentDidMount() {
@@ -145,7 +146,8 @@ export class Opiskelusuunnitelma extends React.Component<
             type: share.type,
             moduleId: share.moduleId,
             tutkinnonOsaTyyppi: share.tutkinnonOsaTyyppi,
-            tutkinnonOsaModuleId: share.tutkinnonOsaModuleId
+            tutkinnonOsaModuleId: share.tutkinnonOsaModuleId,
+            hoksEid: share.hoksEid
           }
         }))
       }
@@ -157,6 +159,7 @@ export class Opiskelusuunnitelma extends React.Component<
     moduleId: string | ""
     tutkinnonOsaTyyppi?: TutkinnonOsaType
     tutkinnonOsaModuleId: string | ""
+    hoksEid: string | ""
   }) {
     return (
       share.type !== this.state.share.type ||
@@ -261,7 +264,7 @@ export class Opiskelusuunnitelma extends React.Component<
 
   render() {
     const { intl } = this.context
-    const { activeAccordions, share } = this.state
+    const { activeAccordions, share, hoksEid } = this.state
     const { plan, elements: customElements = {} } = this.props
     const { suunnitellutOpinnot, aikataulutetutOpinnot, valmiitOpinnot } = plan
     const competencePointsTitle = intl.formatMessage({
@@ -364,6 +367,7 @@ export class Opiskelusuunnitelma extends React.Component<
             competencePointsTitle={competencePointsTitle}
             hasActiveShare={hasActiveShare("suunnitellut")}
             share={share}
+            hoksEid={hoksEid}
             suunnitellutOpinnot={suunnitellutOpinnot}
             elements={elements}
             toggleAccordion={this.toggleAccordion}
@@ -371,6 +375,7 @@ export class Opiskelusuunnitelma extends React.Component<
           <ScheduledStudies
             accordionIsOpen={activeAccordions.suunnitelmat.aikataulutetut}
             share={share}
+            hoksEid={hoksEid}
             hasActiveShare={hasActiveShare("aikataulutetut")}
             toggleAccordion={this.toggleAccordion}
             aikataulutetutOpinnot={aikataulutetutOpinnot}
@@ -380,6 +385,7 @@ export class Opiskelusuunnitelma extends React.Component<
           <CompletedStudies
             accordionIsOpen={activeAccordions.suunnitelmat.valmiit}
             share={share}
+            hoksEid={hoksEid}
             hasActiveShare={hasActiveShare("valmiit")}
             toggleAccordion={this.toggleAccordion}
             valmiitOpinnot={valmiitOpinnot}

@@ -109,6 +109,10 @@ const LinkAnchor = styled(LinkItem)`
   flex: unset;
 `
 
+const RemoveLinkButton = styled(LinkButton)`
+  color: #1976d2;
+`
+
 const ChildContainer = styled("div")`
   border: 1px solid #979797;
   background: ${(props: ColorProps) => props.background};
@@ -334,7 +338,7 @@ export function ShareDialog(props: ShareDialogProps) {
                 </LinkItem>
                 <LinkItem>{link.jakoUuid}</LinkItem>
                 <LinkAnchor>
-                  <LinkButton
+                  <RemoveLinkButton
                     onClick={(event: React.MouseEvent) =>
                       remove(event, link.jakoUuid)
                     }
@@ -343,7 +347,7 @@ export function ShareDialog(props: ShareDialogProps) {
                       id="jakaminen.poistaLinkki"
                       defaultMessage="Poista linkki"
                     />
-                  </LinkButton>
+                  </RemoveLinkButton>
                 </LinkAnchor>
               </SharedLink>
             ))}

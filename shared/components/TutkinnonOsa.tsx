@@ -226,7 +226,7 @@ export class TutkinnonOsa extends React.Component<
           type: "osaamisenhankkimistapa",
           tutkinnonOsaTyyppi,
           tutkinnonOsaModuleId: moduleId,
-          hoksEid: hoksEid
+          hoksEid
         })}`
       )
     }
@@ -250,6 +250,7 @@ export class TutkinnonOsa extends React.Component<
       osaamisenHankkimistavat = [],
       koodiUri,
       moduleId,
+      hoksEid,
       tutkinnonOsaTyyppi,
       share,
       title,
@@ -267,7 +268,7 @@ export class TutkinnonOsa extends React.Component<
       osaamisenOsoittamiset.length > 0 ||
       todentamisenProsessi
     const hasActiveShare =
-      typeof share !== "undefined" && moduleId === share.moduleId
+      typeof share !== "undefined" && moduleId === share.tutkinnonOsaModuleId
     const detailsExpanded = expanded.details || hasActiveShare
 
     return (
@@ -304,6 +305,7 @@ export class TutkinnonOsa extends React.Component<
               todentamisenProsessi={todentamisenProsessi}
               koodiUri={koodiUri}
               share={share}
+              hoksEid={hoksEid}
               moduleId={moduleId}
               tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
               toggle={this.toggle}
