@@ -96,6 +96,7 @@ export interface TutkinnonOsaProps {
    */
   koodiUri?: string
   moduleId?: string
+  hoksEid?: string
   /**
    * List of learning periods.
    * @default []
@@ -109,6 +110,7 @@ export interface TutkinnonOsaProps {
     moduleId?: string
     tutkinnonOsaTyyppi?: TutkinnonOsaType
     tutkinnonOsaModuleId?: string
+    hoksEid?: string
   }
   /** Title of the study, always visible */
   title?: React.ReactNode
@@ -216,14 +218,15 @@ export class TutkinnonOsa extends React.Component<
   }
 
   share = () => {
-    const { moduleId, tutkinnonOsaTyyppi } = this.props
-    if (moduleId && tutkinnonOsaTyyppi) {
+    const { moduleId, hoksEid, tutkinnonOsaTyyppi } = this.props
+    if (moduleId && hoksEid && tutkinnonOsaTyyppi) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
           moduleId,
           type: "osaamisenhankkimistapa",
           tutkinnonOsaTyyppi,
-          tutkinnonOsaModuleId: moduleId
+          tutkinnonOsaModuleId: moduleId,
+          hoksEid: hoksEid
         })}`
       )
     }

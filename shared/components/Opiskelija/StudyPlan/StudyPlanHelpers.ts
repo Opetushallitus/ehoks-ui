@@ -16,6 +16,7 @@ export interface OpiskelusuunnitelmaState {
     moduleId?: string
     tutkinnonOsaTyyppi?: TutkinnonOsaType
     tutkinnonOsaModuleId?: string
+    hoksEid?: string
   }
 }
 

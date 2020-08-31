@@ -110,7 +110,8 @@ export class Opiskelusuunnitelma extends React.Component<
       type: undefined,
       moduleId: undefined,
       tutkinnonOsaTyyppi: undefined,
-      tutkinnonOsaModuleId: undefined
+      tutkinnonOsaModuleId: undefined,
+      hoksEid: this.props.plan.eid
     }
   }
 
@@ -124,7 +125,8 @@ export class Opiskelusuunnitelma extends React.Component<
           type: share.type,
           moduleId: share.moduleId,
           tutkinnonOsaTyyppi: share.tutkinnonOsaTyyppi,
-          tutkinnonOsaModuleId: share.tutkinnonOsaModuleId
+          tutkinnonOsaModuleId: share.tutkinnonOsaModuleId,
+          hoksEid: share.hoksEid
         }
       }))
       this.setInitialExpanded(share)

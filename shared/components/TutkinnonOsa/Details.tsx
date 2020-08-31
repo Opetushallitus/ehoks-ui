@@ -135,6 +135,7 @@ const OsaamisenHankkimistavatExpanded = ({
   hasActiveShare,
   fadedColor,
   shareModuleId,
+  hoksEid,
   tutkinnonOsaTyyppi,
   tutkinnonOsaModuleId,
   instructor,
@@ -143,6 +144,7 @@ const OsaamisenHankkimistavatExpanded = ({
   hasActiveShare: boolean
   fadedColor: string
   shareModuleId?: string
+  hoksEid?: string
   tutkinnonOsaTyyppi?: TutkinnonOsaType
   tutkinnonOsaModuleId?: string
   instructor?: Instructor
@@ -154,8 +156,9 @@ const OsaamisenHankkimistavatExpanded = ({
       <ShareDialog
         active={osaamisenHankkimistapa.moduleId === shareModuleId}
         background={fadedColor}
-        type={ShareType.osaamisenhankkimistapa}
+        type={ShareType.osaamisenhankkiminen}
         moduleId={osaamisenHankkimistapa.moduleId || ""}
+        hoksEid={hoksEid || ""}
         defaultPeriod={{
           start: osaamisenHankkimistapa.alku,
           end: osaamisenHankkimistapa.loppu
@@ -172,6 +175,7 @@ const OsaamisenHankkimistavatExpanded = ({
           moduleId={osaamisenHankkimistapa.moduleId}
           tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
           tutkinnonOsaModuleId={tutkinnonOsaModuleId}
+          hoksEid={hoksEid}
         />
       </ShareDialog>
     ))}
@@ -206,6 +210,7 @@ const OsaamisenOsoittamisetExpanded = ({
   fadedColor,
   koodiUri,
   shareModuleId,
+  hoksEid,
   tutkinnonOsaTyyppi,
   tutkinnonOsaModuleId,
   todentamisenProsessi
@@ -215,6 +220,7 @@ const OsaamisenOsoittamisetExpanded = ({
   fadedColor: string
   koodiUri?: string
   shareModuleId?: string
+  hoksEid?: string
   tutkinnonOsaTyyppi?: TutkinnonOsaType
   tutkinnonOsaModuleId?: string
   todentamisenProsessi?: TodentamisenProsessi
@@ -226,6 +232,7 @@ const OsaamisenOsoittamisetExpanded = ({
         background={fadedColor}
         type={ShareType.osaamisenosoittaminen}
         moduleId={osaamisenOsoittaminen.moduleId || ""}
+        hoksEid={hoksEid || ""}
         defaultPeriod={{
           start: osaamisenOsoittaminen.alku,
           end: osaamisenOsoittaminen.loppu
@@ -240,6 +247,7 @@ const OsaamisenOsoittamisetExpanded = ({
           koodiUri={koodiUri}
           hasActiveShare={hasActiveShare}
           moduleId={osaamisenOsoittaminen.moduleId}
+          hoksEid={hoksEid}
           tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
           tutkinnonOsaModuleId={tutkinnonOsaModuleId}
         />
@@ -464,6 +472,7 @@ interface DetailsProps {
     moduleId?: string
     tutkinnonOsaTyyppi?: TutkinnonOsaType
     tutkinnonOsaModuleId?: string
+    hoksEid?: string
   }
   toggle: (name: ToggleableItems) => () => void
   todentamisenProsessi?: TodentamisenProsessi
@@ -471,6 +480,7 @@ interface DetailsProps {
   tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
   moduleId?: string
   tutkinnonOsaTyyppi?: TutkinnonOsaType
+  hoksEid?: string
 }
 
 export class Details extends React.Component<DetailsProps> {
@@ -488,6 +498,7 @@ export class Details extends React.Component<DetailsProps> {
       osaamisenHankkimistavat = [],
       share,
       moduleId,
+      hoksEid,
       tutkinnonOsaTyyppi,
       toggle,
       todentamisenProsessi,
@@ -508,7 +519,7 @@ export class Details extends React.Component<DetailsProps> {
     const hasActiveShare = moduleId === share?.tutkinnonOsaModuleId
     const shareType = typeof share !== "undefined" ? share.type : undefined
     const firstOsaamisenHankkimistapa =
-      shareType === "osaamisenhankkimistapa" && osaamisenHankkimistavat[0]
+      shareType === "osaamisenhankkiminen" && osaamisenHankkimistavat[0]
         ? osaamisenHankkimistavat[0]
         : undefined
 
@@ -552,7 +563,7 @@ export class Details extends React.Component<DetailsProps> {
 
           <OsaamisenHankkimistavatExpanded
             hasActiveShare={
-              hasActiveShare && shareType === "osaamisenhankkimistapa"
+              hasActiveShare && shareType === "osaamisenhankkiminen"
             }
             fadedColor={fadedColor}
             instructor={instructor}
@@ -561,6 +572,7 @@ export class Details extends React.Component<DetailsProps> {
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
             tutkinnonOsaModuleId={moduleId}
             shareModuleId={share?.moduleId}
+            hoksEid={hoksEid}
           />
 
           <OsaamisenOsoittamisetExpanded
@@ -571,6 +583,7 @@ export class Details extends React.Component<DetailsProps> {
             fadedColor={fadedColor}
             koodiUri={koodiUri}
             shareModuleId={share?.moduleId}
+            hoksEid={hoksEid}
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
             tutkinnonOsaModuleId={moduleId}
             todentamisenProsessi={todentamisenProsessi}

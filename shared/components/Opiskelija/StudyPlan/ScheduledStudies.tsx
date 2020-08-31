@@ -16,6 +16,7 @@ export interface ScheduledStudiesProps {
     moduleId?: string
     tutkinnonOsaTyyppi?: TutkinnonOsaType
     tutkinnonOsaModuleId?: string
+    hoksEid?: string
   }
   hasActiveShare: boolean
   toggleAccordion: (

@@ -1,6 +1,6 @@
 export enum ShareType {
   "osaamisenosoittaminen" = "osaamisenosoittaminen",
-  "osaamisenhankkimistapa" = "osaamisenhankkimistapa"
+  "osaamisenhankkiminen" = "osaamisenhankkiminen"
 }
 
 export enum TutkinnonOsaType {
