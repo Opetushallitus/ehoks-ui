@@ -1,16 +1,16 @@
 import React from "react"
-import { intlShape, FormattedMessage, InjectedIntl } from "react-intl"
+import { FormattedMessage, InjectedIntl, intlShape } from "react-intl"
 import styled from "styled"
 import { Collapse } from "./Collapse"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
 import { OsaamisenHankkimistapa } from "./OsaamisenHankkimistapa"
 import {
+  IOrganisaatio,
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
-  TodentamisenProsessi,
-  IOrganisaatio,
-  ITarkentavatTiedotOsaamisenArvioija
+  ITarkentavatTiedotOsaamisenArvioija,
+  TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "./LearningEvent"
 import { TodentamisenProsessiKoodi } from "types/TodentamisenProsessiKoodi"
