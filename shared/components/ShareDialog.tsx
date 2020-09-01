@@ -271,7 +271,7 @@ export function ShareDialog(props: ShareDialogProps) {
           <ShareHeaderContainer>
             <ShareHeader>
               <ShareTitle>
-                {type === "osaamisenosoittaminen" ? (
+                {type === ShareType.osaamisenosoittaminen ? (
                   <FormattedMessage
                     id="jakaminen.naytonTietojenJakaminenTitle "
                     defaultMessage="Näytön tietojen jakaminen"
@@ -285,7 +285,7 @@ export function ShareDialog(props: ShareDialogProps) {
               </ShareTitle>
 
               <ShareDescription>
-                {type === "osaamisenosoittaminen" ? (
+                {type === ShareType.osaamisenosoittaminen ? (
                   <FormattedMessage
                     id="jakaminen.naytonJakoDescription"
                     defaultMessage="Olet jakamassa näitä näytön tietoja"
@@ -309,7 +309,7 @@ export function ShareDialog(props: ShareDialogProps) {
           </ShareHeaderContainer>
           <ChildContainer background={background}>{children}</ChildContainer>
           <ShareDescription>
-            {type === "osaamisenosoittaminen" ? (
+            {type === ShareType.osaamisenosoittaminen ? (
               <FormattedMessage
                 id="jakaminen.aiemmatNaytonJaotDescription"
                 defaultMessage="Aiemmin tekemäsi näytön jakolinkit"
@@ -360,7 +360,7 @@ export function ShareDialog(props: ShareDialogProps) {
                     <ShareColumns>
                       <ShareColumn>
                         <Subtitle>
-                          {type === "osaamisenosoittaminen" ? (
+                          {type === ShareType.osaamisenosoittaminen ? (
                             <FormattedMessage
                               id="jakaminen.linkkiNaytonTietoihin"
                               defaultMessage="Linkki näytön tietoihin"

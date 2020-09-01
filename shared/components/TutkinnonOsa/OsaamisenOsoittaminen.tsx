@@ -17,7 +17,7 @@ import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
 import { RequirementsAndDeviations } from "./RequirementsAndDeviations"
 import { observer } from "mobx-react"
-import { TutkinnonOsaType } from "../../models/helpers/ShareTypes"
+import { ShareType, TutkinnonOsaType } from "../../models/helpers/ShareTypes"
 
 const OsaamisenOsoittaminenTitle = styled(Title)(
   props => `
@@ -108,7 +108,7 @@ export class OsaamisenOsoittaminen extends React.Component<
     if (moduleId && hoksEid && tutkinnonOsaTyyppi && tutkinnonOsaModuleId) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
-          type: "osaamisenosoittaminen",
+          type: ShareType.osaamisenosoittaminen,
           moduleId,
           hoksEid,
           tutkinnonOsaTyyppi,

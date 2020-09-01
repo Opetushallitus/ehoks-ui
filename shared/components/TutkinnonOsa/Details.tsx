@@ -515,7 +515,7 @@ export class Details extends React.Component<DetailsProps> {
     const hasActiveShare = moduleId === share?.moduleId
     const shareType = typeof share !== "undefined" ? share.type : undefined
     const firstOsaamisenHankkimistapa =
-      shareType === "osaamisenhankkiminen" && osaamisenHankkimistavat[0]
+      shareType === ShareType.osaamisenhankkiminen && osaamisenHankkimistavat[0]
         ? osaamisenHankkimistavat[0]
         : undefined
 

@@ -36,7 +36,7 @@ export const HankittavatTutkinnonOsatViews = types
         }
         const moduleIdMatch = self.moduleId === moduleId
         const typeMatch =
-          type === "osaamisenosoittaminen"
+          type === ShareType.osaamisenosoittaminen
             ? self.osaamisenOsoittaminen?.length > 0
             : !!find(
                 self.osaamisenHankkimistavat,
