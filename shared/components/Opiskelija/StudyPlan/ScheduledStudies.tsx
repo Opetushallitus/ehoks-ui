@@ -18,7 +18,6 @@ export interface ScheduledStudiesProps {
     tutkinnonOsaModuleId?: string
     hoksEid?: string
   }
-  hoksEid?: string
   hasActiveShare: boolean
   toggleAccordion: (
     accordion: ActiveAccordions,
@@ -38,7 +37,6 @@ export class ScheduledStudies extends React.Component<ScheduledStudiesProps> {
     const {
       accordionIsOpen,
       share,
-      hoksEid,
       hasActiveShare,
       toggleAccordion,
       aikataulutetutOpinnot,
@@ -83,7 +81,6 @@ export class ScheduledStudies extends React.Component<ScheduledStudiesProps> {
                   tutkinnonOsaTyyppi={study.tutkinnonOsaTyyppi}
                   osaamisenHankkimistavat={study.osaamisenHankkimistavat}
                   share={share}
-                  hoksEid={hoksEid}
                   title={study.opintoOtsikko(competencePointsTitle)}
                   objectives={study.tavoitteetJaSisallot}
                   koulutuksenJarjestaja={study.koulutuksenJarjestaja}

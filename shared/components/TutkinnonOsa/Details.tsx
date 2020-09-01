@@ -476,7 +476,6 @@ interface DetailsProps {
   tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
   moduleId?: string
   tutkinnonOsaTyyppi?: TutkinnonOsaType
-  hoksEid?: string
 }
 
 export class Details extends React.Component<DetailsProps> {
@@ -493,7 +492,6 @@ export class Details extends React.Component<DetailsProps> {
       koodiUri,
       osaamisenHankkimistavat = [],
       share,
-      hoksEid,
       moduleId,
       tutkinnonOsaTyyppi,
       toggle,
@@ -565,7 +563,7 @@ export class Details extends React.Component<DetailsProps> {
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
             tutkinnonOsaModuleId={moduleId}
             shareModuleId={share?.moduleId}
-            hoksEid={hoksEid}
+            hoksEid={share?.hoksEid}
           />
 
           <OsaamisenOsoittamisetExpanded
@@ -573,7 +571,7 @@ export class Details extends React.Component<DetailsProps> {
             fadedColor={fadedColor}
             koodiUri={koodiUri}
             shareModuleId={share?.moduleId}
-            hoksEid={hoksEid}
+            hoksEid={share?.hoksEid}
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
             tutkinnonOsaModuleId={moduleId}
             todentamisenProsessi={todentamisenProsessi}
