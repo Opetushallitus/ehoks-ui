@@ -2,7 +2,7 @@ import { APIConfig } from "components/APIConfigContext"
 import { TutkinnonOsaType } from "../../models/helpers/ShareTypes"
 
 interface BackendShareLink {
-  "jako-uuid": string
+  "share-id": string
   "module-id": string
   "voimassaolo-alku": string
   "voimassaolo-loppu": string
@@ -32,11 +32,10 @@ export const fetchLinks = async function(
   }
   const json: { data: BackendShareLink[] } = await response.json()
   return json.data.map(link => ({
-    jakoUuid: link["jako-uuid"],
+    jakoUuid: link["share-id"],
     validFrom: link["voimassaolo-alku"],
     validTo: link["voimassaolo-loppu"],
-    type: link.tyyppi,
-    moduleId: link["module-id"]
+    type: link.tyyppi
   }))
 }
 
@@ -44,6 +43,7 @@ export const createLink = async function({
   startDate,
   endDate,
   moduleId,
+  hoksEid,
   type,
   tutkinnonOsaTyyppi,
   tutkinnonOsaModuleId,
@@ -52,6 +52,7 @@ export const createLink = async function({
   startDate: string
   endDate: string
   moduleId: string
+  hoksEid: string
   type: string
   tutkinnonOsaTyyppi: TutkinnonOsaType
   tutkinnonOsaModuleId: string
@@ -70,7 +71,8 @@ export const createLink = async function({
       "shared-module-uuid": moduleId,
       "shared-module-tyyppi": type,
       "voimassaolo-alku": startDate,
-      "voimassaolo-loppu": endDate
+      "voimassaolo-loppu": endDate,
+      "hoks-eid": hoksEid
     })
   })
 

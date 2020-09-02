@@ -96,6 +96,7 @@ export interface TutkinnonOsaProps {
    */
   koodiUri?: string
   moduleId?: string
+  hoksEid?: string
   /**
    * List of learning periods.
    * @default []
@@ -109,6 +110,7 @@ export interface TutkinnonOsaProps {
     moduleId?: string
     tutkinnonOsaTyyppi?: TutkinnonOsaType
     tutkinnonOsaModuleId?: string
+    hoksEid?: string
   }
   /** Title of the study, always visible */
   title?: React.ReactNode
@@ -216,14 +218,15 @@ export class TutkinnonOsa extends React.Component<
   }
 
   share = () => {
-    const { moduleId, tutkinnonOsaTyyppi } = this.props
-    if (moduleId && tutkinnonOsaTyyppi) {
+    const { moduleId, hoksEid, tutkinnonOsaTyyppi } = this.props
+    if (moduleId && hoksEid && tutkinnonOsaTyyppi) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
           moduleId,
           type: "osaamisenhankkimistapa",
           tutkinnonOsaTyyppi,
-          tutkinnonOsaModuleId: moduleId
+          tutkinnonOsaModuleId: moduleId,
+          hoksEid
         })}`
       )
     }
@@ -247,6 +250,7 @@ export class TutkinnonOsa extends React.Component<
       osaamisenHankkimistavat = [],
       koodiUri,
       moduleId,
+      hoksEid,
       tutkinnonOsaTyyppi,
       share,
       title,
@@ -264,7 +268,7 @@ export class TutkinnonOsa extends React.Component<
       osaamisenOsoittamiset.length > 0 ||
       todentamisenProsessi
     const hasActiveShare =
-      typeof share !== "undefined" && moduleId === share.moduleId
+      typeof share !== "undefined" && moduleId === share.tutkinnonOsaModuleId
     const detailsExpanded = expanded.details || hasActiveShare
 
     return (
@@ -301,6 +305,7 @@ export class TutkinnonOsa extends React.Component<
               todentamisenProsessi={todentamisenProsessi}
               koodiUri={koodiUri}
               share={share}
+              hoksEid={hoksEid}
               moduleId={moduleId}
               tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
               toggle={this.toggle}

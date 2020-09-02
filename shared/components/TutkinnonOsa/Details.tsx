@@ -1,16 +1,16 @@
 import React from "react"
-import { intlShape, FormattedMessage, InjectedIntl } from "react-intl"
+import { FormattedMessage, InjectedIntl, intlShape } from "react-intl"
 import styled from "styled"
 import { Collapse } from "./Collapse"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
 import { OsaamisenHankkimistapa } from "./OsaamisenHankkimistapa"
 import {
+  IOrganisaatio,
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
-  TodentamisenProsessi,
-  IOrganisaatio,
-  ITarkentavatTiedotOsaamisenArvioija
+  ITarkentavatTiedotOsaamisenArvioija,
+  TodentamisenProsessi
 } from "models/helpers/TutkinnonOsa"
 import { LearningEvent } from "./LearningEvent"
 import { TodentamisenProsessiKoodi } from "types/TodentamisenProsessiKoodi"
@@ -132,17 +132,17 @@ const ExpandIcon = ({
   ) : null
 
 const OsaamisenHankkimistavatExpanded = ({
-  hasActiveShare,
   fadedColor,
   shareModuleId,
+  hoksEid,
   tutkinnonOsaTyyppi,
   tutkinnonOsaModuleId,
   instructor,
   osaamisenHankkimistavat
 }: {
-  hasActiveShare: boolean
   fadedColor: string
   shareModuleId?: string
+  hoksEid?: string
   tutkinnonOsaTyyppi?: TutkinnonOsaType
   tutkinnonOsaModuleId?: string
   instructor?: Instructor
@@ -154,8 +154,9 @@ const OsaamisenHankkimistavatExpanded = ({
       <ShareDialog
         active={osaamisenHankkimistapa.moduleId === shareModuleId}
         background={fadedColor}
-        type={ShareType.osaamisenhankkimistapa}
+        type={ShareType.osaamisenhankkiminen}
         moduleId={osaamisenHankkimistapa.moduleId || ""}
+        hoksEid={hoksEid || ""}
         defaultPeriod={{
           start: osaamisenHankkimistapa.alku,
           end: osaamisenHankkimistapa.loppu
@@ -168,10 +169,11 @@ const OsaamisenHankkimistavatExpanded = ({
         <OsaamisenHankkimistapa
           key={i}
           osaamisenHankkimistapa={osaamisenHankkimistapa}
-          hasActiveShare={hasActiveShare}
+          hasActiveShare={osaamisenHankkimistapa.moduleId === shareModuleId}
           moduleId={osaamisenHankkimistapa.moduleId}
           tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
           tutkinnonOsaModuleId={tutkinnonOsaModuleId}
+          hoksEid={hoksEid}
         />
       </ShareDialog>
     ))}
@@ -202,19 +204,19 @@ const OsaamisenHankkimistavatCollapsed = ({
 
 const OsaamisenOsoittamisetExpanded = ({
   osaamisenOsoittamiset,
-  hasActiveShare,
   fadedColor,
   koodiUri,
   shareModuleId,
+  hoksEid,
   tutkinnonOsaTyyppi,
   tutkinnonOsaModuleId,
   todentamisenProsessi
 }: {
   osaamisenOsoittamiset: IOsaamisenOsoittaminen[]
-  hasActiveShare: boolean
   fadedColor: string
   koodiUri?: string
   shareModuleId?: string
+  hoksEid?: string
   tutkinnonOsaTyyppi?: TutkinnonOsaType
   tutkinnonOsaModuleId?: string
   todentamisenProsessi?: TodentamisenProsessi
@@ -226,6 +228,7 @@ const OsaamisenOsoittamisetExpanded = ({
         background={fadedColor}
         type={ShareType.osaamisenosoittaminen}
         moduleId={osaamisenOsoittaminen.moduleId || ""}
+        hoksEid={hoksEid || ""}
         defaultPeriod={{
           start: osaamisenOsoittaminen.alku,
           end: osaamisenOsoittaminen.loppu
@@ -238,8 +241,9 @@ const OsaamisenOsoittamisetExpanded = ({
           osaamisenOsoittaminen={osaamisenOsoittaminen}
           todentamisenProsessi={todentamisenProsessi}
           koodiUri={koodiUri}
-          hasActiveShare={hasActiveShare}
+          hasActiveShare={osaamisenOsoittaminen.moduleId === shareModuleId}
           moduleId={osaamisenOsoittaminen.moduleId}
+          hoksEid={hoksEid || ""}
           tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
           tutkinnonOsaModuleId={tutkinnonOsaModuleId}
         />
@@ -464,6 +468,7 @@ interface DetailsProps {
     moduleId?: string
     tutkinnonOsaTyyppi?: TutkinnonOsaType
     tutkinnonOsaModuleId?: string
+    hoksEid?: string
   }
   toggle: (name: ToggleableItems) => () => void
   todentamisenProsessi?: TodentamisenProsessi
@@ -471,6 +476,7 @@ interface DetailsProps {
   tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
   moduleId?: string
   tutkinnonOsaTyyppi?: TutkinnonOsaType
+  hoksEid?: string
 }
 
 export class Details extends React.Component<DetailsProps> {
@@ -487,6 +493,7 @@ export class Details extends React.Component<DetailsProps> {
       koodiUri,
       osaamisenHankkimistavat = [],
       share,
+      hoksEid,
       moduleId,
       tutkinnonOsaTyyppi,
       toggle,
@@ -505,10 +512,10 @@ export class Details extends React.Component<DetailsProps> {
       !!tarkentavatTiedotOsaamisenArvioija
     const isAiempiOsaaminen = !!todentamisenProsessiKoodi
     // TODO hasActiveShare matches now for koodiUri and might show multiple share modals, should use module-id and check per module
-    const hasActiveShare = moduleId === share?.tutkinnonOsaModuleId
+    const hasActiveShare = moduleId === share?.moduleId
     const shareType = typeof share !== "undefined" ? share.type : undefined
     const firstOsaamisenHankkimistapa =
-      shareType === "osaamisenhankkimistapa" && osaamisenHankkimistavat[0]
+      shareType === ShareType.osaamisenhankkiminen && osaamisenHankkimistavat[0]
         ? osaamisenHankkimistavat[0]
         : undefined
 
@@ -551,9 +558,6 @@ export class Details extends React.Component<DetailsProps> {
           />
 
           <OsaamisenHankkimistavatExpanded
-            hasActiveShare={
-              hasActiveShare && shareType === "osaamisenhankkimistapa"
-            }
             fadedColor={fadedColor}
             instructor={instructor}
             defaultPeriod={defaultPeriod}
@@ -561,16 +565,15 @@ export class Details extends React.Component<DetailsProps> {
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
             tutkinnonOsaModuleId={moduleId}
             shareModuleId={share?.moduleId}
+            hoksEid={hoksEid}
           />
 
           <OsaamisenOsoittamisetExpanded
             osaamisenOsoittamiset={osaamisenOsoittamiset}
-            hasActiveShare={
-              hasActiveShare && shareType === "osaamisenosoittaminen"
-            }
             fadedColor={fadedColor}
             koodiUri={koodiUri}
             shareModuleId={share?.moduleId}
+            hoksEid={hoksEid}
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
             tutkinnonOsaModuleId={moduleId}
             todentamisenProsessi={todentamisenProsessi}
