@@ -61,8 +61,7 @@ export const EnvironmentStore = types
     })
 
     const fetchSwaggerJSON = flow(function*() {
-      const response = yield fetch("/ehoks-oppija-backend/doc/swagger.json")
-      return response
+      return yield fetch("/ehoks-oppija-backend/doc/swagger.json")
     })
 
     return { getEnvironment, fetchSwaggerJSON }
