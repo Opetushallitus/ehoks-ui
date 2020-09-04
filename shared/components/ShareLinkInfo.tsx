@@ -1,27 +1,9 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Location, navigate, RouteComponentProps, Router } from "@reach/router"
-import { FormattedMessage, InjectedIntlProps } from "react-intl"
+import { FormattedMessage } from "react-intl"
 import { fetchLink, LinkInfo } from "./ShareDialog/API"
 import { Container } from "components/Container"
-// import { OsaamisenOsoittaminen } from "models/OsaamisenOsoittaminen"
-// import { OsaamisenHankkimistapa } from "models/OsaamisenHankkimistapa"
-import { APIConfigContext } from "components/APIConfigContext"
-import { WindowLocation } from "@reach/router"
-import { FormattedDate } from "components/FormattedDate"
-import { OsaamisenHankkimistapa } from "components/TutkinnonOsa/OsaamisenHankkimistapa"
-import { TutkinnonOsa } from "components/TutkinnonOsa"
 
-// interface ShareLinkInfoState {
-//   oppijaNimi: string
-//   oppijaOid: string
-//   tutkintoNimi: string
-//   osaamisalaNimi: string
-//   voimassaoloAlku: string
-//   voimassaoloLoppu: string
-//   osaamisenOsoittaminen: typeof OsaamisenOsoittaminen
-//   osaamisenHankkimistapa: typeof OsaamisenHankkimistapa
-//   tutkinnonosaTyyppi: string
-// }
+import { APIConfigContext } from "components/APIConfigContext"
 
 interface ShareLinkInfoProps {
   uuid?: string
@@ -40,8 +22,6 @@ export function ShareLinkInfo(props: ShareLinkInfoProps) {
 
     fetchData()
   }, [apiConfig, location])
-
-  console.log(shareInfo)
 
   const showOsaamisenHankkimiset = () => {
     if (shareInfo && shareInfo.osaamisenHankkimistapa) {
