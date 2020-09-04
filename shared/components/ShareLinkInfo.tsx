@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { FormattedMessage } from "react-intl"
 import { fetchLink, LinkInfo } from "./ShareDialog/API"
 import { Container } from "components/Container"
-
+import { OsaamisenHankkimistapa } from "components/TutkinnonOsa/OsaamisenHankkimistapa"
 import { APIConfigContext } from "components/APIConfigContext"
 
 interface ShareLinkInfoProps {
@@ -25,23 +25,14 @@ export function ShareLinkInfo(props: ShareLinkInfoProps) {
 
   const showOsaamisenHankkimiset = () => {
     if (shareInfo && shareInfo.osaamisenHankkimistapa) {
-      shareInfo.osaamisenHankkimistapa.map((osaamisenHankkiminen, i) =>
-        console.log(osaamisenHankkiminen)
-      )
+      shareInfo.osaamisenHankkimistapa.map((osaamisenHankkiminen, i) => (
+        <OsaamisenHankkimistapa
+          key={i}
+          osaamisenHankkimistapa={osaamisenHankkiminen}
+        />
+      ))
     }
   }
-
-  //      {
-  //         shareInfo.osaamisenHankkimistapa.map((osaamisenHankkiminen, i) => (
-  //                     {
-  //                     <OsaamisenHankkimistapa
-  //                     key={i}
-  //                     osaamisenHankkimistapa={osaamisenHankkiminen}
-  //                 />
-  //         ))
-  //       }}
-  //     }
-  //   }
 
   return (
     <React.Fragment>
