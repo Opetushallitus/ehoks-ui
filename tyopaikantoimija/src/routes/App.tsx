@@ -31,8 +31,8 @@ const MainApp = (_: RouteComponentProps) => (
   <Container>
     <AppHeader />
     <Main id="main" role="main">
-      <Router basepath="/ehoks-tyopaikantoimija-ui">
-        <Etusivu path="/" />
+      <Router basepath={`/ehoks-tyopaikantoimija-ui`}>
+        <Etusivu path="/:uuid" />
       </Router>
     </Main>
     <AppFooter />

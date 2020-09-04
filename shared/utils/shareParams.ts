@@ -51,3 +51,20 @@ export const stringifyShareParams = ({
     tutkinnonOsaModuleId,
     hoksEid
   })
+
+export function parseLinkUuid(
+  location: WindowLocation | undefined
+): {
+  link: {
+    uuid: string | undefined
+  }
+} {
+  return {
+    link: {
+      uuid:
+        location && typeof location.pathname.split("/").pop() === "string"
+          ? location.pathname.split("/").pop()
+          : ""
+    }
+  }
+}
