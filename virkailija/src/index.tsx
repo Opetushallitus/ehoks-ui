@@ -24,7 +24,11 @@ const store = RootStore.create(
 store.translations.fetchLocales()
 const appContext = {
   app: "virkailija",
-  featureFlags: { shareDialog: false, shareNotifications: false }
+  featureFlags: {
+    shareDialog: false,
+    shareNotifications: false,
+    casOppija: false
+  }
 }
 
 // initial render to app container

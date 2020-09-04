@@ -23,6 +23,7 @@ import { Suunnittelu } from "routes/Suunnittelu"
 import { IRootStore } from "stores/RootStore"
 import { Locale } from "stores/TranslationStore"
 import styled from "styled"
+import { AppContext } from "components/AppContext"
 
 const Container = styled("div")`
   margin: 0;
@@ -61,8 +62,12 @@ export interface AppProps {
 @inject("store")
 @observer
 export class App extends React.Component<AppProps> {
+  static contextType = AppContext
+  declare context: React.ContextType<typeof AppContext>
+
   async componentDidMount() {
     const { store } = this.props
+    const { featureFlags } = this.context
     const localeParam = parseLocaleParam(window.location.search)
     if (localeParam) {
       store!.translations.setActiveLocale(localeParam)
@@ -73,8 +78,20 @@ export class App extends React.Component<AppProps> {
         : readLocaleFromDomain()
       store!.translations.setActiveLocale(locale)
     }
-    // load user session info from backend
-    await store!.session.checkSession()
+
+    const sessionStore = store!.session
+    if (featureFlags.casOppija) {
+      try {
+        await sessionStore.checkSession()
+      } finally {
+        if (!sessionStore.isLoggedIn) {
+          window.location.href = store!.environment.casOppijaLoginUrl
+        }
+      }
+    } else {
+      // load user session info from backend
+      await sessionStore.checkSession()
+    }
   }
 
   render() {

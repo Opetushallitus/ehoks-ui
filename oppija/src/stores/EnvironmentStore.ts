@@ -15,7 +15,8 @@ const EnvironmentStoreModel = {
   opintopolkuLoginUrlSv: types.optional(types.string, ""),
   opintopolkuLogoutUrlFi: types.optional(types.string, ""),
   opintopolkuLogoutUrlSv: types.optional(types.string, ""),
-  virkailijaLoginUrl: types.optional(types.string, "")
+  virkailijaLoginUrl: types.optional(types.string, ""),
+  casOppijaLoginUrl: types.optional(types.string, "")
 }
 
 export const EnvironmentStore = types
@@ -61,8 +62,7 @@ export const EnvironmentStore = types
     })
 
     const fetchSwaggerJSON = flow(function*() {
-      const response = yield fetch("/ehoks-oppija-backend/doc/swagger.json")
-      return response
+      return yield fetch("/ehoks-oppija-backend/doc/swagger.json")
     })
 
     return { getEnvironment, fetchSwaggerJSON }

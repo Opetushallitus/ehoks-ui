@@ -2,7 +2,11 @@ import React from "react"
 
 interface AppContextShape {
   app: string
-  featureFlags: { shareDialog: boolean; shareNotifications: boolean }
+  featureFlags: {
+    shareDialog: boolean
+    shareNotifications: boolean
+    casOppija: boolean
+  }
 }
 
 // AppContext can be used for easily getting the current
@@ -31,6 +35,7 @@ export const AppContext = React.createContext<AppContextShape>({
   app: "",
   featureFlags: {
     shareDialog: false,
-    shareNotifications: false
+    shareNotifications: false,
+    casOppija: false
   }
 })
