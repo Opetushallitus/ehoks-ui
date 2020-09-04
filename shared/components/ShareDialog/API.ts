@@ -1,11 +1,11 @@
 import { APIConfig } from "components/APIConfigContext"
 import { TutkinnonOsaType } from "../../models/helpers/ShareTypes"
-import { getEnv } from "mobx-state-tree"
-import { StoreEnvironment } from "types/StoreEnvironment"
-import {
-  IOsaamisenHankkimistapa,
-  IOsaamisenOsoittaminen
-} from "models/helpers/TutkinnonOsa"
+// import { getEnv } from "mobx-state-tree"
+// import { StoreEnvironment } from "types/StoreEnvironment"
+// import {
+//   IOsaamisenHankkimistapa,
+//   IOsaamisenOsoittaminen
+// } from "models/helpers/TutkinnonOsa"
 
 interface BackendShareLink {
   "share-id": string
@@ -22,29 +22,29 @@ export interface ShareLink {
   type: string
 }
 
-interface BackendLinkInfo {
-  "oppija-nimi": string
-  "oppija-oid": string
-  "tutkinto-nimi": string
-  "osaamisala-nimi": string
-  "voimassaolo-alku": string
-  "voimassaolo-loppu": string
-  "osaamisen-osoittaminen"?: IOsaamisenOsoittaminen[]
-  "osaamisen-hankkimistapa"?: IOsaamisenHankkimistapa[]
-  "tutkinnonosa-tyyppi": string
-}
+// interface BackendLinkInfo {
+//   "oppija-nimi": string
+//   "oppija-oid": string
+//   "tutkinto-nimi": string
+//   "osaamisala-nimi": string
+//   "voimassaolo-alku": string
+//   "voimassaolo-loppu": string
+//   "osaamisen-osoittaminen"?: IOsaamisenOsoittaminen[]
+//   "osaamisen-hankkimistapa"?: IOsaamisenHankkimistapa[]
+//   "tutkinnonosa-tyyppi": string
+// }
 
-export interface LinkInfo {
-  oppijaNimi: string
-  oppijaOid: string
-  tutkintoNimi: string
-  osaamisalaNimi: string
-  voimassaoloAlku: string
-  voimassaoloLoppu: string
-  osaamisenOsoittaminen?: IOsaamisenOsoittaminen[]
-  osaamisenHankkimistapa?: IOsaamisenHankkimistapa[]
-  tutkinnonosaTyyppi: string
-}
+// export interface LinkInfo {
+//   oppijaNimi: string
+//   oppijaOid: string
+//   tutkintoNimi: string
+//   osaamisalaNimi: string
+//   voimassaoloAlku: string
+//   voimassaoloLoppu: string
+//   osaamisenOsoittaminen?: IOsaamisenOsoittaminen[]
+//   osaamisenHankkimistapa?: IOsaamisenHankkimistapa[]
+//   tutkinnonosaTyyppi: string
+// }
 
 export const fetchLinks = async function(
   moduleId: string,
@@ -137,28 +137,27 @@ export const removeLink = async function({
   }
 }
 
-export const fetchLink = async function(
-  uuid: string,
-  apiConfig: APIConfig
-): Promise<LinkInfo> {
-  const { apiUrl, apiPrefix } = apiConfig
-  const { fetchSingle } = getEnv<StoreEnvironment>(self)
+// export const fetchLink = async function(
+//   uuid: string,
+//   apiConfig: APIConfig
+// ): Promise<LinkInfo> {
+//   const { apiUrl, apiPrefix } = apiConfig
+//   const { fetchSingle } = getEnv<StoreEnvironment>(self)
 
-  const response = fetchSingle(apiUrl(`${apiPrefix}/jaot/jakolinkit/${uuid}`), {
-    credentials: "include"
-  })
-  return response
+//   const response = fetchSingle(apiUrl(`${apiPrefix}/jaot/jakolinkit/${uuid}`), {
+//     credentials: "include"
+//   })
 
-  // const json: { BackendLinkInfo } = await response
-  // return {
-  //   oppijaNimi: json.data["oppija-nimi"],
-  //   oppijaOid: json.data["oppija-oid"],
-  //   tutkintoNimi: json.data["tutkinto-nimi"],
-  //   osaamisalaNimi: json.data["osaamisala-nimi"],
-  //   voimassaoloAlku: json.data["voimassaolo-alku"],
-  //   voimassaoloLoppu: json.data["voimassaolo-loppu"],
-  //   osaamisenOsoittaminen: json.data["osaamisen-osoittaminen"],
-  //   osaamisenHankkimistapa: json.data["osaamisen-hankkimistapa"],
-  //   tutkinnonosaTyyppi: json.data["tutkinnonosa-tyyppi"]
-  // }
-}
+//   // const json: { BackendLinkInfo } = await response
+//   // return {
+//   //   oppijaNimi: json.data["oppija-nimi"],
+//   //   oppijaOid: json.data["oppija-oid"],
+//   //   tutkintoNimi: json.data["tutkinto-nimi"],
+//   //   osaamisalaNimi: json.data["osaamisala-nimi"],
+//   //   voimassaoloAlku: json.data["voimassaolo-alku"],
+//   //   voimassaoloLoppu: json.data["voimassaolo-loppu"],
+//   //   osaamisenOsoittaminen: json.data["osaamisen-osoittaminen"],
+//   //   osaamisenHankkimistapa: json.data["osaamisen-hankkimistapa"],
+//   //   tutkinnonosaTyyppi: json.data["tutkinnonosa-tyyppi"]
+//   // }
+// }
