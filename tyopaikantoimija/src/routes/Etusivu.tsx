@@ -1,10 +1,10 @@
-import { RouteComponentProps, Router } from "@reach/router"
+import { RouteComponentProps } from "@reach/router"
 import { Container } from "components/Container"
 import { ContentContainer } from "components/ContentContainer"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage } from "react-intl"
-import { IRootStore } from "stores/RootStore"
+import { ITyopaikanToimijaStore } from "../stores/TyopaikanToimijaStore"
 import styled from "styled"
 import { ShareLinkInfo } from "components/ShareLinkInfo"
 
@@ -18,13 +18,21 @@ const Header = styled("h1")`
 `
 export interface EtusivuProps extends RouteComponentProps {
   uuid?: string
+  store?: ITyopaikanToimijaStore
 }
 
+@inject("store")
 @observer
 export class Etusivu extends React.Component<EtusivuProps> {
-  render() {
-    const { uuid } = this.props
+  componentDidMount() {
+    const { store, uuid } = this.props
 
+    if (uuid) {
+      store!.share.fetchShareData(uuid)
+    }
+  }
+
+  render() {
     return (
       <Container>
         <Header>
@@ -34,7 +42,7 @@ export class Etusivu extends React.Component<EtusivuProps> {
           />
         </Header>
         <ContentContainer>
-          <ShareLinkInfo uuid={uuid} />
+          <ShareLinkInfo share={this.props.store!.share} />
         </ContentContainer>
       </Container>
     )

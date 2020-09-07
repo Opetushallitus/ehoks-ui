@@ -11,13 +11,13 @@ import { addLocaleData } from "react-intl"
 import fi from "react-intl/locale-data/fi"
 import sv from "react-intl/locale-data/sv"
 import { App } from "./routes/App"
-import { RootStore } from "./stores/RootStore"
+import { TyopaikanToimijaStore } from "./stores/TyopaikanToimijaStore"
 
 // load finnish & swedish locale data (currency units, separators etc.)
 addLocaleData([...fi, ...sv])
 
 // pass fetch utils to RootStore using MST's environment context, so we can easily mock it in tests
-const store = RootStore.create(
+const store = TyopaikanToimijaStore.create(
   {},
   createEnvironment(fetch, apiUrl, apiPrefix, callerId)
 )

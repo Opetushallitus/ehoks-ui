@@ -137,27 +137,29 @@ export const removeLink = async function({
   }
 }
 
-// export const fetchLink = async function(
-//   uuid: string,
-//   apiConfig: APIConfig
-// ): Promise<LinkInfo> {
-//   const { apiUrl, apiPrefix } = apiConfig
-//   const { fetchSingle } = getEnv<StoreEnvironment>(self)
+export const fetchLink = async function(
+  uuid: string,
+  apiConfig: APIConfig
+): Promise<LinkInfo> {
+  const { apiUrl, apiPrefix } = apiConfig
 
-//   const response = fetchSingle(apiUrl(`${apiPrefix}/jaot/jakolinkit/${uuid}`), {
-//     credentials: "include"
-//   })
+  const response = await window.fetch(
+    apiUrl(`${apiPrefix}/jaot/jakolinkit/${uuid}`),
+    {
+      credentials: "include"
+    }
+  )
 
-//   // const json: { BackendLinkInfo } = await response
-//   // return {
-//   //   oppijaNimi: json.data["oppija-nimi"],
-//   //   oppijaOid: json.data["oppija-oid"],
-//   //   tutkintoNimi: json.data["tutkinto-nimi"],
-//   //   osaamisalaNimi: json.data["osaamisala-nimi"],
-//   //   voimassaoloAlku: json.data["voimassaolo-alku"],
-//   //   voimassaoloLoppu: json.data["voimassaolo-loppu"],
-//   //   osaamisenOsoittaminen: json.data["osaamisen-osoittaminen"],
-//   //   osaamisenHankkimistapa: json.data["osaamisen-hankkimistapa"],
-//   //   tutkinnonosaTyyppi: json.data["tutkinnonosa-tyyppi"]
-//   // }
-// }
+  const json: { BackendLinkInfo } = await response
+  return {
+    oppijaNimi: json.data["oppija-nimi"],
+    oppijaOid: json.data["oppija-oid"],
+    tutkintoNimi: json.data["tutkinto-nimi"],
+    osaamisalaNimi: json.data["osaamisala-nimi"],
+    voimassaoloAlku: json.data["voimassaolo-alku"],
+    voimassaoloLoppu: json.data["voimassaolo-loppu"],
+    osaamisenOsoittaminen: json.data["osaamisen-osoittaminen"],
+    osaamisenHankkimistapa: json.data["osaamisen-hankkimistapa"],
+    tutkinnonosaTyyppi: json.data["tutkinnonosa-tyyppi"]
+  }
+}

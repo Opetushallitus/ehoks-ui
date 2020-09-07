@@ -14,7 +14,7 @@ import { AppFooter } from "routes/App/AppFooter"
 import { AppHeader } from "routes/App/AppHeader"
 import { GlobalStyles } from "routes/App/globalStyles"
 import { Etusivu } from "routes/Etusivu"
-import { IRootStore } from "stores/RootStore"
+import { ITyopaikanToimijaStore } from "stores/TyopaikanToimijaStore"
 import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 
@@ -41,7 +41,7 @@ const MainApp = (_: RouteComponentProps) => (
 )
 
 export interface AppProps {
-  store?: IRootStore
+  store?: ITyopaikanToimijaStore
 }
 
 @inject("store")
