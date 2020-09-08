@@ -39,7 +39,8 @@ export const EnvironmentStore = types
           opintopolkuLoginUrlSv,
           opintopolkuLogoutUrlFi,
           opintopolkuLogoutUrlSv,
-          virkailijaLoginUrl
+          virkailijaLoginUrl,
+          casOppijaLoginUrl
         } = response.data
         self.eperusteetPerusteUrl = eperusteetPerusteUrl
         self.opintopolkuLoginUrlFi = devBackendWithoutHost(
@@ -55,6 +56,7 @@ export const EnvironmentStore = types
           opintopolkuLogoutUrlSv
         )
         self.virkailijaLoginUrl = virkailijaLoginUrl
+        self.casOppijaLoginUrl = casOppijaLoginUrl
       } catch (error) {
         errors.logError("EnvironmentStore.getEnvironment", error.message)
       }
