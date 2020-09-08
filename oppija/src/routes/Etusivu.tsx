@@ -145,7 +145,7 @@ export class Etusivu extends React.Component<EtusivuProps> {
     event.preventDefault()
     const store = this.props.store
     const { featureFlags } = this.context
-    this.props.store!.session.resetUserDidLogout()
+    store!.session.resetUserDidLogout()
 
     if (featureFlags.casOppija) {
       if (store!.session.isLoggedIn) {
@@ -153,9 +153,9 @@ export class Etusivu extends React.Component<EtusivuProps> {
       }
     } else {
       window.location.href =
-        this.props.store!.translations.activeLocale === Locale.SV
-          ? this.props.store!.environment.opintopolkuLoginUrlSv
-          : this.props.store!.environment.opintopolkuLoginUrlFi
+        store!.translations.activeLocale === Locale.SV
+          ? store!.environment.opintopolkuLoginUrlSv
+          : store!.environment.opintopolkuLoginUrlFi
     }
   }
 
