@@ -44,7 +44,7 @@ export class Etusivu extends React.Component<EtusivuProps> {
           />
         </Header>
         <ContentContainer>
-          <ShareLinkInfo share={store!.share.share} />
+          <ShareLinkInfo share={store!.share.shareData} />
         </ContentContainer>
       </Container>
     )

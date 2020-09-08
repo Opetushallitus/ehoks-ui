@@ -1,8 +1,8 @@
 import { flow, getEnv, types } from "mobx-state-tree"
 import { APIResponse } from "types/APIResponse"
 import { StoreEnvironment } from "types/StoreEnvironment"
-import { OsaamisenOsoittaminen } from "../../../shared/models/OsaamisenOsoittaminen"
-import { OsaamisenHankkimistapa } from "../../../shared/models/OsaamisenHankkimistapa"
+import { OsaamisenOsoittaminen } from "models/OsaamisenOsoittaminen"
+import { OsaamisenHankkimistapa } from "models/OsaamisenHankkimistapa"
 
 export const Share = types.model("Share", {
   oppijaNimi: types.optional(types.string, ""),
@@ -15,7 +15,7 @@ export const Share = types.model("Share", {
 })
 
 export const ShareStoreModel = {
-  share: types.optional(Share, {})
+  shareData: types.optional(Share, {})
 }
 
 export const ShareStore = types
@@ -31,7 +31,7 @@ export const ShareStore = types
           apiUrl(`${apiPrefix}/jaot/jakolinkit/${shareUuid}`),
           { headers: callerId(), credentials: "include" }
         )
-        self.share = response.data
+        self.shareData = response.data
       } catch (error) {
         errors.logError(
           "ShareSTore.fetchShareData",
