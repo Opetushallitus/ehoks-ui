@@ -6,7 +6,7 @@ import { TranslationStore } from "stores/TranslationStore"
 import { ShareStore } from "stores/ShareStore"
 
 export interface InjectedStores {
-  store: ITyopaikanToimijaStore
+  store: IRootStore
 }
 
 const TyopaikanToimijaStoreModel = {
@@ -25,4 +25,4 @@ export const TyopaikanToimijaStore = types
     }
   }))
 
-export type ITyopaikanToimijaStore = Instance<typeof TyopaikanToimijaStore>
+export type IRootStore = Instance<typeof TyopaikanToimijaStore>

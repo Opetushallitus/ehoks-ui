@@ -4,9 +4,9 @@ import { ContentContainer } from "components/ContentContainer"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage } from "react-intl"
-import { ITyopaikanToimijaStore } from "../stores/TyopaikanToimijaStore"
 import styled from "styled"
 import { ShareLinkInfo } from "components/ShareLinkInfo"
+import { IRootStore } from "../stores/TyopaikanToimijaStore"
 
 const Header = styled("h1")`
   margin: 30px 50px 30px 40px;
@@ -18,7 +18,7 @@ const Header = styled("h1")`
 `
 export interface EtusivuProps extends RouteComponentProps {
   uuid?: string
-  store?: ITyopaikanToimijaStore
+  store: IRootStore
 }
 
 @inject("store")
