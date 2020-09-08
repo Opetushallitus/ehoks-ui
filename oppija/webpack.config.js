@@ -29,6 +29,7 @@ module.exports = {
     inline: true,
     proxy: {
       "/auth-dev": "http://localhost:3000",
+      "/cas-oppija": "http://localhost:3000",
       "/ehoks-oppija-backend": "http://localhost:3000"
     }
   },
