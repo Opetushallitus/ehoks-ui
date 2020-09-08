@@ -148,7 +148,7 @@ export class Etusivu extends React.Component<EtusivuProps> {
     store!.session.resetUserDidLogout()
 
     if (featureFlags.casOppija) {
-      if (store!.session.isLoggedIn) {
+      if (!store!.session.isLoggedIn) {
         window.location.href = store!.environment.casOppijaLoginUrl
       }
     } else {
