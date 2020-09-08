@@ -3,22 +3,11 @@ import { FormattedMessage } from "react-intl"
 import { Container } from "components/Container"
 import { OsaamisenHankkimistapa } from "components/TutkinnonOsa/OsaamisenHankkimistapa"
 import { OsaamisenOsoittaminen } from "components/TutkinnonOsa/OsaamisenOsoittaminen"
-// import { ShareStoreModel } from
-// "../../tyopaikantoimija/src/stores/ShareStore"
 import { Share } from "../../tyopaikantoimija/src/stores/ShareStore"
 import { Instance } from "mobx-state-tree"
 
 interface ShareLinkInfoProps {
   share: Instance<typeof Share>
-  //   {
-  //     oppijaNimi?: string
-  //     oppijaOid?: string
-  //     tutkintoNimi?: string
-  //     voimassaoloAlku?: string
-  //     voimassaoloLoppu?: string
-  //     osaamisenOsoittaminen?: OsaamisenOsoittaminen[]
-  //     osaamisenHankkimistapa?: OsaamisenHankkimistapa[]
-  //   }
 }
 
 export function ShareLinkInfo(props: ShareLinkInfoProps) {

@@ -33,6 +33,8 @@ export class Etusivu extends React.Component<EtusivuProps> {
   }
 
   render() {
+    const { store } = this.props
+
     return (
       <Container>
         <Header>
@@ -42,7 +44,7 @@ export class Etusivu extends React.Component<EtusivuProps> {
           />
         </Header>
         <ContentContainer>
-          <ShareLinkInfo share={this.props.store!.share} />
+          <ShareLinkInfo share={store!.share.share} />
         </ContentContainer>
       </Container>
     )
