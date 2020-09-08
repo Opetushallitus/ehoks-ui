@@ -8,7 +8,7 @@ import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 import ehoksLogo from "./ehoks_logo.png"
 import { LinkButton } from "components/Button"
-import { ITyopaikanToimijaStore } from "stores/TyopaikanToimijaStore"
+import { IRootStore } from "../../stores/RootStore"
 
 interface TopLinkProps {
   active?: boolean
@@ -155,7 +155,7 @@ const LanguageSelector = styled("div")<LanguageSelectorProps>`
 `
 
 interface AppHeaderProps {
-  store?: ITyopaikanToimijaStore
+  store?: IRootStore
 }
 
 interface AppHeaderState {

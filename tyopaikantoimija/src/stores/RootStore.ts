@@ -9,7 +9,7 @@ export interface InjectedStores {
   store: IRootStore
 }
 
-const TyopaikanToimijaStoreModel = {
+const RootStoreModel = {
   environment: types.optional(EnvironmentStore, {}),
   isLoading: false,
   session: types.optional(SessionStore, {}),
@@ -17,12 +17,12 @@ const TyopaikanToimijaStoreModel = {
   share: types.optional(ShareStore, {})
 }
 
-export const TyopaikanToimijaStore = types
-  .model("TyopaikanToimijaStore", TyopaikanToimijaStoreModel)
+export const RootStore = types
+  .model("RootStore", RootStoreModel)
   .views(self => ({
     get errors(): IErrorStore {
       return getEnv(self).errors
     }
   }))
 
-export type IRootStore = Instance<typeof TyopaikanToimijaStore>
+export type IRootStore = Instance<typeof RootStore>
