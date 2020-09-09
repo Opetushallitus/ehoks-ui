@@ -47,7 +47,6 @@ export const ShareStore = types
           apiUrl(`${apiPrefix}/jaot/jakolinkit/${shareUuid}`),
           { headers: callerId(), credentials: "include" }
         )
-        console.log(response.data)
         self.shareData = response.data
       } catch (error) {
         errors.logError(
