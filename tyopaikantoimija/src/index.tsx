@@ -26,8 +26,12 @@ store.translations.fetchLocales()
 
 const apiConfig = { apiUrl, apiPrefix }
 const appContext = {
-  app: "tyopaikantoimija",
-  featureFlags: { shareDialog: false, shareNotifications: false }
+  app: "oppija",
+  featureFlags: {
+    shareDialog: false,
+    shareNotifications: false,
+    casOppija: false
+  }
 }
 
 // initial render to app container

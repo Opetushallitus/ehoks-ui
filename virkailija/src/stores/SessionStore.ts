@@ -1,6 +1,5 @@
 import { withQueryString } from "fetchUtils"
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
-import { APIResponse } from "types/APIResponse"
 import { IOrganisation, OrganisationModel } from "types/Organisation"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
@@ -32,25 +31,10 @@ export const SessionStore = types
       apiUrl,
       fetchSingle,
       fetchCollection,
-      fetch,
       deleteResource,
       errors,
       callerId
     } = getEnv<StoreEnvironment>(self)
-
-    const login = flow(function*(url: string): any {
-      self.isLoading = true
-      try {
-        const response: APIResponse = yield fetch(url, {
-          mode: "no-cors",
-          headers: callerId()
-        })
-        self.user = response.data
-      } catch (error) {
-        self.error = error.message
-      }
-      self.isLoading = false
-    })
 
     const checkSession = flow(function*(): any {
       self.isLoading = true
@@ -119,7 +103,6 @@ export const SessionStore = types
 
     return {
       checkSession,
-      login,
       logout,
       resetUserDidLogout,
       changeSelectedOrganisationOid
