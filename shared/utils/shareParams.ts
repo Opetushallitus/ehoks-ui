@@ -52,19 +52,17 @@ export const stringifyShareParams = ({
     hoksEid
   })
 
-export function parseLinkUuid(
+export const parseLinkUuid = (
   location: WindowLocation | undefined
 ): {
   link: {
     uuid: string | undefined
   }
-} {
-  return {
-    link: {
-      uuid:
-        location && typeof location.pathname.split("/").pop() === "string"
-          ? location.pathname.split("/").pop()
-          : ""
-    }
+} => ({
+  link: {
+    uuid:
+      location && typeof location.pathname.split("/").pop() === "string"
+        ? location.pathname.split("/").pop()
+        : ""
   }
-}
+})
