@@ -1,11 +1,5 @@
 import { APIConfig } from "components/APIConfigContext"
 import { TutkinnonOsaType } from "../../models/helpers/ShareTypes"
-// import { getEnv } from "mobx-state-tree"
-// import { StoreEnvironment } from "types/StoreEnvironment"
-// import {
-//   IOsaamisenHankkimistapa,
-//   IOsaamisenOsoittaminen
-// } from "models/helpers/TutkinnonOsa"
 
 interface BackendShareLink {
   "share-id": string
@@ -21,31 +15,6 @@ export interface ShareLink {
   validTo: string
   type: string
 }
-
-// interface BackendLinkInfo {
-//   "oppija-nimi": string
-//   "oppija-oid": string
-//   "tutkinto-nimi": string
-//   "osaamisala-nimi": string
-//   "voimassaolo-alku": string
-//   "voimassaolo-loppu": string
-//   "osaamisen-osoittaminen"?: IOsaamisenOsoittaminen[]
-//   "osaamisen-hankkimistapa"?: IOsaamisenHankkimistapa[]
-//   "tutkinnonosa-tyyppi": string
-// }
-
-// export interface LinkInfo {
-//   oppijaNimi: string
-//   oppijaOid: string
-//   tutkintoNimi: string
-//   osaamisalaNimi: string
-//   voimassaoloAlku: string
-//   voimassaoloLoppu: string
-//   osaamisenOsoittaminen?: IOsaamisenOsoittaminen[]
-//   osaamisenHankkimistapa?: IOsaamisenHankkimistapa[]
-//   tutkinnonosaTyyppi: string
-// }
-
 export const fetchLinks = async function(
   moduleId: string,
   apiConfig: APIConfig
@@ -134,32 +103,5 @@ export const removeLink = async function({
 
   if (!response.ok) {
     throw new Error(response.statusText)
-  }
-}
-
-export const fetchLink = async function(
-  uuid: string,
-  apiConfig: APIConfig
-): Promise<LinkInfo> {
-  const { apiUrl, apiPrefix } = apiConfig
-
-  const response = await window.fetch(
-    apiUrl(`${apiPrefix}/jaot/jakolinkit/${uuid}`),
-    {
-      credentials: "include"
-    }
-  )
-
-  const json: { BackendLinkInfo } = await response
-  return {
-    oppijaNimi: json.data["oppija-nimi"],
-    oppijaOid: json.data["oppija-oid"],
-    tutkintoNimi: json.data["tutkinto-nimi"],
-    osaamisalaNimi: json.data["osaamisala-nimi"],
-    voimassaoloAlku: json.data["voimassaolo-alku"],
-    voimassaoloLoppu: json.data["voimassaolo-loppu"],
-    osaamisenOsoittaminen: json.data["osaamisen-osoittaminen"],
-    osaamisenHankkimistapa: json.data["osaamisen-hankkimistapa"],
-    tutkinnonosaTyyppi: json.data["tutkinnonosa-tyyppi"]
   }
 }

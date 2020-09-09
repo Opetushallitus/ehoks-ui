@@ -1,53 +1,89 @@
 import React from "react"
 import { FormattedMessage } from "react-intl"
 import { Container } from "components/Container"
-import { OsaamisenHankkimistapa } from "components/TutkinnonOsa/OsaamisenHankkimistapa"
-import { OsaamisenOsoittaminen } from "components/TutkinnonOsa/OsaamisenOsoittaminen"
 import { Share } from "../../tyopaikantoimija/src/stores/ShareStore"
 import { Instance } from "mobx-state-tree"
+import { TutkinnonOsa } from "components/TutkinnonOsa"
+import { StudiesContainer } from "components/StudiesContainer"
+import { FormattedDate } from "components/FormattedDate"
+import styled from "styled"
 
 interface ShareLinkInfoProps {
   share: Instance<typeof Share>
 }
 
+const ShareTitle = styled("h1")`
+  margin: 0 0 16px 0;
+`
+
+const ShareSubTitle = styled("h2")`
+  margin: 0 0 16px 0;
+`
+
 export function ShareLinkInfo(props: ShareLinkInfoProps) {
   const { share } = props
-
-  const showOsaamisenHankkimiset = () => {
-    if (share.osaamisenHankkimistapa) {
-      share.osaamisenHankkimistapa.map((osaamisenHankkiminen, i) => (
-        <OsaamisenHankkimistapa
-          key={i}
-          osaamisenHankkimistapa={osaamisenHankkiminen}
-        />
-      ))
-    }
-  }
-
-  const showOsaamisenOsoittamiset = () => {
-    if (share.osaamisenOsoittaminen) {
-      share.osaamisenOsoittaminen.map((naytto, i) => (
-        <OsaamisenOsoittaminen key={i} osaamisenOsoittaminen={naytto} />
-      ))
-    }
-  }
 
   return (
     <React.Fragment>
       <Container>
-        <FormattedMessage
-          id="tyopaikantoimija.testi"
-          defaultMessage="Oma komponentti"
-        />
-        <FormattedMessage
-          id="tyopaikantoimija.LinkinPvm"
-          defaultMessage="Jaetun linkin pvm on: {pvm}"
-          values={{
-            pvm: share.oppijaNimi ? share.oppijaNimi : "ei päivää"
-          }}
-        />
-        {showOsaamisenHankkimiset()}
-        {showOsaamisenOsoittamiset()}
+        <Container>
+          <ShareTitle>
+            <FormattedMessage
+              id="tyopaikantoimija.oppijanTiedot"
+              defaultMessage="{nimi}, {tutkintoNimi} "
+              values={{
+                nimi: share.oppijaNimi ? share.oppijaNimi : "ei nimeä",
+                tutkintoNimi: share.tutkintoNimi.fi
+                  ? share.tutkintoNimi.fi
+                  : "ei tutkinnon nimeä"
+              }}
+            />
+          </ShareTitle>
+        </Container>
+        <Container>
+          <ShareSubTitle>
+            <FormattedMessage
+              id="tyopaikantoimija.linkinTiedot"
+              defaultMessage="Työpaikalla oppimisen tiedot on jaettuna sinulle
+            {voimassaoloAlku}-{voimassaoloLoppu} "
+              values={{
+                voimassaoloAlku: share.voimassaoloAlku ? (
+                  <FormattedDate date={share.voimassaoloAlku} />
+                ) : (
+                  "ei alkupäivämäärää"
+                ),
+                voimassaoloLoppu: share.voimassaoloLoppu ? (
+                  <FormattedDate date={share.voimassaoloLoppu} />
+                ) : (
+                  "ei loppupäivämäärää"
+                )
+              }}
+            />
+          </ShareSubTitle>
+        </Container>
+        <Container>
+          {(share.osaamisenHankkimistapa || share.osaamisenOsoittaminen) && (
+            <StudiesContainer>
+              <TutkinnonOsa
+                accentColor="scheduled"
+                title={"Tähän tarvitaan otsikko"}
+                moduleId={share.tutkinnonosa?.moduleId}
+                share={{ moduleId: share.tutkinnonosa?.moduleId }}
+                koodiUri={share.tutkinnonosa?.tutkinnonOsaKoodiUri}
+                osaamisenHankkimistavat={
+                  share.osaamisenHankkimistapa
+                    ? [share.osaamisenHankkimistapa]
+                    : []
+                }
+                osaamisenOsoittamiset={
+                  share.osaamisenOsoittaminen
+                    ? [share.osaamisenOsoittaminen]
+                    : []
+                }
+              />
+            </StudiesContainer>
+          )}
+        </Container>
       </Container>
     </React.Fragment>
   )
