@@ -23,12 +23,12 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
       errors,
       fetchSingle,
       fetchCollection,
-      callerId
+      appendCallerId
     } = getEnv<StoreEnvironment>(self)
 
     const getTutkinnonOsaFromEPerusteet = (code: string) =>
       fetchSingle(apiUrl(`${apiPrefix}/external/eperusteet/${code}`), {
-        headers: callerId()
+        headers: appendCallerId()
       })
 
     const fetchTutkinnonOsa = flow(function*(koodiUri: string): any {
@@ -52,7 +52,7 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
           `${apiPrefix}/external/eperusteet/tutkinnonosat/${tutkinnonOsaId}/osaalueet`
         ),
         {
-          headers: callerId()
+          headers: appendCallerId()
         }
       )
 

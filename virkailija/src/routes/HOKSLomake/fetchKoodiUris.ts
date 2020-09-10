@@ -1,12 +1,12 @@
 import { koodistoUrls } from "./formConfig"
 import { buildKoodiUris, mapKoodiUri } from "./helpers/helpers"
-import { callerId } from "fetchUtils"
+import { appendCallerId } from "fetchUtils"
 
 export async function fetchKoodiUris() {
   const requests = await Promise.all(
     Object.keys(koodistoUrls).map(async (key: keyof typeof koodistoUrls) => {
       const json = await window
-        .fetch(koodistoUrls[key], { headers: callerId() })
+        .fetch(koodistoUrls[key], { headers: appendCallerId() })
         .then(r => r.json())
       return {
         key,

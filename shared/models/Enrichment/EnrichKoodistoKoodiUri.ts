@@ -21,7 +21,7 @@ export const EnrichKoodistoKoodiUri = (
     // when assigning to self[enrichedField]
     .volatile((): DynamicObject => ({}))
     .actions(self => {
-      const { apiUrl, apiPrefix, errors, fetchSingle, callerId } = getEnv<
+      const { apiUrl, apiPrefix, errors, fetchSingle, appendCallerId } = getEnv<
         StoreEnvironment
       >(self)
 
@@ -38,7 +38,7 @@ export const EnrichKoodistoKoodiUri = (
 
       const getFromKoodistoService = (koodiUri: string) =>
         fetchSingle(apiUrl(`${apiPrefix}/external/koodisto/${koodiUri}`), {
-          headers: callerId()
+          headers: appendCallerId()
         })
 
       const parseResponse = (data: any) =>

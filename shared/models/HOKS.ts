@@ -79,14 +79,14 @@ export const HOKS = types
       errors,
       fetchCollection,
       fetchSingle,
-      callerId
+      appendCallerId
     } = getEnv<StoreEnvironment>(self)
 
     // fetches detailed HOKS, only needed in virkailija app
     const fetchDetails = flow(function*(): any {
       const response: APIResponse = yield fetchSingle(
         apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}`),
-        { headers: callerId() }
+        { headers: appendCallerId() }
       )
       const keys = Object.keys(response.data)
       keys.forEach(key => {
@@ -101,7 +101,7 @@ export const HOKS = types
         apiUrl(
           `${apiPrefix}/external/eperusteet/tutkinnot?diaarinumero=${diaarinumero}`
         ),
-        { headers: callerId() }
+        { headers: appendCallerId() }
       )
       const { id, suoritustavat } = response.data
       const suoritustapa = suoritustavat.reduce(
@@ -131,7 +131,7 @@ export const HOKS = types
             suoritustapa === "reformi" ? "rakenne" : "tutkinnonosat"
           }`
         ),
-        { headers: callerId() }
+        { headers: appendCallerId() }
       )
       return response.data
     })
@@ -150,7 +150,7 @@ export const HOKS = types
       try {
         const response = yield fetchCollection(
           apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/opiskeluoikeudet`),
-          { headers: callerId() }
+          { headers: appendCallerId() }
         )
         const opiskeluOikeudet: APIResponse = response.data || []
         const opiskeluOikeus = find(
