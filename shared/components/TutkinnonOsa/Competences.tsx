@@ -136,10 +136,18 @@ export class Competences extends React.Component<CompetencesProps> {
             <CollapseContainer data-testid="TutkinnonOsa.Competences.CollapseContainer">
               <CollapseHeaderContainer>
                 <CollapseHeader>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.ammattitaitovaatimuksetTitle"
-                    defaultMessage="Ammattitaitovaatimukset"
-                  />
+                  {tutkinnonOsaTyyppi ===
+                  TutkinnonOsaType.HankittavanYhteisenTutkinnonOsanOsaAlue ? (
+                    <FormattedMessage
+                      id="opiskelusuunnitelma.osaamistavoitteetTitle"
+                      defaultMessage="Osaamistavoitteet"
+                    />
+                  ) : (
+                    <FormattedMessage
+                      id="opiskelusuunnitelma.ammattitaitovaatimuksetTitle"
+                      defaultMessage="Ammattitaitovaatimukset"
+                    />
+                  )}
                 </CollapseHeader>
                 <ToggleAllTitle onClick={allExpanded ? collapseAll : expandAll}>
                   {allExpanded ? (
