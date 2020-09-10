@@ -18,7 +18,7 @@ const EnvironmentStoreModel = {
 export const EnvironmentStore = types
   .model("EnvironmentStore", EnvironmentStoreModel)
   .actions(self => {
-    const { apiUrl, fetchSingle, fetch, errors, callerId } = getEnv<
+    const { apiUrl, fetchSingle, fetch, errors, appendCallerId } = getEnv<
       StoreEnvironment
     >(self)
 
@@ -27,7 +27,7 @@ export const EnvironmentStore = types
       try {
         const response: APIResponse = yield fetchSingle(
           apiUrl("misc/environment"),
-          { headers: callerId() }
+          { headers: appendCallerId() }
         )
         const { virkailijaLoginUrl, raamitUrl } = response.data
         self.virkailijaLoginUrl = devBackendWithoutHost(virkailijaLoginUrl)

@@ -21,7 +21,7 @@ export const EnrichOrganisaatioOid = (
     // when assigning to self[dynamicKey]
     .volatile((): DynamicObject => ({}))
     .actions(self => {
-      const { apiUrl, apiPrefix, errors, fetchSingle, callerId } = getEnv<
+      const { apiUrl, apiPrefix, errors, fetchSingle, appendCallerId } = getEnv<
         StoreEnvironment
       >(self)
 
@@ -40,7 +40,7 @@ export const EnrichOrganisaatioOid = (
         fetchSingle(
           apiUrl(`${apiPrefix}/external/organisaatio/${organisaatioOid}`),
           {
-            headers: callerId()
+            headers: appendCallerId()
           }
         )
 

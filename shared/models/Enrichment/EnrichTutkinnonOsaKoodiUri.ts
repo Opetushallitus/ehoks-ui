@@ -15,13 +15,13 @@ export const EnrichTutkinnonOsaKoodiUri = types
   // when assigning to self[dynamicKey]
   .volatile((): DynamicObject => ({}))
   .actions(self => {
-    const { apiUrl, apiPrefix, errors, fetchSingle, callerId } = getEnv<
+    const { apiUrl, apiPrefix, errors, fetchSingle, appendCallerId } = getEnv<
       StoreEnvironment
     >(self)
 
     const getFromEPerusteetService = (code: string) =>
       fetchSingle(apiUrl(`${apiPrefix}/external/eperusteet/${code}`), {
-        headers: callerId()
+        headers: appendCallerId()
       })
 
     const fetchEPerusteet = flow(function*(koodiUri: string): any {
