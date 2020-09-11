@@ -56,7 +56,7 @@ export const EnvironmentStore = types
           opintopolkuLogoutUrlSv
         )
         self.virkailijaLoginUrl = virkailijaLoginUrl
-        self.casOppijaLoginUrl = casOppijaLoginUrl
+        self.casOppijaLoginUrl = devBackendWithoutHost(casOppijaLoginUrl)
       } catch (error) {
         errors.logError("EnvironmentStore.getEnvironment", error.message)
       }
