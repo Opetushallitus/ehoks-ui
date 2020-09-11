@@ -23,6 +23,9 @@ switch (siteDomain) {
   case "testiopintopolku.fi":
     piwikSiteId = 23
     break
+  case "testistudieinfo.fi":
+    piwikSiteId = 23
+    break
   default:
     piwikSiteId = "" // Kehitys
 }
