@@ -1,5 +1,6 @@
 import { APIConfig } from "components/APIConfigContext"
 import { TutkinnonOsaType } from "../../models/helpers/ShareTypes"
+import { appendCallerId } from "../../fetchUtils"
 
 interface BackendShareLink {
   "share-id": string
@@ -24,6 +25,7 @@ export const fetchLinks = async function(
   const response = await window.fetch(
     apiUrl(`${apiPrefix}/jaot/moduulit/${moduleId}`),
     {
+      headers: appendCallerId(),
       credentials: "include"
     }
   )
@@ -62,9 +64,11 @@ export const createLink = async function({
   const response = await window.fetch(apiUrl(`${apiPrefix}/jaot/jakolinkit`), {
     credentials: "include",
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: appendCallerId(
+      new Headers({
+        "Content-Type": "application/json"
+      })
+    ),
     body: JSON.stringify({
       "tutkinnonosa-module-uuid": tutkinnonOsaModuleId,
       "tutkinnonosa-tyyppi": tutkinnonOsaTyyppi,
@@ -96,9 +100,11 @@ export const removeLink = async function({
     {
       credentials: "include",
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      }
+      headers: appendCallerId(
+        new Headers({
+          "Content-Type": "application/json"
+        })
+      )
     }
   )
 

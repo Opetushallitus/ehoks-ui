@@ -35,7 +35,7 @@ export const Oppija = types
     henkilotiedot: types.optional(SessionUser, { surname: "" })
   })
   .actions(self => {
-    const { fetchCollection, fetchSingle, apiUrl, callerId } = getEnv<
+    const { fetchCollection, fetchSingle, apiUrl, appendCallerId } = getEnv<
       StoreEnvironment
     >(self)
 
@@ -43,7 +43,7 @@ export const Oppija = types
     const fetchSuunnitelmat = flow(function*(): any {
       const response: APIResponse = yield fetchCollection(
         apiUrl(`virkailija/oppijat/${self.oid}/hoksit`),
-        { headers: callerId() }
+        { headers: appendCallerId() }
       )
 
       // NOTE: This node might get detached (destroyed) if user navigates
@@ -62,7 +62,7 @@ export const Oppija = types
     const fetchHenkilotiedot = flow(function*(): any {
       const response: APIResponse = yield fetchSingle(
         apiUrl(`virkailija/oppijat/${self.oid}`),
-        { headers: callerId() }
+        { headers: appendCallerId() }
       )
       const { oid, nimi } = response.data
       // NOTE: This node might get detached (destroyed) if user navigates
@@ -159,7 +159,9 @@ const Search = types
     }
   }))
   .actions(self => {
-    const { fetchCollection, apiUrl, callerId } = getEnv<StoreEnvironment>(self)
+    const { fetchCollection, apiUrl, appendCallerId } = getEnv<
+      StoreEnvironment
+    >(self)
 
     const fetchOppijat = flow(function*(): any {
       // TODO fix cross reference of stores?
@@ -196,7 +198,7 @@ const Search = types
           ...queryParams,
           ...textQueries
         }),
-        { headers: callerId() }
+        { headers: appendCallerId() }
       )
       self.results.clear()
       self.results = response.data

@@ -36,6 +36,7 @@ import { EditHOKSStyles } from "./HOKSLomake/styles"
 import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
+import { appendCallerId } from "fetchUtils"
 
 const disallowedKeys = ["eid", "manuaalisyotto", "module-id"]
 
@@ -155,10 +156,12 @@ export class MuokkaaHOKS extends React.Component<
       `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksId}`,
       {
         credentials: "include",
-        headers: {
-          Accept: "application/json; charset=utf-8",
-          "Content-Type": "application/json"
-        }
+        headers: appendCallerId(
+          new Headers({
+            Accept: "application/json; charset=utf-8",
+            "Content-Type": "application/json"
+          })
+        )
       }
     )
     const json = await request.json()
@@ -236,10 +239,12 @@ export class MuokkaaHOKS extends React.Component<
       {
         method: "PUT",
         credentials: "include",
-        headers: {
-          Accept: "application/json; charset=utf-8",
-          "Content-Type": "application/json"
-        },
+        headers: appendCallerId(
+          new Headers({
+            Accept: "application/json; charset=utf-8",
+            "Content-Type": "application/json"
+          })
+        ),
         body: JSON.stringify(trimEmptyValues(fieldProps.formData))
       }
     )

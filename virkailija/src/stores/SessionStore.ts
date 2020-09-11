@@ -33,7 +33,7 @@ export const SessionStore = types
       fetchCollection,
       deleteResource,
       errors,
-      callerId
+      appendCallerId
     } = getEnv<StoreEnvironment>(self)
 
     const checkSession = flow(function*(): any {
@@ -44,7 +44,7 @@ export const SessionStore = types
       }
       try {
         const response = yield fetchSingle(apiUrl("virkailija/session"), {
-          headers: callerId()
+          headers: appendCallerId()
         })
 
         self.user = response.data
@@ -62,7 +62,7 @@ export const SessionStore = types
           withQueryString(apiUrl("virkailija/external/organisaatio/find"), {
             ...queryParams
           }),
-          { headers: callerId() }
+          { headers: appendCallerId() }
         )
         self.organisations = organisationsData.data.map((o: IOrganisation) => ({
           nimi: o.nimi,
@@ -83,7 +83,7 @@ export const SessionStore = types
       self.isLoading = true
       try {
         yield deleteResource(apiUrl("virkailija/session"), {
-          headers: callerId()
+          headers: appendCallerId()
         })
         self.user = undefined
         self.isLoading = false

@@ -42,9 +42,13 @@ const TranslationStoreModel = {
 export const TranslationStore = types
   .model("TranslationStore", TranslationStoreModel)
   .actions(self => {
-    const { apiUrl, apiPrefix, fetchCollection, errors, callerId } = getEnv<
-      StoreEnvironment
-    >(self)
+    const {
+      apiUrl,
+      apiPrefix,
+      fetchCollection,
+      errors,
+      appendCallerId
+    } = getEnv<StoreEnvironment>(self)
 
     const setActiveLocale = (locale: Locale) => {
       const storedLocale = updateLocaleLocalStorage(locale)
@@ -58,7 +62,7 @@ export const TranslationStore = types
       try {
         const response: APIResponse = yield fetchCollection(
           apiUrl(`${apiPrefix}/external/lokalisointi`),
-          { headers: callerId() }
+          { headers: appendCallerId() }
         )
         // add custom translations from API
         self.translations.replace([
