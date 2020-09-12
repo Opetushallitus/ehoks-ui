@@ -119,7 +119,7 @@
     "map-obj": "^4.1.0",
     "mobx": "^5.15.4",
     "mobx-react": "^6.3.0",
-    "mobx-state-tree": "^3.16.0",
+    "mobx-state-tree": "^3.17.2",
     "promise-polyfill": "^8.1.3",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
