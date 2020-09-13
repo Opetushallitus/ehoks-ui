@@ -32,10 +32,8 @@ export function ShareLinkInfo(props: ShareLinkInfoProps) {
               id="tyopaikantoimija.oppijanTiedot"
               defaultMessage="{nimi}, {tutkintoNimi} "
               values={{
-                nimi: share.oppijaNimi ? share.oppijaNimi : "ei nimeä",
+                nimi: share.oppijaNimi,
                 tutkintoNimi: share.tutkintoNimi.fi
-                  ? share.tutkintoNimi.fi
-                  : "ei tutkinnon nimeä"
               }}
             />
           </ShareTitle>
@@ -47,15 +45,9 @@ export function ShareLinkInfo(props: ShareLinkInfoProps) {
               defaultMessage="Työpaikalla oppimisen tiedot on jaettuna sinulle
             {voimassaoloAlku}-{voimassaoloLoppu} "
               values={{
-                voimassaoloAlku: share.voimassaoloAlku ? (
-                  <FormattedDate date={share.voimassaoloAlku} />
-                ) : (
-                  "ei alkupäivämäärää"
-                ),
-                voimassaoloLoppu: share.voimassaoloLoppu ? (
+                voimassaoloAlku: <FormattedDate date={share.voimassaoloAlku} />,
+                voimassaoloLoppu: (
                   <FormattedDate date={share.voimassaoloLoppu} />
-                ) : (
-                  "ei loppupäivämäärää"
                 )
               }}
             />
@@ -67,7 +59,6 @@ export function ShareLinkInfo(props: ShareLinkInfoProps) {
               <TutkinnonOsa
                 accentColor="scheduled"
                 title={"Tähän tarvitaan otsikko"}
-                moduleId={share.tutkinnonosa?.moduleId}
                 share={{ moduleId: share.tutkinnonosa?.moduleId }}
                 koodiUri={share.tutkinnonosa?.tutkinnonOsaKoodiUri}
                 osaamisenHankkimistavat={
