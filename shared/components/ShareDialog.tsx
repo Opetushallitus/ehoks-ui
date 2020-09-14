@@ -219,7 +219,9 @@ export function ShareDialog(props: ShareDialogProps) {
         apiConfig
       })
       setSharedLinks(await fetchLinks(moduleId, apiConfig))
-      setCreatedUrl(`https://not.implemented.yet/jako/${createdUuid}`)
+      setCreatedUrl(
+        `${window.location.origin}/ehoks-tyopaikantoimija-ui/${createdUuid}`
+      )
     }
   }
 

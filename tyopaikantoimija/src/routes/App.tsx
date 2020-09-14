@@ -14,9 +14,9 @@ import { AppFooter } from "routes/App/AppFooter"
 import { AppHeader } from "routes/App/AppHeader"
 import { GlobalStyles } from "routes/App/globalStyles"
 import { Etusivu } from "routes/Etusivu"
-import { IRootStore } from "stores/RootStore"
 import { Locale } from "stores/TranslationStore"
 import styled from "styled"
+import { IRootStore } from "../stores/RootStore"
 
 const Container = styled("div")`
   margin: 0;
@@ -31,8 +31,8 @@ const MainApp = (_: RouteComponentProps) => (
   <Container>
     <AppHeader />
     <Main id="main" role="main">
-      <Router basepath="/ehoks-tyopaikantoimija-ui">
-        <Etusivu path="/" />
+      <Router basepath={`/ehoks-tyopaikantoimija-ui`}>
+        <Etusivu path="/:uuid" />
       </Router>
     </Main>
     <AppFooter />

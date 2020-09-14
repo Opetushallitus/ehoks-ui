@@ -8,7 +8,7 @@ import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 import ehoksLogo from "./ehoks_logo.png"
 import { LinkButton } from "components/Button"
-import { IRootStore } from "stores/RootStore"
+import { IRootStore } from "../../stores/RootStore"
 
 interface TopLinkProps {
   active?: boolean

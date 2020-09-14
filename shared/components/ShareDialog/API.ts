@@ -16,7 +16,6 @@ export interface ShareLink {
   validTo: string
   type: string
 }
-
 export const fetchLinks = async function(
   moduleId: string,
   apiConfig: APIConfig
