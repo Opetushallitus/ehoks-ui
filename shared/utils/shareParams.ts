@@ -60,9 +60,6 @@ export const parseLinkUuid = (
   }
 } => ({
   link: {
-    uuid:
-      location && typeof location.pathname.split("/").pop() === "string"
-        ? location.pathname.split("/").pop()
-        : ""
+    uuid: location?.pathname ? location.pathname.split("/").pop() : ""
   }
 })
