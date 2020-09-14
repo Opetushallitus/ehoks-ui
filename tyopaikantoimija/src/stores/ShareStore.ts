@@ -36,7 +36,7 @@ export const ShareStoreModel = {
 export const ShareStore = types
   .model("ShareStore", ShareStoreModel)
   .actions(self => {
-    const { apiUrl, apiPrefix, fetchSingle, errors, callerId } = getEnv<
+    const { apiUrl, apiPrefix, fetchSingle, errors, appendCallerId } = getEnv<
       StoreEnvironment
     >(self)
 
@@ -45,7 +45,7 @@ export const ShareStore = types
       try {
         const response: APIResponse = yield fetchSingle(
           apiUrl(`${apiPrefix}/jaot/jakolinkit/${shareUuid}`),
-          { headers: callerId(), credentials: "include" }
+          { headers: appendCallerId(), credentials: "include" }
         )
         self.shareData = response.data
       } catch (error) {
