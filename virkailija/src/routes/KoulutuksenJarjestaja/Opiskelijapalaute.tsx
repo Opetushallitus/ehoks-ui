@@ -162,7 +162,7 @@ export class Opiskelijapalaute extends React.Component<
         ) : (
           <FormattedMessage
             id="tavoitteet.opiskelijapalauteEiPalautteita"
-            defaultMessage="Ei aktiivisia palautteita"
+            defaultMessage="Ei aktiivisia vastauslinkkejä"
           />
         )}
       </Accordion>
