@@ -1,24 +1,25 @@
 import { types, Instance, getEnv, flow, getRoot } from "mobx-state-tree"
 import { AiemminHankittuAmmatillinenTutkinnonOsa } from "models/AiemminHankittuAmmatillinenTutkinnonOsa"
 import { AiemminHankittuPaikallinenTutkinnonOsa } from "models/AiemminHankittuPaikallinenTutkinnonOsa"
-import { AiemminHankittuYhteinenTutkinnonOsa } from "models/AiemminHankittuYhteinenTutkinnonOsa"
+import { AiemminHankittuYhteinenTutkinnonOsa } from "models/YhteinenTutkinnonOsa/AiemminHankittuYhteinenTutkinnonOsa"
 import { HankittavaAmmatillinenTutkinnonOsa } from "models/HankittavaAmmatillinenTutkinnonOsa"
 import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenTutkinnonOsa"
-import { HankittavaYhteinenTutkinnonOsa } from "models/HankittavaYhteinenTutkinnonOsa"
+import { HankittavaYhteinenTutkinnonOsa } from "models/YhteinenTutkinnonOsa/HankittavaYhteinenTutkinnonOsa"
 import {
   IHankittavaTutkinnonOsa,
   IAiemminHankittuTutkinnonOsa
 } from "./helpers/TutkinnonOsa"
 import flattenDeep from "lodash.flattendeep"
-import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteisenTutkinnonOsanOsaAlue"
+import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteinenTutkinnonOsa/YhteisenTutkinnonOsanOsaAlue"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { StoreEnvironment } from "types/StoreEnvironment"
-import { Opiskeluoikeus } from "models/Opiskeluoikeus"
+import { IOsaamisala, Opiskeluoikeus } from "models/Opiskeluoikeus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 import find from "lodash.find"
+import maxBy from "lodash.maxby"
 import { APIResponse } from "types/APIResponse"
 import { OpiskeluvalmiuksiaTukevatOpinnot } from "./OpiskeluvalmiuksiaTukevatOpinnot"
-import { AiemminHankitunYTOOsaAlue } from "./AiemminHankitunYTOOsaAlue"
+import { AiemminHankitunYTOOsaAlue } from "./YhteinenTutkinnonOsa/AiemminHankitunYTOOsaAlue"
 import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 import { OpiskelijapalauteTila } from "./OpiskelijapalauteTila"
 
@@ -80,14 +81,14 @@ export const HOKS = types
       errors,
       fetchCollection,
       fetchSingle,
-      callerId
+      appendCallerId
     } = getEnv<StoreEnvironment>(self)
 
     // fetches detailed HOKS, only needed in virkailija app
     const fetchDetails = flow(function*(): any {
       const response: APIResponse = yield fetchSingle(
         apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}`),
-        { headers: callerId() }
+        { headers: appendCallerId() }
       )
       const keys = Object.keys(response.data)
       keys.forEach(key => {
@@ -101,7 +102,7 @@ export const HOKS = types
         apiUrl(
           `${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}/opiskelijapalaute`
         ),
-        { headers: callerId() }
+        { headers: appendCallerId() }
       )
       self.opiskelijapalauteTilat = response.data
     })
@@ -113,7 +114,7 @@ export const HOKS = types
         apiUrl(
           `${apiPrefix}/external/eperusteet/tutkinnot?diaarinumero=${diaarinumero}`
         ),
-        { headers: callerId() }
+        { headers: appendCallerId() }
       )
       const { id, suoritustavat } = response.data
       const suoritustapa = suoritustavat.reduce(
@@ -143,7 +144,7 @@ export const HOKS = types
             suoritustapa === "reformi" ? "rakenne" : "tutkinnonosat"
           }`
         ),
-        { headers: callerId() }
+        { headers: appendCallerId() }
       )
       return response.data
     })
@@ -162,7 +163,7 @@ export const HOKS = types
       try {
         const response = yield fetchCollection(
           apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/opiskeluoikeudet`),
-          { headers: callerId() }
+          { headers: appendCallerId() }
         )
         const opiskeluOikeudet: APIResponse = response.data || []
         const opiskeluOikeus = find(
@@ -240,12 +241,24 @@ export const HOKS = types
           : ""
       },
       get osaamisala() {
-        return self.opiskeluOikeus.suoritukset &&
-          self.opiskeluOikeus.suoritukset.length &&
-          self.opiskeluOikeus.suoritukset[0].osaamisala.length
-          ? self.opiskeluOikeus.suoritukset[0].osaamisala[0].osaamisala.nimi[
-              root.translations.activeLocale
-            ]
+        const opiskeluOikeusDoesntHaveOsaamisala = () =>
+          !(
+            self.opiskeluOikeus.suoritukset &&
+            self.opiskeluOikeus.suoritukset.length &&
+            self.opiskeluOikeus.suoritukset[0].osaamisala.length
+          )
+
+        const getLatestOsaamisala = (osaamisalat: IOsaamisala[]) =>
+          maxBy(osaamisalat, (osaamisala: IOsaamisala) => osaamisala.alku)
+
+        if (opiskeluOikeusDoesntHaveOsaamisala()) return ""
+
+        const latestOsaamisala = getLatestOsaamisala(
+          self.opiskeluOikeus.suoritukset[0].osaamisala
+        )
+
+        return latestOsaamisala
+          ? latestOsaamisala.osaamisala.nimi[root.translations.activeLocale]
           : ""
       },
       get tutkinnonNimi() {

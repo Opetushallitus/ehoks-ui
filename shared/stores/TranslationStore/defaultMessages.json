@@ -91,6 +91,11 @@
   },
   {
     "locale": "fi",
+    "key": "errors.EnrichOsaAlue.fetchFromEPerusteet",
+    "value": "Tutkinnon osan osa-alueiden haku ePerusteista epäonnistui"
+  },
+  {
+    "locale": "fi",
     "key": "errors.EnrichKoodiUri.fetchKoodisto",
     "value": "Haku koodistosta epäonnistui"
   },
@@ -261,6 +266,11 @@
   },
   {
     "locale": "fi",
+    "key": "tavoitteet.osaaminenSaavutettuTitle",
+    "value": "Sovittu osaaminen saavutettu"
+  },
+  {
+    "locale": "fi",
     "key": "tavoitteet.suunnitelmaJatkoOpintoihinTitle",
     "value": "Suunnitelma jatko-opintoihin siirtymisestä"
   },
@@ -303,6 +313,16 @@
     "locale": "fi",
     "key": "tavoitteet.puhelinnumeroTitle",
     "value": "Puhelinnumero"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.opiskeluoikeudOidTitle",
+    "value": "Opiskeluoikeuden OID"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.idTitle",
+    "value": "eHOKS ID"
   },
   {
     "locale": "fi",

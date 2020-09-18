@@ -44,7 +44,7 @@ export const HOKSStore = types
   }))
   .actions(self => {
     const root: IRootStore = getRoot(self)
-    const { apiUrl, fetchCollection, errors, callerId } = getEnv<
+    const { apiUrl, fetchCollection, errors, appendCallerId } = getEnv<
       StoreEnvironment
     >(self)
 
@@ -53,7 +53,7 @@ export const HOKSStore = types
       try {
         const response: APIResponse = yield fetchCollection(
           apiUrl(`oppija/oppijat/${oid}/hoks`),
-          { headers: callerId() }
+          { headers: appendCallerId() }
         )
         self.suunnitelmat = response.data
 

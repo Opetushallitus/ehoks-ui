@@ -1,4 +1,4 @@
-import { types, getRoot } from "mobx-state-tree"
+import { types, getRoot, Instance } from "mobx-state-tree"
 import find from "lodash.find"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 
@@ -55,8 +55,12 @@ const Osaamisala = types.model("Osaamisala", {
       nimi: types.optional(Nimi, {})
     }),
     {}
-  )
+  ),
+  alku: types.maybe(types.string),
+  loppu: types.maybe(types.string)
 })
+
+export type IOsaamisala = Instance<typeof Osaamisala>
 
 const Suoritus = types.model("Suoritus", {
   oid: types.optional(types.string, ""),

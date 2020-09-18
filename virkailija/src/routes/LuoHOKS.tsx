@@ -38,6 +38,7 @@ import { EditHOKSStyles } from "./HOKSLomake/styles"
 import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./LuoHOKS/uiSchema"
+import { appendCallerId } from "fetchUtils"
 
 interface LuoHOKSProps extends RouteComponentProps {
   store?: IRootStore
@@ -189,12 +190,12 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       {
         method: "POST",
         credentials: "include",
-        headers: {
-          Accept: "application/json; charset=utf-8",
-          // "Caller-Id": ""
-          "Content-Type": "application/json"
-          // ticket: """
-        },
+        headers: appendCallerId(
+          new Headers({
+            Accept: "application/json; charset=utf-8",
+            "Content-Type": "application/json"
+          })
+        ),
         body: JSON.stringify(trimEmptyValues(fieldProps.formData))
       }
     )

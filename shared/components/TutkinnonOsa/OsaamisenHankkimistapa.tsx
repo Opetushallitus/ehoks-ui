@@ -65,9 +65,10 @@ const FlexLearningEvent = styled(LearningEvent)`
 interface OsaamisenHankkimistapaProps {
   osaamisenHankkimistapa: IOsaamisenHankkimistapa
   moduleId?: string
+  hoksEid?: string
   hasActiveShare?: boolean
   tutkinnonOsaTyyppi?: TutkinnonOsaType
-  tutkinnonOsaId?: string
+  tutkinnonOsaModuleId?: string
 }
 
 @observer
@@ -77,14 +78,20 @@ export class OsaamisenHankkimistapa extends React.Component<
   static contextType = AppContext
   declare context: React.ContextType<typeof AppContext>
   share = () => {
-    const { moduleId, tutkinnonOsaTyyppi, tutkinnonOsaId } = this.props
-    if (moduleId && tutkinnonOsaTyyppi && tutkinnonOsaId) {
+    const {
+      moduleId,
+      hoksEid,
+      tutkinnonOsaTyyppi,
+      tutkinnonOsaModuleId
+    } = this.props
+    if (moduleId && hoksEid && tutkinnonOsaTyyppi && tutkinnonOsaModuleId) {
       navigate(
         `${window.location.pathname}?${stringifyShareParams({
           type: "osaamisenhankkimistapa",
           moduleId,
+          hoksEid,
           tutkinnonOsaTyyppi,
-          tutkinnonOsaId
+          tutkinnonOsaModuleId
         })}`
       )
     }

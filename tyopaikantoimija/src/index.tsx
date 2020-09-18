@@ -2,7 +2,7 @@ import { APIConfigContext } from "components/APIConfigContext"
 import { AppContext } from "components/AppContext"
 import { apiPrefix, apiUrl } from "config"
 import { createEnvironment } from "createEnvironment"
-import { callerId, fetch } from "fetchUtils"
+import { appendCallerId, fetch } from "fetchUtils"
 import { Provider } from "mobx-react"
 import "promise-polyfill/src/polyfill" // polyfill Promise for IE 11
 import React from "react"
@@ -19,7 +19,7 @@ addLocaleData([...fi, ...sv])
 // pass fetch utils to RootStore using MST's environment context, so we can easily mock it in tests
 const store = RootStore.create(
   {},
-  createEnvironment(fetch, apiUrl, apiPrefix, callerId)
+  createEnvironment(fetch, apiUrl, apiPrefix, appendCallerId)
 )
 store.environment.getEnvironment()
 store.translations.fetchLocales()
@@ -27,7 +27,11 @@ store.translations.fetchLocales()
 const apiConfig = { apiUrl, apiPrefix }
 const appContext = {
   app: "oppija",
-  featureFlags: { shareDialog: true, shareNotifications: false }
+  featureFlags: {
+    shareDialog: false,
+    shareNotifications: false,
+    casOppija: false
+  }
 }
 
 // initial render to app container

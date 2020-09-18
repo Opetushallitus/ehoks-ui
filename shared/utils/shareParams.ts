@@ -9,7 +9,8 @@ export function parseShareParams(
     type?: ShareType
     moduleId: string | ""
     tutkinnonOsaTyyppi?: TutkinnonOsaType
-    tutkinnonOsaId: string | ""
+    tutkinnonOsaModuleId: string | ""
+    hoksEid: string | ""
   }
 } {
   const qs = queryString.parse(location ? location.search : "")
@@ -21,8 +22,11 @@ export function parseShareParams(
           : undefined,
       moduleId: typeof qs.moduleId === "string" ? qs.moduleId : "",
       tutkinnonOsaTyyppi: qs.tutkinnonOsaTyyppi as TutkinnonOsaType,
-      tutkinnonOsaId:
-        typeof qs.tutkinnonOsaId === "string" ? qs.tutkinnonOsaId : ""
+      tutkinnonOsaModuleId:
+        typeof qs.tutkinnonOsaModuleId === "string"
+          ? qs.tutkinnonOsaModuleId
+          : "",
+      hoksEid: typeof qs.hoksEid === "string" ? qs.hoksEid : ""
     }
   }
 }
@@ -31,11 +35,31 @@ export const stringifyShareParams = ({
   type,
   moduleId,
   tutkinnonOsaTyyppi,
-  tutkinnonOsaId
+  tutkinnonOsaModuleId,
+  hoksEid
 }: {
   type: string
   moduleId: string
   tutkinnonOsaTyyppi: TutkinnonOsaType
-  tutkinnonOsaId: string
+  tutkinnonOsaModuleId: string
+  hoksEid: string
 }): string =>
-  queryString.stringify({ type, moduleId, tutkinnonOsaTyyppi, tutkinnonOsaId })
+  queryString.stringify({
+    type,
+    moduleId,
+    tutkinnonOsaTyyppi,
+    tutkinnonOsaModuleId,
+    hoksEid
+  })
+
+export const parseLinkUuid = (
+  location: WindowLocation | undefined
+): {
+  link: {
+    uuid: string | undefined
+  }
+} => ({
+  link: {
+    uuid: location?.pathname ? location.pathname.split("/").pop() : ""
+  }
+})

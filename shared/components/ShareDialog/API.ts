@@ -1,8 +1,9 @@
 import { APIConfig } from "components/APIConfigContext"
 import { TutkinnonOsaType } from "../../models/helpers/ShareTypes"
+import { appendCallerId } from "../../fetchUtils"
 
 interface BackendShareLink {
-  "jako-uuid": string
+  "share-id": string
   "module-id": string
   "voimassaolo-alku": string
   "voimassaolo-loppu": string
@@ -15,7 +16,6 @@ export interface ShareLink {
   validTo: string
   type: string
 }
-
 export const fetchLinks = async function(
   moduleId: string,
   apiConfig: APIConfig
@@ -24,6 +24,7 @@ export const fetchLinks = async function(
   const response = await window.fetch(
     apiUrl(`${apiPrefix}/jaot/moduulit/${moduleId}`),
     {
+      headers: appendCallerId(),
       credentials: "include"
     }
   )
@@ -32,11 +33,10 @@ export const fetchLinks = async function(
   }
   const json: { data: BackendShareLink[] } = await response.json()
   return json.data.map(link => ({
-    jakoUuid: link["jako-uuid"],
+    jakoUuid: link["share-id"],
     validFrom: link["voimassaolo-alku"],
     validTo: link["voimassaolo-loppu"],
-    type: link.tyyppi,
-    moduleId: link["module-id"]
+    type: link.tyyppi
   }))
 }
 
@@ -44,33 +44,38 @@ export const createLink = async function({
   startDate,
   endDate,
   moduleId,
+  hoksEid,
   type,
   tutkinnonOsaTyyppi,
-  tutkinnonOsaId,
+  tutkinnonOsaModuleId,
   apiConfig
 }: {
   startDate: string
   endDate: string
   moduleId: string
+  hoksEid: string
   type: string
   tutkinnonOsaTyyppi: TutkinnonOsaType
-  tutkinnonOsaId: string
+  tutkinnonOsaModuleId: string
   apiConfig: APIConfig
 }): Promise<string> {
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(apiUrl(`${apiPrefix}/jaot/jakolinkit`), {
     credentials: "include",
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: appendCallerId(
+      new Headers({
+        "Content-Type": "application/json"
+      })
+    ),
     body: JSON.stringify({
-      "tutkinnonosa-module-uuid": tutkinnonOsaId,
+      "tutkinnonosa-module-uuid": tutkinnonOsaModuleId,
       "tutkinnonosa-tyyppi": tutkinnonOsaTyyppi,
       "shared-module-uuid": moduleId,
       "shared-module-tyyppi": type,
       "voimassaolo-alku": startDate,
-      "voimassaolo-loppu": endDate
+      "voimassaolo-loppu": endDate,
+      "hoks-eid": hoksEid
     })
   })
 
@@ -94,9 +99,11 @@ export const removeLink = async function({
     {
       credentials: "include",
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      }
+      headers: appendCallerId(
+        new Headers({
+          "Content-Type": "application/json"
+        })
+      )
     }
   )
 

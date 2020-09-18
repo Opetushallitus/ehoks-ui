@@ -14,6 +14,7 @@ import { AppContext } from "components/AppContext"
 import { FormattedDate } from "components/FormattedDate"
 import { StudyPoints } from "../StudyPoints"
 import { Opiskelijapalaute } from "../../../virkailija/src/routes/KoulutuksenJarjestaja/Opiskelijapalaute"
+import { IKoodistoVastaus } from "../../models/KoodistoVastaus"
 
 interface OsaamisenHankkimisenTarveProps {
   osaamisenHankkimisenTarve: boolean | null
@@ -42,63 +43,6 @@ const OsaamisenHankkimisenTarveMessage = ({
     />
   )
 }
-
-const DegreeInfo = ({ plan }: { plan: IHOKS }) => (
-  <InfoTable>
-    <tbody>
-      <tr>
-        <th>
-          <FormattedMessage
-            id="opiskelusuunnitelma.tutkinnonNimiTitle"
-            defaultMessage="Tutkinnon nimi"
-          />
-        </th>
-        <th>
-          <FormattedMessage
-            id="opiskelusuunnitelma.laajuusTitle"
-            defaultMessage="Laajuus"
-          />
-        </th>
-        <th />
-      </tr>
-      <tr>
-        <LabeledColumn id="opiskelusuunnitelma.tutkinnonNimiTitle">
-          {plan.tutkinnonNimi}
-        </LabeledColumn>
-        <StudyPoints
-          osaamispisteet={plan.osaamispisteet}
-          titleTranslationId={"opiskelusuunnitelma.laajuusTitle"}
-          pointsTranslationId={"opiskelusuunnitelma.osaamispistettaPostfix"}
-        />
-        <td />
-      </tr>
-      <tr>
-        <th>
-          <FormattedMessage
-            id="opiskelusuunnitelma.osaamisalaTitle"
-            defaultMessage="Osaamisala"
-          />
-        </th>
-        <th>
-          <FormattedMessage
-            id="opiskelusuunnitelma.tutkintonimikeTitle"
-            defaultMessage="Tutkintonimike"
-          />
-        </th>
-        <th />
-      </tr>
-      <tr>
-        <LabeledColumn id="opiskelusuunnitelma.osaamisalaTitle">
-          {plan.osaamisala}
-        </LabeledColumn>
-        <LabeledColumn id="opiskelusuunnitelma.tutkintonimikeTitle">
-          {plan.tutkintonimike}
-        </LabeledColumn>
-        <td />
-      </tr>
-    </tbody>
-  </InfoTable>
-)
 
 const StudentPersonalInfo = ({ student }: { student: ISessionUser }) => (
   <>
@@ -196,7 +140,6 @@ const StudentContactInfo = ({
           />
         </th>
       )}
-      <th />
       {student.yhteystiedot.puhelinnumero && (
         <th>
           <FormattedMessage
@@ -214,7 +157,6 @@ const StudentContactInfo = ({
             : hoks.sahkoposti}
         </LabeledColumn>
       )}
-      <td />
       {student.yhteystiedot.puhelinnumero && (
         <LabeledColumn id="tavoitteet.puhelinnumeroTitle">
           {student.yhteystiedot.puhelinnumero}
@@ -222,6 +164,280 @@ const StudentContactInfo = ({
       )}
     </tr>
   </>
+)
+
+const StudentIdentifierInfo = ({ hoks }: { hoks: IHOKS }) => (
+  <>
+    <tr>
+      {hoks.opiskeluoikeusOid && (
+        <th>
+          <FormattedMessage
+            id="tavoitteet.opiskeluoikeudOidTitle"
+            defaultMessage="Opiskeluoikeuden OID"
+          />
+        </th>
+      )}
+      {hoks.id && (
+        <th>
+          <FormattedMessage id="tavoitteet.idTitle" defaultMessage="eHOKS ID" />
+        </th>
+      )}
+    </tr>
+    <tr>
+      {hoks.opiskeluoikeusOid && (
+        <LabeledColumn id="tavoitteet.opiskeluoikeudOidTitle">
+          {hoks.opiskeluoikeusOid}
+        </LabeledColumn>
+      )}
+      {hoks.id && (
+        <LabeledColumn id="tavoitteet.idTitle">{hoks.id}</LabeledColumn>
+      )}
+    </tr>
+  </>
+)
+
+const Urasuunnitelma = ({
+  title,
+  urasuunnitelmaOpen,
+  toggleUrasuunnitelma,
+  urasuunnitelma
+}: {
+  title: React.ReactNode
+  urasuunnitelmaOpen: boolean
+  toggleUrasuunnitelma: () => void
+  urasuunnitelma?: IKoodistoVastaus
+}) => (
+  <Accordion
+    id="omaTavoitteeni"
+    open={urasuunnitelmaOpen}
+    title={title}
+    onToggle={toggleUrasuunnitelma}
+  >
+    {urasuunnitelma && urasuunnitelma.nimi && (
+      <InfoTable>
+        <tbody>
+          <tr>
+            <th>
+              <FormattedMessage
+                id="tavoitteet.suunnitelmaJatkoOpintoihinTitle"
+                defaultMessage="Suunnitelma jatko-opintoihin siirtymisestä"
+              />
+            </th>
+            <th />
+            <th />
+          </tr>
+          <tr>
+            <LabeledColumn id="tavoitteet.suunnitelmaJatkoOpintoihinTitle">
+              {urasuunnitelma.nimi}
+            </LabeledColumn>
+            <td />
+            <td />
+          </tr>
+        </tbody>
+      </InfoTable>
+    )}
+  </Accordion>
+)
+
+const TutkintoTaiKoulutus = ({
+  title,
+  tutkintoTaiKoulutusOpen,
+  toggleTutkintoTaiKoulutus,
+  plan
+}: {
+  title: React.ReactNode
+  tutkintoTaiKoulutusOpen: boolean
+  toggleTutkintoTaiKoulutus: () => void
+  plan: IHOKS
+}) => (
+  <Accordion
+    id="tutkintoTaiKoulutus"
+    open={tutkintoTaiKoulutusOpen}
+    title={title}
+    onToggle={toggleTutkintoTaiKoulutus}
+  >
+    <InfoTable>
+      <tbody>
+        <tr>
+          <th>
+            <FormattedMessage
+              id="opiskelusuunnitelma.tutkinnonNimiTitle"
+              defaultMessage="Tutkinnon nimi"
+            />
+          </th>
+          <th>
+            <FormattedMessage
+              id="opiskelusuunnitelma.laajuusTitle"
+              defaultMessage="Laajuus"
+            />
+          </th>
+          <th />
+        </tr>
+        <tr>
+          <LabeledColumn id="opiskelusuunnitelma.tutkinnonNimiTitle">
+            {plan.tutkinnonNimi}
+          </LabeledColumn>
+          <StudyPoints
+            osaamispisteet={plan.osaamispisteet}
+            titleTranslationId={"opiskelusuunnitelma.laajuusTitle"}
+            pointsTranslationId={"opiskelusuunnitelma.osaamispistettaPostfix"}
+          />
+          <td />
+        </tr>
+        <tr>
+          <th>
+            <FormattedMessage
+              id="opiskelusuunnitelma.osaamisalaTitle"
+              defaultMessage="Osaamisala"
+            />
+          </th>
+          <th>
+            <FormattedMessage
+              id="opiskelusuunnitelma.tutkintonimikeTitle"
+              defaultMessage="Tutkintonimike"
+            />
+          </th>
+          <th />
+        </tr>
+        <tr>
+          <LabeledColumn id="opiskelusuunnitelma.osaamisalaTitle">
+            {plan.osaamisala}
+          </LabeledColumn>
+          <LabeledColumn id="opiskelusuunnitelma.tutkintonimikeTitle">
+            {plan.tutkintonimike}
+          </LabeledColumn>
+          <td />
+        </tr>
+      </tbody>
+    </InfoTable>
+  </Accordion>
+)
+
+const Henkilotiedot = ({
+  title,
+  henkilotiedotOpen,
+  toggleHenkilotiedot,
+  hoks,
+  student,
+  app
+}: {
+  title: React.ReactNode
+  henkilotiedotOpen: boolean
+  toggleHenkilotiedot: () => void
+  hoks: IHOKS
+  student: ISessionUser
+  app: string
+}) => (
+  <Accordion
+    id="henkilotiedot"
+    open={henkilotiedotOpen}
+    title={title}
+    onToggle={toggleHenkilotiedot}
+  >
+    <InfoTable>
+      <tbody>
+        <StudentPersonalInfo student={student} />
+        <StudentAddressInfo student={student} />
+        <StudentContactInfo student={student} hoks={hoks} />
+        {app === "virkailija" && <StudentIdentifierInfo hoks={hoks} />}
+      </tbody>
+    </InfoTable>
+  </Accordion>
+)
+
+const HoksPaivamaarat = ({
+  hoksPaivamaaratOpen,
+  toggleHoksPaivamaarat,
+  hoks
+}: {
+  hoksPaivamaaratOpen: boolean
+  toggleHoksPaivamaarat: () => void
+  hoks: IHOKS
+}) => (
+  <Accordion
+    id="hoksDates"
+    open={hoksPaivamaaratOpen}
+    title={
+      <AccordionTitle>
+        <FormattedMessage
+          id="tavoitteet.hoksPaivamaaratTitle"
+          defaultMessage="HOKS päivämäärät"
+        />
+      </AccordionTitle>
+    }
+    onToggle={toggleHoksPaivamaarat}
+  >
+    <InfoTable>
+      <tbody>
+        <tr>
+          <th>
+            <FormattedMessage
+              id="tavoitteet.ensikertainenHyvaksyminenTitle"
+              defaultMessage="Ensikertainen hyväksyminen"
+            />
+          </th>
+          <th>
+            <FormattedMessage
+              id="tavoitteet.paivitettyTitle"
+              defaultMessage="Päivitetty"
+            />
+          </th>
+          <th>
+            <FormattedMessage
+              id="tavoitteet.osaaminenSaavutettuTitle"
+              defaultMessage="Sovittu osaaminen saavutettu"
+            />
+          </th>
+          <th>
+            <FormattedMessage
+              id="tavoitteet.osaamisenHankkimisenTarveTitle"
+              defaultMessage="Osaamisen hankkimisen tarve"
+            />
+          </th>
+        </tr>
+        <tr>
+          <LabeledColumn id="tavoitteet.ensikertainenHyvaksyminenTitle">
+            <FormattedDate
+              date={hoks.ensikertainenHyvaksyminen}
+              dateNotSet={
+                <FormattedMessage
+                  id="tavoitteet.eiVielaHyvaksyttyTitle"
+                  defaultMessage="Ei vielä hyväksytty"
+                />
+              }
+            />
+          </LabeledColumn>
+          <LabeledColumn id="tavoitteet.paivitettyTitle">
+            <FormattedDate
+              date={hoks.paivitetty}
+              dateNotSet={
+                <FormattedMessage
+                  id="tavoitteet.eiVielaPaivityksiaTitle"
+                  defaultMessage="Ei vielä päivityksiä"
+                />
+              }
+            />
+          </LabeledColumn>
+          <LabeledColumn id="tavoitteet.osaaminenSaavutettuTitle">
+            <FormattedDate
+              date={hoks.osaamisenSaavuttamisenPvm}
+              dateNotSet={
+                <FormattedMessage
+                  id="tavoitteet.osaaminenEiVielaSaavutettuTitle"
+                  defaultMessage="Sovittua osaamista ei vielä saavutettu"
+                />
+              }
+            />
+          </LabeledColumn>
+          <LabeledColumn id="tavoitteet.osaamisenHankkimisenTarveTitle">
+            <OsaamisenHankkimisenTarveMessage
+              osaamisenHankkimisenTarve={hoks.osaamisenHankkimisenTarve}
+            />
+          </LabeledColumn>
+        </tr>
+      </tbody>
+    </InfoTable>
+  </Accordion>
 )
 
 export interface TavoitteetProps {
@@ -337,146 +553,38 @@ export class Tavoitteet extends React.Component<
         </HeadingContainer>
 
         {app === "oppija" && (
-          <Accordion
-            id="hoksDates"
-            open={this.state.activeAccordions.hoksDates}
-            title={
-              <AccordionTitle>
-                <FormattedMessage
-                  id="tavoitteet.hoksPaivamaaratTitle"
-                  defaultMessage="HOKS päivämäärät"
-                />
-              </AccordionTitle>
-            }
-            onToggle={this.toggleAccordion("hoksDates")}
-          >
-            <InfoTable>
-              <tbody>
-                <tr>
-                  <th>
-                    <FormattedMessage
-                      id="tavoitteet.ensikertainenHyvaksyminenTitle"
-                      defaultMessage="Ensikertainen hyväksyminen"
-                    />
-                  </th>
-                  <th>
-                    <FormattedMessage
-                      id="tavoitteet.paivitettyTitle"
-                      defaultMessage="Päivitetty"
-                    />
-                  </th>
-                  <th>
-                    <FormattedMessage
-                      id="tavoitteet.osaaminenSaavutettuTitle"
-                      defaultMessage="Sovittu osaaminen saavutettu"
-                    />
-                  </th>
-                  <th>
-                    <FormattedMessage
-                      id="tavoitteet.osaamisenHankkimisenTarveTitle"
-                      defaultMessage="Osaamisen hankkimisen tarve"
-                    />
-                  </th>
-                </tr>
-                <tr>
-                  <LabeledColumn id="tavoitteet.ensikertainenHyvaksyminenTitle">
-                    <FormattedDate
-                      date={hoks.ensikertainenHyvaksyminen}
-                      dateNotSet={
-                        <FormattedMessage
-                          id="tavoitteet.eiVielaHyvaksyttyTitle"
-                          defaultMessage="Ei vielä hyväksytty"
-                        />
-                      }
-                    />
-                  </LabeledColumn>
-                  <LabeledColumn id="tavoitteet.paivitettyTitle">
-                    <FormattedDate
-                      date={hoks.paivitetty}
-                      dateNotSet={
-                        <FormattedMessage
-                          id="tavoitteet.eiVielaPaivityksiaTitle"
-                          defaultMessage="Ei vielä päivityksiä"
-                        />
-                      }
-                    />
-                  </LabeledColumn>
-                  <LabeledColumn id="tavoitteet.osaaminenSaavutettuTitle">
-                    <FormattedDate
-                      date={hoks.osaamisenSaavuttamisenPvm}
-                      dateNotSet={
-                        <FormattedMessage
-                          id="tavoitteet.osaaminenEiVielaSaavutettuTitle"
-                          defaultMessage="Sovittua osaamista ei vielä saavutettu"
-                        />
-                      }
-                    />
-                  </LabeledColumn>
-                  <LabeledColumn id="tavoitteet.osaamisenHankkimisenTarveTitle">
-                    <OsaamisenHankkimisenTarveMessage
-                      osaamisenHankkimisenTarve={hoks.osaamisenHankkimisenTarve}
-                    />
-                  </LabeledColumn>
-                </tr>
-              </tbody>
-            </InfoTable>
-          </Accordion>
+          <HoksPaivamaarat
+            hoksPaivamaaratOpen={this.state.activeAccordions.hoksDates}
+            toggleHoksPaivamaarat={this.toggleAccordion("hoksDates")}
+            hoks={hoks}
+          />
         )}
 
-        <Accordion
-          id="omaTavoitteeni"
-          open={this.state.activeAccordions.personalGoal}
+        <Urasuunnitelma
           title={titles.goals}
-          onToggle={this.toggleAccordion("personalGoal")}
-        >
-          {hoks.urasuunnitelma && hoks.urasuunnitelma.nimi && (
-            <InfoTable>
-              <tbody>
-                <tr>
-                  <th>
-                    <FormattedMessage
-                      id="tavoitteet.suunnitelmaJatkoOpintoihinTitle"
-                      defaultMessage="Suunnitelma jatko-opintoihin siirtymisestä"
-                    />
-                  </th>
-                  <th />
-                  <th />
-                </tr>
-                <tr>
-                  <LabeledColumn id="tavoitteet.suunnitelmaJatkoOpintoihinTitle">
-                    {hoks.urasuunnitelma && hoks.urasuunnitelma.nimi}
-                  </LabeledColumn>
-                  <td />
-                  <td />
-                </tr>
-              </tbody>
-            </InfoTable>
-          )}
-        </Accordion>
+          urasuunnitelmaOpen={this.state.activeAccordions.personalGoal}
+          toggleUrasuunnitelma={this.toggleAccordion("personalGoal")}
+          urasuunnitelma={hoks.urasuunnitelma}
+        />
 
-        <Accordion
-          id="tutkintoTaiKoulutus"
-          open={this.state.activeAccordions.degreeOrEducation}
+        <TutkintoTaiKoulutus
           title={titles.degreeOrEducation}
-          onToggle={this.toggleAccordion("degreeOrEducation")}
-        >
-          <DegreeInfo plan={hoks} />
-        </Accordion>
+          tutkintoTaiKoulutusOpen={
+            this.state.activeAccordions.degreeOrEducation
+          }
+          toggleTutkintoTaiKoulutus={this.toggleAccordion("degreeOrEducation")}
+          plan={hoks}
+        />
 
-        <Accordion
-          id="henkilotiedot"
-          open={this.state.activeAccordions.personalDetails}
+        <Henkilotiedot
           title={titles.personalDetails}
-          onToggle={this.toggleAccordion("personalDetails")}
-        >
-          <InfoTable>
-            <tbody>
-              <StudentPersonalInfo student={student} />
-              <StudentAddressInfo student={student} />
-              <StudentContactInfo student={student} hoks={hoks} />
-            </tbody>
-          </InfoTable>
-        </Accordion>
+          henkilotiedotOpen={this.state.activeAccordions.personalDetails}
+          toggleHenkilotiedot={this.toggleAccordion("personalDetails")}
+          hoks={hoks}
+          student={student}
+          app={app}
+        />
+
         {this.props.showOpiskelijapalaute && (
           <Opiskelijapalaute
             toggleAccordion={this.toggleAccordion}

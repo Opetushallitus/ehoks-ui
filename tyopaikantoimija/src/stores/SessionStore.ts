@@ -16,16 +16,20 @@ const SessionStoreModel = {
 export const SessionStore = types
   .model("SessionStore", SessionStoreModel)
   .actions(self => {
-    const { apiUrl, fetchSingle, deleteResource, errors, callerId } = getEnv<
-      StoreEnvironment
-    >(self)
+    const {
+      apiUrl,
+      fetchSingle,
+      deleteResource,
+      errors,
+      appendCallerId
+    } = getEnv<StoreEnvironment>(self)
 
     const checkSession = flow(function*(): any {
       self.isLoading = true
       try {
         const response: APIResponse = yield fetchSingle(
           apiUrl("oppija/session"),
-          { headers: callerId() }
+          { headers: appendCallerId() }
         )
         self.user = response.data
       } catch (error) {
@@ -38,7 +42,7 @@ export const SessionStore = types
         try {
           yield fetchSingle(apiUrl("oppija/session/update-user-info"), {
             method: "POST",
-            headers: callerId()
+            headers: appendCallerId()
           })
           yield fetchUserInfo()
         } catch (error) {
@@ -52,7 +56,7 @@ export const SessionStore = types
       try {
         const response: APIResponse = yield fetchSingle(
           apiUrl("oppija/session/user-info"),
-          { headers: callerId() }
+          { headers: appendCallerId() }
         )
         self.user = response.data
       } catch (error) {
@@ -64,7 +68,7 @@ export const SessionStore = types
       try {
         const response: APIResponse = yield fetchSingle(
           apiUrl("oppija/session/settings"),
-          { headers: callerId() }
+          { headers: appendCallerId() }
         )
         self.settings = response.data
       } catch (error) {
@@ -77,7 +81,9 @@ export const SessionStore = types
         yield fetchSingle(apiUrl("oppija/session/settings"), {
           method: "put",
           body: JSON.stringify(getSnapshot(self.settings)),
-          headers: callerId(new Headers({ "Content-Type": "application/json" }))
+          headers: appendCallerId(
+            new Headers({ "Content-Type": "application/json" })
+          )
         })
       } catch (error) {
         errors.logError("SessionStore.saveSettings", error.message)
@@ -87,7 +93,9 @@ export const SessionStore = types
     const logout = flow(function*() {
       self.isLoading = true
       try {
-        yield deleteResource(apiUrl("oppija/session"), { headers: callerId() })
+        yield deleteResource(apiUrl("oppija/session"), {
+          headers: appendCallerId()
+        })
         self.user = undefined
         self.userDidLogout = true
         self.isLoading = false

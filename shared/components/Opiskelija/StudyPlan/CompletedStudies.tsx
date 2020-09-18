@@ -15,8 +15,10 @@ export interface CompletedStudiesProps {
     type?: ShareType
     moduleId?: string
     tutkinnonOsaTyyppi?: TutkinnonOsaType
-    tutkinnonOsaId?: string
+    tutkinnonOsaModuleId?: string
+    hoksEid?: string
   }
+  hoksEid?: string
   hasActiveShare: boolean
   toggleAccordion: (
     accordion: ActiveAccordions,
@@ -40,7 +42,8 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
       toggleAccordion,
       valmiitOpinnot,
       elements = {},
-      competencePointsTitle
+      competencePointsTitle,
+      hoksEid
     } = this.props
 
     return (
@@ -77,8 +80,9 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
                   fadedColor="#ECF6ED"
                   koodiUri={study.tutkinnonOsaKoodiUri}
                   moduleId={study.moduleId}
+                  hoksEid={hoksEid}
                   tutkinnonOsaTyyppi={study.tutkinnonOsaTyyppi}
-                  tutkinnonOsaId={study.tutkinnonOsaId}
+                  tutkinnonOsaModuleId={study.tutkinnonOsaModuleId}
                   osaamisenHankkimistavat={study.osaamisenHankkimistavat}
                   share={share}
                   title={study.opintoOtsikko(competencePointsTitle)}

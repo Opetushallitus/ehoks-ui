@@ -124,7 +124,7 @@ export const mockFetch = (apiUrl: (path: string) => string, version = 0) => (
 export const fetch = (url: string | Request, init: RequestInit) =>
   window.fetch(url, { credentials: "include", ...init })
 
-export const callerId = (headers?: Headers) => {
+export const appendCallerId = (headers?: Headers) => {
   if (headers) {
     headers.append("Caller-Id", "1.2.246.562.10.00000000001.ehoks.ehoks-ui")
     return headers

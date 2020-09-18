@@ -15,7 +15,8 @@ export interface OpiskelusuunnitelmaState {
     type?: ShareType
     moduleId?: string
     tutkinnonOsaTyyppi?: TutkinnonOsaType
-    tutkinnonOsaId?: string
+    tutkinnonOsaModuleId?: string
+    hoksEid?: string
   }
 }
 

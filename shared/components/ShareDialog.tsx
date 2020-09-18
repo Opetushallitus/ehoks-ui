@@ -1,20 +1,20 @@
 import React, {
-  useState,
-  useRef,
-  useEffect,
   useContext,
-  useLayoutEffect
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState
 } from "react"
 import { navigate } from "@reach/router"
-import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl"
+import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl"
 import styled from "styled"
 import { HeroButton, LinkButton } from "components/Button"
 import { ModalWithBackground } from "components/ModalDialogs/Modal"
 import {
-  fetchLinks,
   createLink,
-  ShareLink,
-  removeLink
+  fetchLinks,
+  removeLink,
+  ShareLink
 } from "./ShareDialog/API"
 import { APIConfigContext } from "components/APIConfigContext"
 import CopyToClipboard from "react-copy-to-clipboard"
@@ -109,6 +109,10 @@ const LinkAnchor = styled(LinkItem)`
   flex: unset;
 `
 
+const RemoveLinkButton = styled(LinkButton)`
+  color: #1976d2;
+`
+
 const ChildContainer = styled("div")`
   border: 1px solid #979797;
   background: ${(props: ColorProps) => props.background};
@@ -149,11 +153,12 @@ interface ShareDialogProps extends InjectedIntlProps {
   /* Used version of react-intl cannot handle React.ReactNode here */
   children: any
   moduleId: string
+  hoksEid: string
   type: ShareType
   defaultPeriod?: ShareLinkValidityPeriod
   instructor?: Instructor
   tutkinnonOsaTyyppi?: TutkinnonOsaType
-  tutkinnonOsaId: string
+  tutkinnonOsaModuleId: string
   intl: ReactIntl.InjectedIntl
 }
 
@@ -165,9 +170,10 @@ export function ShareDialog(props: ShareDialogProps) {
     defaultPeriod,
     instructor,
     moduleId,
+    hoksEid,
     type,
     tutkinnonOsaTyyppi,
-    tutkinnonOsaId,
+    tutkinnonOsaModuleId,
     intl
   } = props
 
@@ -198,21 +204,24 @@ export function ShareDialog(props: ShareDialogProps) {
       setSharedLinks(await fetchLinks(moduleId, apiConfig))
     }
     fetchData()
-  }, [])
+  }, [apiConfig, moduleId])
 
   const addLink = async () => {
     if (tutkinnonOsaTyyppi) {
       const createdUuid = await createLink({
         moduleId,
+        hoksEid,
         startDate,
         endDate,
         type,
         tutkinnonOsaTyyppi,
-        tutkinnonOsaId,
+        tutkinnonOsaModuleId,
         apiConfig
       })
       setSharedLinks(await fetchLinks(moduleId, apiConfig))
-      setCreatedUrl(`https://not.implemented.yet/jako/${createdUuid}`)
+      setCreatedUrl(
+        `${window.location.origin}/ehoks-tyopaikantoimija-ui/${createdUuid}`
+      )
     }
   }
 
@@ -264,7 +273,7 @@ export function ShareDialog(props: ShareDialogProps) {
           <ShareHeaderContainer>
             <ShareHeader>
               <ShareTitle>
-                {type === "osaamisenosoittaminen" ? (
+                {type === ShareType.osaamisenosoittaminen ? (
                   <FormattedMessage
                     id="jakaminen.naytonTietojenJakaminenTitle "
                     defaultMessage="Näytön tietojen jakaminen"
@@ -278,7 +287,7 @@ export function ShareDialog(props: ShareDialogProps) {
               </ShareTitle>
 
               <ShareDescription>
-                {type === "osaamisenosoittaminen" ? (
+                {type === ShareType.osaamisenosoittaminen ? (
                   <FormattedMessage
                     id="jakaminen.naytonJakoDescription"
                     defaultMessage="Olet jakamassa näitä näytön tietoja"
@@ -302,7 +311,7 @@ export function ShareDialog(props: ShareDialogProps) {
           </ShareHeaderContainer>
           <ChildContainer background={background}>{children}</ChildContainer>
           <ShareDescription>
-            {type === "osaamisenosoittaminen" ? (
+            {type === ShareType.osaamisenosoittaminen ? (
               <FormattedMessage
                 id="jakaminen.aiemmatNaytonJaotDescription"
                 defaultMessage="Aiemmin tekemäsi näytön jakolinkit"
@@ -331,7 +340,7 @@ export function ShareDialog(props: ShareDialogProps) {
                 </LinkItem>
                 <LinkItem>{link.jakoUuid}</LinkItem>
                 <LinkAnchor>
-                  <LinkButton
+                  <RemoveLinkButton
                     onClick={(event: React.MouseEvent) =>
                       remove(event, link.jakoUuid)
                     }
@@ -340,7 +349,7 @@ export function ShareDialog(props: ShareDialogProps) {
                       id="jakaminen.poistaLinkki"
                       defaultMessage="Poista linkki"
                     />
-                  </LinkButton>
+                  </RemoveLinkButton>
                 </LinkAnchor>
               </SharedLink>
             ))}
@@ -353,7 +362,7 @@ export function ShareDialog(props: ShareDialogProps) {
                     <ShareColumns>
                       <ShareColumn>
                         <Subtitle>
-                          {type === "osaamisenosoittaminen" ? (
+                          {type === ShareType.osaamisenosoittaminen ? (
                             <FormattedMessage
                               id="jakaminen.linkkiNaytonTietoihin"
                               defaultMessage="Linkki näytön tietoihin"

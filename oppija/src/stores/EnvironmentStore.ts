@@ -15,13 +15,14 @@ const EnvironmentStoreModel = {
   opintopolkuLoginUrlSv: types.optional(types.string, ""),
   opintopolkuLogoutUrlFi: types.optional(types.string, ""),
   opintopolkuLogoutUrlSv: types.optional(types.string, ""),
-  virkailijaLoginUrl: types.optional(types.string, "")
+  virkailijaLoginUrl: types.optional(types.string, ""),
+  casOppijaLoginUrl: types.optional(types.string, "")
 }
 
 export const EnvironmentStore = types
   .model("EnvironmentStore", EnvironmentStoreModel)
   .actions(self => {
-    const { apiUrl, fetchSingle, fetch, errors, callerId } = getEnv<
+    const { apiUrl, fetchSingle, fetch, errors, appendCallerId } = getEnv<
       StoreEnvironment
     >(self)
 
@@ -30,7 +31,7 @@ export const EnvironmentStore = types
       try {
         const response: APIResponse = yield fetchSingle(
           apiUrl("misc/environment"),
-          { headers: callerId() }
+          { headers: appendCallerId() }
         )
         const {
           eperusteetPerusteUrl,
@@ -38,7 +39,8 @@ export const EnvironmentStore = types
           opintopolkuLoginUrlSv,
           opintopolkuLogoutUrlFi,
           opintopolkuLogoutUrlSv,
-          virkailijaLoginUrl
+          virkailijaLoginUrl,
+          casOppijaLoginUrl
         } = response.data
         self.eperusteetPerusteUrl = eperusteetPerusteUrl
         self.opintopolkuLoginUrlFi = devBackendWithoutHost(
@@ -54,6 +56,7 @@ export const EnvironmentStore = types
           opintopolkuLogoutUrlSv
         )
         self.virkailijaLoginUrl = virkailijaLoginUrl
+        self.casOppijaLoginUrl = devBackendWithoutHost(casOppijaLoginUrl)
       } catch (error) {
         errors.logError("EnvironmentStore.getEnvironment", error.message)
       }
@@ -61,8 +64,7 @@ export const EnvironmentStore = types
     })
 
     const fetchSwaggerJSON = flow(function*() {
-      const response = yield fetch("/ehoks-oppija-backend/doc/swagger.json")
-      return response
+      return yield fetch("/ehoks-oppija-backend/doc/swagger.json")
     })
 
     return { getEnvironment, fetchSwaggerJSON }

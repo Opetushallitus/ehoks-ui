@@ -25,7 +25,7 @@ install:
 script:
   - npm run travis
   - cd oppija
-  - export BASE_IMAGE=baseimage-fatjar:master
+  - export BASE_IMAGE=baseimage-fatjar-openjdk8:master
   - ../ci-tools/common/pull-image.sh
   - ./scripts/ci/build.sh ehoks-oppija-ui
   - cd ../virkailija

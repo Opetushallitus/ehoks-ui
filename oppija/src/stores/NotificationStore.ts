@@ -87,7 +87,7 @@ export const NotificationStore = types
     return { addNotifications }
   })
   .actions(self => {
-    const { apiUrl, fetchPrimitiveCollection, errors, callerId } = getEnv<
+    const { apiUrl, fetchPrimitiveCollection, errors, appendCallerId } = getEnv<
       StoreEnvironment
     >(self)
 
@@ -103,7 +103,7 @@ export const NotificationStore = types
       try {
         const response: APIResponse = yield fetchPrimitiveCollection(
           apiUrl(`oppija/oppijat/${oid}/kyselylinkit`),
-          { headers: callerId() }
+          { headers: appendCallerId() }
         )
 
         self.studentFeedbackLinks = response.data

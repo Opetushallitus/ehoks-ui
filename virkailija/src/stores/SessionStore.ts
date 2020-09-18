@@ -1,6 +1,5 @@
 import { withQueryString } from "fetchUtils"
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
-import { APIResponse } from "types/APIResponse"
 import { IOrganisation, OrganisationModel } from "types/Organisation"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
@@ -32,25 +31,10 @@ export const SessionStore = types
       apiUrl,
       fetchSingle,
       fetchCollection,
-      fetch,
       deleteResource,
       errors,
-      callerId
+      appendCallerId
     } = getEnv<StoreEnvironment>(self)
-
-    const login = flow(function*(url: string): any {
-      self.isLoading = true
-      try {
-        const response: APIResponse = yield fetch(url, {
-          mode: "no-cors",
-          headers: callerId()
-        })
-        self.user = response.data
-      } catch (error) {
-        self.error = error.message
-      }
-      self.isLoading = false
-    })
 
     const checkSession = flow(function*(): any {
       self.isLoading = true
@@ -60,7 +44,7 @@ export const SessionStore = types
       }
       try {
         const response = yield fetchSingle(apiUrl("virkailija/session"), {
-          headers: callerId()
+          headers: appendCallerId()
         })
 
         self.user = response.data
@@ -78,7 +62,7 @@ export const SessionStore = types
           withQueryString(apiUrl("virkailija/external/organisaatio/find"), {
             ...queryParams
           }),
-          { headers: callerId() }
+          { headers: appendCallerId() }
         )
         self.organisations = organisationsData.data.map((o: IOrganisation) => ({
           nimi: o.nimi,
@@ -99,7 +83,7 @@ export const SessionStore = types
       self.isLoading = true
       try {
         yield deleteResource(apiUrl("virkailija/session"), {
-          headers: callerId()
+          headers: appendCallerId()
         })
         self.user = undefined
         self.isLoading = false
@@ -119,7 +103,6 @@ export const SessionStore = types
 
     return {
       checkSession,
-      login,
       logout,
       resetUserDidLogout,
       changeSelectedOrganisationOid

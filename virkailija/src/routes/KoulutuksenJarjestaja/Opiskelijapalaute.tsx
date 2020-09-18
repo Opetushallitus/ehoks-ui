@@ -9,6 +9,7 @@ import { RouteComponentProps } from "@reach/router"
 import { IOpiskelijapalauteTila } from "models/OpiskelijapalauteTila"
 import { Button } from "components/Button"
 import { IRootStore } from "../../stores/RootStore"
+import { appendCallerId } from "fetchUtils"
 
 export interface OpiskelijapalauteProps {
   store?: IRootStore
@@ -21,7 +22,6 @@ export interface OpiskelijapalauteProps {
 }
 
 interface ResendParameters {
-  alkupvm: string
   tyyppi: string
 }
 
@@ -32,14 +32,14 @@ export class Opiskelijapalaute extends React.Component<
 > {
   resendPalaute = (data: ResendParameters) => async (): Promise<void> => {
     const { hoksID, oppijaOid } = this.props
-    const { notifications, environment } = this.props.store!
+    const { notifications } = this.props.store!
 
     const response: Response = await window.fetch(
       `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksID}/resend-palaute`,
       {
         method: "POST",
         credentials: "include",
-        headers: environment.getCallerId(
+        headers: appendCallerId(
           new Headers({
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json"
@@ -148,7 +148,6 @@ export class Opiskelijapalaute extends React.Component<
                 </InfoTable>
                 <Button
                   onClick={this.resendPalaute({
-                    alkupvm: palauteTila.alkupvm,
                     tyyppi: palauteTila.tyyppi
                   })}
                 >
