@@ -28,7 +28,7 @@ const apiConfig = { apiUrl, apiPrefix }
 const appContext = {
   app: "oppija",
   featureFlags: {
-    shareDialog: true,
+    shareDialog: false,
     shareNotifications: false,
     casOppija: false
   }
