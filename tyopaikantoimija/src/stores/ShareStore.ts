@@ -9,6 +9,11 @@ const tutkintoNimi = types.model("tutkintoNimi", {
   sv: types.optional(types.string, "")
 })
 
+const osaamisalaNimi = types.model("osaamisalaNimi", {
+  fi: types.optional(types.string, ""),
+  sv: types.optional(types.string, "")
+})
+
 const tutkinnonosa = types.model("tutkinnonosa", {
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
   moduleId: types.optional(types.string, ""),
@@ -25,7 +30,8 @@ export const Share = types.model("Share", {
   voimassaoloLoppu: types.optional(types.string, ""),
   osaamisenOsoittaminen: types.maybeNull(OsaamisenOsoittaminen),
   osaamisenHankkimistapa: types.maybeNull(OsaamisenHankkimistapa),
-  tutkinnonosa: types.maybe(tutkinnonosa)
+  tutkinnonosa: types.maybe(tutkinnonosa),
+  osaamisalaNimi: types.optional(osaamisalaNimi, {})
 })
 
 export const ShareStoreModel = {

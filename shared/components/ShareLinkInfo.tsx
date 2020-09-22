@@ -30,10 +30,11 @@ export function ShareLinkInfo(props: ShareLinkInfoProps) {
           <ShareTitle>
             <FormattedMessage
               id="tyopaikantoimija.oppijanTiedot"
-              defaultMessage="{nimi}, {tutkintoNimi} "
+              defaultMessage="{nimi}, {tutkintoNimi}, {osaamisalaNimi} "
               values={{
                 nimi: share.oppijaNimi,
-                tutkintoNimi: share.tutkintoNimi.fi
+                tutkintoNimi: share.tutkintoNimi.fi,
+                osaamisalaNimi: share.osaamisalaNimi.fi
               }}
             />
           </ShareTitle>
