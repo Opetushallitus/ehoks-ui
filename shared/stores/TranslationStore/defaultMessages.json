@@ -423,5 +423,75 @@
     "locale": "fi",
     "key": "introDialog.page1Logo",
     "value": "eHOKS logo"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.OpiskelijapalauteTitle\"",
+    "value": "Opiskelijapalaute"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.opiskelijapalautePaattymispvmTitle",
+    "value": "Vastaamisajan päättymispäivä"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.opiskelijapalauteSahkopostiTitle",
+    "value": "Opiskelijan sähköpostiosoite"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.opiskelijapalauteTilaTitle",
+    "value": "Opiskelijapalautteen tila"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.opiskelijapalauteTyyppiTitle",
+    "value": "Kyselyn tyyppi"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.opiskelijapalauteTila",
+    "value": "Viesti on lähetetty {date} opiskelijalle"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.opiskelijapalauteTyyppi.aloittaneet",
+    "value": "Aloittaneet"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.opiskelijapalauteTyyppi.tutkinnonsuorittaneet",
+    "value": "Tutkinnon suorittaneet"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.opiskelijapalauteTyyppi.tutkinnonosiasuorittaneet",
+    "value": "Tutkinnon osia suorittaneet"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.opiskelijapalauteResendButton",
+    "value": "Lähetä linkki opiskelijapalautekyselyyn uudestaan"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.opiskelijapalauteEiPalautteita",
+    "value": "Ei aktiivisia palautteita"
+  },
+  {
+    "locale": "fi",
+    "key": "notification.Opiskelijapalaute.resendPalaute.success",
+    "value": "Sähköposti opiskelijapalautteesta lähetetään osoitteeseen {sahkoposti}."
+  },
+  {
+    "locale": "fi",
+    "key": "errors.Opiskelijapalaute.resendPalaute",
+    "value": "Virhe uudelleenlähetyspyynnön käsittelyssä"
+  },
+  {
+    "locale": "fi",
+    "key": "notification.piilotaNotifikaatioAriaLabel",
+    "value": "Piilota ilmoitus"
   }
 ]
