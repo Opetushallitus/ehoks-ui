@@ -173,9 +173,9 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
   state = {
     showMenu: false
   }
-  logout = (event: React.MouseEvent) => {
+  logoutOppija = (event: React.MouseEvent) => {
     event.preventDefault()
-    this.props.store!.session!.logout()
+    this.props.store!.session!.logoutOppija()
   }
 
   changeLocale = (locale: Locale) => (event: React.MouseEvent) => {
@@ -280,7 +280,7 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
               <User>
                 {user.firstName} {user.surname}
               </User>
-              <LogoutLink to="" onClick={this.logout}>
+              <LogoutLink to="" onClick={this.logoutOppija}>
                 <FormattedMessage
                   id="header.kirjauduUlosLink"
                   defaultMessage="Kirjaudu ulos"
@@ -294,7 +294,7 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
             activeLocale={activeLocale}
             changeLocale={this.changeLocale}
             toggleMenu={this.toggleMenu}
-            logout={this.logout}
+            logout={this.logoutOppija}
             session={session!}
           />
         )}

@@ -84,7 +84,7 @@ export const SessionStore = types
       }
     })
 
-    const logout = flow(function*() {
+    const logoutOppija = flow(function*() {
       self.isLoading = true
       try {
         yield deleteResource(apiUrl("oppija/session"), {
@@ -106,7 +106,7 @@ export const SessionStore = types
       checkSession,
       fetchSettings,
       fetchUserInfo,
-      logout,
+      logoutOppija,
       resetUserDidLogout,
       saveSettings
     }

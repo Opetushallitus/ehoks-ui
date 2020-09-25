@@ -82,7 +82,7 @@ describe("SessionStore", () => {
       surname: "Testaaja"
     })
 
-    store.logout()
+    store.logoutOppija()
     expect(store.isLoading).toBe(true)
 
     when(
