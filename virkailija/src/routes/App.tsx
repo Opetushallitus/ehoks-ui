@@ -15,6 +15,7 @@ import { LuoHOKS } from "./LuoHOKS"
 import { MuokkaaHOKS } from "./MuokkaaHOKS"
 import { VirkailijaRaamit } from "./VirkailijaRaamit"
 import { Yllapito } from "./Yllapito"
+import AppNotifications from "./App/AppNotifications"
 
 const Container = styled("div")`
   margin: 0;
@@ -72,6 +73,7 @@ export class App extends React.Component<AppProps> {
           <Container>
             <VirkailijaRaamit />
             <Header />
+            <AppNotifications />
             <StyledRouter basepath="/ehoks-virkailija-ui">
               <Redirect
                 from="/"
