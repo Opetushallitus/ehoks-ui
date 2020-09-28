@@ -173,18 +173,25 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
   state = {
     showMenu: false
   }
-  logoutOppija = (event: React.MouseEvent) => {
+
+  logoutOppija = async (event: React.MouseEvent) => {
     event.preventDefault()
     const rootStore = this.props.store
-    rootStore!.session.logoutOppija()
-
     // featureflags.casOppija
     const casOppijaFeatureFlag = false
     if (casOppijaFeatureFlag) {
-      window.location.href =
-        rootStore!.translations.activeLocale === Locale.FI
-          ? rootStore!.environment.casOppijaLogoutUrlFi
-          : rootStore!.environment.casOppijaLogoutUrlSv
+      try {
+        // Ends ehoks session, doesn't end cas session
+        await rootStore!.session.logoutOppija()
+      } finally {
+        // Ends cas session
+        window.location.href =
+          rootStore!.translations.activeLocale === Locale.FI
+            ? rootStore!.environment.casOppijaLogoutUrlFi
+            : rootStore!.environment.casOppijaLogoutUrlSv
+      }
+    } else {
+      rootStore!.session.logoutOppija()
     }
   }
 
