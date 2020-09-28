@@ -30,7 +30,7 @@ const appContext = {
   featureFlags: {
     shareDialog: false,
     shareNotifications: false,
-    casOppija: false // set flag value also to oppija SessionStore.logoutOppija
+    casOppija: false // set flag value also to oppija AppHeader.tsx
   }
 }
 
