@@ -175,7 +175,17 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
   }
   logoutOppija = (event: React.MouseEvent) => {
     event.preventDefault()
-    this.props.store!.session!.logoutOppija()
+    const rootStore = this.props.store
+    rootStore!.session.logoutOppija()
+
+    // featureflags.casOppija
+    const casOppijaFeatureFlag = false
+    if (casOppijaFeatureFlag) {
+      window.location.href =
+        rootStore!.translations.activeLocale === Locale.FI
+          ? rootStore!.environment.casOppijaLogoutUrlFi
+          : rootStore!.environment.casOppijaLogoutUrlSv
+    }
   }
 
   changeLocale = (locale: Locale) => (event: React.MouseEvent) => {

@@ -86,30 +86,15 @@ export const SessionStore = types
 
     const logoutOppija = flow(function*() {
       self.isLoading = true
-      // featureflags.casOppija
-      const casOppijaFeatureFlag = false
-      if (casOppijaFeatureFlag) {
-        try {
-          yield deleteResource(apiUrl("oppija/session"), {
-            headers: appendCallerId()
-          })
-          self.user = undefined
-          self.userDidLogout = true
-          self.isLoading = false
-        } catch (error) {
-          errors.logError("SessionStore.logout", error.message)
-        }
-      } else {
-        try {
-          yield deleteResource(apiUrl("oppija/session"), {
-            headers: appendCallerId()
-          })
-          self.user = undefined
-          self.userDidLogout = true
-          self.isLoading = false
-        } catch (error) {
-          errors.logError("SessionStore.logout", error.message)
-        }
+      try {
+        yield deleteResource(apiUrl("oppija/session"), {
+          headers: appendCallerId()
+        })
+        self.user = undefined
+        self.userDidLogout = true
+        self.isLoading = false
+      } catch (error) {
+        errors.logError("SessionStore.logout", error.message)
       }
     })
 
