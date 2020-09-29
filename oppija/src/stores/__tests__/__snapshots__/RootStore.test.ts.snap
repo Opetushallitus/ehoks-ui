@@ -4,6 +4,8 @@ exports[`RootStore constructor should produce valid tree even with empty input o
 Object {
   "environment": Object {
     "casOppijaLoginUrl": "",
+    "casOppijaLogoutUrlFi": "",
+    "casOppijaLogoutUrlSv": "",
     "eperusteetPerusteUrl": "",
     "error": "",
     "isLoading": false,

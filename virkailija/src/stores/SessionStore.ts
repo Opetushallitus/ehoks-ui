@@ -79,7 +79,7 @@ export const SessionStore = types
       self.isLoading = false
     })
 
-    const logout = flow(function*() {
+    const logoutVirkailija = flow(function*() {
       self.isLoading = true
       try {
         yield deleteResource(apiUrl("virkailija/session"), {
@@ -103,7 +103,7 @@ export const SessionStore = types
 
     return {
       checkSession,
-      logout,
+      logoutVirkailija,
       resetUserDidLogout,
       changeSelectedOrganisationOid
     }

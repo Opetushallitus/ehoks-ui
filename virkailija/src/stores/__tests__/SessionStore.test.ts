@@ -93,7 +93,7 @@ describe("SessionStore", () => {
       ]
     })
 
-    store.logout()
+    store.logoutVirkailija()
     expect(store.isLoading).toBe(true)
 
     when(

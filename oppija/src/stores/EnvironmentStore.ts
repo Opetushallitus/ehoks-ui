@@ -16,7 +16,9 @@ const EnvironmentStoreModel = {
   opintopolkuLogoutUrlFi: types.optional(types.string, ""),
   opintopolkuLogoutUrlSv: types.optional(types.string, ""),
   virkailijaLoginUrl: types.optional(types.string, ""),
-  casOppijaLoginUrl: types.optional(types.string, "")
+  casOppijaLoginUrl: types.optional(types.string, ""),
+  casOppijaLogoutUrlFi: types.optional(types.string, ""),
+  casOppijaLogoutUrlSv: types.optional(types.string, "")
 }
 
 export const EnvironmentStore = types
@@ -40,7 +42,9 @@ export const EnvironmentStore = types
           opintopolkuLogoutUrlFi,
           opintopolkuLogoutUrlSv,
           virkailijaLoginUrl,
-          casOppijaLoginUrl
+          casOppijaLoginUrl,
+          casOppijaLogoutUrlFi,
+          casOppijaLogoutUrlSv
         } = response.data
         self.eperusteetPerusteUrl = eperusteetPerusteUrl
         self.opintopolkuLoginUrlFi = devBackendWithoutHost(
@@ -57,6 +61,8 @@ export const EnvironmentStore = types
         )
         self.virkailijaLoginUrl = virkailijaLoginUrl
         self.casOppijaLoginUrl = devBackendWithoutHost(casOppijaLoginUrl)
+        self.casOppijaLogoutUrlFi = devBackendWithoutHost(casOppijaLogoutUrlFi)
+        self.casOppijaLogoutUrlSv = devBackendWithoutHost(casOppijaLogoutUrlSv)
       } catch (error) {
         errors.logError("EnvironmentStore.getEnvironment", error.message)
       }

@@ -86,6 +86,11 @@ export function fetchUtils(
         ...init,
         method: "DELETE"
       })
+
+      if (!response.ok) {
+        throw new Error(response.statusText)
+      }
+
       return response.ok
     }
   }
