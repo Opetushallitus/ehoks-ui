@@ -1029,7 +1029,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         <form>
                           <HakuInput
                             type="text"
-                            placeholder="1.2.345.678.98.76543212345"
+                            placeholder="123456"
                             value={this.state.sendHerateId}
                             onChange={e =>
                               this.handleSendHerateIdChange(e.target.value)
