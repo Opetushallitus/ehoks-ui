@@ -10,6 +10,7 @@ import { IRootStore } from "stores/RootStore"
 import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 import { StudentFeedbackModal } from "./Suunnittelu/StudentFeedbackModal"
+import { AppContext } from "components/AppContext"
 
 const LoadingContainer = styled("div")`
   display: flex;
@@ -37,10 +38,14 @@ export class Suunnittelu extends React.Component<
   state: SuunnitteluState = {
     allLoaded: false
   }
+  static contextType = AppContext
+  declare context: React.ContextType<typeof AppContext>
   disposeLoginReaction: IReactionDisposer
+
   componentDidMount() {
     const { store } = this.props
     const { session } = store!
+    const { featureFlags } = this.context
 
     this.disposeLoginReaction = reaction(
       () => ({
@@ -51,12 +56,15 @@ export class Suunnittelu extends React.Component<
       async ({ isLoggedIn, userDidLogout, error }) => {
         // navigate to Opintopolku logout url after logging out
         if (!isLoggedIn) {
-          // check that user did actually logout or there was an error (no session)
-          if (userDidLogout || error) {
-            window.location.href =
-              this.props.store!.translations.activeLocale === Locale.SV
-                ? this.props.store!.environment.opintopolkuLogoutUrlSv
-                : this.props.store!.environment.opintopolkuLogoutUrlFi
+          // Remove context from this component when removing feature flag
+          if (!featureFlags.casOppija) {
+            // check that user did actually logout or there was an error (no session)
+            if (userDidLogout || error) {
+              window.location.href =
+                this.props.store!.translations.activeLocale === Locale.SV
+                  ? this.props.store!.environment.opintopolkuLogoutUrlSv
+                  : this.props.store!.environment.opintopolkuLogoutUrlFi
+            }
           }
           // ensure that SessionStore's checkSession call has finished
         } else {
