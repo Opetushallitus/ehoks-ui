@@ -17,7 +17,7 @@ export function getOsaamisvaatimukset(
   } | null,
   activeLocale: Locale.FI | Locale.SV
 ) {
-  if (!arviointi) {
+  if (!arviointi || !arviointi.arvioinninKohdealueet) {
     return []
   }
   return arviointi.arvioinninKohdealueet.map(kohdeAlue => ({
