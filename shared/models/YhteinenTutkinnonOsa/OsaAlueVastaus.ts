@@ -5,7 +5,7 @@ import { EPerusteetArviointi, EPerusteetNimi } from "../EPerusteetVastaus"
 const OsaamisTavoitteet = types.model({
   laajuus: types.optional(types.number, 0),
   pakollinen: types.maybe(types.boolean),
-  arviointi: types.optional(EPerusteetArviointi, {})
+  arviointi: types.maybeNull(EPerusteetArviointi)
 })
 
 export const OsaAlueVastaus = types
