@@ -3,17 +3,19 @@ import { Locale } from "../../stores/TranslationStore"
 
 export function getOsaamisvaatimukset(
   arviointi: {
-    arvioinninKohdealueet: {
-      otsikko: { fi: string; sv: string }
-      arvioinninKohteet: {
-        otsikko: { fi: string; sv: string } | null
-        arviointiAsteikko: string
-        osaamistasonKriteerit: {
-          osaamistaso: string
-          kriteerit: { fi: string; sv: string }[]
+    arvioinninKohdealueet:
+      | {
+          otsikko: { fi: string; sv: string }
+          arvioinninKohteet: {
+            otsikko?: { fi: string; sv: string } | null
+            arviointiAsteikko: string
+            osaamistasonKriteerit: {
+              osaamistaso: string
+              kriteerit: { fi: string; sv: string }[]
+            }[]
+          }[]
         }[]
-      }[]
-    }[]
+      | null
   } | null,
   activeLocale: Locale.FI | Locale.SV
 ) {
