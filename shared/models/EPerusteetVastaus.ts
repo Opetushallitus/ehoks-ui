@@ -28,7 +28,7 @@ const ArvioinninKohdealue = types.model({
 
 export const EPerusteetArviointi = types.model({
   id: types.optional(types.number, 0),
-  arvioinninKohdealueet: types.array(ArvioinninKohdealue)
+  arvioinninKohdealueet: types.maybeNull(types.array(ArvioinninKohdealue))
 })
 
 const EPerusteetAmmattitaitovaatimukset = types.model({
