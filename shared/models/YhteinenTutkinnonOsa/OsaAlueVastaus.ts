@@ -3,7 +3,7 @@ import { LocaleRoot } from "../helpers/LocaleRoot"
 import { EPerusteetArviointi, EPerusteetNimi } from "../EPerusteetVastaus"
 
 const OsaamisTavoitteet = types.model({
-  laajuus: types.optional(types.number, 0),
+  laajuus: types.optional(types.number, 0, [null, undefined]),
   pakollinen: types.maybe(types.boolean),
   arviointi: types.maybeNull(EPerusteetArviointi)
 })
