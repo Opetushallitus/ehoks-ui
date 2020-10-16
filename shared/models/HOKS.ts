@@ -156,6 +156,18 @@ export const HOKS = types
       return null
     }
 
+    const fetchOsaamispisteet = flow(function*(): any {
+      try {
+        if (!self.opiskeluOikeus) return
+
+        const tutkinto = yield fetchTutkinto()
+        const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
+        self.osaamispisteet = getOsaamispisteetFromRakenne(rakenne)
+      } catch (error) {
+        errors.logError("HOKS.fetchOsaamispisteet", error.message)
+      }
+    })
+
     function opiskeluoikeusIsValid(opiskeluOikeus: any) {
       if (opiskeluOikeus === undefined) return false
 
@@ -187,16 +199,18 @@ export const HOKS = types
 
         if (opiskeluoikeusIsValid(opiskeluOikeus)) {
           self.opiskeluOikeus = opiskeluOikeus
-          const tutkinto = yield fetchTutkinto()
-          const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
-          self.osaamispisteet = getOsaamispisteetFromRakenne(rakenne)
         }
       } catch (error) {
         errors.logError("HOKS.fetchOpiskeluoikeudet", error.message)
       }
     })
 
-    return { fetchDetails, fetchOpiskeluoikeudet, fetchOpiskelijapalauteTilat }
+    return {
+      fetchDetails,
+      fetchOpiskeluoikeudet,
+      fetchOpiskelijapalauteTilat,
+      fetchOsaamispisteet
+    }
   })
   .views(self => {
     const root: LocaleRoot = getRoot(self)
