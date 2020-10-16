@@ -20,6 +20,7 @@ import { FormattedMessage } from "react-intl"
 import { HMediaQuery } from "responsive"
 import styled from "styled"
 import { HelpPopup } from "components/HelpPopup"
+import { IReactionDisposer, reaction } from "mobx"
 
 const Section = styled("div")`
   display: flex;
@@ -71,10 +72,32 @@ export interface OmienOpintojenSuunnitteluProps extends RouteComponentProps {
 export class OmienOpintojenSuunnittelu extends React.Component<
   OmienOpintojenSuunnitteluProps
 > {
+  disposeReaction: IReactionDisposer
+
   componentDidMount() {
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
     })
+
+    this.disposeReaction = reaction(
+      () => this.props.suunnitelmat && this.props.suunnitelmat.length > 0,
+      async (hasSuunnitelmat: boolean) => {
+        if (hasSuunnitelmat) {
+          const suunnitelma = find(
+            this.props.suunnitelmat,
+            h => h.eid === this.props.id
+          )
+          if (suunnitelma) {
+            await suunnitelma.fetchOsaamispisteet()
+          }
+        }
+      },
+      { fireImmediately: true }
+    )
+  }
+
+  componentWillUnmount() {
+    this.disposeReaction()
   }
 
   setActiveTab = (route: string) => () => {
