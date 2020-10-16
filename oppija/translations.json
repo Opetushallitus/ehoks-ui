@@ -26,6 +26,7 @@
     "errors.EnvironmentStore.getEnvironment": "Ympäristömuuttujien haku epäonnistui",
     "errors.HOKS.fetchOpiskeluoikeudet": "Opiskeluoikeuksien hakeminen epäonnistui",
     "errors.HOKS.fetchOpiskeluoikeudet.wrongType": "HOKSiin liitetty opiskeluoikeus ei ole ammatillinen tutkinto",
+    "errors.HOKS.fetchOsaamispisteet": "Osaamispisteiden haku epäonnistui",
     "errors.HOKSStore.haeSuunnitelmat": "Suunnitelmien haku epäonnistui",
     "errors.HOKSStore.haeSuunnitelmat.notfound": "Suunnitelmia ei löytynyt",
     "errors.NotificationStore.haeMuistutukset": "Muistutusten haku epäonnistui",
