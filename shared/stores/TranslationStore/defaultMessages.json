@@ -86,6 +86,11 @@
   },
   {
     "locale": "fi",
+    "key": "errors.HOKS.fetchOsaamispisteet",
+    "value": "Osaamispisteiden haku epäonnistui"
+  },
+  {
+    "locale": "fi",
     "key": "errors.EnrichKoodiUri.fetchEPerusteet",
     "value": "Tutkinnon osien haku ePerusteista epäonnistui"
   },

@@ -156,6 +156,32 @@ export const HOKS = types
       return null
     }
 
+    const fetchOsaamispisteet = flow(function*(): any {
+      try {
+        if (!self.opiskeluOikeus) return
+
+        const tutkinto = yield fetchTutkinto()
+        const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
+        self.osaamispisteet = getOsaamispisteetFromRakenne(rakenne)
+      } catch (error) {
+        errors.logError("HOKS.fetchOsaamispisteet", error.message)
+      }
+    })
+
+    function opiskeluoikeusIsValid(opiskeluOikeus: any) {
+      if (opiskeluOikeus === undefined) return false
+
+      if (opiskeluOikeus.tyyppi.koodiarvo !== "ammatillinenkoulutus") {
+        errors.logError(
+          "HOKS.fetchOpiskeluoikeudet",
+          "HOKS.fetchOpiskeluoikeudet.wrongType"
+        )
+        return false
+      }
+
+      return true
+    }
+
     const fetchOpiskeluoikeudet = flow(function*(): any {
       if (!self.oppijaOid) {
         return
@@ -171,26 +197,20 @@ export const HOKS = types
           (oo: any) => oo.oid === self.opiskeluoikeusOid
         )
 
-        if (opiskeluOikeus === undefined) return
-
-        if (opiskeluOikeus.tyyppi.koodiarvo !== "ammatillinenkoulutus") {
-          errors.logError(
-            "HOKS.fetchOpiskeluoikeudet",
-            "HOKS.fetchOpiskeluoikeudet.wrongType"
-          )
-          return
+        if (opiskeluoikeusIsValid(opiskeluOikeus)) {
+          self.opiskeluOikeus = opiskeluOikeus
         }
-
-        self.opiskeluOikeus = opiskeluOikeus
-        const tutkinto = yield fetchTutkinto()
-        const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
-        self.osaamispisteet = getOsaamispisteetFromRakenne(rakenne)
       } catch (error) {
         errors.logError("HOKS.fetchOpiskeluoikeudet", error.message)
       }
     })
 
-    return { fetchDetails, fetchOpiskeluoikeudet, fetchOpiskelijapalauteTilat }
+    return {
+      fetchDetails,
+      fetchOpiskeluoikeudet,
+      fetchOpiskelijapalauteTilat,
+      fetchOsaamispisteet
+    }
   })
   .views(self => {
     const root: LocaleRoot = getRoot(self)
