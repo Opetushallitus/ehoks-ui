@@ -71,6 +71,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
           if (suunnitelma) {
             await suunnitelma.fetchDetails()
             await suunnitelma.fetchOpiskelijapalauteTilat()
+            await suunnitelma.fetchOsaamispisteet()
           }
         }
       },
