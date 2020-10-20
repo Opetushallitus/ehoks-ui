@@ -59,14 +59,7 @@ const OsaamisenSaavuttaminenMessage = ({
       />
       &nbsp; <FormattedDate date={osaamisenSaavuttamisenPvm} />
     </Timestamp>
-  ) : (
-    <Timestamp>
-      <FormattedMessage
-        id="koulutuksenJarjestaja.opiskelija.osaaminenEiVielaSaavutettuTitle"
-        defaultMessage="Sovittua osaamista ei vielä saavutettu"
-      />
-    </Timestamp>
-  )
+  ) : null
 
 export class HOKSInfo extends React.Component<HOKSInfoProps> {
   render() {
