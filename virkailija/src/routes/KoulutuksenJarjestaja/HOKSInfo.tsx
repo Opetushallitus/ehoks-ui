@@ -87,7 +87,7 @@ export class HOKSInfo extends React.Component<HOKSInfoProps> {
             id="koulutuksenJarjestaja.opiskelija.paivitettyTitle"
             defaultMessage="Päivitetty"
           />
-          &nbsp; <FormattedDate date={oppija.paivitetty} />
+          &nbsp; <FormattedDate date={suunnitelma.paivitetty} />
         </Timestamp>
         <Timestamp>
           <OsaamisenSaavuttaminenMessage
