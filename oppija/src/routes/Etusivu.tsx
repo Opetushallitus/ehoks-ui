@@ -150,7 +150,10 @@ export class Etusivu extends React.Component<EtusivuProps> {
     // Remove context from this component when removing feature flag
     if (featureFlags.casOppija) {
       if (!store!.session.isLoggedIn) {
-        window.location.href = store!.environment.casOppijaLoginUrl
+        window.location.href =
+          store!.translations.activeLocale === Locale.SV
+            ? store!.environment.casOppijaLoginUrlSv
+            : store!.environment.casOppijaLoginUrlFi
       }
     } else {
       window.location.href =
