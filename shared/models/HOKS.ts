@@ -287,9 +287,14 @@ export const HOKS = types
           : ""
       },
       get tutkinnonNimi() {
-        return self.opiskeluOikeus.suoritukset.length
+        const isOsittainen = self.opiskeluOikeus.suoritukset.length
+          ? self.opiskeluOikeus.suoritukset[0].tyyppi.isOsittainenSuoritus
+          : false
+        const nimi = self.opiskeluOikeus.suoritukset.length
           ? self.opiskeluOikeus.suoritukset[0].koulutusmoduuli.nimi
           : ""
+        console.log("tutkinnonNimi: " + nimi + ", osittainen: " + isOsittainen)
+        return isOsittainen ? nimi + ", osittainen" : nimi
       },
       get valmiitOpinnot() {
         return this.hankittavatTutkinnonOsat.filter(to => to.tila === "valmis")
