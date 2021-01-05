@@ -268,8 +268,13 @@ export const HOKS = types
             self.opiskeluOikeus.suoritukset[0].osaamisala.length
           )
 
-        const getLatestOsaamisala = (osaamisalat: IOsaamisala[]) =>
-          maxBy(osaamisalat, (osaamisala: IOsaamisala) => osaamisala.alku)
+        const getLatestOsaamisala = (osaamisalat: IOsaamisala[]) => {
+          if (osaamisalat.length === 1) return osaamisalat[0]
+          return maxBy(
+            osaamisalat,
+            (osaamisala: IOsaamisala) => osaamisala.alku
+          )
+        }
 
         if (opiskeluOikeusDoesntHaveOsaamisala()) return ""
 
