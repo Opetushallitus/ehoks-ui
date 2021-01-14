@@ -116,5 +116,8 @@ export const Opiskeluoikeus = types
     },
     get oppilaitosNimi() {
       return self.oppilaitos.oppilaitosNimi
+    },
+    get isOsittainen() {
+      return self.suoritukset.some(s => s.tyyppi.isOsittainenSuoritus)
     }
   }))

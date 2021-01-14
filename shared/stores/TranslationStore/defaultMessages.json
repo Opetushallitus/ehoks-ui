@@ -498,5 +498,10 @@
     "locale": "fi",
     "key": "notification.piilotaNotifikaatioAriaLabel",
     "value": "Piilota ilmoitus"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskeluoikeus.osittainen",
+    "value": "osittainen"
   }
 ]

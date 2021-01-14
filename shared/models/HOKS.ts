@@ -22,6 +22,8 @@ import { OpiskeluvalmiuksiaTukevatOpinnot } from "./OpiskeluvalmiuksiaTukevatOpi
 import { AiemminHankitunYTOOsaAlue } from "./YhteinenTutkinnonOsa/AiemminHankitunYTOOsaAlue"
 import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 import { OpiskelijapalauteTila } from "./OpiskelijapalauteTila"
+import { IRootStore } from "../../virkailija/src/stores/RootStore"
+import { Locale } from "../stores/TranslationStore"
 
 const Model = types.model("HOKSModel", {
   eid: types.optional(types.string, ""),
@@ -287,14 +289,19 @@ export const HOKS = types
           : ""
       },
       get tutkinnonNimi() {
-        const isOsittainen = self.opiskeluOikeus.suoritukset.length
-          ? self.opiskeluOikeus.suoritukset[0].tyyppi.isOsittainenSuoritus
-          : false
-        const nimi = self.opiskeluOikeus.suoritukset.length
+        const isOsittainen = self.opiskeluOikeus.isOsittainen
+
+        const translations = getRoot<IRootStore>(self).translations
+        const activeLocale: Locale = translations.activeLocale
+        const osittainenText: string =
+          translations.messages[activeLocale]["opiskeluoikeus.osittainen"] ||
+          "osittainen"
+        const tutkinnonNimi = self.opiskeluOikeus.suoritukset.length
           ? self.opiskeluOikeus.suoritukset[0].koulutusmoduuli.nimi
           : ""
-        console.log("tutkinnonNimi: " + nimi + ", osittainen: " + isOsittainen)
-        return isOsittainen ? nimi + ", osittainen" : nimi
+        const osittainenResult = isOsittainen ? ", " + osittainenText : ""
+
+        return tutkinnonNimi + osittainenResult
       },
       get valmiitOpinnot() {
         return this.hankittavatTutkinnonOsat.filter(to => to.tila === "valmis")
