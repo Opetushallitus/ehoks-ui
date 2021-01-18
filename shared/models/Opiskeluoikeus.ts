@@ -12,6 +12,16 @@ const Suoritustapa = types
     }
   }))
 
+const SuorituksenTyyppi = types
+  .model("SuorituksenTyyppi", {
+    koodiarvo: types.optional(types.string, "")
+  })
+  .views(self => ({
+    get isOsittainenSuoritus() {
+      return self.koodiarvo.indexOf("osittainen") !== -1
+    }
+  }))
+
 const Nimi = types.model("Nimi", {
   fi: types.optional(types.string, ""),
   sv: types.optional(types.string, "")
@@ -68,7 +78,8 @@ const Suoritus = types.model("Suoritus", {
   osaamisala: types.array(Osaamisala),
   koulutusmoduuli: types.optional(Koulutusmoduuli, {}),
   tutkintonimike: types.array(Tutkintonimike),
-  suoritustapa: types.optional(Suoritustapa, {})
+  suoritustapa: types.optional(Suoritustapa, {}),
+  tyyppi: types.optional(SuorituksenTyyppi, {})
 })
 
 const Oppilaitos = types
@@ -105,5 +116,8 @@ export const Opiskeluoikeus = types
     },
     get oppilaitosNimi() {
       return self.oppilaitos.oppilaitosNimi
+    },
+    get isOsittainen() {
+      return self.suoritukset.some(s => s.tyyppi.isOsittainenSuoritus)
     }
   }))

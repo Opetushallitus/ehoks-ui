@@ -112,13 +112,32 @@ export const Oppija = types
         : ""
     },
     get tutkinto(): string {
-      const activeLocale: Locale = getRoot<IRootStore>(self).translations
-        .activeLocale
+      const translations = getRoot<IRootStore>(self).translations
+      const activeLocale: Locale = translations.activeLocale
+      const osittainenText =
+        translations.messages[activeLocale]["opiskeluoikeus.osittainen"] ||
+        "osittainen"
+      const isOsittainen = self.suunnitelmat.some(
+        s =>
+          s.opiskeluOikeus.oid === self.opiskeluoikeusOid &&
+          s.opiskeluOikeus.isOsittainen
+      )
+
+      self.suunnitelmat.map(s => {
+        if (
+          s.opiskeluOikeus.oid === "" &&
+          s.opiskeluoikeusOid === self.opiskeluoikeusOid
+        ) {
+          s.fetchOpiskeluoikeudet()
+        }
+      })
+
+      const osittainenResult = isOsittainen ? ", " + osittainenText : ""
       switch (activeLocale) {
         case Locale.FI:
-          return self.tutkintoNimi.fi
+          return self.tutkintoNimi.fi + osittainenResult
         case Locale.SV:
-          return self.tutkintoNimi.sv
+          return self.tutkintoNimi.sv + osittainenResult
         default:
           return ""
       }
