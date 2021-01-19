@@ -1,6 +1,6 @@
 # eHOKS frontend
 
-Frontend repository for [eHOKS project](https://confluence.csc.fi/display/OPHPALV/eHOKS+-+hanke).
+Frontend repository for [eHOKS project](https://wiki.eduuni.fi/x/LYZcCw).
 
 ## Getting started
 
