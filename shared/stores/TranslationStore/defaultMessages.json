@@ -71,6 +71,11 @@
   },
   {
     "locale": "fi",
+    "key": "errors.SessionStore.valtuudet",
+    "value": "Olet kirjautunut käyttäen valtuuksia. Voit käyttää eHOKSia kirjauduttuasi ulos, ja sen jälkeen takaisin sisään ilman valtuuksia."
+  },
+  {
+    "locale": "fi",
     "key": "errors.SessionStore.logout",
     "value": "Uloskirjautuminen epäonnistui"
   },

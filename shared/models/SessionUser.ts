@@ -27,7 +27,8 @@ export const SessionUser = types
     firstName: types.optional(types.string, ""),
     oid: types.optional(types.string, ""),
     surname: types.optional(types.string, ""),
-    fullName: types.optional(types.string, "")
+    fullName: types.optional(types.string, ""),
+    usingValtuudet: types.optional(types.boolean, false)
   })
   .views(self => ({
     get yhteystiedot(): Yhteystiedot {
