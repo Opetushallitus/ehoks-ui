@@ -49,6 +49,10 @@ export const HOKSStore = types
     >(self)
 
     const haeSuunnitelmat = flow(function*(oid: string): any {
+      if (oid === "") {
+        console.log("HOKSeja ei voida hakea, koska oppijaOid ei ole tiedossa.")
+        return
+      }
       self.isLoading = true
       try {
         const response: APIResponse = yield fetchCollection(
