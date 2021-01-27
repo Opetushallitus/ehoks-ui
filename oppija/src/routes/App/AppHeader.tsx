@@ -295,8 +295,13 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
           {isLoggedIn && user && (
             <LogoutContainer>
               <User>
-                {user.usingValtuudet ? "(Valtuudet)" : null} {user.firstName}{" "}
-                {user.surname}
+                {user.usingValtuudet ? (
+                  <FormattedMessage
+                    id="header.valtuudet"
+                    defaultMessage="(Valtuudet)"
+                  />
+                ) : null}
+                {user.firstName} {user.surname}
               </User>
               <LogoutLink to="" onClick={this.logoutOppija}>
                 <FormattedMessage

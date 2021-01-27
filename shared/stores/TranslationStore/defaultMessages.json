@@ -146,6 +146,11 @@
   },
   {
     "locale": "fi",
+    "key": "header.valtuudet",
+    "value": "(Valtuudet)"
+  },
+  {
+    "locale": "fi",
     "key": "opiskelusuunnitelma.piilotaAmmattitaitovaatimuksetAriaLabel",
     "value": "Piilota ammattitaitovaatimukset ja arviointikriteerit"
   },
