@@ -16,7 +16,8 @@ const EnvironmentStoreModel = {
   opintopolkuLogoutUrlFi: types.optional(types.string, ""),
   opintopolkuLogoutUrlSv: types.optional(types.string, ""),
   virkailijaLoginUrl: types.optional(types.string, ""),
-  casOppijaLoginUrl: types.optional(types.string, ""),
+  casOppijaLoginUrlFi: types.optional(types.string, ""),
+  casOppijaLoginUrlSv: types.optional(types.string, ""),
   casOppijaLogoutUrlFi: types.optional(types.string, ""),
   casOppijaLogoutUrlSv: types.optional(types.string, "")
 }
@@ -42,7 +43,8 @@ export const EnvironmentStore = types
           opintopolkuLogoutUrlFi,
           opintopolkuLogoutUrlSv,
           virkailijaLoginUrl,
-          casOppijaLoginUrl,
+          casOppijaLoginUrlFi,
+          casOppijaLoginUrlSv,
           casOppijaLogoutUrlFi,
           casOppijaLogoutUrlSv
         } = response.data
@@ -60,7 +62,8 @@ export const EnvironmentStore = types
           opintopolkuLogoutUrlSv
         )
         self.virkailijaLoginUrl = virkailijaLoginUrl
-        self.casOppijaLoginUrl = devBackendWithoutHost(casOppijaLoginUrl)
+        self.casOppijaLoginUrlFi = devBackendWithoutHost(casOppijaLoginUrlFi)
+        self.casOppijaLoginUrlSv = devBackendWithoutHost(casOppijaLoginUrlSv)
         self.casOppijaLogoutUrlFi = devBackendWithoutHost(casOppijaLogoutUrlFi)
         self.casOppijaLogoutUrlSv = devBackendWithoutHost(casOppijaLogoutUrlSv)
       } catch (error) {

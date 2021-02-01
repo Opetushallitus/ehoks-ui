@@ -57,7 +57,8 @@ describe("SessionStore", () => {
           firstName: "Teuvo Taavetti",
           fullName: "",
           oid: "1.1.111.111.11.111111111",
-          surname: "Testaaja"
+          surname: "Testaaja",
+          usingValtuudet: false
         })
         done()
       }
@@ -79,7 +80,8 @@ describe("SessionStore", () => {
       firstName: "Teuvo Taavetti",
       fullName: "",
       oid: "",
-      surname: "Testaaja"
+      surname: "Testaaja",
+      usingValtuudet: false
     })
 
     store.logoutOppija()

@@ -100,6 +100,12 @@ export const NotificationStore = types
     }
 
     const haeOpiskelijapalautelinkit = flow(function*(oid: string): any {
+      if (oid === "") {
+        console.log(
+          "Opiskelijapalautelinkkejä ei voida hakea, koska oppijaOid ei ole määritelty."
+        )
+        return
+      }
       try {
         const response: APIResponse = yield fetchPrimitiveCollection(
           apiUrl(`oppija/oppijat/${oid}/kyselylinkit`),

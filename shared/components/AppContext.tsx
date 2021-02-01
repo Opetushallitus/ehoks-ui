@@ -36,6 +36,6 @@ export const AppContext = React.createContext<AppContextShape>({
   featureFlags: {
     shareDialog: false,
     shareNotifications: false,
-    casOppija: false
+    casOppija: true
   }
 })

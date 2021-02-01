@@ -3,7 +3,8 @@
 exports[`RootStore constructor should produce valid tree even with empty input object 1`] = `
 Object {
   "environment": Object {
-    "casOppijaLoginUrl": "",
+    "casOppijaLoginUrlFi": "",
+    "casOppijaLoginUrlSv": "",
     "casOppijaLogoutUrlFi": "",
     "casOppijaLogoutUrlSv": "",
     "eperusteetPerusteUrl": "",

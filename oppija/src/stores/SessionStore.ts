@@ -52,6 +52,13 @@ export const SessionStore = types
           apiUrl("oppija/session/user-info"),
           { headers: appendCallerId() }
         )
+        if (response.data.usingValtuudet) {
+          errors.logError(
+            "SessionStore.valtuudetKaytossa",
+            "SessionStore.valtuudet"
+          )
+          response.data.oid = ""
+        }
         self.user = response.data
       } catch (error) {
         errors.logError("SessionStore.fetchUserInfo", error.message)

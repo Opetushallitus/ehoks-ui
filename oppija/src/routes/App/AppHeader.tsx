@@ -178,7 +178,7 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
     event.preventDefault()
     const rootStore = this.props.store
     // featureflags.casOppija
-    const casOppijaFeatureFlag = false
+    const casOppijaFeatureFlag = true
     if (casOppijaFeatureFlag) {
       try {
         // Ends ehoks session, doesn't end cas session
@@ -295,6 +295,12 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
           {isLoggedIn && user && (
             <LogoutContainer>
               <User>
+                {user.usingValtuudet ? (
+                  <FormattedMessage
+                    id="header.valtuudet"
+                    defaultMessage="(Valtuudet)"
+                  />
+                ) : null}
                 {user.firstName} {user.surname}
               </User>
               <LogoutLink to="" onClick={this.logoutOppija}>
