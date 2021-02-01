@@ -1,7 +1,7 @@
 import styled from "styled"
 
 export const BottomToolbar = styled("div")`
-  position: fixed;
+  position: inherit;
   left: 0px;
   bottom: 0px;
   height: 60px;
