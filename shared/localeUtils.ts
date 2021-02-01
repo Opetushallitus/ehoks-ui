@@ -61,7 +61,18 @@ export function readLocaleFromDomain() {
 
 export function getActiveDomain() {
   const uri = window.location.toString()
-  return uri.includes("studieinfo") ? "studieinfo.fi" : "opintopolku.fi"
+  let prefix = ""
+  if (uri.includes("hahtuva")) {
+    prefix = "hahtuva"
+  } else if (uri.includes("untuva")) {
+    prefix = "untuva"
+  } else if (uri.includes("testi")) {
+    prefix = "testi"
+  }
+  const postfix = uri.includes("studieinfo")
+    ? "studieinfo.fi"
+    : "opintopolku.fi"
+  return prefix + postfix
 }
 
 export function setDocumentLocale(locale: Locale | string) {
