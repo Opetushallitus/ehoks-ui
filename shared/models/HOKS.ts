@@ -203,6 +203,7 @@ export const HOKS = types
           self.opiskeluOikeus = opiskeluOikeus
         }
       } catch (error) {
+        console.log(error)
         errors.logError("HOKS.fetchOpiskeluoikeudet", error.message)
       }
     })

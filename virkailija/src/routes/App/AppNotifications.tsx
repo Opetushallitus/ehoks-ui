@@ -52,9 +52,24 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
       notifications
     } = this.props.store!
 
+    console.log("unhandled")
+    console.log(unhandled)
+
+    const uniqueUnhandled: IAppError[] = []
+
+    unhandled.forEach(function(error: IAppError) {
+      const index = uniqueUnhandled.findIndex(
+        (err: { errorText: any }) => err.errorText === error.errorText
+      )
+      if (index <= -1) {
+        uniqueUnhandled.push(error)
+      }
+    })
+    console.log("uniqueUnhandled")
+    console.log(uniqueUnhandled)
     return (
       <Container>
-        {unhandled.map((error: IAppError, i: number) => (
+        {uniqueUnhandled.map((error: IAppError, i: number) => (
           <AppNotification key={i} type="error">
             <Content onClick={error.handle}>
               <Text>
