@@ -22,35 +22,9 @@ export const ErrorStore = types
   .actions(self => {
     // logError can accept either a plain string or a translation key as the errorText parameter,
     // see HOKSStore for an example of translation key usage.
-    const logError = (id: string, errorText?: string) => {
-      const error = { errorText, id, handled: false }
-      // Log error only if it is unique
-      console.log("GOT ERROR: " + error.errorText + ", " + error.id)
-      const index = self.errors.findIndex(
-        err => err.errorText === error.errorText && err.handled === false
-      )
-      if (index <= -1) {
-        console.log(
-          "NO EXISTING ERROR FOUND IN STORE, PUSHING: " +
-            error.errorText +
-            ", " +
-            error.id +
-            " index: " +
-            index
-        )
-        self.errors.push(error as any) // https://github.com/mobxjs/mobx-state-tree/issues/501
-      } else {
-        console.log(
-          "NOT PUSHING: " +
-            error.errorText +
-            ", " +
-            error.id +
-            " index: " +
-            index
-        )
-      }
-
-      //self.errors.push(error as any) // https://github.com/mobxjs/mobx-state-tree/issues/501
+    const logError = (id: string, errorText?: string, handled = false) => {
+      const error = { errorText, id, handled }
+      self.errors.push(error as any) // https://github.com/mobxjs/mobx-state-tree/issues/501
     }
     return { logError }
   })
