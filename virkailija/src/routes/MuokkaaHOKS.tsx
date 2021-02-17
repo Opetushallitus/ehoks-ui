@@ -36,7 +36,7 @@ import { EditHOKSStyles } from "./HOKSLomake/styles"
 import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
-import { appendCallerId } from "fetchUtils"
+import { appendCommonHeaders } from "fetchUtils"
 
 const disallowedKeys = ["eid", "manuaalisyotto", "module-id"]
 
@@ -156,7 +156,7 @@ export class MuokkaaHOKS extends React.Component<
       `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksId}`,
       {
         credentials: "include",
-        headers: appendCallerId(
+        headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json"
@@ -239,7 +239,7 @@ export class MuokkaaHOKS extends React.Component<
       {
         method: "PUT",
         credentials: "include",
-        headers: appendCallerId(
+        headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json"
