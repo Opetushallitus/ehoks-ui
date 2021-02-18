@@ -211,28 +211,13 @@ const Urasuunnitelma = ({
     title={title}
     onToggle={toggleUrasuunnitelma}
   >
-    {urasuunnitelma && urasuunnitelma.nimi && (
-      <InfoTable>
-        <tbody>
-          <tr>
-            <th>
-              <FormattedMessage
-                id="tavoitteet.suunnitelmaJatkoOpintoihinTitle"
-                defaultMessage="Suunnitelma jatko-opintoihin siirtymisestä"
-              />
-            </th>
-            <th />
-            <th />
-          </tr>
-          <tr>
-            <LabeledColumn id="tavoitteet.suunnitelmaJatkoOpintoihinTitle">
-              {urasuunnitelma.nimi}
-            </LabeledColumn>
-            <td />
-            <td />
-          </tr>
-        </tbody>
-      </InfoTable>
+    {urasuunnitelma && urasuunnitelma.nimi ? (
+      <span>{urasuunnitelma.nimi}</span>
+    ) : (
+      <FormattedMessage
+        id="tavoitteet.urasuunnitelmaTietoaEiOleTallennettu"
+        defaultMessage="Tietoa ei ole tallennettu."
+      />
     )}
   </Accordion>
 )
