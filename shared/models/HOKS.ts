@@ -203,7 +203,15 @@ export const HOKS = types
           self.opiskeluOikeus = opiskeluOikeus
         }
       } catch (error) {
-        errors.logError("HOKS.fetchOpiskeluoikeudet", error.message)
+        // Log error only if it is unique
+        const index = errors.unhandled.findIndex(
+          (err: { errorText: any }) => err.errorText === error.message
+        )
+        if (index === -1) {
+          errors.logError("HOKS.fetchOpiskeluoikeudet", error.message)
+        } else {
+          errors.logError("HOKS.fetchOpiskeluoikeudet", error.message, true)
+        }
       }
     })
 
