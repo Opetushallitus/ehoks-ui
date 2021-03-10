@@ -40,9 +40,13 @@ export const Oppija = types
     >(self)
 
     // fetches HOKSes with basic info (root level only)
+    const rootStore: IRootStore = getRoot<IRootStore>(self)
+    const oppilaitosOid: string = rootStore.session.selectedOrganisationOid
     const fetchSuunnitelmat = flow(function*(): any {
       const response: APIResponse = yield fetchCollection(
-        apiUrl(`virkailija/oppijat/${self.oid}/hoksit`),
+        apiUrl(
+          `virkailija/oppijat/${self.oid}/hoksit/oppilaitos/${oppilaitosOid}`
+        ),
         { headers: appendCallerId() }
       )
 
