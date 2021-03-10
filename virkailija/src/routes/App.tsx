@@ -1,7 +1,13 @@
 import { Redirect, Router } from "@reach/router"
 import { ThemeWrapper } from "components/ThemeWrapper"
-import { parseLocaleParam, setDocumentLocale, cleanLocaleParam, isLocaleStored,
-  readLocaleFromLocalStorage, getCasMeLocale } from "localeUtils"
+import {
+  parseLocaleParam,
+  setDocumentLocale,
+  cleanLocaleParam,
+  isLocaleStored,
+  readLocaleFromLocalStorage,
+  getCasMeLocale
+} from "localeUtils"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { IntlProvider } from "react-intl"
