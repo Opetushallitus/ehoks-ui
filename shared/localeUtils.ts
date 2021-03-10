@@ -5,42 +5,42 @@ import { fetch, appendCallerId } from "fetchUtils"
 export function parseLocaleParam(search: string) {
   const lang = queryString.parse(search).lang
   if (lang === "fi") {
-    saveLocaleToLocalStorage(Locale.FI)
+    saveLocaleToSessionStorage(Locale.FI)
     return Locale.FI
   } else if (lang === "sv") {
-    saveLocaleToLocalStorage(Locale.SV)
+    saveLocaleToSessionStorage(Locale.SV)
     return Locale.SV
   } else {
     return ""
   }
 }
 
-export function updateLocaleLocalStorage(locale: Locale | string): Locale {
+export function updateLocaleSessionStorage(locale: Locale | string): Locale {
   if (locale) {
-    saveLocaleToLocalStorage(locale)
+    saveLocaleToSessionStorage(locale)
     return locale === "fi" ? Locale.FI : Locale.SV
   } else {
-    return readLocaleFromLocalStorage()
+    return readLocaleFromSessionStorage()
   }
 }
 
-export function saveLocaleToLocalStorage(locale: string) {
-  if (window.localStorage) {
-    localStorage.setItem("ehoks-locale", locale)
+export function saveLocaleToSessionStorage(locale: string) {
+  if (window.sessionStorage) {
+    sessionStorage.setItem("ehoks-locale", locale)
   }
 }
 
 export function isLocaleStored() {
-  if (window.localStorage) {
-    return localStorage.getItem("ehoks-locale") ? true : false
+  if (window.sessionStorage) {
+    return sessionStorage.getItem("ehoks-locale") ? true : false
   } else {
     return false
   }
 }
 
-export function readLocaleFromLocalStorage() {
-  if (window.localStorage) {
-    const storedLocale = localStorage.getItem("ehoks-locale")
+export function readLocaleFromSessionStorage() {
+  if (window.sessionStorage) {
+    const storedLocale = sessionStorage.getItem("ehoks-locale")
     return storedLocale === "sv" ? Locale.SV : Locale.FI
   } else {
     return Locale.FI
