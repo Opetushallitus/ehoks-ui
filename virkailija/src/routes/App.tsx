@@ -4,8 +4,6 @@ import {
   parseLocaleParam,
   setDocumentLocale,
   cleanLocaleParam,
-  isLocaleStored,
-  readLocaleFromLocalStorage,
   getCasMeLocale
 } from "localeUtils"
 import { inject, observer } from "mobx-react"
@@ -58,8 +56,6 @@ export class App extends React.Component<AppProps> {
     if (localeParam) {
       store!.translations.setActiveLocale(localeParam)
       cleanLocaleParam()
-    } else if (isLocaleStored()) {
-      store!.translations.setActiveLocale(readLocaleFromLocalStorage())
     } else {
       try {
         const casMeLocale = await getCasMeLocale()
