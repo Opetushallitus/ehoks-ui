@@ -1,5 +1,6 @@
 import queryString from "query-string"
 import { Locale } from "stores/TranslationStore"
+import { fetch, appendCallerId } from "fetchUtils"
 
 export function parseLocaleParam(search: string) {
   const lang = queryString.parse(search).lang
@@ -81,4 +82,21 @@ export function setDocumentLocale(locale: Locale | string) {
   } else {
     document.documentElement.lang = "fi"
   }
+}
+
+export async function getCasMeLocale() {
+  const response = await fetch(
+    `${location.protocol}//${location.host}/cas/me`,
+    {
+      headers: appendCallerId()
+    }
+  )
+  console.log(response)
+  if (!response.ok) {
+    throw new Error(response.statusText)
+  }
+  const data = await response.json()
+  console.log(data)
+  console.log(data.lang)
+  return data.lang
 }
