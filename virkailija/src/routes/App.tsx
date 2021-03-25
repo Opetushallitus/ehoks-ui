@@ -1,6 +1,13 @@
 import { Redirect, Router } from "@reach/router"
 import { ThemeWrapper } from "components/ThemeWrapper"
-import { parseLocaleParam, setDocumentLocale } from "localeUtils"
+import {
+  parseLocaleParam,
+  setDocumentLocale,
+  cleanLocaleParam,
+  isLocaleStored,
+  readLocaleFromSessionStorage,
+  getCasMeLocale
+} from "localeUtils"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { IntlProvider } from "react-intl"
@@ -46,14 +53,26 @@ export class App extends React.Component<AppProps> {
         window.location.href = this.props.store!.environment.virkailijaLoginUrl
       }
     }
+    const { store } = this.props
+    const localeParam = parseLocaleParam(window.location.search)
+    if (localeParam) {
+      store!.translations.setActiveLocale(localeParam)
+      cleanLocaleParam()
+    } else if (isLocaleStored()) {
+      store!.translations.setActiveLocale(readLocaleFromSessionStorage())
+    } else {
+      try {
+        const casMeLocale = await getCasMeLocale()
+        store!.translations.setActiveLocale(casMeLocale)
+      } catch {
+        store!.translations.setActiveLocale(Locale.FI)
+      }
+    }
   }
 
   render() {
     const { store } = this.props
-    const localeParam = parseLocaleParam(window.location.search)
-    const activeLocale = localeParam
-      ? localeParam
-      : store!.translations.activeLocale
+    const activeLocale = store!.translations.activeLocale
     setDocumentLocale(activeLocale)
     const translations = store!.translations.messages[activeLocale]
     const messages =
