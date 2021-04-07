@@ -543,6 +543,8 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           "ui:order": [
             "osaamisen-hankkimistapa-koodi-uri",
             "osaamisen-hankkimistapa-koodi-versio",
+            "oppisopimuksen-perusta-uri",
+            "oppisopimuksen-perusta-versio",
             "alku",
             "loppu",
             "osa-aikaisuustieto",
@@ -561,6 +563,13 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             typeahead: typeaheadProps(options.osaamisenhankkimistapa)
           },
           "osaamisen-hankkimistapa-koodi-versio": {
+            "ui:widget": "hidden"
+          },
+          "oppisopimuksen-perusta-uri": {
+            "ui:field": "typeahead",
+            typeahead: typeaheadProps(options.oppisopimuksenperusta)
+          },
+          "oppisopimuksen-perusta-versio": {
             "ui:widget": "hidden"
           },
           "hankkijan-edustaja": {
