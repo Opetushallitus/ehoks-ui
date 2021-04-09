@@ -129,13 +129,17 @@ export const mockFetch = (apiUrl: (path: string) => string, version = 0) => (
 export const fetch = (url: string | Request, init: RequestInit) =>
   window.fetch(url, { credentials: "include", ...init })
 
-export const appendCallerId = (headers?: Headers) => {
-  if (headers) {
-    headers.append("Caller-Id", "1.2.246.562.10.00000000001.ehoks.ehoks-ui")
-    return headers
-  } else {
-    return new Headers({
-      "Caller-Id": "1.2.246.562.10.00000000001.ehoks.ehoks-ui"
-    })
+export const appendCommonHeaders = (headers?: Headers) => {
+  function getCSRF() {
+    const val = document.cookie.match("(^|;)\\s*CSRF\\s*=\\s*([^;]+)")
+    return val ? val.pop() : ""
   }
+  const CSRF_VALUE = "" + getCSRF()
+
+  const resultHeaders = headers ? headers : new Headers()
+  resultHeaders.append("Caller-Id", "1.2.246.562.10.00000000001.ehoks.ehoks-ui")
+  if (CSRF_VALUE !== "") {
+    resultHeaders.append("CSRF", CSRF_VALUE)
+  }
+  return resultHeaders
 }

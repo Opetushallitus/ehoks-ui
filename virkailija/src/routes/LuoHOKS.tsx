@@ -38,7 +38,7 @@ import { EditHOKSStyles } from "./HOKSLomake/styles"
 import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./LuoHOKS/uiSchema"
-import { appendCallerId } from "fetchUtils"
+import { appendCommonHeaders } from "fetchUtils"
 
 interface LuoHOKSProps extends RouteComponentProps {
   store?: IRootStore
@@ -190,7 +190,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       {
         method: "POST",
         credentials: "include",
-        headers: appendCallerId(
+        headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json"

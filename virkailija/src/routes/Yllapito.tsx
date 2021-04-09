@@ -9,7 +9,7 @@ import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
-import { appendCallerId } from "fetchUtils"
+import { appendCommonHeaders } from "fetchUtils"
 
 export const BackgroundContainer = styled("div")`
   background: #f8f8f8;
@@ -126,7 +126,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "GET",
         credentials: "include",
-        headers: appendCallerId(
+        headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json"
@@ -168,7 +168,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "DELETE",
         credentials: "include",
-        headers: appendCallerId(
+        headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json"
@@ -205,7 +205,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "POST",
         credentials: "include",
-        headers: appendCallerId(
+        headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json"
@@ -243,7 +243,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "GET",
         credentials: "include",
-        headers: appendCallerId(
+        headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json"
@@ -283,7 +283,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "GET",
         credentials: "include",
-        headers: appendCallerId(
+        headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json"
@@ -324,7 +324,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "GET",
         credentials: "include",
-        headers: appendCallerId(
+        headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json"
@@ -375,7 +375,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
           {
             method: "DELETE",
             credentials: "include",
-            headers: appendCallerId(
+            headers: appendCommonHeaders(
               new Headers({
                 Accept: "application/json; charset=utf-8",
                 "Content-Type": "application/json"
@@ -425,7 +425,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "PUT",
         credentials: "include",
-        headers: appendCallerId(
+        headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json"
@@ -466,7 +466,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "GET",
         credentials: "include",
-        headers: appendCallerId(
+        headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json"
@@ -499,7 +499,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
           {
             method: "PUT",
             credentials: "include",
-            headers: appendCallerId(
+            headers: appendCommonHeaders(
               new Headers({
                 Accept: "application/json; charset=utf-8",
                 "Content-Type": "application/json"
@@ -551,7 +551,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "PUT",
         credentials: "include",
-        headers: appendCallerId(
+        headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json"
@@ -592,7 +592,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "POST",
         credentials: "include",
-        headers: appendCallerId(
+        headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json"
