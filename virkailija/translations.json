@@ -264,6 +264,9 @@
     "yllapito.updateOpiskeluoikeudetButton": "Päivitä opiskeluoikeudet.",
     "yllapito.updateOpiskeluoikeusButton": "Päivitä opiskeluoikeuden tiedot opiskeluoikeus-indeksiin.",
     "yllapito.valimuistiKoko": "Koko: {cacheSize}",
-    "yllapito.valimuistiTitle": "Välimuisti"
+    "yllapito.valimuistiTitle": "Välimuisti",
+    "infoModal.naytaLisatiedot": "Näytä lisätiedot",
+    "infoModal.osaaikaisuus": "Osa-aikaisuus",
+    "infoModal.lisatietoja": "Lisätietoja"
   }
 }

@@ -326,6 +326,9 @@
     "tyopaikantoimija.linkinTiedot": "Työpaikalla oppimisen tiedot on jaettuna sinulle {voimassaoloAlku}-{voimassaoloLoppu} ",
     "tyopaikantoimija.oppijanTiedot": "{nimi}, {tutkintoNimi}, {osaamisalaNimi} ",
     "valinta.title": "Ammattillisten opintojen henkilökohtaistaminen",
-    "valinta.voimassaOlevatSuunnitelmasiTitle": "Voimassa olevat suunnitelmasi"
+    "valinta.voimassaOlevatSuunnitelmasiTitle": "Voimassa olevat suunnitelmasi",
+    "infoModal.naytaLisatiedot": "Näytä lisätiedot",
+    "infoModal.osaaikaisuus": "Osa-aikaisuus",
+    "infoModal.lisatietoja": "Lisätietoja"
   }
 }
