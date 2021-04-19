@@ -16,6 +16,21 @@
   },
   {
     "locale": "fi",
+    "key": "infoModal.naytaLisatiedot",
+    "value": "Näytä lisätiedot"
+  },
+  {
+    "locale": "fi",
+    "key": "infoModal.osaaikaisuus",
+    "value": "Osa-aikaisuus"
+  },
+  {
+    "locale": "fi",
+    "key": "infoModal.lisatietoja",
+    "value": "Lisätietoja"
+  },
+  {
+    "locale": "fi",
     "key": "table.haePlaceholder",
     "value": "Hae"
   },
