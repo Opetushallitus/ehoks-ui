@@ -63,7 +63,10 @@ export const EnrichKoodistoKoodiUri = (
           const { data }: APIResponse = yield cachedResponses[koodiUri]
           self[enrichedField] = parseResponse(data)
         } catch (error) {
-          errors.logError("EnrichKoodiUri.fetchKoodisto", error.message)
+          errors.logError(
+            "EnrichKoodiUri.fetchKoodisto",
+            `${koodiUri} Error: ${error.message}`
+          )
         }
       })
 
