@@ -204,13 +204,16 @@ export const HOKS = types
         }
       } catch (error) {
         // Log error only if it is unique
+        const errorMessage = `HOKS Id: ${self.id},
+                              OppijaOid: ${self.oppijaOid},
+                              Error: ${error.message}`
         const index = errors.unhandled.findIndex(
-          (err: { errorText: any }) => err.errorText === error.message
+          (err: { errorText: any }) => err.errorText === errorMessage
         )
         if (index === -1) {
-          errors.logError("HOKS.fetchOpiskeluoikeudet", error.message)
+          errors.logError("HOKS.fetchOpiskeluoikeudet", errorMessage)
         } else {
-          errors.logError("HOKS.fetchOpiskeluoikeudet", error.message, true)
+          errors.logError("HOKS.fetchOpiskeluoikeudet", errorMessage, true)
         }
       }
     })
