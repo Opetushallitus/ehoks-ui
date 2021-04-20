@@ -61,10 +61,21 @@ export const EnrichOrganisaatioOid = (
           const response: APIResponse = yield cachedResponses[organisaatioOid]
           self[enrichedProperty] = response.data
         } catch (error) {
-          errors.logError(
-            "EnrichOrganisaatioOid.fetchOrganisaatio",
-            error.message
+          const index = errors.unhandled.findIndex(
+            (err: { errorText: any }) => err.errorText === error.message
           )
+          if (index === -1) {
+            errors.logError(
+              "EnrichOrganisaatioOid.fetchOrganisaatio",
+              error.message
+            )
+          } else {
+            errors.logError(
+              "EnrichOrganisaatioOid.fetchOrganisaatio",
+              error.message,
+              true
+            )
+          }
         }
       })
 
