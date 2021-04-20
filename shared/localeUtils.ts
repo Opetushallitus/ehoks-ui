@@ -1,6 +1,6 @@
 import queryString from "query-string"
 import { Locale } from "stores/TranslationStore"
-import { fetch, appendCallerId } from "fetchUtils"
+import { fetch, appendCommonHeaders } from "fetchUtils"
 
 export function parseLocaleParam(search: string) {
   const lang = queryString.parse(search).lang
@@ -88,7 +88,7 @@ export async function getCasMeLocale() {
   const response = await fetch(
     `${location.protocol}//${location.host}/cas/me`,
     {
-      headers: appendCallerId()
+      headers: appendCommonHeaders()
     }
   )
   if (!response.ok) {
