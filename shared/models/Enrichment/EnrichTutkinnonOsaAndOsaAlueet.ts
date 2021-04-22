@@ -42,14 +42,7 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
         ]
         self.tutkinnonOsaId = response.data?.id
       } catch (error) {
-        const index = errors.unhandled.findIndex(
-          (err: { errorText: any }) => err.errorText === error.message
-        )
-        if (index === -1) {
-          errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
-        } else {
-          errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message, true)
-        }
+        errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
       }
     })
 
@@ -94,18 +87,7 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
 
         self.osaAlueet.forEach(getEnrichedDataForOsaAlue(data))
       } catch (error) {
-        const index = errors.unhandled.findIndex(
-          (err: { errorText: any }) => err.errorText === error.message
-        )
-        if (index === -1) {
-          errors.logError("EnrichOsaAlue.fetchFromEPerusteet", error.message)
-        } else {
-          errors.logError(
-            "EnrichOsaAlue.fetchFromEPerusteet",
-            error.message,
-            true
-          )
-        }
+        errors.logError("EnrichOsaAlue.fetchFromEPerusteet", error.message)
       }
     })
 
