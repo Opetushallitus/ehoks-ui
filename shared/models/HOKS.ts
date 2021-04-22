@@ -170,14 +170,17 @@ export const HOKS = types
       }
     })
 
-    function opiskeluoikeusIsValid(opiskeluOikeus: any) {
+    async function opiskeluoikeusIsValid(opiskeluOikeus: any) {
       if (opiskeluOikeus === undefined) return false
 
       if (opiskeluOikeus.tyyppi.koodiarvo !== "ammatillinenkoulutus") {
-        errors.logError(
-          "HOKS.fetchOpiskeluoikeudet",
-          "HOKS.fetchOpiskeluoikeudet.wrongType"
+        const oppija: any = await fetchSingle(
+          apiUrl(`virkailija/oppijat/${self.oppijaOid}`),
+          { headers: appendCallerId() }
         )
+
+        const errorMessage = `Oppija: ${oppija.data.nimi}, Oppija oid: ${self.oppijaOid}, Hoks id: ${self.id}`
+        errors.logError("HOKS.fetchOpiskeluoikeudet.wrongType", errorMessage)
         return false
       }
 
