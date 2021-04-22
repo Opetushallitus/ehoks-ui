@@ -24,7 +24,22 @@ export const ErrorStore = types
     // see HOKSStore for an example of translation key usage.
     const logError = (id: string, errorText?: string, handled = false) => {
       const error = { errorText, id, handled }
-      self.errors.push(error as any) // https://github.com/mobxjs/mobx-state-tree/issues/501
+      const index = self.errors
+        .filter(e => !e.handled)
+        .findIndex(
+          (err: { errorText: any }) => err.errorText === error.errorText
+        )
+      if (index === -1) {
+        console.log("unhandled")
+        console.log(error.errorText)
+        self.errors.push(error as any) // https://github.com/mobxjs/mobx-state-tree/issues/501
+      } else {
+        console.log("handled")
+        console.log(error.errorText)
+        const handledError = { ...error, handled: true }
+        self.errors.push(handledError as any) // https://github.com/mobxjs/mobx-state-tree/issues/501
+      }
+      console.log(self.errors)
     }
     return { logError }
   })

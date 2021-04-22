@@ -32,14 +32,7 @@ export const EnrichTutkinnonOsaKoodiUri = types
         const response: APIResponse = yield cachedResponses[koodiUri]
         self.tutkinnonOsa = response.data
       } catch (error) {
-        const index = errors.unhandled.findIndex(
-          (err: { errorText: any }) => err.errorText === error.message
-        )
-        if (index === -1) {
-          errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
-        } else {
-          errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message, true)
-        }
+        errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
       }
     })
 
