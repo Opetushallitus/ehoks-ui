@@ -39,7 +39,6 @@ export const ErrorStore = types
         const handledError = { ...error, handled: true }
         self.errors.push(handledError as any) // https://github.com/mobxjs/mobx-state-tree/issues/501
       }
-      console.log(self.errors)
     }
     return { logError }
   })
