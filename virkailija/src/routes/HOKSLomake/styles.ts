@@ -367,6 +367,24 @@ export const EditHOKSStyles = createGlobalStyle`
     filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
     cursor: not-allowed;
   }
+
+  .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: .25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+  }
+
+  .dropdown-item:hover {
+    color: #337ab7;
+  }
+
   .open > .dropdown-menu {
     display: block;
   }
