@@ -1,6 +1,7 @@
 import React from "react"
 import { MdInfo } from "react-icons/md"
 import { FormattedMessage, intlShape } from "react-intl"
+import { FormattedDate } from "components/FormattedDate"
 import Popup from "reactjs-popup"
 import styled from "styled"
 
@@ -30,11 +31,12 @@ const InfoButton = styled("button")`
 
 const Modal = styled("div")`
   font-size: 12px;
+  font-weight: 400;
 `
 const ModalHeader = styled("div")`
   border-bottom: 1px solid gray;
   font-size: 18px;
-  text-align: center;
+  text-align: left;
   padding: 5px;
 `
 const ModalContent = styled("div")`
@@ -45,6 +47,9 @@ const ModalContent = styled("div")`
 interface InfoModalProps {
   partTimeAmount?: number
   className?: string
+  nayttoymparistoDetails?: string
+  startDate?: string
+  endDate?: string
 }
 
 export class InfoModal extends React.Component<InfoModalProps> {
@@ -53,7 +58,13 @@ export class InfoModal extends React.Component<InfoModalProps> {
   }
   render() {
     const { intl } = this.context
-    const { className, partTimeAmount } = this.props
+    const {
+      className,
+      partTimeAmount,
+      startDate,
+      endDate,
+      nayttoymparistoDetails
+    } = this.props
     return (
       <Popup
         trigger={
@@ -73,8 +84,21 @@ export class InfoModal extends React.Component<InfoModalProps> {
             <ModalHeader>
               <FormattedMessage
                 id="infoModal.lisatietoja"
-                defaultMessage="Lisätietoja"
+                defaultMessage="Lisätietoja työpaikkajaksosta"
               />
+              <span>: {nayttoymparistoDetails}</span>
+              {startDate === endDate ? (
+                <span>
+                  {" "}
+                  <FormattedDate date={startDate} dateNotSet="" />
+                </span>
+              ) : (
+                <span>
+                  <FormattedDate date={startDate} dateNotSet="" />
+                  {" - "}
+                  <FormattedDate date={endDate} dateNotSet="" />
+                </span>
+              )}
             </ModalHeader>
             <ModalContent>
               <FormattedMessage

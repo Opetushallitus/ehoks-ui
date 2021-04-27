@@ -98,7 +98,12 @@ export class LearningEvent extends React.Component<LearningEventProps> {
             </div>
             {partTimeAmount && (
               <div style={{ display: "inline-block", marginLeft: 5 }}>
-                <InfoModal partTimeAmount={partTimeAmount} />
+                <InfoModal
+                  nayttoymparistoDetails={nayttoymparistoDetails}
+                  startDate={startDate}
+                  endDate={endDate}
+                  partTimeAmount={partTimeAmount}
+                />
               </div>
             )}
             {periodSpecifier && <Detail size={size}>{periodSpecifier}</Detail>}
