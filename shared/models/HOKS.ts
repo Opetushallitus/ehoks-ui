@@ -170,14 +170,17 @@ export const HOKS = types
       }
     })
 
-    function opiskeluoikeusIsValid(opiskeluOikeus: any) {
+    async function opiskeluoikeusIsValid(opiskeluOikeus: any) {
       if (opiskeluOikeus === undefined) return false
 
       if (opiskeluOikeus.tyyppi.koodiarvo !== "ammatillinenkoulutus") {
-        errors.logError(
-          "HOKS.fetchOpiskeluoikeudet",
-          "HOKS.fetchOpiskeluoikeudet.wrongType"
+        const oppija: any = await fetchSingle(
+          apiUrl(`virkailija/oppijat/${self.oppijaOid}`),
+          { headers: appendCallerId() }
         )
+
+        const errorMessage = `Oppija: ${oppija.data.nimi}, Oppija oid: ${self.oppijaOid}, Hoks id: ${self.id}`
+        errors.logError("HOKS.fetchOpiskeluoikeudet.wrongType", errorMessage)
         return false
       }
 
@@ -204,14 +207,12 @@ export const HOKS = types
         }
       } catch (error) {
         // Log error only if it is unique
-        const index = errors.unhandled.findIndex(
-          (err: { errorText: any }) => err.errorText === error.message
+        const oppija: APIResponse = yield fetchSingle(
+          apiUrl(`virkailija/oppijat/${self.oppijaOid}`),
+          { headers: appendCallerId() }
         )
-        if (index === -1) {
-          errors.logError("HOKS.fetchOpiskeluoikeudet", error.message)
-        } else {
-          errors.logError("HOKS.fetchOpiskeluoikeudet", error.message, true)
-        }
+        const errorMessage = `Oppija: ${oppija.data.nimi}, Oppija oid: ${self.oppijaOid}, Hoks id: ${self.id}, Error: ${error.message}`
+        errors.logError("HOKS.fetchOpiskeluoikeudet", errorMessage)
       }
     })
 
