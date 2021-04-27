@@ -30,12 +30,8 @@ export const ErrorStore = types
           (err: { errorText: any }) => err.errorText === error.errorText
         )
       if (index === -1) {
-        console.log("unhandled")
-        console.log(error.errorText)
         self.errors.push(error as any) // https://github.com/mobxjs/mobx-state-tree/issues/501
       } else {
-        console.log("handled")
-        console.log(error.errorText)
         const handledError = { ...error, handled: true }
         self.errors.push(handledError as any) // https://github.com/mobxjs/mobx-state-tree/issues/501
       }
