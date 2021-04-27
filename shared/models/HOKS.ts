@@ -206,13 +206,16 @@ export const HOKS = types
           self.opiskeluOikeus = opiskeluOikeus
         }
       } catch (error) {
-        // Log error only if it is unique
-        const oppija: APIResponse = yield fetchSingle(
-          apiUrl(`virkailija/oppijat/${self.oppijaOid}`),
-          { headers: appendCallerId() }
-        )
-        const errorMessage = `Oppija: ${oppija.data.nimi}, Oppija oid: ${self.oppijaOid}, Hoks id: ${self.id}, Error: ${error.message}`
-        errors.logError("HOKS.fetchOpiskeluoikeudet", errorMessage)
+        // Do not UI-log mobx-state-tree error
+        // "Cannot read property 'mergeCache' of undefined"
+        if (!error.message.includes("mergeCache")) {
+          const oppija: APIResponse = yield fetchSingle(
+            apiUrl(`virkailija/oppijat/${self.oppijaOid}`),
+            { headers: appendCallerId() }
+          )
+          const errorMessage = `Oppija: ${oppija.data.nimi}, Oppija oid: ${self.oppijaOid}, Hoks id: ${self.id}, Error: ${error.message}`
+          errors.logError("HOKS.fetchOpiskeluoikeudet", errorMessage)
+        }
       }
     })
 
