@@ -35,12 +35,12 @@ const Modal = styled("div")`
 `
 const ModalHeader = styled("div")`
   border-bottom: 1px solid gray;
-  font-size: 18px;
+  font-size: 16px;
   text-align: left;
   padding: 5px;
 `
 const ModalContent = styled("div")`
-  font-size: 18px;
+  font-size: 16px;
   padding: 5px;
 `
 
@@ -88,7 +88,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
                 id="infoModal.lisatietoja"
                 defaultMessage="Lisätietoja työpaikkajaksosta"
               />
-              <span>: {nayttoymparistoDetails}</span>
+              <span> {nayttoymparistoDetails}</span>
               {startDate === endDate ? (
                 <span>
                   {" "}
