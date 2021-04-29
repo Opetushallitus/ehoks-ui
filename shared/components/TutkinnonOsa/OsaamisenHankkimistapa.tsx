@@ -69,6 +69,8 @@ interface OsaamisenHankkimistapaProps {
   hasActiveShare?: boolean
   tutkinnonOsaTyyppi?: TutkinnonOsaType
   tutkinnonOsaModuleId?: string
+  partTimeAmount?: number
+  perusta?: string
 }
 
 @observer
@@ -109,7 +111,9 @@ export class OsaamisenHankkimistapa extends React.Component<
       ajanjaksonTarkenne,
       jarjestajanEdustaja,
       hankkijanEdustaja,
-      muutOppimisymparistot
+      muutOppimisymparistot,
+      osaAikaisuustieto,
+      oppisopimuksenPerustaKoodiUri
     } = osaamisenHankkimistapa
 
     const { vastuullinenTyopaikkaOhjaaja, keskeisetTyotehtavat } =
@@ -129,6 +133,8 @@ export class OsaamisenHankkimistapa extends React.Component<
               endDate={loppu}
               periodSpecifier={ajanjaksonTarkenne}
               size="large"
+              partTimeAmount={osaAikaisuustieto}
+              perusta={oppisopimuksenPerustaKoodiUri}
             />
             {showShareButton && (
               <ButtonContainer>

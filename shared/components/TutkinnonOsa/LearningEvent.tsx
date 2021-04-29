@@ -3,6 +3,7 @@ import styled from "styled"
 import { FormattedDate } from "components/FormattedDate"
 import Flag from "components/icons/Flag"
 import { MdEventNote } from "react-icons/md"
+import { InfoModal } from "components/InfoModal"
 
 interface SizeProps {
   size?: "small" | "large"
@@ -52,6 +53,8 @@ interface LearningEventProps {
   endDate?: string
   periodSpecifier?: string
   description?: string
+  partTimeAmount?: number
+  perusta?: string
 }
 
 export class LearningEvent extends React.Component<LearningEventProps> {
@@ -65,7 +68,9 @@ export class LearningEvent extends React.Component<LearningEventProps> {
       endDate = "",
       periodSpecifier = "",
       isOsaamisenOsoittaminen = false,
-      description
+      description,
+      partTimeAmount,
+      perusta
     } = this.props
     const iconSize = size === "small" ? 24 : 32
     return (
@@ -80,16 +85,29 @@ export class LearningEvent extends React.Component<LearningEventProps> {
             )}
           </Icon>
           <DetailsContainer>
-            {startDate === endDate ? (
-              <Detail size={size}>
-                <FormattedDate date={startDate} dateNotSet="" />
-              </Detail>
-            ) : (
-              <Detail size={size}>
-                <FormattedDate date={startDate} dateNotSet="" />
-                {" - "}
-                <FormattedDate date={endDate} dateNotSet="" />
-              </Detail>
+            <div style={{ display: "inline-block", width: "auto" }}>
+              {startDate === endDate ? (
+                <Detail size={size}>
+                  <FormattedDate date={startDate} dateNotSet="" />
+                </Detail>
+              ) : (
+                <Detail size={size}>
+                  <FormattedDate date={startDate} dateNotSet="" />
+                  {" - "}
+                  <FormattedDate date={endDate} dateNotSet="" />
+                </Detail>
+              )}
+            </div>
+            {(partTimeAmount || perusta) && (
+              <div style={{ display: "inline-block", marginLeft: 5 }}>
+                <InfoModal
+                  nayttoymparistoDetails={nayttoymparistoDetails}
+                  startDate={startDate}
+                  endDate={endDate}
+                  partTimeAmount={partTimeAmount}
+                  perusta={perusta}
+                />
+              </div>
             )}
             {periodSpecifier && <Detail size={size}>{periodSpecifier}</Detail>}
             <Detail size={size}>{nayttoymparistoDetails}</Detail>

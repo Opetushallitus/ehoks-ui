@@ -16,6 +16,26 @@
   },
   {
     "locale": "fi",
+    "key": "infoModal.naytaLisatiedot",
+    "value": "Näytä lisätiedot"
+  },
+  {
+    "locale": "fi",
+    "key": "infoModal.osaaikaisuus",
+    "value": "Osa-aikaisuus"
+  },
+  {
+    "locale": "fi",
+    "key": "infoModal.perusta",
+    "value": "Oppisopimuksen perusta"
+  },
+  {
+    "locale": "fi",
+    "key": "infoModal.lisatietoja",
+    "value": "Lisätietoja työpaikkajaksosta"
+  },
+  {
+    "locale": "fi",
     "key": "table.haePlaceholder",
     "value": "Hae"
   },
