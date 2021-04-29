@@ -29,7 +29,9 @@ export const koodistoUrls = {
   ammatillisenoppiaineet:
     "/ehoks-virkailija-backend/api/v1/virkailija/external/koodisto/ammatillisenoppiaineet/koodi",
   oppimisymparistot:
-    "/ehoks-virkailija-backend/api/v1/virkailija/external/koodisto/oppimisymparistot/koodi"
+    "/ehoks-virkailija-backend/api/v1/virkailija/external/koodisto/oppimisymparistot/koodi",
+  oppisopimuksenperusta:
+    "/ehoks-virkailija-backend/api/v1/virkailija/external/koodisto/oppisopimuksenperusta/koodi"
 }
 
 export const codeCategoriesForPaths = {
@@ -39,7 +41,8 @@ export const codeCategoriesForPaths = {
   "koodi-versio": "ammatillisenoppiaineet",
   "osa-alue-koodi-versio": "ammatillisenoppiaineet",
   "osaamisen-hankkimistapa-koodi-versio": "osaamisenhankkimistapa",
-  "oppimisymparisto-koodi-versio": "oppimisymparistot"
+  "oppimisymparisto-koodi-versio": "oppimisymparistot",
+  "oppisopimuksen-perusta-koodi-versio": "oppisopimuksenperusta"
 }
 
 export type UiSchemaOptions = { [key in keyof typeof koodistoUrls]: any[] }
