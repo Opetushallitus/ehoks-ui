@@ -26,6 +26,11 @@
   },
   {
     "locale": "fi",
+    "key": "infoModal.perusta",
+    "value": "Oppisopimuksen perusta"
+  },
+  {
+    "locale": "fi",
     "key": "infoModal.lisatietoja",
     "value": "Lisätietoja työpaikkajaksosta"
   },

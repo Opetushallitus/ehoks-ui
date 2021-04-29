@@ -46,6 +46,7 @@ const ModalContent = styled("div")`
 
 interface InfoModalProps {
   partTimeAmount?: number
+  perusta?: string
   className?: string
   nayttoymparistoDetails?: string
   startDate?: string
@@ -61,6 +62,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
     const {
       className,
       partTimeAmount,
+      perusta,
       startDate,
       endDate,
       nayttoymparistoDetails
@@ -101,12 +103,26 @@ export class InfoModal extends React.Component<InfoModalProps> {
               )}
             </ModalHeader>
             <ModalContent>
-              <FormattedMessage
-                id="infoModal.osaaikaisuus"
-                defaultMessage="Osa-aikaisuus"
-              />
-              : {partTimeAmount} %
-              <br />
+              {partTimeAmount && (
+                <>
+                  <FormattedMessage
+                    id="infoModal.osaaikaisuus"
+                    defaultMessage="Osa-aikaisuus"
+                  />
+                  : {partTimeAmount} %
+                  <br />
+                </>
+              )}
+              {perusta && (
+                <>
+                  <FormattedMessage
+                    id="infoModal.perusta"
+                    defaultMessage="Oppisopimuksen perusta"
+                  />
+                  : {perusta}
+                  <br />
+                </>
+              )}
             </ModalContent>
           </Modal>
         </div>

@@ -54,6 +54,7 @@ interface LearningEventProps {
   periodSpecifier?: string
   description?: string
   partTimeAmount?: number
+  perusta?: string
 }
 
 export class LearningEvent extends React.Component<LearningEventProps> {
@@ -68,7 +69,8 @@ export class LearningEvent extends React.Component<LearningEventProps> {
       periodSpecifier = "",
       isOsaamisenOsoittaminen = false,
       description,
-      partTimeAmount
+      partTimeAmount,
+      perusta
     } = this.props
     const iconSize = size === "small" ? 24 : 32
     return (
@@ -96,13 +98,14 @@ export class LearningEvent extends React.Component<LearningEventProps> {
                 </Detail>
               )}
             </div>
-            {partTimeAmount && (
+            {(partTimeAmount || perusta) && (
               <div style={{ display: "inline-block", marginLeft: 5 }}>
                 <InfoModal
                   nayttoymparistoDetails={nayttoymparistoDetails}
                   startDate={startDate}
                   endDate={endDate}
                   partTimeAmount={partTimeAmount}
+                  perusta={perusta}
                 />
               </div>
             )}
