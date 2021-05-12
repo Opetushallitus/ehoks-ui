@@ -195,7 +195,7 @@ export const HOKS = types
     }
 
     const fetchOpiskeluoikeudet = flow(function*(): any {
-      if (!self.oppijaOid) {
+      if (!isAlive(self) || !self.oppijaOid) {
         return
       }
       try {
@@ -209,7 +209,7 @@ export const HOKS = types
           (oo: any) => oo.oid === self.opiskeluoikeusOid
         )
 
-        if (isAlive(self) && opiskeluoikeusIsValid(opiskeluOikeus)) {
+        if (opiskeluoikeusIsValid(opiskeluOikeus)) {
           self.opiskeluOikeus = opiskeluOikeus
         }
       } catch (error) {
