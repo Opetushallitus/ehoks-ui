@@ -1,4 +1,11 @@
-import { types, Instance, getEnv, flow, getRoot } from "mobx-state-tree"
+import {
+  types,
+  Instance,
+  getEnv,
+  flow,
+  getRoot,
+  isAlive
+} from "mobx-state-tree"
 import { AiemminHankittuAmmatillinenTutkinnonOsa } from "models/AiemminHankittuAmmatillinenTutkinnonOsa"
 import { AiemminHankittuPaikallinenTutkinnonOsa } from "models/AiemminHankittuPaikallinenTutkinnonOsa"
 import { AiemminHankittuYhteinenTutkinnonOsa } from "models/YhteinenTutkinnonOsa/AiemminHankittuYhteinenTutkinnonOsa"
@@ -202,7 +209,7 @@ export const HOKS = types
           (oo: any) => oo.oid === self.opiskeluoikeusOid
         )
 
-        if (opiskeluoikeusIsValid(opiskeluOikeus)) {
+        if (isAlive(self) && opiskeluoikeusIsValid(opiskeluOikeus)) {
           self.opiskeluOikeus = opiskeluOikeus
         }
       } catch (error) {
