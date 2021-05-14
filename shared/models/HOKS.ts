@@ -215,7 +215,7 @@ export const HOKS = types
       } catch (error) {
         // Do not UI-log mobx-state-tree error
         // "Cannot read property 'mergeCache' of undefined"
-        if (!error.message.includes("mergeCache")) {
+        if (!error.message.toLowerCase().includes("cache")) {
           const oppija: APIResponse = yield fetchSingle(
             apiUrl(`virkailija/oppijat/${self.oppijaOid}`),
             { headers: appendCallerId() }
