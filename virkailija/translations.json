@@ -267,6 +267,8 @@
     "yllapito.valimuistiTitle": "Välimuisti",
     "infoModal.naytaLisatiedot": "Näytä lisätiedot",
     "infoModal.osaaikaisuus": "Osa-aikaisuus",
-    "infoModal.lisatietoja": "Lisätietoja työpaikkajaksosta"
+    "infoModal.lisatietoja": "Lisätietoja työpaikkajaksosta",
+    "infoModal.perusta": "Oppisopimuksen perusta",
+    "opiskeluoikeus.osittainen": "osittainen"
   }
 }

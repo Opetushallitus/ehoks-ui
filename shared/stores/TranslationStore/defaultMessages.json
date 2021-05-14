@@ -166,6 +166,21 @@
   },
   {
     "locale": "fi",
+    "key": "header.opiskelijatLink",
+    "value": "Opiskelijat"
+  },
+  {
+    "locale": "fi",
+    "key": "header.raportitLink",
+    "value": "Raportit"
+  },
+  {
+    "locale": "fi",
+    "key": "header.dokumentaatioLink",
+    "value": "Dokumentaatio"
+  },
+  {
+    "locale": "fi",
     "key": "header.valtuudet",
     "value": "(Valtuudet)"
   },
