@@ -481,6 +481,11 @@
   },
   {
     "locale": "fi",
+    "key": "tavoitteet.PoistaHoks",
+    "value": "Poista HOKS"
+  },
+  {
+    "locale": "fi",
     "key": "tavoitteet.opiskelijapalautePaattymispvmTitle",
     "value": "Vastaamisajan päättymispäivä"
   },
