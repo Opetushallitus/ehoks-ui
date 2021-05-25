@@ -4,6 +4,7 @@ import { AccordionTitle } from "components/AccordionTitle"
 import { HeadingContainer, HelpHeading } from "components/Heading"
 import { HelpPopup } from "components/HelpPopup"
 import { InfoTable } from "components/InfoTable"
+import { Button } from "components/Button"
 import { LabeledColumn } from "components/LabeledColumn"
 import { observer } from "mobx-react"
 import { ISessionUser } from "models/SessionUser"
@@ -15,6 +16,7 @@ import { FormattedDate } from "components/FormattedDate"
 import { StudyPoints } from "../StudyPoints"
 import { Opiskelijapalaute } from "../../../virkailija/src/routes/KoulutuksenJarjestaja/Opiskelijapalaute"
 import { IKoodistoVastaus } from "../../models/KoodistoVastaus"
+import styled from "../../../shared/styled"
 
 interface OsaamisenHankkimisenTarveProps {
   osaamisenHankkimisenTarve: boolean | null
@@ -219,6 +221,58 @@ const Urasuunnitelma = ({
         defaultMessage="Tietoa ei ole tallennettu."
       />
     )}
+  </Accordion>
+)
+
+const DeleteMessageContainer = styled("div")`
+  border-style: dashed;
+  border-color: gray;
+  border-radius: 5px;
+  padding: 10px 30px;
+  display: inline-flex;
+`
+
+const ButtonContainer = styled("div")`
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  margin: 20px 0 10px 0;
+`
+
+const DeleteHoksButton = styled(Button)`
+  background: salmon;
+  color: white;
+  padding: 10px 30px;
+  font-size: 16px;
+`
+
+const HOKSpoisto = ({
+  title,
+  hoksPoistoOpen,
+  toggleHoksPoisto
+}: {
+  title: React.ReactNode
+  hoksPoistoOpen: boolean
+  toggleHoksPoisto: () => void
+}) => (
+  <Accordion
+    id="hoksPoisto"
+    open={hoksPoistoOpen}
+    title={title}
+    onToggle={toggleHoksPoisto}
+  >
+    <DeleteMessageContainer>
+      <FormattedMessage
+        id="tavoitteet.PoistaHoksInfo"
+        defaultMessage="placeholder"
+      />
+    </DeleteMessageContainer>
+    <br />
+    <ButtonContainer>
+      <DeleteHoksButton onClick={() => alert("hoks poistetaan")}>
+        Poista HOKS
+      </DeleteHoksButton>
+    </ButtonContainer>
   </Accordion>
 )
 
@@ -434,6 +488,7 @@ export interface TavoitteetProps {
     degreeOrEducation?: React.ReactNode
     personalDetails?: React.ReactNode
     opiskelijapalaute?: React.ReactNode
+    hokspoisto?: React.ReactNode
   }
 }
 
@@ -456,7 +511,8 @@ export class Tavoitteet extends React.Component<
       degreeOrEducation: false,
       personalDetails: false,
       personalGoal: false,
-      opiskelijapalaute: false
+      opiskelijapalaute: false,
+      hoksPoisto: false
     }
   }
 
@@ -516,6 +572,14 @@ export class Tavoitteet extends React.Component<
           <FormattedMessage
             id="tavoitteet.OpiskelijapalauteTitle"
             defaultMessage="Opiskelijapalaute"
+          />
+        </AccordionTitle>
+      ),
+      hoksPoisto: (
+        <AccordionTitle>
+          <FormattedMessage
+            id="tavoitteet.PoistaHoks"
+            defaultMessage="Poista HOKS"
           />
         </AccordionTitle>
       )
@@ -578,6 +642,12 @@ export class Tavoitteet extends React.Component<
             oppijaOid={student.oid}
           />
         )}
+
+        <HOKSpoisto
+          title={titles.hoksPoisto}
+          hoksPoistoOpen={this.state.activeAccordions.hoksPoisto}
+          toggleHoksPoisto={this.toggleAccordion("hoksPoisto")}
+        />
       </React.Fragment>
     )
   }
