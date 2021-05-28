@@ -119,7 +119,10 @@ export class Opiskelijapalaute extends React.Component<
                     <tr>
                       <LabeledColumn id="tavoitteet.opiskelijapalauteTilaTitle">
                         <FormattedMessage
-                          id="tavoitteet.opiskelijapalauteTila"
+                          id={
+                            "tavoitteet.opiskelijapalauteTila." +
+                            palauteTila.lahetystila
+                          }
                           defaultMessage="Viesti on lähetetty {date} opiskelijalle"
                           values={{
                             date: (

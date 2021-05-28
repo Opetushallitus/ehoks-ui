@@ -7,7 +7,8 @@ export const OpiskelijapalauteTila = types.model("OpiskelijapalauteTila", {
   lahetyspvm: types.string,
   sahkoposti: types.string,
   tyyppi: types.string,
-  voimassaLoppupvm: types.string
+  voimassaLoppupvm: types.string,
+  lahetystila: types.string
 })
 
 export type IOpiskelijapalauteTila = Instance<typeof OpiskelijapalauteTila>
