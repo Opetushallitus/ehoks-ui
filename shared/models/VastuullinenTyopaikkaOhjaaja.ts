@@ -5,6 +5,7 @@ export const VastuullinenTyopaikkaOhjaaja = types.model(
   {
     id: types.optional(types.number, 0),
     nimi: types.optional(types.string, ""),
-    sahkoposti: types.optional(types.string, "")
+    sahkoposti: types.optional(types.string, ""),
+    puhelinnumero: types.optional(types.string, "")
   }
 )

@@ -613,7 +613,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
               "ui:widget": "hidden"
             },
             "vastuullinen-tyopaikka-ohjaaja": {
-              "ui:order": ["nimi", "sahkoposti", "*"],
+              "ui:order": ["nimi", "sahkoposti", "puhelinnumero", "*"],
               id: {
                 "ui:widget": "hidden"
               }
@@ -792,7 +792,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
               "ui:widget": "hidden"
             },
             "vastuullinen-tyopaikka-ohjaaja": {
-              "ui:order": ["nimi", "sahkoposti", "*"],
+              "ui:order": ["nimi", "sahkoposti", "puhelinnumero", "*"],
               id: {
                 "ui:widget": "hidden"
               }
@@ -1003,7 +1003,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                   "ui:widget": "hidden"
                 },
                 "vastuullinen-tyopaikka-ohjaaja": {
-                  "ui:order": ["nimi", "sahkoposti", "*"],
+                  "ui:order": ["nimi", "sahkoposti", "puhelinnumero", "*"],
                   id: {
                     "ui:widget": "hidden"
                   }
