@@ -244,6 +244,11 @@ const DeleteHoksButton = styled(Button)`
   color: white;
   padding: 10px 30px;
   font-size: 16px;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
 `
 
 const HOKSpoisto = ({
