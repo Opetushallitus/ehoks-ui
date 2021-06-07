@@ -73,6 +73,7 @@
     "header.opintopolkuLink": "Opintopolku.fi",
     "header.skipToMainLink": "Siirry pääsisältöön",
     "header.swedishLocaleLink": "På svenska",
+    "header.valtuudet": "(Valtuudet)",
     "henkilokohtaistaminen.koulutustavoite": "Koulutustavoite",
     "henkilokohtaistaminen.mitaOsaanJoTitle": "Mitä osaan jo?",
     "henkilokohtaistaminen.mitaPuuttuuTitle": "Mitä osaamista minulta puuttuu?",
@@ -92,6 +93,10 @@
     "henkilokohtaistaminen.title": "Mitä opiskelujen henkilökohtaistaminen tarkoittaa?",
     "henkilokohtaistaminen.tyopaikalla": "Työpaikalla",
     "henkilokohtaistaminen.uratavoite": "Uratavoite",
+    "infoModal.lisatietoja": "Lisätietoja työpaikkajaksosta",
+    "infoModal.naytaLisatiedot": "Näytä lisätiedot",
+    "infoModal.osaaikaisuus": "Osa-aikaisuus",
+    "infoModal.perusta": "Oppisopimuksen perusta",
     "introDialog.alaNaytaSeuraavallaKerralla": "Älä näytä enää seuraavalla kerralla",
     "introDialog.page1Logo": "eHOKS logo",
     "introDialog.page1Paragraph1": "eHOKS on palvelu, jossa näet oman henkilökohtaisen opintosuunnitelmasi ja tavoitteesi milloin vain.",
@@ -159,6 +164,7 @@
     "navigaatio.palaaAloitussivulleLink": "Palaa aloitussivulle",
     "notification.Opiskelijapalaute.resendPalaute.success": "Sähköposti opiskelijapalautteesta lähetetään osoitteeseen {sahkoposti}.",
     "notification.piilotaNotifikaatioAriaLabel": "Piilota ilmoitus",
+    "opiskeluoikeus.osittainen": "osittainen",
     "opiskelusuunnitelma.aiemmanOsaamisenTodentanutTitle": "Aiemman osaamisen todentanut",
     "opiskelusuunnitelma.aiemminHankitunOsaamisenArvioijatTitle": "Arvioijat",
     "opiskelusuunnitelma.aikataulutettunaTitle": "Aikataulutettua tutkinnon osaa",
@@ -318,6 +324,7 @@
     "tavoitteet.title": "Tavoitteeni ja perustietoni",
     "tavoitteet.titleHelpLabel": "Tietoa tavoitteista ja perustiedoista",
     "tavoitteet.tutkintoTaiKoulutusTitle": "Tutkinto tai koulutus",
+    "tavoitteet.urasuunnitelmaTietoaEiOleTallennettu": "Tietoa ei ole tallennettu.",
     "tutkinnonOsa.toteuttavaKoulutuksenJarjestajaTitle": "Toteuttava koulutuksenjärjestäjä",
     "tyopaikanToimija.laajuusTitle": "Laajuus",
     "tyopaikanToimija.osaamispistetta": "osaamispistettä",
@@ -326,11 +333,6 @@
     "tyopaikantoimija.linkinTiedot": "Työpaikalla oppimisen tiedot on jaettuna sinulle {voimassaoloAlku}-{voimassaoloLoppu} ",
     "tyopaikantoimija.oppijanTiedot": "{nimi}, {tutkintoNimi}, {osaamisalaNimi} ",
     "valinta.title": "Ammattillisten opintojen henkilökohtaistaminen",
-    "valinta.voimassaOlevatSuunnitelmasiTitle": "Voimassa olevat suunnitelmasi",
-    "infoModal.naytaLisatiedot": "Näytä lisätiedot",
-    "infoModal.osaaikaisuus": "Osa-aikaisuus",
-    "infoModal.lisatietoja": "Lisätietoja työpaikkajaksosta",
-    "infoModal.perusta": "Oppisopimuksen perusta",
-    "opiskeluoikeus.osittainen": "osittainen"
+    "valinta.voimassaOlevatSuunnitelmasiTitle": "Voimassa olevat suunnitelmasi"
   }
 }

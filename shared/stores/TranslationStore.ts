@@ -2,7 +2,7 @@ import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import defaultMessages from "./TranslationStore/defaultMessages.json"
 import { APIResponse } from "types/APIResponse"
-import { updateLocaleLocalStorage } from "localeUtils"
+import { updateLocaleSessionStorage } from "localeUtils"
 
 export interface ApiTranslation {
   key: string
@@ -51,7 +51,7 @@ export const TranslationStore = types
     } = getEnv<StoreEnvironment>(self)
 
     const setActiveLocale = (locale: Locale) => {
-      const storedLocale = updateLocaleLocalStorage(locale)
+      const storedLocale = updateLocaleSessionStorage(locale)
       self.activeLocale = storedLocale ? storedLocale : locale
     }
 

@@ -5,7 +5,7 @@ import {
   isLocaleStored,
   parseLocaleParam,
   readLocaleFromDomain,
-  readLocaleFromLocalStorage,
+  readLocaleFromSessionStorage,
   setDocumentLocale
 } from "localeUtils"
 import { inject, observer } from "mobx-react"
@@ -69,7 +69,7 @@ export class App extends React.Component<AppProps> {
       cleanLocaleParam()
     } else {
       const locale = isLocaleStored()
-        ? readLocaleFromLocalStorage()
+        ? readLocaleFromSessionStorage()
         : readLocaleFromDomain()
       store!.translations.setActiveLocale(locale)
     }
