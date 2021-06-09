@@ -47,6 +47,7 @@ Object {
   "shareLinks": Object {},
   "translations": Object {
     "activeLocale": "fi",
+    "isInitialRenderLoading": true,
     "isLoading": false,
     "translations": Array [],
   },
