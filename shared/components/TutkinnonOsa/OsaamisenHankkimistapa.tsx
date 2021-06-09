@@ -166,6 +166,8 @@ export class OsaamisenHankkimistapa extends React.Component<
                       .join(", ")}
                     <br />
                     {vastuullinenTyopaikkaOhjaaja.sahkoposti}
+                    <br />
+                    {vastuullinenTyopaikkaOhjaaja.puhelinnumero}
                   </TD>
                 </tr>
               )}
