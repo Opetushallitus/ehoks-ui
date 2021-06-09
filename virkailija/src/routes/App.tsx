@@ -22,6 +22,7 @@ import { LuoHOKS } from "./LuoHOKS"
 import { MuokkaaHOKS } from "./MuokkaaHOKS"
 import { VirkailijaRaamit } from "./VirkailijaRaamit"
 import { Yllapito } from "./Yllapito"
+import { LoadingSpinner } from "components/LoadingSpinner"
 import AppNotifications from "./App/AppNotifications"
 
 const Container = styled("div")`
@@ -68,10 +69,25 @@ export class App extends React.Component<AppProps> {
         store!.translations.setActiveLocale(Locale.FI)
       }
     }
+    store!.translations.setIsInitialRenderLoading(false)
   }
 
   render() {
     const { store } = this.props
+
+    if (store!.translations.isInitialRenderLoading) {
+      return (
+        <ThemeWrapper>
+          <Container>
+            <VirkailijaRaamit />
+            <br />
+            <LoadingSpinner />
+            <GlobalStyles />
+          </Container>
+        </ThemeWrapper>
+      )
+    }
+
     const activeLocale = store!.translations.activeLocale
     setDocumentLocale(activeLocale)
     const translations = store!.translations.messages[activeLocale]

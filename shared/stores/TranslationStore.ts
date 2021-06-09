@@ -35,6 +35,7 @@ const TranslationStoreModel = {
     types.enumeration("ActiveLocale", [Locale.FI, Locale.SV]),
     Locale.FI
   ),
+  isInitialRenderLoading: true,
   isLoading: false,
   translations: types.array(Localization)
 }
@@ -53,6 +54,10 @@ export const TranslationStore = types
     const setActiveLocale = (locale: Locale) => {
       const storedLocale = updateLocaleSessionStorage(locale)
       self.activeLocale = storedLocale ? storedLocale : locale
+    }
+
+    const setIsInitialRenderLoading = (value: boolean) => {
+      self.isInitialRenderLoading = value
     }
 
     const fetchLocales = flow(function*(): any {
@@ -75,7 +80,7 @@ export const TranslationStore = types
       self.isLoading = false
     })
 
-    return { fetchLocales, setActiveLocale }
+    return { fetchLocales, setActiveLocale, setIsInitialRenderLoading }
   })
   .views(self => ({
     get messages() {
