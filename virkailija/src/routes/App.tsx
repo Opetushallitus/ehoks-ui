@@ -79,7 +79,6 @@ export class App extends React.Component<AppProps> {
       return (
         <ThemeWrapper>
           <Container>
-            <VirkailijaRaamit />
             <br />
             <LoadingSpinner />
             <GlobalStyles />
