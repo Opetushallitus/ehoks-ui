@@ -45,15 +45,6 @@ export interface AppProps {
 @observer
 export class App extends React.Component<AppProps> {
   async componentDidMount() {
-    // automatically login user with CAS login
-    await this.props.store!.environment.getEnvironment()
-    try {
-      await this.props.store!.session.checkSession()
-    } finally {
-      if (!this.props.store!.session.isLoggedIn) {
-        window.location.href = this.props.store!.environment.virkailijaLoginUrl
-      }
-    }
     const { store } = this.props
     const localeParam = parseLocaleParam(window.location.search)
     if (localeParam) {
@@ -70,11 +61,22 @@ export class App extends React.Component<AppProps> {
       }
     }
     store!.translations.setIsInitialRenderLoading(false)
+
+    // automatically login user with CAS login
+    if (!store!.translations.isInitialRenderLoading) {
+      await this.props.store!.environment.getEnvironment()
+      try {
+        await this.props.store!.session.checkSession()
+      } finally {
+        if (!this.props.store!.session.isLoggedIn) {
+          window.location.href = this.props.store!.environment.virkailijaLoginUrl
+        }
+      }
+    }
   }
 
   render() {
     const { store } = this.props
-
     if (store!.translations.isInitialRenderLoading) {
       return (
         <ThemeWrapper>
@@ -85,46 +87,46 @@ export class App extends React.Component<AppProps> {
           </Container>
         </ThemeWrapper>
       )
+    } else {
+      const activeLocale = store!.translations.activeLocale
+      setDocumentLocale(activeLocale)
+      const translations = store!.translations.messages[activeLocale]
+      const messages =
+        activeLocale === Locale.FI
+          ? translations
+          : // use finnish translations as fallback, merge provided translations
+            { ...store!.translations.messages.fi, ...translations }
+
+      return (
+        <ThemeWrapper>
+          <IntlProvider
+            defaultLocale={Locale.FI}
+            locale={activeLocale}
+            key={activeLocale}
+            messages={messages}
+            textComponent={React.Fragment}
+          >
+            <Container>
+              <VirkailijaRaamit />
+              <Header />
+              <AppNotifications />
+              <StyledRouter basepath="/ehoks-virkailija-ui">
+                <Redirect
+                  from="/"
+                  to="/ehoks-virkailija-ui/koulutuksenjarjestaja"
+                  noThrow={true}
+                />
+                <LuoHOKS path="luohoks" />
+                <MuokkaaHOKS path="hoks/:oppijaOid/:hoksId" />
+                <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />
+                <Yllapito path="yllapito" />
+                <Opiskelija path="koulutuksenjarjestaja/:studentId/*" />
+              </StyledRouter>
+              <GlobalStyles />
+            </Container>
+          </IntlProvider>
+        </ThemeWrapper>
+      )
     }
-
-    const activeLocale = store!.translations.activeLocale
-    setDocumentLocale(activeLocale)
-    const translations = store!.translations.messages[activeLocale]
-    const messages =
-      activeLocale === Locale.FI
-        ? translations
-        : // use finnish translations as fallback, merge provided translations
-          { ...store!.translations.messages.fi, ...translations }
-
-    return (
-      <ThemeWrapper>
-        <IntlProvider
-          defaultLocale={Locale.FI}
-          locale={activeLocale}
-          key={activeLocale}
-          messages={messages}
-          textComponent={React.Fragment}
-        >
-          <Container>
-            <VirkailijaRaamit />
-            <Header />
-            <AppNotifications />
-            <StyledRouter basepath="/ehoks-virkailija-ui">
-              <Redirect
-                from="/"
-                to="/ehoks-virkailija-ui/koulutuksenjarjestaja"
-                noThrow={true}
-              />
-              <LuoHOKS path="luohoks" />
-              <MuokkaaHOKS path="hoks/:oppijaOid/:hoksId" />
-              <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />
-              <Yllapito path="yllapito" />
-              <Opiskelija path="koulutuksenjarjestaja/:studentId/*" />
-            </StyledRouter>
-            <GlobalStyles />
-          </Container>
-        </IntlProvider>
-      </ThemeWrapper>
-    )
   }
 }
