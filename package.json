@@ -117,7 +117,7 @@
     "lodash.slice": "^4.2.0",
     "lodash.take": "^4.1.1",
     "map-obj": "^4.1.0",
-    "mobx": "^5.15.4",
+    "mobx": "^5.15.6",
     "mobx-react": "^6.3.0",
     "mobx-state-tree": "^3.16.0",
     "promise-polyfill": "^8.1.3",
