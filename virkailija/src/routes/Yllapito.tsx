@@ -649,7 +649,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
         message: intl.formatMessage({
           id: "yllapito.heratteetLahetysOnnistui",
           defaultMessage: "Herätteen lähetys onnistui",
-          values: { count: count }
+          values: { count }
         }),
         isLoading: false
       })
