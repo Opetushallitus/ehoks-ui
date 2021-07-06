@@ -4,7 +4,7 @@ ARG name
 
 RUN apk update \
         # install nginx
-        && apk add nginx \
+        && apk add nginx=1.18.0-r15 \
         # link stdout and stderr to http block level nginx logs
         && ln -sf /dev/stdout /var/log/nginx/access.log \
         && ln -sf /dev/stderr /var/log/nginx/error.log \
