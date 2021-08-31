@@ -118,18 +118,30 @@ export class Opiskelijapalaute extends React.Component<
                     </tr>
                     <tr>
                       <LabeledColumn id="tavoitteet.opiskelijapalauteTilaTitle">
-                        <FormattedMessage
-                          id={
-                            "tavoitteet.opiskelijapalauteTila." +
-                            palauteTila.lahetystila
-                          }
-                          defaultMessage="Viesti on lähetetty {date} opiskelijalle"
-                          values={{
-                            date: (
-                              <FormattedDate date={palauteTila.lahetyspvm} />
-                            )
-                          }}
-                        />
+                        {palauteTila.vastattu ? (
+                          <FormattedMessage
+                            id={"tavoitteet.opiskelijapalauteTila.vastattu"}
+                            defaultMessage="Vastattu"
+                            values={{
+                              date: (
+                                <FormattedDate date={palauteTila.lahetyspvm} />
+                              )
+                            }}
+                          />
+                        ) : (
+                          <FormattedMessage
+                            id={
+                              "tavoitteet.opiskelijapalauteTila." +
+                              palauteTila.lahetystila
+                            }
+                            defaultMessage="Viesti on lähetetty {date} opiskelijalle"
+                            values={{
+                              date: (
+                                <FormattedDate date={palauteTila.lahetyspvm} />
+                              )
+                            }}
+                          />
+                        )}
                       </LabeledColumn>
                       <LabeledColumn id="tavoitteet.opiskelijapalauteSahkopostiTitle">
                         {palauteTila.sahkoposti}
