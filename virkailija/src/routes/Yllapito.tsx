@@ -623,7 +623,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     }
   }
 
-  onSendHeratteetFromTo = async (event: any) => {
+  onSendHeratteetBetween = async (event: any) => {
     const { intl } = this.context
     const { sendHerateDateFrom, sendHerateDateTo } = this.state
     event.preventDefault()
@@ -648,7 +648,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
         success: true,
         message: intl.formatMessage({
           id: "yllapito.heratteetLahetysOnnistui",
-          defaultMessage: "Herätteen lähetys onnistui",
+          defaultMessage: "Lähetettiin {count} herätettä",
           values: { count }
         }),
         isLoading: false
@@ -1115,7 +1115,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         <form>
                           <HakuInput
                             type="string"
-                            placeholder={new Date().toDateString()}
+                            placeholder="yyyy-mm-dd"
                             value={this.state.sendHerateDateFrom}
                             onChange={e =>
                               this.handleSendHerateDateFromChange(
@@ -1125,7 +1125,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           />
                           <HakuInput
                             type="date"
-                            placeholder={new Date().toDateString()}
+                            placeholder="yyyy-mm-dd"
                             value={this.state.sendHerateDateTo}
                             onChange={e =>
                               this.handleSendHerateDateToChange(e.target.value)
@@ -1134,7 +1134,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         </form>
                       </ContentElement>
                       <ContentElement>
-                        <Button onClick={this.onSendHeratteetFromTo}>
+                        <Button onClick={this.onSendHeratteetBetween}>
                           <FormattedMessage
                             id="yllapito.aloitusHerate"
                             defaultMessage="Lähetä uudet herätteet aloituskyselyihin aikavälille."
