@@ -4,6 +4,7 @@ import { FormattedDate } from "components/FormattedDate"
 import Flag from "components/icons/Flag"
 import { MdEventNote } from "react-icons/md"
 import { InfoModal } from "components/InfoModal"
+import { IKoodistoVastaus } from "models/KoodistoVastaus"
 
 interface SizeProps {
   size?: "small" | "large"
@@ -54,7 +55,7 @@ interface LearningEventProps {
   periodSpecifier?: string
   description?: string
   partTimeAmount?: number
-  perusta?: string
+  perusta?: IKoodistoVastaus
 }
 
 export class LearningEvent extends React.Component<LearningEventProps> {

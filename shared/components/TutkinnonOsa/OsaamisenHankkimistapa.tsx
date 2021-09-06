@@ -24,6 +24,7 @@ import { stringifyShareParams } from "utils/shareParams"
 import { navigate } from "@reach/router"
 import { AppContext } from "components/AppContext"
 import { TutkinnonOsaType } from "../../models/helpers/ShareTypes"
+import { IKoodistoVastaus } from "models/KoodistoVastaus"
 
 const OsaamisenHankkimistapaTitle = styled(Title)(
   props => `
@@ -70,7 +71,7 @@ interface OsaamisenHankkimistapaProps {
   tutkinnonOsaTyyppi?: TutkinnonOsaType
   tutkinnonOsaModuleId?: string
   partTimeAmount?: number
-  perusta?: string
+  perusta?: IKoodistoVastaus
 }
 
 @observer
@@ -113,7 +114,7 @@ export class OsaamisenHankkimistapa extends React.Component<
       hankkijanEdustaja,
       muutOppimisymparistot,
       osaAikaisuustieto,
-      oppisopimuksenPerustaKoodiUri
+      oppisopimuksenPerusta
     } = osaamisenHankkimistapa
 
     const { vastuullinenTyopaikkaOhjaaja, keskeisetTyotehtavat } =
@@ -134,7 +135,7 @@ export class OsaamisenHankkimistapa extends React.Component<
               periodSpecifier={ajanjaksonTarkenne}
               size="large"
               partTimeAmount={osaAikaisuustieto}
-              perusta={oppisopimuksenPerustaKoodiUri}
+              perusta={oppisopimuksenPerusta}
             />
             {showShareButton && (
               <ButtonContainer>
