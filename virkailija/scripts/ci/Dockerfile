@@ -7,7 +7,7 @@ RUN apk update \
         && apk add nginx \
         # link stdout and stderr to http block level nginx logs
         && ln -sf /dev/stdout /var/log/nginx/access.log \
-        && ln -sf /dev/stderr /var/log/nginx/error.log \
+        && ln -sf /dev/stdout /var/log/nginx/error.log \
         # make directory for nginx pid file
         && mkdir -p /run/nginx \
         # remove apk index files
