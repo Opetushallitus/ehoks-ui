@@ -34,4 +34,3 @@ mkdir -p /tmp/var/nginx
 mkdir -p /tmp/run/nginx
 mkdir -p /tmp/var/lib/nginx/tmp
 exec nginx -t
-exec nginx -g 'daemon off;'
