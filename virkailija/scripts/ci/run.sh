@@ -33,5 +33,4 @@ echo "Starting nginx…"
 mkdir -p /tmp/var/nginx
 mkdir -p /tmp/run/nginx
 mkdir -p /tmp/var/lib/nginx/tmp
-exec nginx -g 'daemon off;'
-echo "run.sh finished"
+nginx -g 'daemon off;'
