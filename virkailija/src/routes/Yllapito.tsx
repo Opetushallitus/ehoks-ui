@@ -646,11 +646,13 @@ export class Yllapito extends React.Component<YllapitoProps> {
       const count = json.data.count
       this.setState({
         success: true,
-        message: intl.formatMessage({
-          id: "yllapito.heratteetLahetysOnnistui",
-          defaultMessage: "Lähetettiin {count} herätettä",
-          values: { count }
-        }),
+        message: intl.formatMessage(
+          {
+            id: "yllapito.heratteetLahetysOnnistui",
+            defaultMessage: "Lähetettiin {count} herätettä"
+          },
+          { count }
+        ),
         isLoading: false
       })
     } else {
@@ -1114,8 +1116,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                       <ContentElement>
                         <form>
                           <HakuInput
-                            type="string"
-                            placeholder="yyyy-mm-dd"
+                            type="date"
                             value={this.state.sendHerateDateFrom}
                             onChange={e =>
                               this.handleSendHerateDateFromChange(
@@ -1125,7 +1126,6 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           />
                           <HakuInput
                             type="date"
-                            placeholder="yyyy-mm-dd"
                             value={this.state.sendHerateDateTo}
                             onChange={e =>
                               this.handleSendHerateDateToChange(e.target.value)
