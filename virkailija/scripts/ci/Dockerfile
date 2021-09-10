@@ -13,7 +13,7 @@ RUN apk update \
         # remove apk index files
         && rm -rf /var/cache/apk/*
 
-COPY nginx-server.conf /etc/nginx/conf.d/default.conf
+COPY nginx-server.conf /etc/nginx/http.d/ehoks.conf
 
 WORKDIR /root
 
