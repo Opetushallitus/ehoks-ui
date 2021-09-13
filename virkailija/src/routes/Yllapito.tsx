@@ -93,6 +93,8 @@ interface YllapitoState {
   systemInfo?: SystemInfo
   koulutustoimijaOid?: string | ""
   sendHerateId?: number
+  sendHerateDateFrom?: string
+  sendHerateDateTo?: string
 }
 
 interface SystemInfoResponse {
@@ -621,6 +623,50 @@ export class Yllapito extends React.Component<YllapitoProps> {
     }
   }
 
+  onSendHeratteetBetween = async (event: any) => {
+    const { intl } = this.context
+    const { sendHerateDateFrom, sendHerateDateTo } = this.state
+    event.preventDefault()
+    const request = await window.fetch(
+      `/ehoks-virkailija-backend/api/v1/virkailija/hoks/resend-aloitusherate?from=${sendHerateDateFrom}&to=${sendHerateDateTo}`,
+      {
+        method: "POST",
+        credentials: "include",
+
+        headers: appendCommonHeaders(
+          new Headers({
+            Accept: "application/json; charset=utf-8",
+            "Content-Type": "application/json"
+          })
+        )
+      }
+    )
+    if (request.status === 200) {
+      const json = await request.json()
+      const count = json.data.count
+      this.setState({
+        success: true,
+        message: intl.formatMessage(
+          {
+            id: "yllapito.heratteetLahetysOnnistui",
+            defaultMessage: "Lähetettiin {count} herätettä"
+          },
+          { count }
+        ),
+        isLoading: false
+      })
+    } else {
+      this.setState({
+        success: false,
+        message: intl.formatMessage({
+          id: "yllapito.herateetLahetysEpaonnistui",
+          defaultMessage: "Virhe herätteiden uudelleenlähetyksessä!"
+        }),
+        isLoading: false
+      })
+    }
+  }
+
   handleHoksIdChange = (inputId: any) => {
     // const inputOid = event.target.value
     this.setState({
@@ -659,6 +705,18 @@ export class Yllapito extends React.Component<YllapitoProps> {
   handleSendHerateIdChange = (inputId: any) => {
     this.setState({
       sendHerateId: inputId
+    })
+  }
+
+  handleSendHerateDateFromChange = (dateFrom: any) => {
+    this.setState({
+      sendHerateDateFrom: dateFrom
+    })
+  }
+
+  handleSendHerateDateToChange = (dateTo: any) => {
+    this.setState({
+      sendHerateDateTo: dateTo
     })
   }
 
@@ -1042,6 +1100,44 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           <FormattedMessage
                             id="yllapito.aloitusHerate"
                             defaultMessage="Lähetä uusi heräte aloituskyselyyn."
+                          />
+                        </Button>
+                      </ContentElement>
+                    </ContentElement>
+                  </ContentElement>
+                  <ContentElement>
+                    <Header>
+                      <FormattedMessage
+                        id="yllapito.aloitusHeratteet"
+                        defaultMessage="Lähetä uudet herätteet aloituskyselyihin aikavälille."
+                      />
+                    </Header>
+                    <ContentElement>
+                      <ContentElement>
+                        <form>
+                          <HakuInput
+                            type="date"
+                            value={this.state.sendHerateDateFrom}
+                            onChange={e =>
+                              this.handleSendHerateDateFromChange(
+                                e.target.value
+                              )
+                            }
+                          />
+                          <HakuInput
+                            type="date"
+                            value={this.state.sendHerateDateTo}
+                            onChange={e =>
+                              this.handleSendHerateDateToChange(e.target.value)
+                            }
+                          />
+                        </form>
+                      </ContentElement>
+                      <ContentElement>
+                        <Button onClick={this.onSendHeratteetBetween}>
+                          <FormattedMessage
+                            id="yllapito.aloitusHerate"
+                            defaultMessage="Lähetä uudet herätteet aloituskyselyihin aikavälille."
                           />
                         </Button>
                       </ContentElement>
