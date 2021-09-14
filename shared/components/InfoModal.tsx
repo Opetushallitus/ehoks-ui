@@ -2,6 +2,7 @@ import React from "react"
 import { MdInfo } from "react-icons/md"
 import { FormattedMessage, intlShape } from "react-intl"
 import { FormattedDate } from "components/FormattedDate"
+import { IKoodistoVastaus } from "../models/KoodistoVastaus"
 import Popup from "reactjs-popup"
 import styled from "styled"
 
@@ -46,7 +47,7 @@ const ModalContent = styled("div")`
 
 interface InfoModalProps {
   partTimeAmount?: number
-  perusta?: string
+  perusta?: IKoodistoVastaus
   className?: string
   nayttoymparistoDetails?: string
   startDate?: string
@@ -113,13 +114,13 @@ export class InfoModal extends React.Component<InfoModalProps> {
                   <br />
                 </>
               )}
-              {perusta && (
+              {perusta && perusta.nimi && (
                 <>
                   <FormattedMessage
                     id="infoModal.perusta"
                     defaultMessage="Oppisopimuksen perusta"
                   />
-                  : {perusta}
+                  : {perusta.nimi}
                   <br />
                 </>
               )}

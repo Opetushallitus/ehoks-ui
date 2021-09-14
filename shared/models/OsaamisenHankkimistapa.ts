@@ -25,7 +25,8 @@ const Model = types.model("OsaamisenHankkimistapaModel", {
   muutOppimisymparistot: types.array(MuuOppimisymparisto),
   loppu: types.optional(types.string, ""),
   osaAikaisuustieto: types.maybe(types.number),
-  oppisopimuksenPerustaKoodiUri: types.maybe(types.string)
+  oppisopimuksenPerustaKoodiUri: types.maybe(types.string),
+  oppisopimuksenPerusta: types.optional(KoodistoVastaus, {})
 })
 
 export const OsaamisenHankkimistapa = types
@@ -34,6 +35,10 @@ export const OsaamisenHankkimistapa = types
     EnrichKoodistoKoodiUri({
       enrichedProperty: "osaamisenHankkimistapa",
       koodiUriProperty: "osaamisenHankkimistapaKoodiUri"
+    }),
+    EnrichKoodistoKoodiUri({
+      enrichedProperty: "oppisopimuksenPerusta",
+      koodiUriProperty: "oppisopimuksenPerustaKoodiUri"
     }),
     Model
   )
