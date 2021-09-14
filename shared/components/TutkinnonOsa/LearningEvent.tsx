@@ -99,7 +99,7 @@ export class LearningEvent extends React.Component<LearningEventProps> {
                 </Detail>
               )}
             </div>
-            {(partTimeAmount || perusta) && (
+            {(partTimeAmount || (perusta && perusta.nimi)) && (
               <div style={{ display: "inline-block", marginLeft: 5 }}>
                 <InfoModal
                   nayttoymparistoDetails={nayttoymparistoDetails}
