@@ -84,8 +84,9 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
         const { data }: APIResponse = yield cachedOsaAlueResponses[
           tutkinnonOsaId
         ]
-
+        console.log(data)
         self.osaAlueet.forEach(getEnrichedDataForOsaAlue(data))
+        console.log(self.osaAlueet)
       } catch (error) {
         errors.logError("EnrichOsaAlue.fetchFromEPerusteet", error.message)
       }
