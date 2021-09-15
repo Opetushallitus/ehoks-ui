@@ -65,6 +65,7 @@ export class PlannedStudies extends React.Component<PlannedStudiesProps> {
       >
         <StudiesContainer>
           {suunnitellutOpinnot.map((study, i) => {
+            console.log(study)
             const renderExtraItem = (i + 1) % 4 === 0
             return (
               <React.Fragment key={`${study.id}_${i}`}>

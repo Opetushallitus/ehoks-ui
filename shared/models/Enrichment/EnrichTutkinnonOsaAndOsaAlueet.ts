@@ -41,8 +41,6 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
           koodiUri
         ]
         self.tutkinnonOsaId = response.data?.id
-        console.log("fetchTutkinnonOsa data")
-        console.log(response.data)
       } catch (error) {
         errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
       }
@@ -88,8 +86,6 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
         ]
 
         self.osaAlueet.forEach(getEnrichedDataForOsaAlue(data))
-        console.log("fetchOsaAlue data")
-        console.log(data)
       } catch (error) {
         errors.logError("EnrichOsaAlue.fetchFromEPerusteet", error.message)
       }
