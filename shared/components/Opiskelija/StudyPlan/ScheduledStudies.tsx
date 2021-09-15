@@ -65,6 +65,7 @@ export class ScheduledStudies extends React.Component<ScheduledStudiesProps> {
       >
         <StudiesContainer>
           {aikataulutetutOpinnot.map((study, i) => {
+            console.log(study)
             const renderExtraItem = (i + 1) % 4 === 0
             return (
               <React.Fragment key={`${study.id}_${i}`}>
