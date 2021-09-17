@@ -95,6 +95,8 @@ interface YllapitoState {
   sendHerateId?: number
   sendHerateDateFrom?: string
   sendHerateDateTo?: string
+  sendPaattoHerateDateFrom?: string
+  sendPaattoHerateDateTo?: string
 }
 
 interface SystemInfoResponse {
