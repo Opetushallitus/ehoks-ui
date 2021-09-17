@@ -30,7 +30,10 @@ export const EnrichTutkinnonOsaKoodiUri = types
         cachedResponses[koodiUri] =
           cachedResponses[koodiUri] || getFromEPerusteetService(koodiUri)
         const response: APIResponse = yield cachedResponses[koodiUri]
+        console.log(koodiUri)
+        console.log(response.data)
         self.tutkinnonOsa = response.data
+        console.log(self.tutkinnonOsa)
       } catch (error) {
         errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
       }
