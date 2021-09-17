@@ -667,6 +667,50 @@ export class Yllapito extends React.Component<YllapitoProps> {
     }
   }
 
+  onSendPaattoHeratteetBetween = async (event: any) => {
+    const { intl } = this.context
+    const { sendPaattoHerateDateFrom, sendPaattoHerateDateTo } = this.state
+    event.preventDefault()
+    const request = await window.fetch(
+      `/ehoks-virkailija-backend/api/v1/virkailija/hoks/resend-paattoherate?from=${sendPaattoHerateDateFrom}&to=${sendPaattoHerateDateTo}`,
+      {
+        method: "POST",
+        credentials: "include",
+
+        headers: appendCommonHeaders(
+          new Headers({
+            Accept: "application/json; charset=utf-8",
+            "Content-Type": "application/json"
+          })
+        )
+      }
+    )
+    if (request.status === 200) {
+      const json = await request.json()
+      const count = json.data.count
+      this.setState({
+        success: true,
+        message: intl.formatMessage(
+          {
+            id: "yllapito.heratteetLahetysOnnistui",
+            defaultMessage: "Lähetettiin {count} herätettä"
+          },
+          { count }
+        ),
+        isLoading: false
+      })
+    } else {
+      this.setState({
+        success: false,
+        message: intl.formatMessage({
+          id: "yllapito.herateetLahetysEpaonnistui",
+          defaultMessage: "Virhe herätteiden uudelleenlähetyksessä!"
+        }),
+        isLoading: false
+      })
+    }
+  }
+
   handleHoksIdChange = (inputId: any) => {
     // const inputOid = event.target.value
     this.setState({
@@ -717,6 +761,18 @@ export class Yllapito extends React.Component<YllapitoProps> {
   handleSendHerateDateToChange = (dateTo: any) => {
     this.setState({
       sendHerateDateTo: dateTo
+    })
+  }
+
+  handleSendPaattoHerateDateFromChange = (dateFrom: any) => {
+    this.setState({
+      sendPaattoHerateDateFrom: dateFrom
+    })
+  }
+
+  handleSendPaattoHerateDateToChange = (dateTo: any) => {
+    this.setState({
+      sendPaattoHerateDateTo: dateTo
     })
   }
 
@@ -1136,7 +1192,47 @@ export class Yllapito extends React.Component<YllapitoProps> {
                       <ContentElement>
                         <Button onClick={this.onSendHeratteetBetween}>
                           <FormattedMessage
-                            id="yllapito.aloitusHerate"
+                            id="yllapito.aloitusHeratteet"
+                            defaultMessage="Lähetä uudet herätteet aloituskyselyihin aikavälille."
+                          />
+                        </Button>
+                      </ContentElement>
+                    </ContentElement>
+                  </ContentElement>
+                  <ContentElement>
+                    <Header>
+                      <FormattedMessage
+                        id="yllapito.paattoHeratteet"
+                        defaultMessage="Lähetä uudet herätteet aloituskyselyihin aikavälille."
+                      />
+                    </Header>
+                    <ContentElement>
+                      <ContentElement>
+                        <form>
+                          <HakuInput
+                            type="date"
+                            value={this.state.sendPaattoHerateDateFrom}
+                            onChange={e =>
+                              this.handleSendPaattoHerateDateFromChange(
+                                e.target.value
+                              )
+                            }
+                          />
+                          <HakuInput
+                            type="date"
+                            value={this.state.sendPaattoHerateDateTo}
+                            onChange={e =>
+                              this.handleSendPaattoHerateDateToChange(
+                                e.target.value
+                              )
+                            }
+                          />
+                        </form>
+                      </ContentElement>
+                      <ContentElement>
+                        <Button onClick={this.onSendPaattoHeratteetBetween}>
+                          <FormattedMessage
+                            id="yllapito.paattoHeratteet"
                             defaultMessage="Lähetä uudet herätteet aloituskyselyihin aikavälille."
                           />
                         </Button>
