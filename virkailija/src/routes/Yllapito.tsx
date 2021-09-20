@@ -1205,7 +1205,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <Header>
                       <FormattedMessage
                         id="yllapito.paattoHeratteet"
-                        defaultMessage="Lähetä uudet herätteet aloituskyselyihin aikavälille."
+                        defaultMessage="Lähetä uudet herätteet päättökyselyihin aikavälille."
                       />
                     </Header>
                     <ContentElement>
@@ -1235,7 +1235,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         <Button onClick={this.onSendPaattoHeratteetBetween}>
                           <FormattedMessage
                             id="yllapito.paattoHeratteet"
-                            defaultMessage="Lähetä uudet herätteet aloituskyselyihin aikavälille."
+                            defaultMessage="Lähetä uudet herätteet päättökyselyihin aikavälille."
                           />
                         </Button>
                       </ContentElement>
