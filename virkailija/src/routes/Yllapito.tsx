@@ -661,7 +661,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       this.setState({
         success: false,
         message: intl.formatMessage({
-          id: "yllapito.herateetLahetysEpaonnistui",
+          id: "yllapito.heratteetLahetysEpaonnistui",
           defaultMessage: "Virhe herätteiden uudelleenlähetyksessä!"
         }),
         isLoading: false
@@ -705,7 +705,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       this.setState({
         success: false,
         message: intl.formatMessage({
-          id: "yllapito.herateetLahetysEpaonnistui",
+          id: "yllapito.heratteetLahetysEpaonnistui",
           defaultMessage: "Virhe herätteiden uudelleenlähetyksessä!"
         }),
         isLoading: false
