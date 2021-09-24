@@ -122,11 +122,6 @@ export class Opiskelijapalaute extends React.Component<
                           <FormattedMessage
                             id={"tavoitteet.opiskelijapalauteTila.vastattu"}
                             defaultMessage="Vastattu"
-                            values={{
-                              date: (
-                                <FormattedDate date={palauteTila.lahetyspvm} />
-                              )
-                            }}
                           />
                         ) : (
                           <FormattedMessage
@@ -161,16 +156,20 @@ export class Opiskelijapalaute extends React.Component<
                     </tr>
                   </tbody>
                 </InfoTable>
-                <Button
-                  onClick={this.resendPalaute({
-                    tyyppi: palauteTila.tyyppi
-                  })}
-                >
-                  <FormattedMessage
-                    id="tavoitteet.opiskelijapalauteResendButton"
-                    defaultMessage="Lähetä linkki opiskelijapalautekyselyyn uudestaan"
-                  />
-                </Button>
+                {(palauteTila.vastattu ||
+                  Date.now() >
+                    new Date(palauteTila.voimassaLoppupvm).getTime()) && (
+                  <Button
+                    onClick={this.resendPalaute({
+                      tyyppi: palauteTila.tyyppi
+                    })}
+                  >
+                    <FormattedMessage
+                      id="tavoitteet.opiskelijapalauteResendButton"
+                      defaultMessage="Lähetä linkki opiskelijapalautekyselyyn uudestaan"
+                    />
+                  </Button>
+                )}
               </React.Fragment>
             )
           )
