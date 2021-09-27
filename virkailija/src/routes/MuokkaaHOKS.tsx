@@ -38,7 +38,7 @@ import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
 import { appendCommonHeaders } from "fetchUtils"
 
-const disallowedKeys = ["eid", "manuaalisyotto"]
+const disallowedKeys = ["eid", "manuaalisyotto", "module-id"]
 
 function trimDisallowedKeysForPUTSchema(formData: any) {
   if (typeof formData !== "object") {
@@ -72,9 +72,11 @@ const trimArray = (key: string, formData: any) =>
   formData[key].map((element: any) => trimDisallowedKeysForPUTSchema(element))
 
 function trimPrimitive(key: string, result: any, formData: any) {
-  if (disallowedKeys.includes(key)) {
-    return
-  } else {
+  if (
+    !disallowedKeys.includes(key) ||
+    (Object.keys(formData).includes("osaamisen-hankkimistapa-koodi-uri") &&
+      key === "module-id")
+  ) {
     result[key] = formData[key]
   }
 }
