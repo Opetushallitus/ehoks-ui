@@ -92,6 +92,19 @@ export function fetchUtils(
       }
 
       return response.ok
+    },
+
+    patchResource: async (url: string, init?: RequestInit) => {
+      const response = await fetchImplementation(url, {
+        ...init,
+        method: "PATCH"
+      })
+
+      if (!response.ok) {
+        throw new Error(response.statusText)
+      }
+
+      return response.ok
     }
   }
 }
