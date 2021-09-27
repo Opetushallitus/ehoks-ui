@@ -83,6 +83,7 @@ export const HOKS = types
       errors,
       fetchCollection,
       fetchSingle,
+      patchResource,
       appendCallerId
     } = getEnv<StoreEnvironment>(self)
 
@@ -201,7 +202,8 @@ export const HOKS = types
           opiskeluOikeudet,
           (oo: any) => oo.oid === self.opiskeluoikeusOid
         )
-
+        // TODO: always true because the return value is a Promise
+        // async/await should not be used here
         if (opiskeluoikeusIsValid(opiskeluOikeus)) {
           self.opiskeluOikeus = opiskeluOikeus
         }
@@ -219,11 +221,33 @@ export const HOKS = types
       }
     })
 
+    const shallowDelete = flow(function*(): any {
+      if (!self.oppijaOid) {
+        return
+      }
+      try {
+        try {
+          yield patchResource(
+            apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}`),
+            {
+              headers: appendCallerId()
+            }
+          )
+        } catch (error) {
+          errors.logError("SessionStore.logout", error.message)
+        }
+      } catch (error) {
+        // Do not UI-log mobx-state-tree error
+        // "Cannot read property 'mergeCache' of undefined"
+      }
+    })
+
     return {
       fetchDetails,
       fetchOpiskeluoikeudet,
       fetchOpiskelijapalauteTilat,
-      fetchOsaamispisteet
+      fetchOsaamispisteet,
+      shallowDelete
     }
   })
   .views(self => {
