@@ -118,25 +118,18 @@ export class Opiskelijapalaute extends React.Component<
                     </tr>
                     <tr>
                       <LabeledColumn id="tavoitteet.opiskelijapalauteTilaTitle">
-                        {palauteTila.vastattu ? (
-                          <FormattedMessage
-                            id={"tavoitteet.opiskelijapalauteTila.vastattu"}
-                            defaultMessage="Vastattu"
-                          />
-                        ) : (
-                          <FormattedMessage
-                            id={
-                              "tavoitteet.opiskelijapalauteTila." +
-                              palauteTila.lahetystila
-                            }
-                            defaultMessage="Viesti on lähetetty {date} opiskelijalle"
-                            values={{
-                              date: (
-                                <FormattedDate date={palauteTila.lahetyspvm} />
-                              )
-                            }}
-                          />
-                        )}
+                        <FormattedMessage
+                          id={
+                            "tavoitteet.opiskelijapalauteTila." +
+                            palauteTila.lahetystila
+                          }
+                          defaultMessage="Viesti on lähetetty {date} opiskelijalle"
+                          values={{
+                            date: (
+                              <FormattedDate date={palauteTila.lahetyspvm} />
+                            )
+                          }}
+                        />
                       </LabeledColumn>
                       <LabeledColumn id="tavoitteet.opiskelijapalauteSahkopostiTitle">
                         {palauteTila.sahkoposti}
@@ -156,22 +149,20 @@ export class Opiskelijapalaute extends React.Component<
                     </tr>
                   </tbody>
                 </InfoTable>
-                {!palauteTila.vastattu &&
-                  !(
-                    Date.now() >
-                    new Date(palauteTila.voimassaLoppupvm).getTime()
-                  ) && (
-                    <Button
-                      onClick={this.resendPalaute({
-                        tyyppi: palauteTila.tyyppi
-                      })}
-                    >
-                      <FormattedMessage
-                        id="tavoitteet.opiskelijapalauteResendButton"
-                        defaultMessage="Lähetä linkki opiskelijapalautekyselyyn uudestaan"
-                      />
-                    </Button>
-                  )}
+                {!(
+                  Date.now() > new Date(palauteTila.voimassaLoppupvm).getTime()
+                ) && (
+                  <Button
+                    onClick={this.resendPalaute({
+                      tyyppi: palauteTila.tyyppi
+                    })}
+                  >
+                    <FormattedMessage
+                      id="tavoitteet.opiskelijapalauteResendButton"
+                      defaultMessage="Lähetä linkki opiskelijapalautekyselyyn uudestaan"
+                    />
+                  </Button>
+                )}
               </React.Fragment>
             )
           )
