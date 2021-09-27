@@ -38,7 +38,7 @@ import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
 import { appendCommonHeaders } from "fetchUtils"
 
-const disallowedKeys = ["eid", "manuaalisyotto", "module-id"]
+const disallowedKeys = ["eid", "manuaalisyotto"]
 
 function trimDisallowedKeysForPUTSchema(formData: any) {
   if (typeof formData !== "object") {
