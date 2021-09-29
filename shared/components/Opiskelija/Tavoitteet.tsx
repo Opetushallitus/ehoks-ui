@@ -513,19 +513,15 @@ export class Tavoitteet extends React.Component<
       ),
       opiskelijapalaute: (
         <AccordionTitle>
-          <HeadingContainer>
-            <HelpHeading>
-              <FormattedMessage
-                id="tavoitteet.OpiskelijapalauteTitle"
-                defaultMessage="Opiskelijapalaute"
-              />
-            </HelpHeading>
-            <HelpPopup
-              helpContent={
-                <FormattedMessage id="tavoitteet.OpiskelijapalauteTitle.help" />
-              }
-            />
-          </HeadingContainer>
+          <FormattedMessage
+            id="tavoitteet.OpiskelijapalauteTitle"
+            defaultMessage="Opiskelijapalaute"
+          />
+          <HelpPopup
+            helpContent={
+              <FormattedMessage id="tavoitteet.OpiskelijapalauteTitle.help" />
+            }
+          />
         </AccordionTitle>
       )
     }
