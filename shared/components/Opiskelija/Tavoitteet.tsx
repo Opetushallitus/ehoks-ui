@@ -517,11 +517,6 @@ export class Tavoitteet extends React.Component<
             id="tavoitteet.OpiskelijapalauteTitle"
             defaultMessage="Opiskelijapalaute"
           />
-          <HelpPopup
-            helpContent={
-              <FormattedMessage id="tavoitteet.OpiskelijapalauteTitle.help" />
-            }
-          />
         </AccordionTitle>
       )
     }

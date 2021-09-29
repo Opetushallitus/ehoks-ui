@@ -83,6 +83,10 @@ export class Opiskelijapalaute extends React.Component<
         open={this.props.open}
         title={this.props.title}
         onToggle={this.props.toggleAccordion("opiskelijapalaute")}
+        helpIcon={true}
+        helpContent={
+          <FormattedMessage id="tavoitteet.OpiskelijapalauteTitle.help" />
+        }
       >
         {palauteTilat.length ? (
           palauteTilat.map(
