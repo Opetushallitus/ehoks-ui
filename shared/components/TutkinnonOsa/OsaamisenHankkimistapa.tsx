@@ -114,7 +114,8 @@ export class OsaamisenHankkimistapa extends React.Component<
       hankkijanEdustaja,
       muutOppimisymparistot,
       osaAikaisuustieto,
-      oppisopimuksenPerusta
+      oppisopimuksenPerusta,
+      keskeytymisajanjaksot
     } = osaamisenHankkimistapa
 
     const { vastuullinenTyopaikkaOhjaaja, keskeisetTyotehtavat } =

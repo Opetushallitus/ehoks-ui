@@ -573,6 +573,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "jarjestajan-edustaja",
             "tyopaikalla-jarjestettava-koulutus",
             "muut-oppimisymparistot",
+            "keskeytymisajanjaksot",
             "*"
           ],
           id: {
@@ -643,6 +644,12 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
               "oppimisymparisto-koodi-versio": {
                 "ui:widget": "hidden"
               }
+            }
+          },
+          keskeytymisajanjaksot: {
+            "ui:options": { orderable: false },
+            items: {
+              "ui:order": ["alku", "loppu", "*"]
             }
           }
         }
@@ -759,6 +766,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "jarjestajan-edustaja",
             "tyopaikalla-jarjestettava-koulutus",
             "muut-oppimisymparistot",
+            "keskeytymisajanjaksot",
             "*"
           ],
           id: {
@@ -826,6 +834,12 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
               "oppimisymparisto-koodi-versio": {
                 "ui:widget": "hidden"
               }
+            }
+          },
+          keskeytymisajanjaksot: {
+            "ui:options": { orderable: false },
+            items: {
+              "ui:order": ["alku", "loppu", "*"]
             }
           }
         }
@@ -970,6 +984,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                 "jarjestajan-edustaja",
                 "tyopaikalla-jarjestettava-koulutus",
                 "muut-oppimisymparistot",
+                "keskeytymisajanjaksot",
                 "*"
               ],
               id: {
@@ -1035,6 +1050,12 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                   "oppimisymparisto-koodi-versio": {
                     "ui:widget": "hidden"
                   }
+                }
+              },
+              keskeytymisajanjaksot: {
+                "ui:options": { orderable: false },
+                items: {
+                  "ui:order": ["alku", "loppu", "*"]
                 }
               }
             }
