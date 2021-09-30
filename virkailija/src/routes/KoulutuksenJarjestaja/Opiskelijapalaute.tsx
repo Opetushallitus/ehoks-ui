@@ -83,6 +83,10 @@ export class Opiskelijapalaute extends React.Component<
         open={this.props.open}
         title={this.props.title}
         onToggle={this.props.toggleAccordion("opiskelijapalaute")}
+        helpIcon={true}
+        helpContent={
+          <FormattedMessage id="tavoitteet.opiskelijapalauteTitle.help" />
+        }
       >
         {palauteTilat.length ? (
           palauteTilat.map(
@@ -149,16 +153,20 @@ export class Opiskelijapalaute extends React.Component<
                     </tr>
                   </tbody>
                 </InfoTable>
-                <Button
-                  onClick={this.resendPalaute({
-                    tyyppi: palauteTila.tyyppi
-                  })}
-                >
-                  <FormattedMessage
-                    id="tavoitteet.opiskelijapalauteResendButton"
-                    defaultMessage="Lähetä linkki opiskelijapalautekyselyyn uudestaan"
-                  />
-                </Button>
+                {!(
+                  Date.now() > new Date(palauteTila.voimassaLoppupvm).getTime()
+                ) && (
+                  <Button
+                    onClick={this.resendPalaute({
+                      tyyppi: palauteTila.tyyppi
+                    })}
+                  >
+                    <FormattedMessage
+                      id="tavoitteet.opiskelijapalauteResendButton"
+                      defaultMessage="Lähetä linkki opiskelijapalautekyselyyn uudestaan"
+                    />
+                  </Button>
+                )}
               </React.Fragment>
             )
           )
