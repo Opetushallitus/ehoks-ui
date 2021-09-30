@@ -104,7 +104,7 @@ export function fetchUtils(
         throw new Error(response.statusText)
       }
 
-      return response.ok
+      return response
     }
   }
 }

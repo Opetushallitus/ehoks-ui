@@ -226,19 +226,26 @@ export const HOKS = types
         return
       }
       try {
-        try {
-          yield patchResource(
-            apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}`),
+        const response = yield patchResource(
+          apiUrl(
+            `${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}/shallow-delete`
+          ),
+          {
+            headers: appendCallerId()
+          }
+        )
+        if (response.ok) {
+          const notifications = getRoot<IRootStore>(self).notifications
+          notifications.addNotifications([
             {
-              headers: appendCallerId()
+              title: "tavoitteet.PoistaHoksSuccess",
+              default: "Hoksin poisto onnistui.",
+              tyyppi: "success"
             }
-          )
-        } catch (error) {
-          errors.logError("SessionStore.logout", error.message)
+          ])
         }
       } catch (error) {
-        // Do not UI-log mobx-state-tree error
-        // "Cannot read property 'mergeCache' of undefined"
+        errors.logError("HOKS.shallowDelete", error.message)
       }
     })
 
