@@ -78,7 +78,11 @@ export class LearningEvent extends React.Component<LearningEventProps> {
       keskeytymisajanjaksot
     } = this.props
     const iconSize = size === "small" ? 24 : 32
-    const keskeytynyt = !!(keskeytymisajanjaksot || []).find(k => !k.loppu)
+    const kjaksot = keskeytymisajanjaksot || []
+    const kl = kjaksot.length
+    const keskeytynyt =
+      !!kjaksot.find(k => !k.loppu) ||
+      (kl && new Date(kjaksot[kl - 1].loppu) > new Date())
     return (
       <Container className={className} data-testid="TutkinnonOsa.LearningEvent">
         <Title size={size}>{title}</Title>
