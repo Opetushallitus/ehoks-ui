@@ -135,7 +135,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
                   />
                   <div>
                     {keskeytymisajanjaksot.map(k => (
-                      <div>
+                      <div key={k.alku}>
                         <FormattedDate date={k.alku} dateNotSet="" />
                         {" - "}
                         <FormattedDate date={k.loppu} dateNotSet="" />
