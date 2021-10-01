@@ -133,6 +133,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
                     id="infoModal.keskeytymisajanjaksot"
                     defaultMessage="Keskeytymisajanjaksot"
                   />
+                  :
                   <div>
                     {keskeytymisajanjaksot.map(k => (
                       <div key={k.alku}>
@@ -142,7 +143,6 @@ export class InfoModal extends React.Component<InfoModalProps> {
                       </div>
                     ))}
                   </div>
-                  <br />
                 </>
               )}
             </ModalContent>

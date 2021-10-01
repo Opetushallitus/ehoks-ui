@@ -41,6 +41,11 @@
   },
   {
     "locale": "fi",
+    "key": "learningEvent.keskeytynyt",
+    "value": "Keskeytynyt"
+  },
+  {
+    "locale": "fi",
     "key": "table.haePlaceholder",
     "value": "Hae"
   },

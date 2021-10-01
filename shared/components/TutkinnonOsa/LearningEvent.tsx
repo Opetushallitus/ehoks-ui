@@ -1,4 +1,5 @@
 import React from "react"
+import { FormattedMessage } from "react-intl"
 import styled from "styled"
 import { FormattedDate } from "components/FormattedDate"
 import Flag from "components/icons/Flag"
@@ -77,6 +78,7 @@ export class LearningEvent extends React.Component<LearningEventProps> {
       keskeytymisajanjaksot
     } = this.props
     const iconSize = size === "small" ? 24 : 32
+    const keskeytynyt = !!keskeytymisajanjaksot.find(k => !k.loppu)
     return (
       <Container className={className} data-testid="TutkinnonOsa.LearningEvent">
         <Title size={size}>{title}</Title>
@@ -119,6 +121,14 @@ export class LearningEvent extends React.Component<LearningEventProps> {
             {periodSpecifier && <Detail size={size}>{periodSpecifier}</Detail>}
             <Detail size={size}>{nayttoymparistoDetails}</Detail>
             <Detail size={size}>{description}</Detail>
+            {keskeytynyt && (
+              <Detail size={size}>
+                <FormattedMessage
+                  id="learningEvent.keskeytynyt"
+                  defaultMessage="Keskeytynyt"
+                />
+              </Detail>
+            )}
           </DetailsContainer>
         </ContentContainer>
       </Container>
