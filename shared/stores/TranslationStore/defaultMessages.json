@@ -36,6 +36,11 @@
   },
   {
     "locale": "fi",
+    "key": "infoModal.keskeytymisajanjaksot",
+    "value": "Keskeytymisajanjaksot"
+  },
+  {
+    "locale": "fi",
     "key": "table.haePlaceholder",
     "value": "Hae"
   },

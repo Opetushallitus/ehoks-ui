@@ -3,6 +3,7 @@ import { MdInfo } from "react-icons/md"
 import { FormattedMessage, intlShape } from "react-intl"
 import { FormattedDate } from "components/FormattedDate"
 import { IKoodistoVastaus } from "../models/KoodistoVastaus"
+import { IKeskeytymisajanjakso } from "../models/Keskeytymisajanjakso"
 import Popup from "reactjs-popup"
 import styled from "styled"
 
@@ -52,6 +53,7 @@ interface InfoModalProps {
   nayttoymparistoDetails?: string
   startDate?: string
   endDate?: string
+  keskeytymisajanjaksot?: IKeskeytymisajanjakso[]
 }
 
 export class InfoModal extends React.Component<InfoModalProps> {
@@ -66,7 +68,8 @@ export class InfoModal extends React.Component<InfoModalProps> {
       perusta,
       startDate,
       endDate,
-      nayttoymparistoDetails
+      nayttoymparistoDetails,
+      keskeytymisajanjaksot
     } = this.props
     return (
       <Popup
@@ -121,6 +124,24 @@ export class InfoModal extends React.Component<InfoModalProps> {
                     defaultMessage="Oppisopimuksen perusta"
                   />
                   : {perusta.nimi}
+                  <br />
+                </>
+              )}
+              {keskeytymisajanjaksot && (
+                <>
+                  <FormattedMessage
+                    id="infoModal.keskeytymisajanjaksot"
+                    defaultMessage="Keskeytymisajanjaksot"
+                  />
+                  <div>
+                    {keskeytymisajanjaksot.map(k => (
+                      <div>
+                        <FormattedDate date={k.alku} dateNotSet="" />
+                        {" - "}
+                        <FormattedDate date={k.loppu} dateNotSet="" />
+                      </div>
+                    ))}
+                  </div>
                   <br />
                 </>
               )}

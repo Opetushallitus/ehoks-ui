@@ -137,6 +137,7 @@ export class OsaamisenHankkimistapa extends React.Component<
               size="large"
               partTimeAmount={osaAikaisuustieto}
               perusta={oppisopimuksenPerusta}
+              keskeytymisajanjaksot={keskeytymisajanjaksot}
             />
             {showShareButton && (
               <ButtonContainer>
