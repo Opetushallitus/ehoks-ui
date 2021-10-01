@@ -28,7 +28,7 @@ const Model = types.model("OsaamisenHankkimistapaModel", {
   osaAikaisuustieto: types.maybe(types.number),
   oppisopimuksenPerustaKoodiUri: types.maybe(types.string),
   oppisopimuksenPerusta: types.optional(KoodistoVastaus, {}),
-  keskeytysajanjaksot: types.array(Keskeytymisajanjakso)
+  keskeytymisajanjaksot: types.array(Keskeytymisajanjakso)
 })
 
 export const OsaamisenHankkimistapa = types
