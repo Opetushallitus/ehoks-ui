@@ -82,7 +82,7 @@ export class LearningEvent extends React.Component<LearningEventProps> {
     const kl = kjaksot.length
     const keskeytynyt =
       !!kjaksot.find(k => !k.loppu) ||
-      (kl && new Date(kjaksot[kl - 1].loppu) > new Date())
+      !!(kl && new Date(kjaksot[kl - 1].loppu) > new Date())
     return (
       <Container className={className} data-testid="TutkinnonOsa.LearningEvent">
         <Title size={size}>{title}</Title>
