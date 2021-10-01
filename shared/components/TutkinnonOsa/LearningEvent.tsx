@@ -125,7 +125,7 @@ export class LearningEvent extends React.Component<LearningEventProps> {
               <Detail size={size}>
                 <FormattedMessage
                   id="learningEvent.keskeytynyt"
-                  defaultMessage="Keskeytynyt"
+                  defaultMessage="keskeytynyt"
                 />
               </Detail>
             )}
