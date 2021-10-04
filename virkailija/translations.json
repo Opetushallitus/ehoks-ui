@@ -261,6 +261,7 @@
     "yllapito.hoksIdTulos": "Hoks-id on: {hoksId}",
     "yllapito.hoksIdnHaku": "Hoks-id:n haku",
     "yllapito.hoksPoisto": "Aiheettoman HOKSin poisto",
+    "yllapito.hoksPalautus": "Palauta virkailijan käyttöliittymästä poistetuksi asetettu HOKS",
     "yllapito.hoksienmaaraArvo": "Lukumäärä: {hoksAmount}",
     "yllapito.hoksienmaaraTitle": "Hoksien lukumäärä",
     "yllapito.kyselyynOnJoVastattu": "Kyselyyn on jo vastattu",
