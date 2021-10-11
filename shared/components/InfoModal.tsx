@@ -127,7 +127,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
                   <br />
                 </>
               )}
-              {keskeytymisajanjaksot && keskeytymisajanjaksot.length && (
+              {((keskeytymisajanjaksot || []).length || null) && (
                 <>
                   <FormattedMessage
                     id="infoModal.keskeytymisajanjaksot"
