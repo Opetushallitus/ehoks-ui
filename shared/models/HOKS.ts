@@ -24,6 +24,7 @@ import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 import { OpiskelijapalauteTila } from "./OpiskelijapalauteTila"
 import { IRootStore } from "../../virkailija/src/stores/RootStore"
 import { Locale } from "../stores/TranslationStore"
+import { appendCommonHeaders } from "fetchUtils"
 
 const Model = types.model("HOKSModel", {
   eid: types.optional(types.string, ""),
@@ -231,7 +232,16 @@ export const HOKS = types
             `${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}/shallow-delete`
           ),
           {
-            headers: appendCallerId()
+            headers: appendCommonHeaders(
+              new Headers({
+                Accept: "application/json; charset=utf-8",
+                "Content-Type": "application/json"
+              })
+            ),
+            credentials: "include",
+            body: JSON.stringify({
+              "oppilaitos-oid": self.opiskeluOikeus.oppilaitos.oid
+            })
           }
         )
         if (response.ok) {
@@ -243,6 +253,8 @@ export const HOKS = types
               tyyppi: "success"
             }
           ])
+        } else {
+          throw new Error(response)
         }
       } catch (error) {
         errors.logError("HOKS.shallowDelete", error.message)
