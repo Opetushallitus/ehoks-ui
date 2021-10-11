@@ -9,7 +9,7 @@ import { HelpPopup } from "components/HelpPopup"
 import { InfoTable } from "components/InfoTable"
 import { LabeledColumn } from "components/LabeledColumn"
 import { ModalDialog } from "components/ModalDialogs/ModalDialog"
-import { observer } from "mobx-react"
+import { inject, observer } from "mobx-react"
 import { IHOKS } from "models/HOKS"
 import { ISessionUser } from "models/SessionUser"
 import React from "react"
@@ -18,6 +18,7 @@ import styled from "../../../shared/styled"
 import { Opiskelijapalaute } from "../../../virkailija/src/routes/KoulutuksenJarjestaja/Opiskelijapalaute"
 import { IKoodistoVastaus } from "../../models/KoodistoVastaus"
 import { StudyPoints } from "../StudyPoints"
+import { IRootStore } from "../../../virkailija/src/stores/RootStore"
 
 interface OsaamisenHankkimisenTarveProps {
   osaamisenHankkimisenTarve: boolean | null
@@ -590,6 +591,7 @@ const HoksPaivamaarat = ({
 )
 
 export interface TavoitteetProps {
+  store?: IRootStore
   children?: React.ReactChildren
   student: ISessionUser
   hoks: IHOKS
@@ -610,6 +612,7 @@ export interface TavoitteetState {
   }
 }
 
+@inject("store")
 @observer
 export class Tavoitteet extends React.Component<
   TavoitteetProps & RouteComponentProps,
@@ -663,6 +666,7 @@ export class Tavoitteet extends React.Component<
 
   render() {
     const { student, hoks, titles: customTitles = {} } = this.props
+    const session = this.props.store!.session
     const { app } = this.context
 
     const titles = {
@@ -777,7 +781,7 @@ export class Tavoitteet extends React.Component<
             oppijaOid={student.oid}
           />
         )}
-        {app === "virkailija" && (
+        {session.hasShallowDeletePrivilege && app === "virkailija" && (
           <HOKSpoisto
             hoks={hoks}
             student={student}
