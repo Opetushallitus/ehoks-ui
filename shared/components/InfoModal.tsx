@@ -127,24 +127,25 @@ export class InfoModal extends React.Component<InfoModalProps> {
                   <br />
                 </>
               )}
-              {keskeytymisajanjaksot && (
-                <>
-                  <FormattedMessage
-                    id="infoModal.keskeytymisajanjaksot"
-                    defaultMessage="Keskeytymisajanjaksot"
-                  />
-                  :
-                  <div>
-                    {keskeytymisajanjaksot.map(k => (
-                      <div key={k.alku}>
-                        <FormattedDate date={k.alku} dateNotSet="" />
-                        {" - "}
-                        <FormattedDate date={k.loppu} dateNotSet="" />
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
+              {keskeytymisajanjaksot &&
+                keskeytymisajanjaksot.length(
+                  <>
+                    <FormattedMessage
+                      id="infoModal.keskeytymisajanjaksot"
+                      defaultMessage="Keskeytymisajanjaksot"
+                    />
+                    :
+                    <div>
+                      {keskeytymisajanjaksot.map(k => (
+                        <div key={k.alku}>
+                          <FormattedDate date={k.alku} dateNotSet="" />
+                          {" - "}
+                          <FormattedDate date={k.loppu} dateNotSet="" />
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
             </ModalContent>
           </Modal>
         </div>
