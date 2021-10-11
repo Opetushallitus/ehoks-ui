@@ -135,6 +135,13 @@ export const SessionStore = types
         self.selectedOrganisation &&
         self.selectedOrganisation.roles.indexOf("oph-super-user") > -1
       )
+    },
+    get hasShallowDeletePrivilege() {
+      return (
+        self.selectedOrganisation &&
+        self.selectedOrganisation.privileges &&
+        self.selectedOrganisation.privileges.indexOf("hoks_delete") > -1
+      )
     }
   }))
   .views(self => ({
