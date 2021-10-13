@@ -549,11 +549,11 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "loppu",
             "osa-aikaisuustieto",
             "ajanjakson-tarkenne",
+            "keskeytymisajanjaksot",
             "hankkijan-edustaja",
             "jarjestajan-edustaja",
             "tyopaikalla-jarjestettava-koulutus",
             "muut-oppimisymparistot",
-            "keskeytymisajanjaksot",
             "*"
           ],
           id: {
@@ -733,11 +733,11 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "loppu",
             "osa-aikaisuustieto",
             "ajanjakson-tarkenne",
+            "keskeytymisajanjaksot",
             "hankkijan-edustaja",
             "jarjestajan-edustaja",
             "tyopaikalla-jarjestettava-koulutus",
             "muut-oppimisymparistot",
-            "keskeytymisajanjaksot",
             "*"
           ],
           id: {
@@ -939,11 +939,11 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                 "loppu",
                 "osa-aikaisuustieto",
                 "ajanjakson-tarkenne",
+                "keskeytymisajanjaksot",
                 "hankkijan-edustaja",
                 "jarjestajan-edustaja",
                 "tyopaikalla-jarjestettava-koulutus",
                 "muut-oppimisymparistot",
-                "keskeytymisajanjaksot",
                 "*"
               ],
               id: {
