@@ -1,5 +1,4 @@
 import React from "react"
-import { FormattedMessage } from "react-intl"
 import styled from "styled"
 import { FormattedDate } from "components/FormattedDate"
 import Flag from "components/icons/Flag"
