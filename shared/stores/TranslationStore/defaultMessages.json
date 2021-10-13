@@ -36,6 +36,16 @@
   },
   {
     "locale": "fi",
+    "key": "infoModal.keskeytymisajanjaksot",
+    "value": "Keskeytymisajanjaksot"
+  },
+  {
+    "locale": "fi",
+    "key": "learningEvent.keskeytynyt",
+    "value": "keskeytynyt"
+  },
+  {
+    "locale": "fi",
     "key": "table.haePlaceholder",
     "value": "Hae"
   },

@@ -5,6 +5,7 @@ import Flag from "components/icons/Flag"
 import { MdEventNote } from "react-icons/md"
 import { InfoModal } from "components/InfoModal"
 import { IKoodistoVastaus } from "models/KoodistoVastaus"
+import { IKeskeytymisajanjakso } from "models/Keskeytymisajanjakso"
 
 interface SizeProps {
   size?: "small" | "large"
@@ -56,6 +57,7 @@ interface LearningEventProps {
   description?: string
   partTimeAmount?: number
   perusta?: IKoodistoVastaus
+  keskeytymisajanjaksot?: IKeskeytymisajanjakso[]
 }
 
 export class LearningEvent extends React.Component<LearningEventProps> {
@@ -71,9 +73,11 @@ export class LearningEvent extends React.Component<LearningEventProps> {
       isOsaamisenOsoittaminen = false,
       description,
       partTimeAmount,
-      perusta
+      perusta,
+      keskeytymisajanjaksot
     } = this.props
     const iconSize = size === "small" ? 24 : 32
+    const kl = (keskeytymisajanjaksot || []).length
     return (
       <Container className={className} data-testid="TutkinnonOsa.LearningEvent">
         <Title size={size}>{title}</Title>
@@ -99,7 +103,7 @@ export class LearningEvent extends React.Component<LearningEventProps> {
                 </Detail>
               )}
             </div>
-            {(partTimeAmount || (perusta && perusta.nimi)) && (
+            {(partTimeAmount || (perusta && perusta.nimi) || kl || null) && (
               <div style={{ display: "inline-block", marginLeft: 5 }}>
                 <InfoModal
                   nayttoymparistoDetails={nayttoymparistoDetails}
@@ -107,6 +111,7 @@ export class LearningEvent extends React.Component<LearningEventProps> {
                   endDate={endDate}
                   partTimeAmount={partTimeAmount}
                   perusta={perusta}
+                  keskeytymisajanjaksot={keskeytymisajanjaksot}
                 />
               </div>
             )}

@@ -2,6 +2,7 @@ import { types } from "mobx-state-tree"
 import { Oppilaitoshenkilo } from "./Oppilaitoshenkilo"
 import { TyopaikallaJarjestettavaKoulutus } from "./TyopaikallaJarjestettavaKoulutus"
 import { MuuOppimisymparisto } from "./MuuOppimisymparisto"
+import { Keskeytymisajanjakso } from "./Keskeytymisajanjakso"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 
@@ -26,7 +27,8 @@ const Model = types.model("OsaamisenHankkimistapaModel", {
   loppu: types.optional(types.string, ""),
   osaAikaisuustieto: types.maybe(types.number),
   oppisopimuksenPerustaKoodiUri: types.maybe(types.string),
-  oppisopimuksenPerusta: types.optional(KoodistoVastaus, {})
+  oppisopimuksenPerusta: types.optional(KoodistoVastaus, {}),
+  keskeytymisajanjaksot: types.array(Keskeytymisajanjakso)
 })
 
 export const OsaamisenHankkimistapa = types
