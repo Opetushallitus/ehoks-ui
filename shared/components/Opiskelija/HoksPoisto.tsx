@@ -12,7 +12,7 @@ import styled from "../../styled"
 const DeleteMessageContainer = styled("div")`
   border-color: gray;
   border-radius: 5px;
-  padding: 10px 10px;
+  padding: 5px;
   display: inline-flex;
 `
 
@@ -20,7 +20,7 @@ const ButtonContainer = styled("div")`
   display: flex;
   align-items: left;
   justify-content: left;
-  margin: 20px 0 10px 0;
+  margin: 10px 0 10px 0;
 `
 
 const DeleteHoksButton = styled(Button)`
