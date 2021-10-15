@@ -78,6 +78,7 @@ export const HOKS = types
     osaamispisteet: 0
   }))
   .actions(self => {
+    const root: IRootStore = getRoot(self)
     const {
       apiUrl,
       apiPrefix,
@@ -245,8 +246,7 @@ export const HOKS = types
           }
         )
         if (response.ok) {
-          const notifications = getRoot<IRootStore>(self).notifications
-          notifications.addNotifications([
+          root.notifications.addNotifications([
             {
               title: "tavoitteet.PoistaHoksSuccess",
               default: "Hoksin poisto onnistui.",
