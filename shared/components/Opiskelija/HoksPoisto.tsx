@@ -10,10 +10,9 @@ import { FormattedMessage } from "react-intl"
 import styled from "../../styled"
 
 const DeleteMessageContainer = styled("div")`
-  border-style: dashed;
   border-color: gray;
   border-radius: 5px;
-  padding: 10px 30px;
+  padding: 10px 10px;
   display: inline-flex;
 `
 
