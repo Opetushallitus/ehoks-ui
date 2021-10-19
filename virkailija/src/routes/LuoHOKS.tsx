@@ -221,24 +221,27 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       ]
       const ohtErrors: Record<string, Record<number, number[]>> = {}
       let ohtErrorsPresent = false
-      hankittavatTyypit.forEach(osaTyyppi => {
-        ;((json["errors"] || {})[osaTyyppi] || []).forEach((osa, osaIndex) => {
-          ;(osa["osaamisen-hankkimistavat"] || []).forEach((oht, ohtIndex) => {
-            if (oht.includes("Tieto oppisopimuksen perustasta puuttuu")) {
-              errorsPresent = true
-              if (!ohtErrors[osaTyyppi]) {
-                ohtErrors[osaTyyppi] = {}
-              }
+      hankittavatTyypit.forEach((osaTyyppi: Any) =>
+        ((json["errors"] || {})[osaTyyppi] || []).forEach(
+          (osa: Any, osaIndex: Any) =>
+            (osa["osaamisen-hankkimistavat"] || []).forEach(
+              (oht: Any, ohtIndex: Any) => {
+                if (oht.includes("Tieto oppisopimuksen perustasta puuttuu")) {
+                  ohtErrorsPresent = true
+                  if (!ohtErrors[osaTyyppi]) {
+                    ohtErrors[osaTyyppi] = {}
+                  }
 
-              if (!ohtErrors[osaTyyppi][osaIndex]) {
-                ohtErrors[osaTyyppi][osaIndex] = []
-              }
+                  if (!ohtErrors[osaTyyppi][osaIndex]) {
+                    ohtErrors[osaTyyppi][osaIndex] = []
+                  }
 
-              ohtErrors[osaTyyppi][osaIndex].push(ohtIndex)
-            }
-          })
-        })
-      })
+                  ohtErrors[osaTyyppi][osaIndex].push(ohtIndex)
+                }
+              }
+            )
+        )
+      )
 
       if (ohtErrorsPresent) {
         notifications.addError(
