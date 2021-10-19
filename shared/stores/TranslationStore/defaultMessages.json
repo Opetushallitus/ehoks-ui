@@ -126,6 +126,11 @@
   },
   {
     "locale": "fi",
+    "key": "errors.HOKS.OppisopimuksenPerustaPuuttuu",
+    "value": "Oppisopimuksen perusta puuttuu"
+  },
+  {
+    "locale": "fi",
     "key": "errors.EnrichKoodiUri.fetchEPerusteet",
     "value": "Tutkinnon osien haku ePerusteista epäonnistui"
   },

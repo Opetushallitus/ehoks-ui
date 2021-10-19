@@ -265,27 +265,28 @@ export class MuokkaaHOKS extends React.Component<
       ]
       const ohtErrors: Record<string, Record<number, number[]>> = {}
       let ohtErrorsPresent = false
-      hankittavatTyypit.forEach((osaTyyppi: any) =>
-        ((json.errors || {})[osaTyyppi] || []).forEach(
-          (osa: any, osaIndex: any) =>
-            (osa["osaamisen-hankkimistavat"] || []).forEach(
-              (oht: any, ohtIndex: any) => {
-                if (oht.includes("Tieto oppisopimuksen perustasta puuttuu")) {
-                  ohtErrorsPresent = true
-                  if (!ohtErrors[osaTyyppi]) {
-                    ohtErrors[osaTyyppi] = {}
-                  }
-
-                  if (!ohtErrors[osaTyyppi][osaIndex]) {
-                    ohtErrors[osaTyyppi][osaIndex] = []
-                  }
-
-                  ohtErrors[osaTyyppi][osaIndex].push(ohtIndex)
-                }
+      hankittavatTyypit.forEach((osaTyyppi: any) => {
+        ohtErrorsPresent = ohtErrorsPresent(
+          (json.errors || {})[osaTyyppi] || []
+        ).forEach((osa: any, osaIndex: any) => {
+          ohtErrorsPresent = ohtErrorsPresent(
+            osa["osaamisen-hankkimistavat"] || []
+          ).forEach((oht: any, ohtIndex: any) => {
+            if (oht.includes("Tieto oppisopimuksen perustasta puuttuu")) {
+              ohtErrorsPresent = true
+              if (!ohtErrors[osaTyyppi]) {
+                ohtErrors[osaTyyppi] = {}
               }
-            )
-        )
-      )
+
+              if (!ohtErrors[osaTyyppi][osaIndex]) {
+                ohtErrors[osaTyyppi][osaIndex] = []
+              }
+
+              ohtErrors[osaTyyppi][osaIndex].push(ohtIndex)
+            }
+          })
+        })
+      })
 
       if (ohtErrorsPresent) {
         notifications.addError(
