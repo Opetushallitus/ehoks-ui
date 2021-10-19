@@ -269,7 +269,7 @@ export class MuokkaaHOKS extends React.Component<
         ;((json["errors"] || {})[osaTyyppi] || []).forEach((osa, osaIndex) => {
           ;(osa["osaamisen-hankkimistavat"] || []).forEach((oht, ohtIndex) => {
             if (oht.includes("Tieto oppisopimuksen perustasta puuttuu")) {
-              errorsPresent = true
+              ohtErrorsPresent = true
               if (!ohtErrors[osaTyyppi]) {
                 ohtErrors[osaTyyppi] = {}
               }
