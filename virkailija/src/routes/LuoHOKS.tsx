@@ -224,22 +224,27 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       hankittavatTyypit.forEach((osaTyyppi: any) => {
         ;((json.errors || {})[osaTyyppi] || []).forEach(
           (osa: any, osaIndex: any) => {
-            ;(osa["osaamisen-hankkimistavat"] || []).forEach(
-              (oht: any, ohtIndex: any) => {
-                if (oht.includes("Tieto oppisopimuksen perustasta puuttuu")) {
-                  ohtErrorsPresent = true
-                  if (!ohtErrors[osaTyyppi]) {
-                    ohtErrors[osaTyyppi] = {}
-                  }
+            if (osa) {
+              ;(osa["osaamisen-hankkimistavat"] || []).forEach(
+                (oht: any, ohtIndex: any) => {
+                  if (
+                    oht &&
+                    oht.includes("Tieto oppisopimuksen perustasta puuttuu")
+                  ) {
+                    ohtErrorsPresent = true
+                    if (!ohtErrors[osaTyyppi]) {
+                      ohtErrors[osaTyyppi] = {}
+                    }
 
-                  if (!ohtErrors[osaTyyppi][osaIndex]) {
-                    ohtErrors[osaTyyppi][osaIndex] = []
-                  }
+                    if (!ohtErrors[osaTyyppi][osaIndex]) {
+                      ohtErrors[osaTyyppi][osaIndex] = []
+                    }
 
-                  ohtErrors[osaTyyppi][osaIndex].push(ohtIndex)
+                    ohtErrors[osaTyyppi][osaIndex].push(ohtIndex)
+                  }
                 }
-              }
-            )
+              )
+            }
           }
         )
       })
