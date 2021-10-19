@@ -222,11 +222,11 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       const ohtErrors: Record<string, Record<number, number[]>> = {}
       let ohtErrorsPresent = false
       hankittavatTyypit.forEach((osaTyyppi: any) => {
-        ohtErrorsPresent = ohtErrorsPresent;
-        ((json.errors || {})[osaTyyppi] || []).forEach(
+        ohtErrorsPresent = ohtErrorsPresent
+        ;((json.errors || {})[osaTyyppi] || []).forEach(
           (osa: any, osaIndex: any) => {
-            ohtErrorsPresent = ohtErrorsPresent;
-            (osa["osaamisen-hankkimistavat"] || []).forEach(
+            ohtErrorsPresent = ohtErrorsPresent
+            ;(osa["osaamisen-hankkimistavat"] || []).forEach(
               (oht: any, ohtIndex: any) => {
                 if (oht.includes("Tieto oppisopimuksen perustasta puuttuu")) {
                   ohtErrorsPresent = true
@@ -249,7 +249,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       if (ohtErrorsPresent) {
         notifications.addError(
           "HOKS.OppisopimuksenPerustaPuuttuu",
-          JSON.stringify(ohtErrors) // TODO something better
+          JSON.stringify(ohtErrors) // TODO something better...
         )
       }
     }
