@@ -266,10 +266,8 @@ export class MuokkaaHOKS extends React.Component<
       const ohtErrors: Record<string, Record<number, number[]>> = {}
       let ohtErrorsPresent = false
       hankittavatTyypit.forEach((osaTyyppi: any) => {
-        ohtErrorsPresent = ohtErrorsPresent
         ;((json.errors || {})[osaTyyppi] || []).forEach(
           (osa: any, osaIndex: any) => {
-            ohtErrorsPresent = ohtErrorsPresent
             ;(osa["osaamisen-hankkimistavat"] || []).forEach(
               (oht: any, ohtIndex: any) => {
                 if (oht.includes("Tieto oppisopimuksen perustasta puuttuu")) {
@@ -290,6 +288,7 @@ export class MuokkaaHOKS extends React.Component<
         )
       })
 
+      console.log(ohtErrorsPresent)
       if (ohtErrorsPresent) {
         notifications.addError(
           "OppisopimuksenPerustaPuuttuu",
