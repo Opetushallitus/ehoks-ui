@@ -266,7 +266,7 @@ export class MuokkaaHOKS extends React.Component<
       const ohtErrors: Record<string, Record<number, number[]>> = {}
       let ohtErrorsPresent = false
       hankittavatTyypit.forEach((osaTyyppi: any) =>
-        ((json["errors"] || {})[osaTyyppi] || []).forEach(
+        ((json.errors || {})[osaTyyppi] || []).forEach(
           (osa: any, osaIndex: any) =>
             (osa["osaamisen-hankkimistavat"] || []).forEach(
               (oht: any, ohtIndex: any) => {
