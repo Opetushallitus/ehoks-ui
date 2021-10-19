@@ -221,11 +221,11 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       ]
       const ohtErrors: Record<string, Record<number, number[]>> = {}
       let ohtErrorsPresent = false
-      hankittavatTyypit.forEach((osaTyyppi: Any) =>
+      hankittavatTyypit.forEach((osaTyyppi: any) =>
         ((json["errors"] || {})[osaTyyppi] || []).forEach(
-          (osa: Any, osaIndex: Any) =>
+          (osa: any, osaIndex: any) =>
             (osa["osaamisen-hankkimistavat"] || []).forEach(
-              (oht: Any, ohtIndex: Any) => {
+              (oht: any, ohtIndex: any) => {
                 if (oht.includes("Tieto oppisopimuksen perustasta puuttuu")) {
                   ohtErrorsPresent = true
                   if (!ohtErrors[osaTyyppi]) {
