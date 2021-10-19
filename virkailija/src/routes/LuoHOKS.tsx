@@ -184,6 +184,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
 
   create = async (fieldProps: IChangeEvent<FieldProps>) => {
     this.setState({ isLoading: true })
+    const { notifications } = this.props.store!
 
     const request = await window.fetch(
       `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${fieldProps.formData["oppija-oid"]}/hoksit`,
@@ -212,6 +213,39 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       window.localStorage.removeItem("hoks")
     } else {
       this.setState({ success: false })
+
+      const hankittavatTyypit = [
+        "hankittavat-ammat-tutkinnon-osat",
+        "hankittavat-paikalliset-tutkinnon-osat",
+        "hankittavat-yhteiset-tutkinnon-osat"
+      ]
+      const ohtErrors: Record<string, Record<number, number[]>> = {}
+      let ohtErrorsPresent = false
+      hankittavatTyypit.forEach(osatyyppi => {
+        ;((json["errors"] || {})[osatyyppi] || []).forEach((osa, osaIndex) => {
+          ;(osa["osaamisen-hankkimistavat"] || []).forEach((oht, ohtIndex) => {
+            if (oht.includes("Tieto oppisopimuksen perustasta puuttuu")) {
+              errorsPresent = true
+              if (!ohtErrors[osaTyyppi]) {
+                ohtErrors[osaTyyppi] = {}
+              }
+
+              if (!ohtErrors[osaTyyppi][osaIndex]) {
+                ohtErrors[osaTyyppi][osaIndex] = []
+              }
+
+              ohtErrors[osaTyyppi][osaIndex].push(ohtIndex)
+            }
+          })
+        })
+      })
+
+      if (ohtErrorsPresent) {
+        notifications.addError(
+          "OppisopimuksenPerustaPuuttuu",
+          JSON.stringify(ohtErrors) // TODO something better
+        )
+      }
     }
     console.log("RESPONSE STATUS", request.status)
     console.log("RESPONSE JSON", json)
