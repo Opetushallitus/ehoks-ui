@@ -317,7 +317,7 @@ export class MuokkaaHOKS extends React.Component<
                   },
                   {
                     index: n,
-                    ohts: ohtErrors[ht][n].join(", ")
+                    ohts: ohtErrors[ht][n as number].join(", ")
                   }
                 )
               )

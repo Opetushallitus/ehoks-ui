@@ -218,7 +218,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     } else {
       this.setState({ success: false })
 
-      const { intl } = this.context
+      //const { intl } = this.context
       const hankittavatTyypit = [
         "hankittavat-ammat-tutkinnon-osat",
         "hankittavat-paikalliset-tutkinnon-osat",
