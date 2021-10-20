@@ -218,7 +218,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     } else {
       this.setState({ success: false })
 
-      //const { intl } = this.context
+      const { intl } = this.context
       const hankittavatTyypit = [
         "hankittavat-ammat-tutkinnon-osat",
         "hankittavat-paikalliset-tutkinnon-osat",
@@ -257,7 +257,31 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       if (ohtErrorsPresent) {
         notifications.addError(
           "HOKS.OppisopimuksenPerustaPuuttuu",
-          JSON.stringify(ohtErrors) // TODO something better...
+          hankittavatTyypit
+            .map(ht =>
+              Object.keys(ohtErrors[ht] || {})
+                .map(n =>
+                  intl.formatMessage(
+                    {
+                      id:
+                        "errors.HOKS.Hankittavat" +
+                        (ht.includes("ammat")
+                          ? "Ammat"
+                          : ht.includes("paikalliset")
+                          ? "Paikalliset"
+                          : "Yhteiset") +
+                        "OsaamisenHankkimistavoissa"
+                    },
+                    {
+                      index: Number(n) + 1,
+                      ohts: ohtErrors[ht][Number(n)].map(x => x + 1).join(", ")
+                    }
+                  )
+                )
+                .join("; ")
+            )
+            .filter(x => !!x)
+            .join("; ")
         )
       }
     }
