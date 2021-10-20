@@ -322,6 +322,7 @@ export class MuokkaaHOKS extends React.Component<
                 )
               )
             )
+            .filter(x => !!x)
             .join("; ")
         )
       }
