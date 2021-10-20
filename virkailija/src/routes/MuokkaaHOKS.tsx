@@ -317,8 +317,8 @@ export class MuokkaaHOKS extends React.Component<
                         "OsaamisenHankkimistavoissa"
                     },
                     {
-                      index: n,
-                      ohts: ohtErrors[ht][Number(n)].join(", ")
+                      index: n + 1,
+                      ohts: ohtErrors[ht][Number(n)].map(x => x + 1).join(", ")
                     }
                   )
                 )
