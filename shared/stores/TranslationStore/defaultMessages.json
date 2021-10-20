@@ -132,17 +132,17 @@
   {
     "locale": "fi",
     "key": "errors.HOKS.HankittavatAmmatOsaamisenHankkimistavoissa",
-    "value": "Hankittavasta ammatillisesta tutkinnon osasta {index} osaamisen hankkimistavoista {ohts}"
+    "value": "Hankittavan ammatillisen tutkinnon osan {index} osaamisen hankkimistavoista {ohts}"
   },
   {
     "locale": "fi",
     "key": "errors.HOKS.HankittavatPaikallisetOsaamisenHankkimistavoissa",
-    "value": "Hankittavasta paikallisesta tutkinnon osasta {index} osaamisen hankkimistavoista {ohts}"
+    "value": "Hankittavan paikallisen tutkinnon osan {index} osaamisen hankkimistavoista {ohts}"
   },
   {
     "locale": "fi",
     "key": "errors.HOKS.HankittavatYhteisetOsaamisenHankkimistavoissa",
-    "value": "Hankittavasta yhteisestä tutkinnon osasta {index} osaamisen hankkimistavoista {ohts}"
+    "value": "Hankittavan yhteisen tutkinnon osan {index} osaamisen hankkimistavoista {ohts}"
   },
   {
     "locale": "fi",
