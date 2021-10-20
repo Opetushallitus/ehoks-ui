@@ -131,6 +131,21 @@
   },
   {
     "locale": "fi",
+    "key": "errors.HOKS.HankittavatAmmatOsaamisenHankkimistavoissa",
+    "value": "Hankittavassa ammatillisessa tutkinnon osassa {index} osaamisen hankkimistavoissa {ohts}"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.HOKS.HankittavatPaikallisetOsaamisenHankkimistavoissa",
+    "value": "Hankittavassa paikallisessa tutkinnon osassa {index} osaamisen hankkimistavoissa {ohts}"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.HOKS.HankittavatYhteisetOsaamisenHankkimistavoissa",
+    "value": "Hankittavassa yhteisessä tutkinnon osassa {index} osaamisen hankkimistavoissa {ohts}"
+  },
+  {
+    "locale": "fi",
     "key": "errors.EnrichKoodiUri.fetchEPerusteet",
     "value": "Tutkinnon osien haku ePerusteista epäonnistui"
   },

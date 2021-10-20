@@ -5,7 +5,7 @@ import { JSONSchema6 } from "json-schema"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import "react-bootstrap-typeahead/css/Typeahead.css"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, intlShape } from "react-intl"
 import { AjvError, FieldProps, IChangeEvent } from "react-jsonschema-form"
 import { IRootStore } from "stores/RootStore"
 import { ArrayFieldTemplate } from "./HOKSLomake/ArrayFieldTemplate"
@@ -109,6 +109,10 @@ export class MuokkaaHOKS extends React.Component<
   MuokkaaHOKSProps,
   MuokkaaHOKSState
 > {
+  static contextTypes = {
+    intl: intlShape
+  }
+
   state: MuokkaaHOKSState = {
     schema: {},
     formData: {},
@@ -257,6 +261,7 @@ export class MuokkaaHOKS extends React.Component<
     } else {
       this.setState({ success: false, isLoading: false })
 
+      const { intl } = this.context
       const json = await request.json()
       const hankittavatTyypit = [
         "hankittavat-ammat-tutkinnon-osat",
@@ -293,11 +298,31 @@ export class MuokkaaHOKS extends React.Component<
         )
       })
 
-      console.log(ohtErrorsPresent)
       if (ohtErrorsPresent) {
         notifications.addError(
-          "OppisopimuksenPerustaPuuttuu",
-          JSON.stringify(ohtErrors) // TODO something better...
+          "HOKS.OppisopimuksenPerustaPuuttuu",
+          hankittavatTyypit
+            .map(ht =>
+              Object.keys(ohtErrors[ht]).map(n =>
+                intl.formatMessage(
+                  {
+                    id:
+                      "errors.HOKS.Hankittavat" +
+                      (ht.includes("ammat")
+                        ? "Ammat"
+                        : ht.includes("paikalliset")
+                        ? "Paikalliset"
+                        : "Yhteiset") +
+                      "OsaamisenHankkimistavoissa"
+                  },
+                  {
+                    index: n,
+                    ohts: ohtErrors[ht][n].join(", ")
+                  }
+                )
+              )
+            )
+            .join("; ")
         )
       }
     }

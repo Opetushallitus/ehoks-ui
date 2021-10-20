@@ -6,7 +6,7 @@ import { JSONSchema6 } from "json-schema"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import "react-bootstrap-typeahead/css/Typeahead.css"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, intlShape } from "react-intl"
 import { AjvError, FieldProps, IChangeEvent } from "react-jsonschema-form"
 import { IRootStore } from "stores/RootStore"
 import { ArrayFieldTemplate } from "./HOKSLomake/ArrayFieldTemplate"
@@ -63,6 +63,10 @@ interface LuoHOKSState {
 @inject("store")
 @observer
 export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
+  static contextTypes = {
+    intl: intlShape
+  }
+
   state: LuoHOKSState = {
     schema: {},
     formData: {},
@@ -214,6 +218,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     } else {
       this.setState({ success: false })
 
+      const { intl } = this.context
       const hankittavatTyypit = [
         "hankittavat-ammat-tutkinnon-osat",
         "hankittavat-paikalliset-tutkinnon-osat",
