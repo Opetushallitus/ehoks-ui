@@ -303,7 +303,7 @@ export class MuokkaaHOKS extends React.Component<
           "HOKS.OppisopimuksenPerustaPuuttuu",
           hankittavatTyypit
             .map(ht =>
-              Object.keys(ohtErrors[ht]).map(n =>
+              Object.keys(ohtErrors[ht] || {}).map(n =>
                 intl.formatMessage(
                   {
                     id:
