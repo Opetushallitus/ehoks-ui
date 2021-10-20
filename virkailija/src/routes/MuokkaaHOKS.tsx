@@ -303,24 +303,26 @@ export class MuokkaaHOKS extends React.Component<
           "HOKS.OppisopimuksenPerustaPuuttuu",
           hankittavatTyypit
             .map(ht =>
-              Object.keys(ohtErrors[ht] || {}).map(n =>
-                intl.formatMessage(
-                  {
-                    id:
-                      "errors.HOKS.Hankittavat" +
-                      (ht.includes("ammat")
-                        ? "Ammat"
-                        : ht.includes("paikalliset")
-                        ? "Paikalliset"
-                        : "Yhteiset") +
-                      "OsaamisenHankkimistavoissa"
-                  },
-                  {
-                    index: n,
-                    ohts: ohtErrors[ht][Number(n)].join(", ")
-                  }
+              Object.keys(ohtErrors[ht] || {})
+                .map(n =>
+                  intl.formatMessage(
+                    {
+                      id:
+                        "errors.HOKS.Hankittavat" +
+                        (ht.includes("ammat")
+                          ? "Ammat"
+                          : ht.includes("paikalliset")
+                          ? "Paikalliset"
+                          : "Yhteiset") +
+                        "OsaamisenHankkimistavoissa"
+                    },
+                    {
+                      index: n,
+                      ohts: ohtErrors[ht][Number(n)].join(", ")
+                    }
+                  )
                 )
-              )
+                .join("; ")
             )
             .filter(x => !!x)
             .join("; ")
