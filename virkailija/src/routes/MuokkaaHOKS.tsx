@@ -5,7 +5,7 @@ import { JSONSchema6 } from "json-schema"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import "react-bootstrap-typeahead/css/Typeahead.css"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, intlShape } from "react-intl"
 import { AjvError, FieldProps, IChangeEvent } from "react-jsonschema-form"
 import { IRootStore } from "stores/RootStore"
 import { ArrayFieldTemplate } from "./HOKSLomake/ArrayFieldTemplate"
@@ -109,6 +109,10 @@ export class MuokkaaHOKS extends React.Component<
   MuokkaaHOKSProps,
   MuokkaaHOKSState
 > {
+  static contextTypes = {
+    intl: intlShape
+  }
+
   state: MuokkaaHOKSState = {
     schema: {},
     formData: {},
@@ -233,6 +237,7 @@ export class MuokkaaHOKS extends React.Component<
 
   save = async (fieldProps: IChangeEvent<FieldProps>) => {
     this.setState({ isLoading: true })
+    const { notifications } = this.props.store!
     const { oppijaOid, hoksId } = this.props
     const request = await window.fetch(
       `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksId}`,
@@ -255,6 +260,74 @@ export class MuokkaaHOKS extends React.Component<
       })
     } else {
       this.setState({ success: false, isLoading: false })
+
+      const { intl } = this.context
+      const json = await request.json()
+      const hankittavatTyypit = [
+        "hankittavat-ammat-tutkinnon-osat",
+        "hankittavat-paikalliset-tutkinnon-osat",
+        "hankittavat-yhteiset-tutkinnon-osat"
+      ]
+      const ohtErrors: Record<string, Record<number, number[]>> = {}
+      let ohtErrorsPresent = false
+      hankittavatTyypit.forEach((osaTyyppi: any) => {
+        ;((json.errors || {})[osaTyyppi] || []).forEach(
+          (osa: any, osaIndex: any) => {
+            if (osa) {
+              ;(osa["osaamisen-hankkimistavat"] || []).forEach(
+                (oht: any, ohtIndex: any) => {
+                  if (
+                    oht &&
+                    oht.includes("Tieto oppisopimuksen perustasta puuttuu")
+                  ) {
+                    ohtErrorsPresent = true
+                    if (!ohtErrors[osaTyyppi]) {
+                      ohtErrors[osaTyyppi] = {}
+                    }
+
+                    if (!ohtErrors[osaTyyppi][osaIndex]) {
+                      ohtErrors[osaTyyppi][osaIndex] = []
+                    }
+
+                    ohtErrors[osaTyyppi][osaIndex].push(ohtIndex)
+                  }
+                }
+              )
+            }
+          }
+        )
+      })
+
+      if (ohtErrorsPresent) {
+        notifications.addError(
+          "HOKS.OppisopimuksenPerustaPuuttuu",
+          hankittavatTyypit
+            .map(ht =>
+              Object.keys(ohtErrors[ht] || {})
+                .map(n =>
+                  intl.formatMessage(
+                    {
+                      id:
+                        "errors.HOKS.Hankittavat" +
+                        (ht.includes("ammat")
+                          ? "Ammat"
+                          : ht.includes("paikalliset")
+                          ? "Paikalliset"
+                          : "Yhteiset") +
+                        "OsaamisenHankkimistavoissa"
+                    },
+                    {
+                      index: Number(n) + 1,
+                      ohts: ohtErrors[ht][Number(n)].map(x => x + 1).join(", ")
+                    }
+                  )
+                )
+                .join("; ")
+            )
+            .filter(x => !!x)
+            .join("; ")
+        )
+      }
     }
   }
 

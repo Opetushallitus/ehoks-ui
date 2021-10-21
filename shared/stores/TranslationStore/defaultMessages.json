@@ -126,6 +126,26 @@
   },
   {
     "locale": "fi",
+    "key": "errors.HOKS.OppisopimuksenPerustaPuuttuu",
+    "value": "Oppisopimuksen perusta puuttuu"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.HOKS.HankittavatAmmatOsaamisenHankkimistavoissa",
+    "value": "Hankittavan ammatillisen tutkinnon osan {index} osaamisen hankkimistavoista {ohts}"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.HOKS.HankittavatPaikallisetOsaamisenHankkimistavoissa",
+    "value": "Hankittavan paikallisen tutkinnon osan {index} osaamisen hankkimistavoista {ohts}"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.HOKS.HankittavatYhteisetOsaamisenHankkimistavoissa",
+    "value": "Hankittavan yhteisen tutkinnon osan {index} osaamisen hankkimistavoista {ohts}"
+  },
+  {
+    "locale": "fi",
     "key": "errors.EnrichKoodiUri.fetchEPerusteet",
     "value": "Tutkinnon osien haku ePerusteista epäonnistui"
   },

@@ -6,7 +6,7 @@ import { JSONSchema6 } from "json-schema"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import "react-bootstrap-typeahead/css/Typeahead.css"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, intlShape } from "react-intl"
 import { AjvError, FieldProps, IChangeEvent } from "react-jsonschema-form"
 import { IRootStore } from "stores/RootStore"
 import { ArrayFieldTemplate } from "./HOKSLomake/ArrayFieldTemplate"
@@ -63,6 +63,10 @@ interface LuoHOKSState {
 @inject("store")
 @observer
 export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
+  static contextTypes = {
+    intl: intlShape
+  }
+
   state: LuoHOKSState = {
     schema: {},
     formData: {},
@@ -184,6 +188,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
 
   create = async (fieldProps: IChangeEvent<FieldProps>) => {
     this.setState({ isLoading: true })
+    const { notifications } = this.props.store!
 
     const request = await window.fetch(
       `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${fieldProps.formData["oppija-oid"]}/hoksit`,
@@ -212,6 +217,73 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       window.localStorage.removeItem("hoks")
     } else {
       this.setState({ success: false })
+
+      const { intl } = this.context
+      const hankittavatTyypit = [
+        "hankittavat-ammat-tutkinnon-osat",
+        "hankittavat-paikalliset-tutkinnon-osat",
+        "hankittavat-yhteiset-tutkinnon-osat"
+      ]
+      const ohtErrors: Record<string, Record<number, number[]>> = {}
+      let ohtErrorsPresent = false
+      hankittavatTyypit.forEach((osaTyyppi: any) => {
+        ;((json.errors || {})[osaTyyppi] || []).forEach(
+          (osa: any, osaIndex: any) => {
+            if (osa) {
+              ;(osa["osaamisen-hankkimistavat"] || []).forEach(
+                (oht: any, ohtIndex: any) => {
+                  if (
+                    oht &&
+                    oht.includes("Tieto oppisopimuksen perustasta puuttuu")
+                  ) {
+                    ohtErrorsPresent = true
+                    if (!ohtErrors[osaTyyppi]) {
+                      ohtErrors[osaTyyppi] = {}
+                    }
+
+                    if (!ohtErrors[osaTyyppi][osaIndex]) {
+                      ohtErrors[osaTyyppi][osaIndex] = []
+                    }
+
+                    ohtErrors[osaTyyppi][osaIndex].push(ohtIndex)
+                  }
+                }
+              )
+            }
+          }
+        )
+      })
+
+      if (ohtErrorsPresent) {
+        notifications.addError(
+          "HOKS.OppisopimuksenPerustaPuuttuu",
+          hankittavatTyypit
+            .map(ht =>
+              Object.keys(ohtErrors[ht] || {})
+                .map(n =>
+                  intl.formatMessage(
+                    {
+                      id:
+                        "errors.HOKS.Hankittavat" +
+                        (ht.includes("ammat")
+                          ? "Ammat"
+                          : ht.includes("paikalliset")
+                          ? "Paikalliset"
+                          : "Yhteiset") +
+                        "OsaamisenHankkimistavoissa"
+                    },
+                    {
+                      index: Number(n) + 1,
+                      ohts: ohtErrors[ht][Number(n)].map(x => x + 1).join(", ")
+                    }
+                  )
+                )
+                .join("; ")
+            )
+            .filter(x => !!x)
+            .join("; ")
+        )
+      }
     }
     console.log("RESPONSE STATUS", request.status)
     console.log("RESPONSE JSON", json)
