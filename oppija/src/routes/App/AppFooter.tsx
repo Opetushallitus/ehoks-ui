@@ -1,4 +1,3 @@
-import { Link } from "@reach/router"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import styled from "styled"
@@ -178,18 +177,18 @@ export class AppFooter extends React.Component {
                     defaultMessage="Ota yhteyttä: ehoks@opintopolku.fi"
                   />
                 </a>
-                <Link to="https://beta.opintopolku.fi/konfo/fi/sivu/ehoks-palvelun-tietosuojaseloste">
+                <a href="https://beta.opintopolku.fi/konfo/fi/sivu/ehoks-palvelun-tietosuojaseloste">
                   <FormattedMessage
                     id="footer.dataProtectionReportLabel"
                     defaultMessage="Tietosuojaseloste"
                   />
-                </Link>
-                <Link to="https://beta.opintopolku.fi/konfo/fi/sivu/saavutettavuusselosteet">
+                </a>
+                <a href="https://beta.opintopolku.fi/konfo/fi/sivu/saavutettavuusselosteet">
                   <FormattedMessage
                     id="footer.accessibilityReportLabel"
                     defaultMessage="Saavutettavuusseloste"
                   />
-                </Link>
+                </a>
               </LinksContainer>
             </Links>
           </TopContent>
