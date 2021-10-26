@@ -97,6 +97,7 @@ interface YllapitoState {
   sendHerateDateTo?: string
   sendPaattoHerateDateFrom?: string
   sendPaattoHerateDateTo?: string
+  vastaajatunnusToDelete?: string
 }
 
 interface SystemInfoResponse {
