@@ -177,13 +177,25 @@ export class AppFooter extends React.Component {
                     defaultMessage="Ota yhteyttä: ehoks@opintopolku.fi"
                   />
                 </a>
-                <a href="https://beta.opintopolku.fi/konfo/fi/sivu/ehoks-palvelun-tietosuojaseloste">
+                <a
+                  href={intl.formatMessage({
+                    id: "footer.dataProtectionReportLink",
+                    defaultMessage:
+                      "https://beta.opintopolku.fi/konfo/fi/sivu/ehoks-palvelun-tietosuojaseloste"
+                  })}
+                >
                   <FormattedMessage
                     id="footer.dataProtectionReportLabel"
                     defaultMessage="Tietosuojaseloste"
                   />
                 </a>
-                <a href="https://beta.opintopolku.fi/konfo/fi/sivu/saavutettavuusselosteet">
+                <a
+                  href={intl.formatMessage({
+                    id: "footer.accessibilityReportLink",
+                    defaultMessage:
+                      "https://beta.opintopolku.fi/konfo/fi/sivu/saavutettavuusselosteet"
+                  })}
+                >
                   <FormattedMessage
                     id="footer.accessibilityReportLabel"
                     defaultMessage="Saavutettavuusseloste"
