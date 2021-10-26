@@ -258,6 +258,7 @@
     "yllapito.hoksPoisto": "Aiheettoman HOKSin poisto",
     "yllapito.hoksienmaaraArvo": "Lukumäärä: {hoksAmount}",
     "yllapito.hoksienmaaraTitle": "Hoksien lukumäärä",
+    "yllapito.kyselyynOnJoVastattu": "Kyselyyn on jo vastattu",
     "yllapito.muistiMaksimi": "Maksimi: {max} MB",
     "yllapito.muistiTitle": "Muisti",
     "yllapito.muistiVapaana": "Vapaana: {free} MB",
@@ -273,11 +274,16 @@
     "yllapito.paattoHeratteet": "Lähetä uudet herätteet päättökyselyihin aikavälille.",
     "yllapito.paivitaOppija": "Paivita oppijan tiedot indeksiin.",
     "yllapito.poistaHoksButton": "Poista HOKS",
+    "yllapito.poistaVastaajatunnus": "Poista vastaajatunnus",
     "yllapito.title": "Ylläpito",
     "yllapito.tyhjennaValimuisti": "Tyhjennä välimuisti",
     "yllapito.updateOpiskeluoikeudetButton": "Päivitä opiskeluoikeudet.",
     "yllapito.updateOpiskeluoikeusButton": "Päivitä opiskeluoikeuden tiedot opiskeluoikeus-indeksiin.",
     "yllapito.valimuistiKoko": "Koko: {cacheSize}",
-    "yllapito.valimuistiTitle": "Välimuisti"
+    "yllapito.valimuistiTitle": "Välimuisti",
+    "yllapito.vastaajatunnuksenPoistaminenEpaonnistui": "Tunnuksen poistaminen epäonnistui",
+    "yllapito.vastaajatunnuksenPoistaminenOnnistui": "Tunnuksen poistaminen onnistui",
+    "yllapito.vastaajatunnuksenPoisto": "Opiskelijapalautteen vastaajatunnuksen poisto",
+    "yllapito.vastaajatunnusVirheellinen": "Tunnus virheellinen"
   }
 }

@@ -201,6 +201,66 @@ export class Yllapito extends React.Component<YllapitoProps> {
     }
   }
 
+  onRemoveVastaajatunnusClicked = async () => {
+    const { intl } = this.context
+    this.setState({ loadingState: "loading", isLoading: true, message: "" })
+    const { vastaajatunnusToDelete } = this.state
+    const request = await window.fetch(
+      `/ehoks-virkailija-backend/api/v1/virkailija/vastaajatunnus/${vastaajatunnusToDelete}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+        headers: appendCommonHeaders(
+          new Headers({
+            Accept: "application/json; charset=utf-8",
+            "Content-Type": "application/json"
+          })
+        )
+      }
+    )
+
+    if (request.status === 200) {
+      this.setState({
+        success: true,
+        message: intl.formatMessage({
+          id: "yllapito.vastaajatunnuksenPoistaminenOnnistui",
+          defaultMessage: "Tunnuksen poistaminen onnistui"
+        }),
+        isLoading: false
+      })
+    } else {
+      const json = await request.json()
+      if (json.error.message === "Survey has been answered.") {
+        this.setState({
+          success: false,
+          message: intl.formatMessage({
+            id: "yllapito.kyselyynOnJoVastattu",
+            defaultMessage: "Kyselyyn on jo vastattu"
+          }),
+          isLoading: false
+        })
+      } else if (json.error.message === "Survey ID not found.") {
+        this.setState({
+          success: false,
+          message: intl.formatMessage({
+            id: "yllapito.vastaajatunnusVirheellinen",
+            defaultMessage: "Tunnus virheellinen"
+          }),
+          isLoading: false
+        })
+      } else {
+        this.setState({
+          success: false,
+          message: intl.formatMessage({
+            id: "yllapito.vastaajatunnuksenPoistaminenEpaonnistui",
+            defaultMessage: "Tunnuksen poistaminen epäonnistui"
+          }),
+          isLoading: false
+        })
+      }
+    }
+  }
+
   onRunIndexClicked = async () => {
     const { intl } = this.context
     this.setState({ loadingState: "loading", message: "" })
@@ -778,6 +838,12 @@ export class Yllapito extends React.Component<YllapitoProps> {
     })
   }
 
+  handleVastaajatunnusToDeleteChange = (vastaajatunnusToDelete: any) => {
+    this.setState({
+      vastaajatunnusToDelete: vastaajatunnusToDelete
+    })
+  }
+
   hideMessage = () => {
     this.setState({ message: "" })
   }
@@ -1239,6 +1305,36 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           />
                         </Button>
                       </ContentElement>
+                    </ContentElement>
+                  </ContentElement>
+                  <ContentElement>
+                    <Header>
+                      <FormattedMessage
+                        id="yllapito.vastaajatunnuksenPoisto"
+                        defaultMessage="Opiskelijapalautteen vastaajatunnuksen poisto"
+                      />
+                    </Header>
+                    <ContentElement>
+                      <form>
+                        <HakuInput
+                          type="text"
+                          placeholder="123456"
+                          value={this.state.vastaajatunnusToDelete}
+                          onChange={e =>
+                            this.handleVastaajatunnusToDeleteChange(
+                              e.target.value
+                            )
+                          }
+                        />
+                      </form>
+                    </ContentElement>
+                    <ContentElement>
+                      <Button onClick={this.onRemoveVastaajatunnusClicked}>
+                        <FormattedMessage
+                          id="yllapito.poistaVastaajatunnus"
+                          defaultMessage="Poista vastaajatunnus"
+                        />
+                      </Button>
                     </ContentElement>
                   </ContentElement>
                 </ContentElement>
