@@ -839,9 +839,9 @@ export class Yllapito extends React.Component<YllapitoProps> {
     })
   }
 
-  handleVastaajatunnusToDeleteChange = (vastaajatunnusToDelete: any) => {
+  handleVastaajatunnusToDeleteChange = (vastaajatunnus: any) => {
     this.setState({
-      vastaajatunnusToDelete: vastaajatunnusToDelete
+      vastaajatunnusToDelete: vastaajatunnus
     })
   }
 
