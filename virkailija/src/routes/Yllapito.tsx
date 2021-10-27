@@ -231,7 +231,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       })
     } else {
       const json = await request.json()
-      if (json.error.message === "Survey has been answered.") {
+      if (json.error === "Survey has been answered") {
         this.setState({
           success: false,
           message: intl.formatMessage({
@@ -240,7 +240,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
           }),
           isLoading: false
         })
-      } else if (json.error.message === "Survey ID not found.") {
+      } else if (json.error === "Survey ID not found") {
         this.setState({
           success: false,
           message: intl.formatMessage({
