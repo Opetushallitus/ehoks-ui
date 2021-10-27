@@ -193,7 +193,7 @@ export class AppFooter extends React.Component {
                   href={intl.formatMessage({
                     id: "footer.accessibilityReportLink",
                     defaultMessage:
-                      "https://beta.opintopolku.fi/konfo/fi/sivu/saavutettavuusselosteet"
+                      "https://beta.opintopolku.fi/konfo/fi/sivu/ehoks-verkkopalvelun-saavutettavuusselosteet"
                   })}
                 >
                   <FormattedMessage

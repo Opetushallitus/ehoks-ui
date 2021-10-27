@@ -1030,7 +1030,7 @@ exports[`App renders correctly 1`] = `
                   Tietosuojaseloste
                 </a>
                 <a
-                  href="https://beta.opintopolku.fi/konfo/fi/sivu/saavutettavuusselosteet"
+                  href="https://beta.opintopolku.fi/konfo/fi/sivu/ehoks-verkkopalvelun-saavutettavuusselosteet"
                 >
                   Saavutettavuusseloste
                 </a>
