@@ -1025,7 +1025,12 @@ exports[`App renders correctly 1`] = `
                   Ota yhteyttä: ehoks@opintopolku.fi
                 </a>
                 <a
-                  href="/ehoks/saavutettavuusseloste"
+                  href="https://beta.opintopolku.fi/konfo/fi/sivu/ehoks-palvelun-tietosuojaseloste"
+                >
+                  Tietosuojaseloste
+                </a>
+                <a
+                  href="https://beta.opintopolku.fi/konfo/fi/sivu/saavutettavuusselosteet"
                 >
                   Saavutettavuusseloste
                 </a>
