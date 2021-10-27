@@ -204,7 +204,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
 
   onRemoveVastaajatunnusClicked = async () => {
     const { intl } = this.context
-    this.setState({ isLoading: true, message: "" })
+    this.setState({ loadingState: "loading", isLoading: true, message: "" })
     const { vastaajatunnusToDelete } = this.state
     const request = await window.fetch(
       `/ehoks-virkailija-backend/api/v1/virkailija/vastaajatunnus/${vastaajatunnusToDelete}`,
@@ -227,7 +227,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           id: "yllapito.vastaajatunnuksenPoistaminenOnnistui",
           defaultMessage: "Tunnuksen poistaminen onnistui"
         }),
-        isLoading: false
+        isLoading: false,
+        loadingState: "success"
       })
     } else {
       const json = await request.json()
@@ -238,7 +239,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
             id: "yllapito.kyselyynOnJoVastattu",
             defaultMessage: "Kyselyyn on jo vastattu"
           }),
-          isLoading: false
+          isLoading: false,
+          loadingState: "unsuccessful"
         })
       } else if (json.error === "Survey ID not found") {
         this.setState({
@@ -247,7 +249,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
             id: "yllapito.vastaajatunnusVirheellinen",
             defaultMessage: "Tunnus virheellinen"
           }),
-          isLoading: false
+          isLoading: false,
+          loadingState: "unsuccessful"
         })
       } else {
         this.setState({
@@ -256,7 +259,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
             id: "yllapito.vastaajatunnuksenPoistaminenEpaonnistui",
             defaultMessage: "Tunnuksen poistaminen epäonnistui"
           }),
-          isLoading: false
+          isLoading: false,
+          loadingState: "unsuccessful"
         })
       }
     }
