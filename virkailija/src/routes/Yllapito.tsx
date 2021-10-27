@@ -204,7 +204,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
 
   onRemoveVastaajatunnusClicked = async () => {
     const { intl } = this.context
-    this.setState({ loadingState: "loading", isLoading: true, message: "" })
+    this.setState({ isLoading: true, message: "" })
     const { vastaajatunnusToDelete } = this.state
     const request = await window.fetch(
       `/ehoks-virkailija-backend/api/v1/virkailija/vastaajatunnus/${vastaajatunnusToDelete}`,
