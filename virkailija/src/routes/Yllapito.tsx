@@ -252,6 +252,16 @@ export class Yllapito extends React.Component<YllapitoProps> {
           isLoading: false,
           loadingState: "unsuccessful"
         })
+      } else if (json.error === "Survey ID cannot be removed") {
+        this.setState({
+          success: false,
+          message: intl.formatMessage({
+            id: "yllapito.vastaajatunnusEiPoistettavissa",
+            defaultMessage: "Tunnus ei ole poistettavissa"
+          }),
+          isLoading: false,
+          loadingState: "unsuccessful"
+        })
       } else {
         this.setState({
           success: false,

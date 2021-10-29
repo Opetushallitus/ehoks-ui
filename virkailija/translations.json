@@ -284,6 +284,7 @@
     "yllapito.vastaajatunnuksenPoistaminenEpaonnistui": "Tunnuksen poistaminen epäonnistui",
     "yllapito.vastaajatunnuksenPoistaminenOnnistui": "Tunnuksen poistaminen onnistui",
     "yllapito.vastaajatunnuksenPoisto": "Opiskelijapalautteen vastaajatunnuksen poisto",
+    "yllapito.vastaajatunnusEiPoistettavissa": "Tunnus ei ole poistettavissa",
     "yllapito.vastaajatunnusVirheellinen": "Tunnus virheellinen"
   }
 }
