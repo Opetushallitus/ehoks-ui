@@ -97,6 +97,7 @@ interface YllapitoState {
   sendHerateDateTo?: string
   sendPaattoHerateDateFrom?: string
   sendPaattoHerateDateTo?: string
+  vastaajatunnusToDelete?: string
 }
 
 interface SystemInfoResponse {
@@ -198,6 +199,154 @@ export class Yllapito extends React.Component<YllapitoProps> {
           defaultMessage: "Välimuistin tyhjennys epäonnistui"
         })
       })
+    }
+  }
+
+  onRemoveVastaajatunnusClicked = async () => {
+    const { intl } = this.context
+    this.setState({ loadingState: "loading", isLoading: true, message: "" })
+    const { vastaajatunnusToDelete } = this.state
+    const confirmRequest = await window.fetch(
+      `/ehoks-virkailija-backend/api/v1/virkailija/vastaajatunnus/${vastaajatunnusToDelete}`,
+      {
+        method: "GET",
+        credentials: "include",
+        headers: appendCommonHeaders(
+          new Headers({
+            Accept: "application/json; charset=utf-8",
+            "Content-Type": "application/json"
+          })
+        )
+      }
+    )
+
+    const confirmJson = await confirmRequest.json()
+    if (confirmRequest.status === 200) {
+      if (confirmJson.data.vastattu) {
+        this.setState({
+          success: false,
+          message: intl.formatMessage({
+            id: "yllapito.kyselyynOnJoVastattu",
+            defaultMessage: "Kyselyyn on jo vastattu"
+          }),
+          isLoading: false,
+          loadingState: "unsuccessful"
+        })
+      } else if (
+        window.confirm(
+          this.context.intl.formatMessage(
+            {
+              id: "yllapito.vastaajatunnuksenPoistoVarmistus",
+              defaultMessage:
+                "Olet poistaamassa vastaajatunnuksen seuraavilla tiedoilla:\n\n" +
+                "Oppijan nimi: {oppijanNimi}\n" +
+                "Oppija-OID: {oppijanOid}\n" +
+                "Koulutuksen järjestäjä: {koulutustoimijanNimi}\n" +
+                "Koulutustoimija-OID: {koulutustoimijanOid}\n" +
+                "Opiskeluoikeus-OID: {opiskeluoikeus}\n" +
+                "HOKS-ID: {hoksId}\n" +
+                "Kyselytyyppi: {kyselytyyppi}\n" +
+                "Herätepäivä: {heratepvm}\n\n" +
+                "Poistettua vastaajatunnusta ei voi palauttaa."
+            },
+            {
+              oppijanNimi: confirmJson.data["oppijan-nimi"],
+              oppijanOid: confirmJson.data["oppijan-oid"],
+              koulutustoimijanNimi:
+                confirmJson.data["koulutustoimijan-nimi"][
+                  this.props.store!.translations.activeLocale
+                ] || confirmJson.data["koulutustoimijan-nimi"].fi,
+              koulutustoimijanOid: confirmJson.data["koulutustoimijan-oid"],
+              opiskeluoikeus: confirmJson.data["opiskeluoikeus-oid"],
+              hoksId: confirmJson.data["hoks-id"],
+              kyselytyyppi: this.context.intl.formatMessage({
+                id:
+                  "tavoitteet.opiskelijapalauteTyyppi." +
+                  (confirmJson.data.tyyppi || "").replaceAll("_", "")
+              }),
+              heratepvm: this.context.intl.formatDate(
+                new Date(confirmJson.data.alkupvm),
+                {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric"
+                }
+              )
+            }
+          )
+        )
+      ) {
+        const request = await window.fetch(
+          `/ehoks-virkailija-backend/api/v1/virkailija/vastaajatunnus/${vastaajatunnusToDelete}`,
+          {
+            method: "DELETE",
+            credentials: "include",
+            headers: appendCommonHeaders(
+              new Headers({
+                Accept: "application/json; charset=utf-8",
+                "Content-Type": "application/json"
+              })
+            )
+          }
+        )
+
+        if (request.status === 200) {
+          this.setState({
+            success: true,
+            message: intl.formatMessage({
+              id: "yllapito.vastaajatunnuksenPoistaminenOnnistui",
+              defaultMessage: "Tunnuksen poistaminen onnistui"
+            }),
+            isLoading: false,
+            loadingState: "success"
+          })
+        } else {
+          const json = await request.json()
+          if (json.error === "Survey ID cannot be removed") {
+            this.setState({
+              success: false,
+              message: intl.formatMessage({
+                id: "yllapito.vastaajatunnusEiPoistettavissa",
+                defaultMessage: "Tunnus ei ole poistettavissa"
+              }),
+              isLoading: false,
+              loadingState: "unsuccessful"
+            })
+          } else {
+            this.setState({
+              success: false,
+              message: intl.formatMessage({
+                id: "yllapito.vastaajatunnuksenPoistaminenEpaonnistui",
+                defaultMessage: "Tunnuksen poistaminen epäonnistui"
+              }),
+              isLoading: false,
+              loadingState: "unsuccessful"
+            })
+          }
+        }
+      }
+    } else {
+      if (confirmJson.error === "Survey ID not found") {
+        this.setState({
+          success: false,
+          message: intl.formatMessage({
+            id: "yllapito.vastaajatunnusVirheellinen",
+            defaultMessage: "Tunnus virheellinen"
+          }),
+          isLoading: false,
+          loadingState: "unsuccessful"
+        })
+      } else {
+        this.setState({
+          success: false,
+          message: intl.formatMessage({
+            id: "yllapito.vastaajatunnuksenHakuEpaonnistui",
+            defaultMessage: "Tunnuksen haku epäonnistui"
+          }),
+          isLoading: false,
+          loadingState: "unsuccessful"
+        })
+      }
     }
   }
 
@@ -778,6 +927,12 @@ export class Yllapito extends React.Component<YllapitoProps> {
     })
   }
 
+  handleVastaajatunnusToDeleteChange = (vastaajatunnus: any) => {
+    this.setState({
+      vastaajatunnusToDelete: vastaajatunnus
+    })
+  }
+
   hideMessage = () => {
     this.setState({ message: "" })
   }
@@ -1239,6 +1394,36 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           />
                         </Button>
                       </ContentElement>
+                    </ContentElement>
+                  </ContentElement>
+                  <ContentElement>
+                    <Header>
+                      <FormattedMessage
+                        id="yllapito.vastaajatunnuksenPoisto"
+                        defaultMessage="Opiskelijapalautteen vastaajatunnuksen poisto"
+                      />
+                    </Header>
+                    <ContentElement>
+                      <form>
+                        <HakuInput
+                          type="text"
+                          placeholder="123456"
+                          value={this.state.vastaajatunnusToDelete}
+                          onChange={e =>
+                            this.handleVastaajatunnusToDeleteChange(
+                              e.target.value
+                            )
+                          }
+                        />
+                      </form>
+                    </ContentElement>
+                    <ContentElement>
+                      <Button onClick={this.onRemoveVastaajatunnusClicked}>
+                        <FormattedMessage
+                          id="yllapito.poistaVastaajatunnus"
+                          defaultMessage="Poista vastaajatunnus"
+                        />
+                      </Button>
                     </ContentElement>
                   </ContentElement>
                 </ContentElement>
