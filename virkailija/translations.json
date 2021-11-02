@@ -281,9 +281,11 @@
     "yllapito.updateOpiskeluoikeusButton": "Päivitä opiskeluoikeuden tiedot opiskeluoikeus-indeksiin.",
     "yllapito.valimuistiKoko": "Koko: {cacheSize}",
     "yllapito.valimuistiTitle": "Välimuisti",
+    "yllapito.vastaajatunnuksenHakuEpaonnistui": "Tunnuksen haku epäonnistui",
     "yllapito.vastaajatunnuksenPoistaminenEpaonnistui": "Tunnuksen poistaminen epäonnistui",
     "yllapito.vastaajatunnuksenPoistaminenOnnistui": "Tunnuksen poistaminen onnistui",
     "yllapito.vastaajatunnuksenPoisto": "Opiskelijapalautteen vastaajatunnuksen poisto",
+    "yllapito.vastaajatunnuksenPoistoVarmistus": "Olet poistaamassa vastaajatunnuksen seuraavilla tiedoilla:\n\nOppijan nimi: {oppijanNimi}\nOppija-OID: {oppijanOid}\nKoulutuksen järjestäjä: {koulutustoimijanNimi}\nKoulutustoimija-OID: {koulutustoimijanOid}\nOpiskeluoikeus-OID: {opiskeluoikeus}\nHOKS-ID: {hoksId}\nKyselytyyppi: {kyselytyyppi}\nHerätepäivä: {heratepvm}\n\nPoistettua vastaajatunnusta ei voi palauttaa.",
     "yllapito.vastaajatunnusEiPoistettavissa": "Tunnus ei ole poistettavissa",
     "yllapito.vastaajatunnusVirheellinen": "Tunnus virheellinen"
   }

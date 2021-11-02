@@ -206,10 +206,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
     const { intl } = this.context
     this.setState({ loadingState: "loading", isLoading: true, message: "" })
     const { vastaajatunnusToDelete } = this.state
-    const request = await window.fetch(
+    const confirmRequest = await window.fetch(
       `/ehoks-virkailija-backend/api/v1/virkailija/vastaajatunnus/${vastaajatunnusToDelete}`,
       {
-        method: "DELETE",
+        method: "GET",
         credentials: "include",
         headers: appendCommonHeaders(
           new Headers({
@@ -220,19 +220,9 @@ export class Yllapito extends React.Component<YllapitoProps> {
       }
     )
 
-    if (request.status === 200) {
-      this.setState({
-        success: true,
-        message: intl.formatMessage({
-          id: "yllapito.vastaajatunnuksenPoistaminenOnnistui",
-          defaultMessage: "Tunnuksen poistaminen onnistui"
-        }),
-        isLoading: false,
-        loadingState: "success"
-      })
-    } else {
-      const json = await request.json()
-      if (json.error === "Survey has been answered") {
+    const confirmJson = confirmRequest.json()
+    if (confirmRequest.status === 200) {
+      if (confirmJson.data.vastattu) {
         this.setState({
           success: false,
           message: intl.formatMessage({
@@ -242,7 +232,98 @@ export class Yllapito extends React.Component<YllapitoProps> {
           isLoading: false,
           loadingState: "unsuccessful"
         })
-      } else if (json.error === "Survey ID not found") {
+      } else if (
+        window.confirm(
+          this.context.intl.formatMessage(
+            {
+              id: "yllapito.vastaajatunnuksenPoistoVarmistus",
+              defaultMessage:
+                "Olet poistaamassa vastaajatunnuksen seuraavilla tiedoilla:\n\n" +
+                "Oppijan nimi: {oppijanNimi}\n" +
+                "Oppija-OID: {oppijanOid}\n" +
+                "Koulutuksen järjestäjä: {koulutustoimijanNimi}\n" +
+                "Koulutustoimija-OID: {koulutustoimijanOid}\n" +
+                "Opiskeluoikeus-OID: {opiskeluoikeus}\n" +
+                "HOKS-ID: {hoksId}\n" +
+                "Kyselytyyppi: {kyselytyyppi}\n" +
+                "Herätepäivä: {heratepvm}\n\n" +
+                "Poistettua vastaajatunnusta ei voi palauttaa."
+            },
+            {
+              oppijanNimi: confirmJson.data.oppijan_nimi,
+              oppijanOid: confirmJson.data.oppijan_oid,
+              koulutustoimijanNimi: confirmJson.data.koulutustoimijan_nimi,
+              koulutustoimijanOid: confirmJson.data.koulutustoimijan_oid,
+              opiskeluoikeus: confirmJson.data.opiskeluoikeus_oid,
+              hoksId: confirmJson.data.hoks_id,
+              kyselytyyppi: this.context.intl.formatMessage({
+                id:
+                  "tavoitteet.opiskelijapalauteTyyppi." +
+                  (confirmJson.data.tyyppi || "").replaceAll("_", "")
+              }),
+              heratepvm: this.context.intl.formatDate(
+                new Date(confirmJson.data.alkupvm),
+                {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric"
+                }
+              )
+            }
+          )
+        )
+      ) {
+        const request = await window.fetch(
+          `/ehoks-virkailija-backend/api/v1/virkailija/vastaajatunnus/${vastaajatunnusToDelete}`,
+          {
+            method: "DELETE",
+            credentials: "include",
+            headers: appendCommonHeaders(
+              new Headers({
+                Accept: "application/json; charset=utf-8",
+                "Content-Type": "application/json"
+              })
+            )
+          }
+        )
+
+        if (request.status === 200) {
+          this.setState({
+            success: true,
+            message: intl.formatMessage({
+              id: "yllapito.vastaajatunnuksenPoistaminenOnnistui",
+              defaultMessage: "Tunnuksen poistaminen onnistui"
+            }),
+            isLoading: false,
+            loadingState: "success"
+          })
+        } else {
+          const json = await request.json()
+          if (json.error === "Survey ID cannot be removed") {
+            this.setState({
+              success: false,
+              message: intl.formatMessage({
+                id: "yllapito.vastaajatunnusEiPoistettavissa",
+                defaultMessage: "Tunnus ei ole poistettavissa"
+              }),
+              isLoading: false,
+              loadingState: "unsuccessful"
+            })
+          } else {
+            this.setState({
+              success: false,
+              message: intl.formatMessage({
+                id: "yllapito.vastaajatunnuksenPoistaminenEpaonnistui",
+                defaultMessage: "Tunnuksen poistaminen epäonnistui"
+              }),
+              isLoading: false,
+              loadingState: "unsuccessful"
+            })
+          }
+        }
+      }
+    } else {
+      if (confirmJson.error === "Survey ID not found") {
         this.setState({
           success: false,
           message: intl.formatMessage({
@@ -252,22 +333,12 @@ export class Yllapito extends React.Component<YllapitoProps> {
           isLoading: false,
           loadingState: "unsuccessful"
         })
-      } else if (json.error === "Survey ID cannot be removed") {
-        this.setState({
-          success: false,
-          message: intl.formatMessage({
-            id: "yllapito.vastaajatunnusEiPoistettavissa",
-            defaultMessage: "Tunnus ei ole poistettavissa"
-          }),
-          isLoading: false,
-          loadingState: "unsuccessful"
-        })
       } else {
         this.setState({
           success: false,
           message: intl.formatMessage({
-            id: "yllapito.vastaajatunnuksenPoistaminenEpaonnistui",
-            defaultMessage: "Tunnuksen poistaminen epäonnistui"
+            id: "yllapito.vastaajatunnuksenHakuEpaonnistui",
+            defaultMessage: "Tunnuksen haku epäonnistui"
           }),
           isLoading: false,
           loadingState: "unsuccessful"
