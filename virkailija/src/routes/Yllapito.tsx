@@ -250,12 +250,12 @@ export class Yllapito extends React.Component<YllapitoProps> {
                 "Poistettua vastaajatunnusta ei voi palauttaa."
             },
             {
-              oppijanNimi: confirmJson.data.oppijan_nimi,
-              oppijanOid: confirmJson.data.oppijan_oid,
-              koulutustoimijanNimi: confirmJson.data.koulutustoimijan_nimi,
-              koulutustoimijanOid: confirmJson.data.koulutustoimijan_oid,
-              opiskeluoikeus: confirmJson.data.opiskeluoikeus_oid,
-              hoksId: confirmJson.data.hoks_id,
+              oppijanNimi: confirmJson.data["oppijan-nimi"],
+              oppijanOid: confirmJson.data["oppijan-oid"],
+              koulutustoimijanNimi: confirmJson.data["koulutustoimijan-nimi"],
+              koulutustoimijanOid: confirmJson.data["koulutustoimijan-oid"],
+              opiskeluoikeus: confirmJson.data["opiskeluoikeus-oid"],
+              hoksId: confirmJson.data["hoks-id"],
               kyselytyyppi: this.context.intl.formatMessage({
                 id:
                   "tavoitteet.opiskelijapalauteTyyppi." +
