@@ -252,7 +252,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
             {
               oppijanNimi: confirmJson.data["oppijan-nimi"],
               oppijanOid: confirmJson.data["oppijan-oid"],
-              koulutustoimijanNimi: confirmJson.data["koulutustoimijan-nimi"],
+              koulutustoimijanNimi:
+                confirmJson.data["koulutustoimijan-nimi"][
+                  this.props.store!.translations.activeLocale
+                ] || confirmJson.data["koulutustoimijan-nimi"].fi,
               koulutustoimijanOid: confirmJson.data["koulutustoimijan-oid"],
               opiskeluoikeus: confirmJson.data["opiskeluoikeus-oid"],
               hoksId: confirmJson.data["hoks-id"],
