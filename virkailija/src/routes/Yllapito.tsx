@@ -220,7 +220,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       }
     )
 
-    const confirmJson = confirmRequest.json()
+    const confirmJson = await confirmRequest.json()
     if (confirmRequest.status === 200) {
       if (confirmJson.data.vastattu) {
         this.setState({
