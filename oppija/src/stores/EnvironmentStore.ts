@@ -11,10 +11,6 @@ const EnvironmentStoreModel = {
   eperusteetPerusteUrl: types.optional(types.string, ""),
   error: types.optional(types.string, ""),
   isLoading: false,
-  opintopolkuLoginUrlFi: types.optional(types.string, ""),
-  opintopolkuLoginUrlSv: types.optional(types.string, ""),
-  opintopolkuLogoutUrlFi: types.optional(types.string, ""),
-  opintopolkuLogoutUrlSv: types.optional(types.string, ""),
   virkailijaLoginUrl: types.optional(types.string, ""),
   casOppijaLoginUrlFi: types.optional(types.string, ""),
   casOppijaLoginUrlSv: types.optional(types.string, ""),
@@ -38,10 +34,6 @@ export const EnvironmentStore = types
         )
         const {
           eperusteetPerusteUrl,
-          opintopolkuLoginUrlFi,
-          opintopolkuLoginUrlSv,
-          opintopolkuLogoutUrlFi,
-          opintopolkuLogoutUrlSv,
           virkailijaLoginUrl,
           casOppijaLoginUrlFi,
           casOppijaLoginUrlSv,
@@ -49,18 +41,6 @@ export const EnvironmentStore = types
           casOppijaLogoutUrlSv
         } = response.data
         self.eperusteetPerusteUrl = eperusteetPerusteUrl
-        self.opintopolkuLoginUrlFi = devBackendWithoutHost(
-          opintopolkuLoginUrlFi
-        )
-        self.opintopolkuLoginUrlSv = devBackendWithoutHost(
-          opintopolkuLoginUrlSv
-        )
-        self.opintopolkuLogoutUrlFi = devBackendWithoutHost(
-          opintopolkuLogoutUrlFi
-        )
-        self.opintopolkuLogoutUrlSv = devBackendWithoutHost(
-          opintopolkuLogoutUrlSv
-        )
         self.virkailijaLoginUrl = virkailijaLoginUrl
         self.casOppijaLoginUrlFi = devBackendWithoutHost(casOppijaLoginUrlFi)
         self.casOppijaLoginUrlSv = devBackendWithoutHost(casOppijaLoginUrlSv)

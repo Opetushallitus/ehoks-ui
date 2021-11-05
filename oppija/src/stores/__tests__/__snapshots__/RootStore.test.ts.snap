@@ -10,10 +10,6 @@ Object {
     "eperusteetPerusteUrl": "",
     "error": "",
     "isLoading": false,
-    "opintopolkuLoginUrlFi": "",
-    "opintopolkuLoginUrlSv": "",
-    "opintopolkuLogoutUrlFi": "",
-    "opintopolkuLogoutUrlSv": "",
     "virkailijaLoginUrl": "",
   },
   "hoks": Object {

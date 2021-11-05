@@ -13,7 +13,6 @@ import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 import ammatillisetTutkinnotImage from "./Etusivu/kampaaja_ehoks.jpg"
 import henkilokohtaistaminenImage from "./Etusivu/talonrakennus_ehoks.jpg"
-import { AppContext } from "components/AppContext"
 
 const LoginBoxes = styled("div")`
   display: flex;
@@ -122,8 +121,6 @@ export interface EtusivuProps extends RouteComponentProps {
 @observer
 export class Etusivu extends React.Component<EtusivuProps> {
   disposeLoginReaction: IReactionDisposer
-  static contextType = AppContext
-  declare context: React.ContextType<typeof AppContext>
 
   componentDidMount() {
     const { store } = this.props
@@ -144,22 +141,13 @@ export class Etusivu extends React.Component<EtusivuProps> {
   loginStudent = (event: React.MouseEvent) => {
     event.preventDefault()
     const store = this.props.store
-    const { featureFlags } = this.context
     store!.session.resetUserDidLogout()
 
-    // Remove context from this component when removing feature flag
-    if (featureFlags.casOppija) {
-      if (!store!.session.isLoggedIn) {
-        window.location.href =
-          store!.translations.activeLocale === Locale.SV
-            ? store!.environment.casOppijaLoginUrlSv
-            : store!.environment.casOppijaLoginUrlFi
-      }
-    } else {
+    if (!store!.session.isLoggedIn) {
       window.location.href =
         store!.translations.activeLocale === Locale.SV
-          ? store!.environment.opintopolkuLoginUrlSv
-          : store!.environment.opintopolkuLoginUrlFi
+          ? store!.environment.casOppijaLoginUrlSv
+          : store!.environment.casOppijaLoginUrlFi
     }
   }
 
