@@ -2,11 +2,6 @@ import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { APIResponse } from "types/APIResponse"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
-// this allows us to proxy http://localhost:3000/auth-dev/ calls
-// using webpack-development-server proxy
-const devBackendWithoutHost = (url: string) =>
-  url.replace("http://localhost:3000", "")
-
 const EnvironmentStoreModel = {
   eperusteetPerusteUrl: types.optional(types.string, ""),
   error: types.optional(types.string, ""),
