@@ -11,10 +11,6 @@ const EnvironmentStoreModel = {
   eperusteetPerusteUrl: types.optional(types.string, ""),
   error: types.optional(types.string, ""),
   isLoading: false,
-  opintopolkuLoginUrlFi: types.optional(types.string, ""),
-  opintopolkuLoginUrlSv: types.optional(types.string, ""),
-  opintopolkuLogoutUrlFi: types.optional(types.string, ""),
-  opintopolkuLogoutUrlSv: types.optional(types.string, ""),
   virkailijaLoginUrl: types.optional(types.string, "")
 }
 
@@ -32,27 +28,8 @@ export const EnvironmentStore = types
           apiUrl("misc/environment"),
           { headers: appendCallerId() }
         )
-        const {
-          eperusteetPerusteUrl,
-          opintopolkuLoginUrlFi,
-          opintopolkuLoginUrlSv,
-          opintopolkuLogoutUrlFi,
-          opintopolkuLogoutUrlSv,
-          virkailijaLoginUrl
-        } = response.data
+        const { eperusteetPerusteUrl, virkailijaLoginUrl } = response.data
         self.eperusteetPerusteUrl = eperusteetPerusteUrl
-        self.opintopolkuLoginUrlFi = devBackendWithoutHost(
-          opintopolkuLoginUrlFi
-        )
-        self.opintopolkuLoginUrlSv = devBackendWithoutHost(
-          opintopolkuLoginUrlSv
-        )
-        self.opintopolkuLogoutUrlFi = devBackendWithoutHost(
-          opintopolkuLogoutUrlFi
-        )
-        self.opintopolkuLogoutUrlSv = devBackendWithoutHost(
-          opintopolkuLogoutUrlSv
-        )
         self.virkailijaLoginUrl = virkailijaLoginUrl
       } catch (error) {
         errors.logError("EnvironmentStore.getEnvironment", error.message)
