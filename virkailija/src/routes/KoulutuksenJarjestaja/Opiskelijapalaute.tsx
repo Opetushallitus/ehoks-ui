@@ -112,7 +112,7 @@ export class Opiskelijapalaute extends React.Component<
             }}
           />
         }
-        helpCssWidth="400px"
+        helpCssWidth="300px"
       >
         {palauteTilat.length ? (
           palauteTilat.map(

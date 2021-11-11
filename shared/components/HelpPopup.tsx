@@ -58,7 +58,7 @@ export class HelpPopup extends React.Component<HelpPopupProps> {
         }
         position={["left center", "bottom center", "right center"]}
         keepTooltipInside={true}
-        contentStyle={cssWidth ? { width: "300px" } : {}}
+        contentStyle={cssWidth ? { width: cssWidth } : {}}
       >
         <AlertDiv>{helpContent}</AlertDiv>
       </Popup>
