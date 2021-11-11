@@ -101,7 +101,6 @@ export class Opiskelijapalaute extends React.Component<
                     defaultMessage:
                       "https://wiki.eduuni.fi/pages/viewpage.action?pageId=190612670"
                   })}
-                  target="_blank"
                 >
                   {intl.formatMessage({
                     id: "tavoitteet.opiskelijapalauteTitle.help.link",
