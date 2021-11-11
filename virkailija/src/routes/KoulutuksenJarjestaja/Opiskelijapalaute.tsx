@@ -87,6 +87,7 @@ export class Opiskelijapalaute extends React.Component<
         helpContent={
           <FormattedMessage id="tavoitteet.opiskelijapalauteTitle.help" />
         }
+        helpCssWidth="400px"
       >
         {palauteTilat.length ? (
           palauteTilat.map(
