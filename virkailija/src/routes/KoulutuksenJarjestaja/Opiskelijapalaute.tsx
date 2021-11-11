@@ -3,7 +3,7 @@ import { InfoTable } from "components/InfoTable"
 import { LabeledColumn } from "components/LabeledColumn"
 import { inject, observer } from "mobx-react"
 import React from "react"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, intlShape } from "react-intl"
 import { FormattedDate } from "components/FormattedDate"
 import { RouteComponentProps } from "@reach/router"
 import { IOpiskelijapalauteTila } from "models/OpiskelijapalauteTila"
@@ -30,6 +30,10 @@ interface ResendParameters {
 export class Opiskelijapalaute extends React.Component<
   OpiskelijapalauteProps & RouteComponentProps
 > {
+  static contextTypes = {
+    intl: intlShape
+  }
+
   resendPalaute = (data: ResendParameters) => async (): Promise<void> => {
     const { hoksID, oppijaOid } = this.props
     const { notifications } = this.props.store!
@@ -76,6 +80,7 @@ export class Opiskelijapalaute extends React.Component<
 
   render(): React.ReactNode {
     const { palauteTilat } = this.props
+    const { intl } = this.context
 
     return (
       <Accordion
@@ -85,7 +90,28 @@ export class Opiskelijapalaute extends React.Component<
         onToggle={this.props.toggleAccordion("opiskelijapalaute")}
         helpIcon={true}
         helpContent={
-          <FormattedMessage id="tavoitteet.opiskelijapalauteTitle.help" />
+          <FormattedMessage
+            id="tavoitteet.opiskelijapalauteTitle.help"
+            defaultMessage="Opiskelijapalautteen otiskon help: {link}"
+            values={{
+              link: (
+                <a
+                  href={intl.formatMessage({
+                    id: "tavoitteet.opiskelijapalauteTitle.help.link",
+                    defaultMessage:
+                      "https://wiki.eduuni.fi/pages/viewpage.action?pageId=190612670"
+                  })}
+                  target="_blank"
+                >
+                  {intl.formatMessage({
+                    id: "tavoitteet.opiskelijapalauteTitle.help.link",
+                    defaultMessage:
+                      "https://wiki.eduuni.fi/pages/viewpage.action?pageId=190612670"
+                  })}
+                </a>
+              )
+            }}
+          />
         }
         helpCssWidth="400px"
       >
