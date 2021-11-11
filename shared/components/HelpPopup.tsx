@@ -29,6 +29,7 @@ interface HelpPopupProps {
   helpContent?: React.ReactNode
   /** Custom classname for button */
   className?: string
+  cssWidth?: string
 }
 
 export class HelpPopup extends React.Component<HelpPopupProps> {
@@ -37,7 +38,7 @@ export class HelpPopup extends React.Component<HelpPopupProps> {
   }
   render() {
     const { intl } = this.context
-    const { className, helpContent } = this.props
+    const { className, cssWidth, helpContent } = this.props
     return (
       <Popup
         trigger={
@@ -52,7 +53,7 @@ export class HelpPopup extends React.Component<HelpPopupProps> {
         }
         position={["left center", "bottom center", "right center"]}
         keepTooltipInside={true}
-        contentStyle={{ width: "300px" }}
+        contentStyle={cssWidth ? { width: "300px" } : {}}
       >
         <div role="alert">{helpContent}</div>
       </Popup>
