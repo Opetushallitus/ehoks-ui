@@ -24,6 +24,11 @@ const HelpButton = styled("button")`
   }
 `
 
+const AlertDiv = styled("div")`
+  role: alert;
+  overflow-wrap: break-word;
+`
+
 interface HelpPopupProps {
   /** Defines help popup content */
   helpContent?: React.ReactNode
@@ -55,7 +60,7 @@ export class HelpPopup extends React.Component<HelpPopupProps> {
         keepTooltipInside={true}
         contentStyle={cssWidth ? { width: "300px" } : {}}
       >
-        <div role="alert">{helpContent}</div>
+        <AlertDiv>{helpContent}</AlertDiv>
       </Popup>
     )
   }
