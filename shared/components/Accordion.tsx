@@ -56,6 +56,8 @@ export interface AccordionProps {
   helpIcon?: boolean
   /** Defines help popup content */
   helpContent?: React.ReactNode
+  /** Defines help popup width */
+  helpCssWidth?: string
   /**
    * Renders with alternative inline styles
    * @default false
@@ -117,6 +119,7 @@ export class Accordion extends React.Component<AccordionProps, AccordionState> {
       childContainer = true,
       helpIcon = false,
       helpContent,
+      helpCssWidth,
       id,
       inline = false,
       onToggle,
@@ -166,7 +169,9 @@ export class Accordion extends React.Component<AccordionProps, AccordionState> {
               <div data-testid="Title">{title}</div>
             )}
           </TitleRow>
-          {helpIcon ? <HelpPopup helpContent={helpContent} /> : null}
+          {helpIcon ? (
+            <HelpPopup helpContent={helpContent} cssWidth={helpCssWidth} />
+          ) : null}
         </TitleContainer>
         <div data-testid="Content" id={`${id}-content`}>
           {isOpen ? childContent : null}
