@@ -254,7 +254,8 @@ export const HOKS = types
             }
           ])
         } else {
-          throw new Error(response)
+          console.log(response)
+          errors.logError("HOKS.shallowDelete", response)
         }
       } catch (error) {
         errors.logError("HOKS.shallowDelete", error.message)
