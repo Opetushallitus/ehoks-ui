@@ -254,6 +254,7 @@ export const HOKS = types
             }
           ])
         } else {
+          console.log("test")
           console.log(response)
           errors.logError("HOKS.shallowDelete", response)
         }
