@@ -245,9 +245,7 @@ export const HOKS = types
             })
           }
         )
-        console.log(responseData)
-        if (responseData.status === 200) {
-          console.log("shallow delete response ok")
+        if (responseData.status === 204) {
           root.notifications.addNotifications([
             {
               title: "tavoitteet.PoistaHoksSuccess",
@@ -256,7 +254,6 @@ export const HOKS = types
             }
           ])
         } else {
-          console.log("response not ok")
           errors.logError("HOKS.shallowDelete", responseData.body.error)
         }
       } catch (error) {
