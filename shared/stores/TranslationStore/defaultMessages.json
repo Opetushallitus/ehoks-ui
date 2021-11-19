@@ -511,31 +511,6 @@
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.PoistaHoks",
-    "value": "Poista HOKS"
-  },
-  {
-    "locale": "fi",
-    "key": "tavoitteet.PoistaHoksInfo",
-    "value": ""
-  },
-  {
-    "locale": "fi",
-    "key": "tavoitteet.PoistaHoksConfirm",
-    "value": "Haluatko varmasti poistaa hoksin?"
-  },
-  {
-    "locale": "fi",
-    "key": "tavoitteet.PoistaHoksSuccess",
-    "value": "Hoksin poisto onnistui."
-  },
-  {
-    "locale": "fi",
-    "key": "tavoitteet.OppilaitoksenNimi",
-    "value": "Oppilaitoksen nimi"
-  },
-  {
-    "locale": "fi",
     "key": "tavoitteet.opiskelijapalautePaattymispvmTitle",
     "value": "Vastaamisajan päättymispäivä"
   },

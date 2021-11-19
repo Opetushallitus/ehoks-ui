@@ -129,7 +129,10 @@ export class HoksPoisto extends React.Component<
         <br />
         <ButtonContainer>
           <DeleteHoksButton onClick={this.openHoksPoistoModal}>
-            Poista HOKS
+            <FormattedMessage
+              id="tavoitteet.PoistaHoks"
+              defaultMessage="placeholder"
+            />
           </DeleteHoksButton>
         </ButtonContainer>
 
@@ -140,7 +143,7 @@ export class HoksPoisto extends React.Component<
         >
           <b>
             <FormattedMessage
-              id="tavoitteet.PoistaHoksConfirm"
+              id="tavoitteet.PoistaHoksConfirmTitle"
               defaultMessage="Haluatko varmasti poistaa hoksin?"
             />
           </b>
@@ -149,7 +152,7 @@ export class HoksPoisto extends React.Component<
           <HoksInfoRow>
             <HoksInfoTitleCell>
               <FormattedMessage
-                id="tavoitteet.idTitle"
+                id="tavoitteet.DeleteModalIdTitle"
                 defaultMessage="eHoks ID"
               />
             </HoksInfoTitleCell>
@@ -158,7 +161,7 @@ export class HoksPoisto extends React.Component<
           <HoksInfoRow>
             <HoksInfoTitleCell>
               <FormattedMessage
-                id="koulutuksenJarjestaja.opiskelijaTitle"
+                id="tavoitteet.DeleteModalOpiskelijaTitle"
                 defaultMessage="Opiskelijan nimi"
               />
             </HoksInfoTitleCell>
@@ -167,7 +170,7 @@ export class HoksPoisto extends React.Component<
           <HoksInfoRow>
             <HoksInfoTitleCell>
               <FormattedMessage
-                id="opiskelusuunnitelma.tutkinnonNimiTitle"
+                id="tavoitteet.DeleteModalTutkinnonNimiTitle"
                 defaultMessage="Tutkinnon nimi"
               />
             </HoksInfoTitleCell>
@@ -176,7 +179,7 @@ export class HoksPoisto extends React.Component<
           <HoksInfoRow>
             <HoksInfoTitleCell>
               <FormattedMessage
-                id="tavoitteet.opiskeluoikeudOidTitle"
+                id="tavoitteet.DeleteModalOpiskeluoikeudOidTitle"
                 defaultMessage="Opiskeluoikeus-oid"
               />
             </HoksInfoTitleCell>
@@ -185,7 +188,7 @@ export class HoksPoisto extends React.Component<
           <HoksInfoRow>
             <HoksInfoTitleCell>
               <FormattedMessage
-                id="tavoitteet.OppilaitoksenNimi"
+                id="tavoitteet.DeleteModalOppilaitoksenNimi"
                 defaultMessage="Oppilaitoksen nimi"
               />
             </HoksInfoTitleCell>
@@ -196,10 +199,18 @@ export class HoksPoisto extends React.Component<
               to={`/ehoks-virkailija-ui/koulutuksenjarjestaja`}
               onClick={() => this.shallowDeleteHoks(hoks)}
             >
-              <DeleteHoksButton>Poista</DeleteHoksButton>
+              <DeleteHoksButton>
+                <FormattedMessage
+                  id="tavoitteet.DeleteModalPoistaButton"
+                  defaultMessage="Poista"
+                />
+              </DeleteHoksButton>
             </DeleteLink>
             <CancelButton onClick={this.closeHoksPoistoModal}>
-              Peruuta
+              <FormattedMessage
+                id="tavoitteet.DeleteModalPeruutaButton"
+                defaultMessage="Peruuta"
+              />
             </CancelButton>
           </ButtonContainer>
         </ModalDialog>
