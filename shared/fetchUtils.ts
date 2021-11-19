@@ -94,13 +94,11 @@ export function fetchUtils(
       return response.ok
     },
 
-    patchResource: async (url: string, init?: RequestInit) => {
-      const response = await fetchImplementation(url, {
+    patchResource: async (url: string, init?: RequestInit) =>
+      fetchImplementation(url, {
         ...init,
         method: "PATCH"
-      })
-      return response
-    }
+      }).then(r => r.json().then(data => ({ status: r.status, body: data })))
   }
 }
 

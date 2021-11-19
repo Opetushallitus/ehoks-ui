@@ -228,7 +228,7 @@ export const HOKS = types
         return
       }
       try {
-        const response = yield patchResource(
+        const responseData = yield patchResource(
           apiUrl(
             `${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}/shallow-delete`
           ),
@@ -245,7 +245,8 @@ export const HOKS = types
             })
           }
         )
-        if (response.ok) {
+        console.log(responseData)
+        if (responseData.status === 200) {
           console.log("shallow delete response ok")
           root.notifications.addNotifications([
             {
@@ -256,9 +257,7 @@ export const HOKS = types
           ])
         } else {
           console.log("response not ok")
-          console.log(response)
-          console.log(response.json())
-          errors.logError("HOKS.shallowDelete", response.json().error)
+          errors.logError("HOKS.shallowDelete", responseData.body.error)
         }
       } catch (error) {
         errors.logError("HOKS.shallowDelete", error.message)
