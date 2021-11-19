@@ -257,11 +257,10 @@ export const HOKS = types
         } else {
           console.log("response not ok")
           console.log(response)
-          errors.logError("HOKS.shallowDelete", response.body.error)
+          console.log(response.json())
+          errors.logError("HOKS.shallowDelete", response.json().error)
         }
       } catch (error) {
-        console.log("kaatui")
-        console.log(error)
         errors.logError("HOKS.shallowDelete", error.message)
       }
     })
