@@ -245,6 +245,7 @@ export const HOKS = types
             })
           }
         )
+        console.log(responseData)
         if (responseData.status === 204) {
           root.notifications.addNotifications([
             {
