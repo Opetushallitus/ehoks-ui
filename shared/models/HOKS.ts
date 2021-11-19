@@ -228,6 +228,7 @@ export const HOKS = types
         return
       }
       try {
+        console.log("shallow delete")
         const response = yield patchResource(
           apiUrl(
             `${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}/shallow-delete`
@@ -246,6 +247,7 @@ export const HOKS = types
           }
         )
         if (response.ok) {
+          console.log("shallow delete response ok")
           root.notifications.addNotifications([
             {
               title: "tavoitteet.PoistaHoksSuccess",
@@ -254,7 +256,7 @@ export const HOKS = types
             }
           ])
         } else {
-          console.log("test")
+          console.log("response not ok")
           console.log(response)
           errors.logError("HOKS.shallowDelete", response)
         }
