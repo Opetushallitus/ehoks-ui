@@ -129,7 +129,7 @@ export class HoksPoisto extends React.Component<
         <br />
         <ButtonContainer>
           <DeleteHoksButton onClick={this.openHoksPoistoModal}>
-            Poista HOKS
+            Poista HOKS TESTI
           </DeleteHoksButton>
         </ButtonContainer>
 
