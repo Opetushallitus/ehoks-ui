@@ -228,7 +228,6 @@ export const HOKS = types
         return
       }
       try {
-        console.log("shallow delete")
         const response = yield patchResource(
           apiUrl(
             `${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}/shallow-delete`
@@ -258,7 +257,7 @@ export const HOKS = types
         } else {
           console.log("response not ok")
           console.log(response)
-          errors.logError("HOKS.shallowDelete", response)
+          errors.logError("HOKS.shallowDelete", response.body.error)
         }
       } catch (error) {
         console.log("kaatui")

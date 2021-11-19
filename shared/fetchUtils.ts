@@ -99,11 +99,6 @@ export function fetchUtils(
         ...init,
         method: "PATCH"
       })
-
-      if (!response.ok) {
-        throw new Error(response.statusText)
-      }
-
       return response
     }
   }
