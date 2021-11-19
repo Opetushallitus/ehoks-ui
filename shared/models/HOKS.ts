@@ -261,6 +261,8 @@ export const HOKS = types
           errors.logError("HOKS.shallowDelete", response)
         }
       } catch (error) {
+        console.log("kaatui")
+        console.log(error)
         errors.logError("HOKS.shallowDelete", error.message)
       }
     })
