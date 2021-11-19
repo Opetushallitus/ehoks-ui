@@ -246,7 +246,7 @@ export const HOKS = types
           }
         )
         console.log(responseData)
-        if (responseData.status === 204) {
+        if (responseData.status === 200) {
           root.notifications.addNotifications([
             {
               title: "tavoitteet.PoistaHoksSuccess",
