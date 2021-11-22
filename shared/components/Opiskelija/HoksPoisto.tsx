@@ -143,8 +143,8 @@ export class HoksPoisto extends React.Component<
         >
           <b>
             <FormattedMessage
-              id="tavoitteet.PoistaHoksConfirmTitle"
-              defaultMessage="Haluatko varmasti poistaa hoksin?"
+              id="tavoitteet.DeleteModalPoistaHoksConfirmTitle"
+              defaultMessage="Haluatko varmasti poistaa HOKSin?"
             />
           </b>
           <br />
@@ -179,7 +179,7 @@ export class HoksPoisto extends React.Component<
           <HoksInfoRow>
             <HoksInfoTitleCell>
               <FormattedMessage
-                id="tavoitteet.DeleteModalOpiskeluoikeudOidTitle"
+                id="tavoitteet.DeleteModalOpiskeluoikeusOidTitle"
                 defaultMessage="Opiskeluoikeus-oid"
               />
             </HoksInfoTitleCell>

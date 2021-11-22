@@ -250,7 +250,7 @@ export const HOKS = types
           root.notifications.addNotifications([
             {
               title: "tavoitteet.PoistaHoksSuccess",
-              default: "Hoksin poisto onnistui.",
+              default: "HOKSin poisto onnistui.",
               tyyppi: "success"
             }
           ])
