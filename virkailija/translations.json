@@ -212,7 +212,7 @@
     "tavoitteet.opiskelijapalauteSahkopostiTitle": "Opiskelijan sähköpostiosoite",
     "tavoitteet.opiskelijapalauteTila.lahetetty": "Viesti lähetetty opiskelijalle {date}",
     "tavoitteet.opiskelijapalauteTila.lahetys_epaonnistunut": "Viestin lähetys opiskelijalle epäonnistunut {date}",
-    "tavoitteet.opiskelijapalauteTila.vastausaika_loppunut_ennen_lahetysta": "Vastauslinkkiä ei ole lähetetty. Vastausaika päättynyt ennen lähetystä.",
+    "tavoitteet.opiskelijapalauteTila.vastausaika_loppunut_ennen_lahetysta": "Vastausaika on päättynyt ennen lähetystä. Vastauslinkki on muodustettu mutta sitä ei ole voitu lähettää opiskelijalle.",
     "tavoitteet.opiskelijapalauteTila.viestintapalvelussa": "Viesti odottaa lähetystä opiskelijalle",
     "tavoitteet.opiskelijapalauteTilaTitle": "Opiskelijapalautteen tila",
     "tavoitteet.opiskelijapalauteTyyppi.aloittaneet": "Aloittaneet",

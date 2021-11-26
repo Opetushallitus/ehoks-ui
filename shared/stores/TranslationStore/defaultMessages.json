@@ -547,7 +547,7 @@
   {
     "locale": "fi",
     "key": "tavoitteet.opiskelijapalauteTila.vastausaika_loppunut_ennen_lahetysta",
-    "value": "Vastauslinkkiä ei ole lähetetty. Vastausaika päättynyt ennen lähetystä."
+    "value": "Vastausaika on päättynyt ennen lähetystä. Vastauslinkki on muodustettu mutta sitä ei ole voitu lähettää opiskelijalle."
   },
   {
     "locale": "fi",
