@@ -1,20 +1,22 @@
 import { RouteComponentProps } from "@reach/router"
 import { Accordion } from "components/Accordion"
 import { AccordionTitle } from "components/AccordionTitle"
+import { AppContext } from "components/AppContext"
+import { FormattedDate } from "components/FormattedDate"
 import { HeadingContainer, HelpHeading } from "components/Heading"
 import { HelpPopup } from "components/HelpPopup"
 import { InfoTable } from "components/InfoTable"
 import { LabeledColumn } from "components/LabeledColumn"
-import { observer } from "mobx-react"
+import { inject, observer } from "mobx-react"
+import { IHOKS } from "models/HOKS"
 import { ISessionUser } from "models/SessionUser"
 import React from "react"
 import { FormattedMessage } from "react-intl"
-import { IHOKS } from "models/HOKS"
-import { AppContext } from "components/AppContext"
-import { FormattedDate } from "components/FormattedDate"
-import { StudyPoints } from "../StudyPoints"
 import { Opiskelijapalaute } from "../../../virkailija/src/routes/KoulutuksenJarjestaja/Opiskelijapalaute"
 import { IKoodistoVastaus } from "../../models/KoodistoVastaus"
+import { StudyPoints } from "../StudyPoints"
+import { IRootStore } from "../../../virkailija/src/stores/RootStore"
+import { HoksPoisto } from "./HoksPoisto"
 
 interface OsaamisenHankkimisenTarveProps {
   osaamisenHankkimisenTarve: boolean | null
@@ -221,7 +223,6 @@ const Urasuunnitelma = ({
     )}
   </Accordion>
 )
-
 const TutkintoTaiKoulutus = ({
   title,
   tutkintoTaiKoulutusOpen,
@@ -424,6 +425,7 @@ const HoksPaivamaarat = ({
 )
 
 export interface TavoitteetProps {
+  store?: IRootStore
   children?: React.ReactChildren
   student: ISessionUser
   hoks: IHOKS
@@ -434,6 +436,7 @@ export interface TavoitteetProps {
     degreeOrEducation?: React.ReactNode
     personalDetails?: React.ReactNode
     opiskelijapalaute?: React.ReactNode
+    hokspoisto?: React.ReactNode
   }
 }
 
@@ -443,6 +446,7 @@ export interface TavoitteetState {
   }
 }
 
+@inject("store")
 @observer
 export class Tavoitteet extends React.Component<
   TavoitteetProps & RouteComponentProps,
@@ -456,8 +460,10 @@ export class Tavoitteet extends React.Component<
       degreeOrEducation: false,
       personalDetails: false,
       personalGoal: false,
-      opiskelijapalaute: false
-    }
+      opiskelijapalaute: false,
+      hoksPoisto: false
+    },
+    hoksPoistoModalOpen: false
   }
 
   toggleAccordion = (accordion: string) => () => {
@@ -472,6 +478,7 @@ export class Tavoitteet extends React.Component<
 
   render() {
     const { student, hoks, titles: customTitles = {} } = this.props
+    const session = this.props.store!.session
     const { app } = this.context
 
     const titles = {
@@ -516,6 +523,14 @@ export class Tavoitteet extends React.Component<
           <FormattedMessage
             id="tavoitteet.OpiskelijapalauteTitle"
             defaultMessage="Opiskelijapalaute"
+          />
+        </AccordionTitle>
+      ),
+      hoksPoisto: (
+        <AccordionTitle>
+          <FormattedMessage
+            id="tavoitteet.PoistaHoks"
+            defaultMessage="Poista HOKS"
           />
         </AccordionTitle>
       )
@@ -576,6 +591,15 @@ export class Tavoitteet extends React.Component<
             palauteTilat={hoks.opiskelijapalauteTilat}
             hoksID={hoks.id}
             oppijaOid={student.oid}
+          />
+        )}
+        {session.hasShallowDeletePrivilege && app === "virkailija" && (
+          <HoksPoisto
+            hoks={hoks}
+            student={student}
+            title={titles.hoksPoisto}
+            hoksPoistoOpen={this.state.activeAccordions.hoksPoisto}
+            toggleHoksPoisto={this.toggleAccordion}
           />
         )}
       </React.Fragment>

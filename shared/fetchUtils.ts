@@ -92,7 +92,13 @@ export function fetchUtils(
       }
 
       return response.ok
-    }
+    },
+
+    patchResource: async (url: string, init?: RequestInit) =>
+      fetchImplementation(url, {
+        ...init,
+        method: "PATCH"
+      }).then(r => r.json().then(data => ({ status: r.status, body: data })))
   }
 }
 

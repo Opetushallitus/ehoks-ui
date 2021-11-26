@@ -12,7 +12,7 @@ const customStyles = {
   }
 }
 
-Modal.setAppElement("#app")
+if (process.env.NODE_ENV !== "test") Modal.setAppElement("#app")
 
 interface ModalDialogProps {
   children?: React.ReactNode

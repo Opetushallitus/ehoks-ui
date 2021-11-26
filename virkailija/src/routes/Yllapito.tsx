@@ -89,6 +89,7 @@ interface YllapitoState {
   opiskeluoikeusUpdateOid?: string | ""
   hoksHakuId?: number
   hoksDeleteId?: number
+  hoksPalautusId?: number
   idToDelete?: number
   systemInfo?: SystemInfo
   koulutustoimijaOid?: string | ""
@@ -119,6 +120,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     oppijaOid: "",
     updateOppijaOid: "",
     idToDelete: undefined,
+    hoksPalautusId: undefined,
     systemInfo: undefined,
     opiskeluoikeusUpdateOid: "",
     koulutustoimijaOid: ""
@@ -569,6 +571,44 @@ export class Yllapito extends React.Component<YllapitoProps> {
     }
   }
 
+  onPalautaHoks = async (event: any) => {
+    const { intl } = this.context
+    const { hoksPalautusId } = this.state
+    event.preventDefault()
+    const palautaRequest = await window.fetch(
+      `/ehoks-virkailija-backend/api/v1/virkailija/hoks/${hoksPalautusId}/undo-shallow-delete`,
+      {
+        method: "PATCH",
+        credentials: "include",
+        headers: appendCommonHeaders(
+          new Headers({
+            Accept: "application/json; charset=utf-8",
+            "Content-Type": "application/json"
+          })
+        )
+      }
+    )
+    if (palautaRequest.status === 200) {
+      this.setState({
+        success: true,
+        message: intl.formatMessage({
+          id: "yllapito.hoksinPalautusOnnistui",
+          defaultMessage: "HOKSin palautus onnistui"
+        }),
+        isLoading: false
+      })
+    } else {
+      this.setState({
+        success: false,
+        message: intl.formatMessage({
+          id: "yllapito.hoksinPalautusEpaonnistui",
+          defaultMessage: "HOKSin palautus epäonnistui"
+        }),
+        isLoading: false
+      })
+    }
+  }
+
   onUpdateOpiskeluoikeus = async (event: any) => {
     const { intl } = this.context
     const { opiskeluoikeusUpdateOid } = this.state
@@ -885,6 +925,12 @@ export class Yllapito extends React.Component<YllapitoProps> {
     })
   }
 
+  handlePalautaIdChange = (inputId: any) => {
+    this.setState({
+      hoksPalautusId: inputId
+    })
+  }
+
   handlekoulutustoimijaOidChange = (inputOid: any) => {
     this.setState({
       koulutustoimijaOid: inputOid
@@ -1191,6 +1237,36 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           <FormattedMessage
                             id="yllapito.poistaHoksButton"
                             defaultMessage="Poista HOKS"
+                          />
+                        </Button>
+                      </ContentElement>
+                    </ContentElement>
+                  </ContentElement>
+                  <ContentElement>
+                    <Header>
+                      <FormattedMessage
+                        id="yllapito.hoksPalautus"
+                        defaultMessage="Palauta virkailijan käyttöliittymästä poistetuksi asetettu HOKS"
+                      />
+                    </Header>
+                    <ContentElement>
+                      <ContentElement>
+                        <form>
+                          <HakuInput
+                            type="text"
+                            placeholder="12345"
+                            value={this.state.hoksPalautusId}
+                            onChange={e =>
+                              this.handlePalautaIdChange(e.target.value)
+                            }
+                          />
+                        </form>
+                      </ContentElement>
+                      <ContentElement>
+                        <Button onClick={this.onPalautaHoks}>
+                          <FormattedMessage
+                            id="yllapito.poistaHoksButton"
+                            defaultMessage="Palauta HOKS"
                           />
                         </Button>
                       </ContentElement>

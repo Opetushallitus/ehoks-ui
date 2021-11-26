@@ -24,6 +24,7 @@ import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 import { OpiskelijapalauteTila } from "./OpiskelijapalauteTila"
 import { IRootStore } from "../../virkailija/src/stores/RootStore"
 import { Locale } from "../stores/TranslationStore"
+import { appendCommonHeaders } from "fetchUtils"
 
 const Model = types.model("HOKSModel", {
   eid: types.optional(types.string, ""),
@@ -77,12 +78,14 @@ export const HOKS = types
     osaamispisteet: 0
   }))
   .actions(self => {
+    const root: IRootStore = getRoot(self)
     const {
       apiUrl,
       apiPrefix,
       errors,
       fetchCollection,
       fetchSingle,
+      patchResource,
       appendCallerId
     } = getEnv<StoreEnvironment>(self)
 
@@ -201,7 +204,8 @@ export const HOKS = types
           opiskeluOikeudet,
           (oo: any) => oo.oid === self.opiskeluoikeusOid
         )
-
+        // TODO: always true because the return value is a Promise
+        // async/await should not be used here
         if (opiskeluoikeusIsValid(opiskeluOikeus)) {
           self.opiskeluOikeus = opiskeluOikeus
         }
@@ -219,11 +223,51 @@ export const HOKS = types
       }
     })
 
+    const shallowDelete = flow(function*(): any {
+      if (!self.oppijaOid) {
+        return
+      }
+      try {
+        const responseData = yield patchResource(
+          apiUrl(
+            `${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}/shallow-delete`
+          ),
+          {
+            headers: appendCommonHeaders(
+              new Headers({
+                Accept: "application/json; charset=utf-8",
+                "Content-Type": "application/json"
+              })
+            ),
+            credentials: "include",
+            body: JSON.stringify({
+              "oppilaitos-oid": self.opiskeluOikeus.oppilaitos.oid
+            })
+          }
+        )
+        console.log(responseData)
+        if (responseData.status === 200) {
+          root.notifications.addNotifications([
+            {
+              title: "tavoitteet.PoistaHoksSuccess",
+              default: "HOKSin poisto onnistui.",
+              tyyppi: "success"
+            }
+          ])
+        } else {
+          errors.logError("HOKS.shallowDelete", responseData.body.error)
+        }
+      } catch (error) {
+        errors.logError("HOKS.shallowDelete", error.message)
+      }
+    })
+
     return {
       fetchDetails,
       fetchOpiskeluoikeudet,
       fetchOpiskelijapalauteTilat,
-      fetchOsaamispisteet
+      fetchOsaamispisteet,
+      shallowDelete
     }
   })
   .views(self => {
