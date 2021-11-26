@@ -536,6 +536,26 @@
   },
   {
     "locale": "fi",
+    "key": "tavoitteet.opiskelijapalauteTila.lahetetty",
+    "value": "Viesti lähetetty opiskelijalle {date}"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.opiskelijapalauteTila.lahetys_epaonnistunut",
+    "value": "Viestin lähetys opiskelijalle epäonnistunut {date}"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.opiskelijapalauteTila.vastausaika_loppunut_ennen_lahetysta",
+    "value": "Vastausaika on päättynyt ennen lähetystä. Vastauslinkki on muodustettu mutta sitä ei ole voitu lähettää opiskelijalle."
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.opiskelijapalauteTila.viestintapalvelussa",
+    "value": "Viesti odottaa lähetystä opiskelijalle"
+  },
+  {
+    "locale": "fi",
     "key": "tavoitteet.opiskelijapalauteTyyppi.aloittaneet",
     "value": "Aloittaneet"
   },
