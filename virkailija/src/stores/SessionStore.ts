@@ -12,6 +12,7 @@ export const OrganisationPrivilege = types.model("OrganisationPrivilege", {
 
 export const VirkailijaUser = types.model("VirkailijaUser", {
   oidHenkilo: types.string,
+  isSuperuser: types.boolean,
   organisationPrivileges: types.array(OrganisationPrivilege)
 })
 
@@ -138,9 +139,10 @@ export const SessionStore = types
     },
     get hasShallowDeletePrivilege() {
       return (
-        self.selectedOrganisation &&
-        self.selectedOrganisation.privileges &&
-        self.selectedOrganisation.privileges.indexOf("hoks_delete") > -1
+        (self.user && self.user.isSuperuser) ||
+        (self.selectedOrganisation &&
+          self.selectedOrganisation.privileges &&
+          self.selectedOrganisation.privileges.indexOf("hoks_delete") > -1)
       )
     }
   }))
