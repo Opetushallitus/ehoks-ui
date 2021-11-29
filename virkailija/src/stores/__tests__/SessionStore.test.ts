@@ -44,6 +44,7 @@ describe("SessionStore", () => {
       () => {
         expect(store.user).toEqual({
           oidHenkilo: "1.1.111.111.11.11111111111",
+          isSuperuser: false,
           organisationPrivileges: [
             {
               oid: "1.1.111.111.11.11111111112",
@@ -69,6 +70,7 @@ describe("SessionStore", () => {
       {
         user: {
           oidHenkilo: "1.1.111.111.11.11111111111",
+          isSuperuser: false,
           organisationPrivileges: [
             {
               oid: "1.1.111.111.11.11111111112",
@@ -83,6 +85,7 @@ describe("SessionStore", () => {
     )
     expect(store.user).toEqual({
       oidHenkilo: "1.1.111.111.11.11111111111",
+      isSuperuser: false,
       organisationPrivileges: [
         {
           oid: "1.1.111.111.11.11111111112",
