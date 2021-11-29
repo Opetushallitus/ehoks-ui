@@ -12,6 +12,7 @@ export const OrganisationPrivilege = types.model("OrganisationPrivilege", {
 
 export const VirkailijaUser = types.model("VirkailijaUser", {
   oidHenkilo: types.string,
+  isSuperuser: types.boolean,
   organisationPrivileges: types.array(OrganisationPrivilege)
 })
 
@@ -135,19 +136,19 @@ export const SessionStore = types
         self.selectedOrganisation &&
         self.selectedOrganisation.roles.indexOf("oph-super-user") > -1
       )
+    },
+    get hasShallowDeletePrivilege() {
+      return (
+        (self.user && self.user.isSuperuser) ||
+        (self.selectedOrganisation &&
+          self.selectedOrganisation.privileges &&
+          self.selectedOrganisation.privileges.indexOf("hoks_delete") > -1)
+      )
     }
   }))
   .views(self => ({
     get hasEditPrivilege() {
       return self.hasWritePrivilege || self.hasSuperUserPrivilege
-    },
-    get hasShallowDeletePrivilege() {
-      return (
-        self.hasSuperUserPrivilege ||
-        (self.selectedOrganisation &&
-          self.selectedOrganisation.privileges &&
-          self.selectedOrganisation.privileges.indexOf("hoks_delete") > -1)
-      )
     }
   }))
 export type ISessionStore = Instance<typeof SessionStore>
