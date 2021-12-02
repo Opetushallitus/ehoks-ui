@@ -117,9 +117,12 @@ export const SessionStore = types
       return (
         self.user &&
         self.user.organisationPrivileges &&
-        self.user.organisationPrivileges.find(
+        (self.user.organisationPrivileges.find(
           o => o.oid === self.selectedOrganisationOid
-        )
+        ) ||
+          self.user.organisationPrivileges.find(o =>
+            o.childOrganisations.includes(self.selectedOrganisationOid)
+          ))
       )
     }
   }))
