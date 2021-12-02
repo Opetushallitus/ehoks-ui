@@ -37,7 +37,7 @@ const IconContainer = styled("button")`
 `
 
 const NotificationLink = styled(Link)`
-  color: ${props => props.theme.colors.waterBlue};
+  color: ${props => props.theme.colors.green700};
   font-size: 16px;
   margin-right: 10px;
   cursor: pointer;

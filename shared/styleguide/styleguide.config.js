@@ -105,14 +105,14 @@ module.exports = {
       },
       "@global": {
         ".CircularProgressbar .CircularProgressbar-path": {
-          stroke: "#027FA9",
+          stroke: "#3A7A10",
           strokeLinecap: "square"
         },
         ".CircularProgressbar .CircularProgressbar-trail": {
           stroke: "#d6d6d6"
         },
         ".CircularProgressbar .CircularProgressbar-text": {
-          fill: "#027FA9",
+          fill: "#3A7A10",
           fontSize: "48px",
           dominantBaseline: "middle",
           textAnchor: "middle"

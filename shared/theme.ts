@@ -25,7 +25,10 @@ const themeColors = {
   planned: "#FF5000",
   scheduled: "#FFCC33",
   ready: "#5BAC13",
-  text: "#000"
+  text: "#000",
+  green900: "#254905",
+  green700: "#3A7A10",
+  green300: "#9CFF5A"
 }
 
 const fontFamily = '"Source Sans Pro", sans-serif;'
@@ -97,10 +100,10 @@ export const theme = {
   colors: {
     ...themeColors,
     header: {
-      background: "#149ecb"
+      background: "#3A7A10"
     },
     buttons: {
-      background: "#0076d9",
+      background: "#3A7A10",
       cancelBackground: themeColors.greyishBrown,
       color: "#fff"
     },
@@ -109,13 +112,13 @@ export const theme = {
       dotActive: "#fff"
     },
     links: {
-      active: "#0076d9",
-      disabled: themeColors.pinkishGrey
+      active: "#3A7A10",
+      disabled: "#B2B2B2"
     },
     notification: {
       alertBorder: themeColors.yellowOchre,
       errorBorder: themeColors.brick,
-      questionBorder: themeColors.waterBlue,
+      questionBorder: themeColors.green700,
       successBorder: themeColors.midGreen,
       warningBorder: themeColors.yellowOchre,
       alertBg: "rgba(247, 180, 34, 0.05)",

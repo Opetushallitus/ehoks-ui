@@ -25,14 +25,14 @@ const LeftArrow = styled(MdChevronLeft)`
   position: absolute;
   left: -4px;
   top: calc(50% - 16px);
-  fill: ${props => props.theme.colors.waterBlue};
+  fill: ${props => props.theme.colors.green700};
 `
 
 const RightArrow = styled(MdChevronRight)`
   position: absolute;
   right: -4px;
   top: calc(50% - 16px);
-  fill: ${props => props.theme.colors.waterBlue};
+  fill: ${props => props.theme.colors.green700};
 `
 
 interface MobileSliderProps {

@@ -53,7 +53,7 @@ export class HelpPopup extends React.Component<HelpPopupProps> {
             })}
             className={className}
           >
-            <HelpToggle size="28" color="#027fa9" />
+            <HelpToggle size="28" color="#3A7A10" />
           </HelpButton>
         }
         position={["left center", "bottom center", "right center"]}

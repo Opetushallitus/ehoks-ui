@@ -81,7 +81,7 @@ export class Henkilokohtaistaminen extends React.Component<
             <ChartRow role="presentation" height="200px" marginBottom="15px">
               <ChartBox
                 flex={1}
-                backgroundColor="#2874BA"
+                backgroundColor="#3A7A10"
                 icon={
                   <MdAccountBalance
                     size={160}
@@ -112,7 +112,7 @@ export class Henkilokohtaistaminen extends React.Component<
                   </ul>
                 </ChartContent>
                 <ChartArrowRight
-                  backgroundColor="#2874BA"
+                  backgroundColor="#3A7A10"
                   size={40}
                   borderWidth={5}
                 />
@@ -265,7 +265,7 @@ export class Henkilokohtaistaminen extends React.Component<
               </ChartBox>
               <ChartBox
                 flex={1}
-                backgroundColor="#2C70A2"
+                backgroundColor="#3A7210"
                 icon={
                   <MdVerifiedUser size={160} color="rgba(255, 255, 255, 0.1)" />
                 }
@@ -279,13 +279,13 @@ export class Henkilokohtaistaminen extends React.Component<
                   </h2>
                 </ChartContent>
                 <ChartArrowTop
-                  backgroundColor="#2C70A2"
+                  backgroundColor="#3A7210"
                   size={20}
                   borderWidth={5}
                   right="50%"
                 />
                 <ChartArrowBottom
-                  backgroundColor="#2C70A2"
+                  backgroundColor="#3A7210"
                   size={20}
                   borderWidth={15}
                   right="50%"

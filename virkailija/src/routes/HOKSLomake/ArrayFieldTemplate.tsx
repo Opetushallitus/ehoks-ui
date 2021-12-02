@@ -61,8 +61,8 @@ const AddButton = styled("button")`
   border: 1px solid transparent;
   border-radius: 2px;
   color: #fff;
-  background-color: #1976d2;
-  border-color: #1976d2;
+  background-color: #3a7a10;
+  border-color: #3a7a10;
   min-width: 85px;
 `
 
@@ -84,7 +84,7 @@ const ItemButton = styled("button")<ItemButtonProps>`
   border-radius: 25px;
   font-size: 16px;
   font-weight: bold;
-  background: ${props => (props.active ? "#1976d2" : "#fff")};
+  background: ${props => (props.active ? "#3A7A10" : "#fff")};
   color: ${props => (props.active ? "#fff" : "#ccc")};
   border: ${props => (props.active ? "none" : "1px solid #ccc")};
 `

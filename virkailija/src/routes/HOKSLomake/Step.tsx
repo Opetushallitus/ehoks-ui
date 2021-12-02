@@ -20,7 +20,7 @@ const Circle = styled("div")<CircleProps>`
   width: 30px;
   height: 30px;
   border-radius: 15px;
-  background: ${props => (props.active ? "#1976d2" : "#fff")};
+  background: ${props => (props.active ? "#3A7A10" : "#fff")};
   color: ${props => (props.active ? "#fff" : "#ddd")};
   border: ${props => (props.active ? "none" : "1px solid #ddd")};
 `

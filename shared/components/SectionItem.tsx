@@ -36,8 +36,8 @@ const Item = styled("div")<ItemProps>`
   border-radius: 90px;
   width: 90px;
   height: 90px;
-  border: 4px solid #027fa9;
-  background: ${props => (props.selected ? "#027FA9" : "#fff")};
+  border: 4px solid #3a7a10;
+  background: ${props => (props.selected ? "#3A7A10" : "#fff")};
   color: ${props => (props.selected ? "#fff" : "#000")};
 
   @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {

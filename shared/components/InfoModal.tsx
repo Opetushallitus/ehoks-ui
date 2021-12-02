@@ -80,7 +80,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
             })}
             className={className}
           >
-            <InfoToggle size="28" color="#027fa9" />
+            <InfoToggle size="28" color="#3A7A10" />
           </InfoButton>
         }
         modal
