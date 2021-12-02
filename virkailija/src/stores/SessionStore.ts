@@ -117,6 +117,15 @@ export const SessionStore = types
       return (
         self.user &&
         self.user.organisationPrivileges &&
+        self.user.organisationPrivileges.find(
+          o => o.oid === self.selectedOrganisationOid
+        )
+      )
+    },
+    get selectedOrganisationChildOrganisationsIncluded() {
+      return (
+        self.user &&
+        self.user.organisationPrivileges &&
         (self.user.organisationPrivileges.find(
           o => o.oid === self.selectedOrganisationOid
         ) ||
@@ -143,9 +152,11 @@ export const SessionStore = types
     get hasShallowDeletePrivilege() {
       return (
         (self.user && self.user.isSuperuser) ||
-        (self.selectedOrganisation &&
-          self.selectedOrganisation.privileges &&
-          self.selectedOrganisation.privileges.indexOf("hoks_delete") > -1)
+        (self.selectedOrganisationChildOrganisationsIncluded &&
+          self.selectedOrganisationChildOrganisationsIncluded.privileges &&
+          self.selectedOrganisationChildOrganisationsIncluded.privileges.indexOf(
+            "hoks_delete"
+          ) > -1)
       )
     }
   }))
