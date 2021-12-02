@@ -9,7 +9,7 @@ const ButtonContainer = styled("button")<ButtonContainerProps>`
   background: ${props =>
     props.secondary
       ? props.theme.colors.battleshipGrey
-      : props.theme.colors.waterBlue};
+      : props.theme.colors.green700};
   color: #fff;
   ${props => props.theme.typography.body}
   border: 0;

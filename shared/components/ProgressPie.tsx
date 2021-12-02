@@ -37,7 +37,7 @@ const PercentageContainer = styled("div")<{
   font-size: 14px;
   font-weight: bold;
   color: ${props =>
-    props.color ? props.theme.colors[props.color] : "#027FA9"};
+    props.color ? props.theme.colors[props.color] : "#3A7A10"};
 `
 
 const PercentageTitle = styled("div")`
@@ -65,7 +65,7 @@ export interface ProgressPieProps extends ComponentWithTheme {
   onClick?: () => void
   /**
    * Color of circle's filled path
-   * @default #027FA9
+   * @default #3A7A10
    */
   stroke?: ColorType
 }

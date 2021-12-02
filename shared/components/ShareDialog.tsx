@@ -110,7 +110,7 @@ const LinkAnchor = styled(LinkItem)`
 `
 
 const RemoveLinkButton = styled(LinkButton)`
-  color: #1976d2;
+  color: #3a7a10;
 `
 
 const ChildContainer = styled("div")`

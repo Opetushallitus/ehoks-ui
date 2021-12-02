@@ -13,7 +13,7 @@ const AccordionToggle = styled("div")`
   border-radius: 15px;
   width: 30px;
   height: 30px;
-  border: 1px solid #027fa9;
+  border: 1px solid #3a7a10;
   cursor: pointer;
   user-select: none;
 `
@@ -152,13 +152,13 @@ export class Accordion extends React.Component<AccordionProps, AccordionState> {
               {isOpen ? (
                 <MdExpandLess
                   size="28"
-                  color={inline ? "#000" : "#027fa9"}
+                  color={inline ? "#000" : "#3A7A10"}
                   data-testid="Collapse"
                 />
               ) : (
                 <MdExpandMore
                   size="28"
-                  color={inline ? "#000" : "#027fa9"}
+                  color={inline ? "#000" : "#3A7A10"}
                   data-testid="Expand"
                 />
               )}

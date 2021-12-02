@@ -106,8 +106,8 @@ export const EditHOKSStyles = createGlobalStyle`
 
   .btn-info {
     color: #fff;
-    background-color: #1976d2;
-    border-color: #1976d2;
+    background-color: #3A7A10;
+    border-color: #3A7A10;
   }
 
   .btn-danger {
@@ -352,7 +352,7 @@ export const EditHOKSStyles = createGlobalStyle`
     color: #fff;
     text-decoration: none;
     outline: 0;
-    background-color: #337ab7;
+    background-color: #3A7A10;
   }
   .dropdown-menu > .disabled > a,
   .dropdown-menu > .disabled > a:hover,
@@ -382,7 +382,7 @@ export const EditHOKSStyles = createGlobalStyle`
   }
 
   .dropdown-item:hover {
-    color: #337ab7;
+    color: #254905;
   }
 
   .open > .dropdown-menu {

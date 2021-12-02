@@ -4,9 +4,9 @@ import { AjvError } from "react-jsonschema-form"
 import styled from "styled"
 
 const ErrorMessage = styled("li")`
-  color: ${props => props.theme.colors.waterBlue};
+  color: ${props => props.theme.colors.green700};
   &:hover {
-    color: ${props => props.theme.colors.flatBlue};
+    color: ${props => props.theme.colors.green900};
     cursor: pointer;
   }
 `

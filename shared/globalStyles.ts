@@ -23,7 +23,7 @@ export const GlobalStyles = css`
   }
 
   :focus {
-    outline-color: rgba(25, 118, 210, 0.4);
+    outline-color: props.theme.;
     outline-style: solid;
   }
 
@@ -47,7 +47,7 @@ export const GlobalStyles = css`
   * All of the styles in this file are optional and configurable!
   */
   .CircularProgressbar .CircularProgressbar-path {
-    stroke: #027fa9;
+    stroke: ${props => props.theme.colors.green700};
     stroke-linecap: square;
   }
 
@@ -56,7 +56,7 @@ export const GlobalStyles = css`
   }
 
   .CircularProgressbar .CircularProgressbar-text {
-    fill: #027fa9;
+    fill: ${props => props.theme.colors.green300}
     font-size: 48px;
     dominant-baseline: middle;
     text-anchor: middle;

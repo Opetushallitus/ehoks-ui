@@ -9,7 +9,7 @@ const { ChartRow } = require("components/ChartRow")
   <ChartRow height="200px" marginBottom="15px">
     <ChartBox
       flex={1}
-      backgroundColor="#2874BA"
+      backgroundColor="#3A7A10"
       icon={<MdAccountBalance size={160} color="rgba(255, 255, 255, 0.1)" />}
     >
       <ChartContent>
@@ -41,7 +41,7 @@ const { ChartRow } = require("components/ChartRow")
   <ChartRow height="200px" marginBottom="15px">
     <ChartBox
       flex={1}
-      backgroundColor="#2874BA"
+      backgroundColor="#3A7A10"
       icon={<MdAccountBalance size={160} color="rgba(255, 255, 255, 0.1)" />}
     >
       <ChartContent>
@@ -51,10 +51,10 @@ const { ChartRow } = require("components/ChartRow")
           <li>Koulutustavoite</li>
         </ul>
       </ChartContent>
-      <ChartArrowTop backgroundColor="#2874BA" size={20} borderWidth={5} />
-      <ChartArrowBottom backgroundColor="#2874BA" size={20} borderWidth={5} />
-      <ChartArrowLeft backgroundColor="#2874BA" size={20} borderWidth={5} />
-      <ChartArrowRight backgroundColor="#2874BA" size={20} borderWidth={5} />
+      <ChartArrowTop backgroundColor="#3A7A10" size={20} borderWidth={5} />
+      <ChartArrowBottom backgroundColor="#3A7A10" size={20} borderWidth={5} />
+      <ChartArrowLeft backgroundColor="#3A7A10" size={20} borderWidth={5} />
+      <ChartArrowRight backgroundColor="#3A7A10" size={20} borderWidth={5} />
     </ChartBox>
   </ChartRow>
 </ChartContainer>
@@ -72,7 +72,7 @@ const { ChartRow } = require("components/ChartRow")
   <ChartRow height="200px" marginBottom="15px">
     <ChartBox
       flex={1}
-      backgroundColor="#2874BA"
+      backgroundColor="#3A7A10"
       icon={<MdAccountBalance size={160} color="rgba(255, 255, 255, 0.1)" />}
     >
       <ChartContent>
@@ -82,7 +82,7 @@ const { ChartRow } = require("components/ChartRow")
           <li>Koulutustavoite</li>
         </ul>
       </ChartContent>
-      <ChartArrowRight backgroundColor="#2874BA" size={20} borderWidth={5} />
+      <ChartArrowRight backgroundColor="#3A7A10" size={20} borderWidth={5} />
     </ChartBox>
     <ChartBox
       flex={2}
