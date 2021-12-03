@@ -15,7 +15,7 @@ const HeaderContainer = styled("header")`
   display: flex;
   flex: 1;
   color: #fff;
-  background-color: #3a7a10;
+  background-color: ${props => props.theme.colors.green700};
   height: 48px;
   font-size: 14px;
   justify-content: center;
@@ -40,7 +40,7 @@ const TopLink = styled(Link)<TopLinkProps>`
   }
 
   &:not(:last-child) {
-    border-right: 2px solid #3a7a10;
+    border-right: 2px solid ${props => props.theme.colors.green900};
   }
 
   &[aria-current] span {
