@@ -113,6 +113,8 @@ export const HOKS = types
     })
 
     const fetchTutkinto = flow(function*(): any {
+      if (!self.opiskeluOikeus.oid.length) return
+
       const diaarinumero =
         self.opiskeluOikeus.suoritukset[0].koulutusmoduuli.perusteenDiaarinumero
       const response: APIResponse = yield fetchSingle(
@@ -163,7 +165,7 @@ export const HOKS = types
 
     const fetchOsaamispisteet = flow(function*(): any {
       try {
-        if (!self.opiskeluOikeus) return
+        if (!self.opiskeluOikeus.oid.length) return
 
         const tutkinto = yield fetchTutkinto()
         const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
@@ -172,23 +174,6 @@ export const HOKS = types
         errors.logError("HOKS.fetchOsaamispisteet", error.message)
       }
     })
-
-    async function opiskeluoikeusIsValid(opiskeluOikeus: any) {
-      if (opiskeluOikeus === undefined) return false
-
-      if (opiskeluOikeus.tyyppi.koodiarvo !== "ammatillinenkoulutus") {
-        const oppija: any = await fetchSingle(
-          apiUrl(`virkailija/oppijat/${self.oppijaOid}`),
-          { headers: appendCallerId() }
-        )
-
-        const errorMessage = `Oppija: ${oppija.data.nimi}, Oppija oid: ${self.oppijaOid}, Hoks id: ${self.id}`
-        errors.logError("HOKS.fetchOpiskeluoikeudet.wrongType", errorMessage)
-        return false
-      }
-
-      return true
-    }
 
     const fetchOpiskeluoikeudet = flow(function*(): any {
       if (!self.oppijaOid) {
@@ -204,10 +189,19 @@ export const HOKS = types
           opiskeluOikeudet,
           (oo: any) => oo.oid === self.opiskeluoikeusOid
         )
-        // TODO: always true because the return value is a Promise
-        // async/await should not be used here
-        if (opiskeluoikeusIsValid(opiskeluOikeus)) {
-          self.opiskeluOikeus = opiskeluOikeus
+
+        if (opiskeluOikeus) {
+          if (opiskeluOikeus.tyyppi.koodiarvo === "ammatillinenkoulutus") {
+            self.opiskeluOikeus = opiskeluOikeus
+          } else {
+            const activeLocale: Locale = root.translations.activeLocale
+            const errorText =
+              root.translations.messages[activeLocale][
+                "errors.HOKS.fetchOpiskeluoikeudet.wrongType"
+              ] ||
+              "HOKSiin liitetty opiskeluoikeus ei ole ammatillinen tutkinto"
+            throw new Error(errorText)
+          }
         }
       } catch (error) {
         // Do not UI-log mobx-state-tree error
@@ -245,7 +239,7 @@ export const HOKS = types
             })
           }
         )
-        console.log(responseData)
+
         if (responseData.status === 200) {
           root.notifications.addNotifications([
             {

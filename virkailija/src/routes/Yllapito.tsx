@@ -670,7 +670,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     if (confirmRequest.status === 200) {
       const json = await confirmRequest.json()
       const amount = json.data
-      console.log(amount)
+
       if (
         window.confirm(
           this.context.intl.formatMessage(
