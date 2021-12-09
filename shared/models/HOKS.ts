@@ -173,22 +173,22 @@ export const HOKS = types
       }
     })
 
-    async function opiskeluoikeusIsValid(opiskeluOikeus: any) {
-      if (opiskeluOikeus === undefined) return false
+    // async function opiskeluoikeusIsValid(opiskeluOikeus: any) {
+    //   if (opiskeluOikeus === undefined) return false
 
-      if (opiskeluOikeus.tyyppi.koodiarvo !== "ammatillinenkoulutus") {
-        const oppija: any = await fetchSingle(
-          apiUrl(`virkailija/oppijat/${self.oppijaOid}`),
-          { headers: appendCallerId() }
-        )
+    //   if (opiskeluOikeus.tyyppi.koodiarvo !== "ammatillinenkoulutus") {
+    //     const oppija: any = await fetchSingle(
+    //       apiUrl(`virkailija/oppijat/${self.oppijaOid}`),
+    //       { headers: appendCallerId() }
+    //     )
 
-        const errorMessage = `Oppija: ${oppija.data.nimi}, Oppija oid: ${self.oppijaOid}, Hoks id: ${self.id}`
-        errors.logError("HOKS.fetchOpiskeluoikeudet.wrongType", errorMessage)
-        return false
-      }
+    //     const errorMessage = `Oppija: ${oppija.data.nimi}, Oppija oid: ${self.oppijaOid}, Hoks id: ${self.id}`
+    //     errors.logError("HOKS.fetchOpiskeluoikeudet.wrongType", errorMessage)
+    //     return false
+    //   }
 
-      return true
-    }
+    //   return true
+    // }
 
     const fetchOpiskeluoikeudet = flow(function*(): any {
       if (!self.oppijaOid) {
@@ -206,8 +206,25 @@ export const HOKS = types
         )
         // TODO: always true because the return value is a Promise
         // async/await should not be used here
-        if (opiskeluoikeusIsValid(opiskeluOikeus)) {
+        //if (opiskeluoikeusIsValid(opiskeluOikeus)) {
+        //self.opiskeluOikeus = opiskeluOikeus
+        //}
+
+        if (
+          opiskeluOikeus &&
+          opiskeluOikeus.tyyppi.koodiarvo === "ammatillinenkoulutus"
+        ) {
           self.opiskeluOikeus = opiskeluOikeus
+        } else {
+          if (opiskeluOikeus.tyyppi.koodiarvo !== "ammatillinenkoulutus") {
+            const activeLocale: Locale = root.translations.activeLocale
+            const errorText =
+              root.translations.messages[activeLocale][
+                "errors.HOKS.fetchOpiskeluoikeudet.wrongType"
+              ] ||
+              "HOKSiin liitetty opiskeluoikeus ei ole ammatillinen tutkinto"
+            throw new Error(errorText)
+          }
         }
       } catch (error) {
         // Do not UI-log mobx-state-tree error
