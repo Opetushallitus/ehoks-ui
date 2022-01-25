@@ -6,7 +6,6 @@ import { IKoodistoVastaus } from "../models/KoodistoVastaus"
 import { IKeskeytymisajanjakso } from "../models/Keskeytymisajanjakso"
 import Popup from "reactjs-popup"
 import styled from "styled"
-import "reactjs-popup/dist/index.css"
 
 const InfoToggle = styled(MdInfo)`
   vertical-align: bottom;
