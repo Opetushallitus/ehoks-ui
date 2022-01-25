@@ -116,7 +116,7 @@
     "lodash.range": "^3.2.0",
     "lodash.slice": "^4.2.0",
     "lodash.take": "^4.1.1",
-    "map-obj": "^4.1.0",
+    "map-obj": "^4.3.0",
     "mobx": "^5.15.4",
     "mobx-react": "^6.3.0",
     "mobx-state-tree": "^3.16.0",
