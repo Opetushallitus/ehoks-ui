@@ -3,6 +3,7 @@ import { MdHelp } from "react-icons/md"
 import { intlShape } from "react-intl"
 import Popup from "reactjs-popup"
 import styled from "styled"
+import "reactjs-popup/dist/index.css"
 
 const HelpToggle = styled(MdHelp)``
 
