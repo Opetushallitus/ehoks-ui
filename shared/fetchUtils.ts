@@ -5,6 +5,8 @@ import queryString from "query-string"
 import { APIResponse } from "types/APIResponse"
 
 const camelCaseDeep = (model: any) =>
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   mapObj(model, (key: string, value: any) => [camelCase(key), value], {
     deep: true
   })
