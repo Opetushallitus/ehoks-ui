@@ -4,7 +4,7 @@ export const koodiUriSelected = (self: any, callback?: () => void) => (
   path: string,
   selected: boolean
 ) =>
-  new Promise(resolve => {
+  new Promise<void>(resolve => {
     self.setState(
       (state: any) => ({
         ...state,
