@@ -6,5 +6,6 @@ module.exports = {
   testMatch: ["**/__tests__/**/*.ts?(x)", "**/?(*.)+(spec|test).ts?(x)"],
   moduleNameMapper: {
     "\\.(css|jpg|png|svg)$": "<rootDir>/empty-module.js"
-  }
+  },
+  testEnvironment: "jsdom"
 }

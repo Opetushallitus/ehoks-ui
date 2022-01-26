@@ -775,7 +775,7 @@ exports[`App renders correctly 1`] = `
         class="c14"
       />
       <main
-        class="sc-hRMJXU"
+        class=""
         id="main"
         role="main"
       >
@@ -812,7 +812,7 @@ exports[`App renders correctly 1`] = `
                       class="c20 c21"
                     >
                       <svg
-                        class="sc-eLwHnm"
+                        class=""
                         color="#027fa9"
                         fill="currentColor"
                         height="28"
@@ -855,7 +855,7 @@ exports[`App renders correctly 1`] = `
                       class="c20 c21"
                     >
                       <svg
-                        class="sc-eLwHnm"
+                        class=""
                         color="#027fa9"
                         fill="currentColor"
                         height="28"
@@ -898,7 +898,7 @@ exports[`App renders correctly 1`] = `
                       class="c20 c21"
                     >
                       <svg
-                        class="sc-eLwHnm"
+                        class=""
                         color="#027fa9"
                         fill="currentColor"
                         height="28"
@@ -1040,7 +1040,7 @@ exports[`App renders correctly 1`] = `
         </div>
       </footer>
       <div
-        class="sc-czWrlN"
+        class=""
         id="modal-root"
       />
     </div>
