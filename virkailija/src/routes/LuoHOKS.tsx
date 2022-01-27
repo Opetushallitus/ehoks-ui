@@ -2,12 +2,12 @@ import { RouteComponentProps } from "@reach/router"
 import { Button } from "components/Button"
 import { LoadingSpinner } from "components/LoadingSpinner"
 import { ModalDialog } from "components/ModalDialogs/ModalDialog"
-import { JSONSchema6 } from "json-schema"
+import { JSONSchema7 } from "json-schema"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 import { FormattedMessage, intlShape } from "react-intl"
-import { AjvError, FieldProps, IChangeEvent } from "react-jsonschema-form"
+import { AjvError, FieldProps, IChangeEvent } from "@rjsf/core"
 import { IRootStore } from "stores/RootStore"
 import { ArrayFieldTemplate } from "./HOKSLomake/ArrayFieldTemplate"
 import { BottomToolbar } from "./HOKSLomake/BottomToolbar"
@@ -45,14 +45,14 @@ interface LuoHOKSProps extends RouteComponentProps {
 }
 
 interface LuoHOKSState {
-  schema: JSONSchema6
+  schema: JSONSchema7
   formData: { [name: string]: any }
   errors: AjvError[]
   isLoading: boolean
   success: boolean | undefined
   userEnteredText: boolean
   uiSchema?: ReturnType<typeof uiSchemaByStep>
-  rawSchema: JSONSchema6
+  rawSchema: JSONSchema7
   currentStep: number
   errorsByStep: { [index: string]: AjvError[] }
   koodiUris: { [key in keyof typeof koodistoUrls]: any[] }
@@ -385,7 +385,6 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
             ErrorList={ErrorList}
             transformErrors={transformErrors}
             ArrayFieldTemplate={ArrayFieldTemplate}
-            safeRenderCompletion={true}
             liveValidate={true}
             noHtml5Validate={true}
           >

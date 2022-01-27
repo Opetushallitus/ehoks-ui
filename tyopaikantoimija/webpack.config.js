@@ -21,12 +21,10 @@ module.exports = {
 
   devServer: {
     compress: true,
-    contentBase: path.join(__dirname, "public", "ehoks-tyopaikantoimija-ui"),
-    disableHostCheck: true,
+    static: path.join(__dirname, "public", "ehoks-tyopaikantoimija-ui"),
+    allowedHosts: "all",
     historyApiFallback: true,
     host: "0.0.0.0",
-    hot: true,
-    inline: true,
     proxy: {
       "/auth-dev": "http://localhost:3000",
       "/ehoks-oppija-backend": "http://localhost:3000"

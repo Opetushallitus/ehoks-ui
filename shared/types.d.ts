@@ -2,7 +2,7 @@ declare module "*.jpg"
 declare module "*.png"
 declare module "*.svg"
 
-declare module "react-jsonschema-form/lib/components/AddButton" {
+declare module "@rjsf/core/lib/components/AddButton" {
   import * as React from "react" // eslint-disable-line no-duplicate-imports
   const AddButton: React.SFC<{
     className?: string
@@ -12,7 +12,7 @@ declare module "react-jsonschema-form/lib/components/AddButton" {
   export default AddButton
 }
 
-declare module "react-jsonschema-form/lib/components/IconButton" {
+declare module "@rjsf/core/lib/components/IconButton" {
   import * as React from "react" // eslint-disable-line no-duplicate-imports
 
   interface IconButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
@@ -28,7 +28,7 @@ declare module "react-jsonschema-form/lib/components/IconButton" {
   export default IconButton
 }
 
-declare module "react-jsonschema-form/lib/components/fields/DescriptionField" {
+declare module "@rjsf/core/lib/components/fields/DescriptionField.js" {
   import * as React from "react" // eslint-disable-line no-duplicate-imports
   interface DescriptionProps {
     id?: string
@@ -39,15 +39,15 @@ declare module "react-jsonschema-form/lib/components/fields/DescriptionField" {
   export default DescriptionField
 }
 
-declare module "react-jsonschema-form/lib/utils" {
-  import { JSONSchema6 } from "json-schema"
+declare module "@rjsf/core/lib/utils" {
+  import { JSONSchema7 } from "json-schema"
 
-  import { UiSchema } from "react-jsonschema-form" // eslint-disable-line no-duplicate-imports
+  import { UiSchema } from "@rjsf/core" // eslint-disable-line no-duplicate-imports
 
-  export function getUiOptions(schema: JSONSchema6): any
-  export function isMultiSelect(schema: JSONSchema6, definitions: any): any
+  export function getUiOptions(schema: JSONSchema7): any
+  export function isMultiSelect(schema: JSONSchema7, definitions: any): any
   export function isFilesArray(
-    schema: JSONSchema6,
+    schema: JSONSchema7,
     uiSchema: UiSchema,
     definitions: any
   ): any

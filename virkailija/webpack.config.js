@@ -18,15 +18,13 @@ module.exports = {
   },
   devServer: {
     compress: true,
-    contentBase: path.join(__dirname, "public"),
-    disableHostCheck: true,
+    static: path.join(__dirname, "public"),
+    allowedHosts: "all",
     historyApiFallback: {
       disableDotRule: true
     },
     host: "0.0.0.0",
     port: 4000,
-    hot: true,
-    inline: true,
     proxy: {
       "/auth-dev": "http://localhost:3000",
       "/cas": "http://localhost:3000",
