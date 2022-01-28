@@ -13,7 +13,7 @@ import {
 import selectn from "./selectn.min"
 
 import { DefaultLabel } from "./Label"
-import { FieldProps } from "react-jsonschema-form"
+import { FieldProps } from "@rjsf/core"
 
 const DEFAULT_OPTIONS = {
   required: false,

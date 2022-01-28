@@ -21,12 +21,10 @@ module.exports = {
 
   devServer: {
     compress: true,
-    contentBase: path.join(__dirname, "public", "ehoks"),
-    disableHostCheck: true,
+    static: path.join(__dirname, "public", "ehoks"),
+    allowedHosts: "all",
     historyApiFallback: true,
     host: "0.0.0.0",
-    hot: true,
-    inline: true,
     proxy: {
       "/auth-dev": "http://localhost:3000",
       "/cas-oppija": "http://localhost:3000",
