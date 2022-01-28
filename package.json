@@ -92,7 +92,7 @@
     "webpack-dev-server": "^4.7.3"
   },
   "dependencies": {
-    "@opetushallitus/virkailija-ui-components": "^0.3.2",
+    "@opetushallitus/virkailija-ui-components": "^0.4.6",
     "@reach/router": "^1.3.4",
     "@types/lodash.find": "^4.6.6",
     "@types/lodash.max": "^4.0.6",
