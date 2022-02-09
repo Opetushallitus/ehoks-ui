@@ -1,5 +1,5 @@
 import React from "react"
-import { WidgetProps } from "@rjsf/core"
+import { WidgetProps } from "react-jsonschema-form"
 import CustomBaseInput from "./CustomBaseInput"
 
 function pad(num: number, size: number) {
@@ -64,9 +64,7 @@ export function CustomDatetimeWidget(props: WidgetProps) {
       id={id}
       label={label}
       options={options}
-      onChange={(changedValue: string) =>
-        onChange(localDateToUTC(changedValue))
-      }
+      onChange={changedValue => onChange(localDateToUTC(changedValue))}
     />
   )
 }

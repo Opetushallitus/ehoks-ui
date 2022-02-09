@@ -1,4 +1,4 @@
-import Form from "@rjsf/core"
+import Form from "react-jsonschema-form"
 import { trimEmptyValues } from "./helpers/trimFormData"
 
 export class ReactJSONSchemaForm<T> extends Form<T> {

@@ -1,6 +1,6 @@
-import { JSONSchema7, JSONSchema7Definition } from "json-schema"
+import { JSONSchema6, JSONSchema6Definition } from "json-schema"
 import find from "lodash.find"
-import { AjvError } from "@rjsf/core"
+import { AjvError } from "react-jsonschema-form"
 import { koodistoUrls } from "../formConfig"
 
 // Schema formats supported by react-jsonschema-form
@@ -57,10 +57,10 @@ export function mapKoodiUri({ koodiUri, versio, metadata }: any) {
 }
 
 export function schemaByStep(
-  schema: JSONSchema7,
+  schema: JSONSchema6,
   properties: { [index: number]: string[] },
   currentStep: number
-): JSONSchema7 {
+): JSONSchema6 {
   const schemaProperties = schema.properties || {}
   return {
     type: "object",
@@ -68,7 +68,7 @@ export function schemaByStep(
     definitions: schema.definitions,
     required: currentStep === 0 ? schema.required : [],
     properties: Object.keys(schema.properties || []).reduce<{
-      [key: string]: JSONSchema7Definition
+      [key: string]: JSONSchema6Definition
     }>((props, key) => {
       if (properties[currentStep].indexOf(key) > -1 && schemaProperties[key]) {
         props[key] = schemaProperties[key]
