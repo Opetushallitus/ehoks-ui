@@ -1,6 +1,10 @@
 import React from "react"
-import DefaultDescriptionField from "@rjsf/core/lib/components/fields/DescriptionField.js"
-import { isMultiSelect, getUiOptions, isFilesArray } from "@rjsf/core/lib/utils"
+import DefaultDescriptionField from "react-jsonschema-form/lib/components/fields/DescriptionField"
+import {
+  isMultiSelect,
+  getUiOptions,
+  isFilesArray
+} from "react-jsonschema-form/lib/utils"
 
 const REQUIRED_FIELD_SYMBOL = "*"
 

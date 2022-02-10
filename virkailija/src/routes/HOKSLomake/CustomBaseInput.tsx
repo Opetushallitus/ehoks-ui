@@ -1,5 +1,5 @@
 import React from "react"
-import { WidgetProps } from "@rjsf/core"
+import { WidgetProps } from "react-jsonschema-form"
 
 /* eslint-disable react/prop-types */
 interface CustomBaseInputProps

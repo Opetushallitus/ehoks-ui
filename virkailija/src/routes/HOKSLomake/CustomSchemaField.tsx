@@ -1,7 +1,7 @@
 import { Accordion } from "components/Accordion"
 import { AccordionTitle } from "components/AccordionTitle"
 import React from "react"
-import SchemaField from "@rjsf/core/lib/components/fields/SchemaField"
+import SchemaField from "react-jsonschema-form/lib/components/fields/SchemaField"
 import styled from "styled"
 
 const ArrayTitle = styled(AccordionTitle)`

@@ -1,5 +1,5 @@
 import React from "react"
-import IconButton from "@rjsf/core/lib/components/IconButton"
+import IconButton from "react-jsonschema-form/lib/components/IconButton"
 import styled from "styled"
 
 interface ArrayItemProps {
