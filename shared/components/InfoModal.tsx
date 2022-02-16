@@ -46,6 +46,11 @@ const ModalContent = styled("div")`
   padding: 5px;
 `
 
+const StyledPopup = styled(Popup)`
+  border-radius: 10px;
+  border-top: 4px solid rgb(255, 204, 51);
+`
+
 interface InfoModalProps {
   partTimeAmount?: number
   hankkimistapaTyyppi?: IKoodistoVastaus
@@ -74,7 +79,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
       keskeytymisajanjaksot
     } = this.props
     return (
-      <Popup
+      <StyledPopup
         trigger={
           <InfoButton
             aria-label={intl.formatMessage({
@@ -160,7 +165,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
             </ModalContent>
           </Modal>
         </div>
-      </Popup>
+      </StyledPopup>
     )
   }
 }
