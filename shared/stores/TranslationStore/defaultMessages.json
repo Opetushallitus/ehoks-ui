@@ -26,6 +26,11 @@
   },
   {
     "locale": "fi",
+    "key": "infoModal.hankkimistapaTyyppi",
+    "value": "Osaamisen hankkimistavan tyyppi"
+  },
+  {
+    "locale": "fi",
     "key": "infoModal.perusta",
     "value": "Oppisopimuksen perusta"
   },

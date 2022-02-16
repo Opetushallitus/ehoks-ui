@@ -56,6 +56,7 @@ interface LearningEventProps {
   periodSpecifier?: string
   description?: string
   partTimeAmount?: number
+  osaamisenHankkimistapaTyyppi?: IKoodistoVastaus
   perusta?: IKoodistoVastaus
   keskeytymisajanjaksot?: IKeskeytymisajanjakso[]
 }
@@ -73,6 +74,7 @@ export class LearningEvent extends React.Component<LearningEventProps> {
       isOsaamisenOsoittaminen = false,
       description,
       partTimeAmount,
+      osaamisenHankkimistapaTyyppi,
       perusta,
       keskeytymisajanjaksot
     } = this.props
@@ -110,6 +112,7 @@ export class LearningEvent extends React.Component<LearningEventProps> {
                   startDate={startDate}
                   endDate={endDate}
                   partTimeAmount={partTimeAmount}
+                  hankkimistapaTyyppi={osaamisenHankkimistapaTyyppi}
                   perusta={perusta}
                   keskeytymisajanjaksot={keskeytymisajanjaksot}
                 />

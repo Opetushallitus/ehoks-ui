@@ -48,6 +48,7 @@ const ModalContent = styled("div")`
 
 interface InfoModalProps {
   partTimeAmount?: number
+  hankkimistapaTyyppi?: IKoodistoVastaus
   perusta?: IKoodistoVastaus
   className?: string
   nayttoymparistoDetails?: string
@@ -65,6 +66,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
     const {
       className,
       partTimeAmount,
+      hankkimistapaTyyppi,
       perusta,
       startDate,
       endDate,
@@ -114,6 +116,16 @@ export class InfoModal extends React.Component<InfoModalProps> {
                     defaultMessage="Osa-aikaisuus"
                   />
                   : {partTimeAmount} %
+                  <br />
+                </>
+              )}
+              {hankkimistapaTyyppi && hankkimistapaTyyppi.nimi && (
+                <>
+                  <FormattedMessage
+                    id="infoModal.hankkimistapaTyyppi"
+                    defaultMessage="Osaamisen hankkimistavan tyyppi"
+                  />
+                  : {hankkimistapaTyyppi.nimi}
                   <br />
                 </>
               )}
