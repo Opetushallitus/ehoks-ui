@@ -47,7 +47,6 @@ const ModalContent = styled("div")`
 `
 
 const StyledPopup = styled(Popup)`
-  border-radius: 10px;
   border-top: 4px solid rgb(255, 204, 51);
 `
 
