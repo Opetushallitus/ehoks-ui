@@ -34,6 +34,8 @@ const InfoButton = styled("button")`
 const Modal = styled("div")`
   font-size: 12px;
   font-weight: 400;
+  border-top: 4px solid rgb(255, 204, 51);
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 5px 0px;
 `
 const ModalHeader = styled("div")`
   border-bottom: 1px solid gray;
@@ -43,11 +45,19 @@ const ModalHeader = styled("div")`
 `
 const ModalContent = styled("div")`
   font-size: 16px;
+  font-weight: 600;
   padding: 5px;
+  background-color: rgb(253, 246, 233);
+  color: #636769;
+`
+
+const StyledStrong = styled("strong")`
+  color: black;
 `
 
 interface InfoModalProps {
   partTimeAmount?: number
+  hankkimistapaTyyppi?: IKoodistoVastaus
   perusta?: IKoodistoVastaus
   className?: string
   nayttoymparistoDetails?: string
@@ -65,6 +75,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
     const {
       className,
       partTimeAmount,
+      hankkimistapaTyyppi,
       perusta,
       startDate,
       endDate,
@@ -88,10 +99,13 @@ export class InfoModal extends React.Component<InfoModalProps> {
         <div role="dialog">
           <Modal>
             <ModalHeader>
-              <FormattedMessage
-                id="infoModal.lisatietoja"
-                defaultMessage="Lisätietoja työpaikkajaksosta"
-              />
+              <StyledStrong>
+                <FormattedMessage
+                  id="infoModal.lisatietoja"
+                  defaultMessage="Lisätietoja työpaikkajaksosta"
+                />
+              </StyledStrong>
+              <br />
               <span> {nayttoymparistoDetails}</span>
               {startDate === endDate ? (
                 <span>
@@ -109,32 +123,54 @@ export class InfoModal extends React.Component<InfoModalProps> {
             <ModalContent>
               {partTimeAmount && (
                 <>
-                  <FormattedMessage
-                    id="infoModal.osaaikaisuus"
-                    defaultMessage="Osa-aikaisuus"
-                  />
-                  : {partTimeAmount} %
+                  <StyledStrong>
+                    <FormattedMessage
+                      id="infoModal.osaaikaisuus"
+                      defaultMessage="Osa-aikaisuus"
+                    />
+                    :
+                  </StyledStrong>{" "}
+                  {partTimeAmount} %
+                  <br />
+                </>
+              )}
+              {hankkimistapaTyyppi && hankkimistapaTyyppi.nimi && (
+                <>
+                  <StyledStrong>
+                    <FormattedMessage
+                      id="infoModal.hankkimistapaTyyppi"
+                      defaultMessage="Osaamisen hankkimistavan tyyppi"
+                    />
+                    :
+                  </StyledStrong>{" "}
+                  {hankkimistapaTyyppi.nimi}
                   <br />
                 </>
               )}
               {perusta && perusta.nimi && (
                 <>
-                  <FormattedMessage
-                    id="infoModal.perusta"
-                    defaultMessage="Oppisopimuksen perusta"
-                  />
-                  : {perusta.nimi}
+                  <StyledStrong>
+                    <FormattedMessage
+                      id="infoModal.perusta"
+                      defaultMessage="Oppisopimuksen perusta"
+                    />
+                    :
+                  </StyledStrong>{" "}
+                  {perusta.nimi}
                   <br />
                 </>
               )}
               {keskeytymisajanjaksot && (keskeytymisajanjaksot.length || null) && (
                 <>
-                  <FormattedMessage
-                    id="infoModal.keskeytymisajanjaksot"
-                    defaultMessage="Keskeytymisajanjaksot"
-                  />
-                  :
+                  <StyledStrong>
+                    <FormattedMessage
+                      id="infoModal.keskeytymisajanjaksot"
+                      defaultMessage="Keskeytymisajanjaksot"
+                    />
+                    :
+                  </StyledStrong>
                   <div>
+                    {" "}
                     {keskeytymisajanjaksot.map(k => (
                       <div key={k.alku}>
                         <FormattedDate date={k.alku} dateNotSet="" />
