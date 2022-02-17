@@ -248,7 +248,7 @@ class BaseTypeaheadField extends Component<
           // eslint-disable-next-line react/no-string-refs
           if (this.refs.typeahead) {
             // eslint-disable-next-line react/no-string-refs
-            this.refs.typeahead.getInstance().clear()
+            this.refs.typeahead.current.clear()
           }
         }, 0)
       }
@@ -265,7 +265,7 @@ class BaseTypeaheadField extends Component<
     } = this.props
     if (focusOnMount) {
       // eslint-disable-next-line react/no-string-refs
-      this.refs.typeahead.getInstance().focus()
+      this.refs.typeahead.current.focus()
     }
   }
 
@@ -277,9 +277,9 @@ class BaseTypeaheadField extends Component<
         selected: []
       })
       // eslint-disable-next-line react/no-string-refs
-      if (this.refs.typeahead && this.refs.typeahead.getInstance()) {
+      if (this.refs.typeahead && this.refs.typeahead.current) {
         // eslint-disable-next-line react/no-string-refs
-        this.refs.typeahead.getInstance().clear()
+        this.refs.typeahead.current.clear()
       }
       // let onChangeValue = getDefaultValueForSchema(schema);
       // remove the field if the value is empty
