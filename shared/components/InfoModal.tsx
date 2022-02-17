@@ -45,6 +45,7 @@ const ModalHeader = styled("div")`
 `
 const ModalContent = styled("div")`
   font-size: 16px;
+  font-weight: 600;
   padding: 5px;
   background-color: rgb(253, 246, 233);
   color: #636769;
@@ -104,6 +105,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
                   defaultMessage="Lisätietoja työpaikkajaksosta"
                 />
               </StyledStrong>
+              <br />
               <span> {nayttoymparistoDetails}</span>
               {startDate === endDate ? (
                 <span>
@@ -127,7 +129,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
                       defaultMessage="Osa-aikaisuus"
                     />
                     :
-                  </StyledStrong>
+                  </StyledStrong>{" "}
                   {partTimeAmount} %
                   <br />
                 </>
@@ -140,7 +142,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
                       defaultMessage="Osaamisen hankkimistavan tyyppi"
                     />
                     :
-                  </StyledStrong>
+                  </StyledStrong>{" "}
                   {hankkimistapaTyyppi.nimi}
                   <br />
                 </>
@@ -153,7 +155,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
                       defaultMessage="Oppisopimuksen perusta"
                     />
                     :
-                  </StyledStrong>
+                  </StyledStrong>{" "}
                   {perusta.nimi}
                   <br />
                 </>
@@ -168,6 +170,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
                     :
                   </StyledStrong>
                   <div>
+                    {" "}
                     {keskeytymisajanjaksot.map(k => (
                       <div key={k.alku}>
                         <FormattedDate date={k.alku} dateNotSet="" />
