@@ -198,6 +198,9 @@ const OsaamisenHankkimistavatCollapsed = ({
         startDate={osaamisenHankkimistapa.alku}
         endDate={osaamisenHankkimistapa.loppu}
         partTimeAmount={osaamisenHankkimistapa.osaAikaisuustieto}
+        osaamisenHankkimistapaTyyppi={
+          osaamisenHankkimistapa.osaamisenHankkimistapa
+        }
         perusta={osaamisenHankkimistapa.oppisopimuksenPerusta}
         keskeytymisajanjaksot={osaamisenHankkimistapa.keskeytymisajanjaksot}
       />
