@@ -137,7 +137,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
                   <StyledStrong>
                     <FormattedMessage
                       id="infoModal.hankkimistapaTyyppi"
-                      defaultMessage="Osaamisen hankkimistavan tyyppi"
+                      defaultMessage="Osaamisen hankkimistapatyyppi"
                     />
                     :
                   </StyledStrong>
