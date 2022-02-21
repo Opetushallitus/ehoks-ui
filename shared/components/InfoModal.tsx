@@ -121,25 +121,12 @@ export class InfoModal extends React.Component<InfoModalProps> {
               )}
             </ModalHeader>
             <ModalContent>
-              {partTimeAmount && (
-                <>
-                  <StyledStrong>
-                    <FormattedMessage
-                      id="infoModal.osaaikaisuus"
-                      defaultMessage="Osa-aikaisuus"
-                    />
-                    :
-                  </StyledStrong>{" "}
-                  {partTimeAmount} %
-                  <br />
-                </>
-              )}
               {hankkimistapaTyyppi && hankkimistapaTyyppi.nimi && (
                 <>
                   <StyledStrong>
                     <FormattedMessage
                       id="infoModal.hankkimistapaTyyppi"
-                      defaultMessage="Osaamisen hankkimistavan tyyppi"
+                      defaultMessage="Osaamisen hankkimistapa"
                     />
                     :
                   </StyledStrong>{" "}
@@ -157,6 +144,19 @@ export class InfoModal extends React.Component<InfoModalProps> {
                     :
                   </StyledStrong>{" "}
                   {perusta.nimi}
+                  <br />
+                </>
+              )}
+              {partTimeAmount && (
+                <>
+                  <StyledStrong>
+                    <FormattedMessage
+                      id="infoModal.osaaikaisuus"
+                      defaultMessage="Osa-aikaisuus"
+                    />
+                    :
+                  </StyledStrong>{" "}
+                  {partTimeAmount} %
                   <br />
                 </>
               )}
