@@ -24,7 +24,7 @@ const NaviContainer = styled(ProgressPies)`
   justify-content: flex-start;
 `
 const StudentLink = styled(Link)`
-  color: ${props => props.theme.colors.waterBlue};
+  color: ${props => props.theme.colors.green700};
   font-size: 18px;
   font-weight: 400;
 `

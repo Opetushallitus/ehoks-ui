@@ -30,7 +30,7 @@ const LinkIcon = styled(MdLaunch)`
 const Title = styled("div")`
   font-size: 20px;
   font-weight: 600;
-  color: ${props => props.theme.colors.waterBlue};
+  color: ${props => props.theme.colors.green700};
   text-decoration: underline;
 `
 

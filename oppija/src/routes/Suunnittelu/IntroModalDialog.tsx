@@ -111,7 +111,7 @@ const IconContainer = styled("div")`
   border-radius: 90px;
   width: 48px;
   height: 48px;
-  border: 4px solid #027fa9;
+  border: 4px solid #3a7a10;
   background: #fff;
   color: #000;
   margin-right: 20px;

@@ -26,7 +26,7 @@ const HeaderContainer = styled("header")`
 
 const TopLinksContainer = styled("div")`
   width: 100%;
-  background-color: #06526b;
+  background-color: #254905;
   font-size: 16px;
   font-weight: 600;
   padding-left: 20px;
@@ -77,7 +77,7 @@ const TopLink = styled("a")<TopLinkProps>`
     props.active ? props.theme.colors.header.background : "transparent"};
 
   &:focus {
-    outline: 2px solid ${props => props.theme.colors.waterBlue};
+    outline: 2px solid ${props => props.theme.colors.green300};
   }
 `
 
