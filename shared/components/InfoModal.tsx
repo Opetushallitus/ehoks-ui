@@ -34,7 +34,7 @@ const InfoButton = styled("button")`
 const Modal = styled("div")`
   font-size: 12px;
   font-weight: 400;
-  border-top: 4px solid rgb(255, 204, 51);
+  border-top: 4px solid #3a7a10;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 5px 0px;
 `
 const ModalHeader = styled("div")`
@@ -47,7 +47,7 @@ const ModalContent = styled("div")`
   font-size: 16px;
   font-weight: 600;
   padding: 5px;
-  background-color: rgb(253, 246, 233);
+  background-color: #f4fff4;
   color: #636769;
 `
 
