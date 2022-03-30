@@ -153,7 +153,7 @@ describe("TutkinnonOsa", () => {
 
   test("render without params", () => {
     const { getByTestId, queryByTestId } = render(<TutkinnonOsa />)
-    expect(getByTestId("Title")).toBeEmpty()
+    expect(getByTestId("Title")).toBeEmptyDOMElement()
     expect(getByTestId("TutkinnonOsa.EmptyCompetences")).toBeInTheDocument()
     expect(queryByTestId("TutkinnonOsa.Competences")).not.toBeInTheDocument()
   })

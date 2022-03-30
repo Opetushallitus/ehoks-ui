@@ -34,7 +34,7 @@
   "license": "",
   "devDependencies": {
     "@testing-library/react": "^9.5.0",
-    "@testing-library/jest-dom": "^5.1.0",
+    "@testing-library/jest-dom": "^5.11.2",
     "@types/jest": "^27.4.0",
     "@types/lodash.camelcase": "^4.3.6",
     "@types/lodash.debounce": "^4.0.6",

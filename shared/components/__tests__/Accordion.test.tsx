@@ -20,7 +20,7 @@ test("open=false renders expand icon and no child content", () => {
     </Accordion>
   )
   expect(getByTestId("Expand")).toBeDefined()
-  expect(getByTestId("Content")).toBeEmpty()
+  expect(getByTestId("Content")).toBeEmptyDOMElement()
 })
 
 test("onToggle prop function gets invoked with title row clicks", () => {
