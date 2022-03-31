@@ -34,7 +34,7 @@
   "license": "",
   "devDependencies": {
     "@testing-library/react": "^9.5.0",
-    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/jest-dom": "^5.11.2",
     "@types/jest": "^27.4.0",
     "@types/lodash.camelcase": "^4.3.6",
     "@types/lodash.debounce": "^4.0.6",
@@ -121,7 +121,7 @@
     "promise-polyfill": "^8.2.1",
     "query-string": "^6.14.1",
     "react": "^16.14.0",
-    "react-bootstrap-typeahead": "^5.2.1",
+    "react-bootstrap-typeahead": "^5.2.2",
     "react-circular-progressbar": "^2.0.4",
     "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "^16.14.0",
