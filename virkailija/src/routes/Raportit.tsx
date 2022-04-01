@@ -76,7 +76,7 @@ interface RaportitState {
   sendPaattoHerateDateTo?: string
   vastaajatunnusToDelete?: string
   hoksitCount?: number
-  hoksitWithoutOo?: fetchResult[] | null
+  hoksitWithoutOo?: fetchResult | null
 }
 
 @inject("store")
@@ -120,6 +120,9 @@ export class Raportit extends React.Component<RaportitProps> {
     if (request.status === 200) {
       const json: fetchResult = await request.json()
       console.log(json)
+      this.setState({
+        hoksitWithoutOo: json
+      })
     } else {
       console.log("fail")
     }
