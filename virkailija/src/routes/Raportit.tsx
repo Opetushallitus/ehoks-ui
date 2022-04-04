@@ -45,9 +45,9 @@ interface SystemInfo {
 }
 
 interface HoksRow {
-  hoksId: number
-  opiskeluoikeusOid: string
-  koulutustoimijaOid: string
+  hoksid: number
+  opiskeluoikeusoid: string
+  oppilaitosoid: string
 }
 
 interface fetchResult {
