@@ -119,8 +119,9 @@ export class Raportit extends React.Component<RaportitProps> {
 
     if (request.status === 200) {
       const json: fetchResult = await request.json()
+      console.log("123")
       console.log(json.hoksit)
-      console.log(json.hoksit[0])
+      //console.log(json.hoksit[0])
       this.setState({
         hoksitCount: json.count,
         hoksitWithoutOo: json.hoksit
