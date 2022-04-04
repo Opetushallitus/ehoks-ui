@@ -151,7 +151,7 @@ export class Raportit extends React.Component<RaportitProps> {
               </TopHeading>
             </TopContainer>
             <ContentArea>
-              {hoksitCount && hoksitCount > 0 && { hoksitWithoutOo }}
+              {hoksitWithoutOo && hoksitWithoutOo > 0 && { hoksitWithoutOo }}
             </ContentArea>
           </PaddedContent>
         </Container>
