@@ -121,8 +121,8 @@ export class Raportit extends React.Component<RaportitProps> {
       const json: fetchResult = await request.json()
       console.log(json)
       this.setState({
-        hoksitCount: Object.keys(json).length,
-        hoksitWithoutOo: json
+        hoksitCount: json.count,
+        hoksitWithoutOo: json.hoksit
       })
     } else {
       console.log("fail")
