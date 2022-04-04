@@ -121,6 +121,7 @@ export class Raportit extends React.Component<RaportitProps> {
       const json: fetchResult = await request.json()
       console.log(json)
       this.setState({
+        hoksitCount: Object.keys(json).length,
         hoksitWithoutOo: json
       })
     } else {
@@ -151,7 +152,7 @@ export class Raportit extends React.Component<RaportitProps> {
               </TopHeading>
             </TopContainer>
             <ContentArea>
-              {hoksitWithoutOo && hoksitWithoutOo > 0 && { hoksitWithoutOo }}
+              {hoksitCount && hoksitCount > 0 && { hoksitWithoutOo }}
             </ContentArea>
           </PaddedContent>
         </Container>
