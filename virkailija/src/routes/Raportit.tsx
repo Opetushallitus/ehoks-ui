@@ -52,7 +52,7 @@ interface HoksRow {
 
 interface fetchResult {
   count: number
-  hoksit: HoksRow[] | null
+  hoksit: HoksRow[]
 }
 
 interface RaportitState {
@@ -119,7 +119,8 @@ export class Raportit extends React.Component<RaportitProps> {
 
     if (request.status === 200) {
       const json: fetchResult = await request.json()
-      console.log(json)
+      console.log(json.hoksit)
+      console.log(json.hoksit[0])
       this.setState({
         hoksitCount: json.count,
         hoksitWithoutOo: json.hoksit
@@ -138,7 +139,7 @@ export class Raportit extends React.Component<RaportitProps> {
   }
 
   render() {
-    const { hoksitCount, hoksitWithoutOo } = this.state
+    const { hoksitWithoutOo } = this.state
     return (
       <BackgroundContainer>
         <Container>
@@ -151,9 +152,7 @@ export class Raportit extends React.Component<RaportitProps> {
                 />
               </TopHeading>
             </TopContainer>
-            <ContentArea>
-              {hoksitCount && hoksitCount > 0 && { hoksitWithoutOo }}
-            </ContentArea>
+            <ContentArea>{hoksitWithoutOo && { hoksitWithoutOo }}</ContentArea>
           </PaddedContent>
         </Container>
       </BackgroundContainer>
