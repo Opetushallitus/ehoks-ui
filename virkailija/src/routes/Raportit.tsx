@@ -1,6 +1,7 @@
 import { RouteComponentProps } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import { ContentArea } from "components/ContentArea"
+import { RaportitTable } from "components/RaportitTable"
 import { Heading } from "components/Heading"
 import { inject, observer } from "mobx-react"
 import React from "react"
@@ -9,7 +10,7 @@ import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 import { appendCommonHeaders } from "fetchUtils"
 
-export const BackgroundContainer = styled("div")`
+const BackgroundContainer = styled("div")`
   background: #f8f8f8;
   min-height: 100%;
 `
@@ -20,8 +21,73 @@ const TopContainer = styled("div")`
   position: relative;
 `
 
+const Nav = styled("div")`
+  line-height: 30px;
+  width: 20%;
+  height: 100%;
+  float: left;
+  padding: 5px;
+`
+
+const Section = styled("div")`
+  width: 80%;
+  float: left;
+  padding: 10px;
+  margin-bottom: 10px;
+`
+
 const TopHeading = styled(Heading)`
   flex: 1;
+`
+
+const MenuItem = styled("span")`
+  margin: 0;
+  padding: 5px;
+`
+
+const ItemHeader = styled("h3")`
+  margin: 0;
+  padding-right: 10px;
+  padding-bottom: 10px;
+`
+
+const ContentElement = styled("div")`
+  display: inline-block;
+  margin-bottom: 10px;
+  width: 100%;
+`
+
+const Styles = styled("div")`
+  table {
+    border-spacing: 0;
+    border: 1px solid black;
+
+    tr {
+      :last-child {
+        td {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    th,
+    td {
+      padding: 0.5rem;
+      border-bottom: 1px solid black;
+      jborder-right: 1px solid black;
+
+      :last-child {
+        border-right: 0;
+      }
+    }
+
+    th {
+      background: #3a7a10;
+      border-bottom: 3px solid blue;
+      color: white;
+      fontweight: bold;
+    }
+  }
 `
 
 interface RaportitProps extends RouteComponentProps {
@@ -76,7 +142,7 @@ interface RaportitState {
   sendPaattoHerateDateTo?: string
   vastaajatunnusToDelete?: string
   hoksitCount?: number
-  hoksitWithoutOo?: fetchResult | null
+  hoksitWithoutOo?: HoksRow[] | undefined | null
 }
 
 @inject("store")
@@ -98,7 +164,7 @@ export class Raportit extends React.Component<RaportitProps> {
     opiskeluoikeusUpdateOid: "",
     koulutustoimijaOid: "",
     hoksitCount: 0,
-    hoksitWithoutOo: null
+    hoksitWithoutOo: undefined
   }
 
   async loadHoksesWithoutOpiskeluoikeudet(oppilaitosOid: string) {
@@ -119,9 +185,14 @@ export class Raportit extends React.Component<RaportitProps> {
 
     if (request.status === 200) {
       const json: fetchResult = await request.json()
-      console.log("123")
+      /*
+      const json: fetchResult = JSON.parse(
+        '{"count":5,"hoksit":[{"hoksid":36,"opiskeluoikeusoid":"1.2.246.562.15.32354803416","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":35,"opiskeluoikeusoid":"1.2.246.562.15.57320793029","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":8682,"opiskeluoikeusoid":"1.2.246.562.15.59302402942","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":37,"opiskeluoikeusoid":"1.2.246.562.15.64186192825","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":8731,"opiskeluoikeusoid":"1.2.246.562.15.88846009509","oppilaitosoid":"1.2.246.562.10.32506551657"}]}'
+      )
+      */
+      console.log(json)
+      console.log(json.count)
       console.log(json.hoksit)
-      //console.log(json.hoksit[0])
       this.setState({
         hoksitCount: json.count,
         hoksitWithoutOo: json.hoksit
@@ -141,6 +212,24 @@ export class Raportit extends React.Component<RaportitProps> {
 
   render() {
     const { hoksitWithoutOo } = this.state
+
+    const data: HoksRow[] | undefined | null = hoksitWithoutOo
+    const columns = [
+      {
+        Header: "eHOKS ID",
+        accessor: "hoksid"
+      },
+      {
+        Header: "Opiskeluoikeus OID",
+        accessor: "opiskeluoikeusoid"
+      },
+      {
+        Header: "Oppilaitos OID",
+        accessor: "oppilaitosoid"
+      }
+    ]
+
+    if (hoksitWithoutOo === undefined || hoksitWithoutOo === null) return null
     return (
       <BackgroundContainer>
         <Container>
@@ -153,7 +242,27 @@ export class Raportit extends React.Component<RaportitProps> {
                 />
               </TopHeading>
             </TopContainer>
-            <ContentArea>{hoksitWithoutOo && { hoksitWithoutOo }}</ContentArea>
+            <ContentArea>
+              <ContentElement>
+                <Nav>
+                  <MenuItem>Hoksit ilman OO</MenuItem>
+                </Nav>
+                <Section>
+                  {hoksitWithoutOo && hoksitWithoutOo.length && (
+                    <>
+                      <ItemHeader>
+                        Hoksit, joiden opiskeluoikeutta ei löydy Koskesta
+                      </ItemHeader>
+                      <Styles>
+                        {/*
+                          // @ts-ignore fix later */}
+                        <RaportitTable data={data} columns={columns} />
+                      </Styles>
+                    </>
+                  )}
+                </Section>
+              </ContentElement>
+            </ContentArea>
           </PaddedContent>
         </Container>
       </BackgroundContainer>
