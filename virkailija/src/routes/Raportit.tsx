@@ -22,27 +22,29 @@ const TopContainer = styled("div")`
 `
 
 const Nav = styled("div")`
-  line-height: 30px;
-  width: 20%;
+  line-height: 25px;
+  width: 14%;
   height: 100%;
   float: left;
   padding: 5px;
 `
 
 const Section = styled("div")`
-  width: 80%;
+  width: 85%;
   float: left;
-  padding: 10px;
+  padding: 0px 10px 10px 10px;
   margin-bottom: 10px;
+  padding-left: 60px;
 `
 
 const TopHeading = styled(Heading)`
   flex: 1;
 `
 
-const MenuItem = styled("span")`
-  margin: 0;
+const MenuItem = styled("div")`
+  margin-top: 20px;
   padding: 5px;
+  display: block;
 `
 
 const ItemHeader = styled("h3")`
@@ -57,6 +59,17 @@ const ContentElement = styled("div")`
   width: 100%;
 `
 
+const Separator = styled("div")`
+  border-left: 2px solid #a8a8a8;
+  min-height: 400px;
+  float: left;
+`
+
+const linkStyle = {
+  textDecoration: "none",
+  color: "#3a7a10"
+}
+
 const Styles = styled("div")`
   table {
     border-spacing: 0;
@@ -68,6 +81,13 @@ const Styles = styled("div")`
           border-bottom: 0;
         }
       }
+    }
+
+    tr:nth-child(even) {
+      background: #f4fff4;
+    }
+    tr:nth-child(odd) {
+      background: #fff;
     }
 
     th,
@@ -83,7 +103,7 @@ const Styles = styled("div")`
 
     th {
       background: #3a7a10;
-      border-bottom: 3px solid blue;
+      border-bottom: 2px solid black;
       color: white;
       fontweight: bold;
     }
@@ -142,7 +162,9 @@ interface RaportitState {
   sendPaattoHerateDateTo?: string
   vastaajatunnusToDelete?: string
   hoksitCount?: number
-  hoksitWithoutOo?: HoksRow[] | undefined | null
+  hoksitWithoutOo?: HoksRow[] | []
+  titleText: string
+  selected: number
 }
 
 @inject("store")
@@ -164,7 +186,9 @@ export class Raportit extends React.Component<RaportitProps> {
     opiskeluoikeusUpdateOid: "",
     koulutustoimijaOid: "",
     hoksitCount: 0,
-    hoksitWithoutOo: undefined
+    hoksitWithoutOo: [],
+    titleText: "Klikkaa valikosta haluamasi raportti",
+    selected: 0
   }
 
   async loadHoksesWithoutOpiskeluoikeudet(oppilaitosOid: string) {
@@ -185,14 +209,12 @@ export class Raportit extends React.Component<RaportitProps> {
 
     if (request.status === 200) {
       const json: fetchResult = await request.json()
+
       /*
       const json: fetchResult = JSON.parse(
         '{"count":5,"hoksit":[{"hoksid":36,"opiskeluoikeusoid":"1.2.246.562.15.32354803416","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":35,"opiskeluoikeusoid":"1.2.246.562.15.57320793029","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":8682,"opiskeluoikeusoid":"1.2.246.562.15.59302402942","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":37,"opiskeluoikeusoid":"1.2.246.562.15.64186192825","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":8731,"opiskeluoikeusoid":"1.2.246.562.15.88846009509","oppilaitosoid":"1.2.246.562.10.32506551657"}]}'
       )
       */
-      console.log(json)
-      console.log(json.count)
-      console.log(json.hoksit)
       this.setState({
         hoksitCount: json.count,
         hoksitWithoutOo: json.hoksit
@@ -206,14 +228,27 @@ export class Raportit extends React.Component<RaportitProps> {
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
     })
+  }
 
-    await this.loadHoksesWithoutOpiskeluoikeudet("1.2.246.562.10.32506551657")
+  navClickHandler = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    titleText: string,
+    selected: number
+  ) => {
+    event.preventDefault()
+    // @ts-ignore Don't know how to fix
+    event.target.blur()
+    this.setState({
+      titleText,
+      selected
+    })
+    if (selected === 1) {
+      this.loadHoksesWithoutOpiskeluoikeudet("1.2.246.562.10.32506551657")
+    }
   }
 
   render() {
-    const { hoksitWithoutOo } = this.state
-
-    const data: HoksRow[] | undefined | null = hoksitWithoutOo
+    const { hoksitWithoutOo, selected, titleText } = this.state
     const columns = [
       {
         Header: "eHOKS ID",
@@ -229,7 +264,6 @@ export class Raportit extends React.Component<RaportitProps> {
       }
     ]
 
-    if (hoksitWithoutOo === undefined || hoksitWithoutOo === null) return null
     return (
       <BackgroundContainer>
         <Container>
@@ -245,21 +279,65 @@ export class Raportit extends React.Component<RaportitProps> {
             <ContentArea>
               <ContentElement>
                 <Nav>
-                  <MenuItem>Hoksit ilman OO</MenuItem>
+                  <MenuItem
+                    as="a"
+                    href="#"
+                    onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
+                      this.navClickHandler(
+                        event,
+                        "Hoksit, joissa poistettu opiskeluoikeus",
+                        1
+                      )
+                    }
+                    style={linkStyle}
+                  >
+                    Hoksit, joissa poistettu opiskeluoikeus
+                  </MenuItem>
+                  <MenuItem
+                    as="a"
+                    href="#"
+                    onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
+                      this.navClickHandler(event, "Test1", 0)
+                    }
+                    style={linkStyle}
+                  >
+                    Test1
+                  </MenuItem>
+                  <MenuItem
+                    as="a"
+                    href="#"
+                    onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
+                      this.navClickHandler(event, "Testi2", 0)
+                    }
+                    style={linkStyle}
+                  >
+                    Testi2
+                  </MenuItem>
+                  <MenuItem
+                    as="a"
+                    href="#"
+                    onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
+                      this.navClickHandler(event, "Test3", 0)
+                    }
+                    style={linkStyle}
+                  >
+                    Test3
+                  </MenuItem>
                 </Nav>
+                <Separator />
                 <Section>
-                  {hoksitWithoutOo && hoksitWithoutOo.length && (
-                    <>
-                      <ItemHeader>
-                        Hoksit, joiden opiskeluoikeutta ei löydy Koskesta
-                      </ItemHeader>
-                      <Styles>
-                        {/*
+                  <ItemHeader>{titleText}</ItemHeader>
+                  <div
+                    style={{
+                      visibility: selected === 1 ? "visible" : "hidden"
+                    }}
+                  >
+                    <Styles>
+                      {/*
                           // @ts-ignore fix later */}
-                        <RaportitTable data={data} columns={columns} />
-                      </Styles>
-                    </>
-                  )}
+                      <RaportitTable data={hoksitWithoutOo} columns={columns} />
+                    </Styles>
+                  </div>
                 </Section>
               </ContentElement>
             </ContentArea>
