@@ -206,11 +206,6 @@
   },
   {
     "locale": "fi",
-    "key": "header.raportitLink",
-    "value": "Raportit"
-  },
-  {
-    "locale": "fi",
     "key": "header.dokumentaatioLink",
     "value": "Dokumentaatio"
   },
@@ -603,5 +598,30 @@
     "locale": "fi",
     "key": "opiskeluoikeus.osittainen",
     "value": "osittainen"
+  },
+  {
+    "locale": "fi",
+    "key": "header.raportitLink",
+    "value": "Raportit"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.hoksesWithoutOpiskeluoikeus",
+    "value": "Hoksit, joissa poistettu opiskeluoikeus"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.ehoksid",
+    "value": "eHOKS ID"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.opiskeluoikeusoid",
+    "value": "Opiskeluoikeus Oid"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.oppilaitosoid",
+    "value": "Oppilaitos Oid"
   }
 ]
