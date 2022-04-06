@@ -210,17 +210,24 @@ export class Raportit extends React.Component<RaportitProps> {
 
   render() {
     const { hoksitWithoutOo, selected, titleText } = this.state
+    const { intl } = this.context
     const columns = [
       {
-        Header: "eHOKS ID",
+        Header: intl.formatMessage({
+          id: "raportit.ehoksid"
+        }),
         accessor: "hoksid"
       },
       {
-        Header: "Opiskeluoikeus OID",
+        Header: intl.formatMessage({
+          id: "raportit.opiskeluoikeusoid"
+        }),
         accessor: "opiskeluoikeusoid"
       },
       {
-        Header: "Oppilaitos OID",
+        Header: intl.formatMessage({
+          id: "raportit.oppilaitosoid"
+        }),
         accessor: "oppilaitosoid"
       }
     ]
@@ -232,7 +239,7 @@ export class Raportit extends React.Component<RaportitProps> {
             <TopContainer>
               <TopHeading>
                 <FormattedMessage
-                  id="raportit.raportitLink"
+                  id="header.raportitLink"
                   defaultMessage="Raportit"
                 />
               </TopHeading>
@@ -246,7 +253,9 @@ export class Raportit extends React.Component<RaportitProps> {
                     onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
                       this.navClickHandler(
                         event,
-                        "Hoksit, joissa poistettu opiskeluoikeus",
+                        intl.formatMessage({
+                          id: "raportit.hoksesWithoutOpiskeluoikeus"
+                        }),
                         1
                       )
                     }
@@ -255,7 +264,10 @@ export class Raportit extends React.Component<RaportitProps> {
                       fontWeight: this.checkActive(1)
                     }}
                   >
-                    Hoksit, joissa poistettu opiskeluoikeus
+                    <FormattedMessage
+                      id="raportit.hoksesWithoutOpiskeluoikeus"
+                      defaultMessage="Hoksit, joissa poistettu opiskeluoikeus"
+                    />
                   </MenuItem>
                   <MenuItem
                     as="a"
