@@ -114,22 +114,6 @@ interface RaportitProps extends RouteComponentProps {
   store?: IRootStore
 }
 
-interface SystemInfo {
-  cache: { size: number }
-  memory: {
-    max: number
-    total: number
-    free: number
-  }
-  oppijaindex: {
-    unindexedOppijat: number
-    unindexedOpiskeluoikeudet: number
-  }
-  hoksit: {
-    amount: number
-  }
-}
-
 interface HoksRow {
   hoksid: number
   opiskeluoikeusoid: string
@@ -142,25 +126,6 @@ interface fetchResult {
 }
 
 interface RaportitState {
-  message: string
-  hoksId?: number
-  opiskeluoikeusOid?: string | ""
-  oppijaOid?: string | ""
-  updateOppijaOid?: string | ""
-  opiskeluoikeusHakuOid?: string | ""
-  opiskeluoikeusUpdateOid?: string | ""
-  hoksHakuId?: number
-  hoksDeleteId?: number
-  hoksPalautusId?: number
-  idToDelete?: number
-  systemInfo?: SystemInfo
-  koulutustoimijaOid?: string | ""
-  sendHerateId?: number
-  sendHerateDateFrom?: string
-  sendHerateDateTo?: string
-  sendPaattoHerateDateFrom?: string
-  sendPaattoHerateDateTo?: string
-  vastaajatunnusToDelete?: string
   hoksitCount?: number
   hoksitWithoutOo?: HoksRow[] | []
   titleText: string
@@ -175,23 +140,13 @@ export class Raportit extends React.Component<RaportitProps> {
   }
 
   state: RaportitState = {
-    message: "",
-    hoksId: undefined,
-    opiskeluoikeusOid: "",
-    oppijaOid: "",
-    updateOppijaOid: "",
-    idToDelete: undefined,
-    hoksPalautusId: undefined,
-    systemInfo: undefined,
-    opiskeluoikeusUpdateOid: "",
-    koulutustoimijaOid: "",
     hoksitCount: 0,
     hoksitWithoutOo: [],
     titleText: "Klikkaa valikosta haluamasi raportti",
     selected: 0
   }
 
-  async loadHoksesWithoutOpiskeluoikeudet(oppilaitosOid: string) {
+  async loadHoksesWithoutOpiskeluoikeudet(oppilaitosOid: string | undefined) {
     const request = await window.fetch(
       "/ehoks-virkailija-backend/api/v1/virkailija/missing-oo-hoksit/" +
         oppilaitosOid,
@@ -209,7 +164,6 @@ export class Raportit extends React.Component<RaportitProps> {
 
     if (request.status === 200) {
       const json: fetchResult = await request.json()
-
       /*
       const json: fetchResult = JSON.parse(
         '{"count":5,"hoksit":[{"hoksid":36,"opiskeluoikeusoid":"1.2.246.562.15.32354803416","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":35,"opiskeluoikeusoid":"1.2.246.562.15.57320793029","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":8682,"opiskeluoikeusoid":"1.2.246.562.15.59302402942","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":37,"opiskeluoikeusoid":"1.2.246.562.15.64186192825","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":8731,"opiskeluoikeusoid":"1.2.246.562.15.88846009509","oppilaitosoid":"1.2.246.562.10.32506551657"}]}'
@@ -243,9 +197,16 @@ export class Raportit extends React.Component<RaportitProps> {
       selected
     })
     if (selected === 1) {
-      this.loadHoksesWithoutOpiskeluoikeudet("1.2.246.562.10.32506551657")
+      const { store } = this.props
+      const oppilaitosOid: string | undefined =
+        store?.session.selectedOrganisationOid
+      this.loadHoksesWithoutOpiskeluoikeudet(oppilaitosOid)
+      console.log(oppilaitosOid)
     }
   }
+
+  checkActive = (num: number) =>
+    this.state.selected === num ? "bolder" : "initial"
 
   render() {
     const { hoksitWithoutOo, selected, titleText } = this.state
@@ -289,7 +250,10 @@ export class Raportit extends React.Component<RaportitProps> {
                         1
                       )
                     }
-                    style={linkStyle}
+                    style={{
+                      ...linkStyle,
+                      fontWeight: this.checkActive(1)
+                    }}
                   >
                     Hoksit, joissa poistettu opiskeluoikeus
                   </MenuItem>
@@ -299,7 +263,10 @@ export class Raportit extends React.Component<RaportitProps> {
                     onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
                       this.navClickHandler(event, "Test1", 0)
                     }
-                    style={linkStyle}
+                    style={{
+                      ...linkStyle,
+                      fontWeight: this.checkActive(2)
+                    }}
                   >
                     Test1
                   </MenuItem>
@@ -309,7 +276,10 @@ export class Raportit extends React.Component<RaportitProps> {
                     onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
                       this.navClickHandler(event, "Testi2", 0)
                     }
-                    style={linkStyle}
+                    style={{
+                      ...linkStyle,
+                      fontWeight: this.checkActive(3)
+                    }}
                   >
                     Testi2
                   </MenuItem>
@@ -319,7 +289,10 @@ export class Raportit extends React.Component<RaportitProps> {
                     onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
                       this.navClickHandler(event, "Test3", 0)
                     }
-                    style={linkStyle}
+                    style={{
+                      ...linkStyle,
+                      fontWeight: this.checkActive(4)
+                    }}
                   >
                     Test3
                   </MenuItem>

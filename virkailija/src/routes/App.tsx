@@ -104,9 +104,7 @@ export class App extends React.Component<AppProps> {
               <MuokkaaHOKS path="hoks/:oppijaOid/:hoksId" />
               <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />
               <Yllapito path="yllapito" />
-              {store?.session.hasSuperUserPrivilege && (
-                <Raportit path="raportit" />
-              )}
+              {store?.session.user?.isSuperuser && <Raportit path="raportit" />}
               <Opiskelija path="koulutuksenjarjestaja/:studentId/*" />
             </StyledRouter>
             <GlobalStyles />
