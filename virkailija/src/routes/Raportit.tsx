@@ -269,45 +269,6 @@ export class Raportit extends React.Component<RaportitProps> {
                       defaultMessage="Hoksit, joissa poistettu opiskeluoikeus"
                     />
                   </MenuItem>
-                  <MenuItem
-                    as="a"
-                    href="#"
-                    onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
-                      this.navClickHandler(event, "Test1", 0)
-                    }
-                    style={{
-                      ...linkStyle,
-                      fontWeight: this.checkActive(2)
-                    }}
-                  >
-                    Test1
-                  </MenuItem>
-                  <MenuItem
-                    as="a"
-                    href="#"
-                    onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
-                      this.navClickHandler(event, "Testi2", 0)
-                    }
-                    style={{
-                      ...linkStyle,
-                      fontWeight: this.checkActive(3)
-                    }}
-                  >
-                    Testi2
-                  </MenuItem>
-                  <MenuItem
-                    as="a"
-                    href="#"
-                    onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
-                      this.navClickHandler(event, "Test3", 0)
-                    }
-                    style={{
-                      ...linkStyle,
-                      fontWeight: this.checkActive(4)
-                    }}
-                  >
-                    Test3
-                  </MenuItem>
                 </Nav>
                 <Separator />
                 <Section>
