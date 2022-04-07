@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "@reach/router"
+import { RouteComponentProps, Link } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import { ContentArea } from "components/ContentArea"
 import { RaportitTable } from "components/RaportitTable"
@@ -116,6 +116,8 @@ interface RaportitProps extends RouteComponentProps {
 
 interface HoksRow {
   hoksid: number
+  hokseid: string
+  oppijaoid: string
   opiskeluoikeusoid: string
   oppilaitosoid: string
 }
@@ -130,6 +132,12 @@ interface RaportitState {
   hoksitWithoutOo?: HoksRow[] | []
   titleText: string
   selected: number
+}
+
+interface hoksitCell {
+  cell: {
+    value: number
+  }
 }
 
 @inject("store")
@@ -163,12 +171,12 @@ export class Raportit extends React.Component<RaportitProps> {
     )
 
     if (request.status === 200) {
-      const json: fetchResult = await request.json()
-      /*
+      //const json: fetchResult = await request.json()
+
       const json: fetchResult = JSON.parse(
-        '{"count":5,"hoksit":[{"hoksid":36,"opiskeluoikeusoid":"1.2.246.562.15.32354803416","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":35,"opiskeluoikeusoid":"1.2.246.562.15.57320793029","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":8682,"opiskeluoikeusoid":"1.2.246.562.15.59302402942","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":37,"opiskeluoikeusoid":"1.2.246.562.15.64186192825","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":8731,"opiskeluoikeusoid":"1.2.246.562.15.88846009509","oppilaitosoid":"1.2.246.562.10.32506551657"}]}'
+        '{"count":5,"hoksit":[{"hoksid":36,"hokseid":36,"oppijaoid":"1.2.246.562.15.32354803416","opiskeluoikeusoid":"1.2.246.562.15.32354803416","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":35,"hokseid":36,"oppijaoid":"1.2.246.562.15.32354803416","opiskeluoikeusoid":"1.2.246.562.15.57320793029","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":8682,"hokseid":36,"oppijaoid":"1.2.246.562.15.32354803416","opiskeluoikeusoid":"1.2.246.562.15.59302402942","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":37,"hokseid":36,"oppijaoid":"1.2.246.562.15.32354803416","opiskeluoikeusoid":"1.2.246.562.15.64186192825","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":8731,"hokseid":36,"oppijaoid":"1.2.246.562.15.32354803416","opiskeluoikeusoid":"1.2.246.562.15.88846009509","oppilaitosoid":"1.2.246.562.10.32506551657"}]}'
       )
-      */
+
       this.setState({
         hoksitCount: json.count,
         hoksitWithoutOo: json.hoksit
@@ -205,6 +213,15 @@ export class Raportit extends React.Component<RaportitProps> {
     }
   }
 
+  createLinkPath = (hoksid: number) => {
+    const hoksi = this.state.hoksitWithoutOo?.find(
+      (x: HoksRow) => x.hoksid === hoksid
+    )
+    return hoksi
+      ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${hoksi.oppijaoid}/${hoksi?.hokseid}`
+      : "/ehoks-virkailija-ui/raportit"
+  }
+
   checkActive = (num: number) =>
     this.state.selected === num ? "bolder" : "initial"
 
@@ -216,7 +233,16 @@ export class Raportit extends React.Component<RaportitProps> {
         Header: intl.formatMessage({
           id: "raportit.ehoksid"
         }),
-        accessor: "hoksid"
+        accessor: "hoksid",
+        Cell: ({ cell: { value } }: hoksitCell) => (
+          <Link to={this.createLinkPath(value)}>{value}</Link>
+        )
+      },
+      {
+        Header: intl.formatMessage({
+          id: "tavoitteet.oppijanumeroTitle"
+        }),
+        accessor: "oppijaoid"
       },
       {
         Header: intl.formatMessage({

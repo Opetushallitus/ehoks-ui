@@ -4,6 +4,8 @@ import { Column, useTable } from "react-table"
 
 interface HoksRow {
   hoksid: number
+  hokseid: string
+  oppijaoid: string
   opiskeluoikeusoid: string
   oppilaitosoid: string
 }
