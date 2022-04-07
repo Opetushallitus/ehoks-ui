@@ -521,6 +521,8 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
         "vaatimuksista-tai-tavoitteista-poikkeaminen",
         "koulutuksen-jarjestaja-oid",
         "olennainen-seikka",
+        "opetuksen-maara",
+        "ohjauksen-maara",
         "osaamisen-hankkimistavat",
         "osaamisen-osoittaminen",
         "*"
@@ -714,6 +716,8 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
         "vaatimuksista-tai-tavoitteista-poikkeaminen",
         "koulutuksen-jarjestaja-oid",
         "olennainen-seikka",
+        "opetuksen-maara",
+        "ohjauksen-maara",
         "osaamisen-hankkimistavat",
         "osaamisen-osoittaminen",
         "*"
@@ -913,6 +917,8 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "osa-alue-koodi-versio",
             "vaatimuksista-tai-tavoitteista-poikkeaminen",
             "olennainen-seikka",
+            "opetuksen-maara",
+            "ohjauksen-maara",
             "osaamisen-hankkimistavat",
             "osaamisen-osoittaminen",
             "*"
