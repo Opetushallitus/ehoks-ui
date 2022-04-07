@@ -603,5 +603,80 @@
     "locale": "fi",
     "key": "opiskeluoikeus.osittainen",
     "value": "osittainen"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.aloitusHerateKuvaus",
+    "value": "Lähetä tietty aloitusheräte uudestaan herätteen ID:llä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.aloitusHeratteetKuvaus",
+    "value": "Lähetä uudestaan kaikki aloituskyselyherätteet, jotka luotiin annetun aikavälin sisällä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.hoksIdKuvaus",
+    "value": "Hae HOKSin ID opiskeluoikeuden ID:llä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.hoksPoistoKuvaus",
+    "value": "Aiheettoman HOKSin poisto."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.hoksPalautusKuvaus",
+    "value": "Palauta vahingossa poistettu HOKS. HOKSeja ei yleensä poisteta totaalisesti, vaan ne vain merkataan poistetuiksi tietokannassa."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.hoksienMaaraKuvaus",
+    "value": "Näyttää aktiivisten HOKSien määrän."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.muistiKuvaus",
+    "value": "Muistin määrä (yhteensä, vapaana, ja maksimi)."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.opiskeluoikeuksienPaivitysKuvaus",
+    "value": "Päivitä koulutustoimijan opiskeluoikeudet indeksiin."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.opiskeluoikeusOidHakuKuvaus",
+    "value": "Hae opiskeluoikeuden ID ja oppijan ID HOKSin ID:llä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.opiskeluoikeusPaivitysKuvaus",
+    "value": "Päivitä opiskeluoikeuden tiedot opiskeluoikeusindeksiin."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.oppijaIndeksiKuvaus",
+    "value": "Oppijoiden ja opiskeluoikeuksien indeksointi."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.oppijanPaivitysKuvaus",
+    "value": "Päivitä oppijan tiedot indeksiin Oppijanumerorekisteristä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.paattoHeratteetKuvaus",
+    "value": "Lähetä uudestaan kaikki päättökyselyherätteet, jotka luotiin annetun aikavälin sisällä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.valimuistiKuvaus",
+    "value": "Välimuistin koko ja tyhjennys."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.vastaajatunnuksenPoistoKuvaus",
+    "value": "Vastaajatunnuksen poisto ID:llä."
   }
 ]

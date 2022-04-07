@@ -1125,7 +1125,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     </Header>
                     <FormattedMessage
                       id="yllapito.hoksienMaaraKuvaus"
-                      defaultMessage="Kuinka paljon aktiivisia HOKSeja on?"
+                      defaultMessage="Näyttää aktiivisten HOKSien määrän."
                     />
                     <ContentElement>
                       <FormattedMessage
@@ -1213,7 +1213,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <FormattedMessage
                       id="yllapito.oppijaIndeksiKuvaus"
                       defaultMessage={
-                        "Oppijoiden ja opiskeluoikeuksien indeksointi"
+                        "Oppijoiden ja opiskeluoikeuksien indeksointi."
                       }
                     />
                     <ContentElement>
@@ -1289,10 +1289,9 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <FormattedMessage
                       id="yllapito.hoksPalautusKuvaus"
                       defaultMessage={
-                        "Jos HOKS poistetaan vahingossa, sen voi palauttaa " +
-                        "tällä toiminnallisuudella. HOKSeja ei yleensä " +
-                        "poisteta totaalisesti, vaan ne vain merkataan " +
-                        "poistetuiksi tietokannassa."
+                        "Palauta vahingossa poistettu HOKS. HOKSeja ei " +
+                        "yleensä poisteta totaalisesti, vaan ne vain " +
+                        "merkataan poistetuiksi tietokannassa."
                       }
                     />
                     <ContentElement>
