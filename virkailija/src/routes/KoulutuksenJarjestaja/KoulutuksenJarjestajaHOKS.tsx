@@ -92,7 +92,8 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
     const { hoksId, location, suunnitelmat, oppija } = this.props
 
     const suunnitelma = find(suunnitelmat, h => h.eid === hoksId)
-
+    console.log(suunnitelma)
+    console.log(oppija)
     if (!oppija || !suunnitelma) {
       return null
     }
