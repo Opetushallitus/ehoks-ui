@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck testiä varten
 import { Link, navigate, RouteComponentProps, Router } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import { HelpPopup } from "components/HelpPopup"
@@ -12,12 +14,13 @@ import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
 import find from "lodash.find"
 import { IReactionDisposer, reaction } from "mobx"
-import { observer } from "mobx-react"
+import { inject, observer } from "mobx-react"
 import { IHOKS } from "models/HOKS"
 import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import { IOppija } from "stores/KoulutuksenJarjestajaStore"
+import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 
 const NaviContainer = styled(ProgressPies)`
@@ -48,26 +51,42 @@ const HelpButton = styled(HelpPopup)`
 `
 
 export interface KoulutuksenJarjestajaHOKSProps extends RouteComponentProps {
+  store?: IRootStore
   suunnitelmat: IHOKS[]
   oppija?: IOppija
   /* From router path */
   hoksId?: string
 }
 
+@inject("store")
 @observer
 export class KoulutuksenJarjestajaHOKS extends React.Component<
   KoulutuksenJarjestajaHOKSProps
 > {
   disposeReaction: IReactionDisposer
   componentDidMount() {
+    const { koulutuksenJarjestaja } = this.props.store!
+    const fromRaportit = this.props.location.state.fromRaportit
     this.disposeReaction = reaction(
       () => this.props.suunnitelmat.length > 0,
       async (hasSuunnitelmat: boolean) => {
-        if (hasSuunnitelmat) {
-          const suunnitelma = find(
-            this.props.suunnitelmat,
-            h => h.eid === this.props.hoksId
-          )
+        if (hasSuunnitelmat || fromRaportit) {
+          let fromRaportitSuunnitelmat: IHOKS[] = []
+          if (fromRaportit) {
+            console.log(this.props.location.state.oppijaoid)
+            console.log(this.props.location.state.hoksid)
+            const oppija = koulutuksenJarjestaja.search.oppija(
+              this.props.location.state.oppijaoid
+            )
+            fromRaportitSuunnitelmat = oppija ? oppija.suunnitelmat : []
+          }
+          const suunnitelma =
+            fromRaportitSuunnitelmat.length > 0
+              ? find(
+                  fromRaportitSuunnitelmat,
+                  h => h.eid === this.props.location.state.hoksi
+                )
+              : find(this.props.suunnitelmat, h => h.eid === this.props.hoksId)
           if (suunnitelma) {
             await suunnitelma.fetchDetails()
             await suunnitelma.fetchOpiskelijapalauteTilat()
@@ -90,9 +109,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
 
   render() {
     const { hoksId, location, suunnitelmat, oppija } = this.props
-
     const suunnitelma = find(suunnitelmat, h => h.eid === hoksId)
-
     if (!oppija || !suunnitelma) {
       return null
     }
