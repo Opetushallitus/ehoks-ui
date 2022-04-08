@@ -1310,7 +1310,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                       <ContentElement>
                         <Button onClick={this.onPalautaHoks}>
                           <FormattedMessage
-                            id="yllapito.poistaHoksButton"
+                            id="yllapito.palautaHoksButton"
                             defaultMessage="Palauta HOKS"
                           />
                         </Button>

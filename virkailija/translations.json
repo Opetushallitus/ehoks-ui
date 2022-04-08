@@ -300,6 +300,7 @@
     "yllapito.paattoHeratteet": "Lähetä uudet herätteet päättökyselyihin aikavälille.",
     "yllapito.paattoHeratteetKuvaus": "Lähetä uudestaan kaikki päättökyselyherätteet, jotka luotiin annetun aikavälin sisällä.",
     "yllapito.paivitaOppija": "Paivita oppijan tiedot indeksiin.",
+    "yllapito.palautaHoksButton": "Palauta HOKS",
     "yllapito.poistaHoksButton": "Poista HOKS",
     "yllapito.poistaVastaajatunnus": "Poista vastaajatunnus",
     "yllapito.title": "Ylläpito",
