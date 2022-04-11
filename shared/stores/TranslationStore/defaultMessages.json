@@ -686,11 +686,6 @@
   },
   {
     "locale": "fi",
-    "key": "yllapito.hoksienMaaraKuvaus",
-    "value": "Näyttää aktiivisten HOKSien määrän."
-  },
-  {
-    "locale": "fi",
     "key": "yllapito.muistiKuvaus",
     "value": "Muistin määrä (yhteensä, vapaana, ja maksimi)."
   },
