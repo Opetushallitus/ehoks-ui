@@ -241,7 +241,7 @@ export class Raportit extends React.Component<RaportitProps> {
             state={{
               fromRaportit: true,
               oppijaoid: this.getHoksiByHoksId(value)?.oppijaoid,
-              hoksid: value
+              hokseid: this.getHoksiByHoksId(value)?.hokseid
             }}
           >
             {value}
