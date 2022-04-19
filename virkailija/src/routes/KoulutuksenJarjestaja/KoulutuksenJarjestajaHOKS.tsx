@@ -78,7 +78,11 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
             const oppija = koulutuksenJarjestaja.search.oppija(
               this.props.location.state.oppijaoid
             )
+            console.log("oppija componentDidMount")
+            console.log(oppija)
             fromRaportitSuunnitelmat = oppija ? oppija.suunnitelmat : []
+            console.log("fromRaportitSuunnitelmat")
+            console.log(fromRaportitSuunnitelmat)
           }
           const suunnitelma =
             fromRaportitSuunnitelmat.length > 0
@@ -87,6 +91,8 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                   h => h.eid === this.props.location.state.hoksi
                 )
               : find(this.props.suunnitelmat, h => h.eid === this.props.hoksId)
+          console.log("suunnitelma componentDidMount")
+          console.log(suunnitelma)
           if (suunnitelma) {
             await suunnitelma.fetchDetails()
             await suunnitelma.fetchOpiskelijapalauteTilat()
@@ -109,7 +115,15 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
 
   render() {
     const { hoksId, location, suunnitelmat, oppija } = this.props
-    const suunnitelma = find(suunnitelmat, h => h.eid === hoksId)
+    const suunnitelmaHoksId = this.props.location.state.fromRaportit
+      ? this.props.location.state.hokseid
+      : hoksId
+    const suunnitelma = find(suunnitelmat, h => h.eid === suunnitelmaHoksId)
+    console.log("renderi suunnitelma")
+    console.log(suunnitelma)
+
+    console.log("renderi oppija")
+    console.log(oppija)
     if (!oppija || !suunnitelma) {
       return null
     }
