@@ -171,11 +171,12 @@ export class Raportit extends React.Component<RaportitProps> {
     )
 
     if (request.status === 200) {
-      //const json: fetchResult = await request.json()
-
+      const json: fetchResult = await request.json()
+      /*
       const json: fetchResult = JSON.parse(
         '{"count":5,"hoksit":[{"hoksid":36,"hokseid":36,"oppijaoid":"1.2.246.562.15.32354803416","opiskeluoikeusoid":"1.2.246.562.15.32354803416","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":35,"hokseid":36,"oppijaoid":"1.2.246.562.15.32354803416","opiskeluoikeusoid":"1.2.246.562.15.57320793029","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":8682,"hokseid":36,"oppijaoid":"1.2.246.562.15.32354803416","opiskeluoikeusoid":"1.2.246.562.15.59302402942","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":37,"hokseid":36,"oppijaoid":"1.2.246.562.15.32354803416","opiskeluoikeusoid":"1.2.246.562.15.64186192825","oppilaitosoid":"1.2.246.562.10.32506551657"},{"hoksid":8731,"hokseid":36,"oppijaoid":"1.2.246.562.15.32354803416","opiskeluoikeusoid":"1.2.246.562.15.88846009509","oppilaitosoid":"1.2.246.562.10.32506551657"}]}'
       )
+      */
       this.setState({
         hoksitCount: json.count,
         hoksitWithoutOo: json.hoksit
