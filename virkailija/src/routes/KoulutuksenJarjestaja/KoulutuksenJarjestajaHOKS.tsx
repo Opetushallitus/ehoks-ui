@@ -67,12 +67,19 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
   componentDidMount() {
     const { koulutuksenJarjestaja } = this.props.store!
     const fromRaportit = this.props.location.state.fromRaportit
+    console.log("arvot")
+    console.log(`oppijaoid ${this.props.location.state.oppijaoid}`)
+    console.log(`hokseid ${this.props.location.state.hokseid}`)
+    console.log(`fromRaportit ${this.props.location.state.fromRaportit}`)
     this.disposeReaction = reaction(
       () => this.props.suunnitelmat.length > 0,
       async (hasSuunnitelmat: boolean) => {
         if (hasSuunnitelmat || fromRaportit) {
           let fromRaportitSuunnitelmat: IHOKS[] = []
+          console.log("fromRaportit")
+          console.log(fromRaportit)
           if (fromRaportit) {
+            consoe.log("fromRaportit iffissä")
             console.log(this.props.location.state.oppijaoid)
             console.log(this.props.location.state.hoksid)
             const oppija = koulutuksenJarjestaja.search.oppija(
@@ -81,14 +88,14 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
             console.log("oppija componentDidMount")
             console.log(oppija)
             fromRaportitSuunnitelmat = oppija ? oppija.suunnitelmat : []
-            console.log("fromRaportitSuunnitelmat")
+            console.log("fromRaportitSuunnitelmat componentDidMount")
             console.log(fromRaportitSuunnitelmat)
           }
           const suunnitelma =
             fromRaportitSuunnitelmat.length > 0
               ? find(
                   fromRaportitSuunnitelmat,
-                  h => h.eid === this.props.location.state.hoksi
+                  h => h.eid === this.props.location.state.hokseid
                 )
               : find(this.props.suunnitelmat, h => h.eid === this.props.hoksId)
           console.log("suunnitelma componentDidMount")
@@ -115,6 +122,8 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
 
   render() {
     const { hoksId, location, suunnitelmat, oppija } = this.props
+    console.log("propsit renderissä")
+    console.log(this.props)
     const suunnitelmaHoksId = this.props.location.state.fromRaportit
       ? this.props.location.state.hokseid
       : hoksId
