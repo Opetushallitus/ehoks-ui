@@ -82,7 +82,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
             console.log("fromRaportit iffissä")
             console.log(this.props.location.state.oppijaoid)
             console.log(this.props.location.state.hoksied)
-            koulutuksenJarjestaja.search.fetchOppijat()
+            await koulutuksenJarjestaja.search.fetchOppijat()
             const oppija = koulutuksenJarjestaja.search.oppija(
               this.props.location.state.oppijaoid
             )
