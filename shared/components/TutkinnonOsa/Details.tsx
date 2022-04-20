@@ -201,6 +201,7 @@ const OsaamisenHankkimistavatCollapsed = ({
         osaamisenHankkimistapaTyyppi={
           osaamisenHankkimistapa.osaamisenHankkimistapa
         }
+        osaamisenHankkimistapaTyyppi1={osaamisenHankkimistapa.tyyppi}
         perusta={osaamisenHankkimistapa.oppisopimuksenPerusta}
         keskeytymisajanjaksot={osaamisenHankkimistapa.keskeytymisajanjaksot}
       />

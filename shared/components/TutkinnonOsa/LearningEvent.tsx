@@ -6,6 +6,7 @@ import { MdEventNote } from "react-icons/md"
 import { InfoModal } from "components/InfoModal"
 import { IKoodistoVastaus } from "models/KoodistoVastaus"
 import { IKeskeytymisajanjakso } from "models/Keskeytymisajanjakso"
+import { OsaamisenHankkimistapaType } from "models/OsaamisenHankkimistapa"
 
 interface SizeProps {
   size?: "small" | "large"
@@ -57,6 +58,7 @@ interface LearningEventProps {
   description?: string
   partTimeAmount?: number
   osaamisenHankkimistapaTyyppi?: IKoodistoVastaus
+  osaamisenHankkimistapaTyyppi1?: OsaamisenHankkimistapaType
   perusta?: IKoodistoVastaus
   keskeytymisajanjaksot?: IKeskeytymisajanjakso[]
 }
@@ -76,10 +78,12 @@ export class LearningEvent extends React.Component<LearningEventProps> {
       partTimeAmount,
       osaamisenHankkimistapaTyyppi,
       perusta,
-      keskeytymisajanjaksot
+      keskeytymisajanjaksot,
+      osaamisenHankkimistapaTyyppi1
     } = this.props
     const iconSize = size === "small" ? 24 : 32
     const kl = (keskeytymisajanjaksot || []).length
+    console.log(osaamisenHankkimistapaTyyppi1)
     return (
       <Container className={className} data-testid="TutkinnonOsa.LearningEvent">
         <Title size={size}>{title}</Title>
@@ -106,7 +110,9 @@ export class LearningEvent extends React.Component<LearningEventProps> {
               )}
             </div>
             {((osaamisenHankkimistapaTyyppi &&
-              osaamisenHankkimistapaTyyppi.nimi) ||
+              osaamisenHankkimistapaTyyppi.nimi &&
+              osaamisenHankkimistapaTyyppi1 ===
+                OsaamisenHankkimistapaType.Workplace) ||
               partTimeAmount ||
               (perusta && perusta.nimi) ||
               kl ||
