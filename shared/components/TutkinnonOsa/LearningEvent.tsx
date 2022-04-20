@@ -83,7 +83,7 @@ export class LearningEvent extends React.Component<LearningEventProps> {
     } = this.props
     const iconSize = size === "small" ? 24 : 32
     const kl = (keskeytymisajanjaksot || []).length
-    console.log(osaamisenHankkimistapaTyyppi1)
+    console.log(osaamisenHankkimistapaTyyppi)
     return (
       <Container className={className} data-testid="TutkinnonOsa.LearningEvent">
         <Title size={size}>{title}</Title>
