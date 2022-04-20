@@ -1014,23 +1014,6 @@ export class Yllapito extends React.Component<YllapitoProps> {
                   <ContentElement>
                     <Header>
                       <FormattedMessage
-                        id="yllapito.oppijaIndeksiTitle"
-                        defaultMessage="Oppijaindeksi"
-                      />
-                    </Header>
-                    <ContentElement>
-                      <FormattedMessage
-                        id="yllapito.oppijaIndeksoimatta"
-                        defaultMessage="Indeksoimatta: {unindexed} oppijaa"
-                        values={{
-                          unindexed: systemInfo.oppijaindex.unindexedOppijat
-                        }}
-                      />
-                    </ContentElement>
-                  </ContentElement>
-                  <ContentElement>
-                    <Header>
-                      <FormattedMessage
                         id="yllapito.hoksIdnHaku"
                         defaultMessage="Hoks-id:n haku"
                       />
