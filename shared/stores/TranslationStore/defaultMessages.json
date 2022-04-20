@@ -603,5 +603,255 @@
     "locale": "fi",
     "key": "opiskeluoikeus.osittainen",
     "value": "osittainen"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.aloitusHerate",
+    "value": "Lähetä uusi heräte aloituskyselyyn."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.aloitusHerateKuvaus",
+    "value": "Lähetä tietty aloitusheräte uudestaan herätteen ID:llä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.aloitusHeratteet",
+    "value": "Lähetä uudet herätteet aloituskyselyihin aikavälille."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.aloitusHeratteetKuvaus",
+    "value": "Lähetä uudestaan kaikki aloituskyselyherätteet, jotka luotiin annetun aikavälin sisällä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.haeHoksIdButton",
+    "value": "Hae hoks-id opiskeluoikeus-oid:llä"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.haeOpiskeluoikeusOidButton",
+    "value": "Hae opiskeluoikeus hoks-id:llä"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.hoksIdKuvaus",
+    "value": "Hae HOKSin ID opiskeluoikeuden ID:llä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.hoksIdnHaku",
+    "value": "Hoks-id:n haku"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.hoksIdTulos",
+    "value": "Hoks-id on: {hoksId}"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.hoksienMaaraKuvaus",
+    "value": "Näyttää aktiivisten HOKSien määrän."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.hoksienmaaraArvo",
+    "value": "Lukumäärä: {hoksAmount}"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.hoksienmaaraTitle",
+    "value": "Hoksien lukumäärä"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.hoksPoisto",
+    "value": "Aiheettoman HOKSin poisto"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.hoksPoistoKuvaus",
+    "value": "Aiheettoman HOKSin poisto."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.hoksPalautus",
+    "value": "Palauta virkailijan käyttöliittymästä poistetuksi asetettu HOKS"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.hoksPalautusKuvaus",
+    "value": "Palauta vahingossa poistettu HOKS. HOKSeja ei yleensä poisteta totaalisesti, vaan ne vain merkataan poistetuiksi tietokannassa."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.muistiKuvaus",
+    "value": "Muistin määrä (yhteensä, vapaana, ja maksimi)."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.muistiMaksimi",
+    "value": "Maksimi: {max} MB"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.muistiTitle",
+    "value": "Muisti"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.muistiVapaana",
+    "value": "Vapaana: {free} MB"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.muistiYhteensa",
+    "value": "Yhteensä: {total} MB"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.OpiskeluoikeusOidTulos",
+    "value": "Opiskeluoikeus-oid on: {opiskeluoikeusOid}"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.OppijaOidTulos",
+    "value": "Oppija-oid on: {oppijaOid}"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.opiskeluoikeuksienPaivitys",
+    "value": "Päivitä koulutustoimijan opiskeluoikeudet indeksiin Koskesta."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.opiskeluoikeuksienPaivitysKuvaus",
+    "value": "Päivitä koulutustoimijan opiskeluoikeudet indeksiin."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.opiskeluoikeusIndeksoimatta",
+    "value": "Indeksoimatta: {unindexed} opiskeluoikeutta"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.opiskeluoikeusOidHaku",
+    "value": "Opiskeluoikeus-oid:n haku"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.opiskeluoikeusOidHakuKuvaus",
+    "value": "Hae opiskeluoikeuden ID ja oppijan ID HOKSin ID:llä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.opiskeluoikeusPaivitys",
+    "value": "Päivitä opiskeluoikeus indeksiin Koskesta."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.opiskeluoikeusPaivitysKuvaus",
+    "value": "Päivitä opiskeluoikeuden tiedot opiskeluoikeusindeksiin."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.oppijaIndeksiKuvaus",
+    "value": "Oppijoiden ja opiskeluoikeuksien indeksointi."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.oppijaIndeksiTitle",
+    "value": "Oppijaindeksi"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.oppijaIndeksoimatta",
+    "value": "Indeksoimatta: {unindexed} oppijaa"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.oppijaIndex",
+    "value": "Indeksoi oppijat ja opiskeluoikeudet"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.oppijanPaivitys",
+    "value": "Päivitä oppijan tiedot indeksiin Oppijanumerorekisteristä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.oppijanPaivitysKuvaus",
+    "value": "Päivitä oppijan tiedot indeksiin Oppijanumerorekisteristä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.paattoHeratteet",
+    "value": "Lähetä uudet herätteet päättökyselyihin aikavälille."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.paattoHeratteetKuvaus",
+    "value": "Lähetä uudestaan kaikki päättökyselyherätteet, jotka luotiin annetun aikavälin sisällä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.paivitaOppija",
+    "value": "Paivita oppijan tiedot indeksiin."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.palautaHoksButton",
+    "value": "Palauta HOKS"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.poistaHoksButton",
+    "value": "Poista HOKS"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.poistaVastaajatunnus",
+    "value": "Poista vastaajatunnus"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.tyhjennaValimuisti",
+    "value": "Tyhjennä välimuisti"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.updateOpiskeluoikeudetButton",
+    "value": "Päivitä opiskeluoikeudet."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.updateOpiskeluoikeusButton",
+    "value": "Päivitä opiskeluoikeuden tiedot opiskeluoikeus-indeksiin."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.valimuistiKoko",
+    "value": "Koko: {cacheSize}"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.valimuistiKuvaus",
+    "value": "Välimuistin koko ja tyhjennys."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.valimuistiTitle",
+    "value": "Välimuisti"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.vastaajatunnuksenPoisto",
+    "value": "Opiskelijapalautteen vastaajatunnuksen poisto"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.vastaajatunnuksenPoistoKuvaus",
+    "value": "Vastaajatunnuksen poisto ID:llä."
   }
 ]

@@ -1014,27 +1014,14 @@ export class Yllapito extends React.Component<YllapitoProps> {
                   <ContentElement>
                     <Header>
                       <FormattedMessage
-                        id="yllapito.oppijaIndeksiTitle"
-                        defaultMessage="Oppijaindeksi"
-                      />
-                    </Header>
-                    <ContentElement>
-                      <FormattedMessage
-                        id="yllapito.oppijaIndeksoimatta"
-                        defaultMessage="Indeksoimatta: {unindexed} oppijaa"
-                        values={{
-                          unindexed: systemInfo.oppijaindex.unindexedOppijat
-                        }}
-                      />
-                    </ContentElement>
-                  </ContentElement>
-                  <ContentElement>
-                    <Header>
-                      <FormattedMessage
                         id="yllapito.hoksIdnHaku"
                         defaultMessage="Hoks-id:n haku"
                       />
                     </Header>
+                    <FormattedMessage
+                      id="yllapito.hoksIdKuvaus"
+                      defaultMessage="Hae HOKSin ID opiskeluoikeuden ID:llä."
+                    />
                     <ContentElement>
                       <ContentElement>
                         <form>
@@ -1070,6 +1057,12 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         defaultMessage="Opiskeluoikeus-oid:n haku"
                       />
                     </Header>
+                    <FormattedMessage
+                      id="yllapito.opiskeluoikeusOidHakuKuvaus"
+                      defaultMessage={
+                        "Hae opiskeluoikeuden ID ja oppijan ID HOKSin ID:llä."
+                      }
+                    />
                     <ContentElement>
                       <ContentElement>
                         <form>
@@ -1113,6 +1106,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         defaultMessage="Hoksien lukumäärä"
                       />
                     </Header>
+                    <FormattedMessage
+                      id="yllapito.hoksienMaaraKuvaus"
+                      defaultMessage="Näyttää aktiivisten HOKSien määrän."
+                    />
                     <ContentElement>
                       <FormattedMessage
                         id="yllapito.hoksienmaaraArvo"
@@ -1128,6 +1125,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         defaultMessage="Välimuisti"
                       />
                     </Header>
+                    <FormattedMessage
+                      id="yllapito.valimuistiKuvaus"
+                      defaultMessage="Välimuistin koko ja tyhjennys."
+                    />
                     <ContentElement>
                       <FormattedMessage
                         id="yllapito.valimuistiKoko"
@@ -1151,6 +1152,12 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         defaultMessage="Muisti"
                       />
                     </Header>
+                    <FormattedMessage
+                      id="yllapito.muistiKuvaus"
+                      defaultMessage={
+                        "Muistin määrä (yhteensä, vapaana, ja maksimi)."
+                      }
+                    />
                     <ContentElement>
                       <FormattedMessage
                         id="yllapito.muistiYhteensa"
@@ -1186,6 +1193,12 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         defaultMessage="Oppijaindeksi"
                       />
                     </Header>
+                    <FormattedMessage
+                      id="yllapito.oppijaIndeksiKuvaus"
+                      defaultMessage={
+                        "Oppijoiden ja opiskeluoikeuksien indeksointi."
+                      }
+                    />
                     <ContentElement>
                       <FormattedMessage
                         id="yllapito.oppijaIndeksoimatta"
@@ -1219,6 +1232,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         defaultMessage="Aiheettoman HOKSin poisto"
                       />
                     </Header>
+                    <FormattedMessage
+                      id="yllapito.hoksPoistoKuvaus"
+                      defaultMessage="Aiheettoman HOKSin poisto."
+                    />
                     <ContentElement>
                       <ContentElement>
                         <form>
@@ -1246,9 +1263,20 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <Header>
                       <FormattedMessage
                         id="yllapito.hoksPalautus"
-                        defaultMessage="Palauta virkailijan käyttöliittymästä poistetuksi asetettu HOKS"
+                        defaultMessage={
+                          "Palauta virkailijan käyttöliittymästä poistetuksi " +
+                          "asetettu HOKS"
+                        }
                       />
                     </Header>
+                    <FormattedMessage
+                      id="yllapito.hoksPalautusKuvaus"
+                      defaultMessage={
+                        "Palauta vahingossa poistettu HOKS. HOKSeja ei " +
+                        "yleensä poisteta totaalisesti, vaan ne vain " +
+                        "merkataan poistetuiksi tietokannassa."
+                      }
+                    />
                     <ContentElement>
                       <ContentElement>
                         <form>
@@ -1265,7 +1293,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                       <ContentElement>
                         <Button onClick={this.onPalautaHoks}>
                           <FormattedMessage
-                            id="yllapito.poistaHoksButton"
+                            id="yllapito.palautaHoksButton"
                             defaultMessage="Palauta HOKS"
                           />
                         </Button>
@@ -1276,9 +1304,18 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <Header>
                       <FormattedMessage
                         id="yllapito.opiskeluoikeusPaivitys"
-                        defaultMessage="Päivitä opiskeluoikeus indeksiin Koskesta."
+                        defaultMessage={
+                          "Päivitä opiskeluoikeus indeksiin Koskesta."
+                        }
                       />
                     </Header>
+                    <FormattedMessage
+                      id="yllapito.opiskeluoikeusPaivitysKuvaus"
+                      defaultMessage={
+                        "Päivitä opiskeluoikeuden tiedot " +
+                        "opiskeluoikeusindeksiin."
+                      }
+                    />
                     <ContentElement>
                       <ContentElement>
                         <form>
@@ -1296,7 +1333,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         <Button onClick={this.onUpdateOpiskeluoikeus}>
                           <FormattedMessage
                             id="yllapito.updateOpiskeluoikeusButton"
-                            defaultMessage="Päivitä opiskeluoikeuden tiedot opiskeluoikeus-indeksiin."
+                            defaultMessage={
+                              "Päivitä opiskeluoikeuden tiedot " +
+                              "opiskeluoikeus-indeksiin."
+                            }
                           />
                         </Button>
                       </ContentElement>
@@ -1306,9 +1346,18 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <Header>
                       <FormattedMessage
                         id="yllapito.opiskeluoikeuksienPaivitys"
-                        defaultMessage="Päivitä koulutustoimijan opiskeluoikeudet indeksiin Koskesta."
+                        defaultMessage={
+                          "Päivitä koulutustoimijan opiskeluoikeudet " +
+                          "indeksiin Koskesta."
+                        }
                       />
                     </Header>
+                    <FormattedMessage
+                      id="yllapito.opiskeluoikeuksienPaivitysKuvaus"
+                      defaultMessage={
+                        "Päivitä koulutustoimijan opiskeluoikeudet indeksiin."
+                      }
+                    />
                     <ContentElement>
                       <ContentElement>
                         <form>
@@ -1338,9 +1387,19 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <Header>
                       <FormattedMessage
                         id="yllapito.oppijanPaivitys"
-                        defaultMessage="Päivitä oppijan tiedot indeksiin Oppijanumerorekisteristä."
+                        defaultMessage={
+                          "Päivitä oppijan tiedot indeksiin " +
+                          "Oppijanumerorekisteristä."
+                        }
                       />
                     </Header>
+                    <FormattedMessage
+                      id="yllapito.oppijanPaivitysKuvaus"
+                      defaultMessage={
+                        "Päivitä oppijan tiedot indeksiin " +
+                        "Oppijanumerorekisteristä."
+                      }
+                    />
                     <ContentElement>
                       <ContentElement>
                         <form>
@@ -1371,6 +1430,13 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         defaultMessage="Lähetä uusi heräte aloituskyselyyn."
                       />
                     </Header>
+                    <FormattedMessage
+                      id="yllapito.aloitusHerateKuvaus"
+                      defaultMessage={
+                        "Lähetä tietty aloitusheräte uudestaan herätteen " +
+                        "ID:llä."
+                      }
+                    />
                     <ContentElement>
                       <ContentElement>
                         <form>
@@ -1398,9 +1464,19 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <Header>
                       <FormattedMessage
                         id="yllapito.aloitusHeratteet"
-                        defaultMessage="Lähetä uudet herätteet aloituskyselyihin aikavälille."
+                        defaultMessage={
+                          "Lähetä uudet herätteet aloituskyselyihin " +
+                          "aikavälille."
+                        }
                       />
                     </Header>
+                    <FormattedMessage
+                      id="yllapito.aloitusHeratteetKuvaus"
+                      defaultMessage={
+                        "Lähetä uudestaan kaikki aloituskyselyherätteet, " +
+                        "jotka luotiin annetun aikavälin sisällä."
+                      }
+                    />
                     <ContentElement>
                       <ContentElement>
                         <form>
@@ -1426,7 +1502,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         <Button onClick={this.onSendHeratteetBetween}>
                           <FormattedMessage
                             id="yllapito.aloitusHeratteet"
-                            defaultMessage="Lähetä uudet herätteet aloituskyselyihin aikavälille."
+                            defaultMessage={
+                              "Lähetä uudet herätteet aloituskyselyihin " +
+                              "aikavälille."
+                            }
                           />
                         </Button>
                       </ContentElement>
@@ -1436,9 +1515,19 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <Header>
                       <FormattedMessage
                         id="yllapito.paattoHeratteet"
-                        defaultMessage="Lähetä uudet herätteet päättökyselyihin aikavälille."
+                        defaultMessage={
+                          "Lähetä uudet herätteet päättökyselyihin " +
+                          "aikavälille."
+                        }
                       />
                     </Header>
+                    <FormattedMessage
+                      id="yllapito.paattoHeratteetKuvaus"
+                      defaultMessage={
+                        "Lähetä uudestaan kaikki päättökyselyherätteet, " +
+                        "jotka luotiin annetun aikavälin sisällä."
+                      }
+                    />
                     <ContentElement>
                       <ContentElement>
                         <form>
@@ -1466,7 +1555,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         <Button onClick={this.onSendPaattoHeratteetBetween}>
                           <FormattedMessage
                             id="yllapito.paattoHeratteet"
-                            defaultMessage="Lähetä uudet herätteet päättökyselyihin aikavälille."
+                            defaultMessage={
+                              "Lähetä uudet herätteet päättökyselyihin " +
+                              "aikavälille."
+                            }
                           />
                         </Button>
                       </ContentElement>
@@ -1476,9 +1568,15 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <Header>
                       <FormattedMessage
                         id="yllapito.vastaajatunnuksenPoisto"
-                        defaultMessage="Opiskelijapalautteen vastaajatunnuksen poisto"
+                        defaultMessage={
+                          "Opiskelijapalautteen vastaajatunnuksen poisto"
+                        }
                       />
                     </Header>
+                    <FormattedMessage
+                      id="yllapito.vastaajatunnuksenPoistoKuvaus"
+                      defaultMessage="Vastaajatunnuksen poisto ID:llä."
+                    />
                     <ContentElement>
                       <form>
                         <HakuInput
