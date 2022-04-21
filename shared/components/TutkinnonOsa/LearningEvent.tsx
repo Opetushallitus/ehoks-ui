@@ -108,28 +108,28 @@ export class LearningEvent extends React.Component<LearningEventProps> {
                 </Detail>
               )}
             </div>
-            {((osaamisenHankkimistapaKoodisto &&
-              osaamisenHankkimistapaKoodisto.nimi &&
-              osaamisenHankkimistapaTyyppi ===
-                OsaamisenHankkimistapaType.Workplace) ||
-              partTimeAmount ||
-              (perusta && perusta.nimi) ||
-              kl ||
-              null) && (
-              <div style={{ display: "inline-block", marginLeft: 5 }}>
-                <InfoModal
-                  nayttoymparistoDetails={nayttoymparistoDetails}
-                  startDate={startDate}
-                  endDate={endDate}
-                  partTimeAmount={partTimeAmount}
-                  osaamisenHankkimistapaKoodisto={
-                    osaamisenHankkimistapaKoodisto
-                  }
-                  perusta={perusta}
-                  keskeytymisajanjaksot={keskeytymisajanjaksot}
-                />
-              </div>
-            )}
+            {osaamisenHankkimistapaTyyppi ===
+              OsaamisenHankkimistapaType.Workplace &&
+              ((osaamisenHankkimistapaKoodisto &&
+                osaamisenHankkimistapaKoodisto.nimi) ||
+                partTimeAmount ||
+                (perusta && perusta.nimi) ||
+                kl ||
+                null) && (
+                <div style={{ display: "inline-block", marginLeft: 5 }}>
+                  <InfoModal
+                    nayttoymparistoDetails={nayttoymparistoDetails}
+                    startDate={startDate}
+                    endDate={endDate}
+                    partTimeAmount={partTimeAmount}
+                    osaamisenHankkimistapaKoodisto={
+                      osaamisenHankkimistapaKoodisto
+                    }
+                    perusta={perusta}
+                    keskeytymisajanjaksot={keskeytymisajanjaksot}
+                  />
+                </div>
+              )}
             {periodSpecifier && <Detail size={size}>{periodSpecifier}</Detail>}
             <Detail size={size}>{nayttoymparistoDetails}</Detail>
             <Detail size={size}>{description}</Detail>
