@@ -57,8 +57,8 @@ interface LearningEventProps {
   periodSpecifier?: string
   description?: string
   partTimeAmount?: number
-  osaamisenHankkimistapaTyyppi?: IKoodistoVastaus
-  osaamisenHankkimistapaTyyppi1?: OsaamisenHankkimistapaType
+  osaamisenHankkimistapaKoodisto?: IKoodistoVastaus
+  osaamisenHankkimistapaTyyppi?: OsaamisenHankkimistapaType
   perusta?: IKoodistoVastaus
   keskeytymisajanjaksot?: IKeskeytymisajanjakso[]
 }
@@ -76,14 +76,13 @@ export class LearningEvent extends React.Component<LearningEventProps> {
       isOsaamisenOsoittaminen = false,
       description,
       partTimeAmount,
-      osaamisenHankkimistapaTyyppi,
+      osaamisenHankkimistapaKoodisto,
       perusta,
       keskeytymisajanjaksot,
-      osaamisenHankkimistapaTyyppi1
+      osaamisenHankkimistapaTyyppi
     } = this.props
     const iconSize = size === "small" ? 24 : 32
     const kl = (keskeytymisajanjaksot || []).length
-    console.log(osaamisenHankkimistapaTyyppi)
     return (
       <Container className={className} data-testid="TutkinnonOsa.LearningEvent">
         <Title size={size}>{title}</Title>
@@ -109,9 +108,9 @@ export class LearningEvent extends React.Component<LearningEventProps> {
                 </Detail>
               )}
             </div>
-            {((osaamisenHankkimistapaTyyppi &&
-              osaamisenHankkimistapaTyyppi.nimi &&
-              osaamisenHankkimistapaTyyppi1 ===
+            {((osaamisenHankkimistapaKoodisto &&
+              osaamisenHankkimistapaKoodisto.nimi &&
+              osaamisenHankkimistapaTyyppi ===
                 OsaamisenHankkimistapaType.Workplace) ||
               partTimeAmount ||
               (perusta && perusta.nimi) ||
@@ -123,7 +122,9 @@ export class LearningEvent extends React.Component<LearningEventProps> {
                   startDate={startDate}
                   endDate={endDate}
                   partTimeAmount={partTimeAmount}
-                  hankkimistapaTyyppi={osaamisenHankkimistapaTyyppi}
+                  osaamisenHankkimistapaKoodisto={
+                    osaamisenHankkimistapaKoodisto
+                  }
                   perusta={perusta}
                   keskeytymisajanjaksot={keskeytymisajanjaksot}
                 />
