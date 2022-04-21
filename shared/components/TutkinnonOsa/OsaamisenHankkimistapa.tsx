@@ -136,7 +136,7 @@ export class OsaamisenHankkimistapa extends React.Component<
               periodSpecifier={ajanjaksonTarkenne}
               size="large"
               partTimeAmount={osaAikaisuustieto}
-              osaamisenHankkimistapaTyyppi={
+              osaamisenHankkimistapaKoodisto={
                 osaamisenHankkimistapa.osaamisenHankkimistapa
               }
               perusta={oppisopimuksenPerusta}

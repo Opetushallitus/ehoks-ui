@@ -6,6 +6,7 @@ import { MdEventNote } from "react-icons/md"
 import { InfoModal } from "components/InfoModal"
 import { IKoodistoVastaus } from "models/KoodistoVastaus"
 import { IKeskeytymisajanjakso } from "models/Keskeytymisajanjakso"
+import { OsaamisenHankkimistapaType } from "models/OsaamisenHankkimistapa"
 
 interface SizeProps {
   size?: "small" | "large"
@@ -56,7 +57,8 @@ interface LearningEventProps {
   periodSpecifier?: string
   description?: string
   partTimeAmount?: number
-  osaamisenHankkimistapaTyyppi?: IKoodistoVastaus
+  osaamisenHankkimistapaKoodisto?: IKoodistoVastaus
+  osaamisenHankkimistapaTyyppi?: OsaamisenHankkimistapaType
   perusta?: IKoodistoVastaus
   keskeytymisajanjaksot?: IKeskeytymisajanjakso[]
 }
@@ -74,9 +76,10 @@ export class LearningEvent extends React.Component<LearningEventProps> {
       isOsaamisenOsoittaminen = false,
       description,
       partTimeAmount,
-      osaamisenHankkimistapaTyyppi,
+      osaamisenHankkimistapaKoodisto,
       perusta,
-      keskeytymisajanjaksot
+      keskeytymisajanjaksot,
+      osaamisenHankkimistapaTyyppi
     } = this.props
     const iconSize = size === "small" ? 24 : 32
     const kl = (keskeytymisajanjaksot || []).length
@@ -105,24 +108,28 @@ export class LearningEvent extends React.Component<LearningEventProps> {
                 </Detail>
               )}
             </div>
-            {((osaamisenHankkimistapaTyyppi &&
-              osaamisenHankkimistapaTyyppi.nimi) ||
-              partTimeAmount ||
-              (perusta && perusta.nimi) ||
-              kl ||
-              null) && (
-              <div style={{ display: "inline-block", marginLeft: 5 }}>
-                <InfoModal
-                  nayttoymparistoDetails={nayttoymparistoDetails}
-                  startDate={startDate}
-                  endDate={endDate}
-                  partTimeAmount={partTimeAmount}
-                  hankkimistapaTyyppi={osaamisenHankkimistapaTyyppi}
-                  perusta={perusta}
-                  keskeytymisajanjaksot={keskeytymisajanjaksot}
-                />
-              </div>
-            )}
+            {osaamisenHankkimistapaTyyppi ===
+              OsaamisenHankkimistapaType.Workplace &&
+              ((osaamisenHankkimistapaKoodisto &&
+                osaamisenHankkimistapaKoodisto.nimi) ||
+                partTimeAmount ||
+                (perusta && perusta.nimi) ||
+                kl ||
+                null) && (
+                <div style={{ display: "inline-block", marginLeft: 5 }}>
+                  <InfoModal
+                    nayttoymparistoDetails={nayttoymparistoDetails}
+                    startDate={startDate}
+                    endDate={endDate}
+                    partTimeAmount={partTimeAmount}
+                    osaamisenHankkimistapaKoodisto={
+                      osaamisenHankkimistapaKoodisto
+                    }
+                    perusta={perusta}
+                    keskeytymisajanjaksot={keskeytymisajanjaksot}
+                  />
+                </div>
+              )}
             {periodSpecifier && <Detail size={size}>{periodSpecifier}</Detail>}
             <Detail size={size}>{nayttoymparistoDetails}</Detail>
             <Detail size={size}>{description}</Detail>
