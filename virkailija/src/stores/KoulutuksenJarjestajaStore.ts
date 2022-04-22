@@ -246,7 +246,7 @@ const Search = types
     const fetchOppija = flow(function*(oppijaOid): any {
       console.log("fetchOppija")
       const response: APIResponse = yield fetchSingle(
-        apiUrl(`virkailija/oppijat/${oppijaOid}/`),
+        apiUrl(`virkailija/oppijat/${oppijaOid}/with-oo`),
         { headers: appendCallerId() }
       )
       const oppija = response.data
@@ -255,6 +255,7 @@ const Search = types
       yield oppija.fetchHenkilotiedot()
       self.results.push(oppija)
     })
+
     const resetActivePage = () => {
       self.activePage = 0
     }
