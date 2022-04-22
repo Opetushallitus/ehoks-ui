@@ -116,11 +116,6 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
       ? this.props.location.state.hokseid
       : hoksId
     const suunnitelma = find(suunnitelmat, h => h.eid === suunnitelmaHoksId)
-    console.log("renderi suunnitelma")
-    console.log(suunnitelma)
-
-    console.log("renderi oppija")
-    console.log(oppija)
     if (!oppija || !suunnitelma) {
       return null
     }
