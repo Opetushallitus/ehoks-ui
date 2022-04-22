@@ -249,9 +249,9 @@ const Search = types
         apiUrl(`virkailija/oppijat/${oppijaOid}/with-oo`),
         { headers: appendCallerId() }
       )
-      console.log(response)
+      console.log(response.data)
       self.results.clear()
-      self.results = response.data
+      self.results.push(response.data)
       yield Promise.all(
         self.results.map(
           flow(function*(oppija): any {
