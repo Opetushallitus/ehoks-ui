@@ -76,18 +76,15 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
       async (hasSuunnitelmat: boolean) => {
         if (hasSuunnitelmat || fromRaportit) {
           let fromRaportitSuunnitelmat: IHOKS[] = []
-          console.log("fromRaportit")
-          console.log(fromRaportit)
           if (fromRaportit) {
-            console.log("fromRaportit iffissä")
-            console.log(this.props.location.state.oppijaoid)
-            console.log(this.props.location.state.hoksied)
-            await koulutuksenJarjestaja.search.fetchOppija(
-              this.props.location.state.oppijaoid
-            )
             const oppija = koulutuksenJarjestaja.search.oppija(
               this.props.location.state.oppijaoid
             )
+            if (!oppija) {
+              await koulutuksenJarjestaja.search.fetchOppija(
+                this.props.location.state.oppijaoid
+              )
+            }
             console.log("oppija componentDidMount")
             console.log(oppija)
             fromRaportitSuunnitelmat = oppija ? oppija.suunnitelmat : []
