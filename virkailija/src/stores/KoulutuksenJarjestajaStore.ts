@@ -249,11 +249,17 @@ const Search = types
         apiUrl(`virkailija/oppijat/${oppijaOid}/with-oo`),
         { headers: appendCallerId() }
       )
-      const oppija = response.data
-
-      yield oppija.fetchSuunnitelmat()
-      yield oppija.fetchHenkilotiedot()
-      self.results.push(oppija)
+      console.log(response)
+      self.results.clear()
+      self.results = response.data
+      yield Promise.all(
+        self.results.map(
+          flow(function*(oppija): any {
+            yield oppija.fetchSuunnitelmat()
+            yield oppija.fetchHenkilotiedot()
+          })
+        )
+      )
     })
 
     const resetActivePage = () => {
