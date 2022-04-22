@@ -172,7 +172,8 @@ const Search = types
     isLoading: false,
     sortBy: types.optional(SortBy, "nimi"),
     sortDirection: "asc",
-    perPage: 10
+    perPage: 10,
+    fromListView: true
   })
   .volatile((): { searchTexts: { [key in SearchSortKey]: string } } => ({
     searchTexts: {
@@ -238,7 +239,7 @@ const Search = types
           })
         )
       )
-
+      self.fromListView = true
       self.isLoading = false
     })
 
@@ -260,6 +261,7 @@ const Search = types
           })
         )
       )
+      self.fromListView = false
     })
 
     const resetActivePage = () => {
