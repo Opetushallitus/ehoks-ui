@@ -182,7 +182,7 @@ const Search = types
     }
   }))
   .actions(self => {
-    const { fetchCollection, apiUrl, appendCallerId } = getEnv<
+    const { fetchCollection, fetchSingle, apiUrl, appendCallerId } = getEnv<
       StoreEnvironment
     >(self)
 
@@ -242,11 +242,24 @@ const Search = types
       self.isLoading = false
     })
 
+    // Fetches oppija by id and adds it to results
+    const fetchOppija = flow(function*(oppijaOid): any {
+      console.log("fetchOppija")
+      const response: APIResponse = yield fetchSingle(
+        apiUrl(`virkailija/oppijat/${oppijaOid}/`),
+        { headers: appendCallerId() }
+      )
+      const oppija = response.data
+
+      yield oppija.fetchSuunnitelmat()
+      yield oppija.fetchHenkilotiedot()
+      self.results.push(oppija)
+    })
     const resetActivePage = () => {
       self.activePage = 0
     }
 
-    return { fetchOppijat, resetActivePage }
+    return { fetchOppijat, fetchOppija, resetActivePage }
   })
   .actions(self => {
     const changeSearchText = (field: SearchSortKey, searchText = "") => {
