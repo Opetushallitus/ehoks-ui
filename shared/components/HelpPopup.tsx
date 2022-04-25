@@ -35,6 +35,7 @@ interface HelpPopupProps {
   /** Custom classname for button */
   className?: string
   cssWidth?: string
+  toggleSize?: string
 }
 
 export class HelpPopup extends React.Component<HelpPopupProps> {
@@ -43,7 +44,7 @@ export class HelpPopup extends React.Component<HelpPopupProps> {
   }
   render() {
     const { intl } = this.context
-    const { className, cssWidth, helpContent } = this.props
+    const { helpContent, className, cssWidth, toggleSize } = this.props
     return (
       <Popup
         trigger={
@@ -53,7 +54,7 @@ export class HelpPopup extends React.Component<HelpPopupProps> {
             })}
             className={className}
           >
-            <HelpToggle size="28" color="#3A7A10" />
+            <HelpToggle size={toggleSize ? toggleSize : "28"} color="#3A7A10" />
           </HelpButton>
         }
         position={["left center", "bottom center", "right center"]}

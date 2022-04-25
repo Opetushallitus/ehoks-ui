@@ -878,5 +878,10 @@
     "locale": "fi",
     "key": "raportit.oppijanumeroTitle",
     "value": "Oppijanumero"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.hoksesWithoutOpiskeluoikeusInfoKuvaus",
+    "value": "Hakee ja listaa valitun oppilaitoksen hoksit, joiden opiskeluoikeutta ei enää löydy Koski-palvelusta."
   }
 ]

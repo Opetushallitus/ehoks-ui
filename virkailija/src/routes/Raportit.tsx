@@ -2,6 +2,7 @@ import { RouteComponentProps, Link } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import { ContentArea } from "components/ContentArea"
 import { RaportitTable } from "components/RaportitTable"
+import { HelpPopup } from "components/HelpPopup"
 import { Heading } from "components/Heading"
 import { inject, observer } from "mobx-react"
 import React from "react"
@@ -69,6 +70,10 @@ const linkStyle = {
   textDecoration: "none",
   color: "#3a7a10"
 }
+
+const HelpButton = styled(HelpPopup)`
+  margin-left: 12px;
+`
 
 const Styles = styled("div")`
   table {
@@ -300,6 +305,15 @@ export class Raportit extends React.Component<RaportitProps> {
                     <FormattedMessage
                       id="raportit.hoksesWithoutOpiskeluoikeus"
                       defaultMessage="Hoksit, joissa poistettu opiskeluoikeus"
+                    />
+                    <HelpButton
+                      helpContent={
+                        <FormattedMessage
+                          id="raportit.hoksesWithoutOpiskeluoikeusInfoKuvaus"
+                          defaultMessage="Tietoa olennaisesta seikasta"
+                        />
+                      }
+                      toggleSize="18"
                     />
                   </MenuItem>
                 </Nav>
