@@ -181,8 +181,6 @@ export class Raportit extends React.Component<RaportitProps> {
         hoksitCount: json.count,
         hoksitWithoutOo: json.hoksit
       })
-    } else {
-      console.log("fail")
     }
   }
 
@@ -209,7 +207,6 @@ export class Raportit extends React.Component<RaportitProps> {
       const oppilaitosOid: string | undefined =
         store?.session.selectedOrganisationOid
       this.loadHoksesWithoutOpiskeluoikeudet(oppilaitosOid)
-      console.log(oppilaitosOid)
     }
   }
 

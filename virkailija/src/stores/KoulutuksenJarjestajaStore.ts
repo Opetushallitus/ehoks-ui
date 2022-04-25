@@ -245,12 +245,10 @@ const Search = types
 
     // Fetches oppija by id and adds it to results
     const fetchOppija = flow(function*(oppijaOid): any {
-      console.log("fetchOppija")
       const response: APIResponse = yield fetchSingle(
         apiUrl(`virkailija/oppijat/${oppijaOid}/with-oo`),
         { headers: appendCallerId() }
       )
-      console.log(response.data)
       self.results.clear()
       self.results.push(response.data)
       yield Promise.all(
