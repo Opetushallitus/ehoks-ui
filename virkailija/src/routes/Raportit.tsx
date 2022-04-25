@@ -54,6 +54,12 @@ const ItemHeader = styled("h3")`
   padding-bottom: 10px;
 `
 
+const ItemDescription = styled("p")`
+  margin: 0;
+  padding-right: 10px;
+  padding-bottom: 10px;
+`
+
 const ContentElement = styled("div")`
   display: inline-block;
   margin-bottom: 10px;
@@ -136,6 +142,7 @@ interface RaportitState {
   hoksitCount?: number
   hoksitWithoutOo?: HoksRow[] | []
   titleText: string
+  descText: string
   selected: number
 }
 
@@ -156,6 +163,7 @@ export class Raportit extends React.Component<RaportitProps> {
     hoksitCount: 0,
     hoksitWithoutOo: [],
     titleText: "Klikkaa valikosta haluamasi raportti",
+    descText: "",
     selected: 0
   }
 
@@ -198,6 +206,7 @@ export class Raportit extends React.Component<RaportitProps> {
   navClickHandler = (
     event: React.MouseEvent<HTMLAnchorElement>,
     titleText: string,
+    descText: string,
     selected: number
   ) => {
     event.preventDefault()
@@ -205,6 +214,7 @@ export class Raportit extends React.Component<RaportitProps> {
     event.target.blur()
     this.setState({
       titleText,
+      descText,
       selected
     })
     if (selected === 1) {
@@ -229,7 +239,7 @@ export class Raportit extends React.Component<RaportitProps> {
     this.state.selected === num ? "bolder" : "initial"
 
   render() {
-    const { hoksitWithoutOo, selected, titleText } = this.state
+    const { hoksitWithoutOo, selected, titleText, descText } = this.state
     const { intl } = this.context
     const columns = [
       {
@@ -294,6 +304,9 @@ export class Raportit extends React.Component<RaportitProps> {
                         intl.formatMessage({
                           id: "raportit.hoksesWithoutOpiskeluoikeus"
                         }),
+                        intl.formatMessage({
+                          id: "raportit.hoksesWithoutOpiskeluoikeusInfoKuvaus"
+                        }),
                         1
                       )
                     }
@@ -320,6 +333,7 @@ export class Raportit extends React.Component<RaportitProps> {
                 <Separator />
                 <Section>
                   <ItemHeader>{titleText}</ItemHeader>
+                  <ItemDescription>{descText}</ItemDescription>
                   <div
                     style={{
                       visibility: selected === 1 ? "visible" : "hidden"
