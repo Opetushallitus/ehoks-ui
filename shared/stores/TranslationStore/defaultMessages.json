@@ -873,5 +873,10 @@
     "locale": "fi",
     "key": "raportit.oppilaitosoid",
     "value": "Oppilaitos Oid"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.oppijanumeroTitle",
+    "value": "Oppijanumero"
   }
 ]

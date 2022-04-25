@@ -247,7 +247,7 @@ export class Raportit extends React.Component<RaportitProps> {
       },
       {
         Header: intl.formatMessage({
-          id: "tavoitteet.oppijanumeroTitle"
+          id: "raportit.oppijanumeroTitle"
         }),
         accessor: "oppijaoid"
       },
