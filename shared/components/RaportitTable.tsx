@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 import React, { useMemo } from "react"
 import { Column, useTable } from "react-table"
 
@@ -27,7 +26,8 @@ export function RaportitTable(props: RaportitTableProps) {
     rows,
     prepareRow
   } = useTable({ columns, data })
-
+  /* eslint-disable react/jsx-key */
+  /* the jsx key is provided in the .get*Props() spreads. */
   return (
     <table {...getTableProps()}>
       <thead>
