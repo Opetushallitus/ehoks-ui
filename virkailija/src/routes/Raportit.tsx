@@ -205,7 +205,7 @@ export class Raportit extends React.Component<RaportitProps> {
     selected: number
   ) => {
     event.preventDefault()
-    // @ts-ignore Don't know how to fix
+    // @ts-ignore Don't know how to remove focus from link without this
     event.target.blur()
     this.setState({
       titleText,
