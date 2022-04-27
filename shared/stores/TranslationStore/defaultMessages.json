@@ -883,5 +883,10 @@
     "locale": "fi",
     "key": "raportit.hoksesWithoutOpiskeluoikeusInfoKuvaus",
     "value": "Hakee ja listaa valitun oppilaitoksen hoksit, joiden opiskeluoikeutta ei enää löydy Koski-palvelusta."
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.hoksesWithoutOpiskeluoikeusAlaOtsikko",
+    "value": "Hakee ja listaa valitun oppilaitoksen hoksit, joiden opiskeluoikeutta ei enää löydy Koski-palvelusta."
   }
 ]

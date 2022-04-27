@@ -47,6 +47,7 @@
     "header.raportitLink": "Raportit",
     "raportit.hoksesWithoutOpiskeluoikeus": "Hoksit, joissa poistettu opiskeluoikeus",
     "raportit.hoksesWithoutOpiskeluoikeusInfoKuvaus": "Hakee ja listaa valitun oppilaitoksen hoksit, joiden opiskeluoikeutta ei enää löydy Koski-palvelusta.",
+    "raportit.hoksesWithoutOpiskeluoikeusAlaOtsikko": "Hakee ja listaa valitun oppilaitoksen hoksit, joiden opiskeluoikeutta ei enää löydy Koski-palvelusta.",
     "raportit.ehoksid": "eHOKS ID",
     "raportit.opiskeluoikeusoid": "Opiskeluoikeus Oid",
     "raportit.oppilaitosoid": "Oppilaitos Oid",

@@ -305,7 +305,7 @@ export class Raportit extends React.Component<RaportitProps> {
                           id: "raportit.hoksesWithoutOpiskeluoikeus"
                         }),
                         intl.formatMessage({
-                          id: "raportit.hoksesWithoutOpiskeluoikeusInfoKuvaus"
+                          id: "raportit.hoksesWithoutOpiskeluoikeusAlaOtsikko"
                         }),
                         1
                       )
