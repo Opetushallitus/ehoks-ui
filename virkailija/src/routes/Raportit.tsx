@@ -140,7 +140,7 @@ interface fetchResult {
 
 interface RaportitState {
   hoksitCount?: number
-  hoksitWithoutOo?: HoksRow[] | []
+  hoksitWithoutOo?: HoksRow[]
   titleText: string
   descText: string
   selected: number
@@ -335,8 +335,6 @@ export class Raportit extends React.Component<RaportitProps> {
                     }}
                   >
                     <Styles>
-                      {/*
-                          // @ts-ignore fix later */}
                       <RaportitTable data={hoksitWithoutOo} columns={columns} />
                     </Styles>
                   </div>

@@ -52,7 +52,7 @@
     "@types/react-jsonschema-form": "^1.7.8",
     "@types/react-responsive": "^8.0.2",
     "@types/react-swipeable-views": "^0.13.0",
-    "@types/react-table": "^7.7.10",
+    "@types/react-table": "^7.7.11",
     "@types/react-test-renderer": "^16.9.2",
     "@types/styled-components": "^5.1.0",
     "@types/webpack-env": "^1.15.2",

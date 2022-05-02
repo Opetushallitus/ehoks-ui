@@ -10,12 +10,12 @@ interface HoksRow {
 }
 
 interface RaportitTableProps {
-  data: HoksRow[]
+  data: HoksRow[] | undefined
   columns: Column[]
 }
 
 export function RaportitTable(props: RaportitTableProps) {
-  const data = useMemo(() => props.data, [props.data])
+  const data = useMemo(() => props.data, [props.data])!
 
   const columns = useMemo(() => props.columns, [props.columns])
 
