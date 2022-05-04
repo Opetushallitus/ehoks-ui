@@ -8,6 +8,7 @@ export const propertiesByStep: { [index: number]: string[] } = {
     "ensikertainen-hyvaksyminen",
     "paivitetty",
     "sahkoposti",
+    "opiskelijan-puhelinnumero",
     "urasuunnitelma-koodi-uri",
     "urasuunnitelma-koodi-versio",
     "osaamisen-hankkimisen-tarve",
