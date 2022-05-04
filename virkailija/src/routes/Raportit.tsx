@@ -125,7 +125,7 @@ interface RaportitProps extends RouteComponentProps {
   store?: IRootStore
 }
 
-interface HoksRow {
+export interface HoksRow {
   hoksid: number
   hokseid: string
   oppijaoid: string

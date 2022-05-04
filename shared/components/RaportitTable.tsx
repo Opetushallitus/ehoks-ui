@@ -1,13 +1,6 @@
+import { HoksRow } from "../../virkailija/src/routes/Raportit"
 import React, { useMemo } from "react"
 import { Column, useTable } from "react-table"
-
-interface HoksRow {
-  hoksid: number
-  hokseid: string
-  oppijaoid: string
-  opiskeluoikeusoid: string
-  oppilaitosoid: string
-}
 
 interface RaportitTableProps {
   data: HoksRow[] | undefined
