@@ -34,6 +34,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
     "hyvaksytty",
     "paivitetty",
     "sahkoposti",
+    "opiskelijan-puhelinnumero",
     "urasuunnitelma-koodi-uri",
     "urasuunnitelma-koodi-versio",
     "osaamisen-hankkimisen-tarve",
