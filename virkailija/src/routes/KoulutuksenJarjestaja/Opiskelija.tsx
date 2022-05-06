@@ -90,6 +90,7 @@ export class Opiskelija extends React.Component<
     const { koulutuksenJarjestaja, session } = store!
     const results = koulutuksenJarjestaja.search.results
     const oppija = koulutuksenJarjestaja.search.oppija(studentId)
+    const fromListView = koulutuksenJarjestaja.search.fromListView
     const suunnitelmat = oppija ? oppija.suunnitelmat : []
     const studentIndex = oppija ? results.indexOf(oppija) : -1
     const previous = studentIndex > 0 ? results[studentIndex - 1] : undefined
@@ -100,34 +101,36 @@ export class Opiskelija extends React.Component<
 
     return (
       <React.Fragment>
-        <TopContainer>
-          <LeftLink>
-            {previous && (
-              <StudentLink
-                to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${previous.oid}`}
-              >
-                &lt;&lt; {previous.nimi}
+        {fromListView && (
+          <TopContainer>
+            <LeftLink>
+              {previous && (
+                <StudentLink
+                  to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${previous.oid}`}
+                >
+                  &lt;&lt; {previous.nimi}
+                </StudentLink>
+              )}
+            </LeftLink>
+            <LinkContainer>
+              <StudentLink to="/ehoks-virkailija-ui/koulutuksenjarjestaja">
+                <FormattedMessage
+                  id="koulutuksenJarjestaja.opiskelija.takaisinLink"
+                  defaultMessage="Palaa listalle"
+                />
               </StudentLink>
-            )}
-          </LeftLink>
-          <LinkContainer>
-            <StudentLink to="/ehoks-virkailija-ui/koulutuksenjarjestaja">
-              <FormattedMessage
-                id="koulutuksenJarjestaja.opiskelija.takaisinLink"
-                defaultMessage="Palaa listalle"
-              />
-            </StudentLink>
-          </LinkContainer>
-          <RightLink>
-            {next && (
-              <StudentLink
-                to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${next.oid}`}
-              >
-                {next.nimi} &gt;&gt;
-              </StudentLink>
-            )}
-          </RightLink>
-        </TopContainer>
+            </LinkContainer>
+            <RightLink>
+              {next && (
+                <StudentLink
+                  to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${next.oid}`}
+                >
+                  {next.nimi} &gt;&gt;
+                </StudentLink>
+              )}
+            </RightLink>
+          </TopContainer>
+        )}
         <Router
           basepath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${studentId}`}
         >

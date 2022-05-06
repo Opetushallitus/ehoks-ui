@@ -12,12 +12,13 @@ import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
 import find from "lodash.find"
 import { IReactionDisposer, reaction } from "mobx"
-import { observer } from "mobx-react"
+import { inject, observer } from "mobx-react"
 import { IHOKS } from "models/HOKS"
 import React from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import { IOppija } from "stores/KoulutuksenJarjestajaStore"
+import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 
 const NaviContainer = styled(ProgressPies)`
@@ -47,27 +48,56 @@ const HelpButton = styled(HelpPopup)`
   margin: 0 0 0 20px;
 `
 
-export interface KoulutuksenJarjestajaHOKSProps extends RouteComponentProps {
+export interface KoulutuksenJarjestajaHOKSProps
+  extends RouteComponentProps<{
+    location: {
+      state: {
+        fromRaportit: boolean
+        oppijaoid: string | null
+        hokseid: string | null
+      }
+    }
+  }> {
+  store?: IRootStore
   suunnitelmat: IHOKS[]
   oppija?: IOppija
   /* From router path */
   hoksId?: string
 }
 
+@inject("store")
 @observer
 export class KoulutuksenJarjestajaHOKS extends React.Component<
   KoulutuksenJarjestajaHOKSProps
 > {
   disposeReaction: IReactionDisposer
   componentDidMount() {
+    const { koulutuksenJarjestaja } = this.props.store!
+    const fromRaportit = this.props.location
+      ? this.props.location.state.fromRaportit
+      : false
     this.disposeReaction = reaction(
       () => this.props.suunnitelmat.length > 0,
       async (hasSuunnitelmat: boolean) => {
-        if (hasSuunnitelmat) {
-          const suunnitelma = find(
-            this.props.suunnitelmat,
-            h => h.eid === this.props.hoksId
-          )
+        if (hasSuunnitelmat || fromRaportit) {
+          const oppijaoid = this.props.location
+            ? this.props.location.state.oppijaoid
+            : null
+          const hokseid = this.props.location
+            ? this.props.location.state.hokseid
+            : null
+          let fromRaportitSuunnitelmat: IHOKS[] = []
+          if (fromRaportit && oppijaoid) {
+            const oppija = koulutuksenJarjestaja.search.oppija(oppijaoid)
+            if (!oppija) {
+              await koulutuksenJarjestaja.search.fetchOppija(oppijaoid)
+            }
+            fromRaportitSuunnitelmat = oppija ? oppija.suunnitelmat : []
+          }
+          const suunnitelma =
+            fromRaportitSuunnitelmat.length > 0
+              ? find(fromRaportitSuunnitelmat, h => h.eid === hokseid)
+              : find(this.props.suunnitelmat, h => h.eid === this.props.hoksId)
           if (suunnitelma) {
             await suunnitelma.fetchDetails()
             await suunnitelma.fetchOpiskelijapalauteTilat()
@@ -90,9 +120,11 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
 
   render() {
     const { hoksId, location, suunnitelmat, oppija } = this.props
-
-    const suunnitelma = find(suunnitelmat, h => h.eid === hoksId)
-
+    const suunnitelmaHoksId =
+      this.props.location && this.props.location.state.fromRaportit
+        ? this.props.location.state.hokseid
+        : hoksId
+    const suunnitelma = find(suunnitelmat, h => h.eid === suunnitelmaHoksId)
     if (!oppija || !suunnitelma) {
       return null
     }

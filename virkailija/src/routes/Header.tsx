@@ -98,6 +98,13 @@ export class Header extends React.Component<HeaderProps> {
             <ActiveIndicator />
           </TopLink>
         )}
+        <TopLink to="/ehoks-virkailija-ui/raportit">
+          <FormattedMessage
+            id="header.raportitLink"
+            defaultMessage="Raportit"
+          />
+          <ActiveIndicator />
+        </TopLink>
         <TopLink to="/ehoks-virkailija-ui/dokumentaatio">
           <FormattedMessage
             id="header.dokumentaatioLink"
