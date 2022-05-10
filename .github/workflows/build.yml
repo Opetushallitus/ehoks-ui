@@ -36,6 +36,7 @@ jobs:
           npm run ci
           pushd oppija
           export BASE_IMAGE=baseimage-fatjar-openjdk8:master
+          export TRAVIS_BUILD_NUMBER="$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT"
           ../ci-tools/common/pull-image.sh
           ./scripts/ci/build.sh ehoks-oppija-ui
           popd
@@ -53,6 +54,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           export BASE_IMAGE=baseimage-fatjar-openjdk8:master
+          export TRAVIS_BUILD_NUMBER="$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT"
           export TRAVIS_BRANCH=${{ github.ref_name }}
           export TRAVIS_COMMIT=${{ github.sha }}
           ./ci-tools/build/upload-image.sh ehoks-oppija-ui
