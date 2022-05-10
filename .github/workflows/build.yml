@@ -1,8 +1,5 @@
 name: ehoks-ui
 
-node_js:
-  - 16
-
 on:
   workflow_dispatch:
   push:
