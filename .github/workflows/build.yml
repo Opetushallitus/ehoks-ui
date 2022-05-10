@@ -1,0 +1,62 @@
+name: ehoks-ui
+
+language: node_js
+
+node_js:
+  - 16
+
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v3
+
+      - name: Before Install
+        shell: bash
+        run: |
+          npm i -g npm@6
+
+      - name: Install Tools
+        shell: bash
+        run: |
+          git clone https://github.com/Opetushallitus/ci-tools.git
+          source ci-tools/common/setup-tools.sh
+          npm ci
+
+      - name: Run Checks and Build
+        shell: bash
+        run: |
+          npm run ci
+          pushd oppija
+          export BASE_IMAGE=baseimage-fatjar-openjdk8:master
+          ../ci-tools/common/pull-image.sh
+          ./scripts/ci/build.sh ehoks-oppija-ui
+          popd
+          pushd virkailija
+          ./scripts/ci/build.sh ehoks-virkailija-ui
+          popd
+          pushd tyopaikantoimija
+          ./scripts/ci/build.sh ehoks-tyopaikantoimija-ui
+          popd
+
+      - name: Upload Packages
+        shell: bash
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          export BASE_IMAGE=baseimage-fatjar-openjdk8:master
+          export TRAVIS_BRANCH=${{ github.ref_name }}
+          export TRAVIS_COMMIT=${{ github.sha }}
+          ./ci-tools/build/upload-image.sh ehoks-oppija-ui
+          ./ci-tools/build/upload-image.sh ehoks-virkailija-ui
+          ./ci-tools/build/upload-image.sh ehoks-tyopaikantoimija-ui
+
