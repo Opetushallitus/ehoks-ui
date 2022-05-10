@@ -1,7 +1,5 @@
 name: ehoks-ui
 
-language: node_js
-
 node_js:
   - 16
 
