@@ -28,7 +28,7 @@
     "prepush:oppija": "npm run prepush --prefix oppija",
     "prepush:tyopaikantoimija": "npm run prepush --prefix tyopaikantoimija",
     "prepush": "npm-run-all prepush:*",
-    "travis": "npm-run-all prettier:check lint test:* build:*"
+    "ci": "npm-run-all prettier:check lint test:* build:*"
   },
   "private": true,
   "license": "",
