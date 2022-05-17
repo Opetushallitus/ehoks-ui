@@ -18,7 +18,8 @@ const Model = types.model("HankittavaPaikallinenTutkinnonOsaModel", {
   laajuus: types.optional(types.number, 0),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
   koulutuksenJarjestaja: types.maybe(Organisaatio),
-  amosaaTunniste: types.optional(types.string, "")
+  amosaaTunniste: types.optional(types.string, ""),
+  opetusJaOhjausMaara: types.optional(types.number, 0)
 })
 
 export const HankittavaPaikallinenTutkinnonOsa = types

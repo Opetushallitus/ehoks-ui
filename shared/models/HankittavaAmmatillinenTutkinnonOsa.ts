@@ -22,7 +22,8 @@ export const Model = types.model({
   osaamisenHankkimistavat: types.array(OsaamisenHankkimistapa),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
   koulutuksenJarjestaja: types.maybe(Organisaatio),
-  olennainenSeikka: types.optional(types.boolean, false)
+  olennainenSeikka: types.optional(types.boolean, false),
+  opetusJaOhjausMaara: types.optional(types.number, 0)
 })
 
 export const HankittavaAmmatillinenTutkinnonOsa = types
