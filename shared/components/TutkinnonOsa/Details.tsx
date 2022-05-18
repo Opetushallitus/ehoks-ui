@@ -469,13 +469,13 @@ const OpetusJaOhjausMaaraContainer = styled("div")`
 `
 
 const OpetusJaOhjausMaaraView = ({ amount }: { amount?: number }) =>
-  amount != undefined || amount != null ? (
+  amount !== undefined || amount !== null ? (
     <OpetusJaOhjausMaaraContainer>
       <FormattedMessage
         id="opiskelusuunnitelma.opetusJaOhjausMaara"
         defaultMessage="Opetuksen ja ohjauksen määrä"
       />
-      // TODO
+      {amount}
     </OpetusJaOhjausMaaraContainer>
   ) : null
 
