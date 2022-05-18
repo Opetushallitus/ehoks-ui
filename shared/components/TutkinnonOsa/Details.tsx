@@ -464,7 +464,7 @@ const TodentamisenProsessiArvioijienKautta = ({
 )
 
 // TODO
-const OpetusJaOhjausMaaraContainer = styled(div)`
+const OpetusJaOhjausMaaraContainer = styled("div")`
   display: flex;
 `
 
