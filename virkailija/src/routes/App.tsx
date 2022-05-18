@@ -22,6 +22,7 @@ import { LuoHOKS } from "./LuoHOKS"
 import { MuokkaaHOKS } from "./MuokkaaHOKS"
 import { VirkailijaRaamit } from "./VirkailijaRaamit"
 import { Yllapito } from "./Yllapito"
+import { Raportit } from "./Raportit"
 import AppNotifications from "./App/AppNotifications"
 
 const Container = styled("div")`
@@ -103,6 +104,7 @@ export class App extends React.Component<AppProps> {
               <MuokkaaHOKS path="hoks/:oppijaOid/:hoksId" />
               <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />
               <Yllapito path="yllapito" />
+              <Raportit path="raportit" />
               <Opiskelija path="koulutuksenjarjestaja/:studentId/*" />
             </StyledRouter>
             <GlobalStyles />

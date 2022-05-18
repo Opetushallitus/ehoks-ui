@@ -531,6 +531,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       id: {
         "ui:widget": "hidden"
       },
+      "opetus-ja-ohjaus-maara": {
+        "ui:widget": "updown"
+      },
       "tutkinnon-osa-koodi-uri": {
         "ui:field": "typeahead",
         typeahead: typeaheadProps(options.tutkinnonosat)
@@ -724,6 +727,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       ],
       id: {
         "ui:widget": "hidden"
+      },
+      "opetus-ja-ohjaus-maara": {
+        "ui:widget": "updown"
       },
       "osaamisen-hankkimistavat": {
         "ui:options": {
@@ -924,6 +930,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           ],
           id: {
             "ui:widget": "hidden"
+          },
+          "opetus-ja-ohjaus-maara": {
+            "ui:widget": "updown"
           },
           "osa-alue-koodi-uri": {
             "ui:field": "typeahead",

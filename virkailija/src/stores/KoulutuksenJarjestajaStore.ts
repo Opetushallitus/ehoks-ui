@@ -172,7 +172,8 @@ const Search = types
     isLoading: false,
     sortBy: types.optional(SortBy, "nimi"),
     sortDirection: "asc",
-    perPage: 10
+    perPage: 10,
+    fromListView: true
   })
   .volatile((): { searchTexts: { [key in SearchSortKey]: string } } => ({
     searchTexts: {
@@ -182,7 +183,7 @@ const Search = types
     }
   }))
   .actions(self => {
-    const { fetchCollection, apiUrl, appendCallerId } = getEnv<
+    const { fetchCollection, fetchSingle, apiUrl, appendCallerId } = getEnv<
       StoreEnvironment
     >(self)
 
@@ -238,15 +239,34 @@ const Search = types
           })
         )
       )
-
+      self.fromListView = true
       self.isLoading = false
+    })
+
+    // Fetches oppija by id and adds it to results
+    const fetchOppija = flow(function*(oppijaOid): any {
+      const response: APIResponse = yield fetchSingle(
+        apiUrl(`virkailija/oppijat/${oppijaOid}/with-oo`),
+        { headers: appendCallerId() }
+      )
+      self.results.clear()
+      self.results.push(response.data)
+      yield Promise.all(
+        self.results.map(
+          flow(function*(oppija): any {
+            yield oppija.fetchSuunnitelmat()
+            yield oppija.fetchHenkilotiedot()
+          })
+        )
+      )
+      self.fromListView = false
     })
 
     const resetActivePage = () => {
       self.activePage = 0
     }
 
-    return { fetchOppijat, resetActivePage }
+    return { fetchOppijat, fetchOppija, resetActivePage }
   })
   .actions(self => {
     const changeSearchText = (field: SearchSortKey, searchText = "") => {

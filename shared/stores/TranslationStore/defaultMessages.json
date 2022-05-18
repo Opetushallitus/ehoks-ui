@@ -1,288 +1,13 @@
 [
   {
     "locale": "fi",
-    "key": "etusivu.ammatillisetTutkinnotKuvanAriaLabel",
-    "value": "Näppäimistön näppäin jossa lukee 'Education'"
-  },
-  {
-    "locale": "fi",
-    "key": "etusivu.henkilokohtaistaminenKuvanAriaLabel",
-    "value": "Hymyileviä opiskelijoita työn touhussa"
-  },
-  {
-    "locale": "fi",
     "key": "accordion.naytaOhjetekstiAriaLabel",
     "value": "Näytä ohjeteksti"
   },
   {
     "locale": "fi",
-    "key": "infoModal.naytaLisatiedot",
-    "value": "Näytä lisätiedot"
-  },
-  {
-    "locale": "fi",
-    "key": "infoModal.osaaikaisuus",
-    "value": "Osa-aikaisuus"
-  },
-  {
-    "locale": "fi",
-    "key": "infoModal.hankkimistapaTyyppi",
-    "value": "Osaamisen hankkimistapa"
-  },
-  {
-    "locale": "fi",
-    "key": "infoModal.perusta",
-    "value": "Oppisopimuksen perusta"
-  },
-  {
-    "locale": "fi",
-    "key": "infoModal.lisatietoja",
-    "value": "Lisätietoja työpaikkajaksosta"
-  },
-  {
-    "locale": "fi",
-    "key": "infoModal.keskeytymisajanjaksot",
-    "value": "Keskeytymisajanjaksot"
-  },
-  {
-    "locale": "fi",
-    "key": "learningEvent.keskeytynyt",
-    "value": "keskeytynyt"
-  },
-  {
-    "locale": "fi",
-    "key": "table.haePlaceholder",
-    "value": "Hae"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.piilotaVirheAriaLabel",
-    "value": "Piilota virhe"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.HOKSStore.haeSuunnitelmat",
-    "value": "Suunnitelmien haku epäonnistui"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.HOKSStore.haeSuunnitelmat.notfound",
-    "value": "Suunnitelmia ei löytynyt"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.EnvironmentStore.getEnvironment",
-    "value": "Ympäristömuuttujien haku epäonnistui"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.TranslationStore.fetchLocales",
-    "value": "Käännösten haku epäonnistui"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.NotificationStore.haeMuistutukset",
-    "value": "Muistutusten haku epäonnistui"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.NotificationStore.haeOpiskelijapalautelinkit",
-    "value": "Opiskelijapalautelinkkien haku epäonnistui"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.OppilasStore.haePerusteet",
-    "value": "Ammatillisten tutkintojen haku epäonnistui"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.SessionStore.checkSession",
-    "value": "Kirjautumistietojen tarkastus epäonnistui"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.SessionStore.getUserInfo",
-    "value": "Käyttäjätietojen haku epäonnistui"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.SessionStore.valtuudet",
-    "value": "Olet kirjautunut käyttäen valtuuksia. Voit käyttää eHOKSia kirjauduttuasi ulos, ja sen jälkeen takaisin sisään ilman valtuuksia."
-  },
-  {
-    "locale": "fi",
-    "key": "errors.SessionStore.logout",
-    "value": "Uloskirjautuminen epäonnistui"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.HOKS.fetchOpiskeluoikeudet",
-    "value": "Opiskeluoikeuksien hakeminen epäonnistui"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.HOKS.fetchOpiskeluoikeudet.wrongType",
-    "value": "HOKSiin liitetty opiskeluoikeus ei ole ammatillinen tutkinto"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.HOKS.fetchOsaamispisteet",
-    "value": "Osaamispisteiden haku epäonnistui"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.HOKS.OppisopimuksenPerustaPuuttuu",
-    "value": "Oppisopimuksen perusta puuttuu"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.HOKS.HankittavatAmmatOsaamisenHankkimistavoissa",
-    "value": "Hankittavan ammatillisen tutkinnon osan {index} osaamisen hankkimistavoista {ohts}"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.HOKS.HankittavatPaikallisetOsaamisenHankkimistavoissa",
-    "value": "Hankittavan paikallisen tutkinnon osan {index} osaamisen hankkimistavoista {ohts}"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.HOKS.HankittavatYhteisetOsaamisenHankkimistavoissa",
-    "value": "Hankittavan yhteisen tutkinnon osan {index} osaamisen hankkimistavoista {ohts}"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.EnrichKoodiUri.fetchEPerusteet",
-    "value": "Tutkinnon osien haku ePerusteista epäonnistui"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.EnrichOsaAlue.fetchFromEPerusteet",
-    "value": "Tutkinnon osan osa-alueiden haku ePerusteista epäonnistui"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.EnrichKoodiUri.fetchKoodisto",
-    "value": "Haku koodistosta epäonnistui"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.EnrichTutkinnonOsa.fetchViitteet",
-    "value": "Tutkinnon osan viitteiden haku epäonnistui"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.EnrichOrganisaatioOid.fetchOrganisaatio",
-    "value": "Organisaation tietojen haku epäonnistui"
-  },
-  {
-    "locale": "fi",
-    "key": "footer.opintopolkuLogoLabel",
-    "value": "Opintopolku logo"
-  },
-  {
-    "locale": "fi",
-    "key": "footer.okmLogoLabel",
-    "value": "Opetus- ja kulttuuriministeriö logo"
-  },
-  {
-    "locale": "fi",
-    "key": "footer.ophLogoLabel",
-    "value": "Opetushallitus logo"
-  },
-  {
-    "locale": "fi",
-    "key": "footer.ehoksLogoLabel",
-    "value": "eHOKS logo"
-  },
-  {
-    "locale": "fi",
-    "key": "header.ehoksLogoLabel",
-    "value": "eHOKS logo"
-  },
-  {
-    "locale": "fi",
-    "key": "header.opiskelijatLink",
-    "value": "Opiskelijat"
-  },
-  {
-    "locale": "fi",
-    "key": "header.raportitLink",
-    "value": "Raportit"
-  },
-  {
-    "locale": "fi",
-    "key": "header.dokumentaatioLink",
-    "value": "Dokumentaatio"
-  },
-  {
-    "locale": "fi",
-    "key": "header.valtuudet",
-    "value": "(Valtuudet)"
-  },
-  {
-    "locale": "fi",
-    "key": "opiskelusuunnitelma.piilotaAmmattitaitovaatimuksetAriaLabel",
-    "value": "Piilota ammattitaitovaatimukset ja arviointikriteerit"
-  },
-  {
-    "locale": "fi",
-    "key": "opiskelusuunnitelma.naytaAmmattitaitovaatimuksetAriaLabel",
-    "value": "Näytä ammattitaitovaatimukset ja arviointikriteerit"
-  },
-  {
-    "locale": "fi",
-    "key": "opiskelusuunnitelma.naytaPoikkeamatJaArviointikriteeritAriaLabel",
-    "value": "Näytä poikkeaminen ammattitaitovaatimuksista ja yksilölliset arviointikriteerisi"
-  },
-  {
-    "locale": "fi",
-    "key": "opiskelusuunnitelma.piilotaPoikkeamatJaArviointikriteeritAriaLabel",
-    "value": "Piilota poikkeaminen ammattitaitovaatimuksista ja yksilölliset arviointikriteerisi"
-  },
-  {
-    "locale": "fi",
-    "key": "opiskelusuunnitelma.naytaTavoitteetjaSisallotAriaLabel",
-    "value": "Näytä tavoitteet ja sisällöt"
-  },
-  {
-    "locale": "fi",
-    "key": "opiskelusuunnitelma.piilotaTavoitteetjaSisallotAriaLabel",
-    "value": "Piilota tavoitteet ja sisällöt"
-  },
-  {
-    "locale": "fi",
-    "key": "opiskelusuunnitelma.nayttoTitle",
-    "value": "Näyttö"
-  },
-  {
-    "locale": "fi",
-    "key": "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel",
-    "value": "Näytä työssäoppimisen ja näytön laajennetut tiedot"
-  },
-  {
-    "locale": "fi",
-    "key": "opiskelusuunnitelma.piilotaTyossaOppiminenAriaLabel",
-    "value": "Piilota työssäoppimisen ja näytön laajennetut tiedot"
-  },
-  {
-    "locale": "fi",
-    "key": "opiskelusuunnitelma.hyvaksyttyTitle",
-    "value": "Hyväksytty"
-  },
-  {
-    "locale": "fi",
-    "key": "opiskelusuunnitelma.koulutuksenjarjestajanEdustajaTitle",
-    "value": "Koulutuksen järjestäjän edustaja"
-  },
-  {
-    "locale": "fi",
-    "key": "opiskelusuunnitelma.osaamispistettaPostfix",
-    "value": "osaamispistettä"
-  },
-  {
-    "locale": "fi",
-    "key": "ammattitutkinto.hakuPlaceholder",
-    "value": "Hae tietoa"
+    "key": "ammattitutkinto.ammattitutkintojaLadataanAriaLabel",
+    "value": "Ammattitutkintoja ladataan"
   },
   {
     "locale": "fi",
@@ -291,8 +16,8 @@
   },
   {
     "locale": "fi",
-    "key": "ammattitutkinto.ammattitutkintojaLadataanAriaLabel",
-    "value": "Ammattitutkintoja ladataan"
+    "key": "ammattitutkinto.hakuPlaceholder",
+    "value": "Hae tietoa"
   },
   {
     "locale": "fi",
@@ -311,128 +36,223 @@
   },
   {
     "locale": "fi",
-    "key": "opiskelusuunnitelma.osaamispisteLyhenne",
-    "value": "osp"
+    "key": "errors.EnrichKoodiUri.fetchEPerusteet",
+    "value": "Tutkinnon osien haku ePerusteista epäonnistui"
   },
   {
     "locale": "fi",
-    "key": "opiskelusuunnitelma.tutkinnonNimiTitle",
-    "value": "Tutkinnon nimi"
+    "key": "errors.EnrichKoodiUri.fetchKoodisto",
+    "value": "Haku koodistosta epäonnistui"
   },
   {
     "locale": "fi",
-    "key": "opiskelusuunnitelma.laajuusTitle",
-    "value": "Laajuus"
+    "key": "errors.EnrichOrganisaatioOid.fetchOrganisaatio",
+    "value": "Organisaation tietojen haku epäonnistui"
   },
   {
     "locale": "fi",
-    "key": "opiskelusuunnitelma.osaamisalaTitle",
-    "value": "Osaamisala"
+    "key": "errors.EnrichOsaAlue.fetchFromEPerusteet",
+    "value": "Tutkinnon osan osa-alueiden haku ePerusteista epäonnistui"
   },
   {
     "locale": "fi",
-    "key": "opiskelusuunnitelma.tutkintonimikeTitle",
-    "value": "Tutkintonimike"
+    "key": "errors.EnrichTutkinnonOsa.fetchViitteet",
+    "value": "Tutkinnon osan viitteiden haku epäonnistui"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.ensikertainenHyvaksyminenTitle",
-    "value": "Ensikertainen hyväksyminen"
+    "key": "errors.EnvironmentStore.getEnvironment",
+    "value": "Ympäristömuuttujien haku epäonnistui"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.paivitettyTitle",
-    "value": "Päivitetty"
+    "key": "errors.HOKS.fetchOpiskeluoikeudet",
+    "value": "Opiskeluoikeuksien hakeminen epäonnistui"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.osaamisenHankkimisenTarveTitle",
-    "value": "Osaamisen hankkimisen tarve"
+    "key": "errors.HOKS.fetchOpiskeluoikeudet.wrongType",
+    "value": "HOKSiin liitetty opiskeluoikeus ei ole ammatillinen tutkinto"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.osaaminenSaavutettuTitle",
-    "value": "Sovittu osaaminen saavutettu"
+    "key": "errors.HOKS.fetchOsaamispisteet",
+    "value": "Osaamispisteiden haku epäonnistui"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.suunnitelmaJatkoOpintoihinTitle",
-    "value": "Suunnitelma jatko-opintoihin siirtymisestä"
+    "key": "errors.HOKS.HankittavatAmmatOsaamisenHankkimistavoissa",
+    "value": "Hankittavan ammatillisen tutkinnon osan {index} osaamisen hankkimistavoista {ohts}"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.osoiteTitle",
-    "value": "Osoite"
+    "key": "errors.HOKS.HankittavatPaikallisetOsaamisenHankkimistavoissa",
+    "value": "Hankittavan paikallisen tutkinnon osan {index} osaamisen hankkimistavoista {ohts}"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.sahkopostiTitle",
-    "value": "Sähköposti"
+    "key": "errors.HOKS.HankittavatYhteisetOsaamisenHankkimistavoissa",
+    "value": "Hankittavan yhteisen tutkinnon osan {index} osaamisen hankkimistavoista {ohts}"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.etunimiSukunimiTitle",
-    "value": "Etunimi Sukunimi"
+    "key": "errors.HOKS.OppisopimuksenPerustaPuuttuu",
+    "value": "Oppisopimuksen perusta puuttuu"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.kutsumanimiTitle",
-    "value": "Kutsumanimi"
+    "key": "errors.HOKSStore.haeSuunnitelmat",
+    "value": "Suunnitelmien haku epäonnistui"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.oppijanumeroTitle",
-    "value": "Oppijanumero"
+    "key": "errors.HOKSStore.haeSuunnitelmat.notfound",
+    "value": "Suunnitelmia ei löytynyt"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.postiosoiteTitle",
-    "value": "Postiosoite"
+    "key": "errors.NotificationStore.haeMuistutukset",
+    "value": "Muistutusten haku epäonnistui"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.kotikuntaTitle",
-    "value": "Kotikunta"
+    "key": "errors.NotificationStore.haeOpiskelijapalautelinkit",
+    "value": "Opiskelijapalautelinkkien haku epäonnistui"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.puhelinnumeroTitle",
-    "value": "Puhelinnumero"
+    "key": "errors.Opiskelijapalaute.resendPalaute",
+    "value": "Virhe uudelleenlähetyspyynnön käsittelyssä"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.opiskeluoikeudOidTitle",
-    "value": "Opiskeluoikeuden OID"
+    "key": "errors.OppilasStore.haePerusteet",
+    "value": "Ammatillisten tutkintojen haku epäonnistui"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.idTitle",
-    "value": "eHOKS ID"
+    "key": "errors.piilotaVirheAriaLabel",
+    "value": "Piilota virhe"
   },
   {
     "locale": "fi",
-    "key": "tyopaikanToimija.tutkinnonNimiTitle",
-    "value": "Tutkinnon nimi"
+    "key": "errors.SessionStore.checkSession",
+    "value": "Kirjautumistietojen tarkastus epäonnistui"
   },
   {
     "locale": "fi",
-    "key": "tyopaikanToimija.laajuusTitle",
-    "value": "Laajuus"
+    "key": "errors.SessionStore.getUserInfo",
+    "value": "Käyttäjätietojen haku epäonnistui"
   },
   {
     "locale": "fi",
-    "key": "tyopaikanToimija.suunnitelmaJatkoOpintoihinTitle",
-    "value": "Suunnitelma jatko-opintoihin siirtymisestä"
+    "key": "errors.SessionStore.logout",
+    "value": "Uloskirjautuminen epäonnistui"
   },
   {
     "locale": "fi",
-    "key": "tyopaikanToimija.osaamispistetta",
-    "value": "osaamispistettä"
+    "key": "errors.SessionStore.valtuudet",
+    "value": "Olet kirjautunut käyttäen valtuuksia. Voit käyttää eHOKSia kirjauduttuasi ulos, ja sen jälkeen takaisin sisään ilman valtuuksia."
   },
   {
     "locale": "fi",
-    "key": "koulutuksenJarjestaja.hakuPlaceholder",
-    "value": "Hae opiskelijaa"
+    "key": "errors.TranslationStore.fetchLocales",
+    "value": "Käännösten haku epäonnistui"
+  },
+  {
+    "locale": "fi",
+    "key": "etusivu.ammatillisetTutkinnotKuvanAriaLabel",
+    "value": "Näppäimistön näppäin jossa lukee 'Education'"
+  },
+  {
+    "locale": "fi",
+    "key": "etusivu.henkilokohtaistaminenKuvanAriaLabel",
+    "value": "Hymyileviä opiskelijoita työn touhussa"
+  },
+  {
+    "locale": "fi",
+    "key": "footer.ehoksLogoLabel",
+    "value": "eHOKS logo"
+  },
+  {
+    "locale": "fi",
+    "key": "footer.okmLogoLabel",
+    "value": "Opetus- ja kulttuuriministeriö logo"
+  },
+  {
+    "locale": "fi",
+    "key": "footer.ophLogoLabel",
+    "value": "Opetushallitus logo"
+  },
+  {
+    "locale": "fi",
+    "key": "footer.opintopolkuLogoLabel",
+    "value": "Opintopolku logo"
+  },
+  {
+    "locale": "fi",
+    "key": "header.dokumentaatioLink",
+    "value": "Dokumentaatio"
+  },
+  {
+    "locale": "fi",
+    "key": "header.ehoksLogoLabel",
+    "value": "eHOKS logo"
+  },
+  {
+    "locale": "fi",
+    "key": "header.opiskelijatLink",
+    "value": "Opiskelijat"
+  },
+  {
+    "locale": "fi",
+    "key": "header.raportitLink",
+    "value": "Raportit"
+  },
+  {
+    "locale": "fi",
+    "key": "header.valtuudet",
+    "value": "(Valtuudet)"
+  },
+  {
+    "locale": "fi",
+    "key": "infoModal.hankkimistapaTyyppi",
+    "value": "Osaamisen hankkimistapa"
+  },
+  {
+    "locale": "fi",
+    "key": "infoModal.keskeytymisajanjaksot",
+    "value": "Keskeytymisajanjaksot"
+  },
+  {
+    "locale": "fi",
+    "key": "infoModal.lisatietoja",
+    "value": "Lisätietoja työpaikkajaksosta"
+  },
+  {
+    "locale": "fi",
+    "key": "infoModal.naytaLisatiedot",
+    "value": "Näytä lisätiedot"
+  },
+  {
+    "locale": "fi",
+    "key": "infoModal.osaaikaisuus",
+    "value": "Osa-aikaisuus"
+  },
+  {
+    "locale": "fi",
+    "key": "infoModal.perusta",
+    "value": "Oppisopimuksen perusta"
+  },
+  {
+    "locale": "fi",
+    "key": "introDialog.page1Logo",
+    "value": "eHOKS logo"
+  },
+  {
+    "locale": "fi",
+    "key": "jakaminen.haluatkoPoistaaConfirm",
+    "value": "Haluatko varmasti poistaa valitun jakolinkin?"
   },
   {
     "locale": "fi",
@@ -441,8 +261,8 @@
   },
   {
     "locale": "fi",
-    "key": "koulutuksenJarjestaja.jarjestaTitle",
-    "value": "Järjestä"
+    "key": "koulutuksenJarjestaja.hakuPlaceholder",
+    "value": "Hae opiskelijaa"
   },
   {
     "locale": "fi",
@@ -451,28 +271,23 @@
   },
   {
     "locale": "fi",
+    "key": "koulutuksenJarjestaja.jarjestaTitle",
+    "value": "Järjestä"
+  },
+  {
+    "locale": "fi",
     "key": "koulutuksenJarjestaja.meneHakutuloksienSivulleAriaLabel",
     "value": "Mene hakutuloksien sivulle {page}"
   },
   {
     "locale": "fi",
-    "key": "koulutuksenJarjestaja.tavoite.suunnitelmaJatkoOpintoihinTitle",
-    "value": "Suunnitelma jatko-opintoihin siirtymisestä"
-  },
-  {
-    "locale": "fi",
-    "key": "koulutuksenJarjestaja.tavoite.osoiteTitle",
-    "value": "Osoite"
-  },
-  {
-    "locale": "fi",
-    "key": "koulutuksenJarjestaja.tavoite.sahkopostiTitle",
-    "value": "Sähköposti"
-  },
-  {
-    "locale": "fi",
     "key": "koulutuksenJarjestaja.tavoite.etunimiSukunimiTitle",
     "value": "Etunimi Sukunimi"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tavoite.kotikuntaTitle",
+    "value": "Kotikunta"
   },
   {
     "locale": "fi",
@@ -486,13 +301,13 @@
   },
   {
     "locale": "fi",
-    "key": "koulutuksenJarjestaja.tavoite.postiosoiteTitle",
-    "value": "Postiosoite"
+    "key": "koulutuksenJarjestaja.tavoite.osoiteTitle",
+    "value": "Osoite"
   },
   {
     "locale": "fi",
-    "key": "koulutuksenJarjestaja.tavoite.kotikuntaTitle",
-    "value": "Kotikunta"
+    "key": "koulutuksenJarjestaja.tavoite.postiosoiteTitle",
+    "value": "Postiosoite"
   },
   {
     "locale": "fi",
@@ -501,18 +316,188 @@
   },
   {
     "locale": "fi",
-    "key": "jakaminen.haluatkoPoistaaConfirm",
-    "value": "Haluatko varmasti poistaa valitun jakolinkin?"
+    "key": "koulutuksenJarjestaja.tavoite.sahkopostiTitle",
+    "value": "Sähköposti"
   },
   {
     "locale": "fi",
-    "key": "introDialog.page1Logo",
-    "value": "eHOKS logo"
+    "key": "koulutuksenJarjestaja.tavoite.suunnitelmaJatkoOpintoihinTitle",
+    "value": "Suunnitelma jatko-opintoihin siirtymisestä"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.OpiskelijapalauteTitle\"",
-    "value": "Opiskelijapalaute"
+    "key": "learningEvent.keskeytynyt",
+    "value": "keskeytynyt"
+  },
+  {
+    "locale": "fi",
+    "key": "notification.Opiskelijapalaute.resendPalaute.success",
+    "value": "Sähköposti opiskelijapalautteesta lähetetään osoitteeseen {sahkoposti}."
+  },
+  {
+    "locale": "fi",
+    "key": "notification.piilotaNotifikaatioAriaLabel",
+    "value": "Piilota ilmoitus"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskeluoikeus.osittainen",
+    "value": "osittainen"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.hyvaksyttyTitle",
+    "value": "Hyväksytty"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.koulutuksenjarjestajanEdustajaTitle",
+    "value": "Koulutuksen järjestäjän edustaja"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.laajuusTitle",
+    "value": "Laajuus"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.naytaAmmattitaitovaatimuksetAriaLabel",
+    "value": "Näytä ammattitaitovaatimukset ja arviointikriteerit"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.naytaPoikkeamatJaArviointikriteeritAriaLabel",
+    "value": "Näytä poikkeaminen ammattitaitovaatimuksista ja yksilölliset arviointikriteerisi"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.naytaTavoitteetjaSisallotAriaLabel",
+    "value": "Näytä tavoitteet ja sisällöt"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel",
+    "value": "Näytä työssäoppimisen ja näytön laajennetut tiedot"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.nayttoTitle",
+    "value": "Näyttö"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.osaamisalaTitle",
+    "value": "Osaamisala"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.osaamispisteLyhenne",
+    "value": "osp"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.osaamispistettaPostfix",
+    "value": "osaamispistettä"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.piilotaAmmattitaitovaatimuksetAriaLabel",
+    "value": "Piilota ammattitaitovaatimukset ja arviointikriteerit"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.piilotaPoikkeamatJaArviointikriteeritAriaLabel",
+    "value": "Piilota poikkeaminen ammattitaitovaatimuksista ja yksilölliset arviointikriteerisi"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.piilotaTavoitteetjaSisallotAriaLabel",
+    "value": "Piilota tavoitteet ja sisällöt"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.piilotaTyossaOppiminenAriaLabel",
+    "value": "Piilota työssäoppimisen ja näytön laajennetut tiedot"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.tutkinnonNimiTitle",
+    "value": "Tutkinnon nimi"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.tutkintonimikeTitle",
+    "value": "Tutkintonimike"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.ehoksid",
+    "value": "eHOKS ID"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.hoksesWithoutOpiskeluoikeus",
+    "value": "Hoksit, joissa poistettu opiskeluoikeus"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.hoksesWithoutOpiskeluoikeusAlaOtsikko",
+    "value": "Hakee ja listaa valitun oppilaitoksen hoksit, joiden opiskeluoikeutta ei enää löydy Koski-palvelusta."
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.hoksesWithoutOpiskeluoikeusInfoKuvaus",
+    "value": "Hakee ja listaa valitun oppilaitoksen hoksit, joiden opiskeluoikeutta ei enää löydy Koski-palvelusta."
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.opiskeluoikeusoid",
+    "value": "Opiskeluoikeus Oid"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.oppijanumeroTitle",
+    "value": "Oppijanumero"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.oppilaitosoid",
+    "value": "Oppilaitos Oid"
+  },
+  {
+    "locale": "fi",
+    "key": "table.haePlaceholder",
+    "value": "Hae"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.ensikertainenHyvaksyminenTitle",
+    "value": "Ensikertainen hyväksyminen"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.etunimiSukunimiTitle",
+    "value": "Etunimi Sukunimi"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.idTitle",
+    "value": "eHOKS ID"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.kotikuntaTitle",
+    "value": "Kotikunta"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.kutsumanimiTitle",
+    "value": "Kutsumanimi"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.opiskelijapalauteEiPalautteita",
+    "value": "Ei aktiivisia palautteita"
   },
   {
     "locale": "fi",
@@ -521,18 +506,13 @@
   },
   {
     "locale": "fi",
+    "key": "tavoitteet.opiskelijapalauteResendButton",
+    "value": "Lähetä linkki opiskelijapalautekyselyyn uudestaan"
+  },
+  {
+    "locale": "fi",
     "key": "tavoitteet.opiskelijapalauteSahkopostiTitle",
     "value": "Opiskelijan sähköpostiosoite"
-  },
-  {
-    "locale": "fi",
-    "key": "tavoitteet.opiskelijapalauteTilaTitle",
-    "value": "Opiskelijapalautteen tila"
-  },
-  {
-    "locale": "fi",
-    "key": "tavoitteet.opiskelijapalauteTyyppiTitle",
-    "value": "Kyselyn tyyppi"
   },
   {
     "locale": "fi",
@@ -561,13 +541,18 @@
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.opiskelijapalauteTyyppi.aloittaneet",
-    "value": "Aloittaneet"
+    "key": "tavoitteet.opiskelijapalauteTilaTitle",
+    "value": "Opiskelijapalautteen tila"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.opiskelijapalauteTyyppi.tutkinnonsuorittaneet",
-    "value": "Tutkinnon suorittaneet"
+    "key": "tavoitteet.OpiskelijapalauteTitle\"",
+    "value": "Opiskelijapalaute"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.opiskelijapalauteTyyppi.aloittaneet",
+    "value": "Aloittaneet"
   },
   {
     "locale": "fi",
@@ -576,33 +561,83 @@
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.opiskelijapalauteResendButton",
-    "value": "Lähetä linkki opiskelijapalautekyselyyn uudestaan"
+    "key": "tavoitteet.opiskelijapalauteTyyppi.tutkinnonsuorittaneet",
+    "value": "Tutkinnon suorittaneet"
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.opiskelijapalauteEiPalautteita",
-    "value": "Ei aktiivisia palautteita"
+    "key": "tavoitteet.opiskelijapalauteTyyppiTitle",
+    "value": "Kyselyn tyyppi"
   },
   {
     "locale": "fi",
-    "key": "notification.Opiskelijapalaute.resendPalaute.success",
-    "value": "Sähköposti opiskelijapalautteesta lähetetään osoitteeseen {sahkoposti}."
+    "key": "tavoitteet.opiskeluoikeudOidTitle",
+    "value": "Opiskeluoikeuden OID"
   },
   {
     "locale": "fi",
-    "key": "errors.Opiskelijapalaute.resendPalaute",
-    "value": "Virhe uudelleenlähetyspyynnön käsittelyssä"
+    "key": "tavoitteet.oppijanumeroTitle",
+    "value": "Oppijanumero"
   },
   {
     "locale": "fi",
-    "key": "notification.piilotaNotifikaatioAriaLabel",
-    "value": "Piilota ilmoitus"
+    "key": "tavoitteet.osaaminenSaavutettuTitle",
+    "value": "Sovittu osaaminen saavutettu"
   },
   {
     "locale": "fi",
-    "key": "opiskeluoikeus.osittainen",
-    "value": "osittainen"
+    "key": "tavoitteet.osaamisenHankkimisenTarveTitle",
+    "value": "Osaamisen hankkimisen tarve"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.osoiteTitle",
+    "value": "Osoite"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.paivitettyTitle",
+    "value": "Päivitetty"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.postiosoiteTitle",
+    "value": "Postiosoite"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.puhelinnumeroTitle",
+    "value": "Puhelinnumero"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.sahkopostiTitle",
+    "value": "Sähköposti"
+  },
+  {
+    "locale": "fi",
+    "key": "tavoitteet.suunnitelmaJatkoOpintoihinTitle",
+    "value": "Suunnitelma jatko-opintoihin siirtymisestä"
+  },
+  {
+    "locale": "fi",
+    "key": "tyopaikanToimija.laajuusTitle",
+    "value": "Laajuus"
+  },
+  {
+    "locale": "fi",
+    "key": "tyopaikanToimija.osaamispistetta",
+    "value": "osaamispistettä"
+  },
+  {
+    "locale": "fi",
+    "key": "tyopaikanToimija.suunnitelmaJatkoOpintoihinTitle",
+    "value": "Suunnitelma jatko-opintoihin siirtymisestä"
+  },
+  {
+    "locale": "fi",
+    "key": "tyopaikanToimija.tutkinnonNimiTitle",
+    "value": "Tutkinnon nimi"
   },
   {
     "locale": "fi",
@@ -651,28 +686,18 @@
   },
   {
     "locale": "fi",
-    "key": "yllapito.hoksienMaaraKuvaus",
-    "value": "Näyttää aktiivisten HOKSien määrän."
-  },
-  {
-    "locale": "fi",
     "key": "yllapito.hoksienmaaraArvo",
     "value": "Lukumäärä: {hoksAmount}"
   },
   {
     "locale": "fi",
+    "key": "yllapito.hoksienMaaraKuvaus",
+    "value": "Näyttää aktiivisten HOKSien määrän."
+  },
+  {
+    "locale": "fi",
     "key": "yllapito.hoksienmaaraTitle",
     "value": "Hoksien lukumäärä"
-  },
-  {
-    "locale": "fi",
-    "key": "yllapito.hoksPoisto",
-    "value": "Aiheettoman HOKSin poisto"
-  },
-  {
-    "locale": "fi",
-    "key": "yllapito.hoksPoistoKuvaus",
-    "value": "Aiheettoman HOKSin poisto."
   },
   {
     "locale": "fi",
@@ -683,6 +708,16 @@
     "locale": "fi",
     "key": "yllapito.hoksPalautusKuvaus",
     "value": "Palauta vahingossa poistettu HOKS. HOKSeja ei yleensä poisteta totaalisesti, vaan ne vain merkataan poistetuiksi tietokannassa."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.hoksPoisto",
+    "value": "Aiheettoman HOKSin poisto"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.hoksPoistoKuvaus",
+    "value": "Aiheettoman HOKSin poisto."
   },
   {
     "locale": "fi",
@@ -711,16 +746,6 @@
   },
   {
     "locale": "fi",
-    "key": "yllapito.OpiskeluoikeusOidTulos",
-    "value": "Opiskeluoikeus-oid on: {opiskeluoikeusOid}"
-  },
-  {
-    "locale": "fi",
-    "key": "yllapito.OppijaOidTulos",
-    "value": "Oppija-oid on: {oppijaOid}"
-  },
-  {
-    "locale": "fi",
     "key": "yllapito.opiskeluoikeuksienPaivitys",
     "value": "Päivitä koulutustoimijan opiskeluoikeudet indeksiin Koskesta."
   },
@@ -743,6 +768,11 @@
     "locale": "fi",
     "key": "yllapito.opiskeluoikeusOidHakuKuvaus",
     "value": "Hae opiskeluoikeuden ID ja oppijan ID HOKSin ID:llä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.OpiskeluoikeusOidTulos",
+    "value": "Opiskeluoikeus-oid on: {opiskeluoikeusOid}"
   },
   {
     "locale": "fi",
@@ -783,6 +813,11 @@
     "locale": "fi",
     "key": "yllapito.oppijanPaivitysKuvaus",
     "value": "Päivitä oppijan tiedot indeksiin Oppijanumerorekisteristä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.OppijaOidTulos",
+    "value": "Oppija-oid on: {oppijaOid}"
   },
   {
     "locale": "fi",
