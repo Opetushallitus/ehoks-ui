@@ -463,10 +463,27 @@ const TodentamisenProsessiArvioijienKautta = ({
   />
 )
 
+// TODO
+const OpetusJaOhjausMaaraContainer = styled(div)`
+  display: flex;
+`
+
+const OpetusJaOhjausMaaraView = ({ amount }: { amount?: number }) =>
+  amount != undefined || amount != null ? (
+    <OpetusJaOhjausMaaraContainer>
+      <FormattedMessage
+        id="opiskelusuunnitelma.opetusJaOhjausMaara"
+        defaultMessage="Opetuksen ja ohjauksen määrä"
+      />
+      // TODO
+    </OpetusJaOhjausMaaraContainer>
+  ) : null
+
 interface DetailsProps {
   fadedColor?: string
   osaamisenOsoittamiset?: IOsaamisenOsoittaminen[]
   olennainenSeikka?: React.ReactNode
+  opetusJaOhjausMaara?: number
   expanded?: boolean
   koodiUri?: string
   osaamisenHankkimistavat?: IOsaamisenHankkimistapa[]
@@ -495,6 +512,7 @@ export class Details extends React.Component<DetailsProps> {
     const {
       osaamisenOsoittamiset = [],
       olennainenSeikka,
+      opetusJaOhjausMaara,
       expanded,
       fadedColor = "",
       koodiUri,
@@ -587,6 +605,8 @@ export class Details extends React.Component<DetailsProps> {
           />
 
           {olennainenSeikka}
+
+          <OpetusJaOhjausMaaraView amount={opetusJaOhjausMaara} />
 
           <AiemmanOsaamisenTodentanutOrganisaatioExpanded
             isAiempiOsaaminen={isAiempiOsaaminen}
