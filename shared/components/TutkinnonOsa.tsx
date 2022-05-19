@@ -89,6 +89,7 @@ export interface TutkinnonOsaProps {
   osaamisenOsoittamiset?: IOsaamisenOsoittaminen[]
   /** olennainenSeikka is passed through to Details component */
   olennainenSeikka?: React.ReactNode
+  opetusJaOhjausMaara?: number
   /** Color of additional info container */
   fadedColor?: string
   /**
@@ -246,6 +247,7 @@ export class TutkinnonOsa extends React.Component<
       competenceRequirements = [],
       osaamisenOsoittamiset = [],
       olennainenSeikka,
+      opetusJaOhjausMaara,
       fadedColor,
       osaamisenHankkimistavat = [],
       koodiUri,
@@ -270,6 +272,11 @@ export class TutkinnonOsa extends React.Component<
     const hasActiveShare =
       typeof share !== "undefined" && moduleId === share.tutkinnonOsaModuleId
     const detailsExpanded = expanded.details || hasActiveShare
+    const opetusJaOhjausMaaraShouldBeShown =
+      opetusJaOhjausMaara !== null &&
+      (this.state.expanded.details ||
+        this.state.expanded.competences ||
+        this.state.expanded.objectives)
 
     return (
       <Container
@@ -292,6 +299,31 @@ export class TutkinnonOsa extends React.Component<
                 }
               >
                 {koulutuksenJarjestaja?.organizationName}
+              </OneRowTable>
+            </SubTitleContainer>
+          )}
+          {opetusJaOhjausMaaraShouldBeShown && (
+            <SubTitleContainer>
+              <OneRowTable
+                th={
+                  <FormattedMessage
+                    id="tutkinnonOsa.opetusJaOhjausMaaraTitle"
+                    defaultMessage="Opetus ja ohjaus"
+                  />
+                }
+              >
+                {opetusJaOhjausMaara === 1 ? (
+                  <FormattedMessage
+                    id="tutkinnonOsa.opetusJaOhjausMaaraHours"
+                    defaultMessage="{hours} tuntia"
+                    values={{ hours: opetusJaOhjausMaara }}
+                  />
+                ) : (
+                  <FormattedMessage
+                    id="tutkinnonOsa.opetusJaOhjausMaaraOneHour"
+                    defaultMessage="1 tunti"
+                  />
+                )}
               </OneRowTable>
             </SubTitleContainer>
           )}
