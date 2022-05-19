@@ -9,7 +9,7 @@ import {
   IOrganisaatio,
   ITarkentavatTiedotOsaamisenArvioija
 } from "models/helpers/TutkinnonOsa"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, FormattedNumber } from "react-intl"
 import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
@@ -316,7 +316,9 @@ export class TutkinnonOsa extends React.Component<
                   <FormattedMessage
                     id="tutkinnonOsa.opetusJaOhjausMaaraHours"
                     defaultMessage="{hours} tuntia"
-                    values={{ hours: opetusJaOhjausMaara }}
+                    values={{
+                      hours: <FormattedNumber value={opetusJaOhjausMaara} />
+                    }}
                   />
                 ) : (
                   <FormattedMessage
