@@ -2,6 +2,7 @@ import { TypeaheadField } from "components/react-jsonschema-form/TypeaheadField"
 import { CustomBooleanRadioButtonWidget } from "./CustomBooleanRadioButtonWidget"
 import { CustomCheckboxWidget } from "./CustomCheckboxWidget"
 import { CustomDescriptionField } from "./CustomDescriptionField"
+import { CustomNumberWidget } from "./CustomNumberWidget"
 import { CustomSchemaField } from "./CustomSchemaField"
 import { CustomDatetimeWidget } from "./CustomDatetimeWidget"
 
@@ -14,7 +15,8 @@ export const fields = {
 export const widgets = {
   CheckboxWidget: CustomCheckboxWidget,
   customBooleanRadioButtonWidget: CustomBooleanRadioButtonWidget,
-  DatetimeWidget: CustomDatetimeWidget
+  DatetimeWidget: CustomDatetimeWidget,
+  NumberWidget: CustomNumberWidget
 }
 
 export const koodistoUrls = {
