@@ -273,7 +273,7 @@ export class TutkinnonOsa extends React.Component<
       typeof share !== "undefined" && moduleId === share.tutkinnonOsaModuleId
     const detailsExpanded = expanded.details || hasActiveShare
     const opetusJaOhjausMaaraShouldBeShown =
-      opetusJaOhjausMaara !== null &&
+      (!!opetusJaOhjausMaara || opetusJaOhjausMaara === 0) &&
       (this.state.expanded.details ||
         this.state.expanded.competences ||
         this.state.expanded.objectives)
