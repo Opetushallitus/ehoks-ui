@@ -312,7 +312,7 @@ export class TutkinnonOsa extends React.Component<
                   />
                 }
               >
-                {opetusJaOhjausMaara === 1 ? (
+                {opetusJaOhjausMaara !== 1 ? (
                   <FormattedMessage
                     id="tutkinnonOsa.opetusJaOhjausMaaraHours"
                     defaultMessage="{hours} tuntia"
