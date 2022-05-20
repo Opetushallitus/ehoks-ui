@@ -68,6 +68,8 @@ const TitleContainer = styled("div")`
 
 const SubTitleContainer = styled(TitleContainer)`
   margin: 0px 0px 15px 20px;
+  flex-direction: column;
+  align-items: start;
 `
 
 const Title = styled("h2")`
