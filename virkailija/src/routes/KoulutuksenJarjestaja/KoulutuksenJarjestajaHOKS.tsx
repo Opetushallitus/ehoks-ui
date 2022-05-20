@@ -121,7 +121,9 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
   render() {
     const { hoksId, location, suunnitelmat, oppija } = this.props
     const suunnitelmaHoksId =
-      this.props.location && this.props.location.state.fromRaportit
+      this.props.location &&
+      this.props.location.state &&
+      this.props.location.state.fromRaportit
         ? this.props.location.state.hokseid
         : hoksId
     const suunnitelma = find(suunnitelmat, h => h.eid === suunnitelmaHoksId)
