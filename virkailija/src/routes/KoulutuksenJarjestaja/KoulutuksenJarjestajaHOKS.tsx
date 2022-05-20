@@ -73,7 +73,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
   disposeReaction: IReactionDisposer
   componentDidMount() {
     const { koulutuksenJarjestaja } = this.props.store!
-    const fromRaportit = this.props.location
+    const fromRaportit = this.props.location?.state.fromRaportit
       ? this.props.location.state.fromRaportit
       : false
     this.disposeReaction = reaction(
