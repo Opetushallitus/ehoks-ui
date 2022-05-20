@@ -456,6 +456,21 @@
   },
   {
     "locale": "fi",
+    "key": "raportit.tyopaikkajaksoihinTallennetutTiedot",
+    "value": "Työpaikkajaksoihin tallennetut tiedot"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.tyopaikkajaksoihinTallennetutTiedotAlaOtsikko",
+    "value": "Hakee ja listaa valitun oppilaitoksen työpaikkajaksot, joista ei löydy osa-aikaisuustietoa."
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus",
+    "value": "Hakee ja listaa valitun oppilaitoksen työpaikkajaksot, joista ei löydy osa-aikaisuustietoa."
+  },
+  {
+    "locale": "fi",
     "key": "raportit.opiskeluoikeusoid",
     "value": "Opiskeluoikeus Oid"
   },

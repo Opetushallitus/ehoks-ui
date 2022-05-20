@@ -133,7 +133,17 @@ export interface HoksRow {
   oppilaitosoid: string
 }
 
-interface fetchResult {
+export interface TpjRow {
+  hoksid: number
+  opiskeluoikeusoid: string
+  oppijaoid: string
+  yTunnus: string
+  tyopaikanNimi: string
+  alkupvm: string
+  loppupvm: string
+}
+
+interface hoksitFetchResult {
   count: number
   hoksit: HoksRow[]
 }
@@ -185,7 +195,7 @@ export class Raportit extends React.Component<RaportitProps> {
     )
 
     if (request.status === 200) {
-      const json: fetchResult = await request.json()
+      const json: hoksitFetchResult = await request.json()
       this.setState({
         hoksitCount: json.count,
         hoksitWithoutOo: json.hoksit
@@ -235,50 +245,58 @@ export class Raportit extends React.Component<RaportitProps> {
       : "/ehoks-virkailija-ui/raportit"
   }
 
+  getColumnsForTable = (selectedRaportti: number) => {
+    if (selectedRaportti === 1) {
+      return [
+        {
+          Header: this.context.intl.formatMessage({
+            id: "raportit.ehoksid"
+          }),
+          accessor: "hoksid",
+          Cell: ({ cell: { value } }: hoksitCell) => (
+            <Link
+              to={this.createLinkPath(value)}
+              state={{
+                fromRaportit: true,
+                oppijaoid: this.getHoksiByHoksId(value)?.oppijaoid,
+                hokseid: this.getHoksiByHoksId(value)?.hokseid
+              }}
+            >
+              {value}
+            </Link>
+          )
+        },
+        {
+          Header: this.context.intl.formatMessage({
+            id: "raportit.oppijanumeroTitle"
+          }),
+          accessor: "oppijaoid"
+        },
+        {
+          Header: this.context.intl.formatMessage({
+            id: "raportit.opiskeluoikeusoid"
+          }),
+          accessor: "opiskeluoikeusoid"
+        },
+        {
+          Header: this.context.intl.formatMessage({
+            id: "raportit.oppilaitosoid"
+          }),
+          accessor: "oppilaitosoid"
+        }
+      ]
+    } else if (selectedRaportti === 2) {
+      return []
+    }
+  }
+
   checkActive = (num: number) =>
     this.state.selected === num ? "bolder" : "initial"
 
   render() {
     const { hoksitWithoutOo, selected, titleText, descText } = this.state
     const { intl } = this.context
-    const columns = [
-      {
-        Header: intl.formatMessage({
-          id: "raportit.ehoksid"
-        }),
-        accessor: "hoksid",
-        Cell: ({ cell: { value } }: hoksitCell) => (
-          <Link
-            to={this.createLinkPath(value)}
-            state={{
-              fromRaportit: true,
-              oppijaoid: this.getHoksiByHoksId(value)?.oppijaoid,
-              hokseid: this.getHoksiByHoksId(value)?.hokseid
-            }}
-          >
-            {value}
-          </Link>
-        )
-      },
-      {
-        Header: intl.formatMessage({
-          id: "raportit.oppijanumeroTitle"
-        }),
-        accessor: "oppijaoid"
-      },
-      {
-        Header: intl.formatMessage({
-          id: "raportit.opiskeluoikeusoid"
-        }),
-        accessor: "opiskeluoikeusoid"
-      },
-      {
-        Header: intl.formatMessage({
-          id: "raportit.oppilaitosoid"
-        }),
-        accessor: "oppilaitosoid"
-      }
-    ]
+    const columns = getColumnsForTable(selected)
 
     return (
       <BackgroundContainer>
@@ -329,6 +347,41 @@ export class Raportit extends React.Component<RaportitProps> {
                       toggleSize="18"
                     />
                   </MenuItem>
+                  <MenuItem
+                    as="a"
+                    href="#"
+                    onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
+                      this.navClickHandler(
+                        event,
+                        intl.formatMessage({
+                          id: "raportit.tyopaikkajaksoihinTallennetutTiedot"
+                        }),
+                        intl.formatMessage({
+                          id:
+                            "raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
+                        }),
+                        2
+                      )
+                    }
+                    style={{
+                      ...linkStyle,
+                      fontWeight: this.checkActive(2)
+                    }}
+                  >
+                    <FormattedMessage
+                      id="raportit.tyopaikkajaksoihinTallennetutTiedot"
+                      defaultMessage="Työpaikkajaksoihin tallennetut tiedot"
+                    />
+                    <HelpButton
+                      helpContent={
+                        <FormattedMessage
+                          id="raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
+                          defaultMessage="Hakee ja listaa valitun oppilaitoksen työpaikkajaksot, joista ei löydy osa-aikaisuustietoa."
+                        />
+                      }
+                      toggleSize="18"
+                    />
+                  </MenuItem>
                 </Nav>
                 <Separator />
                 <Section>
@@ -341,6 +394,15 @@ export class Raportit extends React.Component<RaportitProps> {
                   >
                     <Styles>
                       <RaportitTable data={hoksitWithoutOo} columns={columns} />
+                    </Styles>
+                  </div>
+                  <div
+                    style={{
+                      visibility: selected === 2 ? "visible" : "hidden"
+                    }}
+                  >
+                    <Styles>
+                      <span>test</span>
                     </Styles>
                   </div>
                 </Section>
