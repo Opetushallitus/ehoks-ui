@@ -14,7 +14,7 @@ function trimObject(object: any) {
   }
   return Object.keys(object).reduce<any>((acc, key) => {
     const trimmed = trimEmptyValues(object[key])
-    if (trimmed || trimmed === false) {
+    if (trimmed || trimmed === false || trimmed === 0) {
       if (!acc) {
         acc = {}
       }
@@ -27,7 +27,7 @@ function trimObject(object: any) {
 const trimArray = (array: any[]) =>
   array.reduce((acc, value) => {
     const trimmed = trimEmptyValues(value)
-    if (trimmed || trimmed === false || trimmed === null) {
+    if (trimmed || trimmed === false || trimmed === null || trimmed === 0) {
       acc.push(trimmed)
     }
     return acc
