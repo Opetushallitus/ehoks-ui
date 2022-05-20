@@ -272,11 +272,6 @@ export class TutkinnonOsa extends React.Component<
     const hasActiveShare =
       typeof share !== "undefined" && moduleId === share.tutkinnonOsaModuleId
     const detailsExpanded = expanded.details || hasActiveShare
-    const opetusJaOhjausMaaraShouldBeShown =
-      (!!opetusJaOhjausMaara || opetusJaOhjausMaara === 0) &&
-      (this.state.expanded.details ||
-        this.state.expanded.competences ||
-        this.state.expanded.objectives)
 
     return (
       <Container
@@ -300,33 +295,31 @@ export class TutkinnonOsa extends React.Component<
               >
                 {koulutuksenJarjestaja?.organizationName}
               </OneRowTable>
-            </SubTitleContainer>
-          )}
-          {opetusJaOhjausMaaraShouldBeShown && (
-            <SubTitleContainer>
-              <OneRowTable
-                th={
-                  <FormattedMessage
-                    id="tutkinnonOsa.opetusJaOhjausMaaraTitle"
-                    defaultMessage="Opetus ja ohjaus"
-                  />
-                }
-              >
-                {opetusJaOhjausMaara !== 1 ? (
-                  <FormattedMessage
-                    id="tutkinnonOsa.opetusJaOhjausMaaraHours"
-                    defaultMessage="{hours} tuntia"
-                    values={{
-                      hours: <FormattedNumber value={opetusJaOhjausMaara} />
-                    }}
-                  />
-                ) : (
-                  <FormattedMessage
-                    id="tutkinnonOsa.opetusJaOhjausMaaraOneHour"
-                    defaultMessage="1 tunti"
-                  />
-                )}
-              </OneRowTable>
+              {(!!opetusJaOhjausMaara || opetusJaOhjausMaara === 0) && (
+                <OneRowTable
+                  th={
+                    <FormattedMessage
+                      id="tutkinnonOsa.opetusJaOhjausMaaraTitle"
+                      defaultMessage="Opetus ja ohjaus"
+                    />
+                  }
+                >
+                  {opetusJaOhjausMaara !== 1 ? (
+                    <FormattedMessage
+                      id="tutkinnonOsa.opetusJaOhjausMaaraHours"
+                      defaultMessage="{hours} tuntia"
+                      values={{
+                        hours: <FormattedNumber value={opetusJaOhjausMaara} />
+                      }}
+                    />
+                  ) : (
+                    <FormattedMessage
+                      id="tutkinnonOsa.opetusJaOhjausMaaraOneHour"
+                      defaultMessage="1 tunti"
+                    />
+                  )}
+                </OneRowTable>
+              )}
             </SubTitleContainer>
           )}
           {hasDetails && (
