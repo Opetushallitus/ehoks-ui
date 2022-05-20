@@ -73,7 +73,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
   disposeReaction: IReactionDisposer
   componentDidMount() {
     const { koulutuksenJarjestaja } = this.props.store!
-    const fromRaportit = this.props.location?.state.fromRaportit
+    const fromRaportit = this.props.location
       ? this.props.location.state.fromRaportit
       : false
     this.disposeReaction = reaction(
@@ -121,7 +121,9 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
   render() {
     const { hoksId, location, suunnitelmat, oppija } = this.props
     const suunnitelmaHoksId =
-      this.props.location && this.props.location.state.fromRaportit
+      this.props.location &&
+      this.props.location.state &&
+      this.props.location.state.fromRaportit
         ? this.props.location.state.hokseid
         : hoksId
     const suunnitelma = find(suunnitelmat, h => h.eid === suunnitelmaHoksId)
