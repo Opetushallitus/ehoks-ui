@@ -1,9 +1,9 @@
-import { HoksRow } from "../../virkailija/src/routes/Raportit"
+import { HoksRow, TpjRow } from "../../virkailija/src/routes/Raportit"
 import React, { useMemo } from "react"
 import { Column, useTable } from "react-table"
 
 interface RaportitTableProps {
-  data: HoksRow[] | undefined
+  data: HoksRow[] | TpjRow[] | undefined
   columns: Column[]
 }
 
