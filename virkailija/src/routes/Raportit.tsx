@@ -168,6 +168,7 @@ export class Raportit extends React.Component<RaportitProps> {
   }
 
   async loadHoksesWithoutOpiskeluoikeudet(oppilaitosOid: string | undefined) {
+    const { notifications } = this.props.store!
     const request = await window.fetch(
       "/ehoks-virkailija-backend/api/v1/virkailija/missing-oo-hoksit/" +
         oppilaitosOid,
@@ -189,6 +190,10 @@ export class Raportit extends React.Component<RaportitProps> {
         hoksitCount: json.count,
         hoksitWithoutOo: json.hoksit
       })
+    }
+
+    if (request.status === 403) {
+      notifications.addError("Raportit.EiOikeuksia", oppilaitosOid)
     }
   }
 

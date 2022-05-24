@@ -126,6 +126,11 @@
   },
   {
     "locale": "fi",
+    "key": "errors.Raportit.EiOikeuksia",
+    "value": "Ei käyttöoikeuksia organisaatioon"
+  },
+  {
+    "locale": "fi",
     "key": "errors.OppilasStore.haePerusteet",
     "value": "Ammatillisten tutkintojen haku epäonnistui"
   },
