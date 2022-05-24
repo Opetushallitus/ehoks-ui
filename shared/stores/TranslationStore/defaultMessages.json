@@ -486,6 +486,51 @@
   },
   {
     "locale": "fi",
+    "key": "raportit.ytunnus",
+    "value": "Y-Tunnus"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.tyopaikannimi",
+    "value": "Työpaikka"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.alku",
+    "value": "Alku"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.loppu",
+    "value": "Loppu"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.ohjaajannimi",
+    "value": "Ohjaaja"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.puhelin",
+    "value": "Puh"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.email",
+    "value": "Email"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.hankkimistapatyyppi",
+    "value": "Tyyppi"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.perusta",
+    "value": "Oppisopimuksen perusta"
+  },
+  {
+    "locale": "fi",
     "key": "table.haePlaceholder",
     "value": "Hae"
   },
