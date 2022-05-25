@@ -185,9 +185,21 @@ interface RaportitState {
   loppu: string
 }
 
-interface hoksitCell {
+interface hoksIdCell {
   cell: {
     value: number
+  }
+}
+
+interface hankkimistapaTyyppi {
+  cell: {
+    value: string
+  }
+}
+
+interface oppisopimuksenPerustaCell {
+  cell: {
+    value: string
   }
 }
 
@@ -340,7 +352,7 @@ export class Raportit extends React.Component<RaportitProps> {
             id: "raportit.ehoksid"
           }),
           accessor: "hoksid",
-          Cell: ({ cell: { value } }: hoksitCell) => (
+          Cell: ({ cell: { value } }: hoksIdCell) => (
             <Link
               to={this.createLinkPath(value)}
               state={{
@@ -379,7 +391,7 @@ export class Raportit extends React.Component<RaportitProps> {
             id: "raportit.ehoksid"
           }),
           accessor: "hoksId",
-          Cell: ({ cell: { value } }: hoksitCell) => (
+          Cell: ({ cell: { value } }: hoksIdCell) => (
             <Link
               to={this.createLinkPath(value)}
               state={{
@@ -450,19 +462,17 @@ export class Raportit extends React.Component<RaportitProps> {
           Header: this.context.intl.formatMessage({
             id: "raportit.hankkimistapatyyppi"
           }),
-          accessor: "hankkimistapaTyyppi"
+          accessor: "hankkimistapaTyyppi",
+          Cell: ({ cell: { value } }: hankkimistapaTyyppi) =>
+            value.split("_")[1]
         },
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.perusta"
           }),
-          accessor: "oppisopimuksenPerusta"
-        },
-        {
-          Header: this.context.intl.formatMessage({
-            id: "raportit.osaaikaisuus"
-          }),
-          accessor: "osaAikaisuus"
+          accessor: "oppisopimuksenPerusta",
+          Cell: ({ cell: { value } }: oppisopimuksenPerustaCell) =>
+            value.split("_")[1]
         }
       ]
     } else {
