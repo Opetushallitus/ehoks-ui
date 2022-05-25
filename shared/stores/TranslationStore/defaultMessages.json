@@ -531,6 +531,11 @@
   },
   {
     "locale": "fi",
+    "key": "raportit.osaaikaisuus",
+    "value": "Osa-aikaisuus"
+  },
+  {
+    "locale": "fi",
     "key": "table.haePlaceholder",
     "value": "Hae"
   },
