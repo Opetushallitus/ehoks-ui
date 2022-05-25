@@ -520,6 +520,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
         "tutkinnon-osa-koodi-versio",
         "vaatimuksista-tai-tavoitteista-poikkeaminen",
         "koulutuksen-jarjestaja-oid",
+        "opetus-ja-ohjaus-maara",
         "olennainen-seikka",
         "osaamisen-hankkimistavat",
         "osaamisen-osoittaminen",
@@ -527,6 +528,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       ],
       id: {
         "ui:widget": "hidden"
+      },
+      "opetus-ja-ohjaus-maara": {
+        "ui:widget": "NumberWidget"
       },
       "tutkinnon-osa-koodi-uri": {
         "ui:field": "typeahead",
@@ -713,6 +717,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
         "tavoitteet-ja-sisallot",
         "vaatimuksista-tai-tavoitteista-poikkeaminen",
         "koulutuksen-jarjestaja-oid",
+        "opetus-ja-ohjaus-maara",
         "olennainen-seikka",
         "osaamisen-hankkimistavat",
         "osaamisen-osoittaminen",
@@ -720,6 +725,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       ],
       id: {
         "ui:widget": "hidden"
+      },
+      "opetus-ja-ohjaus-maara": {
+        "ui:widget": "NumberWidget"
       },
       "osaamisen-hankkimistavat": {
         "ui:options": {
@@ -912,6 +920,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "koulutuksen-jarjestaja-oid",
             "osa-alue-koodi-versio",
             "vaatimuksista-tai-tavoitteista-poikkeaminen",
+            "opetus-ja-ohjaus-maara",
             "olennainen-seikka",
             "osaamisen-hankkimistavat",
             "osaamisen-osoittaminen",
@@ -919,6 +928,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           ],
           id: {
             "ui:widget": "hidden"
+          },
+          "opetus-ja-ohjaus-maara": {
+            "ui:widget": "NumberWidget"
           },
           "osa-alue-koodi-uri": {
             "ui:field": "typeahead",
