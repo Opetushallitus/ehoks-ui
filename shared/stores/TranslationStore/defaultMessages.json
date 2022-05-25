@@ -626,6 +626,21 @@
   },
   {
     "locale": "fi",
+    "key": "tutkinnonOsa.opetusJaOhjausMaaraHours",
+    "value": "{hours} tuntia"
+  },
+  {
+    "locale": "fi",
+    "key": "tutkinnonOsa.opetusJaOhjausMaaraOneHour",
+    "value": "1 tunti"
+  },
+  {
+    "locale": "fi",
+    "key": "tutkinnonOsa.opetusJaOhjausMaaraTitle",
+    "value": "Opetus ja ohjaus"
+  },
+  {
+    "locale": "fi",
     "key": "tyopaikanToimija.laajuusTitle",
     "value": "Laajuus"
   },

@@ -77,6 +77,7 @@ export class PlannedStudies extends React.Component<PlannedStudiesProps> {
                       ? elements.essentialFactor
                       : undefined
                   }
+                  opetusJaOhjausMaara={study.opetusJaOhjausMaara}
                   fadedColor="#FDF1E6"
                   koodiUri={study.tutkinnonOsaKoodiUri}
                   moduleId={study.moduleId}

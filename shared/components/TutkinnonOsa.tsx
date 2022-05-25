@@ -9,7 +9,7 @@ import {
   IOrganisaatio,
   ITarkentavatTiedotOsaamisenArvioija
 } from "models/helpers/TutkinnonOsa"
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage, FormattedNumber } from "react-intl"
 import { navigate } from "@reach/router"
 import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
@@ -68,6 +68,8 @@ const TitleContainer = styled("div")`
 
 const SubTitleContainer = styled(TitleContainer)`
   margin: 0px 0px 15px 20px;
+  flex-direction: column;
+  align-items: start;
 `
 
 const Title = styled("h2")`
@@ -89,6 +91,7 @@ export interface TutkinnonOsaProps {
   osaamisenOsoittamiset?: IOsaamisenOsoittaminen[]
   /** olennainenSeikka is passed through to Details component */
   olennainenSeikka?: React.ReactNode
+  opetusJaOhjausMaara?: number
   /** Color of additional info container */
   fadedColor?: string
   /**
@@ -246,6 +249,7 @@ export class TutkinnonOsa extends React.Component<
       competenceRequirements = [],
       osaamisenOsoittamiset = [],
       olennainenSeikka,
+      opetusJaOhjausMaara,
       fadedColor,
       osaamisenHankkimistavat = [],
       koodiUri,
@@ -293,6 +297,31 @@ export class TutkinnonOsa extends React.Component<
               >
                 {koulutuksenJarjestaja?.organizationName}
               </OneRowTable>
+              {(!!opetusJaOhjausMaara || opetusJaOhjausMaara === 0) && (
+                <OneRowTable
+                  th={
+                    <FormattedMessage
+                      id="tutkinnonOsa.opetusJaOhjausMaaraTitle"
+                      defaultMessage="Opetus ja ohjaus"
+                    />
+                  }
+                >
+                  {opetusJaOhjausMaara !== 1 ? (
+                    <FormattedMessage
+                      id="tutkinnonOsa.opetusJaOhjausMaaraHours"
+                      defaultMessage="{hours} tuntia"
+                      values={{
+                        hours: <FormattedNumber value={opetusJaOhjausMaara} />
+                      }}
+                    />
+                  ) : (
+                    <FormattedMessage
+                      id="tutkinnonOsa.opetusJaOhjausMaaraOneHour"
+                      defaultMessage="1 tunti"
+                    />
+                  )}
+                </OneRowTable>
+              )}
             </SubTitleContainer>
           )}
           {hasDetails && (
