@@ -239,10 +239,13 @@ export class Raportit extends React.Component<RaportitProps> {
   }
 
   async loadTyopaikkaJaksot() {
+    /*
     const tutkinto = JSON.stringify({
       fi: "Autokorimestarin erikoisammattitutkinto",
       sv: "Specialyrkesexamen för karosseri- och bilplåtsmästare"
     })
+    */
+    const tutkinto = JSON.stringify({})
     const { store } = this.props
     const oppilaitosOid: string | undefined =
       store?.session.selectedOrganisationOid
