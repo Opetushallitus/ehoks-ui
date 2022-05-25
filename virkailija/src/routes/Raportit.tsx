@@ -156,7 +156,7 @@ interface hoksitFetchResult {
 }
 
 export interface TpjRow {
-  hoksid: number
+  hoksId: number
   opiskeluoikeusOid: string
   oppijaOid: string
   hankkimistapaTyyppi: string
@@ -172,7 +172,7 @@ export interface TpjRow {
 }
 
 interface TpjFetchResult {
-  tpjResult: TpjRow[]
+  data: TpjRow[]
 }
 
 interface RaportitState {
@@ -275,9 +275,9 @@ export class Raportit extends React.Component<RaportitProps> {
 
       if (request.status === 200) {
         const json: TpjFetchResult = await request.json()
-        console.log(json)
+        console.log(json.data)
         this.setState({
-          data: json.tpjResult
+          data: json.data
         })
       }
 
