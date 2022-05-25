@@ -464,7 +464,7 @@ export class Raportit extends React.Component<RaportitProps> {
           }),
           accessor: "hankkimistapaTyyppi",
           Cell: ({ cell: { value } }: hankkimistapaTyyppi) =>
-            value.split("_")[1]
+            value ? value.split("_")[1] : ""
         },
         {
           Header: this.context.intl.formatMessage({
@@ -472,7 +472,7 @@ export class Raportit extends React.Component<RaportitProps> {
           }),
           accessor: "oppisopimuksenPerusta",
           Cell: ({ cell: { value } }: oppisopimuksenPerustaCell) =>
-            value.split("_")[1]
+            value ? value.split("_")[1] : ""
         }
       ]
     } else {
