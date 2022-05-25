@@ -252,7 +252,7 @@ export class Raportit extends React.Component<RaportitProps> {
       store?.session.selectedOrganisationOid
     if (this.state.alku.length && this.state.loppu.length && oppilaitosOid) {
       const request = await window.fetch(
-        "/ehoks-virkailija-backend/api/v1/virkailija/tep-jakso-raportti/?" +
+        "/ehoks-virkailija-backend/api/v1/virkailija/tep-jakso-raportti?" +
           "tutkinto=" +
           tutkinto +
           "&oppilaitos=" +
@@ -275,6 +275,7 @@ export class Raportit extends React.Component<RaportitProps> {
 
       if (request.status === 200) {
         const json: TpjFetchResult = await request.json()
+        console.log(json)
         this.setState({
           data: json.tpjResult
         })
