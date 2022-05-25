@@ -142,8 +142,7 @@ const StudentContactInfo = ({
           />
         </th>
       )}
-      {(!!hoks.opiskelijanPuhelinnumero ||
-        student.yhteystiedot.puhelinnumero) && (
+      {(!!hoks.puhelinnumero || student.yhteystiedot.puhelinnumero) && (
         <th>
           <FormattedMessage
             id="tavoitteet.puhelinnumeroTitle"
@@ -158,10 +157,9 @@ const StudentContactInfo = ({
           {hoks.sahkoposti}
         </LabeledColumn>
       )}
-      {(!!hoks.opiskelijanPuhelinnumero ||
-        student.yhteystiedot.puhelinnumero) && (
+      {(!!hoks.puhelinnumero || student.yhteystiedot.puhelinnumero) && (
         <LabeledColumn id="tavoitteet.puhelinnumeroTitle">
-          {hoks.opiskelijanPuhelinnumero || student.yhteystiedot.puhelinnumero}
+          {hoks.puhelinnumero || student.yhteystiedot.puhelinnumero}
         </LabeledColumn>
       )}
     </tr>
