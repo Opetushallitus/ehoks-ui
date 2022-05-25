@@ -247,6 +247,7 @@ export class Raportit extends React.Component<RaportitProps> {
     */
     const tutkinto = JSON.stringify({})
     const { store } = this.props
+    const { notifications } = store!
     const oppilaitosOid: string | undefined =
       store?.session.selectedOrganisationOid
     if (this.state.alku.length && this.state.loppu.length && oppilaitosOid) {
@@ -254,11 +255,11 @@ export class Raportit extends React.Component<RaportitProps> {
         "/ehoks-virkailija-backend/api/v1/virkailija/tep-jakso-raportti/?" +
           "tutkinto=" +
           tutkinto +
-          "oppilaitos=" +
+          "&oppilaitos=" +
           oppilaitosOid +
-          "start=" +
+          "&start=" +
           this.state.alku +
-          "end=" +
+          "&end=" +
           this.state.loppu,
         {
           method: "GET",
@@ -277,6 +278,10 @@ export class Raportit extends React.Component<RaportitProps> {
         this.setState({
           data: json.tpjResult
         })
+      }
+
+      if (request.status === 403) {
+        notifications.addError("Raportit.EiOikeuksia", oppilaitosOid)
       }
     }
   }
