@@ -378,7 +378,7 @@ export class Raportit extends React.Component<RaportitProps> {
           Header: this.context.intl.formatMessage({
             id: "raportit.ehoksid"
           }),
-          accessor: "hoksid",
+          accessor: "hoksId",
           Cell: ({ cell: { value } }: hoksitCell) => (
             <Link
               to={this.createLinkPath(value)}
@@ -396,13 +396,13 @@ export class Raportit extends React.Component<RaportitProps> {
           Header: this.context.intl.formatMessage({
             id: "raportit.opiskeluoikeusoid"
           }),
-          accessor: "opiskeluoikeusoid"
+          accessor: "opiskeluoikeusOid"
         },
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.oppijanumeroTitle"
           }),
-          accessor: "oppijaoid"
+          accessor: "oppijaOid"
         },
         {
           Header: this.context.intl.formatMessage({
@@ -414,49 +414,55 @@ export class Raportit extends React.Component<RaportitProps> {
           Header: this.context.intl.formatMessage({
             id: "raportit.tyopaikannimi"
           }),
-          accessor: "tyopaikannimi"
+          accessor: "tyopaikanNimi"
         },
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.alku"
           }),
-          accessor: "alku"
+          accessor: "alkupvm"
         },
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.loppu"
           }),
-          accessor: "loppu"
+          accessor: "loppupvm"
         },
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.ohjaajannimi"
           }),
-          accessor: "ohjaajannimi"
+          accessor: "ohjaajaNimi"
         },
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.puhelin"
           }),
-          accessor: "puhelin"
+          accessor: "ohjaajaPuhelinnumero"
         },
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.email"
           }),
-          accessor: "email"
+          accessor: "ohjaajaEmail"
         },
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.hankkimistapatyyppi"
           }),
-          accessor: "hankkimistapatyyppi"
+          accessor: "hankkimistapaTyyppi"
         },
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.perusta"
           }),
-          accessor: "perusta"
+          accessor: "oppisopimuksenPerusta"
+        },
+        {
+          Header: this.context.intl.formatMessage({
+            id: "raportit.osaaikaisuus"
+          }),
+          accessor: "osaAikaisuus"
         }
       ]
     } else {
