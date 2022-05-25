@@ -465,6 +465,7 @@ export class Raportit extends React.Component<RaportitProps> {
 
     console.log(oppilaitosOid)
     console.log(this.state.alku + " - " + this.state.loppu)
+    this.loadTyopaikkaJaksot()
   }
 
   checkActive = (num: number) =>
@@ -590,7 +591,12 @@ export class Raportit extends React.Component<RaportitProps> {
                         value={loppu}
                         onChange={e => this.setPvmDate("loppu", e.target.value)}
                       />
-                      <SearchButton onClick={this.tpjHaeOnClick}>
+                      <SearchButton
+                        onClick={this.tpjHaeOnClick}
+                        disabled={
+                          !(this.state.alku.length && this.state.loppu.length)
+                        }
+                      >
                         Hae
                       </SearchButton>
                     </FilterBox>
