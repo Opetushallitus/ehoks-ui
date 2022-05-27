@@ -64,6 +64,16 @@ interface InfoModalProps {
   startDate?: string
   endDate?: string
   keskeytymisajanjaksot?: IKeskeytymisajanjakso[]
+  hoksId?: number
+  opiskeluoikeusOid?: string
+  oppijaOid?: string
+  hankkimistapaTyyppi?: string
+  oppisopimuksenPerusta?: string
+  tyopaikanNimi?: string
+  ytunnus?: string
+  ohjaajaNimi?: string
+  ohjaajaEmail?: string
+  ohjaajaPuhelinnumero?: string
 }
 
 export class InfoModal extends React.Component<InfoModalProps> {
@@ -74,13 +84,22 @@ export class InfoModal extends React.Component<InfoModalProps> {
     const { intl } = this.context
     const {
       className,
-      partTimeAmount,
+      partTimeAmount, //osaAikaisuus
       osaamisenHankkimistapaKoodisto,
-      perusta,
-      startDate,
-      endDate,
-      nayttoymparistoDetails,
-      keskeytymisajanjaksot
+      perusta, // oppisopimuksenPerusta
+      startDate, //alkupvm
+      endDate, //loppupvm
+      nayttoymparistoDetails, //tyopaikanNimi
+      keskeytymisajanjaksot,
+      hoksId,
+      opiskeluoikeusOid,
+      oppijaOid,
+      hankkimistapaTyyppi,
+      oppisopimuksenPerusta,
+      ytunnus,
+      ohjaajaNimi,
+      ohjaajaEmail,
+      ohjaajaPuhelinnumero
     } = this.props
     return (
       <Popup
@@ -121,21 +140,78 @@ export class InfoModal extends React.Component<InfoModalProps> {
               )}
             </ModalHeader>
             <ModalContent>
-              {osaamisenHankkimistapaKoodisto &&
-                osaamisenHankkimistapaKoodisto.nimi && (
-                  <>
-                    <StyledStrong>
-                      <FormattedMessage
-                        id="infoModal.hankkimistapaTyyppi"
-                        defaultMessage="Osaamisen hankkimistapa"
-                      />
-                      :
-                    </StyledStrong>{" "}
-                    {osaamisenHankkimistapaKoodisto.nimi}
-                    <br />
-                  </>
-                )}
-              {perusta && perusta.nimi && (
+              {hoksId && (
+                <>
+                  <StyledStrong>
+                    <FormattedMessage
+                      id="raportit.ehoksid"
+                      defaultMessage="eHOKS ID"
+                    />
+                    :
+                  </StyledStrong>{" "}
+                  {hoksId}
+                  <br />
+                </>
+              )}
+              {opiskeluoikeusOid && (
+                <>
+                  <StyledStrong>
+                    <FormattedMessage
+                      id="raportit.opiskeluoikeusoid"
+                      defaultMessage="Opiskeluoikeus Oid"
+                    />
+                    :
+                  </StyledStrong>{" "}
+                  {opiskeluoikeusOid}
+                  <br />
+                </>
+              )}
+              {oppijaOid && (
+                <>
+                  <StyledStrong>
+                    <FormattedMessage
+                      id="raportit.oppijanumeroTitle"
+                      defaultMessage="Oppija Oid"
+                    />
+                    :
+                  </StyledStrong>{" "}
+                  {oppijaOid}
+                  <br />
+                </>
+              )}
+              {oppijaOid && (
+                <>
+                  <StyledStrong>
+                    <FormattedMessage
+                      id="raportit.oppijanumeroTitle"
+                      defaultMessage="Oppija Oid"
+                    />
+                    :
+                  </StyledStrong>{" "}
+                  {oppijaOid}
+                  <br />
+                </>
+              )}
+              {((osaamisenHankkimistapaKoodisto &&
+                osaamisenHankkimistapaKoodisto.nimi) ||
+                hankkimistapaTyyppi) && (
+                <>
+                  <StyledStrong>
+                    <FormattedMessage
+                      id="infoModal.hankkimistapaTyyppi"
+                      defaultMessage="Osaamisen hankkimistapa"
+                    />
+                    :
+                  </StyledStrong>{" "}
+                  {osaamisenHankkimistapaKoodisto &&
+                  osaamisenHankkimistapaKoodisto.nimi
+                    ? osaamisenHankkimistapaKoodisto.nimi
+                    : ""}
+                  {hankkimistapaTyyppi ? hankkimistapaTyyppi : ""}
+                  <br />
+                </>
+              )}
+              {((perusta && perusta.nimi) || oppisopimuksenPerusta) && (
                 <>
                   <StyledStrong>
                     <FormattedMessage
@@ -144,7 +220,8 @@ export class InfoModal extends React.Component<InfoModalProps> {
                     />
                     :
                   </StyledStrong>{" "}
-                  {perusta.nimi}
+                  {perusta && perusta.nimi ? perusta.nimi : ""}
+                  {oppisopimuksenPerusta ? oppisopimuksenPerusta : ""}
                   <br />
                 </>
               )}
@@ -158,6 +235,58 @@ export class InfoModal extends React.Component<InfoModalProps> {
                     :
                   </StyledStrong>{" "}
                   {partTimeAmount} %
+                  <br />
+                </>
+              )}
+              {ytunnus && (
+                <>
+                  <StyledStrong>
+                    <FormattedMessage
+                      id="raportit.ytunnus"
+                      defaultMessage="Y-Tunnus"
+                    />
+                    :
+                  </StyledStrong>{" "}
+                  {ytunnus}
+                  <br />
+                </>
+              )}
+              {ohjaajaNimi && (
+                <>
+                  <StyledStrong>
+                    <FormattedMessage
+                      id="raportit.ohjaajannimi"
+                      defaultMessage="Ohjaajan nimi"
+                    />
+                    :
+                  </StyledStrong>{" "}
+                  {ohjaajaNimi}
+                  <br />
+                </>
+              )}
+              {ohjaajaEmail && (
+                <>
+                  <StyledStrong>
+                    <FormattedMessage
+                      id="raportit.email"
+                      defaultMessage="Ohjaajan Email"
+                    />
+                    :
+                  </StyledStrong>{" "}
+                  {ohjaajaEmail}
+                  <br />
+                </>
+              )}
+              {ohjaajaPuhelinnumero && (
+                <>
+                  <StyledStrong>
+                    <FormattedMessage
+                      id="raportit.puhelin"
+                      defaultMessage="Ohjaajan puhelinnumero"
+                    />
+                    :
+                  </StyledStrong>{" "}
+                  {ohjaajaPuhelinnumero}
                   <br />
                 </>
               )}
