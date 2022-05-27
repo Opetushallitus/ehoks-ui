@@ -10,8 +10,9 @@ import { FormattedMessage, intlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 import { appendCommonHeaders } from "fetchUtils"
-import { Column } from "react-table"
+import { Column, Row } from "react-table"
 import { Button } from "components/Button"
+import { InfoModal } from "../../../shared/components/InfoModal"
 
 const BackgroundContainer = styled("div")`
   background: #f8f8f8;
@@ -169,6 +170,7 @@ export interface TpjRow {
   ohjaajaNimi: string
   ohjaajaEmail: string
   ohjaajaPuhelinnumero: string
+  customColumn: number
 }
 
 interface TpjFetchResult {
@@ -177,7 +179,7 @@ interface TpjFetchResult {
 
 interface RaportitState {
   hoksitCount?: number
-  data?: HoksRow[]
+  data?: (HoksRow | TpjRow)[]
   titleText: string
   descText: string
   selected: number
@@ -185,21 +187,10 @@ interface RaportitState {
   loppu: string
 }
 
-interface hoksIdCell {
+interface CustomColumn {
   cell: {
     value: number
-  }
-}
-
-interface hankkimistapaTyyppi {
-  cell: {
-    value: string
-  }
-}
-
-interface oppisopimuksenPerustaCell {
-  cell: {
-    value: string
+    row: Row
   }
 }
 
@@ -293,6 +284,13 @@ export class Raportit extends React.Component<RaportitProps> {
         })
       }
 
+      /*
+      const asd =
+        '{"meta":{},"data":[{"oppijaOid":"1.2.246.562.24.49789387296","opiskeluoikeusOid":"1.2.246.562.15.11723661101","hoksId":44757,"loppupvm":"2021-11-24","ytunnus":"2667304-3","ohjaajaEmail":"sami.honkanen@knowit.fi","tyopaikanNimi":"Ramin Grilli Oy","alkupvm":"2021-11-17","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus","ohjaajaNimi":"Rami"},{"oppijaOid":"1.2.246.562.24.49789387296","opiskeluoikeusOid":"1.2.246.562.15.11723661101","hoksId":44757,"loppupvm":"2021-11-24","ytunnus":"1873619-8","oppisopimuksenPerusta":"oppisopimuksenperusta_01","ohjaajaEmail":"sami.honkanen@knowit.fi","tyopaikanNimi":"Hesburger Espoo Espoonlahti","alkupvm":"2021-01-09","hankkimistapaTyyppi":"osaamisenhankkimistapa_oppisopimus","ohjaajaNimi":"Hessu"},{"oppijaOid":"1.2.246.562.24.49789387296","opiskeluoikeusOid":"1.2.246.562.15.11723661101","hoksId":44757,"loppupvm":"2021-11-24","ytunnus":"1873619-8","oppisopimuksenPerusta":"oppisopimuksenperusta_02","ohjaajaEmail":"sami.honkanen@knowit.fi","tyopaikanNimi":"Hesburger Espoo Espoonlahti","alkupvm":"2021-01-06","hankkimistapaTyyppi":"osaamisenhankkimistapa_oppisopimus","ohjaajaNimi":"Hessu"},{"oppijaOid":"1.2.246.562.24.49789387296","opiskeluoikeusOid":"1.2.246.562.15.11723661101","hoksId":44757,"loppupvm":"2021-11-24","ytunnus":"2768896-8","oppisopimuksenPerusta":"oppisopimuksenperusta_01","ohjaajaEmail":"sami.honkanen@knowit.fi","tyopaikanNimi":"Kalasataman autopesula","alkupvm":"2021-04-07","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus","ohjaajaNimi":"Sami"},{"oppijaOid":"1.2.246.562.24.49789387296","opiskeluoikeusOid":"1.2.246.562.15.11723661101","hoksId":44757,"loppupvm":"2021-11-24","ytunnus":"1633133-0","oppisopimuksenPerusta":"oppisopimuksenperusta_01","ohjaajaEmail":"sami.honkanen@knowit.fi","tyopaikanNimi":"Auto Sorsa Oy","alkupvm":"2021-08-08","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus","ohjaajaNimi":"Sorsa"},{"oppijaOid":"1.2.246.562.24.98624730263","opiskeluoikeusOid":"1.2.246.562.15.12321544764","hoksId":44760,"loppupvm":"2021-11-25","ytunnus":"123456-7","ohjaajaEmail":"sami.honkanen@knowit.fi","tyopaikanNimi":"Clipper Oy","alkupvm":"2020-11-11","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus","ohjaajaNimi":"Sami"},{"oppijaOid":"1.2.246.562.24.98624730263","opiskeluoikeusOid":"1.2.246.562.15.18102874072","hoksId":44637,"ohjaajaPuhelinnumero":"+358 40 652 7518","loppupvm":"2022-04-29","ytunnus":"lkjh123123","tyopaikanNimi":"uusjee","alkupvm":"2022-03-16","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus","ohjaajaNimi":"kkhkgjhkgjh"},{"oppijaOid":"1.2.246.562.24.93797881060","opiskeluoikeusOid":"1.2.246.562.15.18605405374","hoksId":44620,"loppupvm":"2021-07-15","ytunnus":"123","oppisopimuksenPerusta":"oppisopimuksenperusta_01","tyopaikanNimi":"K Kauppa","alkupvm":"2021-02-01","hankkimistapaTyyppi":"osaamisenhankkimistapa_oppisopimus","ohjaajaNimi":"Mikko"},{"oppijaOid":"1.2.246.562.24.98624730263","opiskeluoikeusOid":"1.2.246.562.15.27057906615","hoksId":44790,"loppupvm":"2022-03-01","alkupvm":"2022-03-01","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus"},{"oppijaOid":"1.2.246.562.24.46561474333","opiskeluoikeusOid":"1.2.246.562.15.33952059666","hoksId":8750,"ohjaajaPuhelinnumero":"adsads2","loppupvm":"2021-07-30","ytunnus":"1234567-8","oppisopimuksenPerusta":"oppisopimuksenperusta_01","tyopaikanNimi":"Coca Cola","alkupvm":"2020-09-07","hankkimistapaTyyppi":"osaamisenhankkimistapa_oppisopimus","ohjaajaNimi":"tero janari"},{"oppijaOid":"1.2.246.562.24.98624730263","opiskeluoikeusOid":"1.2.246.562.15.34644080656","hoksId":44652,"loppupvm":"2021-10-20","ytunnus":"1234567-8","oppisopimuksenPerusta":"oppisopimuksenperusta_01","ohjaajaEmail":"sami.honkanen@knowit.fi","tyopaikanNimi":"POSTi Testi","alkupvm":"2021-05-05","hankkimistapaTyyppi":"osaamisenhankkimistapa_oppisopimus","ohjaajaNimi":"Vesa Vetäjä"},{"oppijaOid":"1.2.246.562.24.98624730263","opiskeluoikeusOid":"1.2.246.562.15.34644080656","hoksId":44652,"loppupvm":"2021-11-24","ytunnus":"1053026-7","oppisopimuksenPerusta":"oppisopimuksenperusta_01","ohjaajaEmail":"sami.honkanen@knowit.fi","tyopaikanNimi":"Knowit Oy","alkupvm":"2021-01-01","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus","ohjaajaNimi":"Knowit Ohjaaja"},{"oppijaOid":"1.2.246.562.24.98624730263","opiskeluoikeusOid":"1.2.246.562.15.34644080656","hoksId":44652,"loppupvm":"2021-11-24","ytunnus":"1053026-7","oppisopimuksenPerusta":"oppisopimuksenperusta_01","ohjaajaEmail":"sami.honkanen@knowit.fi","tyopaikanNimi":"Knowit Oy","alkupvm":"2021-03-02","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus","ohjaajaNimi":"Knowit Ohjaaja"},{"oppijaOid":"1.2.246.562.24.98624730263","opiskeluoikeusOid":"1.2.246.562.15.34644080656","hoksId":44652,"loppupvm":"2021-11-24","ytunnus":"1053026-7","oppisopimuksenPerusta":"oppisopimuksenperusta_01","ohjaajaEmail":"sami.honkanen@knowit.fi","tyopaikanNimi":"Knowit Oy","alkupvm":"2021-05-04","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus","ohjaajaNimi":"Knowit Ohjaaja"},{"oppijaOid":"1.2.246.562.24.98624730263","opiskeluoikeusOid":"1.2.246.562.15.34644080656","hoksId":44652,"loppupvm":"2021-11-24","ytunnus":"2667304-3","oppisopimuksenPerusta":"oppisopimuksenperusta_01","ohjaajaEmail":"sami.honkanen@knowit.fi","tyopaikanNimi":"Ramin Grilli Oy","alkupvm":"2021-07-07","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus","ohjaajaNimi":"Rami"},{"oppijaOid":"1.2.246.562.24.98624730263","opiskeluoikeusOid":"1.2.246.562.15.34644080656","hoksId":44652,"loppupvm":"2021-11-24","ytunnus":"2667304-3","oppisopimuksenPerusta":"oppisopimuksenperusta_01","ohjaajaEmail":"sami.honkanen@knowit.fi","tyopaikanNimi":"Ramin Grilli Oy","alkupvm":"2021-08-08","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus","ohjaajaNimi":"Rami"},{"oppijaOid":"1.2.246.562.24.98624730263","opiskeluoikeusOid":"1.2.246.562.15.34644080656","hoksId":44652,"loppupvm":"2021-11-24","ytunnus":"2667304-3","oppisopimuksenPerusta":"oppisopimuksenperusta_01","ohjaajaEmail":"sami.honkanen@knowit.fi","tyopaikanNimi":"Ramin Grilli Oy","alkupvm":"2021-03-12","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus","ohjaajaNimi":"Rami"},{"oppijaOid":"1.2.246.562.24.49789387296","opiskeluoikeusOid":"1.2.246.562.15.40745434916","hoksId":44755,"loppupvm":"2021-11-24","ytunnus":"8765432-1","oppisopimuksenPerusta":"oppisopimuksenperusta_01","ohjaajaEmail":"Julli@jullinjuottola.com","tyopaikanNimi":"Jullin juottola","alkupvm":"2021-11-12","hankkimistapaTyyppi":"osaamisenhankkimistapa_oppisopimus","ohjaajaNimi":"Julli"},{"oppijaOid":"1.2.246.562.24.49789387296","opiskeluoikeusOid":"1.2.246.562.15.40745434916","hoksId":44755,"loppupvm":"2021-11-24","ytunnus":"2345678-9","ohjaajaEmail":"Saara@saaransaha.com","tyopaikanNimi":"Saaran saha","alkupvm":"2021-11-17","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus","ohjaajaNimi":"Saara"},{"oppijaOid":"1.2.246.562.24.98624730263","opiskeluoikeusOid":"1.2.246.562.15.42279613840","hoksId":44641,"loppupvm":"2021-10-01","ytunnus":"123456","oppisopimuksenPerusta":"oppisopimuksenperusta_01","tyopaikanNimi":"Kukka Kauppa","alkupvm":"2021-02-01","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus","ohjaajaNimi":"Kukka Ohjaaja"},{"oppijaOid":"1.2.246.562.24.98624730263","opiskeluoikeusOid":"1.2.246.562.15.42279613840","hoksId":44641,"ohjaajaPuhelinnumero":"0405066856","loppupvm":"2021-10-06","ytunnus":"123456","oppisopimuksenPerusta":"oppisopimuksenperusta_02","tyopaikanNimi":"OpintoOikeus Eronnut Paikka","alkupvm":"2021-06-05","hankkimistapaTyyppi":"osaamisenhankkimistapa_oppisopimus","ohjaajaNimi":"Opinto Oikeus"},{"oppijaOid":"1.2.246.562.24.36659743384","opiskeluoikeusOid":"1.2.246.562.15.73432851316","hoksId":44599,"loppupvm":"2021-05-26","ytunnus":"1234567-8","ohjaajaEmail":"seppo.sornainen@yritys.fi","tyopaikanNimi":"Asiakkuus Oy","alkupvm":"2021-05-12","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus","ohjaajaNimi":"Seppo Sörnäinen"},{"oppijaOid":"1.2.246.562.24.80414720776","opiskeluoikeusOid":"1.2.246.562.15.76317381846","hoksId":44773,"loppupvm":"2022-01-22","alkupvm":"2022-01-14","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus"},{"oppijaOid":"1.2.246.562.24.37998958910","opiskeluoikeusOid":"1.2.246.562.15.78573431000","hoksId":44794,"loppupvm":"2022-04-29","ytunnus":"29Testi-ytunnus","oppisopimuksenPerusta":"oppisopimuksenperusta_01","ohjaajaEmail":"sami.honkanen@knowit.fi","tyopaikanNimi":"29Testi-tyopaikannimi","alkupvm":"2022-02-10","hankkimistapaTyyppi":"osaamisenhankkimistapa_oppisopimus","ohjaajaNimi":"29Testi Testinen"},{"oppijaOid":"1.2.246.562.24.76247627788","opiskeluoikeusOid":"1.2.246.562.15.89243433391","hoksId":44796,"loppupvm":"2022-04-29","ytunnus":"29Testi-YT","oppisopimuksenPerusta":"oppisopimuksenperusta_01","ohjaajaEmail":"sami.honkanen@knowit.fi","tyopaikanNimi":"29Testi","alkupvm":"2022-01-10","hankkimistapaTyyppi":"osaamisenhankkimistapa_koulutussopimus","ohjaajaNimi":"29Testi Testinen"},{"oppijaOid":"1.2.246.562.24.93797881060","opiskeluoikeusOid":"1.2.246.562.15.92738191920","hoksId":44640,"loppupvm":"2021-09-13","ytunnus":"123456","oppisopimuksenPerusta":"oppisopimuksenperusta_02","tyopaikanNimi":"Ääkköstesti, Crème brûlée","alkupvm":"2021-09-01","hankkimistapaTyyppi":"osaamisenhankkimistapa_oppisopimus","ohjaajaNimi":"Mikko"}]}'
+      this.setState({
+        data: JSON.parse(asd).data
+      })
+      */
       if (request.status === 403) {
         notifications.addError("Raportit.EiOikeuksia", oppilaitosOid)
       }
@@ -328,7 +326,10 @@ export class Raportit extends React.Component<RaportitProps> {
   }
 
   getHoksiByHoksId = (hoksid: number) =>
-    this.state.data?.find((x: HoksRow) => x.hoksid === hoksid)
+    this.state.data?.find((x: HoksRow) => x.hoksid === hoksid) as HoksRow
+
+  getTpjRowByHoksId = (hoksId: number) =>
+    this.state.data?.find((x: TpjRow) => x.hoksId === hoksId) as TpjRow
 
   createLinkPath = (hoksid: number) => {
     const hoksi = this.getHoksiByHoksId(hoksid)
@@ -352,17 +353,19 @@ export class Raportit extends React.Component<RaportitProps> {
             id: "raportit.ehoksid"
           }),
           accessor: "hoksid",
-          Cell: ({ cell: { value } }: hoksIdCell) => (
-            <Link
-              to={this.createLinkPath(value)}
-              state={{
-                fromRaportit: true,
-                oppijaoid: this.getHoksiByHoksId(value)?.oppijaoid,
-                hokseid: this.getHoksiByHoksId(value)?.hokseid
-              }}
-            >
-              {value}
-            </Link>
+          Cell: ({ cell: { value } }: CustomColumn) => (
+            <div style={{ textAlign: "center" }}>
+              <Link
+                to={this.createLinkPath(value)}
+                state={{
+                  fromRaportit: true,
+                  oppijaoid: this.getHoksiByHoksId(value)?.oppijaoid,
+                  hokseid: this.getHoksiByHoksId(value)?.hokseid
+                }}
+              >
+                {value}
+              </Link>
+            </div>
           )
         },
         {
@@ -391,88 +394,113 @@ export class Raportit extends React.Component<RaportitProps> {
             id: "raportit.ehoksid"
           }),
           accessor: "hoksId",
-          Cell: ({ cell: { value } }: hoksIdCell) => (
-            <Link
-              to={this.createLinkPath(value)}
-              state={{
-                fromRaportit: true,
-                oppijaoid: this.getHoksiByHoksId(value)?.oppijaoid,
-                hokseid: this.getHoksiByHoksId(value)?.hokseid
-              }}
-            >
-              {value}
-            </Link>
+          Cell: ({ cell: { value } }: CustomColumn) => (
+            <div style={{ textAlign: "center" }}>
+              <Link
+                to={this.createLinkPath(value)}
+                state={{
+                  fromRaportit: true,
+                  oppijaoid: this.getHoksiByHoksId(value)?.oppijaoid,
+                  hokseid: this.getHoksiByHoksId(value)?.hokseid
+                }}
+              >
+                {value}
+              </Link>
+            </div>
           )
         },
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.opiskeluoikeusoid"
           }),
-          accessor: "opiskeluoikeusOid"
+          accessor: "opiskeluoikeusOid",
+          Cell: ({ cell: { value } }: CustomColumn) => (
+            <div style={{ textAlign: "center" }}>{value}</div>
+          )
         },
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.oppijanumeroTitle"
           }),
-          accessor: "oppijaOid"
+          accessor: "oppijaOid",
+          Cell: ({ cell: { value } }: CustomColumn) => (
+            <div style={{ textAlign: "center" }}>{value}</div>
+          )
         },
+        /*
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.ytunnus"
           }),
           accessor: "ytunnus"
         },
+        */
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.tyopaikannimi"
           }),
-          accessor: "tyopaikanNimi"
-        },
-        {
-          Header: this.context.intl.formatMessage({
-            id: "raportit.alku"
-          }),
-          accessor: "alkupvm"
-        },
-        {
-          Header: this.context.intl.formatMessage({
-            id: "raportit.loppu"
-          }),
-          accessor: "loppupvm"
+          accessor: "tyopaikanNimi",
+          Cell: ({ cell: { value } }: CustomColumn) => (
+            <div style={{ textAlign: "center" }}>{value}</div>
+          )
         },
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.ohjaajannimi"
           }),
-          accessor: "ohjaajaNimi"
+          accessor: "ohjaajaNimi",
+          Cell: ({ cell: { value } }: CustomColumn) => (
+            <div style={{ textAlign: "center" }}>{value}</div>
+          )
         },
         {
           Header: this.context.intl.formatMessage({
-            id: "raportit.puhelin"
+            id: "raportit.alku"
           }),
-          accessor: "ohjaajaPuhelinnumero"
+          accessor: "alkupvm",
+          Cell: ({ cell: { value } }: CustomColumn) => (
+            <div style={{ textAlign: "center" }}>{value}</div>
+          )
         },
         {
           Header: this.context.intl.formatMessage({
-            id: "raportit.email"
+            id: "raportit.loppu"
           }),
-          accessor: "ohjaajaEmail"
+          accessor: "loppupvm",
+          Cell: ({ cell: { value } }: CustomColumn) => (
+            <div style={{ textAlign: "center" }}>{value}</div>
+          )
         },
         {
           Header: this.context.intl.formatMessage({
-            id: "raportit.hankkimistapatyyppi"
+            id: "infoModal.naytaLisatiedot",
+            accessor: "customColumn",
+            Cell: ({ cell: { value } }: CustomColumn) => (
+              <div style={{ textAlign: "center" }}>{value}</div>
+            )
           }),
-          accessor: "hankkimistapaTyyppi",
-          Cell: ({ cell: { value } }: hankkimistapaTyyppi) =>
-            value ? value.split("_")[1] : ""
-        },
-        {
-          Header: this.context.intl.formatMessage({
-            id: "raportit.perusta"
-          }),
-          accessor: "oppisopimuksenPerusta",
-          Cell: ({ cell: { value } }: oppisopimuksenPerustaCell) =>
-            value ? value.split("_")[1] : ""
+          Cell: ({ cell: { value, row } }: CustomColumn) => {
+            const tpjRow = row.original as TpjRow
+            return (
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <InfoModal
+                  nayttoymparistoDetails={tpjRow?.tyopaikanNimi}
+                  startDate={tpjRow?.alkupvm}
+                  endDate={tpjRow?.loppupvm}
+                  partTimeAmount={tpjRow?.osaAikaisuus}
+                  oppisopimuksenPerusta={tpjRow?.oppisopimuksenPerusta}
+                  hoksId={value}
+                  opiskeluoikeusOid={tpjRow?.opiskeluoikeusOid}
+                  hankkimistapaTyyppi={tpjRow?.hankkimistapaTyyppi}
+                  ytunnus={tpjRow?.ytunnus}
+                  oppijaOid={tpjRow?.oppijaOid}
+                  ohjaajaNimi={tpjRow?.ohjaajaNimi}
+                  ohjaajaEmail={tpjRow?.ohjaajaEmail}
+                  ohjaajaPuhelinnumero={tpjRow?.ohjaajaPuhelinnumero}
+                />
+              </div>
+            )
+          }
         }
       ]
     } else {
@@ -481,12 +509,6 @@ export class Raportit extends React.Component<RaportitProps> {
   }
 
   tpjHaeOnClick = () => {
-    const { store } = this.props
-    const oppilaitosOid: string | undefined =
-      store?.session.selectedOrganisationOid
-
-    console.log(oppilaitosOid)
-    console.log(this.state.alku + " - " + this.state.loppu)
     this.loadTyopaikkaJaksot()
   }
 
