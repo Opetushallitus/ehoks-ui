@@ -84,12 +84,12 @@ export class InfoModal extends React.Component<InfoModalProps> {
     const { intl } = this.context
     const {
       className,
-      partTimeAmount, //osaAikaisuus
+      partTimeAmount,
       osaamisenHankkimistapaKoodisto,
-      perusta, // oppisopimuksenPerusta
-      startDate, //alkupvm
-      endDate, //loppupvm
-      nayttoymparistoDetails, //tyopaikanNimi
+      perusta,
+      startDate,
+      endDate,
+      nayttoymparistoDetails,
       keskeytymisajanjaksot,
       hoksId,
       opiskeluoikeusOid,
