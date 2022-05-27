@@ -133,6 +133,7 @@ export class InfoModal extends React.Component<InfoModalProps> {
                 </span>
               ) : (
                 <span>
+                  {" "}
                   <FormattedDate date={startDate} dateNotSet="" />
                   {" - "}
                   <FormattedDate date={endDate} dateNotSet="" />
