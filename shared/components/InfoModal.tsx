@@ -179,19 +179,6 @@ export class InfoModal extends React.Component<InfoModalProps> {
                   <br />
                 </>
               )}
-              {oppijaOid && (
-                <>
-                  <StyledStrong>
-                    <FormattedMessage
-                      id="raportit.oppijanumeroTitle"
-                      defaultMessage="Oppija Oid"
-                    />
-                    :
-                  </StyledStrong>{" "}
-                  {oppijaOid}
-                  <br />
-                </>
-              )}
               {((osaamisenHankkimistapaKoodisto &&
                 osaamisenHankkimistapaKoodisto.nimi) ||
                 hankkimistapaTyyppi) && (
