@@ -309,6 +309,9 @@ export class Raportit extends React.Component<RaportitProps> {
     descText: string,
     selected: number
   ) => {
+    this.setState({
+      data: []
+    })
     event.preventDefault()
     // @ts-ignore Don't know how to remove focus from link without this
     event.target.blur()
@@ -427,14 +430,6 @@ export class Raportit extends React.Component<RaportitProps> {
             <div style={{ textAlign: "center" }}>{value}</div>
           )
         },
-        /*
-        {
-          Header: this.context.intl.formatMessage({
-            id: "raportit.ytunnus"
-          }),
-          accessor: "ytunnus"
-        },
-        */
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.tyopaikannimi"
