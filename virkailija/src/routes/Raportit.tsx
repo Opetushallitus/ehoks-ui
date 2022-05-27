@@ -158,6 +158,7 @@ interface hoksitFetchResult {
 
 export interface TpjRow {
   hoksId: number
+  hoksEid: string
   opiskeluoikeusOid: string
   oppijaOid: string
   hankkimistapaTyyppi: string
@@ -335,9 +336,24 @@ export class Raportit extends React.Component<RaportitProps> {
     this.state.data?.find((x: TpjRow) => x.hoksId === hoksId) as TpjRow
 
   createLinkPath = (hoksid: number) => {
+    let row = {} as HoksRow | TpjRow
+    let oppijaOid = ""
+    let hoksEid = ""
+    switch (this.state.selected) {
+      case 1:
+        row = this.getHoksiByHoksId(hoksid)
+        oppijaOid = row.oppijaoid
+        hoksEid = row.hokseid
+        break
+      case 2:
+        row = this.getTpjRowByHoksId(hoksid)
+        oppijaOid = row.oppijaOid
+        hoksEid = row.hoksEid
+        break
+    }
     const hoksi = this.getHoksiByHoksId(hoksid)
     return hoksi
-      ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${hoksi.oppijaoid}/${hoksi?.hokseid}`
+      ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaOid}/${hoksEid}`
       : "/ehoks-virkailija-ui/raportit"
   }
 
