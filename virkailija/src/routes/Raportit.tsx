@@ -483,12 +483,6 @@ export class Raportit extends React.Component<RaportitProps> {
   }
 
   tpjHaeOnClick = () => {
-    const { store } = this.props
-    const oppilaitosOid: string | undefined =
-      store?.session.selectedOrganisationOid
-
-    console.log(oppilaitosOid)
-    console.log(this.state.alku + " - " + this.state.loppu)
     this.loadTyopaikkaJaksot()
   }
 
