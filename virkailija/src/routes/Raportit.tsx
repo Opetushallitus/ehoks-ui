@@ -417,8 +417,8 @@ export class Raportit extends React.Component<RaportitProps> {
                 to={this.createLinkPath(value)}
                 state={{
                   fromRaportit: true,
-                  oppijaoid: this.getHoksiByHoksId(value)?.oppijaoid,
-                  hokseid: this.getHoksiByHoksId(value)?.hokseid
+                  oppijaoid: this.getTpjRowByHoksId(value)?.oppijaOid,
+                  hokseid: this.getTpjRowByHoksId(value)?.hoksEid
                 }}
               >
                 {value}
