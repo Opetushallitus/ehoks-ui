@@ -1,5 +1,7 @@
 import React, { useMemo } from "react"
 import { Column, useTable } from "react-table"
+// @ts-ignore Ignore type-checking for this library
+import TableScrollbar from "react-table-scrollbar"
 
 interface RaportitTableProps {
   data: any
@@ -21,28 +23,30 @@ export function RaportitTable(props: RaportitTableProps) {
   /* eslint-disable react/jsx-key */
   /* the jsx key is provided in the .get*Props() spreads. */
   return (
-    <table {...getTableProps()}>
-      <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map(row => {
-          prepareRow(row)
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map(cell => (
-                <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+    <TableScrollbar rows={20}>
+      <table {...getTableProps()}>
+        <thead>
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
               ))}
             </tr>
-          )
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map(row => {
+            prepareRow(row)
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map(cell => (
+                  <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                ))}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    </TableScrollbar>
   )
 }
