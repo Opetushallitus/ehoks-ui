@@ -32,6 +32,7 @@
     "errors.SessionStore.logout": "Uloskirjautuminen epäonnistui",
     "errors.SessionStore.valtuudet": "Olet kirjautunut käyttäen valtuuksia. Voit käyttää eHOKSia kirjauduttuasi ulos, ja sen jälkeen takaisin sisään ilman valtuuksia.",
     "errors.TranslationStore.fetchLocales": "Käännösten haku epäonnistui",
+    "errors.Raportit.EiOikeuksia": "Ei käyttöoikeuksia organisaatioon",
     "etusivu.ammatillisetTutkinnotKuvanAriaLabel": "Näppäimistön näppäin jossa lukee 'Education'",
     "etusivu.henkilokohtaistaminenKuvanAriaLabel": "Hymyileviä opiskelijoita työn touhussa",
     "footer.ehoksLogoLabel": "eHOKS logo",

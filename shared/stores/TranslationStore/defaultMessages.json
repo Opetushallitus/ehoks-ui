@@ -126,6 +126,11 @@
   },
   {
     "locale": "fi",
+    "key": "errors.Raportit.EiOikeuksia",
+    "value": "Ei käyttöoikeuksia organisaatioon"
+  },
+  {
+    "locale": "fi",
     "key": "errors.OppilasStore.haePerusteet",
     "value": "Ammatillisten tutkintojen haku epäonnistui"
   },
@@ -618,6 +623,21 @@
     "locale": "fi",
     "key": "tavoitteet.suunnitelmaJatkoOpintoihinTitle",
     "value": "Suunnitelma jatko-opintoihin siirtymisestä"
+  },
+  {
+    "locale": "fi",
+    "key": "tutkinnonOsa.opetusJaOhjausMaaraHours",
+    "value": "{hours} tuntia"
+  },
+  {
+    "locale": "fi",
+    "key": "tutkinnonOsa.opetusJaOhjausMaaraOneHour",
+    "value": "1 tunti"
+  },
+  {
+    "locale": "fi",
+    "key": "tutkinnonOsa.opetusJaOhjausMaaraTitle",
+    "value": "Opetus ja ohjaus"
   },
   {
     "locale": "fi",
