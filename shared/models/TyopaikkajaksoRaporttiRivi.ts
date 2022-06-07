@@ -48,9 +48,6 @@ export const TyopaikkajaksoRaporttiRivi = types
         return self.tutkinnonOsa && self.tutkinnonOsa.nimi
           ? self.tutkinnonOsa.nimi[root.translations.activeLocale]
           : ""
-      },
-      get tutkinnonOsaModuleId() {
-        return self.moduleId
       }
     }
   })
