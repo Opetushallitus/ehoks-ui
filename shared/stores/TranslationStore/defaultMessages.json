@@ -516,6 +516,11 @@
   },
   {
     "locale": "fi",
+    "key": "raportit.tutkinnonOsa",
+    "value": "Tutkinnon osa"
+  },
+  {
+    "locale": "fi",
     "key": "raportit.email",
     "value": "Email"
   },

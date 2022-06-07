@@ -13,6 +13,7 @@ import { appendCommonHeaders } from "fetchUtils"
 import { Column, Row } from "react-table"
 import { Button } from "components/Button"
 import { InfoModal } from "../../../shared/components/InfoModal"
+import { ITyopaikkajaksoRaporttiRivi } from "../../../shared/models/TyopaikkajaksoRaporttiRivi"
 
 const BackgroundContainer = styled("div")`
   background: #f8f8f8;
@@ -156,31 +157,33 @@ interface hoksitFetchResult {
   hoksit: HoksRow[]
 }
 
+/*
 export interface TpjRow {
-  hoksId: number
-  hoksEid: string
-  opiskeluoikeusOid: string
-  oppijaOid: string
-  hankkimistapaTyyppi: string
-  alkupvm: string
-  loppupvm: string
-  osaAikaisuus: number
-  oppisopimuksenPerusta: string
-  tyopaikanNimi: string
-  ytunnus: string
-  ohjaajaNimi: string
-  ohjaajaEmail: string
-  ohjaajaPuhelinnumero: string
+  hoksId: number // OK
+  hoksEid: string // OK
+  opiskeluoikeusOid: string // OK
+  oppijaOid: string // OK
+  hankkimistapaTyyppi: string // uudelleennimetään osaamisenHankkimistapaKoodiUri
+  alkupvm: string // OK
+  loppupvm: string // OK
+  osaAikaisuus: number // OK
+  oppisopimuksenPerusta: string // uudelleennimetään oppisopimuksenPerustaKoodiUri
+  tyopaikanNimi: string // OK
+  ytunnus: string // OK
+  ohjaajaNimi: string // OK
+  ohjaajaEmail: string // OK
+  ohjaajaPuhelinnumero: string // OK
   customColumn: number
 }
+*/
 
 interface TpjFetchResult {
-  data: TpjRow[]
+  data: ITyopaikkajaksoRaporttiRivi[]
 }
 
 interface RaportitState {
   hoksitCount?: number
-  data?: (HoksRow | TpjRow)[]
+  data?: (HoksRow | ITyopaikkajaksoRaporttiRivi)[]
   titleText: string
   descText: string
   selected: number
@@ -332,10 +335,12 @@ export class Raportit extends React.Component<RaportitProps> {
     this.state.data?.find((x: HoksRow) => x.hoksid === hoksid) as HoksRow
 
   getTpjRowByHoksId = (hoksId: number) =>
-    this.state.data?.find((x: TpjRow) => x.hoksId === hoksId) as TpjRow
+    this.state.data?.find(
+      (x: ITyopaikkajaksoRaporttiRivi) => x.hoksId === hoksId
+    ) as ITyopaikkajaksoRaporttiRivi
 
   createLinkPath = (hoksid: number) => {
-    let row = {} as HoksRow | TpjRow
+    let row = {} as HoksRow | ITyopaikkajaksoRaporttiRivi
     let oppijaOid = ""
     let hoksEid = ""
     switch (this.state.selected) {
@@ -489,7 +494,7 @@ export class Raportit extends React.Component<RaportitProps> {
             )
           }),
           Cell: ({ cell: { value, row } }: CustomColumn) => {
-            const tpjRow = row.original as TpjRow
+            const tpjRow = row.original as ITyopaikkajaksoRaporttiRivi
             return (
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <InfoModal
@@ -497,15 +502,18 @@ export class Raportit extends React.Component<RaportitProps> {
                   startDate={tpjRow?.alkupvm}
                   endDate={tpjRow?.loppupvm}
                   partTimeAmount={tpjRow?.osaAikaisuus}
-                  oppisopimuksenPerusta={tpjRow?.oppisopimuksenPerusta}
+                  perusta={tpjRow?.oppisopimuksenPerusta}
                   hoksId={value}
                   opiskeluoikeusOid={tpjRow?.opiskeluoikeusOid}
-                  hankkimistapaTyyppi={tpjRow?.hankkimistapaTyyppi}
+                  osaamisenHankkimistapaKoodisto={
+                    tpjRow?.osaamisenHankkimistapa
+                  }
                   ytunnus={tpjRow?.ytunnus}
                   oppijaOid={tpjRow?.oppijaOid}
                   ohjaajaNimi={tpjRow?.ohjaajaNimi}
                   ohjaajaEmail={tpjRow?.ohjaajaEmail}
                   ohjaajaPuhelinnumero={tpjRow?.ohjaajaPuhelinnumero}
+                  tutkinnonOsanNimi={tpjRow?.tutkinnonOsanNimi}
                 />
               </div>
             )
