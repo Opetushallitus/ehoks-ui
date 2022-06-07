@@ -1,7 +1,6 @@
 import { types, getRoot, Instance } from "mobx-state-tree"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
-import { TutkinnonOsaType } from "./helpers/ShareTypes"
 import { EnrichTutkinnonOsaKoodiUri } from "./Enrichment/EnrichTutkinnonOsaKoodiUri"
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
@@ -49,9 +48,6 @@ export const TyopaikkajaksoRaporttiRivi = types
         return self.tutkinnonOsa && self.tutkinnonOsa.nimi
           ? self.tutkinnonOsa.nimi[root.translations.activeLocale]
           : ""
-      },
-      get tutkinnonOsaTyyppi(): TutkinnonOsaType {
-        return TutkinnonOsaType.HankittavaAmmatillinen
       },
       get tutkinnonOsaModuleId() {
         return self.moduleId
