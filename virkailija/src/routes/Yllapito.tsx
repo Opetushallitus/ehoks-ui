@@ -94,6 +94,7 @@ interface YllapitoState {
   systemInfo?: SystemInfo
   koulutustoimijaOid?: string | ""
   sendHerateId?: number
+  sendPaattoHerateId?: number
   sendHerateDateFrom?: string
   sendHerateDateTo?: string
   sendPaattoHerateDateFrom?: string
@@ -814,6 +815,44 @@ export class Yllapito extends React.Component<YllapitoProps> {
     }
   }
 
+  onSendPaattoHerate = async (event: any) => {
+    const { intl } = this.context
+    const { sendPaattoHerateId } = this.state
+    event.preventDefault()
+    const request = await window.fetch(
+      `/ehoks-virkailija-backend/api/v1/virkailija/hoks/${sendPaattoHerateId}/resend-paattoherate`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: appendCommonHeaders(
+          new Headers({
+            Accept: "application/json; charset=utf-8",
+            "Content-Type": "application/json"
+          })
+        )
+      }
+    )
+    if (request.status === 204) {
+      this.setState({
+        success: true,
+        message: intl.formatMessage({
+          id: "yllapito.herateLahetysOnnistui",
+          defaultMessage: "Herätteen lähetys onnistui"
+        }),
+        isLoading: false
+      })
+    } else {
+      this.setState({
+        success: false,
+        message: intl.formatMessage({
+          id: "yllapito.herateLahetysEpaonnistui",
+          defaultMessage: "Herätteen lähetys epäonnistui"
+        }),
+        isLoading: false
+      })
+    }
+  }
+
   onSendHeratteetBetween = async (event: any) => {
     const { intl } = this.context
     const { sendHerateDateFrom, sendHerateDateTo } = this.state
@@ -946,6 +985,12 @@ export class Yllapito extends React.Component<YllapitoProps> {
   handleSendHerateIdChange = (inputId: any) => {
     this.setState({
       sendHerateId: inputId
+    })
+  }
+
+  handleSendPaattoHerateIdChange = (inputId: any) => {
+    this.setState({
+      sendPaattoHerateId: inputId
     })
   }
 
@@ -1455,6 +1500,45 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           <FormattedMessage
                             id="yllapito.aloitusHerate"
                             defaultMessage="Lähetä uusi heräte aloituskyselyyn."
+                          />
+                        </Button>
+                      </ContentElement>
+                    </ContentElement>
+                  </ContentElement>
+                  <ContentElement>
+                    <Header>
+                      <FormattedMessage
+                        id="yllapito.paattoHerate"
+                        defaultMessage="Lähetä uusi heräte päättökyselyyn."
+                      />
+                    </Header>
+                    <FormattedMessage
+                      id="yllapito.paattoHerateKuvaus"
+                      defaultMessage={
+                        "Lähetä tietty päättöheräte uudestaan herätteen " +
+                        "ID:llä."
+                      }
+                    />
+                    <ContentElement>
+                      <ContentElement>
+                        <form>
+                          <HakuInput
+                            type="text"
+                            placeholder="123456"
+                            value={this.state.sendPaattoHerateId}
+                            onChange={e =>
+                              this.handleSendPaattoHerateIdChange(
+                                e.target.value
+                              )
+                            }
+                          />
+                        </form>
+                      </ContentElement>
+                      <ContentElement>
+                        <Button onClick={this.onSendPaattoHerate}>
+                          <FormattedMessage
+                            id="yllapito.paattoHerate"
+                            defaultMessage="Lähetä uusi heräte päättökyselyyn."
                           />
                         </Button>
                       </ContentElement>
