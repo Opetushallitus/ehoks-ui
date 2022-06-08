@@ -10,7 +10,7 @@ export const Model = types.model({
   hoksEid: types.string,
   opiskeluoikeusOid: types.string,
   oppijaOid: types.string,
-  osaamisenHankkimistapaKoodiUri: types.optional(types.string, ""),
+  osaamisenHankkimistapaKoodiUri: types.maybe(types.string),
   osaamisenHankkimistapa: types.optional(KoodistoVastaus, {}),
   alkupvm: types.maybe(types.string),
   loppupvm: types.maybe(types.string),
@@ -22,7 +22,7 @@ export const Model = types.model({
   ohjaajaNimi: types.maybe(types.string),
   ohjaajaEmail: types.maybe(types.string),
   ohjaajaPuhelinnumero: types.maybe(types.string),
-  tutkinnonOsaKoodiUri: types.optional(types.string, ""),
+  tutkinnonOsaKoodiUri: types.maybe(types.string),
   tutkinnonOsa: types.optional(EPerusteetVastaus, {}),
   customColumn: types.maybe(types.number)
 })
