@@ -319,6 +319,8 @@
     "yllapito.oppijanPaivitys": "Päivitä oppijan tiedot indeksiin Oppijanumerorekisteristä.",
     "yllapito.oppijanPaivitysKuvaus": "Päivitä oppijan tiedot indeksiin Oppijanumerorekisteristä.",
     "yllapito.OppijaOidTulos": "Oppija-oid on: {oppijaOid}",
+    "yllapito.paattoHerate": "Lähetä uusi heräte päättökyselyyn.",
+    "yllapito.paattoHerateKuvaus": "Lähetä tietty päättöheräte uudestaan herätteen ID:llä.",
     "yllapito.paattoHeratteet": "Lähetä uudet herätteet päättökyselyihin aikavälille.",
     "yllapito.paattoHeratteetKuvaus": "Lähetä uudestaan kaikki päättökyselyherätteet, jotka luotiin annetun aikavälin sisällä.",
     "yllapito.paivitaOppija": "Paivita oppijan tiedot indeksiin.",

@@ -61,6 +61,7 @@ const Model = types.model("HOKSModel", {
   urasuunnitelma: types.optional(KoodistoVastaus, {}),
   versio: types.optional(types.number, 0),
   sahkoposti: types.optional(types.string, ""),
+  puhelinnumero: types.optional(types.string, ""),
   manuaalisyotto: types.optional(types.boolean, false),
   opiskelijapalauteTilat: types.array(OpiskelijapalauteTila)
 })
