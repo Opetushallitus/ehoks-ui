@@ -67,12 +67,13 @@ interface InfoModalProps {
   hoksId?: number
   opiskeluoikeusOid?: string
   oppijaOid?: string
+  hankkimistapaTyyppi?: string
+  oppisopimuksenPerusta?: string
   tyopaikanNimi?: string
   ytunnus?: string
   ohjaajaNimi?: string
   ohjaajaEmail?: string
   ohjaajaPuhelinnumero?: string
-  tutkinnonOsanNimi?: string
 }
 
 export class InfoModal extends React.Component<InfoModalProps> {
@@ -93,11 +94,12 @@ export class InfoModal extends React.Component<InfoModalProps> {
       hoksId,
       opiskeluoikeusOid,
       oppijaOid,
+      hankkimistapaTyyppi,
+      oppisopimuksenPerusta,
       ytunnus,
       ohjaajaNimi,
       ohjaajaEmail,
-      ohjaajaPuhelinnumero,
-      tutkinnonOsanNimi
+      ohjaajaPuhelinnumero
     } = this.props
     return (
       <Popup
@@ -178,21 +180,26 @@ export class InfoModal extends React.Component<InfoModalProps> {
                   <br />
                 </>
               )}
-              {osaamisenHankkimistapaKoodisto &&
-                osaamisenHankkimistapaKoodisto.nimi && (
-                  <>
-                    <StyledStrong>
-                      <FormattedMessage
-                        id="infoModal.hankkimistapaTyyppi"
-                        defaultMessage="Osaamisen hankkimistapa"
-                      />
-                      :
-                    </StyledStrong>{" "}
-                    {osaamisenHankkimistapaKoodisto.nimi}
-                    <br />
-                  </>
-                )}
-              {perusta && perusta.nimi && (
+              {((osaamisenHankkimistapaKoodisto &&
+                osaamisenHankkimistapaKoodisto.nimi) ||
+                hankkimistapaTyyppi) && (
+                <>
+                  <StyledStrong>
+                    <FormattedMessage
+                      id="infoModal.hankkimistapaTyyppi"
+                      defaultMessage="Osaamisen hankkimistapa"
+                    />
+                    :
+                  </StyledStrong>{" "}
+                  {osaamisenHankkimistapaKoodisto &&
+                  osaamisenHankkimistapaKoodisto.nimi
+                    ? osaamisenHankkimistapaKoodisto.nimi
+                    : ""}
+                  {hankkimistapaTyyppi ? hankkimistapaTyyppi : ""}
+                  <br />
+                </>
+              )}
+              {((perusta && perusta.nimi) || oppisopimuksenPerusta) && (
                 <>
                   <StyledStrong>
                     <FormattedMessage
@@ -201,7 +208,8 @@ export class InfoModal extends React.Component<InfoModalProps> {
                     />
                     :
                   </StyledStrong>{" "}
-                  {perusta.nimi}
+                  {perusta && perusta.nimi ? perusta.nimi : ""}
+                  {oppisopimuksenPerusta ? oppisopimuksenPerusta : ""}
                   <br />
                 </>
               )}
@@ -267,19 +275,6 @@ export class InfoModal extends React.Component<InfoModalProps> {
                     :
                   </StyledStrong>{" "}
                   {ohjaajaPuhelinnumero}
-                  <br />
-                </>
-              )}
-              {tutkinnonOsanNimi && (
-                <>
-                  <StyledStrong>
-                    <FormattedMessage
-                      id="raportit.tutkinnonOsa"
-                      defaultMessage="Tutkinnon osa"
-                    />
-                    :
-                  </StyledStrong>{" "}
-                  {tutkinnonOsanNimi}
                   <br />
                 </>
               )}

@@ -266,7 +266,11 @@ const Search = types
       self.activePage = 0
     }
 
-    return { fetchOppijat, fetchOppija, resetActivePage }
+    const setFromListView = (val: boolean) => {
+      self.fromListView = val
+    }
+
+    return { fetchOppijat, fetchOppija, resetActivePage, setFromListView }
   })
   .actions(self => {
     const changeSearchText = (field: SearchSortKey, searchText = "") => {
