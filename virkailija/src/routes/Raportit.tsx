@@ -279,7 +279,6 @@ export class Raportit extends React.Component<RaportitProps> {
 
       if (request.status === 200) {
         const json: TpjFetchResult = await request.json()
-        console.log(json.data)
         this.setState({
           data: json.data
         })

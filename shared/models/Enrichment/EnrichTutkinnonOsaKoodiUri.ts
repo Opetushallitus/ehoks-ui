@@ -26,10 +26,6 @@ export const EnrichTutkinnonOsaKoodiUri = types
 
     const fetchEPerusteet = flow(function*(koodiUri: string): any {
       try {
-        console.log(
-          "EnrichTutkinnonOsaKoodiUri fetchEPerusteet " +
-            self.tutkinnonOsaKoodiUri
-        )
         // check our global cache first
         cachedResponses[koodiUri] =
           cachedResponses[koodiUri] || getFromEPerusteetService(koodiUri)
@@ -41,9 +37,6 @@ export const EnrichTutkinnonOsaKoodiUri = types
     })
 
     const afterCreate = () => {
-      console.log(
-        "EnrichTutkinnonOsaKoodiUri afterCreate " + self.tutkinnonOsaKoodiUri
-      )
       fetchEPerusteet(self.tutkinnonOsaKoodiUri)
     }
 
