@@ -1478,8 +1478,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <FormattedMessage
                       id="yllapito.aloitusHerateKuvaus"
                       defaultMessage={
-                        "Lähetä tietty aloitusheräte uudestaan herätteen " +
-                        "ID:llä."
+                        "Käynnistä HOKSin aloituskyselyn muodostus uudestaan " +
+                        "eHOKS ID:llä"
                       }
                     />
                     <ContentElement>
@@ -1515,8 +1515,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <FormattedMessage
                       id="yllapito.paattoHerateKuvaus"
                       defaultMessage={
-                        "Lähetä tietty päättöheräte uudestaan herätteen " +
-                        "ID:llä."
+                        "Käynnistä HOKSin päättökyselyn muodostus uudestaan " +
+                        "eHOKS ID:llä"
                       }
                     />
                     <ContentElement>
