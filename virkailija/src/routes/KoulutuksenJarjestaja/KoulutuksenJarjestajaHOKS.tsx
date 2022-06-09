@@ -76,6 +76,9 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
     const fromRaportit = this.props.location
       ? this.props.location.state.fromRaportit
       : false
+    if (fromRaportit) {
+      koulutuksenJarjestaja.search.setFromListView(false)
+    }
     this.disposeReaction = reaction(
       () => this.props.suunnitelmat.length > 0,
       async (hasSuunnitelmat: boolean) => {

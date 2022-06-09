@@ -10,6 +10,9 @@ import { FormattedMessage, intlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 import { appendCommonHeaders } from "fetchUtils"
+import { Column, Row } from "react-table"
+import { Button } from "components/Button"
+import { InfoModal } from "../../../shared/components/InfoModal"
 
 const BackgroundContainer = styled("div")`
   background: #f8f8f8;
@@ -72,6 +75,11 @@ const Separator = styled("div")`
   float: left;
 `
 
+const SearchButton = styled(Button)`
+  margin-left: 25px;
+  padding: 5px 20px 5px 20px;
+`
+
 const linkStyle = {
   textDecoration: "none",
   color: "#3a7a10"
@@ -79,6 +87,17 @@ const linkStyle = {
 
 const HelpButton = styled(HelpPopup)`
   margin-left: 12px;
+`
+
+const FilterBox = styled("div")`
+  margin-bottom: 25px;
+`
+
+const DateInput = styled("input")`
+  border: 1px solid #999;
+  height: 34px;
+  padding: 10px;
+  font-size: 14px;
 `
 
 const Styles = styled("div")`
@@ -132,23 +151,47 @@ export interface HoksRow {
   opiskeluoikeusoid: string
   oppilaitosoid: string
 }
-
-interface fetchResult {
+interface hoksitFetchResult {
   count: number
   hoksit: HoksRow[]
 }
 
+export interface TpjRow {
+  hoksId: number
+  hoksEid: string
+  opiskeluoikeusOid: string
+  oppijaOid: string
+  hankkimistapaTyyppi: string
+  alkupvm: string
+  loppupvm: string
+  osaAikaisuus: number
+  oppisopimuksenPerusta: string
+  tyopaikanNimi: string
+  ytunnus: string
+  ohjaajaNimi: string
+  ohjaajaEmail: string
+  ohjaajaPuhelinnumero: string
+  customColumn: number
+}
+
+interface TpjFetchResult {
+  data: TpjRow[]
+}
+
 interface RaportitState {
   hoksitCount?: number
-  hoksitWithoutOo?: HoksRow[]
+  data?: (HoksRow | TpjRow)[]
   titleText: string
   descText: string
   selected: number
+  alku: string
+  loppu: string
 }
 
-interface hoksitCell {
+interface CustomColumn {
   cell: {
     value: number
+    row: Row
   }
 }
 
@@ -161,10 +204,12 @@ export class Raportit extends React.Component<RaportitProps> {
 
   state: RaportitState = {
     hoksitCount: 0,
-    hoksitWithoutOo: [],
+    data: [],
     titleText: "Klikkaa valikosta haluamasi raportti",
     descText: "",
-    selected: 0
+    selected: 0,
+    alku: "",
+    loppu: ""
   }
 
   async loadHoksesWithoutOpiskeluoikeudet(oppilaitosOid: string | undefined) {
@@ -185,15 +230,63 @@ export class Raportit extends React.Component<RaportitProps> {
     )
 
     if (request.status === 200) {
-      const json: fetchResult = await request.json()
+      const json: hoksitFetchResult = await request.json()
       this.setState({
         hoksitCount: json.count,
-        hoksitWithoutOo: json.hoksit
+        data: json.hoksit
       })
     }
 
     if (request.status === 403) {
       notifications.addError("Raportit.EiOikeuksia", oppilaitosOid)
+    }
+  }
+
+  async loadTyopaikkaJaksot() {
+    /*
+    const tutkinto = JSON.stringify({
+      fi: "Autokorimestarin erikoisammattitutkinto",
+      sv: "Specialyrkesexamen för karosseri- och bilplåtsmästare"
+    })
+    */
+    const tutkinto = JSON.stringify({})
+    const { store } = this.props
+    const { notifications } = store!
+    const oppilaitosOid: string | undefined =
+      store?.session.selectedOrganisationOid
+    if (this.state.alku.length && this.state.loppu.length && oppilaitosOid) {
+      const request = await window.fetch(
+        "/ehoks-virkailija-backend/api/v1/virkailija/tep-jakso-raportti?" +
+          "tutkinto=" +
+          tutkinto +
+          "&oppilaitos=" +
+          oppilaitosOid +
+          "&start=" +
+          this.state.alku +
+          "&end=" +
+          this.state.loppu,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: appendCommonHeaders(
+            new Headers({
+              Accept: "application/json; charset=utf-8",
+              "Content-Type": "application/json"
+            })
+          )
+        }
+      )
+
+      if (request.status === 200) {
+        const json: TpjFetchResult = await request.json()
+        this.setState({
+          data: json.data
+        })
+      }
+
+      if (request.status === 403) {
+        notifications.addError("Raportit.EiOikeuksia", oppilaitosOid)
+      }
     }
   }
 
@@ -209,6 +302,9 @@ export class Raportit extends React.Component<RaportitProps> {
     descText: string,
     selected: number
   ) => {
+    this.setState({
+      data: []
+    })
     event.preventDefault()
     // @ts-ignore Don't know how to remove focus from link without this
     event.target.blur()
@@ -226,59 +322,205 @@ export class Raportit extends React.Component<RaportitProps> {
   }
 
   getHoksiByHoksId = (hoksid: number) =>
-    this.state.hoksitWithoutOo?.find((x: HoksRow) => x.hoksid === hoksid)
+    this.state.data?.find((x: HoksRow) => x.hoksid === hoksid) as HoksRow
+
+  getTpjRowByHoksId = (hoksId: number) =>
+    this.state.data?.find((x: TpjRow) => x.hoksId === hoksId) as TpjRow
 
   createLinkPath = (hoksid: number) => {
-    const hoksi = this.getHoksiByHoksId(hoksid)
-    return hoksi
-      ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${hoksi.oppijaoid}/${hoksi?.hokseid}`
+    let row = {} as HoksRow | TpjRow
+    let oppijaOid = ""
+    let hoksEid = ""
+    switch (this.state.selected) {
+      case 1:
+        row = this.getHoksiByHoksId(hoksid)
+        oppijaOid = row.oppijaoid
+        hoksEid = row.hokseid
+        break
+      case 2:
+        row = this.getTpjRowByHoksId(hoksid)
+        oppijaOid = row.oppijaOid
+        hoksEid = row.hoksEid
+        break
+    }
+    return oppijaOid.length && hoksEid.length
+      ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaOid}/${hoksEid}`
       : "/ehoks-virkailija-ui/raportit"
+  }
+
+  setPvmDate = (type: string, value: string) => {
+    const target = type === "alku" ? "alku" : "loppu"
+    this.setState({
+      [target]: value
+    })
+  }
+
+  getColumnsForTable = (selectedRaportti: number): Column[] => {
+    if (selectedRaportti === 1) {
+      return [
+        {
+          Header: this.context.intl.formatMessage({
+            id: "raportit.ehoksid"
+          }),
+          accessor: "hoksid",
+          Cell: ({ cell: { value } }: CustomColumn) => (
+            <div style={{ textAlign: "center" }}>
+              <Link
+                to={this.createLinkPath(value)}
+                state={{
+                  fromRaportit: true,
+                  oppijaoid: this.getHoksiByHoksId(value)?.oppijaoid,
+                  hokseid: this.getHoksiByHoksId(value)?.hokseid
+                }}
+              >
+                {value}
+              </Link>
+            </div>
+          )
+        },
+        {
+          Header: this.context.intl.formatMessage({
+            id: "raportit.oppijanumeroTitle"
+          }),
+          accessor: "oppijaoid"
+        },
+        {
+          Header: this.context.intl.formatMessage({
+            id: "raportit.opiskeluoikeusoid"
+          }),
+          accessor: "opiskeluoikeusoid"
+        },
+        {
+          Header: this.context.intl.formatMessage({
+            id: "raportit.oppilaitosoid"
+          }),
+          accessor: "oppilaitosoid"
+        }
+      ]
+    } else if (selectedRaportti === 2) {
+      return [
+        {
+          Header: this.context.intl.formatMessage({
+            id: "raportit.ehoksid"
+          }),
+          accessor: "hoksId",
+          Cell: ({ cell: { value } }: CustomColumn) => (
+            <div style={{ textAlign: "center" }}>
+              <Link
+                to={this.createLinkPath(value)}
+                state={{
+                  fromRaportit: true,
+                  oppijaoid: this.getTpjRowByHoksId(value)?.oppijaOid,
+                  hokseid: this.getTpjRowByHoksId(value)?.hoksEid
+                }}
+              >
+                {value}
+              </Link>
+            </div>
+          )
+        },
+        {
+          Header: this.context.intl.formatMessage({
+            id: "raportit.opiskeluoikeusoid"
+          }),
+          accessor: "opiskeluoikeusOid",
+          Cell: ({ cell: { value } }: CustomColumn) => (
+            <div style={{ textAlign: "center" }}>{value}</div>
+          )
+        },
+        {
+          Header: this.context.intl.formatMessage({
+            id: "raportit.oppijanumeroTitle"
+          }),
+          accessor: "oppijaOid",
+          Cell: ({ cell: { value } }: CustomColumn) => (
+            <div style={{ textAlign: "center" }}>{value}</div>
+          )
+        },
+        {
+          Header: this.context.intl.formatMessage({
+            id: "raportit.tyopaikannimi"
+          }),
+          accessor: "tyopaikanNimi",
+          Cell: ({ cell: { value } }: CustomColumn) => (
+            <div style={{ textAlign: "center" }}>{value}</div>
+          )
+        },
+        {
+          Header: this.context.intl.formatMessage({
+            id: "raportit.ohjaajannimi"
+          }),
+          accessor: "ohjaajaNimi",
+          Cell: ({ cell: { value } }: CustomColumn) => (
+            <div style={{ textAlign: "center" }}>{value}</div>
+          )
+        },
+        {
+          Header: this.context.intl.formatMessage({
+            id: "raportit.alku"
+          }),
+          accessor: "alkupvm",
+          Cell: ({ cell: { value } }: CustomColumn) => (
+            <div style={{ textAlign: "center" }}>{value}</div>
+          )
+        },
+        {
+          Header: this.context.intl.formatMessage({
+            id: "raportit.loppu"
+          }),
+          accessor: "loppupvm",
+          Cell: ({ cell: { value } }: CustomColumn) => (
+            <div style={{ textAlign: "center" }}>{value}</div>
+          )
+        },
+        {
+          Header: this.context.intl.formatMessage({
+            id: "infoModal.naytaLisatiedot",
+            accessor: "customColumn",
+            Cell: ({ cell: { value } }: CustomColumn) => (
+              <div style={{ textAlign: "center" }}>{value}</div>
+            )
+          }),
+          Cell: ({ cell: { value, row } }: CustomColumn) => {
+            const tpjRow = row.original as TpjRow
+            return (
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <InfoModal
+                  nayttoymparistoDetails={tpjRow?.tyopaikanNimi}
+                  startDate={tpjRow?.alkupvm}
+                  endDate={tpjRow?.loppupvm}
+                  partTimeAmount={tpjRow?.osaAikaisuus}
+                  oppisopimuksenPerusta={tpjRow?.oppisopimuksenPerusta}
+                  hoksId={value}
+                  opiskeluoikeusOid={tpjRow?.opiskeluoikeusOid}
+                  hankkimistapaTyyppi={tpjRow?.hankkimistapaTyyppi}
+                  ytunnus={tpjRow?.ytunnus}
+                  oppijaOid={tpjRow?.oppijaOid}
+                  ohjaajaNimi={tpjRow?.ohjaajaNimi}
+                  ohjaajaEmail={tpjRow?.ohjaajaEmail}
+                  ohjaajaPuhelinnumero={tpjRow?.ohjaajaPuhelinnumero}
+                />
+              </div>
+            )
+          }
+        }
+      ]
+    } else {
+      return []
+    }
+  }
+
+  tpjHaeOnClick = () => {
+    this.loadTyopaikkaJaksot()
   }
 
   checkActive = (num: number) =>
     this.state.selected === num ? "bolder" : "initial"
 
   render() {
-    const { hoksitWithoutOo, selected, titleText, descText } = this.state
+    const { data, selected, titleText, descText, alku, loppu } = this.state
     const { intl } = this.context
-    const columns = [
-      {
-        Header: intl.formatMessage({
-          id: "raportit.ehoksid"
-        }),
-        accessor: "hoksid",
-        Cell: ({ cell: { value } }: hoksitCell) => (
-          <Link
-            to={this.createLinkPath(value)}
-            state={{
-              fromRaportit: true,
-              oppijaoid: this.getHoksiByHoksId(value)?.oppijaoid,
-              hokseid: this.getHoksiByHoksId(value)?.hokseid
-            }}
-          >
-            {value}
-          </Link>
-        )
-      },
-      {
-        Header: intl.formatMessage({
-          id: "raportit.oppijanumeroTitle"
-        }),
-        accessor: "oppijaoid"
-      },
-      {
-        Header: intl.formatMessage({
-          id: "raportit.opiskeluoikeusoid"
-        }),
-        accessor: "opiskeluoikeusoid"
-      },
-      {
-        Header: intl.formatMessage({
-          id: "raportit.oppilaitosoid"
-        }),
-        accessor: "oppilaitosoid"
-      }
-    ]
+    const columns = this.getColumnsForTable(selected)
 
     return (
       <BackgroundContainer>
@@ -329,6 +571,41 @@ export class Raportit extends React.Component<RaportitProps> {
                       toggleSize="18"
                     />
                   </MenuItem>
+                  <MenuItem
+                    as="a"
+                    href="#"
+                    onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
+                      this.navClickHandler(
+                        event,
+                        intl.formatMessage({
+                          id: "raportit.tyopaikkajaksoihinTallennetutTiedot"
+                        }),
+                        intl.formatMessage({
+                          id:
+                            "raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
+                        }),
+                        2
+                      )
+                    }
+                    style={{
+                      ...linkStyle,
+                      fontWeight: this.checkActive(2)
+                    }}
+                  >
+                    <FormattedMessage
+                      id="raportit.tyopaikkajaksoihinTallennetutTiedot"
+                      defaultMessage="Työpaikkajaksoihin tallennetut tiedot"
+                    />
+                    <HelpButton
+                      helpContent={
+                        <FormattedMessage
+                          id="raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
+                          defaultMessage="Hakee ja listaa valitun oppilaitoksen työpaikkajaksot, joista ei löydy osa-aikaisuustietoa."
+                        />
+                      }
+                      toggleSize="18"
+                    />
+                  </MenuItem>
                 </Nav>
                 <Separator />
                 <Section>
@@ -336,11 +613,41 @@ export class Raportit extends React.Component<RaportitProps> {
                   <ItemDescription>{descText}</ItemDescription>
                   <div
                     style={{
-                      visibility: selected === 1 ? "visible" : "hidden"
+                      display: selected === 1 ? "block" : "none"
                     }}
                   >
                     <Styles>
-                      <RaportitTable data={hoksitWithoutOo} columns={columns} />
+                      <RaportitTable data={data} columns={columns} />
+                    </Styles>
+                  </div>
+                  <div
+                    style={{
+                      display: selected === 2 ? "block" : "none"
+                    }}
+                  >
+                    <FilterBox>
+                      <DateInput
+                        type="date"
+                        value={alku}
+                        onChange={e => this.setPvmDate("alku", e.target.value)}
+                      />{" "}
+                      -{" "}
+                      <DateInput
+                        type="date"
+                        value={loppu}
+                        onChange={e => this.setPvmDate("loppu", e.target.value)}
+                      />
+                      <SearchButton
+                        onClick={this.tpjHaeOnClick}
+                        disabled={
+                          !(this.state.alku.length && this.state.loppu.length)
+                        }
+                      >
+                        Hae
+                      </SearchButton>
+                    </FilterBox>
+                    <Styles>
+                      <RaportitTable data={data} columns={columns} />
                     </Styles>
                   </div>
                 </Section>
