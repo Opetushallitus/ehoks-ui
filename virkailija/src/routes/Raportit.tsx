@@ -682,12 +682,12 @@ export class Raportit extends React.Component<RaportitProps> {
                     }}
                   >
                     <Styles>
-                      <RaportitTable
+                      {/*                       <RaportitTable
                         data={data}
                         columns={columns}
                         loading={this.state.loading}
                         pageCount={this.state.pageCount}
-                      />
+                      />*/}
                     </Styles>
                   </div>
                   <div
