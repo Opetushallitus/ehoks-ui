@@ -13,6 +13,8 @@ interface RaportitTableProps {
 }
 
 export function RaportitTable(props: RaportitTableProps) {
+  const fetchData = props.fetchData
+
   const data = useMemo(() => props.data, [props.data])!
 
   const columns = useMemo(() => props.columns, [props.columns])
@@ -39,7 +41,7 @@ export function RaportitTable(props: RaportitTableProps) {
 
   useEffect(() => {
     fetchData({ pageIndex, pageSize })
-  }, [pageIndex, pageSize])
+  }, [pageIndex, pageSize, fetchData])
 
   /* eslint-disable react/jsx-key */
   /* the jsx key is provided in the .get*Props() spreads. */
