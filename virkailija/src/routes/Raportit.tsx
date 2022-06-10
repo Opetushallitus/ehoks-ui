@@ -571,43 +571,41 @@ export class Raportit extends React.Component<RaportitProps> {
                       toggleSize="18"
                     />
                   </MenuItem>
-                  {false && (
-                    <MenuItem
-                      as="a"
-                      href="#"
-                      onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
-                        this.navClickHandler(
-                          event,
-                          intl.formatMessage({
-                            id: "raportit.tyopaikkajaksoihinTallennetutTiedot"
-                          }),
-                          intl.formatMessage({
-                            id:
-                              "raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
-                          }),
-                          2
-                        )
+                  <MenuItem
+                    as="a"
+                    href="#"
+                    onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
+                      this.navClickHandler(
+                        event,
+                        intl.formatMessage({
+                          id: "raportit.tyopaikkajaksoihinTallennetutTiedot"
+                        }),
+                        intl.formatMessage({
+                          id:
+                            "raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
+                        }),
+                        2
+                      )
+                    }
+                    style={{
+                      ...linkStyle,
+                      fontWeight: this.checkActive(2)
+                    }}
+                  >
+                    <FormattedMessage
+                      id="raportit.tyopaikkajaksoihinTallennetutTiedot"
+                      defaultMessage="Työpaikkajaksoihin tallennetut tiedot"
+                    />
+                    <HelpButton
+                      helpContent={
+                        <FormattedMessage
+                          id="raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
+                          defaultMessage="Hakee ja listaa valitun oppilaitoksen työpaikkajaksot, joista ei löydy osa-aikaisuustietoa."
+                        />
                       }
-                      style={{
-                        ...linkStyle,
-                        fontWeight: this.checkActive(2)
-                      }}
-                    >
-                      <FormattedMessage
-                        id="raportit.tyopaikkajaksoihinTallennetutTiedot"
-                        defaultMessage="Työpaikkajaksoihin tallennetut tiedot"
-                      />
-                      <HelpButton
-                        helpContent={
-                          <FormattedMessage
-                            id="raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
-                            defaultMessage="Hakee ja listaa valitun oppilaitoksen työpaikkajaksot, joista ei löydy osa-aikaisuustietoa."
-                          />
-                        }
-                        toggleSize="18"
-                      />
-                    </MenuItem>
-                  )}
+                      toggleSize="18"
+                    />
+                  </MenuItem>
                 </Nav>
                 <Separator />
                 <Section>

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useMemo } from "react"
 import { Column, useTable, usePagination } from "react-table"
 // @ts-ignore Ignore type-checking for this library
