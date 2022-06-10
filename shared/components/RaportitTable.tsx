@@ -1,5 +1,6 @@
+// @ts-nocheck
 import React, { useMemo } from "react"
-import { Column, useTable } from "react-table"
+import { Column, useTable, usePagination } from "react-table"
 // @ts-ignore Ignore type-checking for this library
 import TableScrollbar from "react-table-scrollbar"
 
@@ -17,9 +18,18 @@ export function RaportitTable(props: RaportitTableProps) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
-    prepareRow
-  } = useTable({ columns, data })
+    prepareRow,
+    page,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize }
+  } = useTable({ columns, data }, usePagination)
   /* eslint-disable react/jsx-key */
   /* the jsx key is provided in the .get*Props() spreads. */
   return (
@@ -35,7 +45,7 @@ export function RaportitTable(props: RaportitTableProps) {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map(row => {
+          {page.map(row => {
             prepareRow(row)
             return (
               <tr {...row.getRowProps()}>
@@ -47,6 +57,50 @@ export function RaportitTable(props: RaportitTableProps) {
           })}
         </tbody>
       </table>
+      <div className="pagination">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {"<<"}
+        </button>{" "}
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {"<"}
+        </button>{" "}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {">"}
+        </button>{" "}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {">>"}
+        </button>{" "}
+        <span>
+          Page{" "}
+          <strong>
+            {pageIndex + 1} of {pageOptions.length}
+          </strong>{" "}
+        </span>
+        <span>
+          | Go to page:{" "}
+          <input
+            type="number"
+            defaultValue={pageIndex + 1}
+            onChange={e => {
+              const p = e.target.value ? Number(e.target.value) - 1 : 0
+              gotoPage(p)
+            }}
+            style={{ width: "100px" }}
+          />
+        </span>{" "}
+        <select
+          value={pageSize}
+          onBlur={e => {
+            setPageSize(Number(e.target.value))
+          }}
+        >
+          {[10, 20, 30, 40, 50].map(pSize => (
+            <option key={pSize} value={pSize}>
+              Show {pSize}
+            </option>
+          ))}
+        </select>
+      </div>
     </TableScrollbar>
   )
 }
