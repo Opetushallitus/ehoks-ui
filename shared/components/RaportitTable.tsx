@@ -40,7 +40,7 @@ export function RaportitTable(props: RaportitTableProps) {
   )
 
   useEffect(() => {
-    fetchData(pageIndex, pageSize)
+    fetchData(pageSize, pageIndex)
   }, [pageIndex, pageSize, fetchData])
 
   /* eslint-disable react/jsx-key */
