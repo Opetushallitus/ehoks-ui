@@ -229,11 +229,18 @@ export class Raportit extends React.Component<RaportitProps> {
     initSearchDone: false
   }
 
-  async loadHoksesWithoutOpiskeluoikeudet(oppilaitosOid: string | undefined) {
+  async loadHoksesWithoutOpiskeluoikeudet(pageSize: number, pageIndex: number) {
     const { notifications } = this.props.store!
+    const { store } = this.props
+    const oppilaitosOid: string | undefined =
+      store?.session.selectedOrganisationOid
     const request = await window.fetch(
       "/ehoks-virkailija-backend/api/v1/virkailija/missing-oo-hoksit/" +
-        oppilaitosOid,
+        oppilaitosOid + "/?" +
+        "&pagesize=" +
+        pageSize +
+        "&pageindex=" +
+        pageIndex,
       {
         method: "GET",
         credentials: "include",
@@ -250,7 +257,8 @@ export class Raportit extends React.Component<RaportitProps> {
       const json: hoksitFetchResult = await request.json()
       this.setState({
         data: json.data.result,
-        loading: false
+        loading: false,
+        pageCount: json.data.pagecount
       })
     }
 
@@ -386,10 +394,7 @@ export class Raportit extends React.Component<RaportitProps> {
       selected
     })
     if (selected === 1) {
-      const { store } = this.props
-      const oppilaitosOid: string | undefined =
-        store?.session.selectedOrganisationOid
-      this.loadHoksesWithoutOpiskeluoikeudet(oppilaitosOid)
+      this.loadHoksesWithoutOpiskeluoikeudet(10, 0)
     }
   }
 
@@ -694,6 +699,7 @@ export class Raportit extends React.Component<RaportitProps> {
                         columns={columns}
                         loading={this.state.loading}
                         pageCount={this.state.pageCount}
+                        fetchData={this.loadHoksesWithoutOpiskeluoikeudet}
                       />
                     </Styles>
                   </div>
