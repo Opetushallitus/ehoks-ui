@@ -575,7 +575,7 @@ export class Raportit extends React.Component<RaportitProps> {
   }
 
   tpjHaeOnClick = () => {
-    this.loadTyopaikkaJaksot(10, 0)
+    this.loadTyopaikkaJaksot(20, 0)
   }
 
   checkActive = (num: number) =>
