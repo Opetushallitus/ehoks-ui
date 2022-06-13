@@ -94,6 +94,7 @@ interface YllapitoState {
   systemInfo?: SystemInfo
   koulutustoimijaOid?: string | ""
   sendHerateId?: number
+  sendPaattoHerateId?: number
   sendHerateDateFrom?: string
   sendHerateDateTo?: string
   sendPaattoHerateDateFrom?: string
@@ -145,11 +146,13 @@ export class Yllapito extends React.Component<YllapitoProps> {
     if (request.status === 200) {
       const json: SystemInfoResponse = await request.json()
       this.setState({
+        success: true,
         loadingState: "success",
         systemInfo: json.data
       })
     } else {
       this.setState({
+        success: false,
         loadingState: "unsuccessful",
         message: intl.formatMessage({
           id: "yllapito.jarjestelmanTietojenLatausEpaonnistui",
@@ -186,7 +189,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
 
     if (request.status === 200) {
       this.setState({
-        loadingState: "successfull",
+        success: true,
+        loadingState: "success",
         message: intl.formatMessage({
           id: "yllapito.valimuistiTyhjennetty",
           defaultMessage: "Välimuisti tyhjennetty"
@@ -195,6 +199,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       await this.loadSystemInfo()
     } else {
       this.setState({
+        success: false,
         loadingState: "unsuccessful",
         message: intl.formatMessage({
           id: "yllapito.valimuistinTyhjennysEpaonnistui",
@@ -371,7 +376,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
 
     if (request.status === 200) {
       this.setState({
-        loadingState: "successfull",
+        success: true,
+        loadingState: "success",
         message: intl.formatMessage({
           id: "yllapito.indeksointiSuoritettu",
           defaultMessage: "Indeksointi suoritettu"
@@ -380,6 +386,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       await this.loadSystemInfo()
     } else {
       this.setState({
+        success: false,
         loadingState: "unsuccessful",
         message: intl.formatMessage({
           id: "yllapito.indeksointiEpaonnistui",
@@ -410,6 +417,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       const json = await request.json()
       this.setState({
         success: true,
+        loadingState: "success",
         message: intl.formatMessage({
           id: "yllapito.hoksinHakuOnnistui",
           defaultMessage: "Hoksin haku onnistui"
@@ -420,6 +428,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     } else {
       this.setState({
         success: false,
+        loadingState: "unsuccessful",
         message: intl.formatMessage({
           id: "yllapito.hoksinHakuEpaonnistui",
           defaultMessage: "Hoksin haku epäonnistui"
@@ -450,6 +459,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       const json = await request.json()
       this.setState({
         success: true,
+        loadingState: "success",
         message: intl.formatMessage({
           id: "yllapito.opiskeluoikeudenHakuOnnistui",
           defaultMessage: "Opiskeluoikeuden haku onnistui"
@@ -461,6 +471,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     } else {
       this.setState({
         success: false,
+        loadingState: "unsuccessful",
         message: intl.formatMessage({
           id: "yllapito.opiskeluoikeudenHakuEpaonnistui",
           defaultMessage: "Opiskeluoikeuden haku epäonnistui"
@@ -541,6 +552,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
         if (deleteRequest.status === 200) {
           this.setState({
             success: true,
+            loadingState: "success",
             message: intl.formatMessage({
               id: "yllapito.hoksinPoistoOnnistui",
               defaultMessage: "HOKSin poistaminen onnistui"
@@ -550,6 +562,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
         } else {
           this.setState({
             success: false,
+            loadingState: "unsuccessful",
             message: intl.formatMessage({
               id: "yllapito.hoksinPoistoEpaonnistui",
               defaultMessage: "HOKSin poistaminen epäonnistui"
@@ -561,6 +574,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     } else {
       this.setState({
         success: false,
+        loadingState: "unsuccessful",
         message: intl.formatMessage({
           id: "yllapito.hoksinVahvistustietojenHakuEpaonnistui",
           defaultMessage:
@@ -591,6 +605,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     if (palautaRequest.status === 200) {
       this.setState({
         success: true,
+        loadingState: "success",
         message: intl.formatMessage({
           id: "yllapito.hoksinPalautusOnnistui",
           defaultMessage: "HOKSin palautus onnistui"
@@ -600,6 +615,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     } else {
       this.setState({
         success: false,
+        loadingState: "unsuccessful",
         message: intl.formatMessage({
           id: "yllapito.hoksinPalautusEpaonnistui",
           defaultMessage: "HOKSin palautus epäonnistui"
@@ -632,6 +648,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     if (request.status === 204) {
       this.setState({
         success: true,
+        loadingState: "success",
         message: intl.formatMessage({
           id: "yllapito.opiskeluoikeudenPaivitysOnnistui",
           defaultMessage: "Opiskeluoikeuden päivitys onnistui"
@@ -641,6 +658,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     } else {
       this.setState({
         success: false,
+        loadingState: "unsuccessful",
         message: intl.formatMessage({
           id: "yllapito.opiskeluoikeudenPaivitysEpaonnistui",
           defaultMessage: "Opiskeluoikeuden päivitys epäonnistui"
@@ -706,6 +724,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
         if (updateRequest.status === 204) {
           this.setState({
             success: true,
+            loadingState: "success",
             message: intl.formatMessage({
               id: "yllapito.opiskeluoikeuksienPaivitysOnnistui",
               defaultMessage: "Poisto ja uudelleenindeksointi aloitettu"
@@ -715,6 +734,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
         } else {
           this.setState({
             success: false,
+            loadingState: "unsuccessful",
             message: intl.formatMessage({
               id: "yllapito.opiskeluoikeuksienPaivitysEpaonnistui",
               defaultMessage: "Poisto ja uudelleenindeksointi epäonnistui."
@@ -726,6 +746,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     } else {
       this.setState({
         success: false,
+        loadingState: "unsuccessful",
         message: intl.formatMessage({
           id: "yllapito.opiskeluoikeuksienVahvistustietojenHakuEpaonnistui",
           defaultMessage:
@@ -758,6 +779,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     if (updateRequest.status === 204) {
       this.setState({
         success: true,
+        loadingState: "success",
         message: intl.formatMessage({
           id: "yllapito.oppijaPaivitetty",
           defaultMessage: "Opiskeluoikeuden päivitys onnistui"
@@ -767,6 +789,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     } else {
       this.setState({
         success: false,
+        loadingState: "unsuccessful",
         message: intl.formatMessage({
           id: "yllapito.oppijanPaivitysEpaonnistui",
           defaultMessage: "Oppijan päivitys epäonnistui"
@@ -796,6 +819,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     if (request.status === 204) {
       this.setState({
         success: true,
+        loadingState: "success",
         message: intl.formatMessage({
           id: "yllapito.herateLahetysOnnistui",
           defaultMessage: "Herätteen lähetys onnistui"
@@ -805,6 +829,47 @@ export class Yllapito extends React.Component<YllapitoProps> {
     } else {
       this.setState({
         success: false,
+        loadingState: "unsuccessful",
+        message: intl.formatMessage({
+          id: "yllapito.herateLahetysEpaonnistui",
+          defaultMessage: "Herätteen lähetys epäonnistui"
+        }),
+        isLoading: false
+      })
+    }
+  }
+
+  onSendPaattoHerate = async (event: any) => {
+    const { intl } = this.context
+    const { sendPaattoHerateId } = this.state
+    event.preventDefault()
+    const request = await window.fetch(
+      `/ehoks-virkailija-backend/api/v1/virkailija/hoks/${sendPaattoHerateId}/resend-paattoherate`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: appendCommonHeaders(
+          new Headers({
+            Accept: "application/json; charset=utf-8",
+            "Content-Type": "application/json"
+          })
+        )
+      }
+    )
+    if (request.status === 204) {
+      this.setState({
+        success: true,
+        loadingState: "success",
+        message: intl.formatMessage({
+          id: "yllapito.herateLahetysOnnistui",
+          defaultMessage: "Herätteen lähetys onnistui"
+        }),
+        isLoading: false
+      })
+    } else {
+      this.setState({
+        success: false,
+        loadingState: "unsuccessful",
         message: intl.formatMessage({
           id: "yllapito.herateLahetysEpaonnistui",
           defaultMessage: "Herätteen lähetys epäonnistui"
@@ -837,6 +902,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       const count = json.data.count
       this.setState({
         success: true,
+        loadingState: "success",
         message: intl.formatMessage(
           {
             id: "yllapito.heratteetLahetysOnnistui",
@@ -849,6 +915,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     } else {
       this.setState({
         success: false,
+        loadingState: "unsuccessful",
         message: intl.formatMessage({
           id: "yllapito.heratteetLahetysEpaonnistui",
           defaultMessage: "Virhe herätteiden uudelleenlähetyksessä!"
@@ -881,6 +948,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       const count = json.data.count
       this.setState({
         success: true,
+        loadingState: "success",
         message: intl.formatMessage(
           {
             id: "yllapito.heratteetLahetysOnnistui",
@@ -893,6 +961,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     } else {
       this.setState({
         success: false,
+        loadingState: "unsuccessful",
         message: intl.formatMessage({
           id: "yllapito.heratteetLahetysEpaonnistui",
           defaultMessage: "Virhe herätteiden uudelleenlähetyksessä!"
@@ -946,6 +1015,12 @@ export class Yllapito extends React.Component<YllapitoProps> {
   handleSendHerateIdChange = (inputId: any) => {
     this.setState({
       sendHerateId: inputId
+    })
+  }
+
+  handleSendPaattoHerateIdChange = (inputId: any) => {
+    this.setState({
+      sendPaattoHerateId: inputId
     })
   }
 
@@ -1433,8 +1508,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <FormattedMessage
                       id="yllapito.aloitusHerateKuvaus"
                       defaultMessage={
-                        "Lähetä tietty aloitusheräte uudestaan herätteen " +
-                        "ID:llä."
+                        "Käynnistä HOKSin aloituskyselyn muodostus uudestaan " +
+                        "eHOKS ID:llä"
                       }
                     />
                     <ContentElement>
@@ -1455,6 +1530,45 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           <FormattedMessage
                             id="yllapito.aloitusHerate"
                             defaultMessage="Lähetä uusi heräte aloituskyselyyn."
+                          />
+                        </Button>
+                      </ContentElement>
+                    </ContentElement>
+                  </ContentElement>
+                  <ContentElement>
+                    <Header>
+                      <FormattedMessage
+                        id="yllapito.paattoHerate"
+                        defaultMessage="Lähetä uusi heräte päättökyselyyn."
+                      />
+                    </Header>
+                    <FormattedMessage
+                      id="yllapito.paattoHerateKuvaus"
+                      defaultMessage={
+                        "Käynnistä HOKSin päättökyselyn muodostus uudestaan " +
+                        "eHOKS ID:llä"
+                      }
+                    />
+                    <ContentElement>
+                      <ContentElement>
+                        <form>
+                          <HakuInput
+                            type="text"
+                            placeholder="123456"
+                            value={this.state.sendPaattoHerateId}
+                            onChange={e =>
+                              this.handleSendPaattoHerateIdChange(
+                                e.target.value
+                              )
+                            }
+                          />
+                        </form>
+                      </ContentElement>
+                      <ContentElement>
+                        <Button onClick={this.onSendPaattoHerate}>
+                          <FormattedMessage
+                            id="yllapito.paattoHerate"
+                            defaultMessage="Lähetä uusi heräte päättökyselyyn."
                           />
                         </Button>
                       </ContentElement>
