@@ -196,6 +196,7 @@ interface RaportitState {
   selected: number
   alku: string
   loppu: string
+  initSearchDone: boolean
 }
 
 interface CustomColumn {
@@ -221,7 +222,8 @@ export class Raportit extends React.Component<RaportitProps> {
     alku: "",
     loppu: "",
     loading: false,
-    pageCount: 0
+    pageCount: 0,
+    initSearchDone: false
   }
 
   async loadHoksesWithoutOpiskeluoikeudet(oppilaitosOid: string | undefined) {
@@ -302,6 +304,9 @@ export class Raportit extends React.Component<RaportitProps> {
       if (request.status === 403) {
         notifications.addError("Raportit.EiOikeuksia", oppilaitosOid)
       }
+      this.setState({
+        initSearchDone: true
+      })
     }
   }
   /*
@@ -575,7 +580,7 @@ export class Raportit extends React.Component<RaportitProps> {
   }
 
   tpjHaeOnClick = () => {
-    this.loadTyopaikkaJaksot(20, 0)
+    this.loadTyopaikkaJaksot(10, 0)
   }
 
   checkActive = (num: number) =>
@@ -715,15 +720,17 @@ export class Raportit extends React.Component<RaportitProps> {
                         Hae
                       </SearchButton>
                     </FilterBox>
-                    <Styles>
-                      <RaportitTable
-                        data={data}
-                        columns={columns}
-                        loading={this.state.loading}
-                        pageCount={this.state.pageCount}
-                        fetchData={this.loadTyopaikkaJaksot}
-                      />
-                    </Styles>
+                    {this.state.initSearchDone && (
+                      <Styles>
+                        <RaportitTable
+                          data={data}
+                          columns={columns}
+                          loading={this.state.loading}
+                          pageCount={this.state.pageCount}
+                          fetchData={this.loadTyopaikkaJaksot}
+                        />
+                      </Styles>
+                    )}
                   </div>
                 </Section>
               </ContentElement>

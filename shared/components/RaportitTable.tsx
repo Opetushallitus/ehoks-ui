@@ -20,7 +20,7 @@ const printResultInfo = (length: number, count: number, loading: boolean) => {
   } else if (count > 1) {
     return (
       <td colSpan="10000">
-        Näytetään {length} kpl ~{count * 20} hakutuloksesta
+        Näytetään {length} kpl ~{count * 10} hakutuloksesta
       </td>
     )
   } else if (count === 1) {
@@ -30,7 +30,7 @@ const printResultInfo = (length: number, count: number, loading: boolean) => {
   } else {
     return (
       <td colSpan="10000">
-        Näytetään {length} kpl ~{count * 20} hakutuloksesta
+        Näytetään {length} kpl ~{count * 10} hakutuloksesta
       </td>
     )
   }
@@ -63,7 +63,7 @@ export function RaportitTable(props: RaportitTableProps) {
   )
 
   useEffect(() => {
-    fetchData(20, pageIndex)
+    fetchData(10, pageIndex)
   }, [pageIndex, fetchData])
 
   /* eslint-disable react/jsx-key */
