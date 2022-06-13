@@ -46,6 +46,11 @@ const ContentElement = styled("div")`
   margin-bottom: 10px;
 `
 
+const ButtonContainer = styled("div")`
+  display: flex;
+  margin-bottom: 10px;
+`
+
 const Header = styled(Heading)`
   margin: 0;
   padding-right: 10px;
@@ -1151,7 +1156,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           />
                         </form>
                       </ContentElement>
-                      <ContentElement>
+                      <ButtonContainer>
                         <Button onClick={this.onGetHoksId}>
                           <FormattedMessage
                             id="yllapito.haeHoksIdButton"
@@ -1159,7 +1164,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           />
                         </Button>
                         {actionSuccessFailureMessage("getHoksId")}
-                      </ContentElement>
+                      </ButtonContainer>
                     </ContentElement>
                     <FormattedMessage
                       id="yllapito.hoksIdTulos"
@@ -1195,14 +1200,15 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           />
                         </form>
                       </ContentElement>
-                      <ContentElement>
+                      <ButtonContainer>
                         <Button onClick={this.onGetOpiskeluoikeusOid}>
                           <FormattedMessage
                             id="yllapito.haeOpiskeluoikeusOidButton"
                             defaultMessage="Hae opiskeluoikeus hoks-id:llä"
                           />
                         </Button>
-                      </ContentElement>
+                        {actionSuccessFailureMessage("getOpiskeluoikeusOid")}
+                      </ButtonContainer>
                     </ContentElement>
                     <FormattedMessage
                       id="yllapito.OpiskeluoikeusOidTulos"
@@ -1255,14 +1261,15 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         values={{ cacheSize: systemInfo.cache.size }}
                       />
                     </ContentElement>
-                    <ContentElement>
+                    <ButtonContainer>
                       <Button onClick={this.onClearCacheClicked}>
                         <FormattedMessage
                           id="yllapito.tyhjennaValimuisti"
                           defaultMessage="Tyhjennä välimuisti"
                         />
                       </Button>
-                    </ContentElement>
+                      {actionSuccessFailureMessage("clearCache")}
+                    </ButtonContainer>
                   </ContentElement>
                   <ContentElement>
                     <Header>
@@ -1337,12 +1344,15 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         }}
                       />
                     </ContentElement>
-                    <Button onClick={this.onRunIndexClicked}>
-                      <FormattedMessage
-                        id="yllapito.oppijaIndex"
-                        defaultMessage="Indeksoi oppijat ja opiskeluoikeudet"
-                      />
-                    </Button>
+                    <ButtonContainer>
+                      <Button onClick={this.onRunIndexClicked}>
+                        <FormattedMessage
+                          id="yllapito.oppijaIndex"
+                          defaultMessage="Indeksoi oppijat ja opiskeluoikeudet"
+                        />
+                      </Button>
+                    </ButtonContainer>
+                    {actionSuccessFailureMessage("runIndex")}
                   </ContentElement>
                   <ContentElement>
                     <Header>
@@ -1368,14 +1378,15 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           />
                         </form>
                       </ContentElement>
-                      <ContentElement>
+                      <ButtonContainer>
                         <Button onClick={this.onDeleteHoks}>
                           <FormattedMessage
                             id="yllapito.poistaHoksButton"
                             defaultMessage="Poista HOKS"
                           />
                         </Button>
-                      </ContentElement>
+                        {actionSuccessFailureMessage("deleteHoks")}
+                      </ButtonContainer>
                     </ContentElement>
                   </ContentElement>
                   <ContentElement>
@@ -1409,14 +1420,15 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           />
                         </form>
                       </ContentElement>
-                      <ContentElement>
+                      <ButtonContainer>
                         <Button onClick={this.onPalautaHoks}>
                           <FormattedMessage
                             id="yllapito.palautaHoksButton"
                             defaultMessage="Palauta HOKS"
                           />
                         </Button>
-                      </ContentElement>
+                        {actionSuccessFailureMessage("palautaHoks")}
+                      </ButtonContainer>
                     </ContentElement>
                   </ContentElement>
                   <ContentElement>
