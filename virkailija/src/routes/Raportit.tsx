@@ -152,8 +152,11 @@ export interface HoksRow {
   oppilaitosoid: string
 }
 interface hoksitFetchResult {
-  count: number
-  hoksit: HoksRow[]
+  data: {
+    count: number
+    pagecount: number
+    result: HoksRow[]
+  }
 }
 
 export interface TpjRow {
@@ -197,7 +200,6 @@ interface RaportitState {
   alku: string
   loppu: string
   initSearchDone: boolean
-  TpjNewParams: boolean
 }
 
 interface CustomColumn {
@@ -224,8 +226,7 @@ export class Raportit extends React.Component<RaportitProps> {
     loppu: "",
     loading: false,
     pageCount: 0,
-    initSearchDone: false,
-    TpjNewParams: true
+    initSearchDone: false
   }
 
   async loadHoksesWithoutOpiskeluoikeudet(oppilaitosOid: string | undefined) {
@@ -248,8 +249,8 @@ export class Raportit extends React.Component<RaportitProps> {
     if (request.status === 200) {
       const json: hoksitFetchResult = await request.json()
       this.setState({
-        hoksitCount: json.count,
-        data: json.hoksit
+        data: json.data.result,
+        loading: false
       })
     }
 
@@ -258,11 +259,7 @@ export class Raportit extends React.Component<RaportitProps> {
     }
   }
 
-  loadTyopaikkaJaksot = async (
-    pageSize: number,
-    pageIndex: number,
-    tpjNewParams: boolean
-  ) => {
+  loadTyopaikkaJaksot = async (pageSize: number, pageIndex: number) => {
     const tutkinto = JSON.stringify({})
     const { store } = this.props
     const { notifications } = store!
@@ -312,9 +309,6 @@ export class Raportit extends React.Component<RaportitProps> {
       }
       this.setState({
         initSearchDone: true
-      })
-      this.setState({
-        tpjNewParams
       })
     }
   }
@@ -589,7 +583,7 @@ export class Raportit extends React.Component<RaportitProps> {
   }
 
   tpjHaeOnClick = () => {
-    this.loadTyopaikkaJaksot(10, 0, true)
+    this.loadTyopaikkaJaksot(10, 0)
   }
 
   checkActive = (num: number) =>
@@ -695,12 +689,12 @@ export class Raportit extends React.Component<RaportitProps> {
                     }}
                   >
                     <Styles>
-                      {/*                       <RaportitTable
+                      <RaportitTable
                         data={data}
                         columns={columns}
                         loading={this.state.loading}
                         pageCount={this.state.pageCount}
-                      />*/}
+                      />
                     </Styles>
                   </div>
                   <div
@@ -737,7 +731,6 @@ export class Raportit extends React.Component<RaportitProps> {
                           loading={this.state.loading}
                           pageCount={this.state.pageCount}
                           fetchData={this.loadTyopaikkaJaksot}
-                          tpjNewParams={this.state.TpjNewParams}
                         />
                       </Styles>
                     )}

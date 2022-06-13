@@ -11,12 +11,7 @@ interface RaportitTableProps {
   columns: Column[]
   loading: boolean
   pageCount: number
-  fetchData?: (
-    pageSize: number,
-    pageIndex: number,
-    tpjNewParams: boolean
-  ) => void
-  tpjNewParams: boolean
+  fetchData?: (pageSize: number, pageIndex: number) => void
 }
 
 const printResultInfo = (length: number, count: number, loading: boolean) => {
@@ -43,7 +38,6 @@ const printResultInfo = (length: number, count: number, loading: boolean) => {
 
 export function RaportitTable(props: RaportitTableProps) {
   const fetchData = props.fetchData
-
   const data = useMemo(() => props.data, [props.data])!
 
   const columns = useMemo(() => props.columns, [props.columns])
@@ -68,13 +62,7 @@ export function RaportitTable(props: RaportitTableProps) {
   )
 
   useEffect(() => {
-    if (props.tpjNewParams) {
-      gotoPage(0)
-    }
-  })
-
-  useEffect(() => {
-    fetchData(10, pageIndex, false)
+    fetchData(10, pageIndex)
   }, [pageIndex, fetchData])
 
   /* eslint-disable react/jsx-key */
