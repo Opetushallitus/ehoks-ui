@@ -236,7 +236,8 @@ export class Raportit extends React.Component<RaportitProps> {
       store?.session.selectedOrganisationOid
     const request = await window.fetch(
       "/ehoks-virkailija-backend/api/v1/virkailija/missing-oo-hoksit/" +
-        oppilaitosOid + "/?" +
+        oppilaitosOid +
+        "/?" +
         "&pagesize=" +
         pageSize +
         "&pageindex=" +
