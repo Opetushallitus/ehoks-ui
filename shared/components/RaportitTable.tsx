@@ -1,4 +1,6 @@
+/* eslint-disable jsx-a11y/no-onchange */
 // @ts-nocheck
+// Added nocheck because I cannot get react-table types to work correctly.
 import React, { useMemo, useEffect } from "react"
 import { Column, useTable, usePagination } from "react-table"
 // @ts-ignore Ignore type-checking for this library
@@ -32,16 +34,15 @@ export function RaportitTable(props: RaportitTableProps) {
     gotoPage,
     nextPage,
     previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize }
+    state: { pageIndex }
   } = useTable(
     { columns, data, manualPagination: true, pageCount: props.pageCount },
     usePagination
   )
 
   useEffect(() => {
-    fetchData(pageSize, pageIndex)
-  }, [pageIndex, pageSize, fetchData])
+    fetchData(20, pageIndex)
+  }, [pageIndex, fetchData])
 
   /* eslint-disable react/jsx-key */
   /* the jsx key is provided in the .get*Props() spreads. */
@@ -52,7 +53,6 @@ export function RaportitTable(props: RaportitTableProps) {
           {JSON.stringify(
             {
               pageIndex,
-              pageSize,
               pageCount,
               canNextPage,
               canPreviousPage
@@ -88,10 +88,11 @@ export function RaportitTable(props: RaportitTableProps) {
             })}
             <tr>
               {props.loading ? (
-                <td colSpan="10000">Loading...</td>
+                <td colSpan="10000">Ladataan...</td>
               ) : (
                 <td colSpan="10000">
-                  Showing {page.length} of ~{props.pageCount * pageSize} results
+                  Näytetään {page.length} kpl ~{props.pageCount * 20}{" "}
+                  hakutuloksesta
                 </td>
               )}
             </tr>
@@ -114,23 +115,11 @@ export function RaportitTable(props: RaportitTableProps) {
             {">>"}
           </button>{" "}
           <span>
-            Page{" "}
+            Sivu{" "}
             <strong>
-              {pageIndex + 1} of {pageOptions.length}
+              {pageIndex + 1} / {pageOptions.length}
             </strong>{" "}
           </span>
-          <select
-            value={pageSize}
-            onBlur={e => {
-              setPageSize(Number(e.target.value))
-            }}
-          >
-            {[10, 20, 30, 40, 50].map(pSize => (
-              <option key={pSize} value={pSize}>
-                Show {pSize}
-              </option>
-            ))}
-          </select>
         </div>
       </TableScrollbar>
     </>
