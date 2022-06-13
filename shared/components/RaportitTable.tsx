@@ -24,11 +24,9 @@ const printResultInfo = (length: number, count: number, loading: boolean) => {
       </td>
     )
   } else if (count === 1) {
-    return (
-      <td colSpan="10000">
-        Näytetään {length} kpl ~{count * 20} hakutuloksesta
-      </td>
-    )
+    return <td colSpan="10000">Löytyi {length} kpl</td>
+  } else if (count === 0) {
+    return <td colSpan="10000">Ei tuloksia</td>
   } else {
     return (
       <td colSpan="10000">
