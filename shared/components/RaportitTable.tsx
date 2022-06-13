@@ -16,14 +16,12 @@ interface RaportitTableProps {
 
 const printResultInfo = (length: number, count: number, loading: boolean) => {
   if (loading) {
-    return (
-      <td colSpan="10000">Ladataan...</td>
-    )
-  } else if (count > 1)  {
+    return <td colSpan="10000">Ladataan...</td>
+  } else if (count > 1) {
     return (
       <td colSpan="10000">
-      Näytetään {length} kpl ~{count * 20} hakutuloksesta
-    </td>
+        Näytetään {length} kpl ~{count * 20} hakutuloksesta
+      </td>
     )
   } else if (count === 1) {
     return (
