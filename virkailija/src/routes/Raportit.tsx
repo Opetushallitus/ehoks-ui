@@ -173,14 +173,24 @@ export interface TpjRow {
   ohjaajaPuhelinnumero: string
   customColumn: number
 }
-
+/*
+      {:count row-count-total
+                           :pagecount page-count-total
+                           :result pageresult}
+    */
 interface TpjFetchResult {
-  data: TpjRow[]
+  data: {
+    count: number
+    pagecount: number
+    result: TpjRow[]
+  }
 }
 
 interface RaportitState {
   hoksitCount?: number
   data?: (HoksRow | TpjRow)[]
+  loading: boolean
+  pageCount: number
   titleText: string
   descText: string
   selected: number
@@ -209,7 +219,9 @@ export class Raportit extends React.Component<RaportitProps> {
     descText: "",
     selected: 0,
     alku: "",
-    loppu: ""
+    loppu: "",
+    loading: false,
+    pageCount: 0
   }
 
   async loadHoksesWithoutOpiskeluoikeudet(oppilaitosOid: string | undefined) {
@@ -242,19 +254,68 @@ export class Raportit extends React.Component<RaportitProps> {
     }
   }
 
-  async loadTyopaikkaJaksot() {
-    /*
-    const tutkinto = JSON.stringify({
-      fi: "Autokorimestarin erikoisammattitutkinto",
-      sv: "Specialyrkesexamen för karosseri- och bilplåtsmästare"
-    })
-    */
+  loadTyopaikkaJaksot = async (pageSize: number, pageIndex: number) => {
     const tutkinto = JSON.stringify({})
     const { store } = this.props
     const { notifications } = store!
     const oppilaitosOid: string | undefined =
       store?.session.selectedOrganisationOid
     if (this.state.alku.length && this.state.loppu.length && oppilaitosOid) {
+      this.setState({
+        loading: true
+      })
+      const request = await window.fetch(
+        "/ehoks-virkailija-backend/api/v1/virkailija/tep-jakso-raportti?" +
+          "tutkinto=" +
+          tutkinto +
+          "&oppilaitos=" +
+          oppilaitosOid +
+          "&start=" +
+          this.state.alku +
+          "&end=" +
+          this.state.loppu +
+          "&pagesize=" +
+          pageSize +
+          "&pageindex=" +
+          pageIndex,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: appendCommonHeaders(
+            new Headers({
+              Accept: "application/json; charset=utf-8",
+              "Content-Type": "application/json"
+            })
+          )
+        }
+      )
+
+      if (request.status === 200) {
+        const json: TpjFetchResult = await request.json()
+        this.setState({
+          data: json.data.result,
+          loading: false,
+          pageCount: json.data.pagecount
+        })
+      }
+
+      if (request.status === 403) {
+        notifications.addError("Raportit.EiOikeuksia", oppilaitosOid)
+      }
+    }
+  }
+  /*
+  async loadTyopaikkaJaksot() {
+
+    const tutkinto = JSON.stringify({})
+    const { store } = this.props
+    const { notifications } = store!
+    const oppilaitosOid: string | undefined =
+      store?.session.selectedOrganisationOid
+    if (this.state.alku.length && this.state.loppu.length && oppilaitosOid) {
+      this.setState({
+        loading: true
+      })
       const request = await window.fetch(
         "/ehoks-virkailija-backend/api/v1/virkailija/tep-jakso-raportti?" +
           "tutkinto=" +
@@ -278,9 +339,12 @@ export class Raportit extends React.Component<RaportitProps> {
       )
 
       if (request.status === 200) {
+        console.log(request.json())
         const json: TpjFetchResult = await request.json()
         this.setState({
-          data: json.data
+          data: json.data.result,
+          loading: false,
+          pageCount: json.data.pagecount
         })
       }
 
@@ -289,7 +353,7 @@ export class Raportit extends React.Component<RaportitProps> {
       }
     }
   }
-
+*/
   async componentDidMount() {
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
@@ -511,7 +575,7 @@ export class Raportit extends React.Component<RaportitProps> {
   }
 
   tpjHaeOnClick = () => {
-    this.loadTyopaikkaJaksot()
+    this.loadTyopaikkaJaksot(10, 0)
   }
 
   checkActive = (num: number) =>
@@ -571,43 +635,41 @@ export class Raportit extends React.Component<RaportitProps> {
                       toggleSize="18"
                     />
                   </MenuItem>
-                  {false && (
-                    <MenuItem
-                      as="a"
-                      href="#"
-                      onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
-                        this.navClickHandler(
-                          event,
-                          intl.formatMessage({
-                            id: "raportit.tyopaikkajaksoihinTallennetutTiedot"
-                          }),
-                          intl.formatMessage({
-                            id:
-                              "raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
-                          }),
-                          2
-                        )
+                  <MenuItem
+                    as="a"
+                    href="#"
+                    onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
+                      this.navClickHandler(
+                        event,
+                        intl.formatMessage({
+                          id: "raportit.tyopaikkajaksoihinTallennetutTiedot"
+                        }),
+                        intl.formatMessage({
+                          id:
+                            "raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
+                        }),
+                        2
+                      )
+                    }
+                    style={{
+                      ...linkStyle,
+                      fontWeight: this.checkActive(2)
+                    }}
+                  >
+                    <FormattedMessage
+                      id="raportit.tyopaikkajaksoihinTallennetutTiedot"
+                      defaultMessage="Työpaikkajaksoihin tallennetut tiedot"
+                    />
+                    <HelpButton
+                      helpContent={
+                        <FormattedMessage
+                          id="raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
+                          defaultMessage="Hakee ja listaa valitun oppilaitoksen työpaikkajaksot, joista ei löydy osa-aikaisuustietoa."
+                        />
                       }
-                      style={{
-                        ...linkStyle,
-                        fontWeight: this.checkActive(2)
-                      }}
-                    >
-                      <FormattedMessage
-                        id="raportit.tyopaikkajaksoihinTallennetutTiedot"
-                        defaultMessage="Työpaikkajaksoihin tallennetut tiedot"
-                      />
-                      <HelpButton
-                        helpContent={
-                          <FormattedMessage
-                            id="raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
-                            defaultMessage="Hakee ja listaa valitun oppilaitoksen työpaikkajaksot, joista ei löydy osa-aikaisuustietoa."
-                          />
-                        }
-                        toggleSize="18"
-                      />
-                    </MenuItem>
-                  )}
+                      toggleSize="18"
+                    />
+                  </MenuItem>
                 </Nav>
                 <Separator />
                 <Section>
@@ -619,7 +681,12 @@ export class Raportit extends React.Component<RaportitProps> {
                     }}
                   >
                     <Styles>
-                      <RaportitTable data={data} columns={columns} />
+                      {/*                       <RaportitTable
+                        data={data}
+                        columns={columns}
+                        loading={this.state.loading}
+                        pageCount={this.state.pageCount}
+                      />*/}
                     </Styles>
                   </div>
                   <div
@@ -649,7 +716,13 @@ export class Raportit extends React.Component<RaportitProps> {
                       </SearchButton>
                     </FilterBox>
                     <Styles>
-                      <RaportitTable data={data} columns={columns} />
+                      <RaportitTable
+                        data={data}
+                        columns={columns}
+                        loading={this.state.loading}
+                        pageCount={this.state.pageCount}
+                        fetchData={this.loadTyopaikkaJaksot}
+                      />
                     </Styles>
                   </div>
                 </Section>
