@@ -238,7 +238,7 @@ export class Raportit extends React.Component<RaportitProps> {
       "/ehoks-virkailija-backend/api/v1/virkailija/missing-oo-hoksit/" +
         oppilaitosOid +
         "/?" +
-        "&pagesize=" +
+        "pagesize=" +
         pageSize +
         "&pageindex=" +
         pageIndex,
