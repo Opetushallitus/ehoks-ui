@@ -1460,7 +1460,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           />
                         </form>
                       </ContentElement>
-                      <ContentElement>
+                      <ButtonContainer>
                         <Button onClick={this.onUpdateOpiskeluoikeus}>
                           <FormattedMessage
                             id="yllapito.updateOpiskeluoikeusButton"
@@ -1470,7 +1470,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
                             }
                           />
                         </Button>
-                      </ContentElement>
+                        {actionSuccessFailureMessage("updateOpiskeluoikeus")}
+                      </ButtonContainer>
                     </ContentElement>
                   </ContentElement>
                   <ContentElement>
@@ -1504,14 +1505,15 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           />
                         </form>
                       </ContentElement>
-                      <ContentElement>
+                      <ButtonContainer>
                         <Button onClick={this.onUpdateOpiskeluoikeudet}>
                           <FormattedMessage
                             id="yllapito.updateOpiskeluoikeudetButton"
                             defaultMessage="Päivitä opiskeluoikeudet."
                           />
                         </Button>
-                      </ContentElement>
+                        {actionSuccessFailureMessage("updateOpiskeluoikeudet")}
+                      </ButtonContainer>
                     </ContentElement>
                   </ContentElement>
                   <ContentElement>
@@ -1544,14 +1546,15 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           />
                         </form>
                       </ContentElement>
-                      <ContentElement>
+                      <ButtonContainer>
                         <Button onClick={this.onUpdateOppija}>
                           <FormattedMessage
                             id="yllapito.paivitaOppija"
                             defaultMessage="Paivita oppijan tiedot indeksiin."
                           />
                         </Button>
-                      </ContentElement>
+                        {actionSuccessFailureMessage("updateOppija")}
+                      </ButtonContainer>
                     </ContentElement>
                   </ContentElement>
                   <ContentElement>
@@ -1581,14 +1584,15 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           />
                         </form>
                       </ContentElement>
-                      <ContentElement>
+                      <ButtonContainer>
                         <Button onClick={this.onSendHerate}>
                           <FormattedMessage
                             id="yllapito.aloitusHerate"
                             defaultMessage="Lähetä uusi heräte aloituskyselyyn."
                           />
                         </Button>
-                      </ContentElement>
+                        {actionSuccessFailureMessage("sendHerate")}
+                      </ButtonContainer>
                     </ContentElement>
                   </ContentElement>
                   <ContentElement>
@@ -1620,14 +1624,15 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           />
                         </form>
                       </ContentElement>
-                      <ContentElement>
+                      <ButtonContainer>
                         <Button onClick={this.onSendPaattoHerate}>
                           <FormattedMessage
                             id="yllapito.paattoHerate"
                             defaultMessage="Lähetä uusi heräte päättökyselyyn."
                           />
                         </Button>
-                      </ContentElement>
+                        {actionSuccessFailureMessage("sendPaattoHerate")}
+                      </ButtonContainer>
                     </ContentElement>
                   </ContentElement>
                   <ContentElement>
@@ -1668,7 +1673,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           />
                         </form>
                       </ContentElement>
-                      <ContentElement>
+                      <ButtonContainer>
                         <Button onClick={this.onSendHeratteetBetween}>
                           <FormattedMessage
                             id="yllapito.aloitusHeratteet"
@@ -1678,7 +1683,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
                             }
                           />
                         </Button>
-                      </ContentElement>
+                        {actionSuccessFailureMessage("sendHeratteetBetween")}
+                      </ButtonContainer>
                     </ContentElement>
                   </ContentElement>
                   <ContentElement>
@@ -1721,7 +1727,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           />
                         </form>
                       </ContentElement>
-                      <ContentElement>
+                      <ButtonContainer>
                         <Button onClick={this.onSendPaattoHeratteetBetween}>
                           <FormattedMessage
                             id="yllapito.paattoHeratteet"
@@ -1731,7 +1737,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
                             }
                           />
                         </Button>
-                      </ContentElement>
+                        {actionSuccessFailureMessage(
+                          "sendPaattoHeratteetBetween"
+                        )}
+                      </ButtonContainer>
                     </ContentElement>
                   </ContentElement>
                   <ContentElement>
@@ -1761,14 +1770,15 @@ export class Yllapito extends React.Component<YllapitoProps> {
                         />
                       </form>
                     </ContentElement>
-                    <ContentElement>
+                    <ButtonContainer>
                       <Button onClick={this.onRemoveVastaajatunnusClicked}>
                         <FormattedMessage
                           id="yllapito.poistaVastaajatunnus"
                           defaultMessage="Poista vastaajatunnus"
                         />
                       </Button>
-                    </ContentElement>
+                      {actionSuccessFailureMessage("removeVastaajatunnus")}
+                    </ButtonContainer>
                   </ContentElement>
                 </ContentElement>
               )}
