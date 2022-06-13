@@ -145,11 +145,11 @@ interface RaportitProps extends RouteComponentProps {
 }
 
 export interface HoksRow {
-  hoksid: number
-  hokseid: string
-  oppijaoid: string
-  opiskeluoikeusoid: string
-  oppilaitosoid: string
+  hoksId: number
+  hoksEid: string
+  oppijaOid: string
+  opiskeluoikeusOid: string
+  oppilaitosOid: string
 }
 interface hoksitFetchResult {
   data: {
@@ -399,24 +399,24 @@ export class Raportit extends React.Component<RaportitProps> {
     }
   }
 
-  getHoksiByHoksId = (hoksid: number) =>
-    this.state.data?.find((x: HoksRow) => x.hoksid === hoksid) as HoksRow
+  getHoksiByHoksId = (hoksId: number) =>
+    this.state.data?.find((x: HoksRow) => x.hoksId === hoksId) as HoksRow
 
   getTpjRowByHoksId = (hoksId: number) =>
     this.state.data?.find((x: TpjRow) => x.hoksId === hoksId) as TpjRow
 
-  createLinkPath = (hoksid: number) => {
+  createLinkPath = (hoksId: number) => {
     let row = {} as HoksRow | TpjRow
     let oppijaOid = ""
     let hoksEid = ""
     switch (this.state.selected) {
       case 1:
-        row = this.getHoksiByHoksId(hoksid)
-        oppijaOid = row.oppijaoid
-        hoksEid = row.hokseid
+        row = this.getHoksiByHoksId(hoksId)
+        oppijaOid = row.oppijaOid
+        hoksEid = row.hoksEid
         break
       case 2:
-        row = this.getTpjRowByHoksId(hoksid)
+        row = this.getTpjRowByHoksId(hoksId)
         oppijaOid = row.oppijaOid
         hoksEid = row.hoksEid
         break
@@ -447,8 +447,8 @@ export class Raportit extends React.Component<RaportitProps> {
                 to={this.createLinkPath(value)}
                 state={{
                   fromRaportit: true,
-                  oppijaoid: this.getHoksiByHoksId(value)?.oppijaoid,
-                  hokseid: this.getHoksiByHoksId(value)?.hokseid
+                  oppijaoid: this.getHoksiByHoksId(value)?.oppijaOid,
+                  hokseid: this.getHoksiByHoksId(value)?.hoksEid
                 }}
               >
                 {value}
