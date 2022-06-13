@@ -237,7 +237,7 @@ export class Raportit extends React.Component<RaportitProps> {
     const request = await window.fetch(
       "/ehoks-virkailija-backend/api/v1/virkailija/missing-oo-hoksit/" +
         oppilaitosOid +
-        "/?" +
+        "?" +
         "pagesize=" +
         pageSize +
         "&pageindex=" +
