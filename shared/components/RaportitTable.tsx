@@ -11,7 +11,12 @@ interface RaportitTableProps {
   columns: Column[]
   loading: boolean
   pageCount: number
-  fetchData?: (pageSize: number, pageIndex: number) => void
+  fetchData?: (
+    pageSize: number,
+    pageIndex: number,
+    tpjNewParams: boolean
+  ) => void
+  tpjNewParams: boolean
 }
 
 const printResultInfo = (length: number, count: number, loading: boolean) => {
@@ -63,7 +68,13 @@ export function RaportitTable(props: RaportitTableProps) {
   )
 
   useEffect(() => {
-    fetchData(10, pageIndex)
+    if (props.tpjNewParams) {
+      gotoPage(0)
+    }
+  })
+
+  useEffect(() => {
+    fetchData(10, pageIndex, false)
   }, [pageIndex, fetchData])
 
   /* eslint-disable react/jsx-key */

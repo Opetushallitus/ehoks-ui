@@ -197,6 +197,7 @@ interface RaportitState {
   alku: string
   loppu: string
   initSearchDone: boolean
+  TpjNewParams: boolean
 }
 
 interface CustomColumn {
@@ -223,7 +224,8 @@ export class Raportit extends React.Component<RaportitProps> {
     loppu: "",
     loading: false,
     pageCount: 0,
-    initSearchDone: false
+    initSearchDone: false,
+    TpjNewParams: true
   }
 
   async loadHoksesWithoutOpiskeluoikeudet(oppilaitosOid: string | undefined) {
@@ -256,7 +258,11 @@ export class Raportit extends React.Component<RaportitProps> {
     }
   }
 
-  loadTyopaikkaJaksot = async (pageSize: number, pageIndex: number) => {
+  loadTyopaikkaJaksot = async (
+    pageSize: number,
+    pageIndex: number,
+    tpjNewParams: boolean
+  ) => {
     const tutkinto = JSON.stringify({})
     const { store } = this.props
     const { notifications } = store!
@@ -306,6 +312,9 @@ export class Raportit extends React.Component<RaportitProps> {
       }
       this.setState({
         initSearchDone: true
+      })
+      this.setState({
+        tpjNewParams
       })
     }
   }
@@ -580,7 +589,7 @@ export class Raportit extends React.Component<RaportitProps> {
   }
 
   tpjHaeOnClick = () => {
-    this.loadTyopaikkaJaksot(10, 0)
+    this.loadTyopaikkaJaksot(10, 0, true)
   }
 
   checkActive = (num: number) =>
@@ -728,6 +737,7 @@ export class Raportit extends React.Component<RaportitProps> {
                           loading={this.state.loading}
                           pageCount={this.state.pageCount}
                           fetchData={this.loadTyopaikkaJaksot}
+                          tpjNewParams={this.state.TpjNewParams}
                         />
                       </Styles>
                     )}
