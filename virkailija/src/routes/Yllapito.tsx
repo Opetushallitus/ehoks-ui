@@ -100,6 +100,7 @@ interface YllapitoState {
   sendPaattoHerateDateFrom?: string
   sendPaattoHerateDateTo?: string
   vastaajatunnusToDelete?: string
+  currentActionId?: string
 }
 
 interface SystemInfoResponse {
@@ -194,7 +195,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
         message: intl.formatMessage({
           id: "yllapito.valimuistiTyhjennetty",
           defaultMessage: "Välimuisti tyhjennetty"
-        })
+        }),
+        currentActionId: "clearCache"
       })
       await this.loadSystemInfo()
     } else {
@@ -204,7 +206,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
         message: intl.formatMessage({
           id: "yllapito.valimuistinTyhjennysEpaonnistui",
           defaultMessage: "Välimuistin tyhjennys epäonnistui"
-        })
+        }),
+        currentActionId: "clearCache"
       })
     }
   }
@@ -237,7 +240,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
             defaultMessage: "Kyselyyn on jo vastattu"
           }),
           isLoading: false,
-          loadingState: "unsuccessful"
+          loadingState: "unsuccessful",
+          currentActionId: "removeVastaajatunnus"
         })
       } else if (
         window.confirm(
@@ -305,7 +309,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
               defaultMessage: "Tunnuksen poistaminen onnistui"
             }),
             isLoading: false,
-            loadingState: "success"
+            loadingState: "success",
+            currentActionId: "removeVastaajatunnus"
           })
         } else {
           const json = await request.json()
@@ -317,7 +322,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
                 defaultMessage: "Tunnus ei ole poistettavissa"
               }),
               isLoading: false,
-              loadingState: "unsuccessful"
+              loadingState: "unsuccessful",
+              currentActionId: "removeVastaajatunnus"
             })
           } else {
             this.setState({
@@ -327,7 +333,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
                 defaultMessage: "Tunnuksen poistaminen epäonnistui"
               }),
               isLoading: false,
-              loadingState: "unsuccessful"
+              loadingState: "unsuccessful",
+              currentActionId: "removeVastaajatunnus"
             })
           }
         }
@@ -341,7 +348,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
             defaultMessage: "Tunnus virheellinen"
           }),
           isLoading: false,
-          loadingState: "unsuccessful"
+          loadingState: "unsuccessful",
+          currentActionId: "removeVastaajatunnus"
         })
       } else {
         this.setState({
@@ -351,7 +359,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
             defaultMessage: "Tunnuksen haku epäonnistui"
           }),
           isLoading: false,
-          loadingState: "unsuccessful"
+          loadingState: "unsuccessful",
+          currentActionId: "removeVastaajatunnus"
         })
       }
     }
@@ -381,7 +390,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
         message: intl.formatMessage({
           id: "yllapito.indeksointiSuoritettu",
           defaultMessage: "Indeksointi suoritettu"
-        })
+        }),
+        currentActionId: "runIndex"
       })
       await this.loadSystemInfo()
     } else {
@@ -391,7 +401,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
         message: intl.formatMessage({
           id: "yllapito.indeksointiEpaonnistui",
           defaultMessage: "Indeksointi epäonnistui"
-        })
+        }),
+        currentActionId: "runIndex"
       })
     }
   }
@@ -423,7 +434,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           defaultMessage: "Hoksin haku onnistui"
         }),
         isLoading: false,
-        hoksId: json.data.id
+        hoksId: json.data.id,
+        currentActionId: "getHoksId"
       })
     } else {
       this.setState({
@@ -433,7 +445,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           id: "yllapito.hoksinHakuEpaonnistui",
           defaultMessage: "Hoksin haku epäonnistui"
         }),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "getHoksId"
       })
     }
   }
@@ -466,7 +479,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
         }),
         isLoading: false,
         opiskeluoikeusHakuOid: json.data["opiskeluoikeus-oid"],
-        oppijaOid: json.data["oppija-oid"]
+        oppijaOid: json.data["oppija-oid"],
+        currentActionId: "getOpiskeluoikeusOid"
       })
     } else {
       this.setState({
@@ -476,7 +490,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           id: "yllapito.opiskeluoikeudenHakuEpaonnistui",
           defaultMessage: "Opiskeluoikeuden haku epäonnistui"
         }),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "getOpiskeluoikeusOid"
       })
     }
   }
@@ -557,7 +572,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
               id: "yllapito.hoksinPoistoOnnistui",
               defaultMessage: "HOKSin poistaminen onnistui"
             }),
-            isLoading: false
+            isLoading: false,
+            currentActionId: "deleteHoks"
           })
         } else {
           this.setState({
@@ -567,7 +583,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
               id: "yllapito.hoksinPoistoEpaonnistui",
               defaultMessage: "HOKSin poistaminen epäonnistui"
             }),
-            isLoading: false
+            isLoading: false,
+            currentActionId: "deleteHoks"
           })
         }
       }
@@ -580,7 +597,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           defaultMessage:
             "HOKSin poistamisen vahvistustietojen hakeminen epäonnistui"
         }),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "deleteHoks"
       })
     }
   }
@@ -610,7 +628,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           id: "yllapito.hoksinPalautusOnnistui",
           defaultMessage: "HOKSin palautus onnistui"
         }),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "palautaHoks"
       })
     } else {
       this.setState({
@@ -620,7 +639,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           id: "yllapito.hoksinPalautusEpaonnistui",
           defaultMessage: "HOKSin palautus epäonnistui"
         }),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "palautaHoks"
       })
     }
   }
@@ -653,7 +673,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           id: "yllapito.opiskeluoikeudenPaivitysOnnistui",
           defaultMessage: "Opiskeluoikeuden päivitys onnistui"
         }),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "updateOpiskeluoikeus"
       })
     } else {
       this.setState({
@@ -663,7 +684,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           id: "yllapito.opiskeluoikeudenPaivitysEpaonnistui",
           defaultMessage: "Opiskeluoikeuden päivitys epäonnistui"
         }),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "updateOpiskeluoikeus"
       })
     }
   }
@@ -729,7 +751,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
               id: "yllapito.opiskeluoikeuksienPaivitysOnnistui",
               defaultMessage: "Poisto ja uudelleenindeksointi aloitettu"
             }),
-            isLoading: false
+            isLoading: false,
+            currentActionId: "updateOpiskeluoikeudet"
           })
         } else {
           this.setState({
@@ -739,7 +762,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
               id: "yllapito.opiskeluoikeuksienPaivitysEpaonnistui",
               defaultMessage: "Poisto ja uudelleenindeksointi epäonnistui."
             }),
-            isLoading: false
+            isLoading: false,
+            currentActionId: "updateOpiskeluoikeudet"
           })
         }
       }
@@ -752,7 +776,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           defaultMessage:
             "Opikseluoikeuksien vahvistustietojen hakeminen epäonnistui"
         }),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "updateOpiskeluoikeudet"
       })
     }
   }
@@ -784,7 +809,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           id: "yllapito.oppijaPaivitetty",
           defaultMessage: "Opiskeluoikeuden päivitys onnistui"
         }),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "updateOppija"
       })
     } else {
       this.setState({
@@ -794,7 +820,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           id: "yllapito.oppijanPaivitysEpaonnistui",
           defaultMessage: "Oppijan päivitys epäonnistui"
         }),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "updateOppija"
       })
     }
   }
@@ -824,7 +851,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           id: "yllapito.herateLahetysOnnistui",
           defaultMessage: "Herätteen lähetys onnistui"
         }),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "sendHerate"
       })
     } else {
       this.setState({
@@ -834,7 +862,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           id: "yllapito.herateLahetysEpaonnistui",
           defaultMessage: "Herätteen lähetys epäonnistui"
         }),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "sendHerate"
       })
     }
   }
@@ -864,7 +893,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           id: "yllapito.herateLahetysOnnistui",
           defaultMessage: "Herätteen lähetys onnistui"
         }),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "sendPaattoHerate"
       })
     } else {
       this.setState({
@@ -874,7 +904,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           id: "yllapito.herateLahetysEpaonnistui",
           defaultMessage: "Herätteen lähetys epäonnistui"
         }),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "sendPaattoHerate"
       })
     }
   }
@@ -910,7 +941,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           },
           { count }
         ),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "sendHeratteetBetween"
       })
     } else {
       this.setState({
@@ -920,7 +952,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           id: "yllapito.heratteetLahetysEpaonnistui",
           defaultMessage: "Virhe herätteiden uudelleenlähetyksessä!"
         }),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "sendHeratteetBetween"
       })
     }
   }
@@ -956,7 +989,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           },
           { count }
         ),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "sendPaattoHeratteetBetween"
       })
     } else {
       this.setState({
@@ -966,7 +1000,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
           id: "yllapito.heratteetLahetysEpaonnistui",
           defaultMessage: "Virhe herätteiden uudelleenlähetyksessä!"
         }),
-        isLoading: false
+        isLoading: false,
+        currentActionId: "sendPaattoHeratteetBetween"
       })
     }
   }
@@ -1059,7 +1094,15 @@ export class Yllapito extends React.Component<YllapitoProps> {
   }
 
   render() {
-    const { loadingState, message, systemInfo } = this.state
+    const { currentActionId, loadingState, message, systemInfo } = this.state
+
+    const actionSuccessFailureMessage = (actionId: string) =>
+      actionId !== currentActionId ? null : loadingState === "success" ? (
+        <SuccessMessage onClick={this.hideMessage}>{message}</SuccessMessage>
+      ) : (
+        <FailureMessage onClick={this.hideMessage}>{message}</FailureMessage>
+      )
+
     return (
       <BackgroundContainer>
         <Container>
@@ -1115,6 +1158,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                             defaultMessage="Hae hoks-id opiskeluoikeus-oid:llä"
                           />
                         </Button>
+                        {actionSuccessFailureMessage("getHoksId")}
                       </ContentElement>
                     </ContentElement>
                     <FormattedMessage
