@@ -14,6 +14,32 @@ interface RaportitTableProps {
   fetchData?: (pageSize: number, pageIndex: number) => void
 }
 
+const printResultInfo = (length: number, count: number, loading: boolean) => {
+  if (loading) {
+    return (
+      <td colSpan="10000">Ladataan...</td>
+    )
+  } else if (count > 1)  {
+    return (
+      <td colSpan="10000">
+      Näytetään {length} kpl ~{count * 20} hakutuloksesta
+    </td>
+    )
+  } else if (count === 1) {
+    return (
+      <td colSpan="10000">
+        Näytetään {length} kpl ~{count * 20} hakutuloksesta
+      </td>
+    )
+  } else {
+    return (
+      <td colSpan="10000">
+        Näytetään {length} kpl ~{count * 20} hakutuloksesta
+      </td>
+    )
+  }
+}
+
 export function RaportitTable(props: RaportitTableProps) {
   const fetchData = props.fetchData
 
@@ -87,14 +113,7 @@ export function RaportitTable(props: RaportitTableProps) {
               )
             })}
             <tr>
-              {props.loading ? (
-                <td colSpan="10000">Ladataan...</td>
-              ) : (
-                <td colSpan="10000">
-                  Näytetään {page.length} kpl ~{props.pageCount * 20}{" "}
-                  hakutuloksesta
-                </td>
-              )}
+              {printResultInfo(page.length, props.pageCount, props.loading)}
             </tr>
           </tbody>
         </table>
