@@ -1351,8 +1351,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
                           defaultMessage="Indeksoi oppijat ja opiskeluoikeudet"
                         />
                       </Button>
+                      {actionSuccessFailureMessage("runIndex")}
                     </ButtonContainer>
-                    {actionSuccessFailureMessage("runIndex")}
                   </ContentElement>
                   <ContentElement>
                     <Header>
