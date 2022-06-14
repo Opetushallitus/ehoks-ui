@@ -145,15 +145,18 @@ interface RaportitProps extends RouteComponentProps {
 }
 
 export interface HoksRow {
-  hoksid: number
-  hokseid: string
-  oppijaoid: string
-  opiskeluoikeusoid: string
-  oppilaitosoid: string
+  hoksId: number
+  hoksEid: string
+  oppijaOid: string
+  opiskeluoikeusOid: string
+  oppilaitosOid: string
 }
 interface hoksitFetchResult {
-  count: number
-  hoksit: HoksRow[]
+  data: {
+    count: number
+    pagecount: number
+    result: HoksRow[]
+  }
 }
 
 export interface TpjRow {
@@ -175,17 +178,24 @@ export interface TpjRow {
 }
 
 interface TpjFetchResult {
-  data: TpjRow[]
+  data: {
+    count: number
+    pagecount: number
+    result: TpjRow[]
+  }
 }
 
 interface RaportitState {
   hoksitCount?: number
   data?: (HoksRow | TpjRow)[]
+  loading: boolean
+  pageCount: number
   titleText: string
   descText: string
   selected: number
   alku: string
   loppu: string
+  initSearchDone: boolean
 }
 
 interface CustomColumn {
@@ -209,52 +219,68 @@ export class Raportit extends React.Component<RaportitProps> {
     descText: "",
     selected: 0,
     alku: "",
-    loppu: ""
+    loppu: "",
+    loading: false,
+    pageCount: 0,
+    initSearchDone: false
   }
 
-  async loadHoksesWithoutOpiskeluoikeudet(oppilaitosOid: string | undefined) {
-    const { notifications } = this.props.store!
-    const request = await window.fetch(
-      "/ehoks-virkailija-backend/api/v1/virkailija/missing-oo-hoksit/" +
-        oppilaitosOid,
-      {
-        method: "GET",
-        credentials: "include",
-        headers: appendCommonHeaders(
-          new Headers({
-            Accept: "application/json; charset=utf-8",
-            "Content-Type": "application/json"
-          })
-        )
-      }
-    )
-
-    if (request.status === 200) {
-      const json: hoksitFetchResult = await request.json()
+  loadHoksesWithoutOpiskeluoikeudet = async (
+    pageSize: number,
+    pageIndex: number
+  ) => {
+    const { store } = this.props
+    const { notifications } = store!
+    const oppilaitosOid: string | undefined =
+      store?.session.selectedOrganisationOid
+    if (oppilaitosOid) {
       this.setState({
-        hoksitCount: json.count,
-        data: json.hoksit
+        loading: true
       })
-    }
+      const request = await window.fetch(
+        "/ehoks-virkailija-backend/api/v1/virkailija/missing-oo-hoksit/" +
+          oppilaitosOid +
+          "?" +
+          "pagesize=" +
+          pageSize +
+          "&pageindex=" +
+          pageIndex,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: appendCommonHeaders(
+            new Headers({
+              Accept: "application/json; charset=utf-8",
+              "Content-Type": "application/json"
+            })
+          )
+        }
+      )
+      if (request.status === 200) {
+        const json: hoksitFetchResult = await request.json()
+        this.setState({
+          data: json.data.result,
+          loading: false,
+          pageCount: json.data.pagecount
+        })
+      }
 
-    if (request.status === 403) {
-      notifications.addError("Raportit.EiOikeuksia", oppilaitosOid)
+      if (request.status === 403) {
+        notifications.addError("Raportit.EiOikeuksia", oppilaitosOid)
+      }
     }
   }
 
-  async loadTyopaikkaJaksot() {
-    /*
-    const tutkinto = JSON.stringify({
-      fi: "Autokorimestarin erikoisammattitutkinto",
-      sv: "Specialyrkesexamen för karosseri- och bilplåtsmästare"
-    })
-    */
+  loadTyopaikkaJaksot = async (pageSize: number, pageIndex: number) => {
     const tutkinto = JSON.stringify({})
     const { store } = this.props
     const { notifications } = store!
     const oppilaitosOid: string | undefined =
       store?.session.selectedOrganisationOid
     if (this.state.alku.length && this.state.loppu.length && oppilaitosOid) {
+      this.setState({
+        loading: true
+      })
       const request = await window.fetch(
         "/ehoks-virkailija-backend/api/v1/virkailija/tep-jakso-raportti?" +
           "tutkinto=" +
@@ -264,7 +290,11 @@ export class Raportit extends React.Component<RaportitProps> {
           "&start=" +
           this.state.alku +
           "&end=" +
-          this.state.loppu,
+          this.state.loppu +
+          "&pagesize=" +
+          pageSize +
+          "&pageindex=" +
+          pageIndex,
         {
           method: "GET",
           credentials: "include",
@@ -280,13 +310,18 @@ export class Raportit extends React.Component<RaportitProps> {
       if (request.status === 200) {
         const json: TpjFetchResult = await request.json()
         this.setState({
-          data: json.data
+          data: json.data.result,
+          loading: false,
+          pageCount: json.data.pagecount
         })
       }
 
       if (request.status === 403) {
         notifications.addError("Raportit.EiOikeuksia", oppilaitosOid)
       }
+      this.setState({
+        initSearchDone: true
+      })
     }
   }
 
@@ -314,31 +349,28 @@ export class Raportit extends React.Component<RaportitProps> {
       selected
     })
     if (selected === 1) {
-      const { store } = this.props
-      const oppilaitosOid: string | undefined =
-        store?.session.selectedOrganisationOid
-      this.loadHoksesWithoutOpiskeluoikeudet(oppilaitosOid)
+      this.loadHoksesWithoutOpiskeluoikeudet(10, 0)
     }
   }
 
-  getHoksiByHoksId = (hoksid: number) =>
-    this.state.data?.find((x: HoksRow) => x.hoksid === hoksid) as HoksRow
+  getHoksiByHoksId = (hoksId: number) =>
+    this.state.data?.find((x: HoksRow) => x.hoksId === hoksId) as HoksRow
 
   getTpjRowByHoksId = (hoksId: number) =>
     this.state.data?.find((x: TpjRow) => x.hoksId === hoksId) as TpjRow
 
-  createLinkPath = (hoksid: number) => {
+  createLinkPath = (hoksId: number) => {
     let row = {} as HoksRow | TpjRow
     let oppijaOid = ""
     let hoksEid = ""
     switch (this.state.selected) {
       case 1:
-        row = this.getHoksiByHoksId(hoksid)
-        oppijaOid = row.oppijaoid
-        hoksEid = row.hokseid
+        row = this.getHoksiByHoksId(hoksId)
+        oppijaOid = row.oppijaOid
+        hoksEid = row.hoksEid
         break
       case 2:
-        row = this.getTpjRowByHoksId(hoksid)
+        row = this.getTpjRowByHoksId(hoksId)
         oppijaOid = row.oppijaOid
         hoksEid = row.hoksEid
         break
@@ -362,15 +394,15 @@ export class Raportit extends React.Component<RaportitProps> {
           Header: this.context.intl.formatMessage({
             id: "raportit.ehoksid"
           }),
-          accessor: "hoksid",
+          accessor: "hoksId",
           Cell: ({ cell: { value } }: CustomColumn) => (
             <div style={{ textAlign: "center" }}>
               <Link
                 to={this.createLinkPath(value)}
                 state={{
                   fromRaportit: true,
-                  oppijaoid: this.getHoksiByHoksId(value)?.oppijaoid,
-                  hokseid: this.getHoksiByHoksId(value)?.hokseid
+                  oppijaoid: this.getHoksiByHoksId(value)?.oppijaOid,
+                  hokseid: this.getHoksiByHoksId(value)?.hoksEid
                 }}
               >
                 {value}
@@ -382,19 +414,19 @@ export class Raportit extends React.Component<RaportitProps> {
           Header: this.context.intl.formatMessage({
             id: "raportit.oppijanumeroTitle"
           }),
-          accessor: "oppijaoid"
+          accessor: "oppijaOid"
         },
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.opiskeluoikeusoid"
           }),
-          accessor: "opiskeluoikeusoid"
+          accessor: "opiskeluoikeusOid"
         },
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.oppilaitosoid"
           }),
-          accessor: "oppilaitosoid"
+          accessor: "oppilaitosOid"
         }
       ]
     } else if (selectedRaportti === 2) {
@@ -511,7 +543,7 @@ export class Raportit extends React.Component<RaportitProps> {
   }
 
   tpjHaeOnClick = () => {
-    this.loadTyopaikkaJaksot()
+    this.loadTyopaikkaJaksot(10, 0)
   }
 
   checkActive = (num: number) =>
@@ -571,43 +603,41 @@ export class Raportit extends React.Component<RaportitProps> {
                       toggleSize="18"
                     />
                   </MenuItem>
-                  {false && (
-                    <MenuItem
-                      as="a"
-                      href="#"
-                      onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
-                        this.navClickHandler(
-                          event,
-                          intl.formatMessage({
-                            id: "raportit.tyopaikkajaksoihinTallennetutTiedot"
-                          }),
-                          intl.formatMessage({
-                            id:
-                              "raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
-                          }),
-                          2
-                        )
+                  <MenuItem
+                    as="a"
+                    href="#"
+                    onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
+                      this.navClickHandler(
+                        event,
+                        intl.formatMessage({
+                          id: "raportit.tyopaikkajaksoihinTallennetutTiedot"
+                        }),
+                        intl.formatMessage({
+                          id:
+                            "raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
+                        }),
+                        2
+                      )
+                    }
+                    style={{
+                      ...linkStyle,
+                      fontWeight: this.checkActive(2)
+                    }}
+                  >
+                    <FormattedMessage
+                      id="raportit.tyopaikkajaksoihinTallennetutTiedot"
+                      defaultMessage="Työpaikkajaksoihin tallennetut tiedot"
+                    />
+                    <HelpButton
+                      helpContent={
+                        <FormattedMessage
+                          id="raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
+                          defaultMessage="Hakee ja listaa valitun oppilaitoksen työpaikkajaksot, joista ei löydy osa-aikaisuustietoa."
+                        />
                       }
-                      style={{
-                        ...linkStyle,
-                        fontWeight: this.checkActive(2)
-                      }}
-                    >
-                      <FormattedMessage
-                        id="raportit.tyopaikkajaksoihinTallennetutTiedot"
-                        defaultMessage="Työpaikkajaksoihin tallennetut tiedot"
-                      />
-                      <HelpButton
-                        helpContent={
-                          <FormattedMessage
-                            id="raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
-                            defaultMessage="Hakee ja listaa valitun oppilaitoksen työpaikkajaksot, joista ei löydy osa-aikaisuustietoa."
-                          />
-                        }
-                        toggleSize="18"
-                      />
-                    </MenuItem>
-                  )}
+                      toggleSize="18"
+                    />
+                  </MenuItem>
                 </Nav>
                 <Separator />
                 <Section>
@@ -619,7 +649,13 @@ export class Raportit extends React.Component<RaportitProps> {
                     }}
                   >
                     <Styles>
-                      <RaportitTable data={data} columns={columns} />
+                      <RaportitTable
+                        data={data}
+                        columns={columns}
+                        loading={this.state.loading}
+                        pageCount={this.state.pageCount}
+                        fetchData={this.loadHoksesWithoutOpiskeluoikeudet}
+                      />
                     </Styles>
                   </div>
                   <div
@@ -648,9 +684,17 @@ export class Raportit extends React.Component<RaportitProps> {
                         Hae
                       </SearchButton>
                     </FilterBox>
-                    <Styles>
-                      <RaportitTable data={data} columns={columns} />
-                    </Styles>
+                    {this.state.initSearchDone && (
+                      <Styles>
+                        <RaportitTable
+                          data={data}
+                          columns={columns}
+                          loading={this.state.loading}
+                          pageCount={this.state.pageCount}
+                          fetchData={this.loadTyopaikkaJaksot}
+                        />
+                      </Styles>
+                    )}
                   </div>
                 </Section>
               </ContentElement>
