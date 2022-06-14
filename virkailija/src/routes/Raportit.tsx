@@ -237,37 +237,41 @@ export class Raportit extends React.Component<RaportitProps> {
     const { notifications } = store!
     const oppilaitosOid: string | undefined =
       store?.session.selectedOrganisationOid
-    const request = await window.fetch(
-      "/ehoks-virkailija-backend/api/v1/virkailija/missing-oo-hoksit/" +
-        oppilaitosOid +
-        "?" +
-        "pagesize=" +
-        pageSize +
-        "&pageindex=" +
-        pageIndex,
-      {
-        method: "GET",
-        credentials: "include",
-        headers: appendCommonHeaders(
-          new Headers({
-            Accept: "application/json; charset=utf-8",
-            "Content-Type": "application/json"
-          })
-        )
-      }
-    )
-
-    if (request.status === 200) {
-      const json: hoksitFetchResult = await request.json()
+    if (oppilaitosOid) {
       this.setState({
-        data: json.data.result,
-        loading: false,
-        pageCount: json.data.pagecount
+        loading: true
       })
-    }
+      const request = await window.fetch(
+        "/ehoks-virkailija-backend/api/v1/virkailija/missing-oo-hoksit/" +
+          oppilaitosOid +
+          "?" +
+          "pagesize=" +
+          pageSize +
+          "&pageindex=" +
+          pageIndex,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: appendCommonHeaders(
+            new Headers({
+              Accept: "application/json; charset=utf-8",
+              "Content-Type": "application/json"
+            })
+          )
+        }
+      )
+      if (request.status === 200) {
+        const json: hoksitFetchResult = await request.json()
+        this.setState({
+          data: json.data.result,
+          loading: false,
+          pageCount: json.data.pagecount
+        })
+      }
 
-    if (request.status === 403) {
-      notifications.addError("Raportit.EiOikeuksia", oppilaitosOid)
+      if (request.status === 403) {
+        notifications.addError("Raportit.EiOikeuksia", oppilaitosOid)
+      }
     }
   }
 
@@ -394,7 +398,7 @@ export class Raportit extends React.Component<RaportitProps> {
           Header: this.context.intl.formatMessage({
             id: "raportit.ehoksid"
           }),
-          accessor: "hoksid",
+          accessor: "hoksId",
           Cell: ({ cell: { value } }: CustomColumn) => (
             <div style={{ textAlign: "center" }}>
               <Link
@@ -414,19 +418,19 @@ export class Raportit extends React.Component<RaportitProps> {
           Header: this.context.intl.formatMessage({
             id: "raportit.oppijanumeroTitle"
           }),
-          accessor: "oppijaoid"
+          accessor: "oppijaOid"
         },
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.opiskeluoikeusoid"
           }),
-          accessor: "opiskeluoikeusoid"
+          accessor: "opiskeluoikeusOid"
         },
         {
           Header: this.context.intl.formatMessage({
             id: "raportit.oppilaitosoid"
           }),
-          accessor: "oppilaitosoid"
+          accessor: "oppilaitosOid"
         }
       ]
     } else if (selectedRaportti === 2) {
