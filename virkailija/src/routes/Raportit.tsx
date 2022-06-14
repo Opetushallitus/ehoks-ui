@@ -229,7 +229,10 @@ export class Raportit extends React.Component<RaportitProps> {
     initSearchDone: false
   }
 
-  async loadHoksesWithoutOpiskeluoikeudet(pageSize: number, pageIndex: number) {
+  loadHoksesWithoutOpiskeluoikeudet = async (
+    pageSize: number,
+    pageIndex: number
+  ) => {
     const { store } = this.props
     const { notifications } = store!
     const oppilaitosOid: string | undefined =
