@@ -176,11 +176,7 @@ export interface TpjRow {
   ohjaajaPuhelinnumero: string
   customColumn: number
 }
-/*
-      {:count row-count-total
-                           :pagecount page-count-total
-                           :result pageresult}
-    */
+
 interface TpjFetchResult {
   data: {
     count: number
