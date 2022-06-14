@@ -230,8 +230,8 @@ export class Raportit extends React.Component<RaportitProps> {
   }
 
   async loadHoksesWithoutOpiskeluoikeudet(pageSize: number, pageIndex: number) {
-    const { notifications } = this.props.store!
     const { store } = this.props
+    const { notifications } = store!
     const oppilaitosOid: string | undefined =
       store?.session.selectedOrganisationOid
     const request = await window.fetch(
@@ -321,56 +321,7 @@ export class Raportit extends React.Component<RaportitProps> {
       })
     }
   }
-  /*
-  async loadTyopaikkaJaksot() {
 
-    const tutkinto = JSON.stringify({})
-    const { store } = this.props
-    const { notifications } = store!
-    const oppilaitosOid: string | undefined =
-      store?.session.selectedOrganisationOid
-    if (this.state.alku.length && this.state.loppu.length && oppilaitosOid) {
-      this.setState({
-        loading: true
-      })
-      const request = await window.fetch(
-        "/ehoks-virkailija-backend/api/v1/virkailija/tep-jakso-raportti?" +
-          "tutkinto=" +
-          tutkinto +
-          "&oppilaitos=" +
-          oppilaitosOid +
-          "&start=" +
-          this.state.alku +
-          "&end=" +
-          this.state.loppu,
-        {
-          method: "GET",
-          credentials: "include",
-          headers: appendCommonHeaders(
-            new Headers({
-              Accept: "application/json; charset=utf-8",
-              "Content-Type": "application/json"
-            })
-          )
-        }
-      )
-
-      if (request.status === 200) {
-        console.log(request.json())
-        const json: TpjFetchResult = await request.json()
-        this.setState({
-          data: json.data.result,
-          loading: false,
-          pageCount: json.data.pagecount
-        })
-      }
-
-      if (request.status === 403) {
-        notifications.addError("Raportit.EiOikeuksia", oppilaitosOid)
-      }
-    }
-  }
-*/
   async componentDidMount() {
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
