@@ -541,6 +541,36 @@
   },
   {
     "locale": "fi",
+    "key": "raportit.sivu",
+    "value": "Sivu"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.ladataan",
+    "value": "Ladataan"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.hakutulokset",
+    "value": "Hakutulokset"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.loytyi",
+    "value": "Löytyi"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.kpl",
+    "value": "kpl"
+  },
+  {
+    "locale": "fi",
+    "key": "raportit.eiTuloksia",
+    "value": "Ei hakutuloksia"
+  },
+  {
+    "locale": "fi",
     "key": "table.haePlaceholder",
     "value": "Hae"
   },

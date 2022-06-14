@@ -5,6 +5,7 @@ import React, { useMemo, useEffect } from "react"
 import { Column, useTable, usePagination } from "react-table"
 // @ts-ignore Ignore type-checking for this library
 import TableScrollbar from "react-table-scrollbar"
+import { FormattedMessage } from "react-intl"
 
 interface RaportitTableProps {
   data: any
@@ -16,21 +17,33 @@ interface RaportitTableProps {
 
 const printResultInfo = (length: number, count: number, loading: boolean) => {
   if (loading) {
-    return <td colSpan="10000">Ladataan...</td>
+    return (
+      <td colSpan="10000">
+        <FormattedMessage id="raportit.ladataan" defaultMessage="Ladataan" />
+        ...
+      </td>
+    )
   } else if (count > 1) {
     return (
       <td colSpan="10000">
-        Näytetään {length} kpl ~{count * 10} hakutuloksesta
+        <FormattedMessage id="raportit.naytetaan" defaultMessage="Näytetään" />{" "}
+        {length} / ~{count * 10}
       </td>
     )
   } else if (count === 1) {
-    return <td colSpan="10000">Löytyi {length} kpl</td>
-  } else if (count === 0) {
-    return <td colSpan="10000">Ei tuloksia</td>
+    return (
+      <td colSpan="10000">
+        <FormattedMessage id="raportit.loytyi" defaultMessage="Löytyi" />{" "}
+        {length} <FormattedMessage id="raportit.kpl" defaultMessage="kpl" />
+      </td>
+    )
   } else {
     return (
       <td colSpan="10000">
-        Näytetään {length} kpl ~{count * 10} hakutuloksesta
+        <FormattedMessage
+          id="raportit.eiTuloksia"
+          defaultMessage="Ei hakutuloksia"
+        />
       </td>
     )
   }
@@ -129,7 +142,7 @@ export function RaportitTable(props: RaportitTableProps) {
             {">>"}
           </button>{" "}
           <span>
-            Sivu{" "}
+            <FormattedMessage id="raportit.sivu" defaultMessage="Sivu" />{" "}
             <strong>
               {pageIndex + 1} / {pageOptions.length}
             </strong>{" "}
