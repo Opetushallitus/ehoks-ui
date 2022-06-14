@@ -81,74 +81,53 @@ export function RaportitTable(props: RaportitTableProps) {
   /* eslint-disable react/jsx-key */
   /* the jsx key is provided in the .get*Props() spreads. */
   return (
-    <>
-      <pre>
-        <code>
-          {JSON.stringify(
-            {
-              pageIndex,
-              pageCount,
-              canNextPage,
-              canPreviousPage
-            },
-            null,
-            2
-          )}
-        </code>
-      </pre>
-      <TableScrollbar rows={30}>
-        <table {...getTableProps()}>
-          <thead>
-            {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <th {...column.getHeaderProps()}>
-                    {column.render("Header")}
-                  </th>
+    <TableScrollbar rows={30}>
+      <table {...getTableProps()}>
+        <thead>
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {page.map(row => {
+            prepareRow(row)
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map(cell => (
+                  <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                 ))}
               </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map(row => {
-              prepareRow(row)
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map(cell => (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                  ))}
-                </tr>
-              )
-            })}
-            <tr>
-              {printResultInfo(page.length, props.pageCount, props.loading)}
-            </tr>
-          </tbody>
-        </table>
-        <div className="pagination">
-          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-            {"<<"}
-          </button>{" "}
-          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            {"<"}
-          </button>{" "}
-          <button onClick={() => nextPage()} disabled={!canNextPage}>
-            {">"}
-          </button>{" "}
-          <button
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            {">>"}
-          </button>{" "}
-          <span>
-            <FormattedMessage id="raportit.sivu" defaultMessage="Sivu" />{" "}
-            <strong>
-              {pageIndex + 1} / {pageOptions.length}
-            </strong>{" "}
-          </span>
-        </div>
-      </TableScrollbar>
-    </>
+            )
+          })}
+          <tr>
+            {printResultInfo(page.length, props.pageCount, props.loading)}
+          </tr>
+        </tbody>
+      </table>
+      <div className="pagination">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {"<<"}
+        </button>{" "}
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {"<"}
+        </button>{" "}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {">"}
+        </button>{" "}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {">>"}
+        </button>{" "}
+        <span>
+          <FormattedMessage id="raportit.sivu" defaultMessage="Sivu" />{" "}
+          <strong>
+            {pageIndex + 1} / {pageOptions.length}
+          </strong>{" "}
+        </span>
+      </div>
+    </TableScrollbar>
   )
 }
