@@ -74,11 +74,6 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
   disposeReaction: IReactionDisposer
   componentDidMount() {
     const { koulutuksenJarjestaja } = this.props.store!
-    /*
-    const fromRaportit = this.props.location
-      ? this.props.location.state.fromRaportit
-      : false
-    */
     const fromRaportit = get(
       this.props,
       "this.props.location.state.fromRaportit"
