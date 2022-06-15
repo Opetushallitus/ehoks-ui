@@ -11,6 +11,7 @@ import { ProgressPies } from "components/ProgressPies"
 import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
 import find from "lodash.find"
+import get from "lodash.get"
 import { IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import { IHOKS } from "models/HOKS"
@@ -73,9 +74,10 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
   disposeReaction: IReactionDisposer
   componentDidMount() {
     const { koulutuksenJarjestaja } = this.props.store!
-    const fromRaportit = this.props.location
-      ? this.props.location.state.fromRaportit
-      : false
+    const fromRaportit = get(
+      this.props,
+      "this.props.location.state.fromRaportit"
+    )
     if (fromRaportit) {
       koulutuksenJarjestaja.search.setFromListView(false)
     }
@@ -83,12 +85,11 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
       () => this.props.suunnitelmat.length > 0,
       async (hasSuunnitelmat: boolean) => {
         if (hasSuunnitelmat || fromRaportit) {
-          const oppijaoid = this.props.location
-            ? this.props.location.state.oppijaoid
-            : null
-          const hokseid = this.props.location
-            ? this.props.location.state.hokseid
-            : null
+          const oppijaoid = get(
+            this.props,
+            "this.props.location.state.oppijaoid"
+          )
+          const hokseid = get(this.props, "this.props.location.state.hokseid")
           let fromRaportitSuunnitelmat: IHOKS[] = []
           if (fromRaportit && oppijaoid) {
             const oppija = koulutuksenJarjestaja.search.oppija(oppijaoid)
