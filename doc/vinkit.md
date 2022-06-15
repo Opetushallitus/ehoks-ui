@@ -10,7 +10,7 @@ Tässä projekstissa on käytössä tosi intohimoinen linter ja koodin formattaa
 joka itse formattaa koodiasi `git commit`:in yhteydessä. Tämä tarkoittaa, että
 koodi, joka pääsee GitHubiin, ei ole aina täsmälleen sitä, jonka kirjoitit.
 Ennen code reviewia kannattaa aina varmistaa, että formattaaja ei ole luonut
-bugia --- tämä on harvinainen, mutta se on tapahtunut. Koska linter ei salli
+bugia --- tämä on harvinaista, mutta näin on tapahtunut. Koska linter ei salli
 puolipistettä rivin lopussa, on mahdollista kirjoittaa koodinpätkän, jonka
 toimintaa formattaaja muuttaa.
 
@@ -48,6 +48,6 @@ Kun päivität käännöksen, täytyy päivittää myös kyseinen tiedosto.
 
 Käännökset määritellään myös suoraan palvelussa (Käännösten ylläpito
 -välilehden alla). Nämä stringit voi lisätä tai muuttaa ilman koodinmuutosta
-(eli OPH:laisetkin voivat muokata ne). Jos on käännöstyökalussa määritelty
-string tietylle käännösavaimelle, se käytetään UI:ssa; muuten koodissa
-määriteltyä käännöstä tai oletusarvoa käytetään.
+(eli OPH:laisetkin voivat muokata ne). Jos käännöstyökalussa on määritelty
+string tietylle käännösavaimelle, sitä käytetään UI:ssa; muuten käytetään
+koodissa määriteltyä käännöstä tai oletusarvoa.
