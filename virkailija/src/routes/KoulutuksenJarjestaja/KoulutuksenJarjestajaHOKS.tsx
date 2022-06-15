@@ -11,6 +11,7 @@ import { ProgressPies } from "components/ProgressPies"
 import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
 import find from "lodash.find"
+import get from "lodash.get"
 import { IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import { IHOKS } from "models/HOKS"
@@ -73,9 +74,15 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
   disposeReaction: IReactionDisposer
   componentDidMount() {
     const { koulutuksenJarjestaja } = this.props.store!
+    /*
     const fromRaportit = this.props.location
       ? this.props.location.state.fromRaportit
       : false
+    */
+    const fromRaportit = get(
+      this.props,
+      "this.props.location.state.fromRaportit"
+    )
     if (fromRaportit) {
       koulutuksenJarjestaja.search.setFromListView(false)
     }
