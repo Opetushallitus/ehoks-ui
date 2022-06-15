@@ -1,6 +1,6 @@
 # Vinkit kehittäjille
 
-Tämän tiedoston tarkoitus on kerätä lyhyt lista asioista, jotka olisi hyvä
+Tämän tiedoston tarkoitus on kerätä lyhyt lista asioista, jotka olisivat hyviä
 tietää uutena kehittäjänä tässä projektissa.
 
 
@@ -8,10 +8,10 @@ tietää uutena kehittäjänä tässä projektissa.
 
 Tässä projekstissa on käytössä tosi intohimoinen linter ja koodin formattaaja,
 joka itse formattaa koodiasi `git commit`:in yhteydessä. Tämä tarkoittaa, että
-koodi, joka pääsee GitHubiin, ei ole aina täsmälleen se, jonka kirjoitit. Ennen
-koodin reviewia kannattaa aina varmistaa, että tämä formattointiohjelma ei ole
-luonut bugia --- tämä on harvinainen, mutta se on tapahtunut. Koska linter ei
-salli puolipistettä rivin lopussa, on mahdollista kirjoittaa koodinpätkän, jonka
+koodi, joka pääsee GitHubiin, ei ole aina täsmälleen sitä, jonka kirjoitit.
+Ennen code reviewia kannattaa aina varmistaa, että formattaaja ei ole luonut
+bugia --- tämä on harvinainen, mutta se on tapahtunut. Koska linter ei salli
+puolipistettä rivin lopussa, on mahdollista kirjoittaa koodinpätkän, jonka
 toimintaa formattaaja muuttaa.
 
 Välttääksesi tätä kannattaa olla käyttämättä puolipistettä rivin lopussa, ja
