@@ -90,12 +90,11 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
       () => this.props.suunnitelmat.length > 0,
       async (hasSuunnitelmat: boolean) => {
         if (hasSuunnitelmat || fromRaportit) {
-          const oppijaoid = this.props.location
-            ? this.props.location.state.oppijaoid
-            : null
-          const hokseid = this.props.location
-            ? this.props.location.state.hokseid
-            : null
+          const oppijaoid = get(
+            this.props,
+            "this.props.location.state.oppijaoid"
+          )
+          const hokseid = get(this.props, "this.props.location.state.hokseid")
           let fromRaportitSuunnitelmat: IHOKS[] = []
           if (fromRaportit && oppijaoid) {
             const oppija = koulutuksenJarjestaja.search.oppija(oppijaoid)
