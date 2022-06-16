@@ -4,6 +4,7 @@ import { ContentArea } from "components/ContentArea"
 import { RaportitTable } from "components/RaportitTable"
 import { HelpPopup } from "components/HelpPopup"
 import { Heading } from "components/Heading"
+import { TyopaikkajaksoRaporttiRivi } from "models/TyopaikkajaksoRaporttiRivi"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
@@ -515,22 +516,58 @@ export class Raportit extends React.Component<RaportitProps> {
           }),
           Cell: ({ cell: { value, row } }: CustomColumn) => {
             const tpjRow = row.original as TpjRow
+            /*
+ *export interface TpjRow {
+  hoksId: number
+  hoksEid: string
+  opiskeluoikeusOid: string
+  oppijaOid: string
+  hankkimistapaTyyppi: string
+  alkupvm: string
+  loppupvm: string
+  osaAikaisuus: number
+  oppisopimuksenPerusta: string
+  tyopaikanNimi: string
+  ytunnus: string
+  ohjaajaNimi: string
+  ohjaajaEmail: string
+  ohjaajaPuhelinnumero: string
+  customColumn: number
+}
+ * */
+            const trr = TyopaikkajaksoRaporttiRivi.create({
+              hoksId: tpjRow?.hoksId,
+              hoksEid: tpjRow?.hoksEid,
+              opiskeluoikeusOid: tpjRow?.opiskeluoikeusOid,
+              oppijaOid: tpjRow?.oppijaOid,
+              osaamisenHankkimistapaKoodiUri: tpjRow?.hankkimistapaTyyppi,
+              alkupvm: tpjRow?.alkupvm,
+              loppupvm: tpjRow?.loppupvm,
+              osaAikaisuus: tpjRow?.osaAikaisuus,
+              oppisopimuksenPerustaKoodiUri: tpjRow?.oppisopimuksenPerusta,
+              tyopaikanNimi: tpjRow?.tyopaikanNimi,
+              ytunnus: tpjRow?.ytunnus,
+              ohjaajaNimi: tpjRow?.ohjaajaNimi,
+              ohjaajaEmail: tpjRow?.ohjaajaEmail,
+              ohjaajaPuhelinnumero: tpjRow?.ohjaajaPuhelinnumero,
+              customColumn: tpjRow?.customColumn
+            })
             return (
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <InfoModal
-                  nayttoymparistoDetails={tpjRow?.tyopaikanNimi}
-                  startDate={tpjRow?.alkupvm}
-                  endDate={tpjRow?.loppupvm}
-                  partTimeAmount={tpjRow?.osaAikaisuus}
-                  oppisopimuksenPerusta={tpjRow?.oppisopimuksenPerusta}
+                  nayttoymparistoDetails={trr.tyopaikanNimi}
+                  startDate={trr.alkupvm}
+                  endDate={trr.loppupvm}
+                  partTimeAmount={trr.osaAikaisuus}
+                  perusta={trr.oppisopimuksenPerusta}
                   hoksId={value}
-                  opiskeluoikeusOid={tpjRow?.opiskeluoikeusOid}
-                  hankkimistapaTyyppi={tpjRow?.hankkimistapaTyyppi}
-                  ytunnus={tpjRow?.ytunnus}
-                  oppijaOid={tpjRow?.oppijaOid}
-                  ohjaajaNimi={tpjRow?.ohjaajaNimi}
-                  ohjaajaEmail={tpjRow?.ohjaajaEmail}
-                  ohjaajaPuhelinnumero={tpjRow?.ohjaajaPuhelinnumero}
+                  opiskeluoikeusOid={trr.opiskeluoikeusOid}
+                  osaamisenHankkimistapaKoodisto={trr.osaamisenHankkimistapa}
+                  ytunnus={trr.ytunnus}
+                  oppijaOid={trr.oppijaOid}
+                  ohjaajaNimi={trr.ohjaajaNimi}
+                  ohjaajaEmail={trr.ohjaajaEmail}
+                  ohjaajaPuhelinnumero={trr.ohjaajaPuhelinnumero}
                 />
               </div>
             )
