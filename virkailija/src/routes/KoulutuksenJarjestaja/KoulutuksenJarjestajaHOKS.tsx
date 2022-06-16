@@ -85,6 +85,11 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
       () => this.props.suunnitelmat.length > 0,
       async (hasSuunnitelmat: boolean) => {
         if (hasSuunnitelmat || fromRaportit) {
+          console.log(window.location.href)
+          const urlSplit = window.location.href.split("/")
+          console.log(urlSplit)
+          console.log(urlSplit[urlSplit.length - 1])
+          console.log(urlSplit[urlSplit.length - 2])
           const oppijaoid = get(
             this.props,
             "this.props.location.state.oppijaoid"
