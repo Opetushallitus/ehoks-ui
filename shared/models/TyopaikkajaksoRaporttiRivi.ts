@@ -31,7 +31,6 @@ export const TyopaikkajaksoRaporttiRivi = types
   .compose(
     "TyopaikkajaksoRaporttiRivi",
     EnrichTutkinnonOsaKoodiUri,
-    Model,
     EnrichKoodistoKoodiUri({
       enrichedProperty: "osaamisenHankkimistapa",
       koodiUriProperty: "osaamisenHankkimistapaKoodiUri"
@@ -39,7 +38,8 @@ export const TyopaikkajaksoRaporttiRivi = types
     EnrichKoodistoKoodiUri({
       enrichedProperty: "oppisopimuksenPerusta",
       koodiUriProperty: "oppisopimuksenPerustaKoodiUri"
-    })
+    }),
+    Model
   )
   .views(self => {
     const root: LocaleRoot = getRoot(self)
