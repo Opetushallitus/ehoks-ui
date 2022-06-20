@@ -1,15 +1,25 @@
-import { flow, getEnv, getRoot, isAlive, types } from "mobx-state-tree"
+import {
+  Instance,
+  flow,
+  getEnv,
+  getRoot,
+  isAlive,
+  types
+} from "mobx-state-tree"
 import { TyopaikkajaksoRaporttiRivi } from "models/TyopaikkajaksoRaporttiRivi"
 import { IRootStore } from "stores/RootStore"
 import { APIResponse } from "types/APIResponse"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
 const RaportitStoreModel = {
-  alku: types.string,
-  loppu: types.string,
+  alku: types.optional(types.string, ""),
+  loppu: types.optional(types.string, ""),
+  descText: "",
   initSearchDone: false,
   loading: false,
   pageCount: 0,
+  selected: 0,
+  titleText: "Klikkaa valikosta haluamasi raportti",
   tyopaikkajaksoRivit: types.array(TyopaikkajaksoRaporttiRivi)
 }
 
@@ -25,7 +35,7 @@ export const RaportitStore = types
       pageIndex: number
     ): any {
       const tutkinto = JSON.stringify({})
-      const { notifications } = rootStore!
+      // const { notifications } = rootStore! // TODO
       const oppilaitosOid = rootStore?.session.selectedOrganisationOid
       if (self.alku.length && self.loppu.length && oppilaitosOid) {
         self.loading = true

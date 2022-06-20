@@ -4,7 +4,7 @@ import { ContentArea } from "components/ContentArea"
 import { RaportitTable } from "components/RaportitTable"
 import { HelpPopup } from "components/HelpPopup"
 import { Heading } from "components/Heading"
-import { TyopaikkajaksoRaporttiRivi } from "models/TyopaikkajaksoRaporttiRivi"
+import { ITyopaikkajaksoRaporttiRivi } from "models/TyopaikkajaksoRaporttiRivi"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
@@ -178,14 +178,6 @@ export interface TpjRow {
   customColumn: number
 }
 
-interface TpjFetchResult {
-  data: {
-    count: number
-    pagecount: number
-    result: TpjRow[]
-  }
-}
-
 interface RaportitState {
   hoksitCount?: number
   data?: (HoksRow | TpjRow)[]
@@ -305,11 +297,11 @@ export class Raportit extends React.Component<RaportitProps> {
 
   getTpjRowByHoksId = (hoksId: number) =>
     this.props.store!.raportit.tyopaikkajaksoRivit?.find(
-      (x: TpjRow) => x.hoksId === hoksId
-    ) as TpjRow
+      (x: ITyopaikkajaksoRaporttiRivi) => x.hoksId === hoksId
+    ) as ITyopaikkajaksoRaporttiRivi
 
   createLinkPath = (hoksId: number) => {
-    let row = {} as HoksRow | TpjRow
+    let row = {} as HoksRow | ITyopaikkajaksoRaporttiRivi
     let oppijaOid = ""
     let hoksEid = ""
     switch (this.state.selected) {
@@ -463,7 +455,7 @@ export class Raportit extends React.Component<RaportitProps> {
             )
           }),
           Cell: ({ cell: { value, row } }: CustomColumn) => {
-            const tpjRow = row.original as TpjRow
+            const tpjRow = row.original as ITyopaikkajaksoRaporttiRivi
             /*
  *export interface TpjRow {
   hoksId: number
@@ -483,7 +475,7 @@ export class Raportit extends React.Component<RaportitProps> {
   customColumn: number
 }
  * */
-            const trr = TyopaikkajaksoRaporttiRivi.create({
+            /*            const trr = TyopaikkajaksoRaporttiRivi.create({
               hoksId: tpjRow?.hoksId,
               hoksEid: tpjRow?.hoksEid,
               opiskeluoikeusOid: tpjRow?.opiskeluoikeusOid,
@@ -501,23 +493,25 @@ export class Raportit extends React.Component<RaportitProps> {
               ohjaajaEmail: tpjRow?.ohjaajaEmail,
               ohjaajaPuhelinnumero: tpjRow?.ohjaajaPuhelinnumero,
               customColumn: tpjRow?.customColumn
-            })
+            })*/
             return (
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <InfoModal
-                  nayttoymparistoDetails={trr.tyopaikanNimi}
-                  startDate={trr.alkupvm}
-                  endDate={trr.loppupvm}
-                  partTimeAmount={trr.osaAikaisuus}
-                  perusta={trr.oppisopimuksenPerusta}
+                  nayttoymparistoDetails={tpjRow?.tyopaikanNimi}
+                  startDate={tpjRow?.alkupvm}
+                  endDate={tpjRow?.loppupvm}
+                  partTimeAmount={tpjRow?.osaAikaisuus}
+                  perusta={tpjRow?.oppisopimuksenPerusta}
                   hoksId={value}
-                  opiskeluoikeusOid={trr.opiskeluoikeusOid}
-                  osaamisenHankkimistapaKoodisto={trr.osaamisenHankkimistapa}
-                  ytunnus={trr.ytunnus}
-                  oppijaOid={trr.oppijaOid}
-                  ohjaajaNimi={trr.ohjaajaNimi}
-                  ohjaajaEmail={trr.ohjaajaEmail}
-                  ohjaajaPuhelinnumero={trr.ohjaajaPuhelinnumero}
+                  opiskeluoikeusOid={tpjRow?.opiskeluoikeusOid}
+                  osaamisenHankkimistapaKoodisto={
+                    tpjRow?.osaamisenHankkimistapa
+                  }
+                  ytunnus={tpjRow?.ytunnus}
+                  oppijaOid={tpjRow?.oppijaOid}
+                  ohjaajaNimi={tpjRow?.ohjaajaNimi}
+                  ohjaajaEmail={tpjRow?.ohjaajaEmail}
+                  ohjaajaPuhelinnumero={tpjRow?.ohjaajaPuhelinnumero}
                 />
               </div>
             )
@@ -651,7 +645,7 @@ export class Raportit extends React.Component<RaportitProps> {
                   >
                     <Styles>
                       <RaportitTable
-                        data={data}
+                        data={this.state.data}
                         columns={columns}
                         loading={this.state.loading}
                         pageCount={this.state.pageCount}
