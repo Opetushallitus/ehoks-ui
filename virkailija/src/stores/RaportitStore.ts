@@ -40,8 +40,7 @@ export const RaportitStore = types
       if (self.alku.length && self.loppu.length && oppilaitosOid) {
         self.loading = true
         const uri =
-          "/ehoks-virkailija-backend/api/v1/virkailija/" +
-          "tep-jakso-raportti?tutkinto=" +
+          "virkailija/tep-jakso-raportti?tutkinto=" +
           tutkinto +
           "&oppilaitos=" +
           oppilaitosOid +
