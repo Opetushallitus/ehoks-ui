@@ -26,9 +26,9 @@ const RaportitStoreModel = {
 export const RaportitStore = types
   .model("RaportitStore", RaportitStoreModel)
   .actions(self => {
-    const { apiUrl, appendCallerId, fetchCollection } = getEnv<
-      StoreEnvironment
-    >(self)
+    const { apiUrl, appendCallerId, fetchSingle } = getEnv<StoreEnvironment>(
+      self
+    )
     const rootStore: IRootStore = getRoot<IRootStore>(self)
     const fetchTyopaikkajaksoRivit = flow(function*(
       pageSize: number,
@@ -52,7 +52,7 @@ export const RaportitStore = types
           pageSize +
           "&pageindex=" +
           pageIndex
-        const response: APIResponse = yield fetchCollection(apiUrl(uri), {
+        const response: APIResponse = yield fetchSingle(apiUrl(uri), {
           headers: appendCallerId()
         })
 
