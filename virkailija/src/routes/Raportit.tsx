@@ -640,7 +640,7 @@ export class Raportit extends React.Component<RaportitProps> {
                   <ItemDescription>{descText}</ItemDescription>
                   <div
                     style={{
-                      display: selected === 1 ? "block" : "none"
+                      display: this.state.selected === 1 ? "block" : "none"
                     }}
                   >
                     <Styles>
@@ -655,7 +655,7 @@ export class Raportit extends React.Component<RaportitProps> {
                   </div>
                   <div
                     style={{
-                      display: selected === 2 ? "block" : "none"
+                      display: this.state.selected === 2 ? "block" : "none"
                     }}
                   >
                     <FilterBox>
