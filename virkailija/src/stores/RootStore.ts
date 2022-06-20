@@ -4,6 +4,7 @@ import { SessionStore } from "./SessionStore"
 import { TranslationStore } from "stores/TranslationStore"
 import { KoulutuksenJarjestajaStore } from "./KoulutuksenJarjestajaStore"
 import { NotificationStore } from "./NotificationStore"
+import { RaportitStore } from "./RaportitStore"
 
 export interface InjectedStores {
   store: IRootStore
@@ -14,7 +15,8 @@ const RootStoreModel = {
   koulutuksenJarjestaja: types.optional(KoulutuksenJarjestajaStore, {}),
   session: types.optional(SessionStore, {}),
   translations: types.optional(TranslationStore, {}),
-  notifications: types.optional(NotificationStore, {})
+  notifications: types.optional(NotificationStore, {}),
+  raportit: types.optional(RaportitStore, {})
 }
 
 export const RootStore = types

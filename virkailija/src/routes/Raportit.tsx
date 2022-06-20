@@ -272,60 +272,6 @@ export class Raportit extends React.Component<RaportitProps> {
     }
   }
 
-  loadTyopaikkaJaksot = async (pageSize: number, pageIndex: number) => {
-    const tutkinto = JSON.stringify({})
-    const { store } = this.props
-    const { notifications } = store!
-    const oppilaitosOid: string | undefined =
-      store?.session.selectedOrganisationOid
-    if (this.state.alku.length && this.state.loppu.length && oppilaitosOid) {
-      this.setState({
-        loading: true
-      })
-      const request = await window.fetch(
-        "/ehoks-virkailija-backend/api/v1/virkailija/tep-jakso-raportti?" +
-          "tutkinto=" +
-          tutkinto +
-          "&oppilaitos=" +
-          oppilaitosOid +
-          "&start=" +
-          this.state.alku +
-          "&end=" +
-          this.state.loppu +
-          "&pagesize=" +
-          pageSize +
-          "&pageindex=" +
-          pageIndex,
-        {
-          method: "GET",
-          credentials: "include",
-          headers: appendCommonHeaders(
-            new Headers({
-              Accept: "application/json; charset=utf-8",
-              "Content-Type": "application/json"
-            })
-          )
-        }
-      )
-
-      if (request.status === 200) {
-        const json: TpjFetchResult = await request.json()
-        this.setState({
-          data: json.data.result,
-          loading: false,
-          pageCount: json.data.pagecount
-        })
-      }
-
-      if (request.status === 403) {
-        notifications.addError("Raportit.EiOikeuksia", oppilaitosOid)
-      }
-      this.setState({
-        initSearchDone: true
-      })
-    }
-  }
-
   async componentDidMount() {
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
@@ -358,7 +304,9 @@ export class Raportit extends React.Component<RaportitProps> {
     this.state.data?.find((x: HoksRow) => x.hoksId === hoksId) as HoksRow
 
   getTpjRowByHoksId = (hoksId: number) =>
-    this.state.data?.find((x: TpjRow) => x.hoksId === hoksId) as TpjRow
+    this.props.store!.raportit.tyopaikkajaksoRivit?.find(
+      (x: TpjRow) => x.hoksId === hoksId
+    ) as TpjRow
 
   createLinkPath = (hoksId: number) => {
     let row = {} as HoksRow | TpjRow
@@ -582,14 +530,28 @@ export class Raportit extends React.Component<RaportitProps> {
   }
 
   tpjHaeOnClick = () => {
-    this.loadTyopaikkaJaksot(10, 0)
+    this.props.store!.raportit.fetchTyopaikkajaksoRivit(10, 0)
   }
 
   checkActive = (num: number) =>
     this.state.selected === num ? "bolder" : "initial"
 
   render() {
-    const { data, selected, titleText, descText, alku, loppu } = this.state
+    const {
+      // TODO other raportit rows
+      alku,
+      descText,
+      fetchTyopaikkajaksoRivit,
+      initSearchDone,
+      loading,
+      loppu,
+      pageCount,
+      selected,
+      setAlku,
+      setLoppu,
+      titleText,
+      tyopaikkajaksoRivit
+    } = this.props.store!.raportit
     const { intl } = this.context
     const columns = this.getColumnsForTable(selected)
 
@@ -706,31 +668,29 @@ export class Raportit extends React.Component<RaportitProps> {
                       <DateInput
                         type="date"
                         value={alku}
-                        onChange={e => this.setPvmDate("alku", e.target.value)}
+                        onChange={e => setAlku(e.target.value)}
                       />{" "}
                       -{" "}
                       <DateInput
                         type="date"
                         value={loppu}
-                        onChange={e => this.setPvmDate("loppu", e.target.value)}
+                        onChange={e => setLoppu(e.target.value)}
                       />
                       <SearchButton
                         onClick={this.tpjHaeOnClick}
-                        disabled={
-                          !(this.state.alku.length && this.state.loppu.length)
-                        }
+                        disabled={alku.length <= 0 || loppu.length <= 0}
                       >
                         Hae
                       </SearchButton>
                     </FilterBox>
-                    {this.state.initSearchDone && (
+                    {initSearchDone && (
                       <Styles>
                         <RaportitTable
-                          data={data}
+                          data={tyopaikkajaksoRivit}
                           columns={columns}
-                          loading={this.state.loading}
-                          pageCount={this.state.pageCount}
-                          fetchData={this.loadTyopaikkaJaksot}
+                          loading={loading}
+                          pageCount={pageCount}
+                          fetchData={fetchTyopaikkajaksoRivit}
                         />
                       </Styles>
                     )}

@@ -5,7 +5,7 @@ import { EnrichTutkinnonOsaKoodiUri } from "./Enrichment/EnrichTutkinnonOsaKoodi
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 
-export const Model = types.model({
+export const Model = types.model("TyopaikkajaksoRaporttiRiviModel", {
   hoksId: types.number,
   hoksEid: types.string,
   opiskeluoikeusOid: types.string,
