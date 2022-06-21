@@ -6,6 +6,7 @@ import { HelpPopup } from "components/HelpPopup"
 import { Heading } from "components/Heading"
 import { ITyopaikkajaksoRaporttiRivi } from "models/TyopaikkajaksoRaporttiRivi"
 import { inject, observer } from "mobx-react"
+import { getSnapshot } from "mobx-state-tree"
 import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
@@ -506,6 +507,8 @@ export class Raportit extends React.Component<RaportitProps> {
     const { intl } = this.context
     const columns = this.getColumnsForTable(this.state.selected)
 
+    // TODO getSnapshot? from mobx-state-tree?
+    const snapshot = getSnapshot(tyopaikkajaksoRivit)
     console.log(tyopaikkajaksoRivit)
 
     return (
@@ -639,7 +642,7 @@ export class Raportit extends React.Component<RaportitProps> {
                     {initSearchDone && (
                       <Styles>
                         <RaportitTable
-                          data={tyopaikkajaksoRivit}
+                          data={snapshot}
                           columns={columns}
                           loading={loading}
                           pageCount={pageCount}
