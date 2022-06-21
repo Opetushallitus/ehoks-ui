@@ -456,44 +456,6 @@ export class Raportit extends React.Component<RaportitProps> {
           }),
           Cell: ({ cell: { value, row } }: CustomColumn) => {
             const tpjRow = row.original as ITyopaikkajaksoRaporttiRivi
-            /*
- *export interface TpjRow {
-  hoksId: number
-  hoksEid: string
-  opiskeluoikeusOid: string
-  oppijaOid: string
-  hankkimistapaTyyppi: string
-  alkupvm: string
-  loppupvm: string
-  osaAikaisuus: number
-  oppisopimuksenPerusta: string
-  tyopaikanNimi: string
-  ytunnus: string
-  ohjaajaNimi: string
-  ohjaajaEmail: string
-  ohjaajaPuhelinnumero: string
-  customColumn: number
-}
- * */
-            /*            const trr = TyopaikkajaksoRaporttiRivi.create({
-              hoksId: tpjRow?.hoksId,
-              hoksEid: tpjRow?.hoksEid,
-              opiskeluoikeusOid: tpjRow?.opiskeluoikeusOid,
-              oppijaOid: tpjRow?.oppijaOid,
-              osaamisenHankkimistapaKoodiUri: tpjRow?.hankkimistapaTyyppi,
-              osaamisenHankkimistapa: {},
-              alkupvm: tpjRow?.alkupvm,
-              loppupvm: tpjRow?.loppupvm,
-              osaAikaisuus: tpjRow?.osaAikaisuus,
-              oppisopimuksenPerustaKoodiUri: tpjRow?.oppisopimuksenPerusta,
-              oppisopimuksenPerusta: {},
-              tyopaikanNimi: tpjRow?.tyopaikanNimi,
-              ytunnus: tpjRow?.ytunnus,
-              ohjaajaNimi: tpjRow?.ohjaajaNimi,
-              ohjaajaEmail: tpjRow?.ohjaajaEmail,
-              ohjaajaPuhelinnumero: tpjRow?.ohjaajaPuhelinnumero,
-              customColumn: tpjRow?.customColumn
-            })*/
             return (
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <InfoModal
@@ -532,7 +494,6 @@ export class Raportit extends React.Component<RaportitProps> {
 
   render() {
     const {
-      // TODO other raportit rows
       alku,
       descText,
       fetchTyopaikkajaksoRivit,

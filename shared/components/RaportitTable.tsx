@@ -6,6 +6,7 @@ import { Column, useTable, usePagination } from "react-table"
 // @ts-ignore Ignore type-checking for this library
 import TableScrollbar from "react-table-scrollbar"
 import { FormattedMessage } from "react-intl"
+import { observer } from "mobx-react"
 
 interface RaportitTableProps {
   data: any
@@ -49,7 +50,7 @@ const printResultInfo = (length: number, count: number, loading: boolean) => {
   }
 }
 
-export function RaportitTable(props: RaportitTableProps) {
+export const RaportitTable = observer((props: RaportitTableProps) => {
   const fetchData = props.fetchData
   const data = useMemo(() => props.data, [props.data])!
 
@@ -130,4 +131,4 @@ export function RaportitTable(props: RaportitTableProps) {
       </div>
     </TableScrollbar>
   )
-}
+})
