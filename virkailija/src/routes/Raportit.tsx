@@ -497,6 +497,8 @@ export class Raportit extends React.Component<RaportitProps> {
     const { intl } = this.context
     const columns = this.getColumnsForTable(this.state.selected)
 
+    console.log(tyopaikkajaksoRivit)
+
     return (
       <BackgroundContainer>
         <Container>
