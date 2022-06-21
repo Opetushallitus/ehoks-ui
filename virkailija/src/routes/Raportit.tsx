@@ -451,13 +451,11 @@ export class Raportit extends React.Component<RaportitProps> {
                   endDate={tpjRow?.loppupvm}
                   partTimeAmount={tpjRow?.osaAikaisuus}
                   perusta={tpjRow?.oppisopimuksenPerusta}
-                  oppisopimuksenPerusta={tpjRow?.oppisopimuksenPerusta.nimi}
                   hoksId={value}
                   opiskeluoikeusOid={tpjRow?.opiskeluoikeusOid}
                   osaamisenHankkimistapaKoodisto={
                     tpjRow?.osaamisenHankkimistapa
                   }
-                  hankkimistapaTyyppi={tpjRow?.osaamisenHankkimistapa.nimi}
                   ytunnus={tpjRow?.ytunnus}
                   oppijaOid={tpjRow?.oppijaOid}
                   ohjaajaNimi={tpjRow?.ohjaajaNimi}

@@ -58,6 +58,7 @@ export const RaportitStore = types
 
         // TODO error states
         if (isAlive(self)) {
+          console.log(response.data)
           self.tyopaikkajaksoRivit = response.data.result
           self.loading = false
           self.pageCount = response.data.pagecount
