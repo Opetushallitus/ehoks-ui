@@ -67,8 +67,8 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
       () => this.props.suunnitelmat.length > 0,
       async (hasSuunnitelmat: boolean) => {
         const urlSplit = window.location.href.split("/")
-        const hoksEid = urlSplit[urlSplit.length - 1]
-        const oppijaOid = urlSplit[urlSplit.length - 2]
+        const hoksEid = urlSplit[6]
+        const oppijaOid = urlSplit[5]
 
         let fromLinkSuunnitelmat: IHOKS[] = []
         if (!hasSuunnitelmat && oppijaOid) {
@@ -106,7 +106,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
   render() {
     const { location, suunnitelmat, oppija } = this.props
     const urlSplit = window.location.href.split("/")
-    const hoksEid = urlSplit[urlSplit.length - 1]
+    const hoksEid = urlSplit[6]
     const suunnitelma = find(suunnitelmat, h => h.eid === hoksEid)
     if (!oppija || !suunnitelma) {
       return null
