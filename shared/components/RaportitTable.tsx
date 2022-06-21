@@ -52,7 +52,7 @@ const printResultInfo = (length: number, count: number, loading: boolean) => {
 
 export const RaportitTable = observer((props: RaportitTableProps) => {
   const fetchData = props.fetchData
-  const data = props.data
+  const data = useMemo(() => props.data, [props.data])!
   const columns = useMemo(() => props.columns, [props.columns])
 
   const {
