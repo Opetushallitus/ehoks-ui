@@ -450,7 +450,7 @@ export class Raportit extends React.Component<RaportitProps> {
           Header: this.context.intl.formatMessage({
             id: "infoModal.naytaLisatiedot"
           }),
-          accessor: row => row,
+          accessor: "customColumn",
           Cell: ({ cell: { value, row } }: CustomColumn) => {
             const tpjRow = row.original as ITyopaikkajaksoRaporttiRivi
             return (
