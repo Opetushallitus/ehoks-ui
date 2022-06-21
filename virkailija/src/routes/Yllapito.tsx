@@ -1233,7 +1233,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     </Header>
                     <FormattedMessage
                       id="yllapito.hoksienMaaraKuvaus"
-                      defaultMessage="Näyttää aktiivisten HOKSien määrän."
+                      defaultMessage='Näyttää aktiivisten HOKSien määrän.  Klikkaa "Lataa järjestelmän tiedot" -painiketta ladataksesi tiedot.'
                     />
                     <ContentElement>
                       <FormattedMessage
@@ -1252,7 +1252,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     </Header>
                     <FormattedMessage
                       id="yllapito.valimuistiKuvaus"
-                      defaultMessage="Välimuistin koko ja tyhjennys."
+                      defaultMessage='Välimuistin koko ja tyhjennys. Klikkaa "Lataa järjestelmän tiedot" -painiketta ladataksesi tiedot.'
                     />
                     <ContentElement>
                       <FormattedMessage
@@ -1281,7 +1281,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <FormattedMessage
                       id="yllapito.muistiKuvaus"
                       defaultMessage={
-                        "Muistin määrä (yhteensä, vapaana, ja maksimi)."
+                        'Muistin määrä (yhteensä, vapaana, ja maksimi). Klikkaa "Lataa järjestelmän tiedot" -painiketta ladataksesi tiedot.'
                       }
                     />
                     <ContentElement>
@@ -1322,7 +1322,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <FormattedMessage
                       id="yllapito.oppijaIndeksiKuvaus"
                       defaultMessage={
-                        "Oppijoiden ja opiskeluoikeuksien indeksointi."
+                        'Oppijoiden ja opiskeluoikeuksien indeksointi. Klikkaa "Lataa järjestelmän tiedot" -painiketta ladataksesi tiedot.'
                       }
                     />
                     <ContentElement>
