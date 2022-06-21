@@ -400,7 +400,7 @@ export class Raportit extends React.Component<RaportitProps> {
               <Link
                 to={this.createLinkPath(value)}
                 state={{
-                  fromRaportit: true,
+                  fromLink: true,
                   oppijaoid: this.getHoksiByHoksId(value)?.oppijaOid,
                   hokseid: this.getHoksiByHoksId(value)?.hoksEid
                 }}
@@ -438,16 +438,7 @@ export class Raportit extends React.Component<RaportitProps> {
           accessor: "hoksId",
           Cell: ({ cell: { value } }: CustomColumn) => (
             <div style={{ textAlign: "center" }}>
-              <Link
-                to={this.createLinkPath(value)}
-                state={{
-                  fromRaportit: true,
-                  oppijaoid: this.getTpjRowByHoksId(value)?.oppijaOid,
-                  hokseid: this.getTpjRowByHoksId(value)?.hoksEid
-                }}
-              >
-                {value}
-              </Link>
+              <Link to={this.createLinkPath(value)}>{value}</Link>
             </div>
           )
         },
