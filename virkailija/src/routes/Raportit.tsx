@@ -540,14 +540,13 @@ export class Raportit extends React.Component<RaportitProps> {
       loading,
       loppu,
       pageCount,
-      selected,
       setAlku,
       setLoppu,
       titleText,
       tyopaikkajaksoRivit
     } = this.props.store!.raportit
     const { intl } = this.context
-    const columns = this.getColumnsForTable(selected)
+    const columns = this.getColumnsForTable(this.state.selected)
 
     return (
       <BackgroundContainer>
