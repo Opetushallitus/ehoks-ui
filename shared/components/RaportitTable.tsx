@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-onchange */
 // @ts-nocheck
 // Added nocheck because I cannot get react-table types to work correctly.
-import React, { useMemo, useEffect } from "react"
+import React, { useEffect } from "react"
 import { Column, useTable, usePagination } from "react-table"
 // @ts-ignore Ignore type-checking for this library
 import TableScrollbar from "react-table-scrollbar"
