@@ -1285,18 +1285,24 @@ export class Yllapito extends React.Component<YllapitoProps> {
                       id="yllapito.hoksienmaaraTitle"
                       defaultMessage="Hoksien lukumäärä"
                     />
+                    <MiniLink onClick={() => this.loadSystemInfo("hoksit")}>
+                      Lataa tiedot
+                    </MiniLink>
                   </Header>
                   <FormattedMessage
                     id="yllapito.hoksienMaaraKuvaus"
                     defaultMessage='Näyttää aktiivisten HOKSien määrän.  Klikkaa "Lataa järjestelmän tiedot" -painiketta ladataksesi tiedot.'
                   />
-                  <ContentElement>
-                    <FormattedMessage
-                      id="yllapito.hoksienmaaraArvo"
-                      defaultMessage="Lukumäärä: {hoksAmount}"
-                      values={{ hoksAmount: hoksit?.amount }}
-                    />
-                  </ContentElement>
+                  <br />
+                  {hoksit && (
+                    <ContentElement>
+                      <FormattedMessage
+                        id="yllapito.hoksienmaaraArvo"
+                        defaultMessage="Lukumäärä: {hoksAmount}"
+                        values={{ hoksAmount: hoksit?.amount }}
+                      />
+                    </ContentElement>
+                  )}
                 </ContentElement>
                 <ContentElement>
                   <Header>
