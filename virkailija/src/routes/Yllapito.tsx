@@ -51,6 +51,12 @@ const ButtonContainer = styled("div")`
   margin-bottom: 10px;
 `
 
+const MiniLink = styled("button")`
+  margin-left: 10px;
+  font-size: x-small;
+  cursor: pointer;
+`
+
 const Header = styled(Heading)`
   margin: 0;
   padding-right: 10px;
@@ -65,20 +71,23 @@ interface YllapitoProps extends RouteComponentProps {
   store?: IRootStore
 }
 
-interface SystemInfo {
-  cache: { size: number }
-  memory: {
-    max: number
-    total: number
-    free: number
-  }
-  oppijaindex: {
-    unindexedOppijat: number
-    unindexedOpiskeluoikeudet: number
-  }
-  hoksit: {
-    amount: number
-  }
+interface SystemInfoCache {
+  size: number
+}
+
+interface SystemInfoMemory {
+  max: number
+  total: number
+  free: number
+}
+
+interface SystemInfoOppijaindex {
+  unindexedOppijat: number
+  unindexedOpiskeluoikeudet: number
+}
+
+interface SystemInfoHoksit {
+  amount: number
 }
 
 type LoadingState = "initial" | "loading" | "success" | "unsuccessful"
@@ -96,7 +105,10 @@ interface YllapitoState {
   hoksDeleteId?: number
   hoksPalautusId?: number
   idToDelete?: number
-  systemInfo?: SystemInfo
+  cache?: SystemInfoCache
+  memory?: SystemInfoMemory
+  oppijaindex?: SystemInfoOppijaindex
+  hoksit?: SystemInfoHoksit
   koulutustoimijaOid?: string | ""
   sendHerateId?: number
   sendPaattoHerateId?: number
@@ -108,8 +120,17 @@ interface YllapitoState {
   currentActionId?: string
 }
 
-interface SystemInfoResponse {
-  data: SystemInfo
+interface SystemInfoCacheResponse {
+  data: SystemInfoCache
+}
+interface SystemInfoMemoryResponse {
+  data: SystemInfoMemory
+}
+interface SystemInfoOppijaindexResponse {
+  data: SystemInfoOppijaindex
+}
+interface SystemInfoHoksitResponse {
+  data: SystemInfoHoksit
 }
 
 @inject("store")
@@ -128,15 +149,19 @@ export class Yllapito extends React.Component<YllapitoProps> {
     updateOppijaOid: "",
     idToDelete: undefined,
     hoksPalautusId: undefined,
-    systemInfo: undefined,
+    cache: undefined,
+    memory: undefined,
+    oppijaindex: undefined,
+    hoksit: undefined,
     opiskeluoikeusUpdateOid: "",
     koulutustoimijaOid: ""
   }
 
-  async loadSystemInfo() {
+  async loadSystemInfo(type: string) {
     const { intl } = this.context
+    this.setState({ loadingState: "loading", isLoading: true, message: "" })
     const request = await window.fetch(
-      "/ehoks-virkailija-backend/api/v1/virkailija/system-info",
+      "/ehoks-virkailija-backend/api/v1/virkailija/system-info/" + type,
       {
         method: "GET",
         credentials: "include",
@@ -150,11 +175,20 @@ export class Yllapito extends React.Component<YllapitoProps> {
     )
 
     if (request.status === 200) {
-      const json: SystemInfoResponse = await request.json()
+      const json:
+        | SystemInfoCacheResponse
+        | SystemInfoMemoryResponse
+        | SystemInfoOppijaindexResponse
+        | SystemInfoHoksitResponse = await request.json()
       this.setState({
         success: true,
         loadingState: "success",
-        systemInfo: json.data
+        message: intl.formatMessage({
+          id: "yllapito.jarjestelmanTietojenLatausOnnistui",
+          defaultMessage: "Järjestelmän tietojen lataus onnistui"
+        }),
+        currentActionId: type,
+        [type]: json.data
       })
     } else {
       this.setState({
@@ -172,8 +206,6 @@ export class Yllapito extends React.Component<YllapitoProps> {
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
     })
-
-    await this.loadSystemInfo()
   }
 
   onClearCacheClicked = async () => {
@@ -203,7 +235,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
         }),
         currentActionId: "clearCache"
       })
-      await this.loadSystemInfo()
+      await this.loadSystemInfo("cache")
     } else {
       this.setState({
         success: false,
@@ -398,7 +430,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
         }),
         currentActionId: "runIndex"
       })
-      await this.loadSystemInfo()
+      await this.loadSystemInfo("oppijaindex")
     } else {
       this.setState({
         success: false,
@@ -1098,8 +1130,32 @@ export class Yllapito extends React.Component<YllapitoProps> {
     this.setState({ message: "" })
   }
 
+  getMemoryAmount = (type: string) => {
+    if (!this.state.memory) {
+      return "-"
+    } else {
+      if (type === "total") {
+        return Math.floor(this.state.memory.total / 1000000)
+      } else if (type === "free") {
+        return Math.floor(this.state.memory.free / 1000000)
+      } else if (type === "max") {
+        return Math.floor(this.state.memory.max / 1000000)
+      } else {
+        return `unknown type: ${type}`
+      }
+    }
+  }
+
   render() {
-    const { currentActionId, loadingState, message, systemInfo } = this.state
+    const {
+      currentActionId,
+      loadingState,
+      message,
+      cache,
+      memory,
+      oppijaindex,
+      hoksit
+    } = this.state
 
     const actionSuccessFailureMessage = (actionId: string) =>
       actionId !== currentActionId ? null : loadingState === "success" ? (
@@ -1132,638 +1188,617 @@ export class Yllapito extends React.Component<YllapitoProps> {
               )}
             </TopContainer>
             <ContentArea>
-              {systemInfo && (
+              <ContentElement>
                 <ContentElement>
-                  <ContentElement>
-                    <Header>
-                      <FormattedMessage
-                        id="yllapito.hoksIdnHaku"
-                        defaultMessage="Hoks-id:n haku"
-                      />
-                    </Header>
+                  <Header>
                     <FormattedMessage
-                      id="yllapito.hoksIdKuvaus"
-                      defaultMessage="Hae HOKSin ID opiskeluoikeuden ID:llä."
+                      id="yllapito.hoksIdnHaku"
+                      defaultMessage="Hoks-id:n haku"
                     />
+                  </Header>
+                  <FormattedMessage
+                    id="yllapito.hoksIdKuvaus"
+                    defaultMessage="Hae HOKSin ID opiskeluoikeuden ID:llä."
+                  />
+                  <ContentElement>
                     <ContentElement>
-                      <ContentElement>
-                        <form>
-                          <HakuInput
-                            type="text"
-                            placeholder="1.2.345.678.98.76543212345"
-                            value={this.state.opiskeluoikeusOid}
-                            onChange={e => this.handleOidChange(e.target.value)}
-                          />
-                        </form>
-                      </ContentElement>
-                      <ButtonContainer>
-                        <Button onClick={this.onGetHoksId}>
-                          <FormattedMessage
-                            id="yllapito.haeHoksIdButton"
-                            defaultMessage="Hae hoks-id opiskeluoikeus-oid:llä"
-                          />
-                        </Button>
-                        {actionSuccessFailureMessage("getHoksId")}
-                      </ButtonContainer>
+                      <form>
+                        <HakuInput
+                          type="text"
+                          placeholder="1.2.345.678.98.76543212345"
+                          value={this.state.opiskeluoikeusOid}
+                          onChange={e => this.handleOidChange(e.target.value)}
+                        />
+                      </form>
                     </ContentElement>
-                    <FormattedMessage
-                      id="yllapito.hoksIdTulos"
-                      defaultMessage="Hoks-id on: {hoksId}"
-                      values={{
-                        hoksId: this.state.hoksId
-                      }}
-                    />
+                    <ButtonContainer>
+                      <Button onClick={this.onGetHoksId}>
+                        <FormattedMessage
+                          id="yllapito.haeHoksIdButton"
+                          defaultMessage="Hae hoks-id opiskeluoikeus-oid:llä"
+                        />
+                      </Button>
+                      {actionSuccessFailureMessage("getHoksId")}
+                    </ButtonContainer>
                   </ContentElement>
-                  <ContentElement>
-                    <Header>
-                      <FormattedMessage
-                        id="yllapito.opiskeluoikeusOidHaku"
-                        defaultMessage="Opiskeluoikeus-oid:n haku"
-                      />
-                    </Header>
+                  <FormattedMessage
+                    id="yllapito.hoksIdTulos"
+                    defaultMessage="Hoks-id on: {hoksId}"
+                    values={{
+                      hoksId: this.state.hoksId
+                    }}
+                  />
+                </ContentElement>
+                <ContentElement>
+                  <Header>
                     <FormattedMessage
-                      id="yllapito.opiskeluoikeusOidHakuKuvaus"
-                      defaultMessage={
-                        "Hae opiskeluoikeuden ID ja oppijan ID HOKSin ID:llä."
-                      }
+                      id="yllapito.opiskeluoikeusOidHaku"
+                      defaultMessage="Opiskeluoikeus-oid:n haku"
                     />
+                  </Header>
+                  <FormattedMessage
+                    id="yllapito.opiskeluoikeusOidHakuKuvaus"
+                    defaultMessage={
+                      "Hae opiskeluoikeuden ID ja oppijan ID HOKSin ID:llä."
+                    }
+                  />
+                  <ContentElement>
                     <ContentElement>
-                      <ContentElement>
-                        <form>
-                          <HakuInput
-                            type="text"
-                            placeholder="12345"
-                            value={this.state.hoksHakuId}
-                            onChange={e =>
-                              this.handleHoksIdChange(e.target.value)
-                            }
-                          />
-                        </form>
-                      </ContentElement>
-                      <ButtonContainer>
-                        <Button onClick={this.onGetOpiskeluoikeusOid}>
-                          <FormattedMessage
-                            id="yllapito.haeOpiskeluoikeusOidButton"
-                            defaultMessage="Hae opiskeluoikeus hoks-id:llä"
-                          />
-                        </Button>
-                        {actionSuccessFailureMessage("getOpiskeluoikeusOid")}
-                      </ButtonContainer>
+                      <form>
+                        <HakuInput
+                          type="text"
+                          placeholder="12345"
+                          value={this.state.hoksHakuId}
+                          onChange={e =>
+                            this.handleHoksIdChange(e.target.value)
+                          }
+                        />
+                      </form>
                     </ContentElement>
-                    <FormattedMessage
-                      id="yllapito.OpiskeluoikeusOidTulos"
-                      defaultMessage="Opiskeluoikeus-oid on: {opiskeluoikeusOid}"
-                      values={{
-                        opiskeluoikeusOid: this.state.opiskeluoikeusHakuOid
-                      }}
-                    />
-                    <br />
-                    <FormattedMessage
-                      id="yllapito.OppijaOidTulos"
-                      defaultMessage="Oppija-oid on: {oppijaOid}"
-                      values={{ oppijaOid: this.state.oppijaOid }}
-                    />
+                    <ButtonContainer>
+                      <Button onClick={this.onGetOpiskeluoikeusOid}>
+                        <FormattedMessage
+                          id="yllapito.haeOpiskeluoikeusOidButton"
+                          defaultMessage="Hae opiskeluoikeus hoks-id:llä"
+                        />
+                      </Button>
+                      {actionSuccessFailureMessage("getOpiskeluoikeusOid")}
+                    </ButtonContainer>
                   </ContentElement>
-                  <ContentElement>
-                    <Header>
-                      <FormattedMessage
-                        id="yllapito.hoksienmaaraTitle"
-                        defaultMessage="Hoksien lukumäärä"
-                      />
-                    </Header>
+                  <FormattedMessage
+                    id="yllapito.OpiskeluoikeusOidTulos"
+                    defaultMessage="Opiskeluoikeus-oid on: {opiskeluoikeusOid}"
+                    values={{
+                      opiskeluoikeusOid: this.state.opiskeluoikeusHakuOid
+                    }}
+                  />
+                  <br />
+                  <FormattedMessage
+                    id="yllapito.OppijaOidTulos"
+                    defaultMessage="Oppija-oid on: {oppijaOid}"
+                    values={{ oppijaOid: this.state.oppijaOid }}
+                  />
+                </ContentElement>
+                <ContentElement>
+                  <Header>
                     <FormattedMessage
-                      id="yllapito.hoksienMaaraKuvaus"
-                      defaultMessage="Näyttää aktiivisten HOKSien määrän."
+                      id="yllapito.hoksienmaaraTitle"
+                      defaultMessage="Hoksien lukumäärä"
                     />
+                    <MiniLink onClick={() => this.loadSystemInfo("hoksit")}>
+                      Lataa tiedot
+                    </MiniLink>
+                  </Header>
+                  <FormattedMessage
+                    id="yllapito.hoksienMaaraKuvaus"
+                    defaultMessage='Näyttää aktiivisten HOKSien määrän.  Klikkaa "Lataa järjestelmän tiedot" -painiketta ladataksesi tiedot.'
+                  />
+                  <br />
+                  {hoksit && (
                     <ContentElement>
                       <FormattedMessage
                         id="yllapito.hoksienmaaraArvo"
                         defaultMessage="Lukumäärä: {hoksAmount}"
-                        values={{ hoksAmount: systemInfo.hoksit.amount }}
+                        values={{ hoksAmount: hoksit?.amount }}
                       />
                     </ContentElement>
-                  </ContentElement>
-                  <ContentElement>
-                    <Header>
-                      <FormattedMessage
-                        id="yllapito.valimuistiTitle"
-                        defaultMessage="Välimuisti"
-                      />
-                    </Header>
+                  )}
+                </ContentElement>
+                <ContentElement>
+                  <Header>
                     <FormattedMessage
-                      id="yllapito.valimuistiKuvaus"
-                      defaultMessage="Välimuistin koko ja tyhjennys."
+                      id="yllapito.valimuistiTitle"
+                      defaultMessage="Välimuisti"
                     />
+                    <MiniLink onClick={() => this.loadSystemInfo("cache")}>
+                      Lataa tiedot
+                    </MiniLink>
+                  </Header>
+                  <FormattedMessage
+                    id="yllapito.valimuistiKuvaus"
+                    defaultMessage="Välimuistin koko ja tyhjennys."
+                  />
+                  <br />
+                  {cache && (
                     <ContentElement>
                       <FormattedMessage
                         id="yllapito.valimuistiKoko"
                         defaultMessage="Koko: {cacheSize}"
-                        values={{ cacheSize: systemInfo.cache.size }}
+                        values={{ cacheSize: cache?.size }}
                       />
+                    </ContentElement>
+                  )}
+                  <ButtonContainer>
+                    <Button onClick={this.onClearCacheClicked}>
+                      <FormattedMessage
+                        id="yllapito.tyhjennaValimuisti"
+                        defaultMessage="Tyhjennä välimuisti"
+                      />
+                    </Button>
+                    {actionSuccessFailureMessage("clearCache")}
+                  </ButtonContainer>
+                </ContentElement>
+                <ContentElement>
+                  <Header>
+                    <FormattedMessage
+                      id="yllapito.muistiTitle"
+                      defaultMessage="Muisti"
+                    />
+                    <MiniLink onClick={() => this.loadSystemInfo("memory")}>
+                      Lataa tiedot
+                    </MiniLink>
+                  </Header>
+                  <FormattedMessage
+                    id="yllapito.muistiKuvaus"
+                    defaultMessage={
+                      "Muistin määrä (yhteensä, vapaana, ja maksimi)."
+                    }
+                  />
+                  <br />
+                  {memory && (
+                    <>
+                      <ContentElement>
+                        <FormattedMessage
+                          id="yllapito.muistiYhteensa"
+                          defaultMessage="Yhteensä: {total} MB"
+                          values={{
+                            total: this.getMemoryAmount("total")
+                          }}
+                        />
+                      </ContentElement>
+                      <ContentElement>
+                        <FormattedMessage
+                          id="yllapito.muistiVapaana"
+                          defaultMessage="Vapaana: {free} MB"
+                          values={{
+                            free: this.getMemoryAmount("free")
+                          }}
+                        />
+                      </ContentElement>
+                      <ContentElement>
+                        <FormattedMessage
+                          id="yllapito.muistiMaksimi"
+                          defaultMessage="Maksimi: {max} MB"
+                          values={{
+                            max: this.getMemoryAmount("max")
+                          }}
+                        />
+                      </ContentElement>
+                    </>
+                  )}
+                </ContentElement>
+                <ContentElement>
+                  <Header>
+                    <FormattedMessage
+                      id="yllapito.oppijaIndeksiTitle"
+                      defaultMessage="Oppijaindeksi"
+                    />{" "}
+                    <MiniLink
+                      onClick={() => this.loadSystemInfo("oppijaindex")}
+                    >
+                      Lataa tiedot
+                    </MiniLink>
+                  </Header>
+                  <FormattedMessage
+                    id="yllapito.oppijaIndeksiKuvaus"
+                    defaultMessage={
+                      "Oppijoiden ja opiskeluoikeuksien indeksointi."
+                    }
+                  />
+                  <br />
+                  {oppijaindex && (
+                    <>
+                      <ContentElement>
+                        <FormattedMessage
+                          id="yllapito.oppijaIndeksoimatta"
+                          defaultMessage="Indeksoimatta: {unindexed} oppijaa"
+                          values={{
+                            unindexed: oppijaindex?.unindexedOppijat
+                          }}
+                        />
+                      </ContentElement>
+                      <ContentElement>
+                        <FormattedMessage
+                          id="yllapito.opiskeluoikeusIndeksoimatta"
+                          defaultMessage="Indeksoimatta: {unindexed} opiskeluoikeutta"
+                          values={{
+                            unindexed: oppijaindex?.unindexedOpiskeluoikeudet
+                          }}
+                        />
+                      </ContentElement>
+                    </>
+                  )}
+                  <ButtonContainer>
+                    <Button onClick={this.onRunIndexClicked}>
+                      <FormattedMessage
+                        id="yllapito.oppijaIndex"
+                        defaultMessage="Indeksoi oppijat ja opiskeluoikeudet"
+                      />
+                    </Button>
+                    {actionSuccessFailureMessage("runIndex")}
+                  </ButtonContainer>
+                </ContentElement>
+                <ContentElement>
+                  <Header>
+                    <FormattedMessage
+                      id="yllapito.hoksPoisto"
+                      defaultMessage="Aiheettoman HOKSin poisto"
+                    />
+                  </Header>
+                  <FormattedMessage
+                    id="yllapito.hoksPoistoKuvaus"
+                    defaultMessage="Aiheettoman HOKSin poisto."
+                  />
+                  <ContentElement>
+                    <ContentElement>
+                      <form>
+                        <HakuInput
+                          type="text"
+                          placeholder="12345"
+                          value={this.state.hoksDeleteId}
+                          onChange={e =>
+                            this.handleDeleteIdChange(e.target.value)
+                          }
+                        />
+                      </form>
                     </ContentElement>
                     <ButtonContainer>
-                      <Button onClick={this.onClearCacheClicked}>
+                      <Button onClick={this.onDeleteHoks}>
                         <FormattedMessage
-                          id="yllapito.tyhjennaValimuisti"
-                          defaultMessage="Tyhjennä välimuisti"
+                          id="yllapito.poistaHoksButton"
+                          defaultMessage="Poista HOKS"
                         />
                       </Button>
-                      {actionSuccessFailureMessage("clearCache")}
+                      {actionSuccessFailureMessage("deleteHoks")}
                     </ButtonContainer>
                   </ContentElement>
-                  <ContentElement>
-                    <Header>
-                      <FormattedMessage
-                        id="yllapito.muistiTitle"
-                        defaultMessage="Muisti"
-                      />
-                    </Header>
+                </ContentElement>
+                <ContentElement>
+                  <Header>
                     <FormattedMessage
-                      id="yllapito.muistiKuvaus"
+                      id="yllapito.hoksPalautus"
                       defaultMessage={
-                        "Muistin määrä (yhteensä, vapaana, ja maksimi)."
+                        "Palauta virkailijan käyttöliittymästä poistetuksi " +
+                        "asetettu HOKS"
                       }
                     />
-                    <ContentElement>
-                      <FormattedMessage
-                        id="yllapito.muistiYhteensa"
-                        defaultMessage="Yhteensä: {total} MB"
-                        values={{
-                          total: Math.floor(systemInfo.memory.total / 1000000)
-                        }}
-                      />
-                    </ContentElement>
-                    <ContentElement>
-                      <FormattedMessage
-                        id="yllapito.muistiVapaana"
-                        defaultMessage="Vapaana: {free} MB"
-                        values={{
-                          free: Math.floor(systemInfo.memory.free / 1000000)
-                        }}
-                      />
-                    </ContentElement>
-                    <ContentElement>
-                      <FormattedMessage
-                        id="yllapito.muistiMaksimi"
-                        defaultMessage="Maksimi: {max} MB"
-                        values={{
-                          max: Math.floor(systemInfo.memory.max / 1000000)
-                        }}
-                      />
-                    </ContentElement>
-                  </ContentElement>
+                  </Header>
+                  <FormattedMessage
+                    id="yllapito.hoksPalautusKuvaus"
+                    defaultMessage={
+                      "Palauta vahingossa poistettu HOKS. HOKSeja ei " +
+                      "yleensä poisteta totaalisesti, vaan ne vain " +
+                      "merkataan poistetuiksi tietokannassa."
+                    }
+                  />
                   <ContentElement>
-                    <Header>
-                      <FormattedMessage
-                        id="yllapito.oppijaIndeksiTitle"
-                        defaultMessage="Oppijaindeksi"
-                      />
-                    </Header>
-                    <FormattedMessage
-                      id="yllapito.oppijaIndeksiKuvaus"
-                      defaultMessage={
-                        "Oppijoiden ja opiskeluoikeuksien indeksointi."
-                      }
-                    />
                     <ContentElement>
-                      <FormattedMessage
-                        id="yllapito.oppijaIndeksoimatta"
-                        defaultMessage="Indeksoimatta: {unindexed} oppijaa"
-                        values={{
-                          unindexed: systemInfo.oppijaindex.unindexedOppijat
-                        }}
-                      />
-                    </ContentElement>
-                    <ContentElement>
-                      <FormattedMessage
-                        id="yllapito.opiskeluoikeusIndeksoimatta"
-                        defaultMessage="Indeksoimatta: {unindexed} opiskeluoikeutta"
-                        values={{
-                          unindexed:
-                            systemInfo.oppijaindex.unindexedOpiskeluoikeudet
-                        }}
-                      />
+                      <form>
+                        <HakuInput
+                          type="text"
+                          placeholder="12345"
+                          value={this.state.hoksPalautusId}
+                          onChange={e =>
+                            this.handlePalautaIdChange(e.target.value)
+                          }
+                        />
+                      </form>
                     </ContentElement>
                     <ButtonContainer>
-                      <Button onClick={this.onRunIndexClicked}>
+                      <Button onClick={this.onPalautaHoks}>
                         <FormattedMessage
-                          id="yllapito.oppijaIndex"
-                          defaultMessage="Indeksoi oppijat ja opiskeluoikeudet"
+                          id="yllapito.palautaHoksButton"
+                          defaultMessage="Palauta HOKS"
                         />
                       </Button>
-                      {actionSuccessFailureMessage("runIndex")}
+                      {actionSuccessFailureMessage("palautaHoks")}
                     </ButtonContainer>
                   </ContentElement>
-                  <ContentElement>
-                    <Header>
-                      <FormattedMessage
-                        id="yllapito.hoksPoisto"
-                        defaultMessage="Aiheettoman HOKSin poisto"
-                      />
-                    </Header>
+                </ContentElement>
+                <ContentElement>
+                  <Header>
                     <FormattedMessage
-                      id="yllapito.hoksPoistoKuvaus"
-                      defaultMessage="Aiheettoman HOKSin poisto."
-                    />
-                    <ContentElement>
-                      <ContentElement>
-                        <form>
-                          <HakuInput
-                            type="text"
-                            placeholder="12345"
-                            value={this.state.hoksDeleteId}
-                            onChange={e =>
-                              this.handleDeleteIdChange(e.target.value)
-                            }
-                          />
-                        </form>
-                      </ContentElement>
-                      <ButtonContainer>
-                        <Button onClick={this.onDeleteHoks}>
-                          <FormattedMessage
-                            id="yllapito.poistaHoksButton"
-                            defaultMessage="Poista HOKS"
-                          />
-                        </Button>
-                        {actionSuccessFailureMessage("deleteHoks")}
-                      </ButtonContainer>
-                    </ContentElement>
-                  </ContentElement>
-                  <ContentElement>
-                    <Header>
-                      <FormattedMessage
-                        id="yllapito.hoksPalautus"
-                        defaultMessage={
-                          "Palauta virkailijan käyttöliittymästä poistetuksi " +
-                          "asetettu HOKS"
-                        }
-                      />
-                    </Header>
-                    <FormattedMessage
-                      id="yllapito.hoksPalautusKuvaus"
+                      id="yllapito.opiskeluoikeusPaivitys"
                       defaultMessage={
-                        "Palauta vahingossa poistettu HOKS. HOKSeja ei " +
-                        "yleensä poisteta totaalisesti, vaan ne vain " +
-                        "merkataan poistetuiksi tietokannassa."
+                        "Päivitä opiskeluoikeus indeksiin Koskesta."
                       }
                     />
-                    <ContentElement>
-                      <ContentElement>
-                        <form>
-                          <HakuInput
-                            type="text"
-                            placeholder="12345"
-                            value={this.state.hoksPalautusId}
-                            onChange={e =>
-                              this.handlePalautaIdChange(e.target.value)
-                            }
-                          />
-                        </form>
-                      </ContentElement>
-                      <ButtonContainer>
-                        <Button onClick={this.onPalautaHoks}>
-                          <FormattedMessage
-                            id="yllapito.palautaHoksButton"
-                            defaultMessage="Palauta HOKS"
-                          />
-                        </Button>
-                        {actionSuccessFailureMessage("palautaHoks")}
-                      </ButtonContainer>
-                    </ContentElement>
-                  </ContentElement>
+                  </Header>
+                  <FormattedMessage
+                    id="yllapito.opiskeluoikeusPaivitysKuvaus"
+                    defaultMessage={
+                      "Päivitä opiskeluoikeuden tiedot " +
+                      "opiskeluoikeusindeksiin."
+                    }
+                  />
                   <ContentElement>
-                    <Header>
-                      <FormattedMessage
-                        id="yllapito.opiskeluoikeusPaivitys"
-                        defaultMessage={
-                          "Päivitä opiskeluoikeus indeksiin Koskesta."
-                        }
-                      />
-                    </Header>
+                    <ContentElement>
+                      <form>
+                        <HakuInput
+                          type="text"
+                          placeholder="1.2.345.678.98.76543212345"
+                          value={this.state.opiskeluoikeusUpdateOid}
+                          onChange={e =>
+                            this.handleUpdateOidChange(e.target.value)
+                          }
+                        />
+                      </form>
+                    </ContentElement>
+                    <ButtonContainer>
+                      <Button onClick={this.onUpdateOpiskeluoikeus}>
+                        <FormattedMessage
+                          id="yllapito.updateOpiskeluoikeusButton"
+                          defaultMessage={
+                            "Päivitä opiskeluoikeuden tiedot " +
+                            "opiskeluoikeus-indeksiin."
+                          }
+                        />
+                      </Button>
+                      {actionSuccessFailureMessage("updateOpiskeluoikeus")}
+                    </ButtonContainer>
+                  </ContentElement>
+                </ContentElement>
+                <ContentElement>
+                  <Header>
                     <FormattedMessage
-                      id="yllapito.opiskeluoikeusPaivitysKuvaus"
+                      id="yllapito.opiskeluoikeuksienPaivitys"
                       defaultMessage={
-                        "Päivitä opiskeluoikeuden tiedot " +
-                        "opiskeluoikeusindeksiin."
+                        "Päivitä koulutustoimijan opiskeluoikeudet " +
+                        "indeksiin Koskesta."
                       }
                     />
-                    <ContentElement>
-                      <ContentElement>
-                        <form>
-                          <HakuInput
-                            type="text"
-                            placeholder="1.2.345.678.98.76543212345"
-                            value={this.state.opiskeluoikeusUpdateOid}
-                            onChange={e =>
-                              this.handleUpdateOidChange(e.target.value)
-                            }
-                          />
-                        </form>
-                      </ContentElement>
-                      <ButtonContainer>
-                        <Button onClick={this.onUpdateOpiskeluoikeus}>
-                          <FormattedMessage
-                            id="yllapito.updateOpiskeluoikeusButton"
-                            defaultMessage={
-                              "Päivitä opiskeluoikeuden tiedot " +
-                              "opiskeluoikeus-indeksiin."
-                            }
-                          />
-                        </Button>
-                        {actionSuccessFailureMessage("updateOpiskeluoikeus")}
-                      </ButtonContainer>
-                    </ContentElement>
-                  </ContentElement>
+                  </Header>
+                  <FormattedMessage
+                    id="yllapito.opiskeluoikeuksienPaivitysKuvaus"
+                    defaultMessage={
+                      "Päivitä koulutustoimijan opiskeluoikeudet indeksiin."
+                    }
+                  />
                   <ContentElement>
-                    <Header>
-                      <FormattedMessage
-                        id="yllapito.opiskeluoikeuksienPaivitys"
-                        defaultMessage={
-                          "Päivitä koulutustoimijan opiskeluoikeudet " +
-                          "indeksiin Koskesta."
-                        }
-                      />
-                    </Header>
-                    <FormattedMessage
-                      id="yllapito.opiskeluoikeuksienPaivitysKuvaus"
-                      defaultMessage={
-                        "Päivitä koulutustoimijan opiskeluoikeudet indeksiin."
-                      }
-                    />
                     <ContentElement>
-                      <ContentElement>
-                        <form>
-                          <HakuInput
-                            type="text"
-                            placeholder="1.2.345.678.98.76543212345"
-                            value={this.state.koulutustoimijaOid}
-                            onChange={e =>
-                              this.handlekoulutustoimijaOidChange(
-                                e.target.value
-                              )
-                            }
-                          />
-                        </form>
-                      </ContentElement>
-                      <ButtonContainer>
-                        <Button onClick={this.onUpdateOpiskeluoikeudet}>
-                          <FormattedMessage
-                            id="yllapito.updateOpiskeluoikeudetButton"
-                            defaultMessage="Päivitä opiskeluoikeudet."
-                          />
-                        </Button>
-                        {actionSuccessFailureMessage("updateOpiskeluoikeudet")}
-                      </ButtonContainer>
+                      <form>
+                        <HakuInput
+                          type="text"
+                          placeholder="1.2.345.678.98.76543212345"
+                          value={this.state.koulutustoimijaOid}
+                          onChange={e =>
+                            this.handlekoulutustoimijaOidChange(e.target.value)
+                          }
+                        />
+                      </form>
                     </ContentElement>
+                    <ButtonContainer>
+                      <Button onClick={this.onUpdateOpiskeluoikeudet}>
+                        <FormattedMessage
+                          id="yllapito.updateOpiskeluoikeudetButton"
+                          defaultMessage="Päivitä opiskeluoikeudet."
+                        />
+                      </Button>
+                      {actionSuccessFailureMessage("updateOpiskeluoikeudet")}
+                    </ButtonContainer>
                   </ContentElement>
-                  <ContentElement>
-                    <Header>
-                      <FormattedMessage
-                        id="yllapito.oppijanPaivitys"
-                        defaultMessage={
-                          "Päivitä oppijan tiedot indeksiin " +
-                          "Oppijanumerorekisteristä."
-                        }
-                      />
-                    </Header>
+                </ContentElement>
+                <ContentElement>
+                  <Header>
                     <FormattedMessage
-                      id="yllapito.oppijanPaivitysKuvaus"
+                      id="yllapito.oppijanPaivitys"
                       defaultMessage={
                         "Päivitä oppijan tiedot indeksiin " +
                         "Oppijanumerorekisteristä."
                       }
                     />
-                    <ContentElement>
-                      <ContentElement>
-                        <form>
-                          <HakuInput
-                            type="text"
-                            placeholder="1.2.345.678.98.76543212345"
-                            value={this.state.updateOppijaOid}
-                            onChange={e =>
-                              this.handleUpdateOppijaOidChange(e.target.value)
-                            }
-                          />
-                        </form>
-                      </ContentElement>
-                      <ButtonContainer>
-                        <Button onClick={this.onUpdateOppija}>
-                          <FormattedMessage
-                            id="yllapito.paivitaOppija"
-                            defaultMessage="Paivita oppijan tiedot indeksiin."
-                          />
-                        </Button>
-                        {actionSuccessFailureMessage("updateOppija")}
-                      </ButtonContainer>
-                    </ContentElement>
-                  </ContentElement>
+                  </Header>
+                  <FormattedMessage
+                    id="yllapito.oppijanPaivitysKuvaus"
+                    defaultMessage={
+                      "Päivitä oppijan tiedot indeksiin " +
+                      "Oppijanumerorekisteristä."
+                    }
+                  />
                   <ContentElement>
-                    <Header>
-                      <FormattedMessage
-                        id="yllapito.aloitusHerate"
-                        defaultMessage="Lähetä uusi heräte aloituskyselyyn."
-                      />
-                    </Header>
-                    <FormattedMessage
-                      id="yllapito.aloitusHerateKuvaus"
-                      defaultMessage={
-                        "Käynnistä HOKSin aloituskyselyn muodostus uudestaan " +
-                        "eHOKS ID:llä"
-                      }
-                    />
                     <ContentElement>
-                      <ContentElement>
-                        <form>
-                          <HakuInput
-                            type="text"
-                            placeholder="123456"
-                            value={this.state.sendHerateId}
-                            onChange={e =>
-                              this.handleSendHerateIdChange(e.target.value)
-                            }
-                          />
-                        </form>
-                      </ContentElement>
-                      <ButtonContainer>
-                        <Button onClick={this.onSendHerate}>
-                          <FormattedMessage
-                            id="yllapito.aloitusHerate"
-                            defaultMessage="Lähetä uusi heräte aloituskyselyyn."
-                          />
-                        </Button>
-                        {actionSuccessFailureMessage("sendHerate")}
-                      </ButtonContainer>
+                      <form>
+                        <HakuInput
+                          type="text"
+                          placeholder="1.2.345.678.98.76543212345"
+                          value={this.state.updateOppijaOid}
+                          onChange={e =>
+                            this.handleUpdateOppijaOidChange(e.target.value)
+                          }
+                        />
+                      </form>
                     </ContentElement>
+                    <ButtonContainer>
+                      <Button onClick={this.onUpdateOppija}>
+                        <FormattedMessage
+                          id="yllapito.paivitaOppija"
+                          defaultMessage="Paivita oppijan tiedot indeksiin."
+                        />
+                      </Button>
+                      {actionSuccessFailureMessage("updateOppija")}
+                    </ButtonContainer>
                   </ContentElement>
-                  <ContentElement>
-                    <Header>
-                      <FormattedMessage
-                        id="yllapito.paattoHerate"
-                        defaultMessage="Lähetä uusi heräte päättökyselyyn."
-                      />
-                    </Header>
+                </ContentElement>
+                <ContentElement>
+                  <Header>
                     <FormattedMessage
-                      id="yllapito.paattoHerateKuvaus"
-                      defaultMessage={
-                        "Käynnistä HOKSin päättökyselyn muodostus uudestaan " +
-                        "eHOKS ID:llä"
-                      }
+                      id="yllapito.aloitusHerate"
+                      defaultMessage="Lähetä uusi heräte aloituskyselyyn."
                     />
-                    <ContentElement>
-                      <ContentElement>
-                        <form>
-                          <HakuInput
-                            type="text"
-                            placeholder="123456"
-                            value={this.state.sendPaattoHerateId}
-                            onChange={e =>
-                              this.handleSendPaattoHerateIdChange(
-                                e.target.value
-                              )
-                            }
-                          />
-                        </form>
-                      </ContentElement>
-                      <ButtonContainer>
-                        <Button onClick={this.onSendPaattoHerate}>
-                          <FormattedMessage
-                            id="yllapito.paattoHerate"
-                            defaultMessage="Lähetä uusi heräte päättökyselyyn."
-                          />
-                        </Button>
-                        {actionSuccessFailureMessage("sendPaattoHerate")}
-                      </ButtonContainer>
-                    </ContentElement>
-                  </ContentElement>
+                  </Header>
+                  <FormattedMessage
+                    id="yllapito.aloitusHerateKuvaus"
+                    defaultMessage={
+                      "Käynnistä HOKSin aloituskyselyn muodostus uudestaan " +
+                      "eHOKS ID:llä"
+                    }
+                  />
                   <ContentElement>
-                    <Header>
-                      <FormattedMessage
-                        id="yllapito.aloitusHeratteet"
-                        defaultMessage={
-                          "Lähetä uudet herätteet aloituskyselyihin " +
-                          "aikavälille."
-                        }
-                      />
-                    </Header>
-                    <FormattedMessage
-                      id="yllapito.aloitusHeratteetKuvaus"
-                      defaultMessage={
-                        "Lähetä uudestaan kaikki aloituskyselyherätteet, " +
-                        "jotka luotiin annetun aikavälin sisällä."
-                      }
-                    />
-                    <ContentElement>
-                      <ContentElement>
-                        <form>
-                          <HakuInput
-                            type="date"
-                            value={this.state.sendHerateDateFrom}
-                            onChange={e =>
-                              this.handleSendHerateDateFromChange(
-                                e.target.value
-                              )
-                            }
-                          />
-                          <HakuInput
-                            type="date"
-                            value={this.state.sendHerateDateTo}
-                            onChange={e =>
-                              this.handleSendHerateDateToChange(e.target.value)
-                            }
-                          />
-                        </form>
-                      </ContentElement>
-                      <ButtonContainer>
-                        <Button onClick={this.onSendHeratteetBetween}>
-                          <FormattedMessage
-                            id="yllapito.aloitusHeratteet"
-                            defaultMessage={
-                              "Lähetä uudet herätteet aloituskyselyihin " +
-                              "aikavälille."
-                            }
-                          />
-                        </Button>
-                        {actionSuccessFailureMessage("sendHeratteetBetween")}
-                      </ButtonContainer>
-                    </ContentElement>
-                  </ContentElement>
-                  <ContentElement>
-                    <Header>
-                      <FormattedMessage
-                        id="yllapito.paattoHeratteet"
-                        defaultMessage={
-                          "Lähetä uudet herätteet päättökyselyihin " +
-                          "aikavälille."
-                        }
-                      />
-                    </Header>
-                    <FormattedMessage
-                      id="yllapito.paattoHeratteetKuvaus"
-                      defaultMessage={
-                        "Lähetä uudestaan kaikki päättökyselyherätteet, " +
-                        "jotka luotiin annetun aikavälin sisällä."
-                      }
-                    />
-                    <ContentElement>
-                      <ContentElement>
-                        <form>
-                          <HakuInput
-                            type="date"
-                            value={this.state.sendPaattoHerateDateFrom}
-                            onChange={e =>
-                              this.handleSendPaattoHerateDateFromChange(
-                                e.target.value
-                              )
-                            }
-                          />
-                          <HakuInput
-                            type="date"
-                            value={this.state.sendPaattoHerateDateTo}
-                            onChange={e =>
-                              this.handleSendPaattoHerateDateToChange(
-                                e.target.value
-                              )
-                            }
-                          />
-                        </form>
-                      </ContentElement>
-                      <ButtonContainer>
-                        <Button onClick={this.onSendPaattoHeratteetBetween}>
-                          <FormattedMessage
-                            id="yllapito.paattoHeratteet"
-                            defaultMessage={
-                              "Lähetä uudet herätteet päättökyselyihin " +
-                              "aikavälille."
-                            }
-                          />
-                        </Button>
-                        {actionSuccessFailureMessage(
-                          "sendPaattoHeratteetBetween"
-                        )}
-                      </ButtonContainer>
-                    </ContentElement>
-                  </ContentElement>
-                  <ContentElement>
-                    <Header>
-                      <FormattedMessage
-                        id="yllapito.vastaajatunnuksenPoisto"
-                        defaultMessage={
-                          "Opiskelijapalautteen vastaajatunnuksen poisto"
-                        }
-                      />
-                    </Header>
-                    <FormattedMessage
-                      id="yllapito.vastaajatunnuksenPoistoKuvaus"
-                      defaultMessage="Vastaajatunnuksen poisto ID:llä."
-                    />
                     <ContentElement>
                       <form>
                         <HakuInput
                           type="text"
                           placeholder="123456"
-                          value={this.state.vastaajatunnusToDelete}
+                          value={this.state.sendHerateId}
                           onChange={e =>
-                            this.handleVastaajatunnusToDeleteChange(
+                            this.handleSendHerateIdChange(e.target.value)
+                          }
+                        />
+                      </form>
+                    </ContentElement>
+                    <ButtonContainer>
+                      <Button onClick={this.onSendHerate}>
+                        <FormattedMessage
+                          id="yllapito.aloitusHerate"
+                          defaultMessage="Lähetä uusi heräte aloituskyselyyn."
+                        />
+                      </Button>
+                      {actionSuccessFailureMessage("sendHerate")}
+                    </ButtonContainer>
+                  </ContentElement>
+                </ContentElement>
+                <ContentElement>
+                  <Header>
+                    <FormattedMessage
+                      id="yllapito.paattoHerate"
+                      defaultMessage="Lähetä uusi heräte päättökyselyyn."
+                    />
+                  </Header>
+                  <FormattedMessage
+                    id="yllapito.paattoHerateKuvaus"
+                    defaultMessage={
+                      "Käynnistä HOKSin päättökyselyn muodostus uudestaan " +
+                      "eHOKS ID:llä"
+                    }
+                  />
+                  <ContentElement>
+                    <ContentElement>
+                      <form>
+                        <HakuInput
+                          type="text"
+                          placeholder="123456"
+                          value={this.state.sendPaattoHerateId}
+                          onChange={e =>
+                            this.handleSendPaattoHerateIdChange(e.target.value)
+                          }
+                        />
+                      </form>
+                    </ContentElement>
+                    <ButtonContainer>
+                      <Button onClick={this.onSendPaattoHerate}>
+                        <FormattedMessage
+                          id="yllapito.paattoHerate"
+                          defaultMessage="Lähetä uusi heräte päättökyselyyn."
+                        />
+                      </Button>
+                      {actionSuccessFailureMessage("sendPaattoHerate")}
+                    </ButtonContainer>
+                  </ContentElement>
+                </ContentElement>
+                <ContentElement>
+                  <Header>
+                    <FormattedMessage
+                      id="yllapito.aloitusHeratteet"
+                      defaultMessage={
+                        "Lähetä uudet herätteet aloituskyselyihin " +
+                        "aikavälille."
+                      }
+                    />
+                  </Header>
+                  <FormattedMessage
+                    id="yllapito.aloitusHeratteetKuvaus"
+                    defaultMessage={
+                      "Lähetä uudestaan kaikki aloituskyselyherätteet, " +
+                      "jotka luotiin annetun aikavälin sisällä."
+                    }
+                  />
+                  <ContentElement>
+                    <ContentElement>
+                      <form>
+                        <HakuInput
+                          type="date"
+                          value={this.state.sendHerateDateFrom}
+                          onChange={e =>
+                            this.handleSendHerateDateFromChange(e.target.value)
+                          }
+                        />
+                        <HakuInput
+                          type="date"
+                          value={this.state.sendHerateDateTo}
+                          onChange={e =>
+                            this.handleSendHerateDateToChange(e.target.value)
+                          }
+                        />
+                      </form>
+                    </ContentElement>
+                    <ButtonContainer>
+                      <Button onClick={this.onSendHeratteetBetween}>
+                        <FormattedMessage
+                          id="yllapito.aloitusHeratteet"
+                          defaultMessage={
+                            "Lähetä uudet herätteet aloituskyselyihin " +
+                            "aikavälille."
+                          }
+                        />
+                      </Button>
+                      {actionSuccessFailureMessage("sendHeratteetBetween")}
+                    </ButtonContainer>
+                  </ContentElement>
+                </ContentElement>
+                <ContentElement>
+                  <Header>
+                    <FormattedMessage
+                      id="yllapito.paattoHeratteet"
+                      defaultMessage={
+                        "Lähetä uudet herätteet päättökyselyihin " +
+                        "aikavälille."
+                      }
+                    />
+                  </Header>
+                  <FormattedMessage
+                    id="yllapito.paattoHeratteetKuvaus"
+                    defaultMessage={
+                      "Lähetä uudestaan kaikki päättökyselyherätteet, " +
+                      "jotka luotiin annetun aikavälin sisällä."
+                    }
+                  />
+                  <ContentElement>
+                    <ContentElement>
+                      <form>
+                        <HakuInput
+                          type="date"
+                          value={this.state.sendPaattoHerateDateFrom}
+                          onChange={e =>
+                            this.handleSendPaattoHerateDateFromChange(
+                              e.target.value
+                            )
+                          }
+                        />
+                        <HakuInput
+                          type="date"
+                          value={this.state.sendPaattoHerateDateTo}
+                          onChange={e =>
+                            this.handleSendPaattoHerateDateToChange(
                               e.target.value
                             )
                           }
@@ -1771,17 +1806,59 @@ export class Yllapito extends React.Component<YllapitoProps> {
                       </form>
                     </ContentElement>
                     <ButtonContainer>
-                      <Button onClick={this.onRemoveVastaajatunnusClicked}>
+                      <Button onClick={this.onSendPaattoHeratteetBetween}>
                         <FormattedMessage
-                          id="yllapito.poistaVastaajatunnus"
-                          defaultMessage="Poista vastaajatunnus"
+                          id="yllapito.paattoHeratteet"
+                          defaultMessage={
+                            "Lähetä uudet herätteet päättökyselyihin " +
+                            "aikavälille."
+                          }
                         />
                       </Button>
-                      {actionSuccessFailureMessage("removeVastaajatunnus")}
+                      {actionSuccessFailureMessage(
+                        "sendPaattoHeratteetBetween"
+                      )}
                     </ButtonContainer>
                   </ContentElement>
                 </ContentElement>
-              )}
+                <ContentElement>
+                  <Header>
+                    <FormattedMessage
+                      id="yllapito.vastaajatunnuksenPoisto"
+                      defaultMessage={
+                        "Opiskelijapalautteen vastaajatunnuksen poisto"
+                      }
+                    />
+                  </Header>
+                  <FormattedMessage
+                    id="yllapito.vastaajatunnuksenPoistoKuvaus"
+                    defaultMessage="Vastaajatunnuksen poisto ID:llä."
+                  />
+                  <ContentElement>
+                    <form>
+                      <HakuInput
+                        type="text"
+                        placeholder="123456"
+                        value={this.state.vastaajatunnusToDelete}
+                        onChange={e =>
+                          this.handleVastaajatunnusToDeleteChange(
+                            e.target.value
+                          )
+                        }
+                      />
+                    </form>
+                  </ContentElement>
+                  <ButtonContainer>
+                    <Button onClick={this.onRemoveVastaajatunnusClicked}>
+                      <FormattedMessage
+                        id="yllapito.poistaVastaajatunnus"
+                        defaultMessage="Poista vastaajatunnus"
+                      />
+                    </Button>
+                    {actionSuccessFailureMessage("removeVastaajatunnus")}
+                  </ButtonContainer>
+                </ContentElement>
+              </ContentElement>
             </ContentArea>
           </PaddedContent>
         </Container>
