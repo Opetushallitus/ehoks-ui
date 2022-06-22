@@ -322,13 +322,6 @@ export class Raportit extends React.Component<RaportitProps> {
       : "/ehoks-virkailija-ui/raportit"
   }
 
-  setPvmDate = (type: string, value: string) => {
-    const target = type === "alku" ? "alku" : "loppu"
-    this.setState({
-      [target]: value
-    })
-  }
-
   getColumnsForTable = (selectedRaportti: number): Column[] => {
     if (selectedRaportti === 1) {
       return [
