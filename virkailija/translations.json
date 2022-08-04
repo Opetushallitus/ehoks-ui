@@ -319,6 +319,7 @@
     "yllapito.opiskeluoikeusPaivitys": "Päivitä opiskeluoikeus indeksiin Koskesta.",
     "yllapito.opiskeluoikeusPaivitysKuvaus": "Päivitä opiskeluoikeuden tiedot opiskeluoikeusindeksiin.",
     "yllapito.oppijaIndeksiKuvaus": "Oppijoiden ja opiskeluoikeuksien indeksointi.",
+    "yllapito.lataaTiedot": "Lataa tiedot",
     "yllapito.oppijaIndeksiTitle": "Oppijaindeksi",
     "yllapito.oppijaIndeksoimatta": "Indeksoimatta: {unindexed} oppijaa",
     "yllapito.oppijaIndex": "Indeksoi oppijat ja opiskeluoikeudet",

@@ -911,6 +911,11 @@
   },
   {
     "locale": "fi",
+    "key": "yllapito.lataaTiedot",
+    "value": "Lataa tiedot"
+  },
+  {
+    "locale": "fi",
     "key": "yllapito.oppijaIndeksiTitle",
     "value": "Oppijaindeksi"
   },

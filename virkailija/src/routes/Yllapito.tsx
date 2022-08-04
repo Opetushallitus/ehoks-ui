@@ -1286,7 +1286,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
                       defaultMessage="Hoksien lukumäärä"
                     />
                     <MiniLink onClick={() => this.loadSystemInfo("hoksit")}>
-                      Lataa tiedot
+                      <FormattedMessage
+                        id="yllapito.lataaTiedot"
+                        defaultMessage="Lataa tiedot"
+                      />
                     </MiniLink>
                   </Header>
                   <FormattedMessage
@@ -1311,7 +1314,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
                       defaultMessage="Välimuisti"
                     />
                     <MiniLink onClick={() => this.loadSystemInfo("cache")}>
-                      Lataa tiedot
+                      <FormattedMessage
+                        id="yllapito.lataaTiedot"
+                        defaultMessage="Lataa tiedot"
+                      />
                     </MiniLink>
                   </Header>
                   <FormattedMessage
@@ -1345,7 +1351,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
                       defaultMessage="Muisti"
                     />
                     <MiniLink onClick={() => this.loadSystemInfo("memory")}>
-                      Lataa tiedot
+                      <FormattedMessage
+                        id="yllapito.lataaTiedot"
+                        defaultMessage="Lataa tiedot"
+                      />
                     </MiniLink>
                   </Header>
                   <FormattedMessage
@@ -1396,7 +1405,10 @@ export class Yllapito extends React.Component<YllapitoProps> {
                     <MiniLink
                       onClick={() => this.loadSystemInfo("oppijaindex")}
                     >
-                      Lataa tiedot
+                      <FormattedMessage
+                        id="yllapito.lataaTiedot"
+                        defaultMessage="Lataa tiedot"
+                      />
                     </MiniLink>
                   </Header>
                   <FormattedMessage
