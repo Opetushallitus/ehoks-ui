@@ -7,6 +7,8 @@ import {
   isAlive,
   types
 } from "mobx-state-tree"
+import find from "lodash.find"
+import get from "lodash.get"
 import { HOKS } from "models/HOKS"
 import { SessionUser } from "models/SessionUser"
 import { IRootStore } from "stores/RootStore"
@@ -135,7 +137,11 @@ export const Oppija = types
           s.fetchOpiskeluoikeudet()
         }
       })
-
+      const x = find(
+        self.suunnitelmat,
+        y => y.opiskeluoikeusOid === self.opiskeluoikeusOid
+      )
+      console.log(get(x, "opiskeluoikeus.suoritukset[0].tutkinnonNimi"))
       const osittainenResult = isOsittainen ? ", " + osittainenText : ""
       switch (activeLocale) {
         case Locale.FI:
