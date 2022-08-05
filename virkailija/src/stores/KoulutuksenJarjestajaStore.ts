@@ -141,7 +141,8 @@ export const Oppija = types
         self.suunnitelmat,
         y => y.opiskeluoikeusOid === self.opiskeluoikeusOid
       )
-      console.log(get(x, "opiskeluoikeus.suoritukset[0].tutkinnonNimi"))
+      //console.log(get(x, "opiskeluoikeus.suoritukset[0].tutkinnonNimi"))
+      console.log(x)
       const osittainenResult = isOsittainen ? ", " + osittainenText : ""
       switch (activeLocale) {
         case Locale.FI:
