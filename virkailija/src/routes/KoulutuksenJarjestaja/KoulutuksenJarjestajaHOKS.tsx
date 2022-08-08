@@ -11,7 +11,6 @@ import { ProgressPies } from "components/ProgressPies"
 import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
 import find from "lodash.find"
-import get from "lodash.get"
 import { IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import { IHOKS } from "models/HOKS"
@@ -49,16 +48,7 @@ const HelpButton = styled(HelpPopup)`
   margin: 0 0 0 20px;
 `
 
-export interface KoulutuksenJarjestajaHOKSProps
-  extends RouteComponentProps<{
-    location: {
-      state: {
-        fromRaportit: boolean
-        oppijaoid: string | null
-        hokseid: string | null
-      }
-    }
-  }> {
+export interface KoulutuksenJarjestajaHOKSProps extends RouteComponentProps {
   store?: IRootStore
   suunnitelmat: IHOKS[]
   oppija?: IOppija
@@ -73,40 +63,31 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
 > {
   disposeReaction: IReactionDisposer
   componentDidMount() {
-    const { koulutuksenJarjestaja } = this.props.store!
-    const fromRaportit = get(
-      this.props,
-      "this.props.location.state.fromRaportit"
-    )
-    if (fromRaportit) {
-      koulutuksenJarjestaja.search.setFromListView(false)
-    }
     this.disposeReaction = reaction(
       () => this.props.suunnitelmat.length > 0,
       async (hasSuunnitelmat: boolean) => {
-        if (hasSuunnitelmat || fromRaportit) {
-          const oppijaoid = get(
-            this.props,
-            "this.props.location.state.oppijaoid"
-          )
-          const hokseid = get(this.props, "this.props.location.state.hokseid")
-          let fromRaportitSuunnitelmat: IHOKS[] = []
-          if (fromRaportit && oppijaoid) {
-            const oppija = koulutuksenJarjestaja.search.oppija(oppijaoid)
-            if (!oppija) {
-              await koulutuksenJarjestaja.search.fetchOppija(oppijaoid)
-            }
-            fromRaportitSuunnitelmat = oppija ? oppija.suunnitelmat : []
+        const urlSplit = window.location.pathname.split("/")
+        const hoksEid = urlSplit[4]
+        const oppijaOid = urlSplit[3]
+
+        let fromLinkSuunnitelmat: IHOKS[] = []
+        if (!hasSuunnitelmat && oppijaOid) {
+          const { koulutuksenJarjestaja } = this.props.store!
+          koulutuksenJarjestaja.search.setFromListView(false)
+          const oppija = koulutuksenJarjestaja.search.oppija(oppijaOid)
+          if (!oppija) {
+            await koulutuksenJarjestaja.search.fetchOppija(oppijaOid)
           }
-          const suunnitelma =
-            fromRaportitSuunnitelmat.length > 0
-              ? find(fromRaportitSuunnitelmat, h => h.eid === hokseid)
-              : find(this.props.suunnitelmat, h => h.eid === this.props.hoksId)
-          if (suunnitelma) {
-            await suunnitelma.fetchDetails()
-            await suunnitelma.fetchOpiskelijapalauteTilat()
-            await suunnitelma.fetchOsaamispisteet()
-          }
+          fromLinkSuunnitelmat = oppija ? oppija.suunnitelmat : []
+        }
+        const suunnitelma =
+          fromLinkSuunnitelmat.length > 0
+            ? find(fromLinkSuunnitelmat, h => h.eid === hoksEid)
+            : find(this.props.suunnitelmat, h => h.eid === this.props.hoksId)
+        if (suunnitelma) {
+          await suunnitelma.fetchDetails()
+          await suunnitelma.fetchOpiskelijapalauteTilat()
+          await suunnitelma.fetchOsaamispisteet()
         }
       },
       { fireImmediately: true }
@@ -123,14 +104,10 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
   }
 
   render() {
-    const { hoksId, location, suunnitelmat, oppija } = this.props
-    const suunnitelmaHoksId =
-      this.props.location &&
-      this.props.location.state &&
-      this.props.location.state.fromRaportit
-        ? this.props.location.state.hokseid
-        : hoksId
-    const suunnitelma = find(suunnitelmat, h => h.eid === suunnitelmaHoksId)
+    const { location, suunnitelmat, oppija } = this.props
+    const urlSplit = window.location.pathname.split("/")
+    const hoksEid = urlSplit[4]
+    const suunnitelma = find(suunnitelmat, h => h.eid === hoksEid)
     if (!oppija || !suunnitelma) {
       return null
     }
