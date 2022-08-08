@@ -118,18 +118,6 @@ export const Oppija = types
         : ""
     },
     get tutkinto(): string {
-      /*
-      const translations = getRoot<IRootStore>(self).translations
-      const activeLocale: Locale = translations.activeLocale
-      const osittainenText =
-        translations.messages[activeLocale]["opiskeluoikeus.osittainen"] ||
-        "osittainen"
-      const isOsittainen = self.suunnitelmat.some(
-        s =>
-          s.opiskeluOikeus.oid === self.opiskeluoikeusOid &&
-          s.opiskeluOikeus.isOsittainen
-      )
-      */
       self.suunnitelmat.map(s => {
         if (
           s.opiskeluOikeus.oid === "" &&
@@ -142,9 +130,6 @@ export const Oppija = types
         self.suunnitelmat,
         y => y.opiskeluoikeusOid === self.opiskeluoikeusOid
       )
-      //console.log(get(x, "opiskeluoikeus.suoritukset[0].tutkinnonNimi"))
-      console.log(x?.tutkinnonNimi)
-      //const osittainenResult = isOsittainen ? ", " + osittainenText : ""
       return get(x, "tutkinnonNimi", "")
     },
     get osaamisala(): string {
