@@ -8,7 +8,7 @@ import {
   types
 } from "mobx-state-tree"
 import find from "lodash.find"
-// import get from "lodash.get"
+import get from "lodash.get"
 import { HOKS } from "models/HOKS"
 import { SessionUser } from "models/SessionUser"
 import { IRootStore } from "stores/RootStore"
@@ -118,6 +118,7 @@ export const Oppija = types
         : ""
     },
     get tutkinto(): string {
+      /*
       const translations = getRoot<IRootStore>(self).translations
       const activeLocale: Locale = translations.activeLocale
       const osittainenText =
@@ -128,7 +129,7 @@ export const Oppija = types
           s.opiskeluOikeus.oid === self.opiskeluoikeusOid &&
           s.opiskeluOikeus.isOsittainen
       )
-
+      */
       self.suunnitelmat.map(s => {
         if (
           s.opiskeluOikeus.oid === "" &&
@@ -143,15 +144,8 @@ export const Oppija = types
       )
       //console.log(get(x, "opiskeluoikeus.suoritukset[0].tutkinnonNimi"))
       console.log(x?.tutkinnonNimi)
-      const osittainenResult = isOsittainen ? ", " + osittainenText : ""
-      switch (activeLocale) {
-        case Locale.FI:
-          return self.tutkintoNimi.fi + osittainenResult
-        case Locale.SV:
-          return self.tutkintoNimi.sv + osittainenResult
-        default:
-          return ""
-      }
+      //const osittainenResult = isOsittainen ? ", " + osittainenText : ""
+      return get(x, "tutkinnonNimi", "")
     },
     get osaamisala(): string {
       const activeLocale: Locale = getRoot<IRootStore>(self).translations
