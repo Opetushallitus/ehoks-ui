@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-onchange */
 // @ts-nocheck
 // Added nocheck because I cannot get react-table types to work correctly.
-import React, { useMemo, useEffect } from "react"
+import React, { useEffect } from "react"
 import { Column, useTable, usePagination } from "react-table"
 // @ts-ignore Ignore type-checking for this library
 import TableScrollbar from "react-table-scrollbar"
@@ -49,11 +49,10 @@ const printResultInfo = (length: number, count: number, loading: boolean) => {
   }
 }
 
-export function RaportitTable(props: RaportitTableProps) {
+export const RaportitTable = (props: RaportitTableProps) => {
   const fetchData = props.fetchData
-  const data = useMemo(() => props.data, [props.data])!
-
-  const columns = useMemo(() => props.columns, [props.columns])
+  const data = props.data //useMemo(() => props.data, [props.data])!
+  const columns = props.columns //useMemo(() => props.columns, [props.columns])
 
   const {
     getTableProps,

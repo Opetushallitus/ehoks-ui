@@ -5,7 +5,7 @@ import { EnrichTutkinnonOsaKoodiUri } from "./Enrichment/EnrichTutkinnonOsaKoodi
 import { KoodistoVastaus } from "models/KoodistoVastaus"
 import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 
-export const Model = types.model({
+export const Model = types.model("TyopaikkajaksoRaporttiRiviModel", {
   hoksId: types.number,
   hoksEid: types.string,
   opiskeluoikeusOid: types.string,
@@ -31,7 +31,6 @@ export const TyopaikkajaksoRaporttiRivi = types
   .compose(
     "TyopaikkajaksoRaporttiRivi",
     EnrichTutkinnonOsaKoodiUri,
-    Model,
     EnrichKoodistoKoodiUri({
       enrichedProperty: "osaamisenHankkimistapa",
       koodiUriProperty: "osaamisenHankkimistapaKoodiUri"
@@ -39,7 +38,8 @@ export const TyopaikkajaksoRaporttiRivi = types
     EnrichKoodistoKoodiUri({
       enrichedProperty: "oppisopimuksenPerusta",
       koodiUriProperty: "oppisopimuksenPerustaKoodiUri"
-    })
+    }),
+    Model
   )
   .views(self => {
     const root: LocaleRoot = getRoot(self)
