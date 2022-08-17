@@ -20,7 +20,8 @@ export const propertiesByStep: { [index: number]: string[] } = {
   4: ["hankittavat-ammat-tutkinnon-osat"],
   5: ["hankittavat-paikalliset-tutkinnon-osat"],
   6: ["hankittavat-yhteiset-tutkinnon-osat"],
-  7: ["opiskeluvalmiuksia-tukevat-opinnot"]
+  7: ["hankittavat-koulutuksen-osat"],
+  8: ["opiskeluvalmiuksia-tukevat-opinnot"]
 }
 
 const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
@@ -41,6 +42,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
     "hankittavat-ammat-tutkinnon-osat",
     "hankittavat-paikalliset-tutkinnon-osat",
     "hankittavat-yhteiset-tutkinnon-osat",
+    "hankittavat-koulutuksen-osat",
     "opiskeluvalmiuksia-tukevat-opinnot",
     "*"
   ],
@@ -1095,6 +1097,31 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             }
           }
         }
+      }
+    }
+  },
+  "hankittavat-koulutuksen-osat": {
+    "ui:options": {
+      orderable: false
+    },
+    items: {
+      "ui:order": [
+        "koulutuksen-osa-koodi-uri",
+        "koulutuksen-osa-koodi-versio",
+        "alku",
+        "loppu",
+        "laajuus",
+        "*"
+      ],
+      id: {
+        "ui:widget": "hidden"
+      },
+      "koulutuksen-osa-koodi-uri": {
+        "ui:field": "typeahead",
+        typeahead: typeaheadProps(options.ammatillisenoppiaineet)
+      },
+      "koulutuksen-osa-koodi-versio": {
+        "ui:widget": "hidden"
       }
     }
   },

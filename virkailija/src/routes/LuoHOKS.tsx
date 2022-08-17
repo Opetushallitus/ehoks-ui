@@ -222,7 +222,8 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       const hankittavatTyypit = [
         "hankittavat-ammat-tutkinnon-osat",
         "hankittavat-paikalliset-tutkinnon-osat",
-        "hankittavat-yhteiset-tutkinnon-osat"
+        "hankittavat-yhteiset-tutkinnon-osat",
+        "hankittavat-koulutuksen-osat"
       ]
       const ohtErrors: Record<string, Record<number, number[]>> = {}
       let ohtErrorsPresent = false
