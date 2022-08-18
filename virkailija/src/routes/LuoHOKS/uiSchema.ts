@@ -1118,7 +1118,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       },
       "koulutuksen-osa-koodi-uri": {
         "ui:field": "typeahead",
-        typeahead: typeaheadProps(options.ammatillisenoppiaineet)
+        typeahead: typeaheadProps(options.koulutuksenosat)
       },
       "koulutuksen-osa-koodi-versio": {
         "ui:widget": "hidden"
