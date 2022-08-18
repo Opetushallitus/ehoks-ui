@@ -369,6 +369,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
             <Step>Hankittavat ammatilliset tutkinnon osat</Step>
             <Step>Hankittavat paikalliset tutkinnon osat</Step>
             <Step>Hankittavat yhteiset tutkinnon osat</Step>
+            <Step>Hankittavat koulutuksen osat</Step>
             <Step>Opiskeluvalmiuksia tukevat opinnot</Step>
           </Stepper>
         </TopToolbar>
