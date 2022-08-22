@@ -177,7 +177,9 @@ export const HOKS = types
     })
 
     const fetchOpiskeluoikeudet = flow(function*(): any {
+      console.log("fetchOpiskeluoikeudet")
       if (!self.oppijaOid) {
+        console.log("!self.oppijaOid")
         return
       }
       try {
@@ -190,9 +192,9 @@ export const HOKS = types
           opiskeluOikeudet,
           (oo: any) => oo.oid === self.opiskeluoikeusOid
         )
-
+        console.log(opiskeluOikeus)
         if (opiskeluOikeus) {
-          console.log(opiskeluOikeus)
+          console.log("oo sisällä")
           if (opiskeluOikeus.tyyppi.koodiarvo === "ammatillinenkoulutus") {
             self.opiskeluOikeus = opiskeluOikeus
           } else {
