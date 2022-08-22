@@ -98,7 +98,8 @@ export class Opiskelija extends React.Component<
       results.length && studentIndex !== -1 && studentIndex + 1 < results.length
         ? results[studentIndex + 1]
         : undefined
-
+    console.log("Opiskelija.tsx")
+    console.log(fromListView)
     return (
       <React.Fragment>
         {fromListView && (

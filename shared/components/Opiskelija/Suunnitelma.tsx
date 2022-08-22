@@ -83,7 +83,12 @@ export const Suunnitelma = observer(function Suunnitelma(
         </EditIconContainer>
       )}
 
-      <OpenHOKSButton to={`${hoksPath}${suunnitelma.eid}`}>
+      <OpenHOKSButton
+        state={{
+          fromOppijaHoksitPage: true
+        }}
+        to={`${hoksPath}${suunnitelma.eid}`}
+      >
         <FormattedMessage
           id="suunnitelma.avaaHoksTitle"
           defaultMessage="Avaa HOKS"
