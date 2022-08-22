@@ -75,29 +75,31 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
       () => this.props.suunnitelmat.length > 0,
       async (hasSuunnitelmat: boolean) => {
         const fromOppijaHoksitPage = koulutuksenJarjestaja.search.fromListView
+        let suunnitelmaFound = false
         if (fromOppijaHoksitPage) {
           koulutuksenJarjestaja.search.setFromListView(true)
         }
-        console.log("fromOppijaHoksitPage")
-        console.log(fromOppijaHoksitPage)
-        console.log("arvo suoraan")
+
+        console.log("koulutuksenJarjestaja.search.fromListView")
         console.log(koulutuksenJarjestaja.search.fromListView)
+
         // Default behaviour
-        if (fromOppijaHoksitPage) {
-          console.log("defualttiin meni")
-          if (hasSuunnitelmat) {
-            const suunnitelma = find(
-              this.props.suunnitelmat,
-              h => h.eid === this.props.hoksId
-            )
-            if (suunnitelma) {
-              await suunnitelma.fetchDetails()
-              await suunnitelma.fetchOpiskelijapalauteTilat()
-              await suunnitelma.fetchOsaamispisteet()
-            }
+        if (hasSuunnitelmat) {
+          const suunnitelma = find(
+            this.props.suunnitelmat,
+            h => h.eid === this.props.hoksId
+          )
+          if (suunnitelma) {
+            console.log("suunnitelma löytyi")
+            await suunnitelma.fetchDetails()
+            await suunnitelma.fetchOpiskelijapalauteTilat()
+            await suunnitelma.fetchOsaamispisteet()
+            suunnitelmaFound = true
           }
-        } else {
-          console.log("elseen meni")
+        }
+
+        if (!suunnitelmaFound) {
+          console.log("suunnitelmaFound oli false")
           const urlSplit = window.location.pathname.split("/")
           const hoksEid = urlSplit[4]
           const oppijaOid = urlSplit[3]
