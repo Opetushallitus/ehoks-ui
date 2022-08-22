@@ -11,6 +11,7 @@ import { ProgressPies } from "components/ProgressPies"
 import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
 import find from "lodash.find"
+import get from "lodash.get"
 import { IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import { IHOKS } from "models/HOKS"
@@ -48,7 +49,14 @@ const HelpButton = styled(HelpPopup)`
   margin: 0 0 0 20px;
 `
 
-export interface KoulutuksenJarjestajaHOKSProps extends RouteComponentProps {
+export interface KoulutuksenJarjestajaHOKSProps
+  extends RouteComponentProps<{
+    location: {
+      state: {
+        fromOppijaHoksitPage: boolean
+      }
+    }
+  }> {
   store?: IRootStore
   suunnitelmat: IHOKS[]
   oppija?: IOppija
@@ -63,31 +71,50 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
 > {
   disposeReaction: IReactionDisposer
   componentDidMount() {
+    const { koulutuksenJarjestaja } = this.props.store!
     this.disposeReaction = reaction(
       () => this.props.suunnitelmat.length > 0,
       async (hasSuunnitelmat: boolean) => {
-        const urlSplit = window.location.pathname.split("/")
-        const hoksEid = urlSplit[4]
-        const oppijaOid = urlSplit[3]
-
-        let fromLinkSuunnitelmat: IHOKS[] = []
-        if (!hasSuunnitelmat && oppijaOid) {
-          const { koulutuksenJarjestaja } = this.props.store!
+        const fromOppijaHoksitPage = get(
+          this.props,
+          "this.props.location.state.fromOppijaHoksitPage"
+        )
+        if (fromOppijaHoksitPage) {
+          koulutuksenJarjestaja.search.setFromListView(true)
+        }
+        // Default behaviour
+        if (fromOppijaHoksitPage) {
+          if (hasSuunnitelmat) {
+            const suunnitelma = find(
+              this.props.suunnitelmat,
+              h => h.eid === this.props.hoksId
+            )
+            if (suunnitelma) {
+              await suunnitelma.fetchDetails()
+              await suunnitelma.fetchOpiskelijapalauteTilat()
+              await suunnitelma.fetchOsaamispisteet()
+            }
+          }
+        } else {
+          const urlSplit = window.location.pathname.split("/")
+          const hoksEid = urlSplit[4]
+          const oppijaOid = urlSplit[3]
+          let fromLinkSuunnitelmat: IHOKS[] = []
           koulutuksenJarjestaja.search.setFromListView(false)
           const oppija = koulutuksenJarjestaja.search.oppija(oppijaOid)
           if (!oppija) {
             await koulutuksenJarjestaja.search.fetchOppija(oppijaOid)
           }
           fromLinkSuunnitelmat = oppija ? oppija.suunnitelmat : []
-        }
-        const suunnitelma =
-          fromLinkSuunnitelmat.length > 0
-            ? find(fromLinkSuunnitelmat, h => h.eid === hoksEid)
-            : find(this.props.suunnitelmat, h => h.eid === this.props.hoksId)
-        if (suunnitelma) {
-          await suunnitelma.fetchDetails()
-          await suunnitelma.fetchOpiskelijapalauteTilat()
-          await suunnitelma.fetchOsaamispisteet()
+          const suunnitelma =
+            fromLinkSuunnitelmat.length > 0
+              ? find(fromLinkSuunnitelmat, h => h.eid === hoksEid)
+              : find(this.props.suunnitelmat, h => h.eid === this.props.hoksId)
+          if (suunnitelma) {
+            await suunnitelma.fetchDetails()
+            await suunnitelma.fetchOpiskelijapalauteTilat()
+            await suunnitelma.fetchOsaamispisteet()
+          }
         }
       },
       { fireImmediately: true }
@@ -111,13 +138,16 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
     if (!oppija || !suunnitelma) {
       return null
     }
-
+    const fromOppijaHoksitPage = get(
+      this.props,
+      "this.props.location.state.fromOppijaHoksitPage"
+    )
     return (
       <React.Fragment>
         <NavigationContainer>
           <Container>
             <PaddedContent>
-              {suunnitelmat.length > 1 && (
+              {fromOppijaHoksitPage && suunnitelmat.length > 1 && (
                 <Timestamp>
                   <StudentLink
                     to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}`}
