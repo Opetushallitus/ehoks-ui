@@ -11,7 +11,6 @@ import { ProgressPies } from "components/ProgressPies"
 import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
 import find from "lodash.find"
-import get from "lodash.get"
 import { IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import { IHOKS } from "models/HOKS"
@@ -75,15 +74,14 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
     this.disposeReaction = reaction(
       () => this.props.suunnitelmat.length > 0,
       async (hasSuunnitelmat: boolean) => {
-        const fromOppijaHoksitPage = get(
-          this.props,
-          "this.props.location.state.fromOppijaHoksitPage"
-        )
+        const fromOppijaHoksitPage = koulutuksenJarjestaja.search.fromListView
         if (fromOppijaHoksitPage) {
           koulutuksenJarjestaja.search.setFromListView(true)
         }
         console.log("fromOppijaHoksitPage")
         console.log(fromOppijaHoksitPage)
+        console.log("arvo suoraan")
+        console.log(koulutuksenJarjestaja.search.fromListView)
         // Default behaviour
         if (fromOppijaHoksitPage) {
           console.log("defualttiin meni")
@@ -135,6 +133,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
   }
 
   render() {
+    const { koulutuksenJarjestaja } = this.props.store!
     const { location, suunnitelmat, oppija } = this.props
     const urlSplit = window.location.pathname.split("/")
     const hoksEid = urlSplit[4]
@@ -142,10 +141,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
     if (!oppija || !suunnitelma) {
       return null
     }
-    const fromOppijaHoksitPage = get(
-      this.props,
-      "this.props.location.state.fromOppijaHoksitPage"
-    )
+    const fromOppijaHoksitPage = koulutuksenJarjestaja.search.fromListView
     return (
       <React.Fragment>
         <NavigationContainer>
