@@ -94,6 +94,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
             await suunnitelma.fetchDetails()
             await suunnitelma.fetchOpiskelijapalauteTilat()
             await suunnitelma.fetchOsaamispisteet()
+            await suunnitelma.fetchOpiskeluoikeudet()
             suunnitelmaFound = true
           }
         }
