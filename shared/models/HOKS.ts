@@ -192,6 +192,7 @@ export const HOKS = types
         )
 
         if (opiskeluOikeus) {
+          console.log(opiskeluOikeus)
           if (opiskeluOikeus.tyyppi.koodiarvo === "ammatillinenkoulutus") {
             self.opiskeluOikeus = opiskeluOikeus
           } else {
