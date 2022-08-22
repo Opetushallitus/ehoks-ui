@@ -144,6 +144,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
       return null
     }
     const fromOppijaHoksitPage = koulutuksenJarjestaja.search.fromListView
+    console.log(suunnitelma)
     return (
       <React.Fragment>
         <NavigationContainer>
