@@ -82,8 +82,11 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
         if (fromOppijaHoksitPage) {
           koulutuksenJarjestaja.search.setFromListView(true)
         }
+        console.log("fromOppijaHoksitPage")
+        console.log(fromOppijaHoksitPage)
         // Default behaviour
         if (fromOppijaHoksitPage) {
+          console.log("defualttiin meni")
           if (hasSuunnitelmat) {
             const suunnitelma = find(
               this.props.suunnitelmat,
@@ -96,6 +99,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
             }
           }
         } else {
+          console.log("elseen meni")
           const urlSplit = window.location.pathname.split("/")
           const hoksEid = urlSplit[4]
           const oppijaOid = urlSplit[3]

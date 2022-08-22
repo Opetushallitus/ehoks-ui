@@ -231,7 +231,7 @@ const Search = types
 
     // Fetches oppija by id and adds it to results
     const fetchOppija = flow(function*(oppijaOid): any {
-      self.fromListView = false
+      //self.fromListView = false
       const response: APIResponse = yield fetchSingle(
         apiUrl(`virkailija/oppijat/${oppijaOid}/with-oo`),
         { headers: appendCallerId() }
