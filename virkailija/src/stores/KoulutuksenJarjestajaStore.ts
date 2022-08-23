@@ -222,6 +222,8 @@ const Search = types
           flow(function*(oppija): any {
             yield oppija.fetchSuunnitelmat()
             yield oppija.fetchHenkilotiedot()
+            yield oppija.fetchOpiskeluoikeudet()
+            yield oppija.fetchSuunnitelmat()
           })
         )
       )
