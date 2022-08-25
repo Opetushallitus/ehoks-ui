@@ -286,8 +286,8 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
         )
       }
     }
-    console.log("RESPONSE STATUS", request.status)
-    console.log("RESPONSE JSON", json)
+    //console.log("RESPONSE STATUS", request.status)
+    //console.log("RESPONSE JSON", json)
     this.setState({ isLoading: false })
   }
 
