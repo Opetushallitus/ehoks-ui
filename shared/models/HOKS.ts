@@ -192,7 +192,6 @@ export const HOKS = types
         )
 
         if (opiskeluOikeus) {
-          console.log(opiskeluOikeus.tyyppi.koodiarvo)
           if (
             opiskeluOikeus.tyyppi.koodiarvo === "ammatillinenkoulutus" ||
             opiskeluOikeus.tyyppi.koodiarvo === "tuvakoulutuksensuoritus"
