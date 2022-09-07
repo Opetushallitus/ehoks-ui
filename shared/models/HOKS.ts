@@ -192,7 +192,10 @@ export const HOKS = types
         )
 
         if (opiskeluOikeus) {
-          if (opiskeluOikeus.tyyppi.koodiarvo === "ammatillinenkoulutus") {
+          if (
+            opiskeluOikeus.tyyppi.koodiarvo === "ammatillinenkoulutus" ||
+            opiskeluOikeus.tyyppi.koodiarvo === "tuva"
+          ) {
             self.opiskeluOikeus = opiskeluOikeus
           } else {
             const activeLocale: Locale = root.translations.activeLocale
@@ -200,7 +203,7 @@ export const HOKS = types
               root.translations.messages[activeLocale][
                 "errors.HOKS.fetchOpiskeluoikeudet.wrongType"
               ] ||
-              "HOKSiin liitetty opiskeluoikeus ei ole ammatillinen tutkinto"
+              "HOKSiin liitetty opiskeluoikeus ei ole ammatillinen tutkinto tai TUVA"
             throw new Error(errorText)
           }
         }
