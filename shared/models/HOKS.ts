@@ -196,7 +196,7 @@ export const HOKS = types
         if (opiskeluOikeus) {
           if (
             opiskeluOikeus.tyyppi.koodiarvo === "ammatillinenkoulutus" ||
-            opiskeluOikeus.tyyppi.koodiarvo === "tuvakoulutuksensuoritus"
+            opiskeluOikeus.tyyppi.koodiarvo === "tuva"
           ) {
             self.opiskeluOikeus = opiskeluOikeus
           } else {
@@ -280,6 +280,7 @@ export const HOKS = types
         return [
           ...self.hankittavatAmmatTutkinnonOsat,
           ...self.hankittavatPaikallisetTutkinnonOsat,
+          ...self.hankittavatKoulutuksenOsat,
           // treat osaAlue as tutkinnonOsa for hankittavatYhteisetTutkinnonOsat
           ...osaAlueet
         ]
