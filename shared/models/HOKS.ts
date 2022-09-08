@@ -5,6 +5,7 @@ import { AiemminHankittuYhteinenTutkinnonOsa } from "models/YhteinenTutkinnonOsa
 import { HankittavaAmmatillinenTutkinnonOsa } from "models/HankittavaAmmatillinenTutkinnonOsa"
 import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenTutkinnonOsa"
 import { HankittavaYhteinenTutkinnonOsa } from "models/YhteinenTutkinnonOsa/HankittavaYhteinenTutkinnonOsa"
+import { HankittavaKoulutuksenOsa } from "models/HankittavaKoulutuksenOsa"
 import {
   IHankittavaTutkinnonOsa,
   IAiemminHankittuTutkinnonOsa
@@ -54,6 +55,7 @@ const Model = types.model("HOKSModel", {
     HankittavaPaikallinenTutkinnonOsa
   ),
   hankittavatYhteisetTutkinnonOsat: types.array(HankittavaYhteinenTutkinnonOsa),
+  hankittavatKoulutuksenOsat: types.array(HankittavaKoulutuksenOsa),
   opiskeluvalmiuksiaTukevatOpinnot: types.array(
     OpiskeluvalmiuksiaTukevatOpinnot
   ),
@@ -278,6 +280,7 @@ export const HOKS = types
         return [
           ...self.hankittavatAmmatTutkinnonOsat,
           ...self.hankittavatPaikallisetTutkinnonOsat,
+          ...self.hankittavatKoulutuksenOsat,
           // treat osaAlue as tutkinnonOsa for hankittavatYhteisetTutkinnonOsat
           ...osaAlueet
         ]
