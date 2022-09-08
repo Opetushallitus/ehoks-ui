@@ -3,6 +3,7 @@ import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 //import { LocaleRoot } from "models/helpers/LocaleRoot"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 import { EnrichTutkinnonOsaKoodiUri } from "./Enrichment/EnrichTutkinnonOsaKoodiUri"
+import { HankittavatTutkinnonOsatViews } from "./helpers/HankittavatTutkinnonOsatViews"
 
 export const Model = types.model({
   id: types.optional(types.number, 0),
@@ -14,7 +15,12 @@ export const Model = types.model({
 })
 
 export const HankittavaKoulutuksenOsa = types
-  .compose("HankittavaKoulutuksenOsa", EnrichTutkinnonOsaKoodiUri, Model)
+  .compose(
+    "HankittavaKoulutuksenOsa",
+    EnrichTutkinnonOsaKoodiUri,
+    Model,
+    HankittavatTutkinnonOsatViews
+  )
   .views(_ => ({
     get tyyppi(): TutkinnonOsaType {
       return TutkinnonOsaType.HankittavaKoulutuksenOsa

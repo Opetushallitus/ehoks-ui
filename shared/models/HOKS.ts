@@ -280,6 +280,7 @@ export const HOKS = types
         return [
           ...self.hankittavatAmmatTutkinnonOsat,
           ...self.hankittavatPaikallisetTutkinnonOsat,
+          ...self.hankittavatKoulutuksenOsat,
           // treat osaAlue as tutkinnonOsa for hankittavatYhteisetTutkinnonOsat
           ...osaAlueet
         ]

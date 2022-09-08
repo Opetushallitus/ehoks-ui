@@ -6,6 +6,7 @@ import { AiemminHankittuPaikallinenTutkinnonOsa } from "models/AiemminHankittuPa
 import { AiemminHankitunYTOOsaAlue } from "models/YhteinenTutkinnonOsa/AiemminHankitunYTOOsaAlue"
 import { HankittavaAmmatillinenTutkinnonOsa } from "models/HankittavaAmmatillinenTutkinnonOsa"
 import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenTutkinnonOsa"
+import { HankittavaKoulutuksenOsa } from "models/HankittavaKoulutuksenOsa"
 import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteinenTutkinnonOsa/YhteisenTutkinnonOsanOsaAlue"
 import { Organisaatio } from "../Organisaatio"
 import { TodennettuArviointiLisatiedot } from "../TodennettuArviointiLisatiedot"
@@ -40,6 +41,7 @@ const HankittavaTutkinnonOsa = types
   .compose(
     HankittavaAmmatillinenTutkinnonOsa,
     HankittavaPaikallinenTutkinnonOsa,
+    HankittavaKoulutuksenOsa,
     YhteisenTutkinnonOsanOsaAlue // added with flattenDeep
   )
   .named("HankittavaTutkinnonOsa")
