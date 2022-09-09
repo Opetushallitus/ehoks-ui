@@ -222,7 +222,8 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       const hankittavatTyypit = [
         "hankittavat-ammat-tutkinnon-osat",
         "hankittavat-paikalliset-tutkinnon-osat",
-        "hankittavat-yhteiset-tutkinnon-osat"
+        "hankittavat-yhteiset-tutkinnon-osat",
+        "hankittavat-koulutuksen-osat"
       ]
       const ohtErrors: Record<string, Record<number, number[]>> = {}
       let ohtErrorsPresent = false
@@ -285,8 +286,8 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
         )
       }
     }
-    console.log("RESPONSE STATUS", request.status)
-    console.log("RESPONSE JSON", json)
+    //console.log("RESPONSE STATUS", request.status)
+    //console.log("RESPONSE JSON", json)
     this.setState({ isLoading: false })
   }
 
@@ -368,6 +369,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
             <Step>Hankittavat ammatilliset tutkinnon osat</Step>
             <Step>Hankittavat paikalliset tutkinnon osat</Step>
             <Step>Hankittavat yhteiset tutkinnon osat</Step>
+            <Step>Hankittavat koulutuksen osat</Step>
             <Step>Opiskeluvalmiuksia tukevat opinnot</Step>
           </Stepper>
         </TopToolbar>

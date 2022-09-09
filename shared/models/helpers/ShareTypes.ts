@@ -8,6 +8,7 @@ export enum TutkinnonOsaType {
   HankittavaPaikallinen = "HankittavaPaikallinenTutkinnonOsa",
   HankittavaYhteinen = "HankittavaYhteinenTutkinnonOsa",
   HankittavanYhteisenTutkinnonOsanOsaAlue = "HankittavaYTOOsaAlue",
+  HankittavaKoulutuksenOsa = "HankittavaKoulutuksenOsa",
   AiemminHankittuAmmatillinen = "AiemminHankittuAmmatillinenTutkinnonOsa",
   AiemminHankittuPaikallinen = "AiemminHankittuPaikallinenTutkinnonOsa",
   AiemminHankittuYhteinen = "AiemminHankittuYhteinenTutkinnonOsa",
