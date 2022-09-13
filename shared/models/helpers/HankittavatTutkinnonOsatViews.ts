@@ -43,7 +43,7 @@ export const HankittavatTutkinnonOsatViews = types
         if (self.tyyppi !== TutkinnonOsaType.HankittavaKoulutuksenOsa) {
           return getOtsikko(self, ospLyhenne)
         } else {
-          return "TEMP otsikko koulutuksen osa"
+          return self.otsikko
         }
       },
       hasNayttoOrHarjoittelujakso(type?: ShareType, moduleId?: string) {

@@ -20,8 +20,14 @@ export const HankittavaKoulutuksenOsa = types
     Model,
     HankittavatTutkinnonOsatViews
   )
-  .views(_ => ({
+  .views(self => ({
     get tyyppi(): TutkinnonOsaType {
       return TutkinnonOsaType.HankittavaKoulutuksenOsa
+    },
+    get otsikko() {
+      return "TUVA Koulutuksen Osa " + self.laajuus + " vkoa"
+    },
+    get ajanjakso() {
+      return self.alku + " - " + self.loppu
     }
   }))
