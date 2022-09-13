@@ -25,7 +25,8 @@ const Container = styled("div")<ContainerProps>`
   width: unset;
   border-top-style: solid;
   border-top-width: 4px;
-  border-top-color: #979797;
+  border-top-color: ${props =>
+    !!props.accentColor ? props.theme.colors[props.accentColor] : "#979797"};
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.4);
   margin-left: 20px;
   margin-bottom: 20px;
