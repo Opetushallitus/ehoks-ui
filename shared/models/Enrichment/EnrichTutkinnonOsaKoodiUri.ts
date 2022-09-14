@@ -1,6 +1,7 @@
 import { flow, getEnv, types } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { APIResponse } from "types/APIResponse"
+import { TutkinnonOsaType } from "../helpers/ShareTypes"
 
 interface DynamicObject {
   [name: string]: any
@@ -37,7 +38,11 @@ export const EnrichTutkinnonOsaKoodiUri = types
     })
 
     const afterCreate = () => {
-      fetchEPerusteet(self.tutkinnonOsaKoodiUri)
+      const koodiUri =
+        self.tyyppi === TutkinnonOsaType.HankittavaKoulutuksenOsa
+          ? self.koulutuksenOsaKoodiUri
+          : self.tutkinnonOsaKoodiUri
+      fetchEPerusteet(koodiUri)
     }
 
     return { afterCreate }
