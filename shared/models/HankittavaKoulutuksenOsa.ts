@@ -1,16 +1,23 @@
-import { types } from "mobx-state-tree"
+import { types, getRoot } from "mobx-state-tree"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 import { EnrichTutkinnonOsaKoodiUri } from "./Enrichment/EnrichTutkinnonOsaKoodiUri"
 import { HankittavatTutkinnonOsatViews } from "./helpers/HankittavatTutkinnonOsatViews"
+import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
+import { LocaleRoot } from "models/helpers/LocaleRoot"
 
 export const Model = types.model({
   id: types.optional(types.number, 0),
   koulutuksenOsaKoodiUri: types.optional(types.string, ""),
-  koulutuksennOsa: types.optional(EPerusteetVastaus, {}),
+  tutkinnonOsa: types.optional(EPerusteetVastaus, {}),
   alku: types.optional(types.string, ""),
   loppu: types.optional(types.string, ""),
-  laajuus: types.optional(types.number, 0)
+  laajuus: types.optional(types.number, 0),
+  tutkinnonOsaViitteet: types.array(TutkinnonOsaViite),
+  vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
+  koulutuksenJarjestajaOid: types.optional(types.string, ""),
+  olennainenSeikka: types.optional(types.boolean, false),
+  opetusJaOhjausMaara: types.maybe(types.number)
 })
 
 export const HankittavaKoulutuksenOsa = types
@@ -20,14 +27,19 @@ export const HankittavaKoulutuksenOsa = types
     Model,
     HankittavatTutkinnonOsatViews
   )
-  .views(self => ({
-    get tyyppi(): TutkinnonOsaType {
-      return TutkinnonOsaType.HankittavaKoulutuksenOsa
-    },
-    get otsikko() {
-      return "TUVA Koulutuksen Osa " + self.laajuus + " vkoa"
-    },
-    get ajanjakso() {
-      return self.alku + " - " + self.loppu
+  .views(self => {
+    const root: LocaleRoot = getRoot(self)
+    return {
+      get tyyppi(): TutkinnonOsaType {
+        return TutkinnonOsaType.HankittavaKoulutuksenOsa
+      },
+      get otsikko() {
+        return self.tutkinnonOsa && self.tutkinnonOsa.nimi
+          ? self.tutkinnonOsa.nimi[root.translations.activeLocale]
+          : "TUVA Koulutuksen Osa " + self.laajuus + " vkoa"
+      },
+      get ajanjakso() {
+        return self.alku + " - " + self.loppu
+      }
     }
-  }))
+  })
