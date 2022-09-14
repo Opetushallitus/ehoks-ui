@@ -20,7 +20,7 @@ export const HankittavatTutkinnonOsatViews = types
             self.osaamisenHankkimistavat
           )
         } else {
-          return "aikataulutettu"
+          return self.isValmis ? "valmis" : "aikataulutettu"
         }
       },
       get osaamisvaatimukset() {

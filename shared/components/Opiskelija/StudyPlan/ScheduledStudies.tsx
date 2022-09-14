@@ -102,8 +102,8 @@ export class ScheduledStudies extends React.Component<ScheduledStudiesProps> {
                   <KoulutuksenOsa
                     accentColor="scheduled"
                     title={study.opintoOtsikko(competencePointsTitle)}
-                    ajanjakso={"ajanjakso"}
-                    laajuus={"laajuus"}
+                    ajanjakso={study.ajanjakso}
+                    laajuus={study.laajuus}
                   />
                   {renderExtraItem && <EmptyItem />}
                 </React.Fragment>

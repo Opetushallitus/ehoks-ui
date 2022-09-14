@@ -124,7 +124,7 @@ export interface KoulutuksenOsaProps {
   koulutuksenJarjestaja?: IOrganisaatio
   tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
   ajanjakso?: string
-  laajuus?: string
+  laajuus?: number
 }
 
 export interface KoulutuksenOsaState {
@@ -219,22 +219,14 @@ export class KoulutuksenOsa extends React.Component<
             <OneRowTable
               th={
                 <FormattedMessage
-                  id="koulutuksenOsa.ajanjakso"
-                  defaultMessage="Ajanjakso"
-                />
-              }
-            >
-              {ajanjakso}
-            </OneRowTable>
-            <OneRowTable
-              th={
-                <FormattedMessage
                   id="koulutuksenOsa.kuvaus"
-                  defaultMessage="Kuvaus"
+                  defaultMessage="ePerusteet linkki"
                 />
               }
             >
-              linkki
+              <a href="https://eperusteet.opintopolku.fi/#/fi/tutkintoonvalmentava/7534950/linkkisivu/7535290">
+                Tutkintokoulutukseen valmentava koulutus
+              </a>
             </OneRowTable>
           </SubTitleContainer>
         </InnerContainer>

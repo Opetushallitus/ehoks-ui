@@ -40,6 +40,12 @@ export const HankittavaKoulutuksenOsa = types
       },
       get ajanjakso() {
         return self.alku + " - " + self.loppu
+      },
+      get laajuus() {
+        return self.laajuus
+      },
+      get isValmis() {
+        return new Date() >= new Date(self.loppu)
       }
     }
   })
