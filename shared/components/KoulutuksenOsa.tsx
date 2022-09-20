@@ -225,13 +225,25 @@ export class KoulutuksenOsa extends React.Component<
                 <FormattedMessage
                   id="opiskelusuunnitelma.laajuusTitle"
                   defaultMessage="Laajuus"
-                />{" "}
-                {laajuus} viikkoa
+                />
+                {": "}
+                {laajuus}
+                <FormattedMessage
+                  id="opiskelusuunnitelma.viikkoa"
+                  defaultMessage="viikkoa"
+                />
               </Detail>
               <Detail>
                 {" "}
-                <a href="https://eperusteet.opintopolku.fi/#/fi/tutkintoonvalmentava/7534950/linkkisivu/7535290">
-                  Tutkintokoulutukseen valmentava koulutus
+                <a
+                  href="https://eperusteet.opintopolku.fi/#/fi/tutkintoonvalmentava/7534950/linkkisivu/7535290"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.ePerusteLinkki"
+                    defaultMessage="Linkki ePerusteisiin"
+                  />
                 </a>
               </Detail>
             </DetailsContainer>

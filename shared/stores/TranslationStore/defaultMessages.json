@@ -366,6 +366,16 @@
   },
   {
     "locale": "fi",
+    "key": "opiskelusuunnitelma.ePerusteLinkki",
+    "value": "Linkki ePerusteisiin"
+  },
+  {
+    "locale": "fi",
+    "key": "opiskelusuunnitelma.viikkoa",
+    "value": "viikkoa"
+  },
+  {
+    "locale": "fi",
     "key": "opiskelusuunnitelma.naytaAmmattitaitovaatimuksetAriaLabel",
     "value": "Näytä ammattitaitovaatimukset ja arviointikriteerit"
   },
