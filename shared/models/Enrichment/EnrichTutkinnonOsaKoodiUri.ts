@@ -20,10 +20,21 @@ export const EnrichTutkinnonOsaKoodiUri = types
       StoreEnvironment
     >(self)
 
-    const getFromEPerusteetService = (code: string) =>
-      fetchSingle(apiUrl(`${apiPrefix}/external/eperusteet/${code}`), {
-        headers: appendCallerId()
-      })
+    const getFromEPerusteetService = (code: string) => {
+      if (self.tyyppi === TutkinnonOsaType.HankittavaKoulutuksenOsa) {
+        console.log("koulutuksenOsa Enrich")
+        return fetchSingle(
+          apiUrl(`${apiPrefix}/external/eperusteet/koulutuksenOsa/${code}`),
+          {
+            headers: appendCallerId()
+          }
+        )
+      } else {
+        return fetchSingle(apiUrl(`${apiPrefix}/external/eperusteet/${code}`), {
+          headers: appendCallerId()
+        })
+      }
+    }
 
     const fetchEPerusteet = flow(function*(koodiUri: string): any {
       try {
