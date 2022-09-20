@@ -10,8 +10,8 @@ import {
 } from "models/helpers/TutkinnonOsa"
 import { FormattedMessage } from "react-intl"
 import { AppContext } from "components/AppContext"
-import { OneRowTable } from "./TutkinnonOsa/Shared"
 import { ColorType } from "theme"
+import { MdEventNote } from "react-icons/md"
 import { ShareType, TutkinnonOsaType } from "../models/helpers/ShareTypes"
 
 interface ContainerProps {
@@ -50,6 +50,7 @@ const InnerContainer = styled("div")`
   width: 100%;
   flex-direction: column;
   justify-content: space-between;
+  margin
 `
 
 const TitleContainer = styled("div")`
@@ -58,10 +59,9 @@ const TitleContainer = styled("div")`
   align-items: center;
 `
 
-const SubTitleContainer = styled(TitleContainer)`
+const ContentContainer = styled("div")`
+  display: flex;
   margin: 0px 0px 15px 20px;
-  flex-direction: column;
-  align-items: start;
 `
 
 const Title = styled("h2")`
@@ -74,12 +74,19 @@ const Title = styled("h2")`
 const DetailsContainer = styled("div")`
   flex: 1;
   flex-direction: column;
+  margin: 0px 0px 15px 20px;
 `
 
 const Detail = styled("div")`
   font-weight: 600;
   color: #636769;
   line-height: small;
+`
+
+const Icon = styled("div")`
+  margin-right: 10px;
+  padding-top: 3px;
+  color: #000;
 `
 
 export interface KoulutuksenOsaProps {
@@ -206,52 +213,29 @@ export class KoulutuksenOsa extends React.Component<
           <TitleContainer>
             <Title data-testid="Title">{title}</Title>
           </TitleContainer>
-          <SubTitleContainer>
-            <OneRowTable
-              th={
-                <FormattedMessage
-                  id="koulutuksenOsa.ajanjakso"
-                  defaultMessage="Ajanjakso"
-                />
-              }
-            >
-              {ajanjakso}
-            </OneRowTable>
-            <OneRowTable
-              th={
+          <ContentContainer>
+            <Icon>
+              <MdEventNote size="24" fill="#636769" />
+            </Icon>
+            <DetailsContainer>
+              <div style={{ display: "inline-block", width: "auto" }}>
+                <Detail>{ajanjakso}</Detail>
+              </div>
+              <Detail>
                 <FormattedMessage
                   id="opiskelusuunnitelma.laajuusTitle"
                   defaultMessage="Laajuus"
-                />
-              }
-            >
-              {laajuus} viikkoa
-            </OneRowTable>
-            <OneRowTable
-              th={
-                <FormattedMessage
-                  id="koulutuksenOsa.kuvaus"
-                  defaultMessage="ePerusteet linkki"
-                />
-              }
-            >
-              <a href="https://eperusteet.opintopolku.fi/#/fi/tutkintoonvalmentava/7534950/linkkisivu/7535290">
-                Tutkintokoulutukseen valmentava koulutus
-              </a>
-            </OneRowTable>
-          </SubTitleContainer>
-          <DetailsContainer>
-            <div style={{ display: "inline-block", width: "auto" }}>
-              <Detail>{ajanjakso}</Detail>
-            </div>
-            <Detail>{laajuus}</Detail>
-            <Detail>
-              {" "}
-              <a href="https://eperusteet.opintopolku.fi/#/fi/tutkintoonvalmentava/7534950/linkkisivu/7535290">
-                Tutkintokoulutukseen valmentava koulutus
-              </a>
-            </Detail>
-          </DetailsContainer>
+                />{" "}
+                {laajuus} viikkoa
+              </Detail>
+              <Detail>
+                {" "}
+                <a href="https://eperusteet.opintopolku.fi/#/fi/tutkintoonvalmentava/7534950/linkkisivu/7535290">
+                  Tutkintokoulutukseen valmentava koulutus
+                </a>
+              </Detail>
+            </DetailsContainer>
+          </ContentContainer>
         </InnerContainer>
       </Container>
     )
