@@ -583,7 +583,7 @@ export class Tavoitteet extends React.Component<
           app={app}
         />
 
-        {this.props.showOpiskelijapalaute && (
+        {this.props.showOpiskelijapalaute && !hoks.hasKoulutuksenOsa && (
           <Opiskelijapalaute
             toggleAccordion={this.toggleAccordion}
             open={this.state.activeAccordions.opiskelijapalaute}
