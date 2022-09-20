@@ -54,5 +54,6 @@ export const EPerusteetVastaus = types.model("EPerusteet", {
   ammattitaidonOsoittamistavat: types.maybeNull(
     EPerusteetAmmattitaidonOsoittamistavat
   ),
-  nimi: types.optional(EPerusteetNimi, {})
+  nimi: types.optional(EPerusteetNimi, {}),
+  koulutuksenOsaId: types.optional(types.string, "")
 })
