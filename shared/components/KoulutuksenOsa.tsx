@@ -71,6 +71,17 @@ const Title = styled("h2")`
   margin: 10px 20px;
   ${props => props.theme.typography.heading3}
 `
+const DetailsContainer = styled("div")`
+  flex: 1;
+  flex-direction: column;
+`
+
+const Detail = styled("div")`
+  font-weight: 600;
+  color: #636769;
+  line-height: small;
+`
+
 export interface KoulutuksenOsaProps {
   /** Color of top border */
   accentColor?: ColorType
@@ -229,6 +240,18 @@ export class KoulutuksenOsa extends React.Component<
               </a>
             </OneRowTable>
           </SubTitleContainer>
+          <DetailsContainer>
+            <div style={{ display: "inline-block", width: "auto" }}>
+              <Detail>{ajanjakso}</Detail>
+            </div>
+            <Detail>{laajuus}</Detail>
+            <Detail>
+              {" "}
+              <a href="https://eperusteet.opintopolku.fi/#/fi/tutkintoonvalmentava/7534950/linkkisivu/7535290">
+                Tutkintokoulutukseen valmentava koulutus
+              </a>
+            </Detail>
+          </DetailsContainer>
         </InnerContainer>
       </Container>
     )
