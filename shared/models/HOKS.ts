@@ -378,6 +378,9 @@ export const HOKS = types
       },
       get paattymispaiva() {
         return self.opiskeluOikeus.paattymispaiva
+      },
+      get hasKoulutuksenOsa() {
+        return self.hankittavatKoulutuksenOsat.length > 0
       }
     }
   })
