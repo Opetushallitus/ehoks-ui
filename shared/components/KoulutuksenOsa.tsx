@@ -226,8 +226,7 @@ export class KoulutuksenOsa extends React.Component<
                   id="opiskelusuunnitelma.laajuusTitle"
                   defaultMessage="Laajuus"
                 />
-                {": "}
-                {laajuus}
+                {":"}&nbsp; {laajuus}
                 <FormattedMessage
                   id="opiskelusuunnitelma.viikkoa"
                   defaultMessage="viikkoa"
