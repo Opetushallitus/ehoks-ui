@@ -379,8 +379,8 @@ export const HOKS = types
       get paattymispaiva() {
         return self.opiskeluOikeus.paattymispaiva
       },
-      get hasKoulutuksenOsa() {
-        return self.hankittavatKoulutuksenOsat.length > 0
+      get isTuvaHoks() {
+        return self.opiskeluOikeus.tyyppi.isTuvaOpiskeluoikeus
       }
     }
   })

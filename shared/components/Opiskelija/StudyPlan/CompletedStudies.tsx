@@ -103,7 +103,8 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
                   <KoulutuksenOsa
                     accentColor="ready"
                     title={study.opintoOtsikko(competencePointsTitle)}
-                    ajanjakso={study.ajanjakso}
+                    alku={study.alku}
+                    loppu={study.loppu}
                     laajuus={study.laajuus}
                   />
                   {renderExtraItem && <EmptyItem />}

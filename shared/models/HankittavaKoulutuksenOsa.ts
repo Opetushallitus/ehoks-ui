@@ -38,9 +38,6 @@ export const HankittavaKoulutuksenOsa = types
           ? self.tutkinnonOsa.nimi[root.translations.activeLocale]
           : "TUVA Koulutuksen Osa " + self.laajuus + " vkoa"
       },
-      get ajanjakso() {
-        return self.alku + " - " + self.loppu
-      },
       get isValmis() {
         return new Date() >= new Date(self.loppu)
       }

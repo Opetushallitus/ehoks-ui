@@ -9,6 +9,7 @@ import {
   ITarkentavatTiedotOsaamisenArvioija
 } from "models/helpers/TutkinnonOsa"
 import { FormattedMessage } from "react-intl"
+import { FormattedDate } from "components/FormattedDate"
 import { AppContext } from "components/AppContext"
 import { ColorType } from "theme"
 import { MdEventNote } from "react-icons/md"
@@ -141,7 +142,8 @@ export interface KoulutuksenOsaProps {
   objectives?: string
   koulutuksenJarjestaja?: IOrganisaatio
   tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
-  ajanjakso?: string
+  alku?: string
+  loppu?: string
   laajuus?: number
 }
 
@@ -205,7 +207,14 @@ export class KoulutuksenOsa extends React.Component<
   }
 
   render() {
-    const { accentColor, title, width = "25%", ajanjakso, laajuus } = this.props
+    const {
+      accentColor,
+      title,
+      width = "25%",
+      alku,
+      loppu,
+      laajuus
+    } = this.props
 
     return (
       <Container accentColor={accentColor} width={width}>
@@ -219,14 +228,18 @@ export class KoulutuksenOsa extends React.Component<
             </Icon>
             <DetailsContainer>
               <div style={{ display: "inline-block", width: "auto" }}>
-                <Detail>{ajanjakso}</Detail>
+                <Detail>
+                  <FormattedDate date={alku} dateNotSet="" />
+                  {" - "}
+                  <FormattedDate date={loppu} dateNotSet="" />
+                </Detail>
               </div>
               <Detail>
                 <FormattedMessage
                   id="opiskelusuunnitelma.laajuusTitle"
                   defaultMessage="Laajuus"
                 />
-                {":"}&nbsp; {laajuus} &nbsp;
+                {":"}&nbsp;{laajuus}&nbsp;
                 <FormattedMessage
                   id="opiskelusuunnitelma.viikkoa"
                   defaultMessage="viikkoa"
