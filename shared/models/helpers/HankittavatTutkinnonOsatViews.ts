@@ -6,7 +6,7 @@ import { LocaleRoot } from "models/helpers/LocaleRoot"
 import { getOsaamispisteet } from "./getOsaamispisteet"
 import find from "lodash.find"
 import { OsaamisenHankkimistapaType } from "../OsaamisenHankkimistapa"
-import { ShareType } from "./ShareTypes"
+import { ShareType, TutkinnonOsaType } from "./ShareTypes"
 
 export const HankittavatTutkinnonOsatViews = types
   .model({})
@@ -14,7 +14,14 @@ export const HankittavatTutkinnonOsatViews = types
     const root: LocaleRoot = getRoot(self)
     return {
       get tila() {
-        return getTila(self.osaamisenOsoittaminen, self.osaamisenHankkimistavat)
+        if (self.tyyppi !== TutkinnonOsaType.HankittavaKoulutuksenOsa) {
+          return getTila(
+            self.osaamisenOsoittaminen,
+            self.osaamisenHankkimistavat
+          )
+        } else {
+          return self.isValmis ? "valmis" : "aikataulutettu"
+        }
       },
       get osaamisvaatimukset() {
         if (!self.tutkinnonOsa) {
@@ -26,10 +33,19 @@ export const HankittavatTutkinnonOsatViews = types
         )
       },
       get osaamispisteet() {
-        return getOsaamispisteet(self.tutkinnonOsaViitteet)
+        if (self.tyyppi !== TutkinnonOsaType.HankittavaKoulutuksenOsa) {
+          return getOsaamispisteet(self.tutkinnonOsaViitteet)
+        } else {
+          return 0
+        }
       },
-      opintoOtsikko: (ospLyhenne: string): string =>
-        getOtsikko(self, ospLyhenne),
+      opintoOtsikko(ospLyhenne: string) {
+        if (self.tyyppi !== TutkinnonOsaType.HankittavaKoulutuksenOsa) {
+          return getOtsikko(self, ospLyhenne)
+        } else {
+          return self.otsikko
+        }
+      },
       hasNayttoOrHarjoittelujakso(type?: ShareType, moduleId?: string) {
         if (!moduleId && !type) {
           return false

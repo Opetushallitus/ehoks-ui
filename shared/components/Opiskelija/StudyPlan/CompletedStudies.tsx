@@ -5,6 +5,7 @@ import { AccordionTitle } from "../../AccordionTitle"
 import { FormattedMessage } from "react-intl"
 import { StudiesContainer } from "../../StudiesContainer"
 import { TutkinnonOsa } from "../../TutkinnonOsa"
+import { KoulutuksenOsa } from "../../KoulutuksenOsa"
 import { EmptyItem } from "../../EmptyItem"
 import { Accordion } from "../../Accordion"
 import { ShareType, TutkinnonOsaType } from "../../../models/helpers/ShareTypes"
@@ -66,33 +67,50 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
         <StudiesContainer>
           {valmiitOpinnot.map((study, i) => {
             const renderExtraItem = (i + 1) % 4 === 0
-            return (
-              <React.Fragment key={`${study.id}_${i}`}>
-                <TutkinnonOsa
-                  accentColor="ready"
-                  competenceRequirements={study.osaamisvaatimukset}
-                  osaamisenOsoittamiset={study.osaamisenOsoittaminen}
-                  olennainenSeikka={
-                    study.olennainenSeikka
-                      ? elements.essentialFactor
-                      : undefined
-                  }
-                  opetusJaOhjausMaara={study.opetusJaOhjausMaara}
-                  fadedColor="#ECF6ED"
-                  koodiUri={study.tutkinnonOsaKoodiUri}
-                  moduleId={study.moduleId}
-                  hoksEid={hoksEid}
-                  tutkinnonOsaTyyppi={study.tutkinnonOsaTyyppi}
-                  tutkinnonOsaModuleId={study.tutkinnonOsaModuleId}
-                  osaamisenHankkimistavat={study.osaamisenHankkimistavat}
-                  share={share}
-                  title={study.opintoOtsikko(competencePointsTitle)}
-                  objectives={study.tavoitteetJaSisallot}
-                  koulutuksenJarjestaja={study.koulutuksenJarjestaja}
-                />
-                {renderExtraItem && <EmptyItem />}
-              </React.Fragment>
-            )
+            const isKoulutuksenOsa =
+              study.tyyppi === TutkinnonOsaType.HankittavaKoulutuksenOsa
+            if (!isKoulutuksenOsa) {
+              return (
+                <React.Fragment key={`${study.id}_${i}`}>
+                  <TutkinnonOsa
+                    accentColor="ready"
+                    competenceRequirements={study.osaamisvaatimukset}
+                    osaamisenOsoittamiset={study.osaamisenOsoittaminen}
+                    olennainenSeikka={
+                      study.olennainenSeikka
+                        ? elements.essentialFactor
+                        : undefined
+                    }
+                    opetusJaOhjausMaara={study.opetusJaOhjausMaara}
+                    fadedColor="#ECF6ED"
+                    koodiUri={study.tutkinnonOsaKoodiUri}
+                    moduleId={study.moduleId}
+                    hoksEid={hoksEid}
+                    tutkinnonOsaTyyppi={study.tutkinnonOsaTyyppi}
+                    tutkinnonOsaModuleId={study.tutkinnonOsaModuleId}
+                    osaamisenHankkimistavat={study.osaamisenHankkimistavat}
+                    share={share}
+                    title={study.opintoOtsikko(competencePointsTitle)}
+                    objectives={study.tavoitteetJaSisallot}
+                    koulutuksenJarjestaja={study.koulutuksenJarjestaja}
+                  />
+                  {renderExtraItem && <EmptyItem />}
+                </React.Fragment>
+              )
+            } else {
+              return (
+                <React.Fragment key={`${study.id}_${i}`}>
+                  <KoulutuksenOsa
+                    accentColor="ready"
+                    title={study.opintoOtsikko(competencePointsTitle)}
+                    alku={study.alku}
+                    loppu={study.loppu}
+                    laajuus={study.laajuus}
+                  />
+                  {renderExtraItem && <EmptyItem />}
+                </React.Fragment>
+              )
+            }
           })}
           {!valmiitOpinnot.length && (
             <div>
