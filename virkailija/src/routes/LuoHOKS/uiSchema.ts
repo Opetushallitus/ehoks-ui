@@ -4,6 +4,7 @@ import { UiSchemaOptions } from "../HOKSLomake/formConfig"
 export const propertiesByStep: { [index: number]: string[] } = {
   0: [
     "opiskeluoikeus-oid",
+    "tuva-opiskeluoikeus-oid",
     "oppija-oid",
     "ensikertainen-hyvaksyminen",
     "paivitetty",
@@ -27,6 +28,7 @@ export const propertiesByStep: { [index: number]: string[] } = {
 const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
   "ui:order": [
     "opiskeluoikeus-oid",
+    "tuva-opiskeluoikeus-oid",
     "oppija-oid",
     "ensikertainen-hyvaksyminen",
     "paivitetty",
