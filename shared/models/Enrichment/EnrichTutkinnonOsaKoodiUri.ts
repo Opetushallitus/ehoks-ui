@@ -45,6 +45,7 @@ export const EnrichTutkinnonOsaKoodiUri = types
         self.tutkinnonOsa = response.data
       } catch (error) {
         errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
+        self.tutkinnonOsa = "n/a"
       }
     })
 
