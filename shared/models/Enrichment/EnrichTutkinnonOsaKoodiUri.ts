@@ -45,7 +45,7 @@ export const EnrichTutkinnonOsaKoodiUri = types
         self.tutkinnonOsa = response.data
       } catch (error) {
         errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
-        self.tutkinnonOsa = "n/a"
+        self.tutkinnonOsa = [{ nimi: { en: "n/a", fi: "n/a", sv: "n/a" } }]
       }
     })
 
