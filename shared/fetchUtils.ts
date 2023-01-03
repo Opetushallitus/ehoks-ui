@@ -132,9 +132,16 @@ export const mockFetch = (apiUrl: (path: string) => string, version = 0) => (
   return Promise.resolve(mockResponse)
 }
 
+export const timeoutSignal = (timeout: number) =>
+  AbortSignal && "timeout" in AbortSignal ? AbortSignal.timeout(timeout) : null
+
 // fetch that includes credentials
 export const fetch = (url: string | Request, init: RequestInit) =>
-  window.fetch(url, { credentials: "include", ...init })
+  window.fetch(url, {
+    credentials: "include",
+    signal: timeoutSignal(15000),
+    ...init
+  })
 
 export const appendCommonHeaders = (headers?: Headers) => {
   function getCSRF() {

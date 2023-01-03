@@ -9,7 +9,7 @@ import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
-import { appendCommonHeaders } from "fetchUtils"
+import { appendCommonHeaders, timeoutSignal } from "fetchUtils"
 
 export const BackgroundContainer = styled("div")`
   background: #f8f8f8;
@@ -133,6 +133,8 @@ interface SystemInfoHoksitResponse {
   data: SystemInfoHoksit
 }
 
+const yllapitoRequestTimeout = 60000
+
 @inject("store")
 @observer
 export class Yllapito extends React.Component<YllapitoProps> {
@@ -165,6 +167,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "GET",
         credentials: "include",
+        signal: timeoutSignal(yllapitoRequestTimeout),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
@@ -216,6 +219,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "DELETE",
         credentials: "include",
+        signal: timeoutSignal(yllapitoRequestTimeout),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
@@ -258,6 +262,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "GET",
         credentials: "include",
+        signal: timeoutSignal(yllapitoRequestTimeout),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
@@ -329,6 +334,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
           {
             method: "DELETE",
             credentials: "include",
+            signal: timeoutSignal(yllapitoRequestTimeout),
             headers: appendCommonHeaders(
               new Headers({
                 Accept: "application/json; charset=utf-8",
@@ -411,6 +417,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "POST",
         credentials: "include",
+        signal: timeoutSignal(yllapitoRequestTimeout),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
@@ -453,6 +460,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "GET",
         credentials: "include",
+        signal: timeoutSignal(yllapitoRequestTimeout),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
@@ -497,6 +505,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "GET",
         credentials: "include",
+        signal: timeoutSignal(yllapitoRequestTimeout),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
@@ -542,6 +551,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "GET",
         credentials: "include",
+        signal: timeoutSignal(yllapitoRequestTimeout),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
@@ -593,6 +603,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
           {
             method: "DELETE",
             credentials: "include",
+            signal: timeoutSignal(yllapitoRequestTimeout),
             headers: appendCommonHeaders(
               new Headers({
                 Accept: "application/json; charset=utf-8",
@@ -649,6 +660,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "PATCH",
         credentials: "include",
+        signal: timeoutSignal(yllapitoRequestTimeout),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
@@ -691,6 +703,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "PUT",
         credentials: "include",
+        signal: timeoutSignal(yllapitoRequestTimeout),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
@@ -736,6 +749,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "GET",
         credentials: "include",
+        signal: timeoutSignal(yllapitoRequestTimeout),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
@@ -769,6 +783,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
           {
             method: "PUT",
             credentials: "include",
+            signal: timeoutSignal(yllapitoRequestTimeout),
             headers: appendCommonHeaders(
               new Headers({
                 Accept: "application/json; charset=utf-8",
@@ -827,6 +842,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "PUT",
         credentials: "include",
+        signal: timeoutSignal(yllapitoRequestTimeout),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
@@ -872,6 +888,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "POST",
         credentials: "include",
+        signal: timeoutSignal(yllapitoRequestTimeout),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
@@ -914,6 +931,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "POST",
         credentials: "include",
+        signal: timeoutSignal(yllapitoRequestTimeout),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
@@ -956,7 +974,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "POST",
         credentials: "include",
-
+        signal: timeoutSignal(yllapitoRequestTimeout),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
@@ -1004,7 +1022,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
       {
         method: "POST",
         credentials: "include",
-
+        signal: timeoutSignal(yllapitoRequestTimeout),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",

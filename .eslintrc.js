@@ -161,7 +161,7 @@ module.exports = {
     "one-var": ["off", "never"],
     "arrow-body-style": ["error", "as-needed"],
     "prefer-arrow/prefer-arrow-functions": [
-      "error",
+      "warn",
       {
         disallowPrototype: false,
         singleReturnOnly: true,
@@ -172,7 +172,8 @@ module.exports = {
     "prefer-object-spread": "error",
     "quote-props": "off",
     radix: "error",
-    "react/prop-types": ["error", { skipUndeclared: true }],
+    "react/prop-types": ["warn", { skipUndeclared: true }],
+    "react/display-name": "warn",
     "space-before-function-paren": "off",
     "space-in-parens": ["off", "never"],
     "use-isnan": "error",

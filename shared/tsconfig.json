@@ -19,7 +19,8 @@
       "dom",
       "es2018" /* mobx - error TS2304: Cannot find name 'AsyncGenerator'*/
     ],
-    "baseUrl": "."
+    "baseUrl": ".",
+    "skipLibCheck": true
   },
   "include": ["./**/*"],
   "exclude": ["node_modules", "./**/__tests__"]
