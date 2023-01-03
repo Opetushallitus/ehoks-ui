@@ -17,7 +17,9 @@ jobs:
       - name: Before Install
         shell: bash
         run: |
-          npm i -g npm@6
+          npm i -g npm@8
+          npm -v
+          node -v
 
       - name: Install Tools
         shell: bash
