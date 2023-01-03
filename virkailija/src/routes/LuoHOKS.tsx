@@ -38,7 +38,7 @@ import { EditHOKSStyles } from "./HOKSLomake/styles"
 import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./LuoHOKS/uiSchema"
-import { appendCommonHeaders } from "fetchUtils"
+import { appendCommonHeaders, timeoutSignal } from "fetchUtils"
 
 interface LuoHOKSProps extends RouteComponentProps {
   store?: IRootStore
@@ -195,6 +195,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       {
         method: "POST",
         credentials: "include",
+        signal: timeoutSignal(),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",

@@ -9,7 +9,7 @@ import React from "react"
 import { FormattedMessage, intlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
-import { appendCommonHeaders } from "fetchUtils"
+import { appendCommonHeaders, timeoutSignal } from "fetchUtils"
 import { Column, Row } from "react-table"
 import { Button } from "components/Button"
 import { InfoModal } from "../../../shared/components/InfoModal"
@@ -248,6 +248,7 @@ export class Raportit extends React.Component<RaportitProps> {
         {
           method: "GET",
           credentials: "include",
+          signal: timeoutSignal(),
           headers: appendCommonHeaders(
             new Headers({
               Accept: "application/json; charset=utf-8",
@@ -298,6 +299,7 @@ export class Raportit extends React.Component<RaportitProps> {
         {
           method: "GET",
           credentials: "include",
+          signal: timeoutSignal(),
           headers: appendCommonHeaders(
             new Headers({
               Accept: "application/json; charset=utf-8",

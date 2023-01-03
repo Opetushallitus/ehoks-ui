@@ -36,7 +36,7 @@ import { EditHOKSStyles } from "./HOKSLomake/styles"
 import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
-import { appendCommonHeaders } from "fetchUtils"
+import { appendCommonHeaders, timeoutSignal } from "fetchUtils"
 
 const disallowedKeys = ["eid", "manuaalisyotto", "module-id"]
 
@@ -160,6 +160,7 @@ export class MuokkaaHOKS extends React.Component<
       `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksId}`,
       {
         credentials: "include",
+        signal: timeoutSignal(),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
@@ -244,6 +245,7 @@ export class MuokkaaHOKS extends React.Component<
       {
         method: "PUT",
         credentials: "include",
+        signal: timeoutSignal(),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",

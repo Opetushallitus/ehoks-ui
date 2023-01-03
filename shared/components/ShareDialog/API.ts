@@ -1,6 +1,6 @@
 import { APIConfig } from "components/APIConfigContext"
 import { TutkinnonOsaType } from "../../models/helpers/ShareTypes"
-import { appendCommonHeaders } from "../../fetchUtils"
+import { appendCommonHeaders, timeoutSignal } from "../../fetchUtils"
 
 interface BackendShareLink {
   "share-id": string
@@ -25,7 +25,8 @@ export const fetchLinks = async function(
     apiUrl(`${apiPrefix}/jaot/moduulit/${moduleId}`),
     {
       headers: appendCommonHeaders(),
-      credentials: "include"
+      credentials: "include",
+      signal: timeoutSignal()
     }
   )
   if (!response.ok) {
@@ -62,6 +63,7 @@ export const createLink = async function({
   const { apiUrl, apiPrefix } = apiConfig
   const response = await window.fetch(apiUrl(`${apiPrefix}/jaot/jakolinkit`), {
     credentials: "include",
+    signal: timeoutSignal(),
     method: "POST",
     headers: appendCommonHeaders(
       new Headers({
@@ -98,6 +100,7 @@ export const removeLink = async function({
     apiUrl(`${apiPrefix}/jaot/jakolinkit/${uuid}`),
     {
       credentials: "include",
+      signal: timeoutSignal(),
       method: "DELETE",
       headers: appendCommonHeaders(
         new Headers({

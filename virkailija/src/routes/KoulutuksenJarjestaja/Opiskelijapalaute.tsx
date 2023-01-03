@@ -9,7 +9,7 @@ import { RouteComponentProps } from "@reach/router"
 import { IOpiskelijapalauteTila } from "models/OpiskelijapalauteTila"
 import { Button } from "components/Button"
 import { IRootStore } from "../../stores/RootStore"
-import { appendCommonHeaders } from "fetchUtils"
+import { appendCommonHeaders, timeoutSignal } from "fetchUtils"
 
 export interface OpiskelijapalauteProps {
   store?: IRootStore
@@ -43,6 +43,7 @@ export class Opiskelijapalaute extends React.Component<
       {
         method: "POST",
         credentials: "include",
+        signal: timeoutSignal(),
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",

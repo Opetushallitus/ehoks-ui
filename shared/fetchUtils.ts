@@ -132,14 +132,14 @@ export const mockFetch = (apiUrl: (path: string) => string, version = 0) => (
   return Promise.resolve(mockResponse)
 }
 
-export const timeoutSignal = (timeout: number) =>
+export const timeoutSignal = (timeout = 15000) =>
   AbortSignal && "timeout" in AbortSignal ? AbortSignal.timeout(timeout) : null
 
 // fetch that includes credentials
 export const fetch = (url: string | Request, init: RequestInit) =>
   window.fetch(url, {
     credentials: "include",
-    signal: timeoutSignal(15000),
+    signal: timeoutSignal(),
     ...init
   })
 
