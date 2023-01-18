@@ -41,6 +41,12 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
           koodiUri
         ]
         self.tutkinnonOsaId = response.data?.id
+        if (!self.tutkinnonOsaId) {
+          errors.logError(
+            "EnrichKoodiUri.fetchEPerusteet",
+            "Tutkinnon osaa ei saatu ladattua"
+          )
+        }
       } catch (error) {
         errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
       }
@@ -95,7 +101,9 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
       tutkinnonOsaKoodiUri: string
     ): any {
       yield fetchTutkinnonOsa(tutkinnonOsaKoodiUri)
-      yield fetchOsaAlue(self.tutkinnonOsaId)
+      if (self.tutkinnonOsaId) {
+        yield fetchOsaAlue(self.tutkinnonOsaId)
+      }
     })
 
     const afterCreate = () => {
