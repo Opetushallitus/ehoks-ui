@@ -328,6 +328,12 @@ export class MuokkaaHOKS extends React.Component<
             .filter(x => !!x)
             .join("; ")
         )
+      } else if (
+        json.errors &&
+        typeof json.errors === "string" &&
+        json.errors.includes("tuva-hoks-cross-check")
+      ) {
+        notifications.addError("HOKS.TUVARistiintarkistusVirhe", json.errors)
       }
     }
   }

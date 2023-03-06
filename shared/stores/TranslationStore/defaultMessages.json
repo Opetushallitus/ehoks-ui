@@ -101,6 +101,11 @@
   },
   {
     "locale": "fi",
+    "key": "errors.HOKS.TUVARistiintarkistusVirhe",
+    "value": "HOKSin rakenne ei vastaa sen opiskeluoikeuden tyyppiä"
+  },
+  {
+    "locale": "fi",
     "key": "errors.HOKSStore.haeSuunnitelmat",
     "value": "Suunnitelmien haku epäonnistui"
   },
