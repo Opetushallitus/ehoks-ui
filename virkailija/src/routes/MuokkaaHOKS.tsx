@@ -333,7 +333,7 @@ export class MuokkaaHOKS extends React.Component<
         typeof json.errors === "string" &&
         json.errors.includes("tuva-hoks-cross-check")
       ) {
-        notifications.addError("HOKS.TUVARistiintarkistusVirhe", json.errors)
+        notifications.addError("HOKS.TUVARistiintarkistusVirhe")
       }
     }
   }
