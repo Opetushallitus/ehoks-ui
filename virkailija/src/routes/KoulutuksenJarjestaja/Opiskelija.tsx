@@ -63,6 +63,10 @@ export class Opiskelija extends React.Component<
           }
 
           if (studentId) {
+            const maybeOppija = search.oppija(studentId)
+            if (!maybeOppija) {
+              await search.fetchOppija(studentId)
+            }
             const oppija = search.oppija(studentId)
             if (oppija) {
               await oppija.fetchOpiskeluoikeudet()
