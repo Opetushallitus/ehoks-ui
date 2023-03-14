@@ -81,6 +81,8 @@ export class App extends React.Component<AppProps> {
         ? translations
         : // use finnish translations as fallback, merge provided translations
           { ...store!.translations.messages.fi, ...translations }
+    const selectedOrganisationOid = store!.session.selectedOrganisationOid
+    const defaultPath = `/ehoks-virkailija-ui/koulutuksenjarjestaja/${selectedOrganisationOid}`
 
     return (
       <ThemeWrapper>
@@ -95,17 +97,14 @@ export class App extends React.Component<AppProps> {
             <Header />
             <AppNotifications />
             <StyledRouter basepath="/ehoks-virkailija-ui">
-              <Redirect
-                from="/"
-                to="/ehoks-virkailija-ui/koulutuksenjarjestaja"
-                noThrow={true}
-              />
+              <Redirect from="/" to={defaultPath} noThrow={true} />
               <LuoHOKS path="luohoks" />
               <MuokkaaHOKS path="hoks/:oppijaOid/:hoksId" />
-              <KoulutuksenJarjestaja path="koulutuksenjarjestaja" />
+              <Redirect from="/koulutuksenjarjestaja" to={defaultPath} />
+              <KoulutuksenJarjestaja path="koulutuksenjarjestaja/:orgId" />
+              <Opiskelija path="koulutuksenjarjestaja/:orgId/oppija/:studentId/*" />
               <Yllapito path="yllapito" />
               <Raportit path="raportit" />
-              <Opiskelija path="koulutuksenjarjestaja/:studentId/*" />
             </StyledRouter>
             <GlobalStyles />
           </Container>

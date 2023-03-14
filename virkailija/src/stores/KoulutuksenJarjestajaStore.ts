@@ -108,12 +108,14 @@ export const Oppija = types
       return self.suunnitelmat.length
     },
     get editLink(): string {
+      const rootStore: IRootStore = getRoot<IRootStore>(self)
+      const oppilaitosOid: string = rootStore.session.selectedOrganisationOid
       const manualPlans = self.suunnitelmat.filter(
         suunnitelma => suunnitelma.manuaalisyotto
       )
       return manualPlans.length
         ? manualPlans.length > 1
-          ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${self.oid}`
+          ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppilaitosOid}/oppija/${self.oid}`
           : `/ehoks-virkailija-ui/hoks/${self.oid}/${manualPlans[0].id}`
         : ""
     },
