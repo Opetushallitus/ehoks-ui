@@ -54,6 +54,8 @@ const Spinner = styled(LoadingSpinner)`
 
 interface KoulutuksenJarjestajaProps extends RouteComponentProps {
   store?: IRootStore
+  // from path parameters
+  orgId?: string
 }
 
 @inject("store")
@@ -73,10 +75,14 @@ export class KoulutuksenJarjestaja extends React.Component<
 
   componentDidMount() {
     const { koulutuksenJarjestaja, session } = this.props.store!
+    const orgId = this.props.orgId
 
     this.disposeLoginReaction = reaction(
       () => session.isLoggedIn && session.organisations.length > 0,
       async hasLoggedIn => {
+        if (orgId && orgId !== session.selectedOrganisationOid) {
+          session.changeSelectedOrganisationOid(orgId)
+        }
         if (hasLoggedIn) {
           await koulutuksenJarjestaja.search.fetchOppijat()
           window.requestAnimationFrame(() => {
@@ -134,6 +140,7 @@ export class KoulutuksenJarjestaja extends React.Component<
       isLoading,
       searchTexts
     } = koulutuksenJarjestaja.search
+    const selectedOrganisationOid = this.props.orgId
 
     return (
       <BackgroundContainer>
@@ -215,7 +222,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                       <TableCell>
                         {student.lukumaara > 0 ? (
                           <Link
-                            to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${student.oid}`}
+                            to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${selectedOrganisationOid}/oppija/${student.oid}`}
                           >
                             {student.nimi}
                           </Link>
