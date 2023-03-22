@@ -55,5 +55,5 @@ export const EPerusteetVastaus = types.model("EPerusteet", {
     EPerusteetAmmattitaidonOsoittamistavat
   ),
   nimi: types.optional(EPerusteetNimi, {}),
-  koulutuksenOsaId: types.optional(types.string, "")
+  koulutuksenOsaViiteId: types.optional(types.number, 0)
 })
