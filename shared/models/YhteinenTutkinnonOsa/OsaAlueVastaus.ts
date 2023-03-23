@@ -8,6 +8,14 @@ const OsaamisTavoitteet = types.model({
   arviointi: types.maybeNull(EPerusteetArviointi)
 })
 
+const fallbackValue = (koodiUri?: string) => {
+  try {
+    return koodiUri ? "⚠️  " + koodiUri.split("_")[1].toUpperCase() : ""
+  } catch (e) {
+    return "⚠️ "
+  }
+}
+
 export const OsaAlueVastaus = types
   .model("OsaAlueVastaus", {
     koodiUri: types.maybe(types.string),
@@ -20,7 +28,7 @@ export const OsaAlueVastaus = types
       get osaAlueNimi() {
         return self.nimi[root.translations.activeLocale]
           ? self.nimi[root.translations.activeLocale]
-          : ""
+          : fallbackValue(self.koodiUri)
       },
       get laajuus() {
         return self.osaamistavoitteet

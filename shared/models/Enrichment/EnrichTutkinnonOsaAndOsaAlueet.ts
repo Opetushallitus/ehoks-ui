@@ -65,11 +65,16 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
     const findMatchingOsaAlueFromEperusteetResponse = (
       ePerusteeReponse: any,
       osaAlueKoodiUri: string
-    ) =>
-      ePerusteeReponse.find(
+    ) => {
+      const osaAlueVastaus = ePerusteeReponse.find(
         (osaAlueFromEperusteet: IOsaAlueVastaus) =>
           osaAlueFromEperusteet.koodiUri === osaAlueKoodiUri
       )
+      if (!osaAlueVastaus) {
+        errors.logError("EnrichOsaAlue.fetchFromEPerusteet", osaAlueKoodiUri)
+      }
+      return osaAlueVastaus || { koodiUri: osaAlueKoodiUri }
+    }
 
     const getEnrichedDataForOsaAlue = (ePerusteeReponse: any) => (osaAlue: {
       osaAlueEnrichedData: IOsaAlueVastaus
