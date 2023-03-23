@@ -1,6 +1,10 @@
 import { getRoot, Instance, types } from "mobx-state-tree"
 import { LocaleRoot } from "../helpers/LocaleRoot"
-import { EPerusteetArviointi, EPerusteetNimi } from "../EPerusteetVastaus"
+import {
+  EPerusteetArviointi,
+  EPerusteetNimi,
+  EPerusteKoodi
+} from "../EPerusteetVastaus"
 
 const OsaamisTavoitteet = types.model({
   laajuus: types.optional(types.number, 0, [null, undefined]),
@@ -20,14 +24,15 @@ export const OsaAlueVastaus = types
   .model("OsaAlueVastaus", {
     koodiUri: types.maybe(types.string),
     nimi: types.optional(EPerusteetNimi, {}),
+    koodi: types.optional(EPerusteKoodi, {}),
     osaamistavoitteet: types.array(OsaamisTavoitteet)
   })
   .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {
       get osaAlueNimi() {
-        return self.nimi[root.translations.activeLocale]
-          ? self.nimi[root.translations.activeLocale]
+        return self.koodi?.nimi[root.translations.activeLocale]
+          ? self.koodi?.nimi[root.translations.activeLocale]
           : fallbackValue(self.koodiUri)
       },
       get laajuus() {

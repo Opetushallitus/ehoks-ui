@@ -68,7 +68,9 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
     ) => {
       const osaAlueVastaus = ePerusteeReponse.find(
         (osaAlueFromEperusteet: IOsaAlueVastaus) =>
-          osaAlueFromEperusteet.koodiUri === osaAlueKoodiUri
+          osaAlueFromEperusteet.koodiUri === osaAlueKoodiUri ||
+          (osaAlueKoodiUri.startsWith("ammatillisenoppiaineet_vvai") &&
+            osaAlueFromEperusteet.koodiUri === "ammatillisenoppiaineet_vvai22")
       )
       if (!osaAlueVastaus) {
         errors.logError("EnrichOsaAlue.fetchFromEPerusteet", osaAlueKoodiUri)
