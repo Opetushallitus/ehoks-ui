@@ -329,13 +329,13 @@ export class MuokkaaHOKS extends React.Component<
             .join("; ")
         )
       } else if (
-        json.errors &&
-        typeof json.errors === "string" &&
-        json.errors.includes(
+        json.error &&
+        typeof json.error === "string" &&
+        json.error.includes(
           "HOKSin rakenteen tulee vastata siihen liitetyn opiskeluoikeuden tyyppiä"
         )
       ) {
-        notifications.addError("HOKS.TUVARistiintarkistusVirhe")
+        notifications.addError("HOKS.RakenneVirhe", json.error)
       }
     }
   }
