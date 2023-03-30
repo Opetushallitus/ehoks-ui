@@ -102,7 +102,7 @@
   {
     "locale": "fi",
     "key": "errors.HOKS.TUVARistiintarkistusVirhe",
-    "value": "HOKSin rakenne ei vastaa sen opiskeluoikeuden tyyppiä"
+    "value": "HOKSin rakenteen tulee vastata siihen liitetyn opiskeluoikeuden tyyppiä"
   },
   {
     "locale": "fi",

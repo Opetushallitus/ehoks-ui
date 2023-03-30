@@ -331,7 +331,9 @@ export class MuokkaaHOKS extends React.Component<
       } else if (
         json.errors &&
         typeof json.errors === "string" &&
-        json.errors.includes("tuva-hoks-cross-check")
+        json.errors.includes(
+          "HOKSin rakenteen tulee vastata siihen liitetyn opiskeluoikeuden tyyppiä"
+        )
       ) {
         notifications.addError("HOKS.TUVARistiintarkistusVirhe")
       }
