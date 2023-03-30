@@ -239,6 +239,8 @@ export class MuokkaaHOKS extends React.Component<
     this.setState({ isLoading: true })
     const { notifications } = this.props.store!
     const { oppijaOid, hoksId } = this.props
+    notifications.markAllErrorsHandled()
+
     const request = await window.fetch(
       `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksId}`,
       {
@@ -328,7 +330,8 @@ export class MuokkaaHOKS extends React.Component<
             .filter(x => !!x)
             .join("; ")
         )
-      } else if (
+      }
+      if (
         json.error &&
         typeof json.error === "string" &&
         json.error.includes(

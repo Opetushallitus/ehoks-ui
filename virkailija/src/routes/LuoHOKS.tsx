@@ -189,6 +189,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
   create = async (fieldProps: IChangeEvent<FieldProps>) => {
     this.setState({ isLoading: true })
     const { notifications } = this.props.store!
+    notifications.markAllErrorsHandled()
 
     const request = await window.fetch(
       `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${fieldProps.formData["oppija-oid"]}/hoksit`,
@@ -285,9 +286,16 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
             .join("; ")
         )
       }
+      if (
+        json.error &&
+        typeof json.error === "string" &&
+        json.error.includes(
+          "HOKSin rakenteen tulee vastata siihen liitetyn opiskeluoikeuden tyyppiä"
+        )
+      ) {
+        notifications.addError("HOKS.RakenneVirhe", json.error)
+      }
     }
-    //console.log("RESPONSE STATUS", request.status)
-    //console.log("RESPONSE JSON", json)
     this.setState({ isLoading: false })
   }
 
