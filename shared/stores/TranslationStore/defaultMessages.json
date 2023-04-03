@@ -101,6 +101,11 @@
   },
   {
     "locale": "fi",
+    "key": "errors.HOKS.RakenneVirhe",
+    "value": "Virhe HOKSin rakenteessa"
+  },
+  {
+    "locale": "fi",
     "key": "errors.HOKSStore.haeSuunnitelmat",
     "value": "Suunnitelmien haku epäonnistui"
   },

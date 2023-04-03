@@ -61,7 +61,12 @@ export const NotificationStore = types
       )
     }
 
-    return { addNotifications, removeNotificationsBySource, addError }
+    return {
+      addNotifications,
+      removeNotificationsBySource,
+      addError,
+      markAllErrorsHandled: errors.markAllErrorsHandled
+    }
   })
   .views(self => ({
     get visible() {
