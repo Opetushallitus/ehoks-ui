@@ -1,7 +1,7 @@
 export const getOtsikko = (
-  model: { otsikko: string; osaamispisteet: number },
+  model: { otsikko: JSX.Element | string; osaamispisteet: number },
   ospLyhenne: string
-): string =>
+): JSX.Element | string =>
   `${model.otsikko}${
     model.osaamispisteet ? ` ${model.osaamispisteet} ${ospLyhenne}` : ""
   }`

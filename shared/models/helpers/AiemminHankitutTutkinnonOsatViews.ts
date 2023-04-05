@@ -11,5 +11,6 @@ export const AiemminHankitutTutkinnonOsatViews = types
           self.tarkentavatTiedotOsaamisenArvioija.lahetettyArvioitavaksi
       }
     },
-    opintoOtsikko: (ospLyhenne: string): string => getOtsikko(self, ospLyhenne)
+    opintoOtsikko: (ospLyhenne: string): JSX.Element | string =>
+      getOtsikko(self, ospLyhenne)
   }))
