@@ -36,7 +36,7 @@ export const AiemminHankittuPaikallinenTutkinnonOsa = types
     model
   )
   .views(self => ({
-    get otsikko() {
+    get otsikko(): JSX.Element | string {
       return self.nimi
     },
     get osaamispisteet() {

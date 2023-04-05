@@ -35,7 +35,7 @@ export const YhteisenTutkinnonOsanOsaAlue = types
   .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {
-      get otsikko() {
+      get otsikko(): JSX.Element | string {
         return self.osaAlueEnrichedData
           ? self.osaAlueEnrichedData.osaAlueNimi
           : ""
