@@ -6,7 +6,7 @@ import {
   EPerusteKoodi
 } from "../EPerusteetVastaus"
 import { GrAlert } from "react-icons/gr"
-import { Icon } from "../../components/Icon"
+import { IconInline } from "../../components/Icon"
 import { IRootStore } from "../../../virkailija/src/stores/RootStore"
 import { Locale } from "../../stores/TranslationStore"
 
@@ -16,31 +16,17 @@ const OsaamisTavoitteet = types.model({
   arviointi: types.maybeNull(EPerusteetArviointi)
 })
 
-const fallbackValue = (
+const fallbackMessage = (
   koodiUri: string | undefined,
   message: string
-): JSX.Element => {
-  try {
-    return koodiUri ? (
-      <span title={message}>
-        <Icon>
-          <GrAlert size="24" color="#EC7123" />
-        </Icon>
-        {koodiUri.split("_")[1].toUpperCase()}
-      </span>
-    ) : (
-      <Icon title={message}>
-        <GrAlert size="24" color="#EC7123" />
-      </Icon>
-    )
-  } catch (e) {
-    return (
-      <Icon title={message}>
-        <GrAlert size="24" color="#EC7123" />
-      </Icon>
-    )
-  }
-}
+): JSX.Element => (
+  <span title={message}>
+    <IconInline>
+      <GrAlert size="20" color="#EC7123" />
+    </IconInline>
+    {koodiUri ? koodiUri.split("_")[1].toUpperCase() : ""}
+  </span>
+)
 
 export const OsaAlueVastaus = types
   .model("OsaAlueVastaus", {
@@ -54,14 +40,17 @@ export const OsaAlueVastaus = types
     const activeLocale: Locale = root.translations.activeLocale
     return {
       get osaAlueNimi(): JSX.Element | string {
-        return self.koodi?.nimi[activeLocale]
-          ? self.koodi?.nimi[activeLocale]
-          : fallbackValue(
-              self.koodiUri,
-              root.translations.messages[activeLocale][
-                "errors.OsaAlueVastaus.nimeaEiLoytynyt"
-              ]
-            )
+        if (!self.koodi && !self.koodiUri) return ""
+        return (
+          self.koodi?.nimi[activeLocale] ||
+          fallbackMessage(
+            self.koodiUri,
+            root.translations.messages[activeLocale][
+              "errors.OsaAlueVastaus.nimeaEiLoytynyt"
+            ] ||
+              "Osa-alueen nimen lataaminen ei onnistunut. Tämä on tilapäinen häiriö."
+          )
+        )
       },
       get laajuus() {
         return self.osaamistavoitteet
