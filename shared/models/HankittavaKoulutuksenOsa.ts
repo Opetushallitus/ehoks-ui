@@ -33,7 +33,7 @@ export const HankittavaKoulutuksenOsa = types
       get tyyppi(): TutkinnonOsaType {
         return TutkinnonOsaType.HankittavaKoulutuksenOsa
       },
-      get otsikko() {
+      get otsikko(): JSX.Element | string {
         return self.tutkinnonOsa && self.tutkinnonOsa.nimi
           ? self.tutkinnonOsa.nimi[root.translations.activeLocale]
           : "TUVA Koulutuksen Osa " + self.laajuus + " vkoa"

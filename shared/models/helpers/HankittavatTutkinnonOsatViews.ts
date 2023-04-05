@@ -39,7 +39,7 @@ export const HankittavatTutkinnonOsatViews = types
           return 0
         }
       },
-      opintoOtsikko(ospLyhenne: string) {
+      opintoOtsikko(ospLyhenne: string): JSX.Element | string {
         if (self.tyyppi !== TutkinnonOsaType.HankittavaKoulutuksenOsa) {
           return getOtsikko(self, ospLyhenne)
         } else {

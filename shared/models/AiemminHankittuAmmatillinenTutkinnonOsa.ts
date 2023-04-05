@@ -44,7 +44,7 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
   .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {
-      get otsikko() {
+      get otsikko(): JSX.Element | string {
         return self.tutkinnonOsa && self.tutkinnonOsa.nimi
           ? self.tutkinnonOsa.nimi[root.translations.activeLocale]
           : ""

@@ -48,7 +48,7 @@ const HankittavaTutkinnonOsa = types
 export interface IHankittavaTutkinnonOsa
   extends Partial<Instance<typeof HankittavaTutkinnonOsa>> {
   /** YhteisenTutkinnonOsanOsaAlue does not contain this but it is defined after flattenDeep */
-  opintoOtsikko(ospLyhenne: string): string
+  opintoOtsikko(ospLyhenne: string): JSX.Element | string
   /** YhteisenTutkinnonOsanOsaAlue does not contain this but it is defined after flattenDeep */
 
   hasNayttoOrHarjoittelujakso(type?: ShareType, moduleId?: string): boolean
@@ -65,5 +65,5 @@ const AiemminHankittuTutkinnonOsa = types
 export interface IAiemminHankittuTutkinnonOsa
   extends Partial<Instance<typeof AiemminHankittuTutkinnonOsa>> {
   /** AiemminHankitunYTOOsaAlue does not contain this but it is defined after flattenDeep */
-  opintoOtsikko(ospLyhenne: string): string
+  opintoOtsikko(ospLyhenne: string): JSX.Element | string
 }
