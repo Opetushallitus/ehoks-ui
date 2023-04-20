@@ -63,10 +63,10 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
       )
 
     const findMatchingOsaAlueFromEperusteetResponse = (
-      ePerusteeReponse: any,
+      ePerusteetReponse: any,
       osaAlueKoodiUri: string
     ) => {
-      const osaAlueVastaus = ePerusteeReponse.find(
+      const osaAlueVastaus = ePerusteetReponse.find(
         (osaAlueFromEperusteet: IOsaAlueVastaus) =>
           osaAlueFromEperusteet.koodiUri === osaAlueKoodiUri ||
           (osaAlueKoodiUri.startsWith("ammatillisenoppiaineet_vvai") &&
@@ -78,12 +78,12 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
       return osaAlueVastaus || { koodiUri: osaAlueKoodiUri }
     }
 
-    const getEnrichedDataForOsaAlue = (ePerusteeReponse: any) => (osaAlue: {
+    const getEnrichedDataForOsaAlue = (ePerusteetReponse: any) => (osaAlue: {
       osaAlueEnrichedData: IOsaAlueVastaus
       osaAlueKoodiUri: string
     }) => {
       osaAlue.osaAlueEnrichedData = findMatchingOsaAlueFromEperusteetResponse(
-        ePerusteeReponse,
+        ePerusteetReponse,
         osaAlue.osaAlueKoodiUri
       )
     }
