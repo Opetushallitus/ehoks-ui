@@ -24,6 +24,7 @@ import {
   buildKoodiUris,
   schemaByStep,
   stripUnsupportedFormats,
+  reportHOKSErrors,
   transformErrors
 } from "./HOKSLomake/helpers/helpers"
 import { isRoot } from "./HOKSLomake/helpers/isRoot"
@@ -213,88 +214,17 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
         errors: [],
         errorsByStep: {},
         success: true,
+        message: undefined,
         userEnteredText: false
       })
       window.localStorage.removeItem("hoks")
     } else {
-      this.setState({ success: false })
-
+      this.setState({ success: false, message: undefined })
       const { intl } = this.context
-      const hankittavatTyypit = [
-        "hankittavat-ammat-tutkinnon-osat",
-        "hankittavat-paikalliset-tutkinnon-osat",
-        "hankittavat-yhteiset-tutkinnon-osat",
-        "hankittavat-koulutuksen-osat"
-      ]
-      const ohtErrors: Record<string, Record<number, number[]>> = {}
-      let ohtErrorsPresent = false
-      hankittavatTyypit.forEach((osaTyyppi: any) => {
-        ;((json.errors || {})[osaTyyppi] || []).forEach(
-          (osa: any, osaIndex: any) => {
-            if (osa) {
-              ;(osa["osaamisen-hankkimistavat"] || []).forEach(
-                (oht: any, ohtIndex: any) => {
-                  if (
-                    oht &&
-                    oht.includes("Tieto oppisopimuksen perustasta puuttuu")
-                  ) {
-                    ohtErrorsPresent = true
-                    if (!ohtErrors[osaTyyppi]) {
-                      ohtErrors[osaTyyppi] = {}
-                    }
-
-                    if (!ohtErrors[osaTyyppi][osaIndex]) {
-                      ohtErrors[osaTyyppi][osaIndex] = []
-                    }
-
-                    ohtErrors[osaTyyppi][osaIndex].push(ohtIndex)
-                  }
-                }
-              )
-            }
-          }
-        )
+      reportHOKSErrors(json, intl, (errorId: string, message: string) => {
+        notifications.addError(errorId, message)
+        this.setState({ message })
       })
-
-      if (ohtErrorsPresent) {
-        notifications.addError(
-          "HOKS.OppisopimuksenPerustaPuuttuu",
-          hankittavatTyypit
-            .map(ht =>
-              Object.keys(ohtErrors[ht] || {})
-                .map(n =>
-                  intl.formatMessage(
-                    {
-                      id:
-                        "errors.HOKS.Hankittavat" +
-                        (ht.includes("ammat")
-                          ? "Ammat"
-                          : ht.includes("paikalliset")
-                          ? "Paikalliset"
-                          : "Yhteiset") +
-                        "OsaamisenHankkimistavoissa"
-                    },
-                    {
-                      index: Number(n) + 1,
-                      ohts: ohtErrors[ht][Number(n)].map(x => x + 1).join(", ")
-                    }
-                  )
-                )
-                .join("; ")
-            )
-            .filter(x => !!x)
-            .join("; ")
-        )
-      }
-      if (
-        json.error &&
-        typeof json.error === "string" &&
-        json.error.includes(
-          "HOKSin rakenteen tulee vastata siihen liitetyn opiskeluoikeuden tyyppiä"
-        )
-      ) {
-        notifications.addError("HOKS.RakenneVirhe", json.error)
-      }
     }
     this.setState({ isLoading: false })
   }
