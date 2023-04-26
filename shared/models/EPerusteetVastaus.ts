@@ -46,6 +46,10 @@ export const EPerusteetNimi = types.model({
   sv: types.optional(types.string, "")
 })
 
+export const EPerusteKoodi = types.model({
+  nimi: types.optional(EPerusteetNimi, {})
+})
+
 export const EPerusteetVastaus = types.model("EPerusteet", {
   id: types.optional(types.number, 0),
   koodiUri: types.optional(types.string, ""),

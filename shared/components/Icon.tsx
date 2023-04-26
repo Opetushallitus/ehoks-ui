@@ -8,3 +8,8 @@ export const Icon = styled("div")`
   margin: 0 16px;
   align-items: center;
 `
+
+export const IconInline = styled("span")`
+  margin-right: 5px;
+  vertical-align: middle;
+`

@@ -22,7 +22,6 @@ export const EnrichTutkinnonOsaKoodiUri = types
 
     const getFromEPerusteetService = (code: string) => {
       if (self.tyyppi === TutkinnonOsaType.HankittavaKoulutuksenOsa) {
-        console.log("koulutuksenOsa Enrich")
         return fetchSingle(
           apiUrl(`${apiPrefix}/external/eperusteet/koulutuksenOsa/${code}`),
           {
