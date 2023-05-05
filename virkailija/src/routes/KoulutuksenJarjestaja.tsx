@@ -186,6 +186,12 @@ export class KoulutuksenJarjestaja extends React.Component<
                         defaultMessage="Osaamisala"
                       />
                     </SearchableHeader>
+                    <SearchableHeader sortName="hoks-id" omitSortButtons={true}>
+                      <FormattedMessage
+                        id="koulutuksenJarjestaja.hoksIdTitle"
+                        defaultMessage="eHOKS-id"
+                      />
+                    </SearchableHeader>
                     <TableHeader>
                       <FormattedMessage
                         id="koulutuksenJarjestaja.hyvaksyttyTitle"
@@ -211,9 +217,10 @@ export class KoulutuksenJarjestaja extends React.Component<
                   <col style={{ width: "25%" }} />
                   <col style={{ width: "20%" }} />
                   <col style={{ width: "20%" }} />
-                  <col style={{ width: "10%" }} />
-                  <col style={{ width: "10%" }} />
-                  <col style={{ width: "10%" }} />
+                  <col style={{ width: "8%" }} />
+                  <col style={{ width: "8%" }} />
+                  <col style={{ width: "8%" }} />
+                  <col style={{ width: "6%" }} />
                   <col style={{ width: "5%" }} />
                 </colgroup>
                 <TableBody>
@@ -232,6 +239,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                       </TableCell>
                       <TableCell>{student.tutkinto}</TableCell>
                       <TableCell>{student.osaamisala}</TableCell>
+                      <TableCell>{student.hoksId}</TableCell>
                       <TableCell>
                         <FormattedDate
                           date={
@@ -261,7 +269,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                       <TableCell colSpan={6}>
                         <FormattedMessage
                           id="koulutuksenJarjestaja.eiOpiskelijoitaLabel"
-                          defaultMessage="Valitulle organisaatiolle ei löytynyt yhtään opiskelijaa."
+                          defaultMessage="Näillä hakuehdoilla ei löytynyt yhtään opiskelijaa."
                         />
                       </TableCell>
                     </TableRow>
