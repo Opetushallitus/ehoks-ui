@@ -38,7 +38,7 @@ const ArrowDown = styled(
   )
 )<ArrowProps>`
   color: ${props =>
-    props.disabled ? "#C0C0C0" : props.active ? "#229FC9" : "#84898C"};
+    props.disabled ? "#F0F0F0" : props.active ? "#229FC9" : "#84898C"};
   margin-top: -24px;
 `
 
