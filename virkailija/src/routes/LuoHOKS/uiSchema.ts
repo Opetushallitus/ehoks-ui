@@ -569,6 +569,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           id: {
             "ui:widget": "hidden"
           },
+          "yksiloiva-tunniste": {
+            "ui:widget": "hidden"
+          },
           "osaamisen-hankkimistapa-koodi-uri": {
             "ui:field": "typeahead",
             typeahead: typeaheadProps(options.osaamisenhankkimistapa)
@@ -755,6 +758,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "*"
           ],
           id: {
+            "ui:widget": "hidden"
+          },
+          "yksiloiva-tunniste": {
             "ui:widget": "hidden"
           },
           "osaamisen-hankkimistapa-koodi-uri": {
@@ -965,6 +971,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                 "*"
               ],
               id: {
+                "ui:widget": "hidden"
+              },
+              "yksiloiva-tunniste": {
                 "ui:widget": "hidden"
               },
               "osaamisen-hankkimistapa-koodi-uri": {
