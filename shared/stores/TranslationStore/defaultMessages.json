@@ -216,6 +216,11 @@
   },
   {
     "locale": "fi",
+    "key": "header.tietojenTallennusLink",
+    "value": "Uusi HOKS"
+  },
+  {
+    "locale": "fi",
     "key": "header.valtuudet",
     "value": "(Valtuudet)"
   },
