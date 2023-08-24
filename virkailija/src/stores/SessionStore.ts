@@ -1,5 +1,5 @@
 import { withQueryString } from "fetchUtils"
-import { flow, getEnv, Instance, types } from "mobx-state-tree"
+import { flow, getEnv, getParent, Instance, types } from "mobx-state-tree"
 import { IOrganisation, OrganisationModel } from "types/Organisation"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
@@ -10,11 +10,39 @@ export const OrganisationPrivilege = types.model("OrganisationPrivilege", {
   childOrganisations: types.array(types.string)
 })
 
-export const VirkailijaUser = types.model("VirkailijaUser", {
-  oidHenkilo: types.string,
-  isSuperuser: types.boolean,
-  organisationPrivileges: types.array(OrganisationPrivilege)
-})
+export const VirkailijaUser = types
+  .model("VirkailijaUser", {
+    oidHenkilo: types.string,
+    isSuperuser: types.boolean,
+    organisationPrivileges: types.array(OrganisationPrivilege)
+  })
+  .views(self => ({
+    get hasWritePrivilege(): boolean {
+      const oid = getParent<ISessionStore>(self).selectedOrganisationOid
+      return !!self.organisationPrivileges
+        ?.find(o => o.oid === oid)
+        ?.privileges.includes("write")
+    },
+    get hasSuperUserPrivilege(): boolean {
+      const selectedOrganisation = getParent<ISessionStore>(self)
+        .selectedOrganisation
+      return !!selectedOrganisation?.roles.includes("oph-super-user")
+    },
+    get hasShallowDeletePrivilege(): boolean {
+      const sessionStore = getParent<ISessionStore>(self)
+      return (
+        self.isSuperuser ||
+        !!sessionStore.selectedOrganisationChildOrganisationsIncluded?.privileges.includes(
+          "hoks_delete"
+        )
+      )
+    }
+  }))
+  .views(self => ({
+    get hasEditPrivilege() {
+      return self.hasWritePrivilege || self.hasSuperUserPrivilege
+    }
+  }))
 
 const SessionStoreModel = {
   error: types.optional(types.string, ""),
@@ -114,55 +142,20 @@ export const SessionStore = types
       return !!self.user
     },
     get selectedOrganisation() {
-      return (
-        self.user &&
-        self.user.organisationPrivileges &&
-        self.user.organisationPrivileges.find(
-          o => o.oid === self.selectedOrganisationOid
-        )
+      return self.user?.organisationPrivileges.find(
+        o => o.oid === self.selectedOrganisationOid
       )
-    },
+    }
+  }))
+  .views(self => ({
     get selectedOrganisationChildOrganisationsIncluded() {
       return (
-        self.user &&
-        self.user.organisationPrivileges &&
-        (self.user.organisationPrivileges.find(
-          o => o.oid === self.selectedOrganisationOid
-        ) ||
-          self.user.organisationPrivileges.find(o =>
-            o.childOrganisations.includes(self.selectedOrganisationOid)
-          ))
+        self.selectedOrganisation ||
+        self.user?.organisationPrivileges.find(o =>
+          o.childOrganisations.includes(self.selectedOrganisationOid)
+        )
       )
     }
   }))
-  .views(self => ({
-    get hasWritePrivilege() {
-      return (
-        self.selectedOrganisation &&
-        self.selectedOrganisation.privileges &&
-        self.selectedOrganisation.privileges.indexOf("write") > -1
-      )
-    },
-    get hasSuperUserPrivilege() {
-      return (
-        self.selectedOrganisation &&
-        self.selectedOrganisation.roles.indexOf("oph-super-user") > -1
-      )
-    },
-    get hasShallowDeletePrivilege() {
-      return (
-        (self.user && self.user.isSuperuser) ||
-        (self.selectedOrganisationChildOrganisationsIncluded &&
-          self.selectedOrganisationChildOrganisationsIncluded.privileges &&
-          self.selectedOrganisationChildOrganisationsIncluded.privileges.indexOf(
-            "hoks_delete"
-          ) > -1)
-      )
-    }
-  }))
-  .views(self => ({
-    get hasEditPrivilege() {
-      return self.hasWritePrivilege || self.hasSuperUserPrivilege
-    }
-  }))
+
 export type ISessionStore = Instance<typeof SessionStore>

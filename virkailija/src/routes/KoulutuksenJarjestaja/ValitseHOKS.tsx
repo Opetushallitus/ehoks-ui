@@ -37,7 +37,7 @@ export class ValitseHOKS extends React.Component<ValitseHOKSProps> {
       app === "virkailija" &&
       oppijaId !== "" &&
       suunnitelma.manuaalisyotto &&
-      session.hasEditPrivilege === true
+      session.user?.hasEditPrivilege === true
 
     const hoksPath = `/ehoks-virkailija-ui/koulutuksenjarjestaja/${laitosId}/oppija/${oppijaId}/`
 

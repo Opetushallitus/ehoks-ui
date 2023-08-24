@@ -614,7 +614,7 @@ export class Tavoitteet extends React.Component<
             oppijaOid={student.oid}
           />
         )}
-        {session.hasShallowDeletePrivilege && app === "virkailija" && (
+        {session.user?.hasShallowDeletePrivilege && app === "virkailija" && (
           <HoksPoisto
             hoks={hoks}
             student={student}

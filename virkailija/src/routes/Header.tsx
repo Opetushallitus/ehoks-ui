@@ -90,7 +90,7 @@ export class Header extends React.Component<HeaderProps> {
           />
           <ActiveIndicator />
         </TopLink>
-        {session.hasWritePrivilege && (
+        {session.user?.hasWritePrivilege && (
           <TopLink to="/ehoks-virkailija-ui/luohoks">
             <FormattedMessage
               id="header.tietojenTallennusLink"
@@ -113,7 +113,7 @@ export class Header extends React.Component<HeaderProps> {
           />
           <ActiveIndicator />
         </TopLink>
-        {session.hasSuperUserPrivilege && (
+        {session.user?.hasSuperUserPrivilege && (
           <TopLink to="/ehoks-virkailija-ui/yllapito">
             <FormattedMessage
               id="header.yllapitoLink"

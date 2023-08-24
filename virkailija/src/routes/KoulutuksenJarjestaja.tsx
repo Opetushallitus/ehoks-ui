@@ -256,7 +256,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                       </TableCell>
                       <TableCell>{student.lukumaara}</TableCell>
                       <TableCell>
-                        {session.hasEditPrivilege && student.editLink && (
+                        {session.user?.hasEditPrivilege && student.editLink && (
                           <Link to={student.editLink}>
                             <MdEdit size={24} color="#000" />
                           </Link>
