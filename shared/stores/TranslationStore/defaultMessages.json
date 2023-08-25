@@ -216,8 +216,18 @@
   },
   {
     "locale": "fi",
+    "key": "header.tietojenTallennusLink",
+    "value": "Uusi HOKS"
+  },
+  {
+    "locale": "fi",
     "key": "header.valtuudet",
     "value": "(Valtuudet)"
+  },
+  {
+    "locale": "fi",
+    "key": "header.yllapitoLink",
+    "value": "Ylläpito"
   },
   {
     "locale": "fi",
@@ -261,6 +271,11 @@
   },
   {
     "locale": "fi",
+    "key": "koulutuksenJarjestaja.eiOpiskelijoitaLabel",
+    "value": "Näillä hakuehdoilla ei löytynyt yhtään opiskelijaa."
+  },
+  {
+    "locale": "fi",
     "key": "koulutuksenJarjestaja.hakuAriaLabel",
     "value": "Hae opiskelijaa"
   },
@@ -276,13 +291,53 @@
   },
   {
     "locale": "fi",
+    "key": "koulutuksenJarjestaja.haunSivutuksenEdellinen",
+    "value": "Edellinen"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.haunSivutuksenSeuraava",
+    "value": "Seuraava"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.hoksIdTitle",
+    "value": "eHOKS-id"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.hyvaksyttyTitle",
+    "value": "Ens. hyv."
+  },
+  {
+    "locale": "fi",
     "key": "koulutuksenJarjestaja.jarjestaTitle",
     "value": "Järjestä"
   },
   {
     "locale": "fi",
+    "key": "koulutuksenJarjestaja.lkmTitle",
+    "value": "Lkm"
+  },
+  {
+    "locale": "fi",
     "key": "koulutuksenJarjestaja.meneHakutuloksienSivulleAriaLabel",
     "value": "Mene hakutuloksien sivulle {page}"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.opiskelijaTitle",
+    "value": "Opiskelijan nimi"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.osaamisalaTitle",
+    "value": "Osaamisala"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.paivitettyTitle",
+    "value": "Päivitetty"
   },
   {
     "locale": "fi",
@@ -328,6 +383,16 @@
     "locale": "fi",
     "key": "koulutuksenJarjestaja.tavoite.suunnitelmaJatkoOpintoihinTitle",
     "value": "Suunnitelma jatko-opintoihin siirtymisestä"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.title",
+    "value": "Järjestä"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tutkintoTitle",
+    "value": "Tutkinto tai koulutus"
   },
   {
     "locale": "fi",
