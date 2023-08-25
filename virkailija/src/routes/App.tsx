@@ -89,6 +89,7 @@ export class App extends React.Component<AppProps> {
         <IntlProvider
           defaultLocale={Locale.FI}
           locale={activeLocale}
+          key={activeLocale}
           messages={messages}
           textComponent={React.Fragment}
         >
