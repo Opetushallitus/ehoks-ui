@@ -45,9 +45,7 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
     const root: LocaleRoot = getRoot(self)
     return {
       get otsikko(): JSX.Element | string {
-        return self.tutkinnonOsa && self.tutkinnonOsa.nimi
-          ? self.tutkinnonOsa.nimi[root.translations.activeLocale]
-          : ""
+        return self.tutkinnonOsa.nimi[root.translations.activeLocale]
       },
       get osaamispisteet() {
         return getOsaamispisteet(self.tutkinnonOsaViitteet)

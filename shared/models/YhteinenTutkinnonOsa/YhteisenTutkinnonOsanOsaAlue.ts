@@ -36,9 +36,7 @@ export const YhteisenTutkinnonOsanOsaAlue = types
     const root: LocaleRoot = getRoot(self)
     return {
       get otsikko(): JSX.Element | string {
-        return self.osaAlueEnrichedData
-          ? self.osaAlueEnrichedData.osaAlueNimi
-          : ""
+        return self.osaAlueEnrichedData.osaAlueNimi
       },
 
       get osaamisvaatimukset() {

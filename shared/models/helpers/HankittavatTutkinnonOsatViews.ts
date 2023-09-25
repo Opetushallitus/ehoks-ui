@@ -39,13 +39,8 @@ export const HankittavatTutkinnonOsatViews = types
           return 0
         }
       },
-      opintoOtsikko(ospLyhenne: string): JSX.Element | string {
-        if (self.tyyppi !== TutkinnonOsaType.HankittavaKoulutuksenOsa) {
-          return getOtsikko(self, ospLyhenne)
-        } else {
-          return self.otsikko
-        }
-      },
+      opintoOtsikko: (ospLyhenne: string): JSX.Element | string =>
+        getOtsikko(self, ospLyhenne),
       hasNayttoOrHarjoittelujakso(type?: ShareType, moduleId?: string) {
         if (!moduleId && !type) {
           return false
