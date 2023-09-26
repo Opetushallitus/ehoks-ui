@@ -34,7 +34,10 @@ export const HankittavaKoulutuksenOsa = types
         return TutkinnonOsaType.HankittavaKoulutuksenOsa
       },
       get otsikko(): JSX.Element | string {
-        return self.tutkinnonOsa.nimi[root.translations.activeLocale]
+        return (
+          self.tutkinnonOsa.nimi[root.translations.activeLocale] ||
+          self.tutkinnonOsa.nimi.fi
+        )
       },
       get isValmis() {
         return new Date() >= new Date(self.loppu)

@@ -25,7 +25,12 @@ export const OsaAlueVastaus = types
     const activeLocale: Locale = root.translations.activeLocale
     return {
       get osaAlueNimi(): JSX.Element | string {
-        return self.koodi?.nimi[activeLocale]
+        return (
+          self.koodi?.nimi[activeLocale] ||
+          self.nimi[activeLocale] ||
+          self.koodi?.nimi.fi ||
+          self.nimi.fi
+        )
       },
       get laajuus() {
         return self.osaamistavoitteet
