@@ -42,9 +42,12 @@ export const HankittavaAmmatillinenTutkinnonOsa = types
     const root: LocaleRoot = getRoot(self)
     return {
       get otsikko(): JSX.Element | string {
-        return self.tutkinnonOsa && self.tutkinnonOsa.nimi
-          ? self.tutkinnonOsa.nimi[root.translations.activeLocale]
-          : ""
+        return (
+          self.tutkinnonOsa.nimi[root.translations.activeLocale] ||
+          self.tutkinnonOsa.koodi.nimi[root.translations.activeLocale] ||
+          self.tutkinnonOsa.nimi.fi ||
+          self.tutkinnonOsa.koodi.nimi.fi
+        )
       },
       get tutkinnonOsaTyyppi(): TutkinnonOsaType {
         return TutkinnonOsaType.HankittavaAmmatillinen

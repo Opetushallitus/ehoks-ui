@@ -35,9 +35,7 @@ export const AiemminHankitunYTOOsaAlue = types
   )
   .views(self => ({
     get otsikko(): JSX.Element | string {
-      return self.osaAlueEnrichedData
-        ? self.osaAlueEnrichedData.osaAlueNimi
-        : ""
+      return self.osaAlueEnrichedData.osaAlueNimi
     },
     get osaamispisteet() {
       return self.osaAlueEnrichedData.laajuus
