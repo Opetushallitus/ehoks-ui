@@ -100,8 +100,8 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       formData = {},
       errors = [],
       errorsByStep = {}
-    } = window.localStorage.getItem("hoks")
-      ? JSON.parse(window.localStorage.getItem("hoks") || "")
+    } = window.sessionStorage.getItem("hoks")
+      ? JSON.parse(window.sessionStorage.getItem("hoks") || "")
       : {}
     this.setState({
       formData,
@@ -163,7 +163,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       }),
       () => {
         const { errorsByStep } = this.state
-        window.localStorage.setItem(
+        window.sessionStorage.setItem(
           "hoks",
           JSON.stringify({ formData, errors, errorsByStep })
         )
@@ -217,7 +217,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
         message: undefined,
         userEnteredText: false
       })
-      window.localStorage.removeItem("hoks")
+      window.sessionStorage.removeItem("hoks")
     } else {
       this.setState({ success: false, message: undefined })
       const { intl } = this.context
@@ -250,7 +250,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       isRoot: isRoot(rootKeys),
       koodiUriSelected: koodiUriSelected(this, () => {
         const { formData, errors, errorsByStep } = this.state
-        window.localStorage.setItem(
+        window.sessionStorage.setItem(
           "hoks",
           JSON.stringify({ formData, errors, errorsByStep })
         )
@@ -279,7 +279,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
         clearModalOpen: false
       },
       () => {
-        window.localStorage.setItem(
+        window.sessionStorage.setItem(
           "hoks",
           JSON.stringify({ formData: {}, errors: [], errorsByStep: {} })
         )
