@@ -124,6 +124,7 @@
     "koulutuksenJarjestaja.tutkintoTitle": "Tutkinto tai koulutus",
     "luoHoks.luontiOnnistui": "HOKS luotiin onnistuneesti",
     "luoHoks.vaaditutKentat": "Vaaditut kentät",
+    "luoHoks.haluatkoPoistua": "Tietoja ei ole vielä tallennettu. Haluatko silti poistua HOKSin luonnista?",
     "muokkaaHoks.tallennusOnnistui": "HOKS tallennettiin onnistuneesti",
     "notification.Opiskelijapalaute.resendPalaute.success": "Sähköposti opiskelijapalautteesta lähetetään osoitteeseen {sahkoposti}.",
     "notification.piilotaNotifikaatioAriaLabel": "Piilota ilmoitus",
