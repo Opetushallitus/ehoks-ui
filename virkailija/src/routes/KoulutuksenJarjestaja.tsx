@@ -89,8 +89,7 @@ export class KoulutuksenJarjestaja extends React.Component<
             window.scrollTo(0, 0)
           })
         }
-      },
-      { fireImmediately: true }
+      }
     )
   }
 
