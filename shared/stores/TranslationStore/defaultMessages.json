@@ -942,12 +942,27 @@
   {
     "locale": "fi",
     "key": "yllapito.oppijanPaivitys",
-    "value": "Päivitä oppijan tiedot indeksiin Oppijanumerorekisteristä."
+    "value": "Päivitä oppijan tiedot indeksiin ja oppijan hokseihin"
   },
   {
     "locale": "fi",
     "key": "yllapito.oppijanPaivitysKuvaus",
-    "value": "Päivitä oppijan tiedot indeksiin Oppijanumerorekisteristä."
+    "value": "Päivittää oppijan tiedot (nimi ja oppijanumero) indeksiin sekä oppijan hokseihin, hakemalla tuoreimmat tiedot Oppijanumerorekisteristä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.oppijanPaivitysInputLabel",
+    "value": "Syötä alla olevaan kenttään oppijan uusin oppijanumero:"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.oppijanPaivitysKaynnistetty",
+    "value": "Oppijan tietojen päivitys käynnistetty eHOKSissa."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.oppijanPaivityksenKaynnistysEpaonnistui",
+    "value": "Oppijan tietojen päivityksen käynnistys eHOKSissa epäonnistui."
   },
   {
     "locale": "fi",
@@ -967,7 +982,7 @@
   {
     "locale": "fi",
     "key": "yllapito.paivitaOppija",
-    "value": "Paivita oppijan tiedot indeksiin."
+    "value": "Käynnistä oppijan tietojen päivitys"
   },
   {
     "locale": "fi",
