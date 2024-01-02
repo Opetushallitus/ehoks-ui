@@ -823,7 +823,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
     const { intl } = this.context
     const { updateOppijaOid } = this.state
     const updateRequest = await window.fetch(
-      `/ehoks-virkailija-backend/api/v1/heratepalvelu/onrmodify?oid=${updateOppijaOid}`,
+      `/ehoks-virkailija-backend/api/v1/virkailija/onrmodify?oid=${updateOppijaOid}`,
       {
         method: "POST",
         credentials: "include",
