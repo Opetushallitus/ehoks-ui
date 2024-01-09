@@ -295,14 +295,14 @@ export class IntroModalDialog extends React.Component<
   componentDidMount() {
     const { store } = this.props
     Modal.setAppElement("#app")
-    const dispose = reaction(
+    reaction(
       () => store!.session.settings.introDialog.userAcknowledgedIntroDialog,
-      (acknowledged, _) => {
+      (acknowledged, _, initialReaction) => {
         this.setState({
           initialAcknowledgedStatus: acknowledged,
           introDialogOpen: !acknowledged
         })
-        dispose()
+        initialReaction.dispose()
       },
       { fireImmediately: true }
     )
