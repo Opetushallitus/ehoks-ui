@@ -92,6 +92,7 @@
   "dependencies": {
     "@formatjs/intl-relativetimeformat": "^11.2.12",
     "@opetushallitus/virkailija-ui-components": "^0.4.7",
+    "@rjsf/core": "2.5.1",
     "@types/lodash.find": "^4.6.7",
     "@types/lodash.get": "^4.4.7",
     "@types/lodash.max": "^4.0.7",
@@ -129,7 +130,6 @@
     "react-dom": "^16.14.0",
     "react-icons": "^3.11.0",
     "react-intl": "^6.6.2",
-    "react-jsonschema-form": "1.8.0",
     "react-modal": "^3.16.1",
     "react-responsive": "^8.2.0",
     "react-router": "^6.22.3",
