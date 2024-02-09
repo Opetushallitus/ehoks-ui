@@ -1,6 +1,6 @@
 import range from "lodash.range"
 import React, { useCallback, useState } from "react"
-import { UiSchema } from "react-jsonschema-form"
+import { UiSchema } from "@rjsf/core"
 import styled from "styled"
 import { ArrayFieldDescription } from "./ArrayFieldDescription"
 import { ArrayItem } from "./ArrayItem"

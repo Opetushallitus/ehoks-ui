@@ -1,6 +1,6 @@
 import React from "react"
 import { FormattedMessage } from "react-intl"
-import { AjvError } from "react-jsonschema-form"
+import { AjvError } from "@rjsf/core"
 import styled from "styled"
 
 const ErrorMessage = styled("li")`
