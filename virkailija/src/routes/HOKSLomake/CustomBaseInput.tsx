@@ -1,5 +1,5 @@
 import React from "react"
-import { WidgetProps } from "react-jsonschema-form"
+import { WidgetProps } from "@rjsf/utils"
 
 /* eslint-disable react/prop-types */
 interface CustomBaseInputProps
@@ -27,6 +27,8 @@ function CustomBaseInput(props: CustomBaseInputProps) {
     onBlur,
     onFocus,
     schema,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    uiSchema,
     ...inputProps
   } = props
 
@@ -55,20 +57,7 @@ function CustomBaseInput(props: CustomBaseInputProps) {
           onFocus={
             onFocus && (event => onFocus(inputProps.id, event.target.value))
           }
-        />,
-        schema.examples ? (
-          <datalist id={`examples_${inputProps.id}`}>
-            {[
-              // TODO Type 'Set<JSONSchema6Type>' is not an array type or a string type
-              // @ts-ignore Don't know what to do with this, not worthy problem to spend time on
-              ...new Set(
-                schema.examples.concat(schema.default ? [schema.default] : [])
-              )
-            ].map(example => (
-              <option key={example} value={example} />
-            ))}
-          </datalist>
-        ) : null
+        />
       ]}
     </>
   )
