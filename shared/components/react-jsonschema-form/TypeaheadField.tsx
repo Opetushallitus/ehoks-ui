@@ -13,7 +13,7 @@ import {
 import selectn from "./selectn.min"
 
 import { DefaultLabel } from "./Label"
-import { FieldProps } from "@rjsf/core"
+import { FieldProps } from "@rjsf/utils"
 
 const DEFAULT_OPTIONS = {
   required: false,
@@ -260,10 +260,8 @@ class BaseTypeaheadField extends Component<
   }
 
   componentDidMount() {
-    const {
-      uiSchema: { focusOnMount = false }
-    } = this.props
-    if (focusOnMount) {
+    const { uiSchema } = this.props
+    if (uiSchema!["ui:autofocus"]) {
       // eslint-disable-next-line react/no-string-refs
       this.refs.typeahead.current.focus()
     }
@@ -293,48 +291,46 @@ const isValidFormData = (data: any) => data && !isEmpty(data)
 export class TypeaheadField extends BaseTypeaheadField {
   constructor(props: TypeaheadFieldProps) {
     super(props)
-    const {
-      schema,
-      uiSchema: { typeahead },
-      formData
-    } = this.props
+    const { schema, uiSchema, formData } = this.props
 
     this.state = {
       selected: isValidFormData(formData)
-        ? toSelected(formData, schema, typeahead.mapping, typeahead.options)
+        ? toSelected(
+            formData,
+            schema,
+            uiSchema?.typeahead.mapping,
+            uiSchema?.typeahead.options
+          )
         : []
     }
   }
 
   componentDidUpdate(prevProps: TypeaheadFieldProps) {
-    const {
-      schema,
-      uiSchema: { typeahead },
-      formData
-    } = this.props
+    const { schema, uiSchema, formData } = this.props
     if (formData !== prevProps.formData) {
       this.setState({
         selected: isValidFormData(formData)
-          ? toSelected(formData, schema, typeahead.mapping, typeahead.options)
+          ? toSelected(
+              formData,
+              schema,
+              uiSchema?.typeahead.mapping,
+              uiSchema?.typeahead.options
+            )
           : []
       })
     }
   }
 
   render() {
-    const {
-      uiSchema: { typeahead },
-      idSchema: { $id = undefined } = {},
-      schema
-    } = this.props
-    let labelKey = mapLabelKey(typeahead.labelKey)
+    const { uiSchema, idSchema: { $id = undefined } = {}, schema } = this.props
+    let labelKey = mapLabelKey(uiSchema?.typeahead.labelKey)
     // if something is already selected and is a string - removing the label key so that the labelKey function can be ignored.
     labelKey = transformLabelKey(labelKey, schema, this.state.selected)
 
     const typeConf = {
       ...DEFAULT_OPTIONS,
-      ...typeahead,
-      onChange: this.handleSelectionChange(typeahead),
+      ...uiSchema?.typeahead,
+      onChange: this.handleSelectionChange(uiSchema?.typeahead),
       labelKey,
       selected: this.state.selected,
       id: $id,
@@ -354,17 +350,13 @@ export class AsyncTypeaheadField extends BaseTypeaheadField {
   constructor(props: TypeaheadFieldProps) {
     super(props)
 
-    const {
-      schema,
-      uiSchema: { asyncTypeahead },
-      formData
-    } = this.props
+    const { schema, uiSchema, formData } = this.props
 
     this.state = {
       options: [],
       isLoading: false,
       selected: isValidFormData(formData)
-        ? toSelected(formData, schema, asyncTypeahead.mapping)
+        ? toSelected(formData, schema, uiSchema?.asyncTypeahead.mapping)
         : []
     }
   }
@@ -374,16 +366,13 @@ export class AsyncTypeaheadField extends BaseTypeaheadField {
       return
     }
 
+    const { uiSchema } = this.props
     const {
-      uiSchema: {
-        asyncTypeahead: {
-          url,
-          optionsPath,
-          search = (searchUrl: string, searchQuery: string) =>
-            fetch(`${searchUrl}?query=${searchQuery}`).then(res => res.json())
-        }
-      }
-    } = this.props
+      url,
+      optionsPath,
+      search = (searchUrl: string, searchQuery: string) =>
+        fetch(`${searchUrl}?query=${searchQuery}`).then(res => res.json())
+    } = uiSchema?.asyncTypeahead
 
     this.setState({ isLoading: true })
 
@@ -393,18 +382,15 @@ export class AsyncTypeaheadField extends BaseTypeaheadField {
   }
 
   handleOnFocus = () => {
+    const { uiSchema } = this.props
     const {
-      uiSchema: {
-        asyncTypeahead: {
-          url,
-          optionsPath,
-          queryOnFocus = "",
-          minLength,
-          search = (searchUrl: string, searchQuery: string) =>
-            fetch(`${searchUrl}?query=${searchQuery}`).then(res => res.json())
-        }
-      }
-    } = this.props
+      url,
+      optionsPath,
+      queryOnFocus = "",
+      minLength,
+      search = (searchUrl: string, searchQuery: string) =>
+        fetch(`${searchUrl}?query=${searchQuery}`).then(res => res.json())
+    } = uiSchema?.asyncTypeahead
 
     if (minLength === 0) {
       this.setState({ isLoading: true })
@@ -415,30 +401,26 @@ export class AsyncTypeaheadField extends BaseTypeaheadField {
   }
 
   render() {
-    const {
-      uiSchema: { asyncTypeahead },
-      idSchema: { $id = undefined } = {},
-      schema
-    } = this.props
+    const { uiSchema, idSchema: { $id = undefined } = {}, schema } = this.props
 
-    let labelKey = mapLabelKey(asyncTypeahead.labelKey)
+    let labelKey = mapLabelKey(uiSchema?.asyncTypeahead.labelKey)
     // if something is already selected and is a string - removing the label key so that the labelKey function can be ignored.
     labelKey = transformLabelKey(labelKey, schema, this.state.selected)
 
     const typeConf = {
       ...DEFAULT_OPTIONS,
-      ...asyncTypeahead,
+      ...uiSchema?.asyncTypeahead,
       selected: this.state.selected,
       isLoading: this.state.isLoading,
       labelKey,
-      onChange: this.handleSelectionChange(asyncTypeahead),
+      onChange: this.handleSelectionChange(uiSchema?.asyncTypeahead),
       onSearch: this.handleSearch,
       options: this.state.options,
       onFocus: this.handleOnFocus,
       onBlur: this.handleBlur
     }
 
-    if (asyncTypeahead.overrideOptions) {
+    if (uiSchema?.asyncTypeahead.overrideOptions) {
       typeConf.onInputChange = this.props.onChange
     }
 

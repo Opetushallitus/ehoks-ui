@@ -2,28 +2,31 @@ import { useNavigate } from "react-router"
 import { Button } from "components/Button"
 import { LoadingSpinner } from "components/LoadingSpinner"
 import { ModalDialog } from "components/ModalDialogs/ModalDialog"
-import { JSONSchema7 } from "json-schema"
 import { inject, observer } from "mobx-react"
 import React, { useState, useEffect } from "react"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 import { useIntl, FormattedMessage } from "react-intl"
-import { AjvError, FieldProps, IChangeEvent } from "@rjsf/core"
+import Form, { IChangeEvent } from "@rjsf/core"
+import { FieldProps, RJSFSchema, RJSFValidationError } from "@rjsf/utils"
 import { IRootStore } from "stores/RootStore"
-import { ArrayFieldTemplate } from "./HOKSLomake/ArrayFieldTemplate"
 import { BottomToolbar } from "./HOKSLomake/BottomToolbar"
 import { ButtonsContainer } from "./HOKSLomake/ButtonsContainer"
 import { ClearButton } from "./HOKSLomake/ClearButton"
-import ErrorList from "./HOKSLomake/ErrorList"
 import { FailureMessage } from "./HOKSLomake/FailureMessage"
 import { fetchKoodiUris } from "./HOKSLomake/fetchKoodiUris"
-import { fields, koodistoUrls, widgets } from "./HOKSLomake/formConfig"
+import {
+  fields,
+  koodistoUrls,
+  widgets,
+  templates
+} from "./HOKSLomake/formConfig"
 import { FormContainer } from "./HOKSLomake/FormContainer"
 import "./HOKSLomake/glyphicons/glyphicons.css"
 import { Header } from "./HOKSLomake/Header"
 import {
   buildKoodiUris,
   schemaByStep,
-  stripUnsupportedFormats,
+  convertSchemaDefinitions,
   reportHOKSErrors,
   transformErrors
 } from "./HOKSLomake/helpers/helpers"
@@ -31,7 +34,6 @@ import { isRoot } from "./HOKSLomake/helpers/isRoot"
 import { koodiUriSelected } from "./HOKSLomake/helpers/koodiUriSelected"
 import { trimEmptyValues } from "./HOKSLomake/helpers/trimFormData"
 import { HOKSFormContainer } from "./HOKSLomake/HOKSContainer"
-import { ReactJSONSchemaForm } from "./HOKSLomake/ReactJSONSchemaForm"
 import { SpinnerContainer } from "./HOKSLomake/SpinnerContainer"
 import { Step } from "./HOKSLomake/Step"
 import { Stepper } from "./HOKSLomake/Stepper"
@@ -40,22 +42,23 @@ import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./LuoHOKS/uiSchema"
 import { appendCommonHeaders } from "fetchUtils"
+import validator from "@rjsf/validator-ajv8"
 
 interface LuoHOKSProps {
   store?: IRootStore
 }
 
 interface LuoHOKSState {
-  schema: JSONSchema7
+  schema: RJSFSchema
   formData: { [name: string]: any }
-  errors: AjvError[]
+  errors: RJSFValidationError[]
   isLoading: boolean
   success: boolean | undefined
   userEnteredText: boolean
   uiSchema?: ReturnType<typeof uiSchemaByStep>
-  rawSchema: JSONSchema7
+  rawSchema: RJSFSchema
   currentStep: number
-  errorsByStep: { [index: string]: AjvError[] }
+  errorsByStep: { [index: string]: RJSFValidationError[] }
   koodiUris: { [key in keyof typeof koodistoUrls]: any[] }
   message?: string
   clearModalOpen: boolean
@@ -124,7 +127,7 @@ export const LuoHOKS = inject("store")(
     useEffect(() => {
       props.store!.environment.fetchSwaggerJSON().then(async json => {
         const rawSchema = {
-          definitions: stripUnsupportedFormats(json.definitions),
+          definitions: convertSchemaDefinitions(json.definitions),
           ...json.definitions.HOKSLuonti
         }
         const koodiUris = await fetchKoodiUris()
@@ -207,7 +210,7 @@ export const LuoHOKS = inject("store")(
       })
     }
 
-    const setErrors = (errors: AjvError[]) => {
+    const setErrors = (errors: RJSFValidationError[]) => {
       setState({ ...state, errors })
     }
 
@@ -254,7 +257,9 @@ export const LuoHOKS = inject("store")(
       notifications.markAllErrorsHandled()
 
       const request = await window.fetch(
-        `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${fieldProps.formData["oppija-oid"]}/hoksit`,
+        `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${
+          fieldProps.formData!["oppija-oid"]
+        }/hoksit`,
         {
           method: "POST",
           credentials: "include",
@@ -368,7 +373,7 @@ export const LuoHOKS = inject("store")(
           </Stepper>
         </TopToolbar>
         <FormContainer>
-          <ReactJSONSchemaForm
+          <Form
             fields={fields}
             widgets={widgets}
             schema={state.schema}
@@ -378,11 +383,11 @@ export const LuoHOKS = inject("store")(
             onChange={onChange}
             onSubmit={create}
             onError={setErrors}
-            ErrorList={ErrorList}
+            templates={templates}
             transformErrors={transformErrors}
-            ArrayFieldTemplate={ArrayFieldTemplate}
             liveValidate={true}
             noHtml5Validate={true}
+            validator={validator}
           >
             <BottomToolbar>
               <ButtonsContainer>
@@ -429,7 +434,7 @@ export const LuoHOKS = inject("store")(
               <Button onClick={nextStep}>Seuraava</Button> */}
               </ButtonsContainer>
             </BottomToolbar>
-          </ReactJSONSchemaForm>
+          </Form>
         </FormContainer>
       </HOKSFormContainer>
     )

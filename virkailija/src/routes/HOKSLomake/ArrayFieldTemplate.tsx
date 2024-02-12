@@ -1,24 +1,9 @@
 import range from "lodash.range"
 import React, { useCallback, useState } from "react"
-import { UiSchema } from "@rjsf/core"
+import { ArrayFieldTemplateProps } from "@rjsf/utils"
 import styled from "styled"
 import { ArrayFieldDescription } from "./ArrayFieldDescription"
 import { ArrayItem } from "./ArrayItem"
-
-interface ArrayFieldTemplateProps {
-  className: string
-  idSchema: { $id: string }
-  schema: any
-  uiSchema: UiSchema
-  DescriptionField: any
-  items: any[]
-  canAdd: boolean
-  onAddClick: any
-  disabled: boolean
-  readonly: boolean
-  formContext: any
-  title: string
-}
 
 const ArrayField = styled("fieldset")``
 
@@ -101,19 +86,16 @@ export function ArrayFieldTemplate(props: ArrayFieldTemplateProps) {
   const {
     canAdd,
     className,
-    DescriptionField,
     disabled,
-    formContext,
     idSchema,
     items,
     onAddClick,
     readonly,
     schema,
-    title,
+    registry,
     uiSchema
   } = props
 
-  const isRoot = formContext.isRoot(title)
   const [activeStep, setActiveStep] = useState(0)
   const onAdd = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -140,14 +122,14 @@ export function ArrayFieldTemplate(props: ArrayFieldTemplateProps) {
   return (
     <ArrayField className={className} id={idSchema.$id}>
       <ArrayHeader>
-        {(uiSchema["ui:description"] || schema.description) && (
+        {(uiSchema!["ui:description"] || schema.description) && (
           <DescriptionContainer>
             <ArrayFieldDescription
               key={`array-field-description-${idSchema.$id}`}
-              DescriptionField={DescriptionField}
               idSchema={idSchema}
-              description={uiSchema["ui:description"] || schema.description}
-              isRoot={isRoot}
+              schema={schema}
+              registry={registry}
+              description={uiSchema!["ui:description"] || schema.description}
             />
           </DescriptionContainer>
         )}

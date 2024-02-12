@@ -92,7 +92,9 @@
   "dependencies": {
     "@formatjs/intl-relativetimeformat": "^11.2.12",
     "@opetushallitus/virkailija-ui-components": "^0.4.7",
-    "@rjsf/core": "4.2.3",
+    "@rjsf/core": "^5.17.0",
+    "@rjsf/utils": "^5.17.0",
+    "@rjsf/validator-ajv8": "^5.17.0",
     "@types/lodash.find": "^4.6.7",
     "@types/lodash.get": "^4.4.7",
     "@types/lodash.max": "^4.0.7",
