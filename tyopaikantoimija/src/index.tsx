@@ -12,6 +12,7 @@ import fi from "react-intl/locale-data/fi"
 import sv from "react-intl/locale-data/sv"
 import { App } from "./routes/App"
 import { RootStore } from "./stores/RootStore"
+import "core-js"
 
 // load finnish & swedish locale data (currency units, separators etc.)
 addLocaleData([...fi, ...sv])
