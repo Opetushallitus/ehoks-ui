@@ -67,7 +67,9 @@ export function CustomDatetimeWidget(props: WidgetProps) {
       id={id}
       label={label}
       options={options}
-      onChange={changedValue => onChange(localDateToUTC(changedValue))}
+      onChange={(changedValue: string) =>
+        onChange(localDateToUTC(changedValue))
+      }
       multiple={multiple}
     />
   )
