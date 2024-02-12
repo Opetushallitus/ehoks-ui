@@ -1,5 +1,5 @@
 import React from "react"
-import { WidgetProps } from "@rjsf/core"
+import { WidgetProps } from "@rjsf/utils"
 
 /* eslint-disable react/prop-types */
 interface CustomBaseInputProps

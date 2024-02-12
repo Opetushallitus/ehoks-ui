@@ -1,10 +1,3 @@
-// These methods have been adapted from this pull request:
-// https://github.com/rjsf-team/react-jsonschema-form/pull/1228
-// This is not a perfect solution but provides ok-ish workaround
-// until issue:
-// https://github.com/rjsf-team/react-jsonschema-form/issues/675
-// has been resolved
-
 function trimObject(object: any) {
   if (object === null) {
     return null
@@ -33,9 +26,15 @@ const trimArray = (array: any[]) =>
     return acc
   }, [])
 
-export const trimEmptyValues = (value: any) =>
-  Array.isArray(value)
+const trimString = (value: string) => value.trim()
+
+export const trimEmptyValues = (value: any) => {
+  console.log("Trimming", value)
+  return Array.isArray(value)
     ? trimArray(value)
     : typeof value === "object"
     ? trimObject(value)
+    : typeof value === "string"
+    ? trimString(value)
     : value
+}

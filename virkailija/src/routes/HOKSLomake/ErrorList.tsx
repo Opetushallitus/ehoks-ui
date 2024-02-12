@@ -1,6 +1,6 @@
 import React from "react"
 import { FormattedMessage } from "react-intl"
-import { AjvError } from "@rjsf/core"
+import { ErrorListProps, RJSFValidationError } from "@rjsf/utils"
 import styled from "styled"
 
 const ErrorMessage = styled("li")`
@@ -18,10 +18,12 @@ const generateFieldId = (path: string) =>
     .join("_")
     .replace(/\[|'|\./g, "")}`
 
-const scrollToError = (error: AjvError) => (event: React.MouseEvent) => {
+const scrollToError = (error: RJSFValidationError) => (
+  event: React.MouseEvent
+) => {
   event.preventDefault()
   const element: any = document.querySelector(
-    `#${generateFieldId(error.property)}`
+    `#${generateFieldId(error.property!)}`
   )
   const topToolbar: any = document.getElementById("topToolbar")
   if (element) {
@@ -31,15 +33,11 @@ const scrollToError = (error: AjvError) => (event: React.MouseEvent) => {
       element.tagName === "INPUT"
         ? element
         : document.querySelectorAll(
-            `#${generateFieldId(error.property)} input:first-child`
+            `#${generateFieldId(error.property!)} input:first-child`
           )[0]
 
     focusElement.focus()
   }
-}
-
-interface ErrorListProps {
-  errors: AjvError[]
 }
 
 export default function ErrorList(props: ErrorListProps) {
@@ -55,9 +53,9 @@ export default function ErrorList(props: ErrorListProps) {
       </h3>
 
       <ul>
-        {errors.map((error: AjvError, i: number) => {
-          const property = error.property
-            .replace(/\[|\]|'/gi, "")
+        {errors.map((error: RJSFValidationError, i: number) => {
+          const property = error
+            .property!.replace(/\[|\]|'/gi, "")
             .replace(/\d/gi, (match: string) => ` ${Number(match) + 1} `)
           return (
             <ErrorMessage key={i} onClick={scrollToError(error)} role="button">

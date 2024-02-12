@@ -1,5 +1,5 @@
 import React from "react"
-import { WidgetProps } from "@rjsf/core"
+import { WidgetProps } from "@rjsf/utils"
 
 export function CustomBooleanRadioButtonWidget(props: WidgetProps) {
   const { value, required, autofocus, onChange, id } = props

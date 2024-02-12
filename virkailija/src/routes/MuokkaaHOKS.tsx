@@ -1,27 +1,30 @@
 import { RouteComponentProps } from "@reach/router"
 import { Button } from "components/Button"
 import { LoadingSpinner } from "components/LoadingSpinner"
-import { JSONSchema7 } from "json-schema"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 import { FormattedMessage, intlShape } from "react-intl"
-import { AjvError, FieldProps, IChangeEvent } from "@rjsf/core"
+import Form, { IChangeEvent } from "@rjsf/core"
+import { FieldProps, RJSFSchema, RJSFValidationError } from "@rjsf/utils"
 import { IRootStore } from "stores/RootStore"
-import { ArrayFieldTemplate } from "./HOKSLomake/ArrayFieldTemplate"
 import { BottomToolbar } from "./HOKSLomake/BottomToolbar"
 import { ButtonsContainer } from "./HOKSLomake/ButtonsContainer"
-import ErrorList from "./HOKSLomake/ErrorList"
 import { FailureMessage } from "./HOKSLomake/FailureMessage"
 import { fetchKoodiUris } from "./HOKSLomake/fetchKoodiUris"
-import { fields, koodistoUrls, widgets } from "./HOKSLomake/formConfig"
+import {
+  fields,
+  koodistoUrls,
+  widgets,
+  templates
+} from "./HOKSLomake/formConfig"
 import { FormContainer } from "./HOKSLomake/FormContainer"
 import "./HOKSLomake/glyphicons/glyphicons.css"
 import { Header } from "./HOKSLomake/Header"
 import {
   buildKoodiUris,
   schemaByStep,
-  stripUnsupportedFormats,
+  convertSchemaDefinitions,
   reportHOKSErrors,
   transformErrors
 } from "./HOKSLomake/helpers/helpers"
@@ -29,7 +32,6 @@ import { isRoot } from "./HOKSLomake/helpers/isRoot"
 import { koodiUriSelected } from "./HOKSLomake/helpers/koodiUriSelected"
 import { trimEmptyValues } from "./HOKSLomake/helpers/trimFormData"
 import { HOKSFormContainer } from "./HOKSLomake/HOKSContainer"
-import { ReactJSONSchemaForm } from "./HOKSLomake/ReactJSONSchemaForm"
 import { SpinnerContainer } from "./HOKSLomake/SpinnerContainer"
 import { Step } from "./HOKSLomake/Step"
 import { Stepper } from "./HOKSLomake/Stepper"
@@ -38,6 +40,7 @@ import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
 import { appendCommonHeaders } from "fetchUtils"
+import validator from "@rjsf/validator-ajv8"
 
 const disallowedKeys = ["eid", "manuaalisyotto", "module-id"]
 
@@ -89,16 +92,16 @@ interface MuokkaaHOKSProps extends RouteComponentProps {
 }
 
 interface MuokkaaHOKSState {
-  schema: JSONSchema7
+  schema: RJSFSchema
   formData: { [name: string]: any }
-  errors: AjvError[]
+  errors: RJSFValidationError[]
   isLoading: boolean
   success: boolean | undefined
   userEnteredText: boolean
   uiSchema?: ReturnType<typeof uiSchemaByStep>
-  rawSchema: JSONSchema7
+  rawSchema: RJSFSchema
   currentStep: number
-  errorsByStep: { [index: string]: AjvError[] }
+  errorsByStep: { [index: string]: RJSFValidationError[] }
   koodiUris: { [key in keyof typeof koodistoUrls]: any[] }
   message?: string
   clearModalOpen: boolean
@@ -134,7 +137,7 @@ export class MuokkaaHOKS extends React.Component<
     const json: any = await this.props.store!.environment.fetchSwaggerJSON()
     const hoks = await this.fetchHOKS()
     const rawSchema = {
-      definitions: stripUnsupportedFormats(json.definitions),
+      definitions: convertSchemaDefinitions(json.definitions),
       ...json.definitions.HOKSKorvaus
     }
     const koodiUris = await fetchKoodiUris()
@@ -206,7 +209,7 @@ export class MuokkaaHOKS extends React.Component<
     }))
   }
 
-  setErrors = (errors: AjvError[]) => {
+  setErrors = (errors: RJSFValidationError[]) => {
     this.setState({ errors })
   }
 
@@ -337,7 +340,7 @@ export class MuokkaaHOKS extends React.Component<
           </Stepper>
         </TopToolbar>
         <FormContainer>
-          <ReactJSONSchemaForm
+          <Form
             fields={fields}
             widgets={widgets}
             schema={this.state.schema}
@@ -347,11 +350,11 @@ export class MuokkaaHOKS extends React.Component<
             onChange={this.onChange}
             onSubmit={this.save}
             onError={this.setErrors}
-            ErrorList={ErrorList}
+            templates={templates}
             transformErrors={transformErrors}
-            ArrayFieldTemplate={ArrayFieldTemplate}
             liveValidate={true}
             noHtml5Validate={true}
+            validator={validator}
           >
             <BottomToolbar>
               <ButtonsContainer>
@@ -388,7 +391,7 @@ export class MuokkaaHOKS extends React.Component<
                 <Button onClick={this.nextStep}>Seuraava</Button> */}
               </ButtonsContainer>
             </BottomToolbar>
-          </ReactJSONSchemaForm>
+          </Form>
         </FormContainer>
       </HOKSFormContainer>
     )
