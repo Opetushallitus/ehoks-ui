@@ -243,7 +243,7 @@ export const HOKS = types
             ),
             credentials: "include",
             body: JSON.stringify({
-              "oppilaitos-oid": self.opiskeluOikeus.oppilaitos.oid
+              "oppilaitos-oid": self.opiskeluOikeus?.oppilaitos?.oid || null
             })
           }
         )
