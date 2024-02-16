@@ -29,7 +29,6 @@ const trimArray = (array: any[]) =>
 const trimString = (value: string) => value.trim()
 
 export const trimEmptyValues = (value: any) => {
-  console.log("Trimming", value)
   return Array.isArray(value)
     ? trimArray(value)
     : typeof value === "object"
