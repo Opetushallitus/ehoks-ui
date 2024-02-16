@@ -28,12 +28,11 @@ const trimArray = (array: any[]) =>
 
 const trimString = (value: string) => value.trim()
 
-export const trimEmptyValues = (value: any) => {
-  return Array.isArray(value)
+export const trimEmptyValues = (value: any) =>
+  Array.isArray(value)
     ? trimArray(value)
     : typeof value === "object"
     ? trimObject(value)
     : typeof value === "string"
     ? trimString(value)
     : value
-}
