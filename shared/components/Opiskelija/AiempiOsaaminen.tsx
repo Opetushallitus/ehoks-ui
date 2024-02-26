@@ -104,6 +104,9 @@ export class AiempiOsaaminen extends React.Component<
                     olennainenSeikka={
                       study.olennainenSeikka ? essentialFactor : undefined
                     }
+                    vaatimuksistaTaiTavoitteistaPoikkeaminen={
+                      study.vaatimuksistaTaiTavoitteistaPoikkeaminen
+                    }
                   />
                   {renderExtraItem && <EmptyItem />}
                 </React.Fragment>
