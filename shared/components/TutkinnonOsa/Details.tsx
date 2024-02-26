@@ -26,6 +26,7 @@ import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
 import { Table, TBody, TD, TH } from "./Shared"
 import { observer } from "mobx-react"
 import { ShareType, TutkinnonOsaType } from "../../models/helpers/ShareTypes"
+import { RequirementsAndDeviations } from "./RequirementsAndDeviations"
 
 interface ColorProps {
   fadedColor: string
@@ -484,6 +485,7 @@ interface DetailsProps {
   moduleId?: string
   tutkinnonOsaTyyppi?: TutkinnonOsaType
   hoksEid?: string
+  vaatimuksistaTaiTavoitteistaPoikkeaminen?: string
 }
 
 export class Details extends React.Component<DetailsProps> {
@@ -506,7 +508,8 @@ export class Details extends React.Component<DetailsProps> {
       toggle,
       todentamisenProsessi,
       koulutuksenJarjestaja,
-      tarkentavatTiedotOsaamisenArvioija
+      tarkentavatTiedotOsaamisenArvioija,
+      vaatimuksistaTaiTavoitteistaPoikkeaminen
     } = this.props
     const { intl } = this.context
 
@@ -592,6 +595,15 @@ export class Details extends React.Component<DetailsProps> {
             isAiempiOsaaminen={isAiempiOsaaminen}
             koulutuksenJarjestaja={koulutuksenJarjestaja}
           />
+
+          {!!vaatimuksistaTaiTavoitteistaPoikkeaminen && (
+            <RequirementsAndDeviations
+              toggle={toggle("details")}
+              expanded={true}
+              requirements={[]}
+              deviations={vaatimuksistaTaiTavoitteistaPoikkeaminen}
+            />
+          )}
         </DetailsContent>
       </DetailsExpanded>
     ) : (
