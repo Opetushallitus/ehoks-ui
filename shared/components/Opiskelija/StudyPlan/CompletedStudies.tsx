@@ -93,6 +93,9 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
                     title={study.opintoOtsikko(competencePointsTitle)}
                     objectives={study.tavoitteetJaSisallot}
                     koulutuksenJarjestaja={study.koulutuksenJarjestaja}
+                    vaatimuksistaTaiTavoitteistaPoikkeaminen={
+                      study.vaatimuksistaTaiTavoitteistaPoikkeaminen
+                    }
                   />
                   {renderExtraItem && <EmptyItem />}
                 </React.Fragment>

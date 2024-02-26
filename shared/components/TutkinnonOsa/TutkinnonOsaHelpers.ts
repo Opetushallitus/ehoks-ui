@@ -1,1 +1,5 @@
-export type ToggleableItems = "competences" | "details" | "objectives"
+export type ToggleableItems =
+  | "competences"
+  | "details"
+  | "objectives"
+  | "requirementsAndDeviations"
