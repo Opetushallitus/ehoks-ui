@@ -19,6 +19,7 @@ import { Details } from "./TutkinnonOsa/Details"
 import { OneRowTable } from "./TutkinnonOsa/Shared"
 import { ColorType } from "theme"
 import { ShareType, TutkinnonOsaType } from "../models/helpers/ShareTypes"
+import { RequirementsAndDeviations } from "./TutkinnonOsa/RequirementsAndDeviations"
 
 interface ContainerProps {
   accentColor?: ColorType
@@ -139,6 +140,7 @@ export interface TutkinnonOsaState {
     competences: boolean
     details: boolean
     objectives: boolean
+    requirementsAndDeviations: boolean
   }
   expandedCompetences: number[]
 }
@@ -157,7 +159,8 @@ export class TutkinnonOsa extends React.Component<
     expanded: {
       competences: false,
       details: false,
-      objectives: false
+      objectives: false,
+      requirementsAndDeviations: false
     },
     expandedCompetences: []
   }
@@ -240,7 +243,8 @@ export class TutkinnonOsa extends React.Component<
     return (
       this.state.expanded.details ||
       this.state.expanded.competences ||
-      this.state.expanded.objectives
+      this.state.expanded.objectives ||
+      this.state.expanded.requirementsAndDeviations
     )
   }
 
@@ -345,9 +349,6 @@ export class TutkinnonOsa extends React.Component<
               tarkentavatTiedotOsaamisenArvioija={
                 tarkentavatTiedotOsaamisenArvioija
               }
-              vaatimuksistaTaiTavoitteistaPoikkeaminen={
-                vaatimuksistaTaiTavoitteistaPoikkeaminen
-              }
             />
           )}
           <Competences
@@ -360,6 +361,14 @@ export class TutkinnonOsa extends React.Component<
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
             toggle={this.toggle}
           />
+          {!!vaatimuksistaTaiTavoitteistaPoikkeaminen && (
+            <RequirementsAndDeviations
+              toggle={this.toggle("requirementsAndDeviations")}
+              expanded={expanded.requirementsAndDeviations}
+              requirements={[]}
+              deviations={vaatimuksistaTaiTavoitteistaPoikkeaminen}
+            />
+          )}
           {objectives && (
             <Objectives
               expanded={expanded.objectives}
