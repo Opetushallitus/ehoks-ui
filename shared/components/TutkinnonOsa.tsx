@@ -19,6 +19,7 @@ import { Details } from "./TutkinnonOsa/Details"
 import { OneRowTable } from "./TutkinnonOsa/Shared"
 import { ColorType } from "theme"
 import { ShareType, TutkinnonOsaType } from "../models/helpers/ShareTypes"
+import { RequirementsAndDeviations } from "./TutkinnonOsa/RequirementsAndDeviations"
 
 interface ContainerProps {
   accentColor?: ColorType
@@ -131,6 +132,7 @@ export interface TutkinnonOsaProps {
   objectives?: string
   koulutuksenJarjestaja?: IOrganisaatio
   tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija
+  vaatimuksistaTaiTavoitteistaPoikkeaminen?: string
 }
 
 export interface TutkinnonOsaState {
@@ -138,6 +140,7 @@ export interface TutkinnonOsaState {
     competences: boolean
     details: boolean
     objectives: boolean
+    requirementsAndDeviations: boolean
   }
   expandedCompetences: number[]
 }
@@ -156,7 +159,8 @@ export class TutkinnonOsa extends React.Component<
     expanded: {
       competences: false,
       details: false,
-      objectives: false
+      objectives: false,
+      requirementsAndDeviations: false
     },
     expandedCompetences: []
   }
@@ -239,7 +243,8 @@ export class TutkinnonOsa extends React.Component<
     return (
       this.state.expanded.details ||
       this.state.expanded.competences ||
-      this.state.expanded.objectives
+      this.state.expanded.objectives ||
+      this.state.expanded.requirementsAndDeviations
     )
   }
 
@@ -262,7 +267,8 @@ export class TutkinnonOsa extends React.Component<
       width = "25%",
       objectives,
       koulutuksenJarjestaja,
-      tarkentavatTiedotOsaamisenArvioija
+      tarkentavatTiedotOsaamisenArvioija,
+      vaatimuksistaTaiTavoitteistaPoikkeaminen
     } = this.props
     const { expandedCompetences, expanded } = this.state
     const hasOsaamisenHakkimistavat =
@@ -270,7 +276,8 @@ export class TutkinnonOsa extends React.Component<
     const hasDetails =
       hasOsaamisenHakkimistavat ||
       osaamisenOsoittamiset.length > 0 ||
-      todentamisenProsessi
+      todentamisenProsessi ||
+      vaatimuksistaTaiTavoitteistaPoikkeaminen
     const hasActiveShare =
       typeof share !== "undefined" && moduleId === share.tutkinnonOsaModuleId
     const detailsExpanded = expanded.details || hasActiveShare
@@ -354,6 +361,14 @@ export class TutkinnonOsa extends React.Component<
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
             toggle={this.toggle}
           />
+          {!!vaatimuksistaTaiTavoitteistaPoikkeaminen && (
+            <RequirementsAndDeviations
+              toggle={this.toggle("requirementsAndDeviations")}
+              expanded={expanded.requirementsAndDeviations}
+              requirements={[]}
+              deviations={vaatimuksistaTaiTavoitteistaPoikkeaminen}
+            />
+          )}
           {objectives && (
             <Objectives
               expanded={expanded.objectives}
