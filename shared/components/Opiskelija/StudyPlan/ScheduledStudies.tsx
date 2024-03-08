@@ -105,6 +105,7 @@ export class ScheduledStudies extends React.Component<ScheduledStudiesProps> {
                     alku={study.alku}
                     loppu={study.loppu}
                     laajuus={study.laajuus}
+                    viiteId={study.tutkinnonOsa?.koulutuksenOsaViiteId}
                   />
                   {renderExtraItem && <EmptyItem />}
                 </React.Fragment>

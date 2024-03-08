@@ -360,6 +360,9 @@ export class Raportit extends React.Component<RaportitProps> {
     this.state.data?.find((x: TpjRow) => x.hoksId === hoksId) as TpjRow
 
   createLinkPath = (hoksId: number) => {
+    const { store } = this.props
+    const oppilaitosOid: string | undefined =
+      store?.session.selectedOrganisationOid
     let row = {} as HoksRow | TpjRow
     let oppijaOid = ""
     let hoksEid = ""
@@ -376,7 +379,7 @@ export class Raportit extends React.Component<RaportitProps> {
         break
     }
     return oppijaOid.length && hoksEid.length
-      ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaOid}/${hoksEid}`
+      ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppilaitosOid}/oppija/${oppijaOid}/${hoksEid}`
       : "/ehoks-virkailija-ui/raportit"
   }
 

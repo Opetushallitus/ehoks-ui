@@ -36,7 +36,10 @@ export const ErrorStore = types
         self.errors.push(handledError as any) // https://github.com/mobxjs/mobx-state-tree/issues/501
       }
     }
-    return { logError }
+    const markAllErrorsHandled = () => {
+      self.errors.forEach(error => error.handle())
+    }
+    return { logError, markAllErrorsHandled }
   })
   .views(self => ({
     get unhandled(): IAppError[] {

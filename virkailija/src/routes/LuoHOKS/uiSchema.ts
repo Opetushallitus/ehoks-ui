@@ -4,6 +4,7 @@ import { UiSchemaOptions } from "../HOKSLomake/formConfig"
 export const propertiesByStep: { [index: number]: string[] } = {
   0: [
     "opiskeluoikeus-oid",
+    "tuva-opiskeluoikeus-oid",
     "oppija-oid",
     "ensikertainen-hyvaksyminen",
     "paivitetty",
@@ -27,6 +28,7 @@ export const propertiesByStep: { [index: number]: string[] } = {
 const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
   "ui:order": [
     "opiskeluoikeus-oid",
+    "tuva-opiskeluoikeus-oid",
     "oppija-oid",
     "ensikertainen-hyvaksyminen",
     "paivitetty",
@@ -567,6 +569,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           id: {
             "ui:widget": "hidden"
           },
+          "yksiloiva-tunniste": {
+            "ui:widget": "hidden"
+          },
           "osaamisen-hankkimistapa-koodi-uri": {
             "ui:field": "typeahead",
             typeahead: typeaheadProps(options.osaamisenhankkimistapa)
@@ -753,6 +758,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "*"
           ],
           id: {
+            "ui:widget": "hidden"
+          },
+          "yksiloiva-tunniste": {
             "ui:widget": "hidden"
           },
           "osaamisen-hankkimistapa-koodi-uri": {
@@ -963,6 +971,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                 "*"
               ],
               id: {
+                "ui:widget": "hidden"
+              },
+              "yksiloiva-tunniste": {
                 "ui:widget": "hidden"
               },
               "osaamisen-hankkimistapa-koodi-uri": {

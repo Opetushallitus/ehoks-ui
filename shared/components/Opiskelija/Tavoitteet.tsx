@@ -193,6 +193,23 @@ const StudentIdentifierInfo = ({ hoks }: { hoks: IHOKS }) => (
         <LabeledColumn id="tavoitteet.idTitle">{hoks.id}</LabeledColumn>
       )}
     </tr>
+    {hoks.tuvaOpiskeluoikeusOid && (
+      <>
+        <tr>
+          <th>
+            <FormattedMessage
+              id="tavoitteet.tuvaOpiskeluoikeusOidTitle"
+              defaultMessage="TUVA-opiskeluoikeuden OID"
+            />
+          </th>
+        </tr>
+        <tr>
+          <LabeledColumn id="tavoitteet.tuvaOpiskeluoikeusOidTitle">
+            {hoks.tuvaOpiskeluoikeusOid}
+          </LabeledColumn>
+        </tr>
+      </>
+    )}
   </>
 )
 

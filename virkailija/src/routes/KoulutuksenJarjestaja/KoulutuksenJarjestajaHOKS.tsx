@@ -64,6 +64,7 @@ export interface KoulutuksenJarjestajaHOKSProps
   oppija?: IOppija
   /* From router path */
   hoksId?: string
+  laitosId?: string
 }
 
 @inject("store")
@@ -123,7 +124,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
   }
 
   render() {
-    const { hoksId, location, suunnitelmat, oppija } = this.props
+    const { hoksId, location, suunnitelmat, oppija, laitosId } = this.props
     const suunnitelmaHoksId =
       this.props.location &&
       this.props.location.state &&
@@ -134,6 +135,10 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
     if (!oppija || !suunnitelma) {
       return null
     }
+    const oppijaPath = `/ehoks-virkailija-ui/koulutuksenjarjestaja/${laitosId}/oppija/${oppija.oid}`
+    const hoksPath = `${oppijaPath}/${suunnitelma.eid}`
+    const osaamisPath = `${hoksPath}/osaaminen`
+    const opsPath = `${hoksPath}/opiskelusuunnitelma`
 
     return (
       <React.Fragment>
@@ -142,9 +147,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
             <PaddedContent>
               {suunnitelmat.length > 1 && (
                 <Timestamp>
-                  <StudentLink
-                    to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}`}
-                  >
+                  <StudentLink to={oppijaPath}>
                     <FormattedMessage
                       id="koulutuksenJarjestaja.opiskelija.naytaKaikkiLink"
                       defaultMessage="Näytä kaikki tämän opiskelijan suunnitelmat"
@@ -156,13 +159,8 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                 <HOKSInfo suunnitelma={suunnitelma} oppija={oppija} />
                 <SectionItems>
                   <SectionItem
-                    selected={
-                      location?.pathname ===
-                      `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${suunnitelma.eid}`
-                    }
-                    onClick={this.setActiveTab(
-                      `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${suunnitelma.eid}`
-                    )}
+                    selected={location?.pathname === hoksPath}
+                    onClick={this.setActiveTab(hoksPath)}
                     title={
                       <FormattedMessage
                         id="koulutuksenJarjestaja.opiskelija.tavoiteTitle"
@@ -173,13 +171,8 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                     <Flag />
                   </SectionItem>
                   <SectionItem
-                    selected={
-                      location?.pathname ===
-                      `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${suunnitelma.eid}/osaaminen`
-                    }
-                    onClick={this.setActiveTab(
-                      `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${suunnitelma.eid}/osaaminen`
-                    )}
+                    selected={location?.pathname === osaamisPath}
+                    onClick={this.setActiveTab(osaamisPath)}
                     title={
                       <FormattedMessage
                         id="koulutuksenJarjestaja.opiskelija.aiempiOsaaminenTitle"
@@ -190,13 +183,8 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                     <MdExtension />
                   </SectionItem>
                   <SectionItem
-                    selected={
-                      location?.pathname ===
-                      `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${suunnitelma.eid}/opiskelusuunnitelma`
-                    }
-                    onClick={this.setActiveTab(
-                      `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${suunnitelma.eid}/opiskelusuunnitelma`
-                    )}
+                    selected={location?.pathname === opsPath}
+                    onClick={this.setActiveTab(opsPath)}
                     title={
                       <FormattedMessage
                         id="koulutuksenJarjestaja.opiskelija.opiskelusuunnitelmaTitle"
@@ -215,9 +203,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
         <BackgroundContainer>
           <Container>
             <PaddedContent>
-              <Router
-                basepath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppija.oid}/${suunnitelma.eid}`}
-              >
+              <Router basepath={hoksPath}>
                 <Tavoitteet
                   path="/"
                   student={oppija.henkilotiedot}

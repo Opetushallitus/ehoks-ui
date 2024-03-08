@@ -22,7 +22,6 @@ export const EnrichTutkinnonOsaKoodiUri = types
 
     const getFromEPerusteetService = (code: string) => {
       if (self.tyyppi === TutkinnonOsaType.HankittavaKoulutuksenOsa) {
-        console.log("koulutuksenOsa Enrich")
         return fetchSingle(
           apiUrl(`${apiPrefix}/external/eperusteet/koulutuksenOsa/${code}`),
           {
@@ -42,7 +41,13 @@ export const EnrichTutkinnonOsaKoodiUri = types
         cachedResponses[koodiUri] =
           cachedResponses[koodiUri] || getFromEPerusteetService(koodiUri)
         const response: APIResponse = yield cachedResponses[koodiUri]
-        self.tutkinnonOsa = response.data
+        if (Array.isArray(response.data)) {
+          const tutkinnonOsat = [...response.data]
+          tutkinnonOsat.sort((to1, to2) => to2.muokattu - to1.muokattu)
+          self.tutkinnonOsa = tutkinnonOsat[0]
+        } else {
+          self.tutkinnonOsa = response.data
+        }
       } catch (error) {
         errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
       }

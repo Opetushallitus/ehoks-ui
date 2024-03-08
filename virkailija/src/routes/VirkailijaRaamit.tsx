@@ -10,6 +10,9 @@ interface RaamitProps {
 @inject("store")
 @observer
 export class VirkailijaRaamit extends React.Component<RaamitProps> {
+  componentWillUnmount() {
+    document.getElementById("raamit_app_root")?.remove()
+  }
   render() {
     const scriptUrl = this.props.store!.environment.virkailijaRaamitUrl
     return <UiVirkailijaRaamit scriptUrl={scriptUrl} />

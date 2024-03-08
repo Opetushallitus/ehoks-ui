@@ -60,7 +60,11 @@ export function fetchUtils(
           // supports:
           // 1) array with one object in json.data
           // 2) object in json.data
-          data: Array.isArray(json.data) ? json.data[0] : json.data,
+          data: Array.isArray(json.data)
+            ? json.data.length > 0
+              ? json.data[0]
+              : {}
+            : json.data,
           meta: json.meta || {}
         }
         // camelCase kebab-cased object keys recursively so we can use dot syntax for accessing values
