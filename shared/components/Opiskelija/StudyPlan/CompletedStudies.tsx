@@ -106,6 +106,7 @@ export class CompletedStudies extends React.Component<CompletedStudiesProps> {
                     alku={study.alku}
                     loppu={study.loppu}
                     laajuus={study.laajuus}
+                    viiteId={study.tutkinnonOsa?.koulutuksenOsaViiteId}
                   />
                   {renderExtraItem && <EmptyItem />}
                 </React.Fragment>

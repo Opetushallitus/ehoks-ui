@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "@reach/router"
+import { RouteComponentProps, navigate } from "@reach/router"
 import { Button } from "components/Button"
 import { LoadingSpinner } from "components/LoadingSpinner"
 import { ModalDialog } from "components/ModalDialogs/ModalDialog"
@@ -24,6 +24,7 @@ import {
   buildKoodiUris,
   schemaByStep,
   stripUnsupportedFormats,
+  reportHOKSErrors,
   transformErrors
 } from "./HOKSLomake/helpers/helpers"
 import { isRoot } from "./HOKSLomake/helpers/isRoot"
@@ -58,6 +59,7 @@ interface LuoHOKSState {
   koodiUris: { [key in keyof typeof koodistoUrls]: any[] }
   message?: string
   clearModalOpen: boolean
+  confirmCloseListenerExists: boolean
 }
 
 @inject("store")
@@ -80,7 +82,45 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     koodiUris: buildKoodiUris(),
     errorsByStep: {},
     message: undefined,
-    clearModalOpen: false
+    clearModalOpen: false,
+    confirmCloseListenerExists: false
+  }
+
+  confirmClose = (ev: BeforeUnloadEvent) => {
+    if (this.state?.success) {
+      this.removeBeforeUnloadListener()
+    } else {
+      ev.preventDefault()
+      const { intl } = this.context
+      ev.returnValue = intl.formatMessage({
+        id: "luoHoks.haluatkoPoistua"
+      })
+      return ev.returnValue
+    }
+  }
+
+  addBeforeUnloadListener = () => {
+    if (!this.state.confirmCloseListenerExists) {
+      // confirmation when closing the window/page
+      window.addEventListener("beforeunload", this.confirmClose)
+      this.setState({
+        confirmCloseListenerExists: true
+      })
+    }
+  }
+
+  removeBeforeUnloadListener = () => {
+    if (this.state.confirmCloseListenerExists) {
+      window.removeEventListener("beforeunload", this.confirmClose)
+      this.setState({
+        confirmCloseListenerExists: false
+      })
+    }
+  }
+
+  formDataExists = () => {
+    const { formData } = this.state
+    return typeof formData === "object" && Object.keys(formData).length > 0
   }
 
   async componentDidMount() {
@@ -99,8 +139,8 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       formData = {},
       errors = [],
       errorsByStep = {}
-    } = window.localStorage.getItem("hoks")
-      ? JSON.parse(window.localStorage.getItem("hoks") || "")
+    } = window.sessionStorage.getItem("hoks")
+      ? JSON.parse(window.sessionStorage.getItem("hoks") || "")
       : {}
     this.setState({
       formData,
@@ -112,6 +152,29 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       uiSchema: uiSchemaByStep(koodiUris, this.state.currentStep),
       isLoading: false
     })
+    if (this.formDataExists()) {
+      this.addBeforeUnloadListener()
+    }
+  }
+
+  async componentWillUnmount() {
+    const { intl } = this.context
+    const { success } = this.state
+    // confirmation when navigating to another ehoks page
+    if (
+      this.formDataExists() &&
+      !success &&
+      !confirm(
+        intl.formatMessage({
+          id: "luoHoks.haluatkoPoistua"
+        })
+      )
+    ) {
+      // navigate "back" to hoks form
+      await navigate("/ehoks-virkailija-ui/luohoks")
+    } else {
+      this.removeBeforeUnloadListener()
+    }
   }
 
   nextStep = () => {
@@ -156,18 +219,22 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
     this.setState(
       state => ({
         ...state,
+        success: undefined,
         formData,
         errors,
         errorsByStep: { ...state.errorsByStep, [state.currentStep]: errors }
       }),
       () => {
         const { errorsByStep } = this.state
-        window.localStorage.setItem(
+        window.sessionStorage.setItem(
           "hoks",
           JSON.stringify({ formData, errors, errorsByStep })
         )
       }
     )
+    if (this.formDataExists()) {
+      this.addBeforeUnloadListener()
+    }
   }
 
   scrollToErrors = (event: React.MouseEvent) => {
@@ -189,6 +256,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
   create = async (fieldProps: IChangeEvent<FieldProps>) => {
     this.setState({ isLoading: true })
     const { notifications } = this.props.store!
+    notifications.markAllErrorsHandled()
 
     const request = await window.fetch(
       `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${fieldProps.formData["oppija-oid"]}/hoksit`,
@@ -212,82 +280,19 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
         errors: [],
         errorsByStep: {},
         success: true,
+        message: undefined,
         userEnteredText: false
       })
-      window.localStorage.removeItem("hoks")
+      window.sessionStorage.removeItem("hoks")
+      this.removeBeforeUnloadListener()
     } else {
-      this.setState({ success: false })
-
+      this.setState({ success: false, message: undefined })
       const { intl } = this.context
-      const hankittavatTyypit = [
-        "hankittavat-ammat-tutkinnon-osat",
-        "hankittavat-paikalliset-tutkinnon-osat",
-        "hankittavat-yhteiset-tutkinnon-osat",
-        "hankittavat-koulutuksen-osat"
-      ]
-      const ohtErrors: Record<string, Record<number, number[]>> = {}
-      let ohtErrorsPresent = false
-      hankittavatTyypit.forEach((osaTyyppi: any) => {
-        ;((json.errors || {})[osaTyyppi] || []).forEach(
-          (osa: any, osaIndex: any) => {
-            if (osa) {
-              ;(osa["osaamisen-hankkimistavat"] || []).forEach(
-                (oht: any, ohtIndex: any) => {
-                  if (
-                    oht &&
-                    oht.includes("Tieto oppisopimuksen perustasta puuttuu")
-                  ) {
-                    ohtErrorsPresent = true
-                    if (!ohtErrors[osaTyyppi]) {
-                      ohtErrors[osaTyyppi] = {}
-                    }
-
-                    if (!ohtErrors[osaTyyppi][osaIndex]) {
-                      ohtErrors[osaTyyppi][osaIndex] = []
-                    }
-
-                    ohtErrors[osaTyyppi][osaIndex].push(ohtIndex)
-                  }
-                }
-              )
-            }
-          }
-        )
+      reportHOKSErrors(json, intl, (errorId: string, message: string) => {
+        notifications.addError(errorId, message)
+        this.setState({ message })
       })
-
-      if (ohtErrorsPresent) {
-        notifications.addError(
-          "HOKS.OppisopimuksenPerustaPuuttuu",
-          hankittavatTyypit
-            .map(ht =>
-              Object.keys(ohtErrors[ht] || {})
-                .map(n =>
-                  intl.formatMessage(
-                    {
-                      id:
-                        "errors.HOKS.Hankittavat" +
-                        (ht.includes("ammat")
-                          ? "Ammat"
-                          : ht.includes("paikalliset")
-                          ? "Paikalliset"
-                          : "Yhteiset") +
-                        "OsaamisenHankkimistavoissa"
-                    },
-                    {
-                      index: Number(n) + 1,
-                      ohts: ohtErrors[ht][Number(n)].map(x => x + 1).join(", ")
-                    }
-                  )
-                )
-                .join("; ")
-            )
-            .filter(x => !!x)
-            .join("; ")
-        )
-      }
     }
-    //console.log("RESPONSE STATUS", request.status)
-    //console.log("RESPONSE JSON", json)
     this.setState({ isLoading: false })
   }
 
@@ -312,7 +317,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
       isRoot: isRoot(rootKeys),
       koodiUriSelected: koodiUriSelected(this, () => {
         const { formData, errors, errorsByStep } = this.state
-        window.localStorage.setItem(
+        window.sessionStorage.setItem(
           "hoks",
           JSON.stringify({ formData, errors, errorsByStep })
         )
@@ -341,7 +346,7 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
         clearModalOpen: false
       },
       () => {
-        window.localStorage.setItem(
+        window.sessionStorage.setItem(
           "hoks",
           JSON.stringify({ formData: {}, errors: [], errorsByStep: {} })
         )

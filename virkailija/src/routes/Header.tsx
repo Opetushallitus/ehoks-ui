@@ -1,4 +1,4 @@
-import { Link } from "@reach/router"
+import { Link, navigate } from "@reach/router"
 import { OrganisationDropdown } from "components/OrganisationDropdown"
 import { inject, observer } from "mobx-react"
 import React from "react"
@@ -68,6 +68,7 @@ export class Header extends React.Component<HeaderProps> {
     koulutuksenJarjestaja.search.resetActivePage()
     koulutuksenJarjestaja.search.fetchOppijat()
     localStorage.setItem("selectedOrganisationOid", oid)
+    navigate(`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oid}`)
   }
 
   render() {

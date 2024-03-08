@@ -127,9 +127,9 @@ export const HOKS = types
         { headers: appendCallerId() }
       )
       const { id, suoritustavat } = response.data
-      const suoritustapa = suoritustavat.reduce(
+      const suoritustapa = suoritustavat?.reduce(
         (
-          result: "ops" | "reformi" | "",
+          result: "ops" | "reformi" | undefined,
           tapa: { suoritustapakoodi: "ops" | "reformi" }
         ) => {
           if (tapa.suoritustapakoodi === "ops") {
@@ -139,7 +139,7 @@ export const HOKS = types
           }
           return result
         },
-        ""
+        undefined
       )
       return { id, suoritustapa }
     })
@@ -171,8 +171,10 @@ export const HOKS = types
         if (!self.opiskeluOikeus.oid.length) return
 
         const tutkinto = yield fetchTutkinto()
-        const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
-        self.osaamispisteet = getOsaamispisteetFromRakenne(rakenne)
+        if (tutkinto.id) {
+          const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
+          self.osaamispisteet = getOsaamispisteetFromRakenne(rakenne)
+        }
       } catch (error) {
         errors.logError("HOKS.fetchOsaamispisteet", error.message)
       }
@@ -241,7 +243,7 @@ export const HOKS = types
             ),
             credentials: "include",
             body: JSON.stringify({
-              "oppilaitos-oid": self.opiskeluOikeus.oppilaitos.oid
+              "oppilaitos-oid": self.opiskeluOikeus?.oppilaitos?.oid || null
             })
           }
         )
@@ -349,10 +351,10 @@ export const HOKS = types
         const isOsittainen = self.opiskeluOikeus.isOsittainen
 
         const translations = getRoot<IRootStore>(self).translations
-        const activeLocale: Locale = translations.activeLocale
-        const osittainenText: string =
-          translations.messages[activeLocale]["opiskeluoikeus.osittainen"] ||
-          "osittainen"
+        const messages = translations.messages[translations.activeLocale]
+        const osittainenText: string = messages
+          ? messages["opiskeluoikeus.osittainen"]
+          : "osittainen"
         const tutkinnonNimi = self.opiskeluOikeus.suoritukset.length
           ? self.opiskeluOikeus.suoritukset[0].koulutusmoduuli.nimi
           : ""
