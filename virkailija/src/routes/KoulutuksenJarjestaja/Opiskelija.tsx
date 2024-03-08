@@ -38,7 +38,8 @@ const TopContainer = styled("div")`
 
 export interface OpiskelijaProps {
   store?: IRootStore
-  /* From router path */
+  // From router path
+  orgId?: string
   studentId?: string
 }
 
@@ -57,12 +58,21 @@ export class Opiskelija extends React.Component<
     this.disposeLoginReaction = reaction(
       () => session.isLoggedIn && session.organisations.length > 0,
       async hasLoggedIn => {
+        const orgId = this.props.orgId
+        if (orgId && orgId !== session.selectedOrganisationOid) {
+          session.changeSelectedOrganisationOid(orgId)
+        }
+
         if (hasLoggedIn) {
           if (!search.results.length) {
             await search.fetchOppijat()
           }
 
           if (studentId) {
+            const maybeOppija = search.oppija(studentId)
+            if (!maybeOppija) {
+              await search.fetchOppija(studentId)
+            }
             const oppija = search.oppija(studentId)
             if (oppija) {
               await oppija.fetchOpiskeluoikeudet()
@@ -83,7 +93,7 @@ export class Opiskelija extends React.Component<
   }
 
   render() {
-    const { studentId, store } = this.props
+    const { studentId, orgId, store } = this.props
     if (!studentId) {
       return null
     }
@@ -98,6 +108,8 @@ export class Opiskelija extends React.Component<
       results.length && studentIndex !== -1 && studentIndex + 1 < results.length
         ? results[studentIndex + 1]
         : undefined
+    const basePath = `/ehoks-virkailija-ui/koulutuksenjarjestaja/${orgId}/oppija`
+    const selfPath = `${basePath}/${studentId}`
 
     return (
       <React.Fragment>
@@ -105,9 +117,7 @@ export class Opiskelija extends React.Component<
           <TopContainer>
             <LeftLink>
               {previous && (
-                <StudentLink
-                  to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${previous.oid}`}
-                >
+                <StudentLink to={`${basePath}/${previous.oid}`}>
                   &lt;&lt; {previous.nimi}
                 </StudentLink>
               )}
@@ -122,21 +132,18 @@ export class Opiskelija extends React.Component<
             </LinkContainer>
             <RightLink>
               {next && (
-                <StudentLink
-                  to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${next.oid}`}
-                >
+                <StudentLink to={`${basePath}/${next.oid}`}>
                   {next.nimi} &gt;&gt;
                 </StudentLink>
               )}
             </RightLink>
           </TopContainer>
         )}
-        <Router
-          basepath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${studentId}`}
-        >
+        <Router basepath={selfPath}>
           <ValitseHOKS
             path="/"
             oppijaId={studentId}
+            laitosId={orgId || "unknown"}
             nimi={oppija?.nimi}
             suunnitelmat={suunnitelmat}
             session={session}
@@ -145,6 +152,7 @@ export class Opiskelija extends React.Component<
             path=":hoksId/*"
             suunnitelmat={suunnitelmat}
             oppija={oppija}
+            laitosId={orgId || "unknown"}
           />
         </Router>
       </React.Fragment>

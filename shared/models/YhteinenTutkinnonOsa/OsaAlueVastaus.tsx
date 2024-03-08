@@ -1,6 +1,11 @@
 import { getRoot, Instance, types } from "mobx-state-tree"
-import { LocaleRoot } from "../helpers/LocaleRoot"
-import { EPerusteetArviointi, EPerusteetNimi } from "../EPerusteetVastaus"
+import {
+  EPerusteetArviointi,
+  EPerusteetNimi,
+  EPerusteKoodi
+} from "../EPerusteetVastaus"
+import { IRootStore } from "../../../virkailija/src/stores/RootStore"
+import { Locale } from "../../stores/TranslationStore"
 
 const OsaamisTavoitteet = types.model({
   laajuus: types.optional(types.number, 0, [null, undefined]),
@@ -12,15 +17,20 @@ export const OsaAlueVastaus = types
   .model("OsaAlueVastaus", {
     koodiUri: types.maybe(types.string),
     nimi: types.optional(EPerusteetNimi, {}),
+    koodi: types.optional(EPerusteKoodi, {}),
     osaamistavoitteet: types.array(OsaamisTavoitteet)
   })
   .views(self => {
-    const root: LocaleRoot = getRoot(self)
+    const root: IRootStore = getRoot(self)
+    const activeLocale: Locale = root.translations.activeLocale
     return {
-      get osaAlueNimi() {
-        return self.nimi[root.translations.activeLocale]
-          ? self.nimi[root.translations.activeLocale]
-          : ""
+      get osaAlueNimi(): JSX.Element | string {
+        return (
+          self.koodi?.nimi[activeLocale] ||
+          self.nimi[activeLocale] ||
+          self.koodi?.nimi.fi ||
+          self.nimi.fi
+        )
       },
       get laajuus() {
         return self.osaamistavoitteet

@@ -22,18 +22,23 @@ const Text = styled("span")`
 
 interface ArrowProps {
   active: boolean
+  disabled: boolean
 }
 
-const ArrowUp = styled(({ active: _active, ...rest }) => (
+const ArrowUp = styled(({ disabled: _disabled, active: _active, ...rest }) => (
   <MdArrowDropUp {...rest} />
 ))<ArrowProps>`
-  color: ${props => (props.active ? "#229FC9" : "#84898C")};
+  color: ${props =>
+    props.disabled ? "#F0F0F0" : props.active ? "#229FC9" : "#84898C"};
 `
 
-const ArrowDown = styled(({ active: _active, ...rest }) => (
-  <MdArrowDropDown {...rest} />
-))<ArrowProps>`
-  color: ${props => (props.active ? "#229FC9" : "#84898C")};
+const ArrowDown = styled(
+  ({ disabled: _disabled, active: _active, ...rest }) => (
+    <MdArrowDropDown {...rest} />
+  )
+)<ArrowProps>`
+  color: ${props =>
+    props.disabled ? "#F0F0F0" : props.active ? "#229FC9" : "#84898C"};
   margin-top: -24px;
 `
 
@@ -58,6 +63,7 @@ const SearchInput = styled("input")`
 
 interface SearchableHeaderProps {
   sortName: string
+  omitSortButtons?: boolean
 }
 
 export class SearchableHeader extends React.Component<SearchableHeaderProps> {
@@ -72,7 +78,7 @@ export class SearchableHeader extends React.Component<SearchableHeaderProps> {
 
   render() {
     const { intl } = this.context
-    const { children, sortName } = this.props
+    const { children, sortName, omitSortButtons } = this.props
 
     const placeholder = intl.formatMessage({
       id: "table.haePlaceholder"
@@ -103,7 +109,7 @@ export class SearchableHeader extends React.Component<SearchableHeaderProps> {
           return (
             <Container {...ariaProps} role="columnheader" scope="col">
               <Button
-                onClick={changeSort}
+                onClick={omitSortButtons ? undefined : changeSort}
                 onKeyPress={this.sortByKeypress(changeSort)}
                 tabIndex={0}
                 role="button"
@@ -116,12 +122,14 @@ export class SearchableHeader extends React.Component<SearchableHeaderProps> {
                     aria-hidden={true}
                     focusable="false"
                     active={activeSort && sortDirection === "asc"}
+                    disabled={omitSortButtons}
                   />
                   <ArrowDown
                     size="32"
                     aria-hidden={true}
                     focusable="false"
                     active={activeSort && sortDirection === "desc"}
+                    disabled={omitSortButtons}
                   />
                 </ArrowContainer>
               </Button>

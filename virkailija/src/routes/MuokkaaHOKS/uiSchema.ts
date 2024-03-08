@@ -589,6 +589,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           id: {
             "ui:widget": "hidden"
           },
+          "yksiloiva-tunniste": {
+            "ui:widget": "hidden"
+          },
           "module-id": {
             "ui:widget": "hidden"
           },
@@ -784,6 +787,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "*"
           ],
           id: {
+            "ui:widget": "hidden"
+          },
+          "yksiloiva-tunniste": {
             "ui:widget": "hidden"
           },
           "module-id": {
@@ -1006,6 +1012,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                 "*"
               ],
               id: {
+                "ui:widget": "hidden"
+              },
+              "yksiloiva-tunniste": {
                 "ui:widget": "hidden"
               },
               "module-id": {
