@@ -34,10 +34,8 @@ export const AiemminHankitunYTOOsaAlue = types
     Model
   )
   .views(self => ({
-    get otsikko() {
-      return self.osaAlueEnrichedData
-        ? self.osaAlueEnrichedData.osaAlueNimi
-        : ""
+    get otsikko(): JSX.Element | string {
+      return self.osaAlueEnrichedData.osaAlueNimi
     },
     get osaamispisteet() {
       return self.osaAlueEnrichedData.laajuus

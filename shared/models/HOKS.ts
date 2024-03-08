@@ -5,6 +5,7 @@ import { AiemminHankittuYhteinenTutkinnonOsa } from "models/YhteinenTutkinnonOsa
 import { HankittavaAmmatillinenTutkinnonOsa } from "models/HankittavaAmmatillinenTutkinnonOsa"
 import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenTutkinnonOsa"
 import { HankittavaYhteinenTutkinnonOsa } from "models/YhteinenTutkinnonOsa/HankittavaYhteinenTutkinnonOsa"
+import { HankittavaKoulutuksenOsa } from "models/HankittavaKoulutuksenOsa"
 import {
   IHankittavaTutkinnonOsa,
   IAiemminHankittuTutkinnonOsa
@@ -54,6 +55,7 @@ const Model = types.model("HOKSModel", {
     HankittavaPaikallinenTutkinnonOsa
   ),
   hankittavatYhteisetTutkinnonOsat: types.array(HankittavaYhteinenTutkinnonOsa),
+  hankittavatKoulutuksenOsat: types.array(HankittavaKoulutuksenOsa),
   opiskeluvalmiuksiaTukevatOpinnot: types.array(
     OpiskeluvalmiuksiaTukevatOpinnot
   ),
@@ -125,9 +127,9 @@ export const HOKS = types
         { headers: appendCallerId() }
       )
       const { id, suoritustavat } = response.data
-      const suoritustapa = suoritustavat.reduce(
+      const suoritustapa = suoritustavat?.reduce(
         (
-          result: "ops" | "reformi" | "",
+          result: "ops" | "reformi" | undefined,
           tapa: { suoritustapakoodi: "ops" | "reformi" }
         ) => {
           if (tapa.suoritustapakoodi === "ops") {
@@ -137,7 +139,7 @@ export const HOKS = types
           }
           return result
         },
-        ""
+        undefined
       )
       return { id, suoritustapa }
     })
@@ -169,8 +171,10 @@ export const HOKS = types
         if (!self.opiskeluOikeus.oid.length) return
 
         const tutkinto = yield fetchTutkinto()
-        const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
-        self.osaamispisteet = getOsaamispisteetFromRakenne(rakenne)
+        if (tutkinto.id) {
+          const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
+          self.osaamispisteet = getOsaamispisteetFromRakenne(rakenne)
+        }
       } catch (error) {
         errors.logError("HOKS.fetchOsaamispisteet", error.message)
       }
@@ -192,7 +196,10 @@ export const HOKS = types
         )
 
         if (opiskeluOikeus) {
-          if (opiskeluOikeus.tyyppi.koodiarvo === "ammatillinenkoulutus") {
+          if (
+            opiskeluOikeus.tyyppi.koodiarvo === "ammatillinenkoulutus" ||
+            opiskeluOikeus.tyyppi.koodiarvo === "tuva"
+          ) {
             self.opiskeluOikeus = opiskeluOikeus
           } else {
             const activeLocale: Locale = root.translations.activeLocale
@@ -200,7 +207,7 @@ export const HOKS = types
               root.translations.messages[activeLocale][
                 "errors.HOKS.fetchOpiskeluoikeudet.wrongType"
               ] ||
-              "HOKSiin liitetty opiskeluoikeus ei ole ammatillinen tutkinto"
+              "HOKSiin liitetty opiskeluoikeus ei ole ammatillinen tutkinto tai TUVA"
             throw new Error(errorText)
           }
         }
@@ -236,7 +243,7 @@ export const HOKS = types
             ),
             credentials: "include",
             body: JSON.stringify({
-              "oppilaitos-oid": self.opiskeluOikeus.oppilaitos.oid
+              "oppilaitos-oid": self.opiskeluOikeus?.oppilaitos?.oid || null
             })
           }
         )
@@ -275,6 +282,7 @@ export const HOKS = types
         return [
           ...self.hankittavatAmmatTutkinnonOsat,
           ...self.hankittavatPaikallisetTutkinnonOsat,
+          ...self.hankittavatKoulutuksenOsat,
           // treat osaAlue as tutkinnonOsa for hankittavatYhteisetTutkinnonOsat
           ...osaAlueet
         ]
@@ -343,10 +351,10 @@ export const HOKS = types
         const isOsittainen = self.opiskeluOikeus.isOsittainen
 
         const translations = getRoot<IRootStore>(self).translations
-        const activeLocale: Locale = translations.activeLocale
-        const osittainenText: string =
-          translations.messages[activeLocale]["opiskeluoikeus.osittainen"] ||
-          "osittainen"
+        const messages = translations.messages[translations.activeLocale]
+        const osittainenText: string = messages
+          ? messages["opiskeluoikeus.osittainen"]
+          : "osittainen"
         const tutkinnonNimi = self.opiskeluOikeus.suoritukset.length
           ? self.opiskeluOikeus.suoritukset[0].koulutusmoduuli.nimi
           : ""
@@ -372,6 +380,9 @@ export const HOKS = types
       },
       get paattymispaiva() {
         return self.opiskeluOikeus.paattymispaiva
+      },
+      get isTuvaHoks() {
+        return self.opiskeluOikeus.tyyppi.isTuvaOpiskeluoikeus
       }
     }
   })

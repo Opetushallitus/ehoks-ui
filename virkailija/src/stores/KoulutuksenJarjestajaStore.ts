@@ -16,7 +16,7 @@ import { Locale } from "stores/TranslationStore"
 import { APIResponse } from "types/APIResponse"
 import { StoreEnvironment } from "types/StoreEnvironment"
 
-const sortKeys = ["nimi", "tutkinto", "osaamisala"] as const
+const sortKeys = ["nimi", "tutkinto", "osaamisala", "hoks-id"] as const
 
 export type SearchSortKey = typeof sortKeys[number]
 
@@ -31,6 +31,7 @@ export const Oppija = types
     nimi: types.string,
     tutkintoNimi: types.optional(Translation, {}),
     osaamisalaNimi: types.optional(Translation, {}),
+    hoksId: types.integer,
     opiskeluoikeusOid: types.string,
     suunnitelmat: types.array(HOKS),
     suunnitelmaIndex: types.optional(types.integer, -1),
@@ -108,12 +109,14 @@ export const Oppija = types
       return self.suunnitelmat.length
     },
     get editLink(): string {
+      const rootStore: IRootStore = getRoot<IRootStore>(self)
+      const oppilaitosOid: string = rootStore.session.selectedOrganisationOid
       const manualPlans = self.suunnitelmat.filter(
         suunnitelma => suunnitelma.manuaalisyotto
       )
       return manualPlans.length
         ? manualPlans.length > 1
-          ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${self.oid}`
+          ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppilaitosOid}/oppija/${self.oid}`
           : `/ehoks-virkailija-ui/hoks/${self.oid}/${manualPlans[0].id}`
         : ""
     },
@@ -165,7 +168,8 @@ const Search = types
     searchTexts: {
       nimi: "",
       tutkinto: "",
-      osaamisala: ""
+      osaamisala: "",
+      "hoks-id": ""
     }
   }))
   .actions(self => {
@@ -196,7 +200,7 @@ const Search = types
 
       const textQueries = Object.keys(self.searchTexts).reduce<{
         [key: string]: string
-      }>((texts, key: "nimi" | "tutkinto" | "osaamisala") => {
+      }>((texts, key: "nimi" | "tutkinto" | "osaamisala" | "hoks-id") => {
         if (self.searchTexts[key].length) {
           texts[key] = self.searchTexts[key]
         }
@@ -265,7 +269,9 @@ const Search = types
       self.searchTexts = { ...self.searchTexts, [field]: searchText }
     }
 
-    const changeSort = (sortName: "nimi" | "tutkinto" | "osaamisala") => {
+    const changeSort = (
+      sortName: "nimi" | "tutkinto" | "osaamisala" | "hoks-id"
+    ) => {
       const changeDirection = self.sortBy === sortName
       self.sortBy = sortName
       self.sortDirection = changeDirection

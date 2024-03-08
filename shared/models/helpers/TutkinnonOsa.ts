@@ -6,6 +6,7 @@ import { AiemminHankittuPaikallinenTutkinnonOsa } from "models/AiemminHankittuPa
 import { AiemminHankitunYTOOsaAlue } from "models/YhteinenTutkinnonOsa/AiemminHankitunYTOOsaAlue"
 import { HankittavaAmmatillinenTutkinnonOsa } from "models/HankittavaAmmatillinenTutkinnonOsa"
 import { HankittavaPaikallinenTutkinnonOsa } from "models/HankittavaPaikallinenTutkinnonOsa"
+import { HankittavaKoulutuksenOsa } from "models/HankittavaKoulutuksenOsa"
 import { YhteisenTutkinnonOsanOsaAlue } from "models/YhteinenTutkinnonOsa/YhteisenTutkinnonOsanOsaAlue"
 import { Organisaatio } from "../Organisaatio"
 import { TodennettuArviointiLisatiedot } from "../TodennettuArviointiLisatiedot"
@@ -40,13 +41,14 @@ const HankittavaTutkinnonOsa = types
   .compose(
     HankittavaAmmatillinenTutkinnonOsa,
     HankittavaPaikallinenTutkinnonOsa,
+    HankittavaKoulutuksenOsa,
     YhteisenTutkinnonOsanOsaAlue // added with flattenDeep
   )
   .named("HankittavaTutkinnonOsa")
 export interface IHankittavaTutkinnonOsa
   extends Partial<Instance<typeof HankittavaTutkinnonOsa>> {
   /** YhteisenTutkinnonOsanOsaAlue does not contain this but it is defined after flattenDeep */
-  opintoOtsikko(ospLyhenne: string): string
+  opintoOtsikko(ospLyhenne: string): JSX.Element | string
   /** YhteisenTutkinnonOsanOsaAlue does not contain this but it is defined after flattenDeep */
 
   hasNayttoOrHarjoittelujakso(type?: ShareType, moduleId?: string): boolean
@@ -63,5 +65,5 @@ const AiemminHankittuTutkinnonOsa = types
 export interface IAiemminHankittuTutkinnonOsa
   extends Partial<Instance<typeof AiemminHankittuTutkinnonOsa>> {
   /** AiemminHankitunYTOOsaAlue does not contain this but it is defined after flattenDeep */
-  opintoOtsikko(ospLyhenne: string): string
+  opintoOtsikko(ospLyhenne: string): JSX.Element | string
 }

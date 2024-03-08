@@ -1,6 +1,7 @@
 import { flow, getEnv, types } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { APIResponse } from "types/APIResponse"
+import { TutkinnonOsaType } from "../helpers/ShareTypes"
 
 interface DynamicObject {
   [name: string]: any
@@ -19,10 +20,20 @@ export const EnrichTutkinnonOsaKoodiUri = types
       StoreEnvironment
     >(self)
 
-    const getFromEPerusteetService = (code: string) =>
-      fetchSingle(apiUrl(`${apiPrefix}/external/eperusteet/${code}`), {
-        headers: appendCallerId()
-      })
+    const getFromEPerusteetService = (code: string) => {
+      if (self.tyyppi === TutkinnonOsaType.HankittavaKoulutuksenOsa) {
+        return fetchSingle(
+          apiUrl(`${apiPrefix}/external/eperusteet/koulutuksenOsa/${code}`),
+          {
+            headers: appendCallerId()
+          }
+        )
+      } else {
+        return fetchSingle(apiUrl(`${apiPrefix}/external/eperusteet/${code}`), {
+          headers: appendCallerId()
+        })
+      }
+    }
 
     const fetchEPerusteet = flow(function*(koodiUri: string): any {
       try {
@@ -30,14 +41,24 @@ export const EnrichTutkinnonOsaKoodiUri = types
         cachedResponses[koodiUri] =
           cachedResponses[koodiUri] || getFromEPerusteetService(koodiUri)
         const response: APIResponse = yield cachedResponses[koodiUri]
-        self.tutkinnonOsa = response.data
+        if (Array.isArray(response.data)) {
+          const tutkinnonOsat = [...response.data]
+          tutkinnonOsat.sort((to1, to2) => to2.muokattu - to1.muokattu)
+          self.tutkinnonOsa = tutkinnonOsat[0]
+        } else {
+          self.tutkinnonOsa = response.data
+        }
       } catch (error) {
         errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
       }
     })
 
     const afterCreate = () => {
-      fetchEPerusteet(self.tutkinnonOsaKoodiUri)
+      const koodiUri =
+        self.tyyppi === TutkinnonOsaType.HankittavaKoulutuksenOsa
+          ? self.koulutuksenOsaKoodiUri
+          : self.tutkinnonOsaKoodiUri
+      fetchEPerusteet(koodiUri)
     }
 
     return { afterCreate }

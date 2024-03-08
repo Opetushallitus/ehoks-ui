@@ -58,7 +58,8 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
           <AppNotification key={i} type="error">
             <Content onClick={error.handle}>
               <Text>
-                <FormattedMessage id={`errors.${error.id}`} />:{" "}
+                <FormattedMessage id={`errors.${error.id}`} />
+                {!!error.errorText && <span>{": "}</span>}
                 {!!error.errorText && (
                   <FormattedMessage
                     id={`errors.${error.errorText}`}
