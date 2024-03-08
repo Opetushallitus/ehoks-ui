@@ -54,6 +54,8 @@ const Spinner = styled(LoadingSpinner)`
 
 interface KoulutuksenJarjestajaProps extends RouteComponentProps {
   store?: IRootStore
+  // from path parameters
+  orgId?: string
 }
 
 @inject("store")
@@ -73,18 +75,21 @@ export class KoulutuksenJarjestaja extends React.Component<
 
   componentDidMount() {
     const { koulutuksenJarjestaja, session } = this.props.store!
+    const orgId = this.props.orgId
 
     this.disposeLoginReaction = reaction(
       () => session.isLoggedIn && session.organisations.length > 0,
       async hasLoggedIn => {
+        if (orgId && orgId !== session.selectedOrganisationOid) {
+          session.changeSelectedOrganisationOid(orgId)
+        }
         if (hasLoggedIn) {
           await koulutuksenJarjestaja.search.fetchOppijat()
           window.requestAnimationFrame(() => {
             window.scrollTo(0, 0)
           })
         }
-      },
-      { fireImmediately: true }
+      }
     )
   }
 
@@ -134,6 +139,7 @@ export class KoulutuksenJarjestaja extends React.Component<
       isLoading,
       searchTexts
     } = koulutuksenJarjestaja.search
+    const selectedOrganisationOid = this.props.orgId
 
     return (
       <BackgroundContainer>
@@ -179,6 +185,12 @@ export class KoulutuksenJarjestaja extends React.Component<
                         defaultMessage="Osaamisala"
                       />
                     </SearchableHeader>
+                    <SearchableHeader sortName="hoks-id" omitSortButtons={true}>
+                      <FormattedMessage
+                        id="koulutuksenJarjestaja.hoksIdTitle"
+                        defaultMessage="eHOKS-id"
+                      />
+                    </SearchableHeader>
                     <TableHeader>
                       <FormattedMessage
                         id="koulutuksenJarjestaja.hyvaksyttyTitle"
@@ -204,9 +216,10 @@ export class KoulutuksenJarjestaja extends React.Component<
                   <col style={{ width: "25%" }} />
                   <col style={{ width: "20%" }} />
                   <col style={{ width: "20%" }} />
-                  <col style={{ width: "10%" }} />
-                  <col style={{ width: "10%" }} />
-                  <col style={{ width: "10%" }} />
+                  <col style={{ width: "8%" }} />
+                  <col style={{ width: "8%" }} />
+                  <col style={{ width: "8%" }} />
+                  <col style={{ width: "6%" }} />
                   <col style={{ width: "5%" }} />
                 </colgroup>
                 <TableBody>
@@ -215,7 +228,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                       <TableCell>
                         {student.lukumaara > 0 ? (
                           <Link
-                            to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${student.oid}`}
+                            to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${selectedOrganisationOid}/oppija/${student.oid}`}
                           >
                             {student.nimi}
                           </Link>
@@ -225,6 +238,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                       </TableCell>
                       <TableCell>{student.tutkinto}</TableCell>
                       <TableCell>{student.osaamisala}</TableCell>
+                      <TableCell>{student.hoksId}</TableCell>
                       <TableCell>
                         <FormattedDate
                           date={
@@ -254,7 +268,7 @@ export class KoulutuksenJarjestaja extends React.Component<
                       <TableCell colSpan={6}>
                         <FormattedMessage
                           id="koulutuksenJarjestaja.eiOpiskelijoitaLabel"
-                          defaultMessage="Valitulle organisaatiolle ei löytynyt yhtään opiskelijaa."
+                          defaultMessage="Näillä hakuehdoilla ei löytynyt yhtään opiskelijaa."
                         />
                       </TableCell>
                     </TableRow>

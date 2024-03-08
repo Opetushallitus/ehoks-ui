@@ -193,6 +193,23 @@ const StudentIdentifierInfo = ({ hoks }: { hoks: IHOKS }) => (
         <LabeledColumn id="tavoitteet.idTitle">{hoks.id}</LabeledColumn>
       )}
     </tr>
+    {hoks.tuvaOpiskeluoikeusOid && (
+      <>
+        <tr>
+          <th>
+            <FormattedMessage
+              id="tavoitteet.tuvaOpiskeluoikeusOidTitle"
+              defaultMessage="TUVA-opiskeluoikeuden OID"
+            />
+          </th>
+        </tr>
+        <tr>
+          <LabeledColumn id="tavoitteet.tuvaOpiskeluoikeusOidTitle">
+            {hoks.tuvaOpiskeluoikeusOid}
+          </LabeledColumn>
+        </tr>
+      </>
+    )}
   </>
 )
 
@@ -268,30 +285,34 @@ const TutkintoTaiKoulutus = ({
           />
           <td />
         </tr>
-        <tr>
-          <th>
-            <FormattedMessage
-              id="opiskelusuunnitelma.osaamisalaTitle"
-              defaultMessage="Osaamisala"
-            />
-          </th>
-          <th>
-            <FormattedMessage
-              id="opiskelusuunnitelma.tutkintonimikeTitle"
-              defaultMessage="Tutkintonimike"
-            />
-          </th>
-          <th />
-        </tr>
-        <tr>
-          <LabeledColumn id="opiskelusuunnitelma.osaamisalaTitle">
-            {plan.osaamisala}
-          </LabeledColumn>
-          <LabeledColumn id="opiskelusuunnitelma.tutkintonimikeTitle">
-            {plan.tutkintonimike}
-          </LabeledColumn>
-          <td />
-        </tr>
+        {!plan.isTuvaHoks && (
+          <>
+            <tr>
+              <th>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.osaamisalaTitle"
+                  defaultMessage="Osaamisala"
+                />
+              </th>
+              <th>
+                <FormattedMessage
+                  id="opiskelusuunnitelma.tutkintonimikeTitle"
+                  defaultMessage="Tutkintonimike"
+                />
+              </th>
+              <th />
+            </tr>
+            <tr>
+              <LabeledColumn id="opiskelusuunnitelma.osaamisalaTitle">
+                {plan.osaamisala}
+              </LabeledColumn>
+              <LabeledColumn id="opiskelusuunnitelma.tutkintonimikeTitle">
+                {plan.tutkintonimike}
+              </LabeledColumn>
+              <td />
+            </tr>
+          </>
+        )}
       </tbody>
     </InfoTable>
   </Accordion>
@@ -583,7 +604,7 @@ export class Tavoitteet extends React.Component<
           app={app}
         />
 
-        {this.props.showOpiskelijapalaute && (
+        {this.props.showOpiskelijapalaute && !hoks.isTuvaHoks && (
           <Opiskelijapalaute
             toggleAccordion={this.toggleAccordion}
             open={this.state.activeAccordions.opiskelijapalaute}

@@ -823,19 +823,16 @@ export class Yllapito extends React.Component<YllapitoProps> {
     const { intl } = this.context
     const { updateOppijaOid } = this.state
     const updateRequest = await window.fetch(
-      `/ehoks-virkailija-backend/api/v1/virkailija/oppija/update`,
+      `/ehoks-virkailija-backend/api/v1/virkailija/onrmodify?oid=${updateOppijaOid}`,
       {
-        method: "PUT",
+        method: "POST",
         credentials: "include",
         headers: appendCommonHeaders(
           new Headers({
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json"
           })
-        ),
-        body: JSON.stringify({
-          "oppija-oid": updateOppijaOid
-        })
+        )
       }
     )
     if (updateRequest.status === 204) {
@@ -843,8 +840,8 @@ export class Yllapito extends React.Component<YllapitoProps> {
         success: true,
         loadingState: "success",
         message: intl.formatMessage({
-          id: "yllapito.oppijaPaivitetty",
-          defaultMessage: "Opiskeluoikeuden päivitys onnistui"
+          id: "yllapito.oppijanPaivitysKaynnistetty",
+          defaultMessage: "Oppijan tietojen päivitys käynnistetty eHOKSissa."
         }),
         isLoading: false,
         currentActionId: "updateOppija"
@@ -854,8 +851,9 @@ export class Yllapito extends React.Component<YllapitoProps> {
         success: false,
         loadingState: "unsuccessful",
         message: intl.formatMessage({
-          id: "yllapito.oppijanPaivitysEpaonnistui",
-          defaultMessage: "Oppijan päivitys epäonnistui"
+          id: "yllapito.oppijanPaivityksenKaynnistysEpaonnistui",
+          defaultMessage:
+            "Oppijan tietojen päivityksen käynnistys eHOKSissa epäonnistui."
         }),
         isLoading: false,
         currentActionId: "updateOppija"
@@ -1614,23 +1612,34 @@ export class Yllapito extends React.Component<YllapitoProps> {
                   <Header>
                     <FormattedMessage
                       id="yllapito.oppijanPaivitys"
-                      defaultMessage={
-                        "Päivitä oppijan tiedot indeksiin " +
-                        "Oppijanumerorekisteristä."
-                      }
+                      defaultMessage={`
+                        Päivitä oppijan tiedot indeksiin ja oppijan hokseihin
+                      `}
                     />
                   </Header>
                   <FormattedMessage
                     id="yllapito.oppijanPaivitysKuvaus"
-                    defaultMessage={
-                      "Päivitä oppijan tiedot indeksiin " +
-                      "Oppijanumerorekisteristä."
-                    }
+                    defaultMessage={`
+                      Päivittää oppijan tiedot (nimi ja oppijanumero) indeksiin
+                      sekä oppijan hokseihin, hakemalla tuoreimmat tiedot
+                      Oppijanumerorekisteristä.
+                    `}
                   />
                   <ContentElement>
                     <ContentElement>
                       <form>
+                        <label htmlFor="oppijaUpdateInput">
+                          <FormattedMessage
+                            id="yllapito.oppijanPaivitysInputLabel"
+                            defaultMessage={`
+                              Syötä alla olevaan kenttään oppijan uusin
+                              oppijanumero:
+                          `}
+                          />
+                        </label>
+                        <br />
                         <HakuInput
+                          id="oppijaUpdateInput"
                           type="text"
                           placeholder="1.2.345.678.98.76543212345"
                           value={this.state.updateOppijaOid}
@@ -1644,7 +1653,7 @@ export class Yllapito extends React.Component<YllapitoProps> {
                       <Button onClick={this.onUpdateOppija}>
                         <FormattedMessage
                           id="yllapito.paivitaOppija"
-                          defaultMessage="Paivita oppijan tiedot indeksiin."
+                          defaultMessage="Käynnistä oppijan tietojen päivitys"
                         />
                       </Button>
                       {actionSuccessFailureMessage("updateOppija")}

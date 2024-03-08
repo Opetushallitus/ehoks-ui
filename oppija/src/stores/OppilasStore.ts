@@ -15,7 +15,7 @@ export const OppilasStore = types
       StoreEnvironment
     >(self)
     // tracks the most recent fetch by user
-    let newestPromise = null
+    let newestPromise: Promise<APIResponse> | null = null
 
     const haePerusteet = flow(function*(name: string): any {
       self.isLoading = true

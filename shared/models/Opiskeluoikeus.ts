@@ -97,6 +97,16 @@ const Oppilaitos = types
     }
   })
 
+const OpiskeluOikeusTyyppi = types
+  .model("OpiskeluOikeusTyyppi", {
+    koodiarvo: types.optional(types.string, "")
+  })
+  .views(self => ({
+    get isTuvaOpiskeluoikeus() {
+      return self.koodiarvo === "tuva"
+    }
+  }))
+
 export const Opiskeluoikeus = types
   .model("Opiskeluoikeus", {
     oid: types.optional(types.string, ""),
@@ -105,7 +115,8 @@ export const Opiskeluoikeus = types
     aikaleima: types.optional(types.string, ""),
     alkamispaiva: types.optional(types.string, ""),
     paattymispaiva: types.optional(types.string, ""),
-    arvioituPaattymispaiva: types.optional(types.string, "")
+    arvioituPaattymispaiva: types.optional(types.string, ""),
+    tyyppi: types.optional(OpiskeluOikeusTyyppi, {})
   })
   .views(self => ({
     get perustutkinto() {
