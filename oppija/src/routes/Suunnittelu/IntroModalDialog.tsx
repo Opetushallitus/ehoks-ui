@@ -297,7 +297,7 @@ export class IntroModalDialog extends React.Component<
     Modal.setAppElement("#app")
     reaction(
       () => store!.session.settings.introDialog.userAcknowledgedIntroDialog,
-      (acknowledged, initialReaction) => {
+      (acknowledged, _, initialReaction) => {
         this.setState({
           initialAcknowledgedStatus: acknowledged,
           introDialogOpen: !acknowledged

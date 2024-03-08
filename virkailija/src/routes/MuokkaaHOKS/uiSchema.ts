@@ -5,6 +5,7 @@ export const propertiesByStep: { [index: number]: string[] } = {
   0: [
     "id",
     "opiskeluoikeus-oid",
+    "tuva-opiskeluoikeus-oid",
     "oppija-oid",
     "ensikertainen-hyvaksyminen",
     "hyvaksytty",
@@ -30,6 +31,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
   "ui:order": [
     "id",
     "opiskeluoikeus-oid",
+    "tuva-opiskeluoikeus-oid",
     "oppija-oid",
     "ensikertainen-hyvaksyminen",
     "hyvaksytty",
@@ -587,6 +589,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           id: {
             "ui:widget": "hidden"
           },
+          "yksiloiva-tunniste": {
+            "ui:widget": "hidden"
+          },
           "module-id": {
             "ui:widget": "hidden"
           },
@@ -782,6 +787,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "*"
           ],
           id: {
+            "ui:widget": "hidden"
+          },
+          "yksiloiva-tunniste": {
             "ui:widget": "hidden"
           },
           "module-id": {
@@ -1004,6 +1012,9 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
                 "*"
               ],
               id: {
+                "ui:widget": "hidden"
+              },
+              "yksiloiva-tunniste": {
                 "ui:widget": "hidden"
               },
               "module-id": {

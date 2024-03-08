@@ -41,6 +41,12 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
           koodiUri
         ]
         self.tutkinnonOsaId = response.data?.id
+        if (!self.tutkinnonOsaId) {
+          errors.logError(
+            "EnrichKoodiUri.fetchEPerusteet",
+            "Tutkinnon osaa ei saatu ladattua"
+          )
+        }
       } catch (error) {
         errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
       }
@@ -57,20 +63,27 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
       )
 
     const findMatchingOsaAlueFromEperusteetResponse = (
-      ePerusteeReponse: any,
+      ePerusteetReponse: any,
       osaAlueKoodiUri: string
-    ) =>
-      ePerusteeReponse.find(
+    ) => {
+      const osaAlueVastaus = ePerusteetReponse.find(
         (osaAlueFromEperusteet: IOsaAlueVastaus) =>
-          osaAlueFromEperusteet.koodiUri === osaAlueKoodiUri
+          osaAlueFromEperusteet.koodiUri === osaAlueKoodiUri ||
+          (osaAlueKoodiUri.startsWith("ammatillisenoppiaineet_vvai") &&
+            osaAlueFromEperusteet.koodiUri === "ammatillisenoppiaineet_vvai22")
       )
+      if (!osaAlueVastaus) {
+        errors.logError("EnrichOsaAlue.fetchFromEPerusteet", osaAlueKoodiUri)
+      }
+      return osaAlueVastaus || { koodiUri: osaAlueKoodiUri }
+    }
 
-    const getEnrichedDataForOsaAlue = (ePerusteeReponse: any) => (osaAlue: {
+    const getEnrichedDataForOsaAlue = (ePerusteetReponse: any) => (osaAlue: {
       osaAlueEnrichedData: IOsaAlueVastaus
       osaAlueKoodiUri: string
     }) => {
       osaAlue.osaAlueEnrichedData = findMatchingOsaAlueFromEperusteetResponse(
-        ePerusteeReponse,
+        ePerusteetReponse,
         osaAlue.osaAlueKoodiUri
       )
     }
@@ -95,7 +108,9 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
       tutkinnonOsaKoodiUri: string
     ): any {
       yield fetchTutkinnonOsa(tutkinnonOsaKoodiUri)
-      yield fetchOsaAlue(self.tutkinnonOsaId)
+      if (self.tutkinnonOsaId) {
+        yield fetchOsaAlue(self.tutkinnonOsaId)
+      }
     })
 
     const afterCreate = () => {

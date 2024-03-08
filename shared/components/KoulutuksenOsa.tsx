@@ -145,6 +145,7 @@ export interface KoulutuksenOsaProps {
   alku?: string
   loppu?: string
   laajuus?: number
+  viiteId?: number
 }
 
 export interface KoulutuksenOsaState {
@@ -213,8 +214,12 @@ export class KoulutuksenOsa extends React.Component<
       width = "25%",
       alku,
       loppu,
-      laajuus
+      laajuus,
+      viiteId
     } = this.props
+    const ePerusteetLinkki = viiteId
+      ? `https://eperusteet.opintopolku.fi/#/fi/tutkintoonvalmentava/7534950/koulutuksenosa/${viiteId}`
+      : "https://eperusteet.opintopolku.fi/#/fi/tutkintoonvalmentava/7534950/linkkisivu/7535290"
 
     return (
       <Container accentColor={accentColor} width={width}>
@@ -247,11 +252,7 @@ export class KoulutuksenOsa extends React.Component<
               </Detail>
               <Detail>
                 {" "}
-                <a
-                  href="https://eperusteet.opintopolku.fi/#/fi/tutkintoonvalmentava/7534950/linkkisivu/7535290"
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a href={ePerusteetLinkki} target="_blank" rel="noreferrer">
                   <FormattedMessage
                     id="opiskelusuunnitelma.ePerusteLinkki"
                     defaultMessage="Linkki ePerusteisiin"
