@@ -16,6 +16,7 @@ import { Instance } from "mobx-state-tree"
 interface ValitseHOKSProps extends RouteComponentProps {
   nimi?: string
   oppijaId: string
+  laitosId: string
   suunnitelmat: IHOKS[]
   session: ISessionStore
 }
@@ -25,7 +26,7 @@ export class ValitseHOKS extends React.Component<ValitseHOKSProps> {
   static contextType = AppContext
   declare context: React.ContextType<typeof AppContext>
   render() {
-    const { nimi, suunnitelmat, oppijaId, session } = this.props
+    const { nimi, suunnitelmat, oppijaId, laitosId, session } = this.props
     const { app } = this.context
     const [paattyneet, voimassaOlevat] = partition<IHOKS>(
       suunnitelmat,
@@ -37,6 +38,8 @@ export class ValitseHOKS extends React.Component<ValitseHOKSProps> {
       oppijaId !== "" &&
       suunnitelma.manuaalisyotto &&
       session.hasEditPrivilege === true
+
+    const hoksPath = `/ehoks-virkailija-ui/koulutuksenjarjestaja/${laitosId}/oppija/${oppijaId}/`
 
     return (
       <React.Fragment>
@@ -61,7 +64,7 @@ export class ValitseHOKS extends React.Component<ValitseHOKSProps> {
 
                 {voimassaOlevat.map((suunnitelma, i) => (
                   <Suunnitelma
-                    hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
+                    hoksPath={hoksPath}
                     suunnitelma={suunnitelma}
                     oppijaId={oppijaId}
                     showEditIcon={isHoksEditIconVisible(suunnitelma)}
@@ -81,7 +84,7 @@ export class ValitseHOKS extends React.Component<ValitseHOKSProps> {
 
                 {paattyneet.map((suunnitelma, i) => (
                   <Suunnitelma
-                    hoksPath={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppijaId}/`}
+                    hoksPath={hoksPath}
                     suunnitelma={suunnitelma}
                     oppijaId={oppijaId}
                     showEditIcon={isHoksEditIconVisible(suunnitelma)}

@@ -81,23 +81,23 @@
   },
   {
     "locale": "fi",
-    "key": "errors.HOKS.HankittavatAmmatOsaamisenHankkimistavoissa",
-    "value": "Hankittavan ammatillisen tutkinnon osan {index} osaamisen hankkimistavoista {ohts}"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.HOKS.HankittavatPaikallisetOsaamisenHankkimistavoissa",
-    "value": "Hankittavan paikallisen tutkinnon osan {index} osaamisen hankkimistavoista {ohts}"
-  },
-  {
-    "locale": "fi",
-    "key": "errors.HOKS.HankittavatYhteisetOsaamisenHankkimistavoissa",
-    "value": "Hankittavan yhteisen tutkinnon osan {index} osaamisen hankkimistavoista {ohts}"
+    "key": "errors.HOKS.MuuVirheTallennuksessa",
+    "value": "Kentässä {field} on virhe: {apierror}"
   },
   {
     "locale": "fi",
     "key": "errors.HOKS.OppisopimuksenPerustaPuuttuu",
     "value": "Oppisopimuksen perusta puuttuu"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.HOKS.RakenneVirhe",
+    "value": "Virhe HOKSin rakenteessa"
+  },
+  {
+    "locale": "fi",
+    "key": "errors.HOKS.TallennusAPIVirhe",
+    "value": "Palvelin antoi tallennettaessa virheen"
   },
   {
     "locale": "fi",
@@ -216,8 +216,18 @@
   },
   {
     "locale": "fi",
+    "key": "header.tietojenTallennusLink",
+    "value": "Uusi HOKS"
+  },
+  {
+    "locale": "fi",
     "key": "header.valtuudet",
     "value": "(Valtuudet)"
+  },
+  {
+    "locale": "fi",
+    "key": "header.yllapitoLink",
+    "value": "Ylläpito"
   },
   {
     "locale": "fi",
@@ -261,6 +271,11 @@
   },
   {
     "locale": "fi",
+    "key": "koulutuksenJarjestaja.eiOpiskelijoitaLabel",
+    "value": "Näillä hakuehdoilla ei löytynyt yhtään opiskelijaa."
+  },
+  {
+    "locale": "fi",
     "key": "koulutuksenJarjestaja.hakuAriaLabel",
     "value": "Hae opiskelijaa"
   },
@@ -276,13 +291,53 @@
   },
   {
     "locale": "fi",
+    "key": "koulutuksenJarjestaja.haunSivutuksenEdellinen",
+    "value": "Edellinen"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.haunSivutuksenSeuraava",
+    "value": "Seuraava"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.hoksIdTitle",
+    "value": "eHOKS-id"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.hyvaksyttyTitle",
+    "value": "Ens. hyv."
+  },
+  {
+    "locale": "fi",
     "key": "koulutuksenJarjestaja.jarjestaTitle",
     "value": "Järjestä"
   },
   {
     "locale": "fi",
+    "key": "koulutuksenJarjestaja.lkmTitle",
+    "value": "Lkm"
+  },
+  {
+    "locale": "fi",
     "key": "koulutuksenJarjestaja.meneHakutuloksienSivulleAriaLabel",
     "value": "Mene hakutuloksien sivulle {page}"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.opiskelijaTitle",
+    "value": "Opiskelijan nimi"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.osaamisalaTitle",
+    "value": "Osaamisala"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.paivitettyTitle",
+    "value": "Päivitetty"
   },
   {
     "locale": "fi",
@@ -328,6 +383,16 @@
     "locale": "fi",
     "key": "koulutuksenJarjestaja.tavoite.suunnitelmaJatkoOpintoihinTitle",
     "value": "Suunnitelma jatko-opintoihin siirtymisestä"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.title",
+    "value": "Järjestä"
+  },
+  {
+    "locale": "fi",
+    "key": "koulutuksenJarjestaja.tutkintoTitle",
+    "value": "Tutkinto tai koulutus"
   },
   {
     "locale": "fi",
@@ -942,12 +1007,27 @@
   {
     "locale": "fi",
     "key": "yllapito.oppijanPaivitys",
-    "value": "Päivitä oppijan tiedot indeksiin Oppijanumerorekisteristä."
+    "value": "Päivitä oppijan tiedot indeksiin ja oppijan hokseihin"
   },
   {
     "locale": "fi",
     "key": "yllapito.oppijanPaivitysKuvaus",
-    "value": "Päivitä oppijan tiedot indeksiin Oppijanumerorekisteristä."
+    "value": "Päivittää oppijan tiedot (nimi ja oppijanumero) indeksiin sekä oppijan hokseihin, hakemalla tuoreimmat tiedot Oppijanumerorekisteristä."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.oppijanPaivitysInputLabel",
+    "value": "Syötä alla olevaan kenttään oppijan uusin oppijanumero:"
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.oppijanPaivitysKaynnistetty",
+    "value": "Oppijan tietojen päivitys käynnistetty eHOKSissa."
+  },
+  {
+    "locale": "fi",
+    "key": "yllapito.oppijanPaivityksenKaynnistysEpaonnistui",
+    "value": "Oppijan tietojen päivityksen käynnistys eHOKSissa epäonnistui."
   },
   {
     "locale": "fi",
@@ -967,7 +1047,7 @@
   {
     "locale": "fi",
     "key": "yllapito.paivitaOppija",
-    "value": "Paivita oppijan tiedot indeksiin."
+    "value": "Käynnistä oppijan tietojen päivitys"
   },
   {
     "locale": "fi",

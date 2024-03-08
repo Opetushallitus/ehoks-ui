@@ -33,6 +33,7 @@
     "errors.NotificationStore.haeOpiskelijapalautelinkit": "Opiskelijapalautelinkkien haku epäonnistui",
     "errors.Opiskelijapalaute.resendPalaute": "Virhe uudelleenlähetyspyynnön käsittelyssä",
     "errors.OppilasStore.haePerusteet": "Ammatillisten tutkintojen haku epäonnistui",
+    "errors.OsaAlueVastaus.nimeaEiLoytynyt": "tietojen lataaminen ePerusteet-palvelusta ei onnistunut.",
     "errors.piilotaVirheAriaLabel": "Piilota virhe",
     "errors.SessionStore.checkSession": "Kirjautumistietojen tarkastus epäonnistui",
     "errors.SessionStore.getUserInfo": "Käyttäjätietojen haku epäonnistui",

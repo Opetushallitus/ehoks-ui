@@ -41,6 +41,73 @@ export const transformErrors = (errors: AjvError[]) =>
     return error
   })
 
+const humanReadablePrefix = (prefix: any[]) => {
+  if (!prefix.length) return ""
+  return prefix
+    .map(
+      (part: any, index: number) =>
+        "" +
+        part +
+        (typeof prefix[index + 1] === "number"
+          ? " "
+          : typeof prefix[index + 1] === "string"
+          ? ", "
+          : "")
+    )
+    .join("")
+}
+
+export const reportHOKSErrors = (
+  json: any,
+  intl: any,
+  report: (errorId: string, message: string) => void
+) => {
+  const ohtErrors: string[] = []
+  const APIErrorsToNotifications = (prefix: any[], subtree: any) => {
+    if (subtree === null || subtree === "") {
+      return
+    }
+    if (Array.isArray(subtree)) {
+      subtree.forEach((item: any, index: number) =>
+        APIErrorsToNotifications(prefix.concat([index + 1]), item)
+      )
+    } else if (typeof subtree === "object") {
+      Object.keys(subtree).forEach((key: string) =>
+        APIErrorsToNotifications(prefix.concat([key]), subtree[key])
+      )
+    } else if (
+      typeof subtree === "string" &&
+      subtree.includes("Tieto oppisopimuksen perustasta puuttuu")
+    ) {
+      ohtErrors.push(humanReadablePrefix(prefix))
+    } else if (typeof subtree === "string" && prefix.length) {
+      report(
+        "HOKS.TallennusAPIVirhe",
+        intl.formatMessage(
+          { id: "errors.HOKS.MuuVirheTallennuksessa" },
+          { field: humanReadablePrefix(prefix), apierror: subtree }
+        )
+      )
+    }
+  }
+  APIErrorsToNotifications([], json.errors)
+
+  if (ohtErrors.length) {
+    report("HOKS.OppisopimuksenPerustaPuuttuu", ohtErrors.join("; "))
+  }
+
+  if (json.error && typeof json.error === "string") {
+    report(
+      json.error.includes(
+        "HOKSin rakenteen tulee vastata siihen liitetyn opiskeluoikeuden tyyppiä"
+      )
+        ? "HOKS.RakenneVirhe"
+        : "HOKS.TallennusAPIVirhe",
+      json.error
+    )
+  }
+}
+
 export const buildKoodiUris = () =>
   Object.keys(koodistoUrls).reduce((urls, key) => {
     urls[key] = []

@@ -243,7 +243,7 @@ export const HOKS = types
             ),
             credentials: "include",
             body: JSON.stringify({
-              "oppilaitos-oid": self.opiskeluOikeus.oppilaitos.oid
+              "oppilaitos-oid": self.opiskeluOikeus?.oppilaitos?.oid || null
             })
           }
         )
@@ -351,10 +351,10 @@ export const HOKS = types
         const isOsittainen = self.opiskeluOikeus.isOsittainen
 
         const translations = getRoot<IRootStore>(self).translations
-        const activeLocale: Locale = translations.activeLocale
-        const osittainenText: string =
-          translations.messages[activeLocale]["opiskeluoikeus.osittainen"] ||
-          "osittainen"
+        const messages = translations.messages[translations.activeLocale]
+        const osittainenText: string = messages
+          ? messages["opiskeluoikeus.osittainen"]
+          : "osittainen"
         const tutkinnonNimi = self.opiskeluOikeus.suoritukset.length
           ? self.opiskeluOikeus.suoritukset[0].koulutusmoduuli.nimi
           : ""

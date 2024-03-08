@@ -61,7 +61,7 @@ export const SessionStore = types
         }
         self.user = response.data
       } catch (error) {
-        errors.logError("SessionStore.fetchUserInfo", error.message)
+        errors.logError("SessionStore.getUserInfo", error.message)
       }
     })
 
