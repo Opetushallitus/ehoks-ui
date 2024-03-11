@@ -76,10 +76,9 @@ export class Header extends React.Component<HeaderProps & RouteComponentProps> {
     navigate(`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oid}`)
   }
 
-  languageChangeUrl = (activeLocale: Locale, location?: WindowLocation) => {
-    if (!location) return "/ehoks-virkailija-ui/koulutuksenjarjestaja"
-    return location.href +
-      (location.search ? "&" : "?") +
+  languageChangeUrl = (activeLocale: Locale, location: WindowLocation) => {
+    return location!.href +
+      (location!.search ? "&" : "?") +
       "lang=" +
       activeLocale ===
       Locale.FI
@@ -140,7 +139,7 @@ export class Header extends React.Component<HeaderProps & RouteComponentProps> {
             <ActiveIndicator />
           </TopLink>
         )}
-        <TopLink to={this.languageChangeUrl(activeLocale, location)}>
+        <TopLink to={this.languageChangeUrl(activeLocale, location!)}>
           {activeLocale === Locale.FI ? (
             <FormattedMessage
               id="header.swedishLocaleLink"
