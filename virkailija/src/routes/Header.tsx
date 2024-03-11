@@ -55,6 +55,37 @@ const TopLink = styled(Link)<TopLinkProps>`
   }
 `
 
+const LanguageSwitch = styled("a")`
+  position: relative;
+  display: inline-block;
+  padding: 5px 20px 5px 20px;
+  text-decoration: none;
+  color: #fff;
+
+  span {
+    display: none;
+  }
+
+  &:focus {
+    outline: 2px solid ${props => props.theme.colors.green300};
+  }
+
+  &:not(:last-child) {
+    border-right: 2px solid ${props => props.theme.colors.green900};
+  }
+
+  &[aria-current] span {
+    background: #fff;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    right: 50%;
+    width: 3px;
+    height: 3px;
+  }
+`
+
 interface HeaderProps {
   store?: IRootStore
 }
@@ -71,8 +102,14 @@ export class Header extends React.Component<HeaderProps> {
     navigate(`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oid}`)
   }
 
+  changeLocale = (locale: Locale) => (event: React.MouseEvent) => {
+    event.preventDefault()
+    this.props.store!.translations.setActiveLocale(locale)
+  }
+
   render() {
     const { session } = this.props.store!
+    const { activeLocale } = this.props.store!.translations
     return (
       <HeaderContainer>
         {session.organisations && (
@@ -122,6 +159,29 @@ export class Header extends React.Component<HeaderProps> {
             <ActiveIndicator />
           </TopLink>
         )}
+        <LanguageSwitch
+          href="#"
+          onClick={e => {
+            e.preventDefault()
+            if (activeLocale === Locale.FI) {
+              this.changeLocale(Locale.SV)
+            } else {
+              this.changeLocale(Locale.FI)
+            }
+          }}
+        >
+          {activeLocale === Locale.FI ? (
+            <FormattedMessage
+              id="header.swedishLocaleLink"
+              defaultMessage="På svenska"
+            />
+          ) : (
+            <FormattedMessage
+              id="header.finnishLocaleLink"
+              defaultMessage="Suomeksi"
+            />
+          )}
+        </LanguageSwitch>
       </HeaderContainer>
     )
   }
