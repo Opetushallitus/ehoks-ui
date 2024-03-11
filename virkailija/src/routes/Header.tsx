@@ -1,4 +1,4 @@
-import { Link, navigate, useLocation } from "@reach/router"
+import { Link, navigate } from "@reach/router"
 import { OrganisationDropdown } from "components/OrganisationDropdown"
 import { inject, observer } from "mobx-react"
 import React from "react"
@@ -71,16 +71,14 @@ export class Header extends React.Component<HeaderProps> {
     navigate(`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oid}`)
   }
 
-  languageChangeUrl = (activeLocale: Locale) => {
-    const location = useLocation()
-    return location.href +
-      (location.search ? "&" : "?") +
+  languageChangeUrl = (activeLocale: Locale) =>
+    window.location.href +
+      (window.location.search ? "&" : "?") +
       "lang=" +
       activeLocale ===
-      Locale.FI
+    Locale.FI
       ? Locale.SV
       : Locale.FI
-  }
 
   render() {
     const { session } = this.props.store!
