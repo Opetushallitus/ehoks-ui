@@ -1,4 +1,9 @@
-import { Link, navigate } from "@reach/router"
+import {
+  Link,
+  navigate,
+  RouteComponentProps,
+  WindowLocation
+} from "@reach/router"
 import { OrganisationDropdown } from "components/OrganisationDropdown"
 import { inject, observer } from "mobx-react"
 import React from "react"
@@ -55,44 +60,13 @@ const TopLink = styled(Link)<TopLinkProps>`
   }
 `
 
-const LanguageSwitch = styled("a")`
-  position: relative;
-  display: inline-block;
-  padding: 5px 20px 5px 20px;
-  text-decoration: none;
-  color: #fff;
-
-  span {
-    display: none;
-  }
-
-  &:focus {
-    outline: 2px solid ${props => props.theme.colors.green300};
-  }
-
-  &:not(:last-child) {
-    border-right: 2px solid ${props => props.theme.colors.green900};
-  }
-
-  &[aria-current] span {
-    background: #fff;
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    right: 50%;
-    width: 3px;
-    height: 3px;
-  }
-`
-
 interface HeaderProps {
   store?: IRootStore
 }
 
 @inject("store")
 @observer
-export class Header extends React.Component<HeaderProps> {
+export class Header extends React.Component<HeaderProps & RouteComponentProps> {
   handleOnOrganisationChange = (oid: string) => {
     const { session, koulutuksenJarjestaja } = this.props.store!
     session.changeSelectedOrganisationOid(oid)
@@ -102,14 +76,21 @@ export class Header extends React.Component<HeaderProps> {
     navigate(`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oid}`)
   }
 
-  changeLocale = (locale: Locale) => (event: React.MouseEvent) => {
-    event.preventDefault()
-    this.props.store!.translations.setActiveLocale(locale)
+  languageChangeUrl = (activeLocale: Locale, location?: WindowLocation) => {
+    if (!location) return "/ehoks-virkailija-ui/koulutuksenjarjestaja"
+    return location.href +
+      (location.search ? "&" : "?") +
+      "lang=" +
+      activeLocale ===
+      Locale.FI
+      ? Locale.SV
+      : Locale.FI
   }
 
   render() {
     const { session } = this.props.store!
     const { activeLocale } = this.props.store!.translations
+    const { location } = this.props
     return (
       <HeaderContainer>
         {session.organisations && (
@@ -159,17 +140,7 @@ export class Header extends React.Component<HeaderProps> {
             <ActiveIndicator />
           </TopLink>
         )}
-        <LanguageSwitch
-          href="#"
-          onClick={e => {
-            e.preventDefault()
-            if (activeLocale === Locale.FI) {
-              this.changeLocale(Locale.SV)
-            } else {
-              this.changeLocale(Locale.FI)
-            }
-          }}
-        >
+        <TopLink to={this.languageChangeUrl(activeLocale, location)}>
           {activeLocale === Locale.FI ? (
             <FormattedMessage
               id="header.swedishLocaleLink"
@@ -181,7 +152,7 @@ export class Header extends React.Component<HeaderProps> {
               defaultMessage="Suomeksi"
             />
           )}
-        </LanguageSwitch>
+        </TopLink>
       </HeaderContainer>
     )
   }
