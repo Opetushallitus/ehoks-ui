@@ -76,15 +76,11 @@ export class Header extends React.Component<HeaderProps & RouteComponentProps> {
     navigate(`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oid}`)
   }
 
-  languageChangeUrl = (activeLocale: Locale, location: WindowLocation) => {
-    return location!.href +
-      (location!.search ? "&" : "?") +
-      "lang=" +
-      activeLocale ===
-      Locale.FI
+  languageChangeUrl = (activeLocale: Locale, location: WindowLocation) =>
+    location!.href + (location!.search ? "&" : "?") + "lang=" + activeLocale ===
+    Locale.FI
       ? Locale.SV
       : Locale.FI
-  }
 
   render() {
     const { session } = this.props.store!
