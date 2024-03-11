@@ -1,4 +1,3 @@
-import { RouteComponentProps } from "@reach/router"
 import {
   ChartArrowBottom,
   ChartArrowLeft,
@@ -15,7 +14,7 @@ import { HomeOrb } from "components/HomeOrb"
 import PenPaper from "components/icons/PenPaper"
 import Ribbon from "components/icons/Ribbon"
 import User from "components/icons/User"
-import React from "react"
+import React, { useEffect } from "react"
 import {
   MdAccountBalance,
   MdDescription,
@@ -43,18 +42,14 @@ const SectionTitle = styled("h1")`
   margin: 0 0 10px 0;
 `
 
-export type HenkilokohtaistaminenProps = RouteComponentProps
-
-export class Henkilokohtaistaminen extends React.Component<
-  HenkilokohtaistaminenProps
-> {
-  componentDidMount() {
+export const Henkilokohtaistaminen = () => {
+  useEffect(() => {
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
     })
-  }
+  }, [])
 
-  render = () => (
+  return (
     <Container>
       <PaddedContainer>
         <HomeLink to="../">

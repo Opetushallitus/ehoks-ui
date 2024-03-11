@@ -1,7 +1,7 @@
 import { Page, PageButton } from "components/Page"
 import range from "lodash.range"
 import React from "react"
-import { FormattedMessage, InjectedIntl, injectIntl } from "react-intl"
+import { FormattedMessage, injectIntl, IntlShape } from "react-intl"
 import styled from "styled"
 
 const PagingContainer = styled("nav")`
@@ -17,7 +17,7 @@ interface PagingProps {
   activePage: number
   totalResultsCount: number
   perPage: number
-  intl: InjectedIntl
+  intl: IntlShape
   goToPage: (index: number) => () => void
   onPaginationResultEnter: (
     index: number

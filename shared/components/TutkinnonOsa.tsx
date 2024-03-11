@@ -10,8 +10,6 @@ import {
   ITarkentavatTiedotOsaamisenArvioija
 } from "models/helpers/TutkinnonOsa"
 import { FormattedMessage, FormattedNumber } from "react-intl"
-import { navigate } from "@reach/router"
-import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
 import { ToggleableItems } from "./TutkinnonOsa/TutkinnonOsaHelpers"
 import { Objectives } from "./TutkinnonOsa/Objectives"
@@ -218,21 +216,6 @@ export class TutkinnonOsa extends React.Component<
 
   collapseAll = () => {
     this.setState({ expandedCompetences: [] })
-  }
-
-  share = () => {
-    const { moduleId, hoksEid, tutkinnonOsaTyyppi } = this.props
-    if (moduleId && hoksEid && tutkinnonOsaTyyppi) {
-      navigate(
-        `${window.location.pathname}?${stringifyShareParams({
-          moduleId,
-          type: "osaamisenhankkimistapa",
-          tutkinnonOsaTyyppi,
-          tutkinnonOsaModuleId: moduleId,
-          hoksEid
-        })}`
-      )
-    }
   }
 
   private koulutuksenJarjestajaShouldBeShown() {

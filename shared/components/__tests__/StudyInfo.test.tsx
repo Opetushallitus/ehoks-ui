@@ -1,13 +1,13 @@
 import React from "react"
-import { render, fireEvent, wait } from "@testing-library/react"
+import { fireEvent, wait } from "@testing-library/react"
 import { TutkinnonOsa as TutkinnonOsaWithoutTheme } from "../TutkinnonOsa"
-import { renderWithContext, withTheme } from "testUtils"
+import { renderWithContext, withTheme } from "../../testUtils"
 import {
   IOsaamisenHankkimistapa,
   IOsaamisenOsoittaminen,
   ITarkentavatTiedotOsaamisenArvioija
-} from "models/helpers/TutkinnonOsa"
-import { mockFetch } from "fetchUtils"
+} from "../../models/helpers/TutkinnonOsa"
+import { mockFetch } from "../../fetchUtils"
 import { OsaamisenHankkimistapaType } from "../../models/OsaamisenHankkimistapa"
 import { Instance } from "mobx-state-tree"
 import { OsaAlueReference } from "../../models/OsaAlueReference"
@@ -152,14 +152,14 @@ describe("TutkinnonOsa", () => {
   })
 
   test("render without params", () => {
-    const { getByTestId, queryByTestId } = render(<TutkinnonOsa />)
+    const { getByTestId, queryByTestId } = renderWithContext(<TutkinnonOsa />)
     expect(getByTestId("Title")).toBeEmptyDOMElement()
     expect(getByTestId("TutkinnonOsa.EmptyCompetences")).toBeInTheDocument()
     expect(queryByTestId("TutkinnonOsa.Competences")).not.toBeInTheDocument()
   })
 
   test("render title", () => {
-    const { getByTestId } = render(<TutkinnonOsa title="Test" />)
+    const { getByTestId } = renderWithContext(<TutkinnonOsa title="Test" />)
     expect(getByTestId("Title").textContent).toBe("Test")
   })
 
@@ -276,7 +276,7 @@ describe("TutkinnonOsa", () => {
 
     expect(queryAllByTestId("TutkinnonOsa.LearningEvent").length).toBe(0)
     expect(getByText("Osaaminen tunnistettu suoraan")).toBeInTheDocument()
-    expect(queryByText("Aiemman osaamisen todentanut")).not.toBeInTheDocument()
+    expect(queryByText(/Aiemman osaamisen todentanut/)).not.toBeInTheDocument()
 
     rerender(
       <TutkinnonOsa
@@ -297,8 +297,8 @@ describe("TutkinnonOsa", () => {
     expect(
       getByText("Osaaminen lähetetty arvioitavaksi 15.4.2019")
     ).toBeInTheDocument()
-    expect(getByText("Aiemman osaamisen todentanut")).toBeInTheDocument()
-    expect(getByText("Koulutuksen järjestäjä-organisaatio")).toBeInTheDocument()
+    expect(getByText(/Aiemman osaamisen todentanut/)).toBeInTheDocument()
+    expect(getByText(/Koulutuksen järjestäjä-organisaatio/)).toBeInTheDocument()
 
     rerender(
       <TutkinnonOsa

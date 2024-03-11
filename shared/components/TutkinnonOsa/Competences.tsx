@@ -1,7 +1,7 @@
 import { CompetenceRequirement } from "components/CompetenceRequirement"
 import { HorizontalLine } from "components/HorizontalLine"
 import React from "react"
-import { FormattedMessage, intlShape } from "react-intl"
+import { useIntl, FormattedMessage } from "react-intl"
 import { HMediaQuery } from "responsive"
 import styled from "styled"
 import { Collapse } from "./Collapse"
@@ -106,125 +106,120 @@ interface CompetencesProps {
   toggle: (name: ToggleableItems) => () => void
 }
 
-export class Competences extends React.Component<CompetencesProps> {
-  static contextTypes = {
-    intl: intlShape
+export const Competences = (props: CompetencesProps) => {
+  const {
+    collapseAll,
+    competenceRequirements = [],
+    expandAll,
+    expandCompetence,
+    expanded,
+    expandedCompetences,
+    tutkinnonOsaTyyppi,
+    toggle
+  } = props
+  const intl = useIntl()
+  const allExpanded =
+    expandedCompetences.length === competenceRequirements.length
+
+  if (!competenceRequirements.length) {
+    return <Container data-testid="TutkinnonOsa.EmptyCompetences" />
   }
-  render() {
-    const {
-      collapseAll,
-      competenceRequirements = [],
-      expandAll,
-      expandCompetence,
-      expanded,
-      expandedCompetences,
-      tutkinnonOsaTyyppi,
-      toggle
-    } = this.props
-    const { intl } = this.context
-    const allExpanded =
-      expandedCompetences.length === competenceRequirements.length
 
-    if (!competenceRequirements.length) {
-      return <Container data-testid="TutkinnonOsa.EmptyCompetences" />
-    }
-
-    return (
-      <Container data-testid="TutkinnonOsa.Competences">
-        {expanded ? (
-          <React.Fragment>
-            <CollapseContainer data-testid="TutkinnonOsa.Competences.CollapseContainer">
-              <CollapseHeaderContainer>
-                <CollapseHeader>
-                  {tutkinnonOsaTyyppi ===
-                  TutkinnonOsaType.HankittavanYhteisenTutkinnonOsanOsaAlue ? (
-                    <FormattedMessage
-                      id="opiskelusuunnitelma.osaamistavoitteetTitle"
-                      defaultMessage="Osaamistavoitteet"
-                    />
-                  ) : (
-                    <FormattedMessage
-                      id="opiskelusuunnitelma.ammattitaitovaatimuksetTitle"
-                      defaultMessage="Ammattitaitovaatimukset"
-                    />
-                  )}
-                </CollapseHeader>
-                <ToggleAllTitle onClick={allExpanded ? collapseAll : expandAll}>
-                  {allExpanded ? (
-                    <FormattedMessage
-                      id="opiskelusuunnitelma.piilotaKaikkiKriteeritLink"
-                      defaultMessage="Piilota arviointikriteerit"
-                    />
-                  ) : (
-                    <FormattedMessage
-                      id="opiskelusuunnitelma.naytaKaikkiKriteeritLink"
-                      defaultMessage="Näytä kaikki arviointikriteerit"
-                    />
-                  )}
-                </ToggleAllTitle>
-              </CollapseHeaderContainer>
-              <IconContainer
-                onClick={toggle("competences")}
-                aria-label={intl.formatMessage({
-                  id:
-                    "opiskelusuunnitelma.piilotaAmmattitaitovaatimuksetAriaLabel"
-                })}
-                data-testid="TutkinnonOsa.Competences.CollapseCompetences"
-              >
-                <Collapse size={40} />
-              </IconContainer>
-            </CollapseContainer>
-            <Line height="2px" backgroundColor="#000" />
-          </React.Fragment>
-        ) : (
-          <ExpandContainer>
-            <ExpandTitle onClick={toggle("competences")}>
-              {tutkinnonOsaTyyppi ===
-              TutkinnonOsaType.HankittavanYhteisenTutkinnonOsanOsaAlue ? (
-                <FormattedMessage
-                  id="opiskelusuunnitelma.naytaOsaamistavoitteetLink"
-                  defaultMessage="Osaamistavoitteet ja arviointikriteerit"
-                />
-              ) : (
-                <FormattedMessage
-                  id="opiskelusuunnitelma.naytaAmmattitaitovaatimuksetLink"
-                  defaultMessage="Ammattitaitovaatimukset ja arviointikriteerit"
-                />
-              )}
-            </ExpandTitle>
+  return (
+    <Container data-testid="TutkinnonOsa.Competences">
+      {expanded ? (
+        <React.Fragment>
+          <CollapseContainer data-testid="TutkinnonOsa.Competences.CollapseContainer">
+            <CollapseHeaderContainer>
+              <CollapseHeader>
+                {tutkinnonOsaTyyppi ===
+                TutkinnonOsaType.HankittavanYhteisenTutkinnonOsanOsaAlue ? (
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.osaamistavoitteetTitle"
+                    defaultMessage="Osaamistavoitteet"
+                  />
+                ) : (
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.ammattitaitovaatimuksetTitle"
+                    defaultMessage="Ammattitaitovaatimukset"
+                  />
+                )}
+              </CollapseHeader>
+              <ToggleAllTitle onClick={allExpanded ? collapseAll : expandAll}>
+                {allExpanded ? (
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.piilotaKaikkiKriteeritLink"
+                    defaultMessage="Piilota arviointikriteerit"
+                  />
+                ) : (
+                  <FormattedMessage
+                    id="opiskelusuunnitelma.naytaKaikkiKriteeritLink"
+                    defaultMessage="Näytä kaikki arviointikriteerit"
+                  />
+                )}
+              </ToggleAllTitle>
+            </CollapseHeaderContainer>
             <IconContainer
               onClick={toggle("competences")}
               aria-label={intl.formatMessage({
-                id: "opiskelusuunnitelma.naytaAmmattitaitovaatimuksetAriaLabel"
+                id:
+                  "opiskelusuunnitelma.piilotaAmmattitaitovaatimuksetAriaLabel"
               })}
-              data-testid="TutkinnonOsa.Competences.ExpandCompetences"
+              data-testid="TutkinnonOsa.Competences.CollapseCompetences"
             >
-              <Expand size={40} />
+              <Collapse size={40} />
             </IconContainer>
-          </ExpandContainer>
-        )}
-        {expanded && (
-          <React.Fragment>
-            <HMediaQuery.SmallTablet>
-              <MobileCompetences
-                competenceRequirements={competenceRequirements}
+          </CollapseContainer>
+          <Line height="2px" backgroundColor="#000" />
+        </React.Fragment>
+      ) : (
+        <ExpandContainer>
+          <ExpandTitle onClick={toggle("competences")}>
+            {tutkinnonOsaTyyppi ===
+            TutkinnonOsaType.HankittavanYhteisenTutkinnonOsanOsaAlue ? (
+              <FormattedMessage
+                id="opiskelusuunnitelma.naytaOsaamistavoitteetLink"
+                defaultMessage="Osaamistavoitteet ja arviointikriteerit"
               />
-            </HMediaQuery.SmallTablet>
-            <HMediaQuery.SmallTablet notMatch>
-              <InfoContainer data-testid="TutkinnonOsa.Competences.CompetenceRequirements">
-                {competenceRequirements.map((competenceRequirement, i) => (
-                  <CompetenceRequirement
-                    key={i}
-                    competenceRequirement={competenceRequirement}
-                    expanded={expandedCompetences.indexOf(i) > -1}
-                    expand={expandCompetence(i)}
-                  />
-                ))}
-              </InfoContainer>
-            </HMediaQuery.SmallTablet>
-          </React.Fragment>
-        )}
-      </Container>
-    )
-  }
+            ) : (
+              <FormattedMessage
+                id="opiskelusuunnitelma.naytaAmmattitaitovaatimuksetLink"
+                defaultMessage="Ammattitaitovaatimukset ja arviointikriteerit"
+              />
+            )}
+          </ExpandTitle>
+          <IconContainer
+            onClick={toggle("competences")}
+            aria-label={intl.formatMessage({
+              id: "opiskelusuunnitelma.naytaAmmattitaitovaatimuksetAriaLabel"
+            })}
+            data-testid="TutkinnonOsa.Competences.ExpandCompetences"
+          >
+            <Expand size={40} />
+          </IconContainer>
+        </ExpandContainer>
+      )}
+      {expanded && (
+        <React.Fragment>
+          <HMediaQuery.SmallTablet>
+            <MobileCompetences
+              competenceRequirements={competenceRequirements}
+            />
+          </HMediaQuery.SmallTablet>
+          <HMediaQuery.SmallTablet notMatch>
+            <InfoContainer data-testid="TutkinnonOsa.Competences.CompetenceRequirements">
+              {competenceRequirements.map((competenceRequirement, i) => (
+                <CompetenceRequirement
+                  key={i}
+                  competenceRequirement={competenceRequirement}
+                  expanded={expandedCompetences.indexOf(i) > -1}
+                  expand={expandCompetence(i)}
+                />
+              ))}
+            </InfoContainer>
+          </HMediaQuery.SmallTablet>
+        </React.Fragment>
+      )}
+    </Container>
+  )
 }

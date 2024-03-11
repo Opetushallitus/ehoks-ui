@@ -1,12 +1,12 @@
-import { Link } from "@reach/router"
+import { Link } from "react-router-dom"
 import { AppContext } from "components/AppContext"
 import { Container } from "components/Container"
 import { Notification } from "components/Notification"
 import { FormattedDate } from "components/FormattedDate"
 import { inject, observer } from "mobx-react"
-import React from "react"
+import React, { useContext } from "react"
 import { MdClose } from "react-icons/md"
-import { FormattedMessage, InjectedIntl, injectIntl } from "react-intl"
+import { FormattedMessage, useIntl } from "react-intl"
 import { IAppError } from "stores/ErrorStore"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
@@ -58,23 +58,18 @@ const AlertType = ({ type }: { type: string }) =>
 
 export interface AppNotificationsProps {
   store?: IRootStore
-  intl: InjectedIntl
 }
 
-@inject("store")
-@observer
-export class AppNotifications extends React.Component<AppNotificationsProps> {
-  static contextType = AppContext
-  declare context: React.ContextType<typeof AppContext>
+export const AppNotifications = inject("store")(
+  observer((props: AppNotificationsProps) => {
+    const ackNotification = (hide: () => void) => (event: React.MouseEvent) => {
+      event.preventDefault()
+      hide()
+    }
 
-  ackNotification = (hide: () => void) => (event: React.MouseEvent) => {
-    event.preventDefault()
-    hide()
-  }
-
-  render() {
-    const { store, intl } = this.props
-    const { featureFlags } = this.context
+    const { store } = props
+    const intl = useIntl()
+    const { featureFlags } = useContext(AppContext)
     const {
       errors: { unhandled },
       notifications
@@ -136,7 +131,7 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
                   <NotificationAnchor
                     role="button"
                     href="#"
-                    onClick={this.ackNotification(notification.ackNotification)}
+                    onClick={ackNotification(notification.ackNotification)}
                   >
                     <FormattedMessage
                       id="muistutukset.poistaMuistutus"
@@ -158,7 +153,7 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
           })}
       </Container>
     )
-  }
-}
+  })
+)
 
-export default injectIntl(AppNotifications)
+export default AppNotifications

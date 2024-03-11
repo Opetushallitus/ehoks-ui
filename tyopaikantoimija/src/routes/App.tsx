@@ -1,4 +1,4 @@
-import { Router, RouteComponentProps } from "@reach/router"
+import { Routes, Route } from "react-router"
 import { ThemeWrapper } from "components/ThemeWrapper"
 import {
   cleanLocaleParam,
@@ -8,7 +8,7 @@ import {
   readLocaleFromSessionStorage
 } from "localeUtils"
 import { inject, observer } from "mobx-react"
-import React from "react"
+import React, { useEffect } from "react"
 import { IntlProvider } from "react-intl"
 import { AppFooter } from "routes/App/AppFooter"
 import { AppHeader } from "routes/App/AppHeader"
@@ -17,6 +17,7 @@ import { Etusivu } from "routes/Etusivu"
 import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 import { IRootStore } from "../stores/RootStore"
+import { Redirect } from "components/Redirect"
 
 const Container = styled("div")`
   margin: 0;
@@ -27,13 +28,13 @@ const Container = styled("div")`
 
 const Main = styled("main")``
 
-const MainApp = (_: RouteComponentProps) => (
+const MainApp = () => (
   <Container>
     <AppHeader />
     <Main id="main" role="main">
-      <Router basepath={`/ehoks-tyopaikantoimija-ui`}>
-        <Etusivu path="/:uuid" />
-      </Router>
+      <Routes>
+        <Route path="/ehoks-tyopaikantoimija-ui/:uuid" element={<Etusivu />} />
+      </Routes>
     </Main>
     <AppFooter />
     <GlobalStyles />
@@ -44,25 +45,23 @@ export interface AppProps {
   store?: IRootStore
 }
 
-@inject("store")
-@observer
-export class App extends React.Component<AppProps> {
-  async componentDidMount() {
-    const { store } = this.props
-    const localeParam = parseLocaleParam(window.location.search)
-    if (localeParam) {
-      store!.translations.setActiveLocale(localeParam)
-      cleanLocaleParam()
-    } else {
-      const locale = isLocaleStored()
-        ? readLocaleFromSessionStorage()
-        : readLocaleFromDomain()
-      store!.translations.setActiveLocale(locale)
-    }
-  }
+export const App = inject("store")(
+  observer((props: AppProps) => {
+    useEffect(() => {
+      const { store } = props
+      const localeParam = parseLocaleParam(window.location.search)
+      if (localeParam) {
+        store!.translations.setActiveLocale(localeParam)
+        cleanLocaleParam()
+      } else {
+        const locale = isLocaleStored()
+          ? readLocaleFromSessionStorage()
+          : readLocaleFromDomain()
+        store!.translations.setActiveLocale(locale)
+      }
+    }, [])
 
-  render() {
-    const { store } = this.props
+    const { store } = props
     const activeLocale = store!.translations.activeLocale
     const translations = store!.translations.messages[activeLocale]
     const messages =
@@ -78,11 +77,15 @@ export class App extends React.Component<AppProps> {
           messages={messages}
           textComponent={React.Fragment}
         >
-          <Router basepath="/ehoks-tyopaikantoimija-ui">
-            <MainApp path="*" />
-          </Router>
+          <Routes>
+            <Route path="/ehoks-tyopaikantoimija-ui/*" element={<MainApp />} />
+            <Route
+              path="/"
+              element={<Redirect to="/ehoks-tyopaikantoimija-ui/" />}
+            />
+          </Routes>
         </IntlProvider>
       </ThemeWrapper>
     )
-  }
-}
+  })
+)

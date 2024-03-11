@@ -76,21 +76,17 @@ interface StudentFeedbackProps
   store?: IRootStore
 }
 
-@inject("store")
-@observer
-export class StudentFeedbackModal extends React.Component<
-  StudentFeedbackProps
-> {
-  closeFeedbackModal = () => {
-    this.props.store!.notifications.hideFeedbackModal()
-  }
+export const StudentFeedbackModal = inject("store")(
+  observer((props: StudentFeedbackProps) => {
+    const closeFeedbackModal = () => {
+      props.store!.notifications.hideFeedbackModal()
+    }
 
-  removeFeedbackLink = (linkToRemove: string) => {
-    this.props.store!.notifications.removeOpiskelijapalautelinkki(linkToRemove)
-  }
+    const removeFeedbackLink = (linkToRemove: string) => {
+      props.store!.notifications.removeOpiskelijapalautelinkki(linkToRemove)
+    }
 
-  render() {
-    const { store, studentFeedbackLinks } = this.props
+    const { store, studentFeedbackLinks } = props
     const showFeedbackModal = store!.notifications.showFeedbackModal
 
     // always guard your array index based access with a .length check.
@@ -115,7 +111,7 @@ export class StudentFeedbackModal extends React.Component<
             />
           </StudentFeedbackTextContainer>
           <ButtonContainer>
-            <CloseFeedbackModalButton onClick={this.closeFeedbackModal}>
+            <CloseFeedbackModalButton onClick={closeFeedbackModal}>
               <FormattedMessage
                 id="studentFeedbackDialog.closeFeedbackButton"
                 defaultMessage="Vastaan myöhemmin"
@@ -123,10 +119,7 @@ export class StudentFeedbackModal extends React.Component<
             </CloseFeedbackModalButton>
             <StartFeedbackLink
               href={studentFeedbackLinks[0]}
-              onClick={this.removeFeedbackLink.bind(
-                this,
-                studentFeedbackLinks[0]
-              )}
+              onClick={removeFeedbackLink.bind(this, studentFeedbackLinks[0])}
               target="_blank"
             >
               <FormattedMessage
@@ -138,5 +131,5 @@ export class StudentFeedbackModal extends React.Component<
         </FeedbackModalContainer>
       </StyledStudentFeedbackModal>
     )
-  }
-}
+  })
+)

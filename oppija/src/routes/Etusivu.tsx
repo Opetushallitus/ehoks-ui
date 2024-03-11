@@ -1,12 +1,11 @@
-import { navigate, RouteComponentProps } from "@reach/router"
+import { useNavigate } from "react-router"
 import { HeroButton } from "components/Button"
 import { Container } from "components/Container"
 import { ContentContainer } from "components/ContentContainer"
 import { HelpPopup } from "components/HelpPopup"
 import { LinkPanel } from "components/LinkPanel"
-import { IReactionDisposer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
-import React from "react"
+import React, { useEffect } from "react"
 import { FormattedMessage } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import { Locale } from "stores/TranslationStore"
@@ -113,50 +112,35 @@ const HelpButton = styled(HelpPopup)`
   margin-top: 7px;
 `
 
-export interface EtusivuProps extends RouteComponentProps {
+export interface EtusivuProps {
   store?: IRootStore
 }
 
-@inject("store")
-@observer
-export class Etusivu extends React.Component<EtusivuProps> {
-  disposeLoginReaction: IReactionDisposer
-
-  componentDidMount() {
-    const { store } = this.props
-    this.disposeLoginReaction = reaction(
-      () => store!.session.isLoggedIn,
-      isLoggedIn => {
-        if (isLoggedIn) {
-          navigate("/ehoks/suunnittelu")
-        }
+export const Etusivu = inject("store")(
+  observer(({ store }: EtusivuProps) => {
+    useEffect(() => {
+      const navigate = useNavigate()
+      if (store!.session.isLoggedIn) {
+        navigate("/ehoks/suunnittelu")
       }
-    )
-  }
+    }, [store])
 
-  componentWillUnmount() {
-    this.disposeLoginReaction()
-  }
+    const loginStudent = (event: React.MouseEvent) => {
+      event.preventDefault()
+      store!.session.resetUserDidLogout()
 
-  loginStudent = (event: React.MouseEvent) => {
-    event.preventDefault()
-    const store = this.props.store
-    store!.session.resetUserDidLogout()
-
-    if (!store!.session.isLoggedIn) {
-      window.location.href =
-        store!.translations.activeLocale === Locale.SV
-          ? store!.environment.casOppijaLoginUrlSv
-          : store!.environment.casOppijaLoginUrlFi
+      if (!store!.session.isLoggedIn) {
+        window.location.href =
+          store!.translations.activeLocale === Locale.SV
+            ? store!.environment.casOppijaLoginUrlSv
+            : store!.environment.casOppijaLoginUrlFi
+      }
     }
-  }
+    const loginVirkailija = (event: React.MouseEvent) => {
+      event.preventDefault()
+      window.location.href = store!.environment.virkailijaLoginUrl
+    }
 
-  loginVirkailija = (event: React.MouseEvent) => {
-    event.preventDefault()
-    window.location.href = this.props.store!.environment.virkailijaLoginUrl
-  }
-
-  render() {
     return (
       <Container>
         <Header>
@@ -192,7 +176,7 @@ export class Etusivu extends React.Component<EtusivuProps> {
                 />
               </p>
 
-              <LoginButton onClick={this.loginStudent}>
+              <LoginButton onClick={loginStudent}>
                 <FormattedMessage
                   id="etusivu.omaSuunnitelmaKirjauduButtonLabel"
                   defaultMessage="Kirjaudu omaan suunnitelmaan"
@@ -223,7 +207,7 @@ export class Etusivu extends React.Component<EtusivuProps> {
                   defaultMessage="Kirjautumalla siirryt ohjattavien opiskelijoiden suunnitelmiin."
                 />
               </p>
-              <LoginButton onClick={this.loginVirkailija}>
+              <LoginButton onClick={loginVirkailija}>
                 <FormattedMessage
                   id="etusivu.oppilaitoksenEdustajaKirjauduButtonLabel"
                   defaultMessage="Kirjaudu oppilaitoksen edustajana"
@@ -280,5 +264,5 @@ export class Etusivu extends React.Component<EtusivuProps> {
         </ContentContainer>
       </Container>
     )
-  }
-}
+  })
+)

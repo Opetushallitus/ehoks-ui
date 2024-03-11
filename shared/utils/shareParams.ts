@@ -1,9 +1,8 @@
-import { WindowLocation } from "@reach/router"
 import queryString from "query-string"
 import { ShareType, TutkinnonOsaType } from "../models/helpers/ShareTypes"
 
 export function parseShareParams(
-  location: WindowLocation | undefined
+  search: string | undefined
 ): {
   share: {
     type?: ShareType
@@ -13,7 +12,7 @@ export function parseShareParams(
     hoksEid: string | ""
   }
 } {
-  const qs = queryString.parse(location ? location.search : "")
+  const qs = queryString.parse(search ?? "")
   return {
     share: {
       type:
@@ -53,7 +52,7 @@ export const stringifyShareParams = ({
   })
 
 export const parseLinkUuid = (
-  location: WindowLocation | undefined
+  location: Location | undefined
 ): {
   link: {
     uuid: string | undefined

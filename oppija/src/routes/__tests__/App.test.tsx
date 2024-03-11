@@ -1,30 +1,19 @@
-import {
-  createHistory,
-  createMemorySource,
-  LocationProvider
-} from "@reach/router"
+import { BrowserRouter } from "react-router-dom"
 import "@testing-library/jest-dom/extend-expect"
 import { cleanup, render } from "@testing-library/react"
-import { apiUrl } from "config"
-import { createEnvironment } from "createEnvironment"
-import { mockFetch } from "fetchUtils"
+import { apiUrl } from "../../config"
+import { createEnvironment } from "../../../../shared/createEnvironment"
+import { mockFetch } from "../../../../shared/fetchUtils"
 import { Provider } from "mobx-react"
 import React from "react"
-import { RootStore } from "stores/RootStore"
+import { RootStore } from "../../stores/RootStore"
 import { App } from "../App"
 
 const callerId = (headers?: Headers) => (headers ? headers : new Headers())
 
-function renderWithRouter(
-  ui: any,
-  { route = "/", history = createHistory(createMemorySource(route)) } = {}
-) {
+function renderWithRouter(ui: React.ReactNode) {
   return {
-    ...render(<LocationProvider history={history}>{ui}</LocationProvider>),
-    // adding `history` to the returned utilities to allow us
-    // to reference it in our tests (just try to avoid using
-    // this to test implementation details).
-    history
+    ...render(<BrowserRouter>{ui}</BrowserRouter>)
   }
 }
 
@@ -42,8 +31,7 @@ it("App renders correctly", async () => {
   const { container } = renderWithRouter(
     <Provider store={store}>
       <App />
-    </Provider>,
-    { route: "/ehoks" }
+    </Provider>
   )
   expect(container).toMatchSnapshot()
 })

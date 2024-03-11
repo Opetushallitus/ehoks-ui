@@ -4,8 +4,8 @@ import range from "lodash.range"
 import slice from "lodash.slice"
 import take from "lodash.take"
 import { inject, observer } from "mobx-react"
-import React from "react"
-import { FormattedMessage, intlShape } from "react-intl"
+import React, { useState } from "react"
+import { useIntl, FormattedMessage } from "react-intl"
 import { SearchResult } from "routes/Ammattitutkinto/SearchResult"
 import { Section } from "routes/Ammattitutkinto/Section"
 import { SectionTitle } from "routes/Ammattitutkinto/SectionTitle"
@@ -42,59 +42,55 @@ export interface AmmattitutkintoHakuProps {
   store?: IRootStore
 }
 
-@inject("store")
-@observer
-export class AmmattitutkintoHaku extends React.Component<
-  AmmattitutkintoHakuProps
-> {
-  static contextTypes = {
-    intl: intlShape
-  }
-  state = {
-    activePage: 0,
-    perPage: 5,
-    searchText: "",
-    searchTimeout: 0
-  }
-
-  formSubmit = (event: React.FormEvent) => {
-    event.preventDefault()
-  }
-
-  updateSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const searchText = event.target.value
-    if (this.state.searchTimeout) {
-      window.clearTimeout(this.state.searchTimeout)
-    }
-    this.props.store!.oppilas.tyhjennaPerusteet()
-
-    this.setState({
+export const AmmattitutkintoHaku = inject("store")(
+  observer((props: AmmattitutkintoHakuProps) => {
+    const [state, setState] = useState({
       activePage: 0,
-      searchText,
-      searchTimeout: window.setTimeout(() => {
-        if (searchText.length > 0) {
-          this.props.store!.oppilas.haePerusteet(searchText)
-        }
-      }, 300)
+      perPage: 5,
+      searchText: "",
+      searchTimeout: 0
     })
-  }
+    const intl = useIntl()
 
-  onPaginationResultEnter = (index: number) => (event: React.KeyboardEvent) => {
-    if (event.key === "Enter" || event.key === " ") {
-      this.setState({ activePage: index })
+    const formSubmit = (event: React.FormEvent) => {
+      event.preventDefault()
     }
-  }
 
-  goToPage = (index: number) => () => {
-    this.setState({ activePage: index })
-  }
+    const updateSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const searchText = event.target.value
+      if (state.searchTimeout) {
+        window.clearTimeout(state.searchTimeout)
+      }
+      props.store!.oppilas.tyhjennaPerusteet()
 
-  render() {
-    const { intl } = this.context
-    const { store } = this.props
-    const { searchText } = this.state
+      setState({
+        ...state,
+        activePage: 0,
+        searchText,
+        searchTimeout: window.setTimeout(() => {
+          if (searchText.length > 0) {
+            props.store!.oppilas.haePerusteet(searchText)
+          }
+        }, 300)
+      })
+    }
+
+    const onPaginationResultEnter = (index: number) => (
+      event: React.KeyboardEvent
+    ) => {
+      if (event.key === "Enter" || event.key === " ") {
+        setState({ ...state, activePage: index })
+      }
+    }
+
+    const goToPage = (index: number) => () => {
+      setState({ ...state, activePage: index })
+    }
+
+    const { store } = props
+    const { searchText } = state
     const { oppilas } = store!
-    const totalPages = Math.ceil(oppilas.perusteet.length / this.state.perPage)
+    const totalPages = Math.ceil(oppilas.perusteet.length / state.perPage)
     return (
       <Section>
         <SectionTitle>
@@ -107,11 +103,11 @@ export class AmmattitutkintoHaku extends React.Component<
         <SearchContainer>
           <SearchField
             isLoading={oppilas.isLoading}
-            onSubmit={this.formSubmit}
-            onTextChange={this.updateSearchText}
+            onSubmit={formSubmit}
+            onTextChange={updateSearchText}
             value={searchText}
           />
-          {this.state.searchText.length > 0 && oppilas.perusteet.length > 0 && (
+          {state.searchText.length > 0 && oppilas.perusteet.length > 0 && (
             <React.Fragment>
               <SearchResultsContainer>
                 <SearchResultsTitle>
@@ -125,11 +121,8 @@ export class AmmattitutkintoHaku extends React.Component<
                 </SearchResultsTitle>
                 <SearchResultsList role="list">
                   {take(
-                    slice(
-                      oppilas.perusteet,
-                      this.state.activePage * this.state.perPage
-                    ),
-                    this.state.perPage
+                    slice(oppilas.perusteet, state.activePage * state.perPage),
+                    state.perPage
                   ).map(peruste => (
                     <SearchResult
                       key={peruste.id}
@@ -150,10 +143,10 @@ export class AmmattitutkintoHaku extends React.Component<
                   {range(totalPages).map(index => (
                     <Page
                       key={index}
-                      active={this.state.activePage === index}
-                      aria-current={this.state.activePage === index}
-                      onClick={this.goToPage(index)}
-                      onKeyPress={this.onPaginationResultEnter(index)}
+                      active={state.activePage === index}
+                      aria-current={state.activePage === index}
+                      onClick={goToPage(index)}
+                      onKeyPress={onPaginationResultEnter(index)}
                       tabIndex={0}
                       aria-label={intl.formatMessage(
                         {
@@ -173,5 +166,5 @@ export class AmmattitutkintoHaku extends React.Component<
         </SearchContainer>
       </Section>
     )
-  }
-}
+  })
+)

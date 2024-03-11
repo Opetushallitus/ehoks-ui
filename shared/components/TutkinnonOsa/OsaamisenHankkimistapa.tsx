@@ -1,5 +1,5 @@
 import { MobileSlider, Slide } from "components/MobileSlider"
-import React from "react"
+import React, { useContext } from "react"
 import { FormattedMessage } from "react-intl"
 import { HMediaQuery } from "responsive"
 import styled from "styled"
@@ -21,7 +21,7 @@ import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
 import { HeroButton } from "components/Button"
 import { MdShare } from "react-icons/md"
 import { stringifyShareParams } from "utils/shareParams"
-import { navigate } from "@reach/router"
+import { useNavigate } from "react-router"
 import { AppContext } from "components/AppContext"
 import { TutkinnonOsaType } from "../../models/helpers/ShareTypes"
 import { IKoodistoVastaus } from "models/KoodistoVastaus"
@@ -74,34 +74,30 @@ interface OsaamisenHankkimistapaProps {
   perusta?: IKoodistoVastaus
 }
 
-@observer
-export class OsaamisenHankkimistapa extends React.Component<
-  OsaamisenHankkimistapaProps
-> {
-  static contextType = AppContext
-  declare context: React.ContextType<typeof AppContext>
-  share = () => {
-    const {
-      moduleId,
-      hoksEid,
-      tutkinnonOsaTyyppi,
-      tutkinnonOsaModuleId
-    } = this.props
-    if (moduleId && hoksEid && tutkinnonOsaTyyppi && tutkinnonOsaModuleId) {
-      navigate(
-        `${window.location.pathname}?${stringifyShareParams({
-          type: "osaamisenhankkimistapa",
-          moduleId,
-          hoksEid,
-          tutkinnonOsaTyyppi,
-          tutkinnonOsaModuleId
-        })}`
-      )
+export const OsaamisenHankkimistapa = observer(
+  (props: OsaamisenHankkimistapaProps) => {
+    const navigate = useNavigate()
+    const share = () => {
+      const {
+        moduleId,
+        hoksEid,
+        tutkinnonOsaTyyppi,
+        tutkinnonOsaModuleId
+      } = props
+      if (moduleId && hoksEid && tutkinnonOsaTyyppi && tutkinnonOsaModuleId) {
+        return navigate(
+          `${window.location.pathname}?${stringifyShareParams({
+            type: "osaamisenhankkimistapa",
+            moduleId,
+            hoksEid,
+            tutkinnonOsaTyyppi,
+            tutkinnonOsaModuleId
+          })}`
+        )
+      }
     }
-  }
 
-  render() {
-    const { osaamisenHankkimistapa, hasActiveShare = false } = this.props
+    const { osaamisenHankkimistapa, hasActiveShare = false } = props
     const {
       alku,
       loppu,
@@ -121,7 +117,7 @@ export class OsaamisenHankkimistapa extends React.Component<
     const { vastuullinenTyopaikkaOhjaaja, keskeisetTyotehtavat } =
       tyopaikallaJarjestettavaKoulutus || {}
 
-    const { featureFlags } = this.context
+    const { featureFlags } = useContext(AppContext)
     const showShareButton = !hasActiveShare && featureFlags.shareDialog
 
     return (
@@ -144,7 +140,7 @@ export class OsaamisenHankkimistapa extends React.Component<
             />
             {showShareButton && (
               <ButtonContainer>
-                <Button onClick={this.share}>
+                <Button onClick={share}>
                   <FormattedMessage
                     id="jakaminen.jaaTiedotButtonTitle"
                     defaultMessage="Jaa nämä tietosi"
@@ -244,4 +240,4 @@ export class OsaamisenHankkimistapa extends React.Component<
       </Container>
     )
   }
-}
+)
