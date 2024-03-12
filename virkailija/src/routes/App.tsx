@@ -1,4 +1,4 @@
-import { Redirect, Router } from "@reach/router"
+import { createHistory, Redirect, Router } from "@reach/router"
 import { ThemeWrapper } from "components/ThemeWrapper"
 import {
   parseLocaleParam,
@@ -83,6 +83,8 @@ export class App extends React.Component<AppProps> {
           { ...store!.translations.messages.fi, ...translations }
     const selectedOrganisationOid = store!.session.selectedOrganisationOid
     const defaultPath = `/ehoks-virkailija-ui/koulutuksenjarjestaja/${selectedOrganisationOid}`
+    // @ts-ignore otherwise complains about window object
+    const history = createHistory(window)
 
     return (
       <ThemeWrapper>
@@ -95,7 +97,7 @@ export class App extends React.Component<AppProps> {
         >
           <Container>
             <VirkailijaRaamit />
-            <Header />
+            <Header history={history} />
             <AppNotifications />
             <StyledRouter basepath="/ehoks-virkailija-ui">
               <Redirect from="/" to={defaultPath} noThrow={true} />

@@ -1,4 +1,4 @@
-import { Link, navigate } from "@reach/router"
+import { Link, navigate, History } from "@reach/router"
 import { OrganisationDropdown } from "components/OrganisationDropdown"
 import { inject, observer } from "mobx-react"
 import React from "react"
@@ -57,11 +57,16 @@ const TopLink = styled(Link)<TopLinkProps>`
 
 interface HeaderProps {
   store?: IRootStore
+  history: History
+}
+
+interface HeaderState {
+  languageChangeUrl: string
 }
 
 @inject("store")
 @observer
-export class Header extends React.Component<HeaderProps> {
+export class Header extends React.Component<HeaderProps, HeaderState> {
   handleOnOrganisationChange = (oid: string) => {
     const { session, koulutuksenJarjestaja } = this.props.store!
     session.changeSelectedOrganisationOid(oid)
@@ -71,14 +76,19 @@ export class Header extends React.Component<HeaderProps> {
     navigate(`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oid}`)
   }
 
-  languageChangeUrl = (activeLocale: Locale) =>
-    window.location.href +
-      (window.location.search ? "&" : "?") +
-      "lang=" +
-      activeLocale ===
-    Locale.FI
-      ? Locale.SV
-      : Locale.FI
+  componentDidMount() {
+    const { activeLocale } = this.props.store!.translations
+    this.setState({
+      languageChangeUrl:
+        this.props.history.location.href +
+          (this.props.history.location.search ? "&" : "?") +
+          "lang=" +
+          activeLocale ===
+        Locale.FI
+          ? Locale.SV
+          : Locale.FI
+    })
+  }
 
   render() {
     const { session } = this.props.store!
@@ -132,7 +142,7 @@ export class Header extends React.Component<HeaderProps> {
             <ActiveIndicator />
           </TopLink>
         )}
-        <TopLink to={this.languageChangeUrl(activeLocale)}>
+        <TopLink to={this.state.languageChangeUrl}>
           {activeLocale === Locale.FI ? (
             <FormattedMessage
               id="header.swedishLocaleLink"
