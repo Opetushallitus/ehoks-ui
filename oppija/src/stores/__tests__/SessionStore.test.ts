@@ -7,7 +7,7 @@ import { SessionStore } from "stores/SessionStore"
 const callerId = (headers?: Headers) => (headers ? headers : new Headers())
 
 describe("SessionStore", () => {
-  test("checkSession without login", () => {
+  test("checkSession without login", done => {
     const store = SessionStore.create(
       {},
       createEnvironment(mockFetch(apiUrl), apiUrl, "", callerId)
@@ -22,7 +22,15 @@ describe("SessionStore", () => {
     when(
       () => !store.isLoading,
       () => {
-        expect(store.user).toBeUndefined()
+        expect(store.user).toEqual({
+          contactValuesGroup: [],
+          firstName: "",
+          fullName: "",
+          oid: "",
+          surname: "",
+          usingValtuudet: false
+        })
+        done()
       }
     )
   })
@@ -65,7 +73,7 @@ describe("SessionStore", () => {
     )
   })
 
-  test("logout", () => {
+  test("logout", done => {
     const store = SessionStore.create(
       {
         user: {
@@ -91,6 +99,7 @@ describe("SessionStore", () => {
       () => !store.isLoading,
       () => {
         expect(store.user).toBeUndefined()
+        done()
       }
     )
   })

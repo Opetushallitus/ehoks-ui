@@ -7,7 +7,7 @@ const fallbackMessage = (
   koodiUri: string,
   errormessage: string
 ): JSX.Element => {
-  const [codetype, code] = koodiUri.split("_")
+  const [codetype = "ei koodistoa", code = "ei koodia"] = koodiUri.split("_")
   return (
     <span title={errormessage}>
       <IconInline>

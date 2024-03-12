@@ -5,8 +5,11 @@ import { CustomDescriptionField } from "./CustomDescriptionField"
 import { CustomNumberWidget } from "./CustomNumberWidget"
 import { CustomSchemaField } from "./CustomSchemaField"
 import { CustomDatetimeWidget } from "./CustomDatetimeWidget"
+import { TemplatesType, RegistryFieldsType } from "@rjsf/utils"
+import { ArrayFieldTemplate } from "./ArrayFieldTemplate"
+import ErrorList from "./ErrorList"
 
-export const fields = {
+export const fields: RegistryFieldsType = {
   SchemaField: CustomSchemaField,
   typeahead: TypeaheadField,
   DescriptionField: CustomDescriptionField
@@ -51,3 +54,8 @@ export const codeCategoriesForPaths = {
 }
 
 export type UiSchemaOptions = { [key in keyof typeof koodistoUrls]: any[] }
+
+export const templates: Partial<TemplatesType> = {
+  ArrayFieldTemplate,
+  ErrorListTemplate: ErrorList
+}

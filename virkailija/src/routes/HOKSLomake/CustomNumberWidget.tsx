@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { WidgetProps } from "react-jsonschema-form"
+import { WidgetProps } from "@rjsf/utils"
 
 export const CustomNumberWidget = (props: WidgetProps) => {
   const { id, onBlur, onChange, onFocus, value } = props

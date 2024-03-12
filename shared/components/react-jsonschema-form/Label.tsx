@@ -1,10 +1,6 @@
 import React from "react"
-import DefaultDescriptionField from "react-jsonschema-form/lib/components/fields/DescriptionField"
-import {
-  isMultiSelect,
-  getUiOptions,
-  isFilesArray
-} from "react-jsonschema-form/lib/utils"
+import { isMultiSelect, getUiOptions, isFilesArray } from "@rjsf/utils"
+import validator from "@rjsf/validator-ajv8"
 
 const REQUIRED_FIELD_SYMBOL = "*"
 
@@ -32,14 +28,13 @@ export function DefaultLabel({
   formContext,
   registry
 }: any) {
-  const { fields = {} } = registry
   const uiOptions = getUiOptions(uiSchema)
   let { label: displayLabel = true } = uiOptions
   const { forceLabelDisplay } = uiOptions
   if (schema.type === "array") {
     displayLabel =
-      isMultiSelect(schema, definitions) ||
-      isFilesArray(schema, uiSchema, definitions)
+      isMultiSelect(validator, schema, definitions) ||
+      isFilesArray(validator, schema, uiSchema, definitions)
   }
   if (schema.type === "object") {
     displayLabel = false
@@ -48,10 +43,10 @@ export function DefaultLabel({
     displayLabel = false
   }
 
-  const label = uiSchema["ui:title"] || schema.title || name
-  const description = uiSchema["ui:description"] || schema.description
+  const label = uiSchema!["ui:title"] || schema.title || name
+  const description = uiSchema!["ui:description"] || schema.description
 
-  const { DescriptionField = DefaultDescriptionField } = fields
+  const DescriptionField = registry.fields.DescriptionField
 
   if (displayLabel || forceLabelDisplay) {
     return (
