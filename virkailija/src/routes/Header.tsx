@@ -1,4 +1,4 @@
-import { Link, navigate, History } from "@reach/router"
+import { Link, navigate, LocationContext } from "@reach/router"
 import { OrganisationDropdown } from "components/OrganisationDropdown"
 import { inject, observer } from "mobx-react"
 import React from "react"
@@ -55,39 +55,63 @@ const TopLink = styled(Link)<TopLinkProps>`
   }
 `
 
+const LanguageChangeLink = styled("a")<TopLinkProps>`
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  padding: 5px 20px 5px 20px;
+  text-decoration: none;
+  color: #fff;
+
+  span {
+    display: none;
+  }
+
+  &:focus {
+    outline: 2px solid ${props => props.theme.colors.green300};
+  }
+
+  &[aria-current] span {
+    background: #fff;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    right: 50%;
+    width: 3px;
+    height: 3px;
+  }
+`
+
 interface HeaderProps {
   store?: IRootStore
-  history: History
-}
-
-interface HeaderState {
-  languageChangeUrl: string
 }
 
 @inject("store")
 @observer
-export class Header extends React.Component<HeaderProps, HeaderState> {
+export class Header extends React.Component<HeaderProps & LocationContext> {
   handleOnOrganisationChange = (oid: string) => {
     const { session, koulutuksenJarjestaja } = this.props.store!
     session.changeSelectedOrganisationOid(oid)
     koulutuksenJarjestaja.search.resetActivePage()
     koulutuksenJarjestaja.search.fetchOppijat()
     localStorage.setItem("selectedOrganisationOid", oid)
-    navigate(`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oid}`)
+    return navigate(`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oid}`)
   }
 
-  componentDidMount() {
-    const { activeLocale } = this.props.store!.translations
-    this.setState({
-      languageChangeUrl:
-        this.props.history.location.href +
-          (this.props.history.location.search ? "&" : "?") +
-          "lang=" +
-          activeLocale ===
-        Locale.FI
-          ? Locale.SV
-          : Locale.FI
-    })
+  changeLanguage = () => {
+    const location = this.props.location
+    const params = new URLSearchParams(location.search)
+    const hash = location.hash
+    params.set(
+      "lang",
+      this.props.store!.translations.activeLocale === Locale.FI
+        ? Locale.SV
+        : Locale.FI
+    )
+    return navigate(
+      `${location.pathname}?${params.toString()}${hash ? `#${hash}` : ""}`
+    )
   }
 
   render() {
@@ -142,7 +166,7 @@ export class Header extends React.Component<HeaderProps, HeaderState> {
             <ActiveIndicator />
           </TopLink>
         )}
-        <TopLink to={this.state.languageChangeUrl}>
+        <LanguageChangeLink onClick={this.changeLanguage}>
           {activeLocale === Locale.FI ? (
             <FormattedMessage
               id="header.swedishLocaleLink"
@@ -154,7 +178,7 @@ export class Header extends React.Component<HeaderProps, HeaderState> {
               defaultMessage="Suomeksi"
             />
           )}
-        </TopLink>
+        </LanguageChangeLink>
       </HeaderContainer>
     )
   }

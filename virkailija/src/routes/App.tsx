@@ -1,4 +1,4 @@
-import { createHistory, Redirect, Router } from "@reach/router"
+import { Location, Redirect, Router } from "@reach/router"
 import { ThemeWrapper } from "components/ThemeWrapper"
 import {
   parseLocaleParam,
@@ -83,8 +83,6 @@ export class App extends React.Component<AppProps> {
           { ...store!.translations.messages.fi, ...translations }
     const selectedOrganisationOid = store!.session.selectedOrganisationOid
     const defaultPath = `/ehoks-virkailija-ui/koulutuksenjarjestaja/${selectedOrganisationOid}`
-    // @ts-ignore otherwise complains about window object
-    const history = createHistory(window)
 
     return (
       <ThemeWrapper>
@@ -95,22 +93,29 @@ export class App extends React.Component<AppProps> {
           messages={messages}
           textComponent={React.Fragment}
         >
-          <Container>
-            <VirkailijaRaamit />
-            <Header history={history} />
-            <AppNotifications />
-            <StyledRouter basepath="/ehoks-virkailija-ui">
-              <Redirect from="/" to={defaultPath} noThrow={true} />
-              <LuoHOKS path="luohoks" />
-              <MuokkaaHOKS path="hoks/:oppijaOid/:hoksId" />
-              <Redirect from="/koulutuksenjarjestaja" to={defaultPath} />
-              <KoulutuksenJarjestaja path="koulutuksenjarjestaja/:orgId" />
-              <Opiskelija path="koulutuksenjarjestaja/:orgId/oppija/:studentId/*" />
-              <Yllapito path="yllapito" />
-              <Raportit path="raportit" />
-            </StyledRouter>
-            <GlobalStyles />
-          </Container>
+          <Location>
+            {({ location, navigate }) => (
+              <Container>
+                <VirkailijaRaamit />
+                <Header location={location} navigate={navigate} />
+                <AppNotifications />
+                <StyledRouter
+                  basepath="/ehoks-virkailija-ui"
+                  location={location}
+                >
+                  <Redirect from="/" to={defaultPath} noThrow={true} />
+                  <LuoHOKS path="luohoks" />
+                  <MuokkaaHOKS path="hoks/:oppijaOid/:hoksId" />
+                  <Redirect from="/koulutuksenjarjestaja" to={defaultPath} />
+                  <KoulutuksenJarjestaja path="koulutuksenjarjestaja/:orgId" />
+                  <Opiskelija path="koulutuksenjarjestaja/:orgId/oppija/:studentId/*" />
+                  <Yllapito path="yllapito" />
+                  <Raportit path="raportit" />
+                </StyledRouter>
+                <GlobalStyles />
+              </Container>
+            )}
+          </Location>
         </IntlProvider>
       </ThemeWrapper>
     )
