@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router"
+import { useNavigate, useLocation } from "react-router"
 import { Link } from "react-router-dom"
 import { OrganisationDropdown } from "components/OrganisationDropdown"
 import { inject, observer } from "mobx-react"
@@ -56,9 +56,69 @@ const TopLink = styled(Link)<TopLinkProps>`
   }
 `
 
+const LanguageChangeLink = styled("a")<TopLinkProps>`
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  padding: 5px 20px 5px 20px;
+  text-decoration: none;
+  color: #fff;
+
+  span {
+    display: none;
+  }
+
+  &:focus {
+    outline: 2px solid ${props => props.theme.colors.green300};
+  }
+
+  &[aria-current] span {
+    background: #fff;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    right: 50%;
+    width: 3px;
+    height: 3px;
+  }
+`
+
 interface HeaderProps {
   store?: IRootStore
 }
+
+const LanguageChanger: ({
+  activeLocale
+}: {
+  activeLocale: Locale
+}) => JSX.Element = observer(({ activeLocale }) => {
+  const location = useLocation()
+  return (
+    <LanguageChangeLink
+      onClick={() => {
+        // navigate ei toimi tässä jostain syystä
+        window.location.assign(
+          `${location.pathname}?lang=${
+            activeLocale === Locale.FI ? Locale.SV : Locale.FI
+          }`
+        )
+      }}
+    >
+      {activeLocale === Locale.FI ? (
+        <FormattedMessage
+          id="header.swedishLocaleLink"
+          defaultMessage="På svenska"
+        />
+      ) : (
+        <FormattedMessage
+          id="header.finnishLocaleLink"
+          defaultMessage="Suomeksi"
+        />
+      )}
+    </LanguageChangeLink>
+  )
+})
 
 export const Header = inject("store")(
   observer(({ store }: HeaderProps) => {
@@ -72,6 +132,7 @@ export const Header = inject("store")(
       navigate(`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oid}`)
     }
     const { session } = store!
+    const { activeLocale } = store!.translations
     return (
       <HeaderContainer>
         {session.organisations && (
@@ -121,6 +182,7 @@ export const Header = inject("store")(
             <ActiveIndicator />
           </TopLink>
         )}
+        <LanguageChanger activeLocale={activeLocale} />
       </HeaderContainer>
     )
   })
