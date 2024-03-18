@@ -1,4 +1,4 @@
-import { RouteComponentProps, Link } from "@reach/router"
+import { Link } from "react-router-dom"
 import { Container, PaddedContent } from "components/Container"
 import { ContentArea } from "components/ContentArea"
 import { RaportitTable } from "components/RaportitTable"
@@ -6,13 +6,13 @@ import { HelpPopup } from "components/HelpPopup"
 import { Heading } from "components/Heading"
 import { inject, observer } from "mobx-react"
 import React from "react"
-import { FormattedMessage, intlShape } from "react-intl"
+import { FormattedMessage, injectIntl, IntlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 import { appendCommonHeaders } from "fetchUtils"
 import { Column, Row } from "react-table"
 import { Button } from "components/Button"
-import { InfoModal } from "../../../shared/components/InfoModal"
+import { InfoModal } from "components/InfoModal"
 
 const BackgroundContainer = styled("div")`
   background: #f8f8f8;
@@ -140,8 +140,9 @@ const Styles = styled("div")`
   }
 `
 
-interface RaportitProps extends RouteComponentProps {
+interface RaportitProps {
   store?: IRootStore
+  intl: IntlShape
 }
 
 export interface HoksRow {
@@ -205,13 +206,7 @@ interface CustomColumn {
   }
 }
 
-@inject("store")
-@observer
-export class Raportit extends React.Component<RaportitProps> {
-  static contextTypes = {
-    intl: intlShape
-  }
-
+class RaportitInner extends React.Component<RaportitProps> {
   state: RaportitState = {
     hoksitCount: 0,
     data: [],
@@ -394,7 +389,7 @@ export class Raportit extends React.Component<RaportitProps> {
     if (selectedRaportti === 1) {
       return [
         {
-          Header: this.context.intl.formatMessage({
+          Header: this.props.intl.formatMessage({
             id: "raportit.ehoksid"
           }),
           accessor: "hoksId",
@@ -414,19 +409,19 @@ export class Raportit extends React.Component<RaportitProps> {
           )
         },
         {
-          Header: this.context.intl.formatMessage({
+          Header: this.props.intl.formatMessage({
             id: "raportit.oppijanumeroTitle"
           }),
           accessor: "oppijaOid"
         },
         {
-          Header: this.context.intl.formatMessage({
+          Header: this.props.intl.formatMessage({
             id: "raportit.opiskeluoikeusoid"
           }),
           accessor: "opiskeluoikeusOid"
         },
         {
-          Header: this.context.intl.formatMessage({
+          Header: this.props.intl.formatMessage({
             id: "raportit.oppilaitosoid"
           }),
           accessor: "oppilaitosOid"
@@ -435,7 +430,7 @@ export class Raportit extends React.Component<RaportitProps> {
     } else if (selectedRaportti === 2) {
       return [
         {
-          Header: this.context.intl.formatMessage({
+          Header: this.props.intl.formatMessage({
             id: "raportit.ehoksid"
           }),
           accessor: "hoksId",
@@ -455,7 +450,7 @@ export class Raportit extends React.Component<RaportitProps> {
           )
         },
         {
-          Header: this.context.intl.formatMessage({
+          Header: this.props.intl.formatMessage({
             id: "raportit.opiskeluoikeusoid"
           }),
           accessor: "opiskeluoikeusOid",
@@ -464,7 +459,7 @@ export class Raportit extends React.Component<RaportitProps> {
           )
         },
         {
-          Header: this.context.intl.formatMessage({
+          Header: this.props.intl.formatMessage({
             id: "raportit.oppijanumeroTitle"
           }),
           accessor: "oppijaOid",
@@ -473,7 +468,7 @@ export class Raportit extends React.Component<RaportitProps> {
           )
         },
         {
-          Header: this.context.intl.formatMessage({
+          Header: this.props.intl.formatMessage({
             id: "raportit.tyopaikannimi"
           }),
           accessor: "tyopaikanNimi",
@@ -482,7 +477,7 @@ export class Raportit extends React.Component<RaportitProps> {
           )
         },
         {
-          Header: this.context.intl.formatMessage({
+          Header: this.props.intl.formatMessage({
             id: "raportit.ohjaajannimi"
           }),
           accessor: "ohjaajaNimi",
@@ -491,7 +486,7 @@ export class Raportit extends React.Component<RaportitProps> {
           )
         },
         {
-          Header: this.context.intl.formatMessage({
+          Header: this.props.intl.formatMessage({
             id: "raportit.alku"
           }),
           accessor: "alkupvm",
@@ -500,7 +495,7 @@ export class Raportit extends React.Component<RaportitProps> {
           )
         },
         {
-          Header: this.context.intl.formatMessage({
+          Header: this.props.intl.formatMessage({
             id: "raportit.loppu"
           }),
           accessor: "loppupvm",
@@ -509,13 +504,10 @@ export class Raportit extends React.Component<RaportitProps> {
           )
         },
         {
-          Header: this.context.intl.formatMessage({
-            id: "infoModal.naytaLisatiedot",
-            accessor: "customColumn",
-            Cell: ({ cell: { value } }: CustomColumn) => (
-              <div style={{ textAlign: "center" }}>{value}</div>
-            )
+          Header: this.props.intl.formatMessage({
+            id: "infoModal.naytaLisatiedot"
           }),
+          accessor: "customColumn",
           Cell: ({ cell: { value, row } }: CustomColumn) => {
             const tpjRow = row.original as TpjRow
             return (
@@ -554,7 +546,7 @@ export class Raportit extends React.Component<RaportitProps> {
 
   render() {
     const { data, selected, titleText, descText, alku, loppu } = this.state
-    const { intl } = this.context
+    const { intl } = this.props
     const columns = this.getColumnsForTable(selected)
 
     return (
@@ -708,3 +700,5 @@ export class Raportit extends React.Component<RaportitProps> {
     )
   }
 }
+
+export const Raportit = inject("store")(observer(injectIntl(RaportitInner)))

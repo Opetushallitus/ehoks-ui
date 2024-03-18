@@ -1,8 +1,8 @@
-import { RouteComponentProps, Router } from "@reach/router"
+import { Routes, Route } from "react-router"
 import { LoadingSpinner } from "components/LoadingSpinner"
-import { comparer, IReactionDisposer, reaction } from "mobx"
+import { comparer, reaction } from "mobx"
 import { inject, observer } from "mobx-react"
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { OmienOpintojenSuunnittelu } from "routes/OmienOpintojenSuunnittelu"
 import { IntroModalDialog } from "routes/Suunnittelu/IntroModalDialog"
 import { ValitseHOKS } from "routes/Suunnittelu/ValitseHOKS"
@@ -17,7 +17,7 @@ const LoadingContainer = styled("div")`
   min-height: 300px;
 `
 
-interface SuunnitteluProps extends RouteComponentProps {
+interface SuunnitteluProps {
   store?: IRootStore
   /* From router path */
   "*"?: string
@@ -27,52 +27,42 @@ interface SuunnitteluState {
   allLoaded: boolean
 }
 
-@inject("store")
-@observer
-export class Suunnittelu extends React.Component<
-  SuunnitteluProps & RouteComponentProps,
-  SuunnitteluState
-> {
-  state: SuunnitteluState = {
-    allLoaded: false
-  }
-  disposeLoginReaction: IReactionDisposer
+export const Suunnittelu = inject("store")(
+  observer((props: SuunnitteluProps) => {
+    const [state, setState] = useState<SuunnitteluState>({
+      allLoaded: false
+    })
+    useEffect(() => {
+      const { store } = props
+      const { session } = store!
+      return () => {
+        reaction(
+          () => ({ isLoggedIn: session.isLoggedIn }),
+          async ({ isLoggedIn }) => {
+            // navigate to Opintopolku logout url after logging out
+            if (isLoggedIn) {
+              // ensure that SessionStore's checkSession call has finished
+              await store!.session.fetchSettings()
+              if (session.user) {
+                await store!.hoks.haeSuunnitelmat(session.user.oid)
+                await store!.notifications.haeOpiskelijapalautelinkit(
+                  session.user.oid
+                )
+              } else {
+                throw new Error(`Session user not defined`)
+              }
 
-  componentDidMount() {
-    const { store } = this.props
-    const { session } = store!
+              setState({ allLoaded: true })
+            }
+          },
+          { fireImmediately: true, equals: comparer.structural }
+        )
+      }
+    }, [])
 
-    this.disposeLoginReaction = reaction(
-      () => ({ isLoggedIn: session.isLoggedIn }),
-      async ({ isLoggedIn }) => {
-        // navigate to Opintopolku logout url after logging out
-        if (isLoggedIn) {
-          // ensure that SessionStore's checkSession call has finished
-          await store!.session.fetchSettings()
-          if (session.user) {
-            await store!.hoks.haeSuunnitelmat(session.user.oid)
-            await store!.notifications.haeOpiskelijapalautelinkit(
-              session.user.oid
-            )
-          } else {
-            throw new Error(`Session user not defined`)
-          }
+    const { notifications, hoks, session } = props.store!
 
-          this.setState({ allLoaded: true })
-        }
-      },
-      { fireImmediately: true, equals: comparer.structural }
-    )
-  }
-
-  componentWillUnmount() {
-    this.disposeLoginReaction()
-  }
-
-  render() {
-    const { notifications, hoks, session } = this.props.store!
-
-    if (!this.state.allLoaded) {
+    if (!state.allLoaded) {
       return (
         <LoadingContainer>
           <LoadingSpinner />
@@ -86,15 +76,22 @@ export class Suunnittelu extends React.Component<
         <StudentFeedbackModal
           studentFeedbackLinks={notifications.studentFeedbackLinks}
         />
-        <Router basepath={`/ehoks/suunnittelu`}>
-          <ValitseHOKS path="/" suunnitelmat={hoks.suunnitelmat} />
-          <OmienOpintojenSuunnittelu
-            path=":id/*"
-            student={session.user}
-            suunnitelmat={hoks.suunnitelmat}
+        <Routes>
+          <Route
+            path="/ehoks/suunnittelu/"
+            element={<ValitseHOKS suunnitelmat={hoks.suunnitelmat} />}
           />
-        </Router>
+          <Route
+            path="/ehoks/suunnittelu/:id/*"
+            element={
+              <OmienOpintojenSuunnittelu
+                student={session.user}
+                suunnitelmat={hoks.suunnitelmat}
+              />
+            }
+          />
+        </Routes>
       </>
     )
-  }
-}
+  })
+)

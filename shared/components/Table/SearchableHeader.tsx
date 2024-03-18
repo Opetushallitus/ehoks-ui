@@ -1,6 +1,6 @@
 import { TableContext } from "components/Table"
 import React from "react"
-import { intlShape } from "react-intl"
+import { useIntl } from "react-intl"
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md"
 import styled from "styled"
 
@@ -64,84 +64,82 @@ const SearchInput = styled("input")`
 interface SearchableHeaderProps {
   sortName: string
   omitSortButtons?: boolean
+  children: React.ReactNode
 }
 
-export class SearchableHeader extends React.Component<SearchableHeaderProps> {
-  static contextTypes = {
-    intl: intlShape
-  }
-  sortByKeypress = (onSort: () => void) => (event: React.KeyboardEvent) => {
+export const SearchableHeader = (props: SearchableHeaderProps) => {
+  const sortByKeypress = (onSort: () => void) => (
+    event: React.KeyboardEvent
+  ) => {
     if (event.key === "Enter" || event.key === " ") {
       onSort()
     }
   }
 
-  render() {
-    const { intl } = this.context
-    const { children, sortName, omitSortButtons } = this.props
+  const intl = useIntl()
+  const { children, sortName, omitSortButtons } = props
 
-    const placeholder = intl.formatMessage({
-      id: "table.haePlaceholder"
-    })
+  const placeholder = intl.formatMessage({
+    id: "table.haePlaceholder"
+  })
 
-    return (
-      <TableContext.Consumer>
-        {({
-          sortBy,
-          sortDirection,
-          sortTitle,
-          searchTexts,
-          onSort,
-          onUpdateSearchText
-        }) => {
-          const activeSort = sortBy === sortName
-          const ariaProps: {
-            "aria-sort": "ascending" | "descending" | "none"
-          } = {
-            "aria-sort":
-              sortBy === sortName
-                ? sortDirection === "asc"
-                  ? "ascending"
-                  : "descending"
-                : "none"
-          }
-          const changeSort = () => onSort(sortName)
-          return (
-            <Container {...ariaProps} role="columnheader" scope="col">
-              <Button
-                onClick={omitSortButtons ? undefined : changeSort}
-                onKeyPress={this.sortByKeypress(changeSort)}
-                tabIndex={0}
-                role="button"
-                title={sortTitle}
-              >
-                <Text>{children}</Text>{" "}
-                <ArrowContainer>
-                  <ArrowUp
-                    size="32"
-                    aria-hidden={true}
-                    focusable="false"
-                    active={activeSort && sortDirection === "asc"}
-                    disabled={omitSortButtons}
-                  />
-                  <ArrowDown
-                    size="32"
-                    aria-hidden={true}
-                    focusable="false"
-                    active={activeSort && sortDirection === "desc"}
-                    disabled={omitSortButtons}
-                  />
-                </ArrowContainer>
-              </Button>
-              <SearchInput
-                placeholder={placeholder}
-                onChange={onUpdateSearchText(sortName)}
-                value={searchTexts[sortName]}
-              />
-            </Container>
-          )
-        }}
-      </TableContext.Consumer>
-    )
-  }
+  return (
+    <TableContext.Consumer>
+      {({
+        sortBy,
+        sortDirection,
+        sortTitle,
+        searchTexts,
+        onSort,
+        onUpdateSearchText
+      }) => {
+        const activeSort = sortBy === sortName
+        const ariaProps: {
+          "aria-sort": "ascending" | "descending" | "none"
+        } = {
+          "aria-sort":
+            sortBy === sortName
+              ? sortDirection === "asc"
+                ? "ascending"
+                : "descending"
+              : "none"
+        }
+        const changeSort = () => onSort(sortName)
+        return (
+          <Container {...ariaProps} role="columnheader" scope="col">
+            <Button
+              onClick={omitSortButtons ? undefined : changeSort}
+              onKeyPress={sortByKeypress(changeSort)}
+              tabIndex={0}
+              role="button"
+              title={sortTitle}
+            >
+              <Text>{children}</Text>{" "}
+              <ArrowContainer>
+                <ArrowUp
+                  size="32"
+                  aria-hidden={true}
+                  focusable="false"
+                  active={activeSort && sortDirection === "asc"}
+                  disabled={omitSortButtons}
+                />
+                <ArrowDown
+                  size="32"
+                  aria-hidden={true}
+                  focusable="false"
+                  active={activeSort && sortDirection === "desc"}
+                  disabled={omitSortButtons}
+                />
+              </ArrowContainer>
+            </Button>
+            <SearchInput
+              placeholder={placeholder}
+              onChange={onUpdateSearchText(sortName)}
+              value={searchTexts[sortName]}
+            />
+          </Container>
+        )
+      }}
+    </TableContext.Consumer>
+  )
 }

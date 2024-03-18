@@ -1,5 +1,5 @@
 import React from "react"
-import { FormattedMessage, intlShape } from "react-intl"
+import { useIntl, FormattedMessage } from "react-intl"
 import styled from "styled"
 import ehoksLogo from "./ehoks_logo_2.png"
 import ophLogo from "./oph_logo.svg"
@@ -133,85 +133,79 @@ const Disclaimer = styled("div")`
   }
 `
 
-export class AppFooter extends React.Component {
-  static contextTypes = {
-    intl: intlShape
-  }
-
-  render() {
-    const { intl } = this.context
-    return (
-      <FooterContainer>
-        <Footer>
-          <TopContent>
-            <Description>
-              <DescriptionText>
-                <FormattedMessage
-                  id="footer.descriptionText"
-                  defaultMessage="
+export const AppFooter = () => {
+  const intl = useIntl()
+  return (
+    <FooterContainer>
+      <Footer>
+        <TopContent>
+          <Description>
+            <DescriptionText>
+              <FormattedMessage
+                id="footer.descriptionText"
+                defaultMessage="
               Henkilökohtainen osaamisen kehityssuunnitelma on käytännön
               työväline opiskelijalle, opettajille ja ohjaajille oppilaitoksessa
               ja työpaikoilla."
-                />
-              </DescriptionText>
-            </Description>
-            <LogosContainer>
-              <EHOKSLogo
-                src={ehoksLogo}
-                alt={intl.formatMessage({
-                  id: "footer.ehoksLogoLabel"
-                })}
               />
-              <OPHLogo
-                src={ophLogo}
-                alt={intl.formatMessage({
-                  id: "footer.ophLogoLabel"
-                })}
-              />
-            </LogosContainer>
-            <Links>
-              <LinksContainer>
-                <a href="mailto:ehoks@opintopolku.fi">
-                  <FormattedMessage
-                    id="footer.contactEmailLabel"
-                    defaultMessage="Ota yhteyttä: ehoks@opintopolku.fi"
-                  />
-                </a>
-                <a
-                  href={intl.formatMessage({
-                    id: "footer.dataProtectionReportLink",
-                    defaultMessage:
-                      "https://beta.opintopolku.fi/konfo/fi/sivu/ehoks-palvelun-tietosuojaseloste"
-                  })}
-                >
-                  <FormattedMessage
-                    id="footer.dataProtectionReportLabel"
-                    defaultMessage="Tietosuojaseloste"
-                  />
-                </a>
-                <a
-                  href={intl.formatMessage({
-                    id: "footer.accessibilityReportLink",
-                    defaultMessage:
-                      "https://beta.opintopolku.fi/konfo/fi/sivu/ehoks-verkkopalvelun-saavutettavuusselosteet"
-                  })}
-                >
-                  <FormattedMessage
-                    id="footer.accessibilityReportLabel"
-                    defaultMessage="Saavutettavuusseloste"
-                  />
-                </a>
-              </LinksContainer>
-            </Links>
-          </TopContent>
-          <Disclaimer>
-            <FormattedMessage
-              id="footer.informationDisclaimer"
-              defaultMessage="Koulutuksen järjestäjät ylläpitävät eHOKS-tietojasi. Tietojen oikeellisuuden voit tarkistaa kyseisestä oppilaitoksesta."
+            </DescriptionText>
+          </Description>
+          <LogosContainer>
+            <EHOKSLogo
+              src={ehoksLogo}
+              alt={intl.formatMessage({
+                id: "footer.ehoksLogoLabel"
+              })}
             />
-          </Disclaimer>
-        </Footer>
-      </FooterContainer>
-    )
-  }
+            <OPHLogo
+              src={ophLogo}
+              alt={intl.formatMessage({
+                id: "footer.ophLogoLabel"
+              })}
+            />
+          </LogosContainer>
+          <Links>
+            <LinksContainer>
+              <a href="mailto:ehoks@opintopolku.fi">
+                <FormattedMessage
+                  id="footer.contactEmailLabel"
+                  defaultMessage="Ota yhteyttä: ehoks@opintopolku.fi"
+                />
+              </a>
+              <a
+                href={intl.formatMessage({
+                  id: "footer.dataProtectionReportLink",
+                  defaultMessage:
+                    "https://beta.opintopolku.fi/konfo/fi/sivu/ehoks-palvelun-tietosuojaseloste"
+                })}
+              >
+                <FormattedMessage
+                  id="footer.dataProtectionReportLabel"
+                  defaultMessage="Tietosuojaseloste"
+                />
+              </a>
+              <a
+                href={intl.formatMessage({
+                  id: "footer.accessibilityReportLink",
+                  defaultMessage:
+                    "https://beta.opintopolku.fi/konfo/fi/sivu/ehoks-verkkopalvelun-saavutettavuusselosteet"
+                })}
+              >
+                <FormattedMessage
+                  id="footer.accessibilityReportLabel"
+                  defaultMessage="Saavutettavuusseloste"
+                />
+              </a>
+            </LinksContainer>
+          </Links>
+        </TopContent>
+        <Disclaimer>
+          <FormattedMessage
+            id="footer.informationDisclaimer"
+            defaultMessage="Koulutuksen järjestäjät ylläpitävät eHOKS-tietojasi. Tietojen oikeellisuuden voit tarkistaa kyseisestä oppilaitoksesta."
+          />
+        </Disclaimer>
+      </Footer>
+    </FooterContainer>
+  )
 }

@@ -1,5 +1,5 @@
 import { MobileSlider, Slide } from "components/MobileSlider"
-import React from "react"
+import React, { useState, useContext } from "react"
 import { FormattedMessage } from "react-intl"
 import { HMediaQuery } from "responsive"
 import styled from "styled"
@@ -12,7 +12,7 @@ import { LearningEvent } from "components/TutkinnonOsa/LearningEvent"
 import { TodentamisenProsessiKoodi } from "types/TodentamisenProsessiKoodi"
 import { HeroButton } from "components/Button"
 import { MdShare } from "react-icons/md"
-import { navigate } from "@reach/router"
+import { useNavigate } from "react-router"
 import { stringifyShareParams } from "utils/shareParams"
 import { AppContext } from "components/AppContext"
 import { RequirementsAndDeviations } from "./RequirementsAndDeviations"
@@ -80,52 +80,46 @@ interface OsaamisenOsoittaminenProps {
   tutkinnonOsaModuleId?: string
 }
 
-@observer
-export class OsaamisenOsoittaminen extends React.Component<
-  OsaamisenOsoittaminenProps,
-  OsaamisenOsoittaminenState
-> {
-  static contextType = AppContext
-  declare context: React.ContextType<typeof AppContext>
+export const OsaamisenOsoittaminen = observer(
+  (props: OsaamisenOsoittaminenProps) => {
+    const navigate = useNavigate()
+    const [state, setState] = useState<OsaamisenOsoittaminenState>({
+      requirementsAndDeviationsExpanded: false
+    })
 
-  state: OsaamisenOsoittaminenState = {
-    requirementsAndDeviationsExpanded: false
-  }
-
-  toggleRequirementsAndDeviations = () => {
-    this.setState(state => ({
-      requirementsAndDeviationsExpanded: !state.requirementsAndDeviationsExpanded
-    }))
-  }
-
-  share = () => {
-    const {
-      moduleId,
-      hoksEid,
-      tutkinnonOsaTyyppi,
-      tutkinnonOsaModuleId
-    } = this.props
-    if (moduleId && hoksEid && tutkinnonOsaTyyppi && tutkinnonOsaModuleId) {
-      navigate(
-        `${window.location.pathname}?${stringifyShareParams({
-          type: ShareType.osaamisenosoittaminen,
-          moduleId,
-          hoksEid,
-          tutkinnonOsaTyyppi,
-          tutkinnonOsaModuleId
-        })}`
-      )
+    const toggleRequirementsAndDeviations = () => {
+      setState({
+        requirementsAndDeviationsExpanded: !state.requirementsAndDeviationsExpanded
+      })
     }
-  }
 
-  render() {
+    const share = () => {
+      const {
+        moduleId,
+        hoksEid,
+        tutkinnonOsaTyyppi,
+        tutkinnonOsaModuleId
+      } = props
+      if (moduleId && hoksEid && tutkinnonOsaTyyppi && tutkinnonOsaModuleId) {
+        navigate(
+          `${window.location.pathname}?${stringifyShareParams({
+            type: ShareType.osaamisenosoittaminen,
+            moduleId,
+            hoksEid,
+            tutkinnonOsaTyyppi,
+            tutkinnonOsaModuleId
+          })}`
+        )
+      }
+    }
+
     const {
       osaamisenOsoittaminen,
       hasActiveShare = false,
       todentamisenProsessi
-    } = this.props
-    const { featureFlags } = this.context
-    const { requirementsAndDeviationsExpanded } = this.state
+    } = props
+    const { featureFlags } = useContext(AppContext)
+    const { requirementsAndDeviationsExpanded } = state
 
     const title =
       todentamisenProsessi &&
@@ -171,7 +165,7 @@ export class OsaamisenOsoittaminen extends React.Component<
           />
           {showShareButton && (
             <ButtonContainer>
-              <Button onClick={this.share}>
+              <Button onClick={share}>
                 <FormattedMessage
                   id="jakaminen.jaaTiedotButtonTitle"
                   defaultMessage="Jaa nämä tietosi"
@@ -255,7 +249,7 @@ export class OsaamisenOsoittaminen extends React.Component<
         </HMediaQuery.MaxWidth>
 
         <RequirementsAndDeviations
-          toggle={this.toggleRequirementsAndDeviations}
+          toggle={toggleRequirementsAndDeviations}
           expanded={requirementsAndDeviationsExpanded}
           requirements={osaamisenOsoittaminen.yksilollisetKriteerit}
           deviations={
@@ -265,4 +259,4 @@ export class OsaamisenOsoittaminen extends React.Component<
       </Container>
     )
   }
-}
+)

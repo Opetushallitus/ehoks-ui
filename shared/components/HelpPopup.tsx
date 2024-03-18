@@ -1,6 +1,6 @@
 import React from "react"
 import { MdHelp } from "react-icons/md"
-import { intlShape } from "react-intl"
+import { useIntl } from "react-intl"
 import Popup from "reactjs-popup"
 import styled from "styled"
 
@@ -38,31 +38,26 @@ interface HelpPopupProps {
   toggleSize?: string
 }
 
-export class HelpPopup extends React.Component<HelpPopupProps> {
-  static contextTypes = {
-    intl: intlShape
-  }
-  render() {
-    const { intl } = this.context
-    const { helpContent, className, cssWidth, toggleSize } = this.props
-    return (
-      <Popup
-        trigger={
-          <HelpButton
-            aria-label={intl.formatMessage({
-              id: "accordion.naytaOhjetekstiAriaLabel"
-            })}
-            className={className}
-          >
-            <HelpToggle size={toggleSize ? toggleSize : "28"} color="#3A7A10" />
-          </HelpButton>
-        }
-        position={["left center", "bottom center", "right center"]}
-        keepTooltipInside={true}
-        contentStyle={cssWidth ? { width: cssWidth } : {}}
-      >
-        <AlertDiv>{helpContent}</AlertDiv>
-      </Popup>
-    )
-  }
+export const HelpPopup = (props: HelpPopupProps) => {
+  const intl = useIntl()
+  const { helpContent, className, cssWidth, toggleSize } = props
+  return (
+    <Popup
+      trigger={
+        <HelpButton
+          aria-label={intl.formatMessage({
+            id: "accordion.naytaOhjetekstiAriaLabel"
+          })}
+          className={className}
+        >
+          <HelpToggle size={toggleSize ? toggleSize : "28"} color="#3A7A10" />
+        </HelpButton>
+      }
+      position={["left center", "bottom center", "right center"]}
+      keepTooltipInside={true}
+      contentStyle={cssWidth ? { width: cssWidth } : {}}
+    >
+      <AlertDiv>{helpContent}</AlertDiv>
+    </Popup>
+  )
 }

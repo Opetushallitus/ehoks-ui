@@ -3,9 +3,9 @@ import { Checkbox } from "components/Checkbox"
 import Flag from "components/icons/Flag"
 import { reaction } from "mobx"
 import { inject, observer } from "mobx-react"
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
-import { FormattedMessage, intlShape } from "react-intl"
+import { useIntl, FormattedMessage } from "react-intl"
 import Modal from "react-modal"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
@@ -142,113 +142,104 @@ const VerticallyCentered = styled("div")`
   flex: 1;
 `
 
-class IntroPage1 extends React.Component {
-  static contextTypes = {
-    intl: intlShape
-  }
-  render() {
-    const { intl } = this.context
-    return (
-      <>
-        <IntroPageTitle>
-          <FormattedMessage
-            id="introDialog.page1Title"
-            defaultMessage="Tervetuloa käyttämään eHOKSia!"
-          />
-        </IntroPageTitle>
-        <IntroPageTextContainer>
-          <FormattedMessage
-            id="introDialog.page1Paragraph1"
-            defaultMessage="eHOKS on palvelu, jossa näet oman henkilökohtaisen opintosuunnitelmasi
+const IntroPage1 = () => {
+  const intl = useIntl()
+  return (
+    <>
+      <IntroPageTitle>
+        <FormattedMessage
+          id="introDialog.page1Title"
+          defaultMessage="Tervetuloa käyttämään eHOKSia!"
+        />
+      </IntroPageTitle>
+      <IntroPageTextContainer>
+        <FormattedMessage
+          id="introDialog.page1Paragraph1"
+          defaultMessage="eHOKS on palvelu, jossa näet oman henkilökohtaisen opintosuunnitelmasi
             ja tavoitteesi milloin vain."
-          />
-        </IntroPageTextContainer>
-        <IntroPageTextContainer>
-          <FormattedMessage
-            id="introDialog.page1Paragraph2"
-            defaultMessage="Voit käyttää palvelua tietokoneella tai mobiililaitteella."
-          />
-        </IntroPageTextContainer>
+        />
+      </IntroPageTextContainer>
+      <IntroPageTextContainer>
+        <FormattedMessage
+          id="introDialog.page1Paragraph2"
+          defaultMessage="Voit käyttää palvelua tietokoneella tai mobiililaitteella."
+        />
+      </IntroPageTextContainer>
+      <div>
+        <Logo
+          src={ehoksLogo}
+          alt={intl.formatMessage({
+            id: "introDialog.page1Logo"
+          })}
+        />
+      </div>
+    </>
+  )
+}
+
+const IntroPage2 = () => (
+  <>
+    <IntroPageTitle>
+      <FormattedMessage
+        id="introDialog.page2Title"
+        defaultMessage="Tietosi ovat eHOKSissa kolmessa osassa:"
+      />
+    </IntroPageTitle>
+    <VerticallyCentered>
+      <ListContainer>
         <div>
-          <Logo
-            src={ehoksLogo}
-            alt={intl.formatMessage({
-              id: "introDialog.page1Logo"
-            })}
-          />
+          <ListItemWithIcon>
+            <IconContainer>
+              <Flag size={24} />
+            </IconContainer>
+            <FormattedMessage
+              id="introDialog.page2item1"
+              defaultMessage="Oma tavoitteesi"
+            />
+          </ListItemWithIcon>
+          <ListItemWithIcon>
+            <IconContainer>
+              <MdExtension size={24} />
+            </IconContainer>
+            <FormattedMessage
+              id="introDialog.page2item2"
+              defaultMessage="Aiempi osaamisesi"
+            />
+          </ListItemWithIcon>
+          <ListItemWithIcon>
+            <IconContainer>
+              <MdEventNote size={24} />
+            </IconContainer>
+            <FormattedMessage
+              id="introDialog.page2item3"
+              defaultMessage="Opintosuunnitelmasi"
+            />
+          </ListItemWithIcon>
         </div>
-      </>
-    )
-  }
-}
+      </ListContainer>
+    </VerticallyCentered>
+  </>
+)
 
-class IntroPage2 extends React.Component {
-  render = () => (
-    <>
-      <IntroPageTitle>
+const IntroPage3 = () => (
+  <>
+    <IntroPageTitle>
+      <FormattedMessage
+        id="introDialog.page3Title"
+        defaultMessage="eHOKS-tiedoistasi vastaa oma oppilaitoksesi"
+      />
+    </IntroPageTitle>
+    <VerticallyCentered>
+      <IntroPageTextContainer>
         <FormattedMessage
-          id="introDialog.page2Title"
-          defaultMessage="Tietosi ovat eHOKSissa kolmessa osassa:"
-        />
-      </IntroPageTitle>
-      <VerticallyCentered>
-        <ListContainer>
-          <div>
-            <ListItemWithIcon>
-              <IconContainer>
-                <Flag size={24} />
-              </IconContainer>
-              <FormattedMessage
-                id="introDialog.page2item1"
-                defaultMessage="Oma tavoitteesi"
-              />
-            </ListItemWithIcon>
-            <ListItemWithIcon>
-              <IconContainer>
-                <MdExtension size={24} />
-              </IconContainer>
-              <FormattedMessage
-                id="introDialog.page2item2"
-                defaultMessage="Aiempi osaamisesi"
-              />
-            </ListItemWithIcon>
-            <ListItemWithIcon>
-              <IconContainer>
-                <MdEventNote size={24} />
-              </IconContainer>
-              <FormattedMessage
-                id="introDialog.page2item3"
-                defaultMessage="Opintosuunnitelmasi"
-              />
-            </ListItemWithIcon>
-          </div>
-        </ListContainer>
-      </VerticallyCentered>
-    </>
-  )
-}
-
-class IntroPage3 extends React.Component {
-  render = () => (
-    <>
-      <IntroPageTitle>
-        <FormattedMessage
-          id="introDialog.page3Title"
-          defaultMessage="eHOKS-tiedoistasi vastaa oma oppilaitoksesi"
-        />
-      </IntroPageTitle>
-      <VerticallyCentered>
-        <IntroPageTextContainer>
-          <FormattedMessage
-            id="introDialog.page3paragraph1"
-            defaultMessage="Ole yhteydessä omaan opettajaasi, jos tietosi eivät ole ajan tasalla
+          id="introDialog.page3paragraph1"
+          defaultMessage="Ole yhteydessä omaan opettajaasi, jos tietosi eivät ole ajan tasalla
                 palvelussa."
-          />
-        </IntroPageTextContainer>
-      </VerticallyCentered>
-    </>
-  )
-}
+        />
+      </IntroPageTextContainer>
+    </VerticallyCentered>
+  </>
+)
 
 interface IntroPageContentProps {
   page: IntroPage
@@ -280,81 +271,77 @@ interface IntroModalProps {
   store?: IRootStore
 }
 
-@inject("store")
-@observer
-export class IntroModalDialog extends React.Component<
-  IntroModalProps,
-  IntroModalState
-> {
-  state: IntroModalState = {
-    introDialogOpen: false,
-    initialAcknowledgedStatus: true,
-    currentPage: IntroPage.Page1
-  }
+export const IntroModalDialog = inject("store")(
+  observer((props: IntroModalProps) => {
+    const [state, setState] = useState<IntroModalState>({
+      introDialogOpen: false,
+      initialAcknowledgedStatus: true,
+      currentPage: IntroPage.Page1
+    })
 
-  componentDidMount() {
-    const { store } = this.props
-    Modal.setAppElement("#app")
-    reaction(
-      () => store!.session.settings.introDialog.userAcknowledgedIntroDialog,
-      (acknowledged, _, initialReaction) => {
-        this.setState({
-          initialAcknowledgedStatus: acknowledged,
-          introDialogOpen: !acknowledged
-        })
-        initialReaction.dispose()
-      },
-      { fireImmediately: true }
-    )
-  }
+    useEffect(() => {
+      const { store } = props
+      Modal.setAppElement("#app")
+      reaction(
+        () => store!.session.settings.introDialog.userAcknowledgedIntroDialog,
+        (acknowledged, _, initialReaction) => {
+          setState({
+            ...state,
+            initialAcknowledgedStatus: acknowledged,
+            introDialogOpen: !acknowledged
+          })
+          initialReaction.dispose()
+        },
+        { fireImmediately: true }
+      )
+    }, [])
 
-  closeIntroDialog = async () => {
-    const { saveSettings } = this.props.store!.session
-    await saveSettings()
-    this.setState({ introDialogOpen: false })
-  }
-
-  nextPage = () => {
-    switch (this.state.currentPage) {
-      case IntroPage.Page1:
-        this.setState({ currentPage: IntroPage.Page2 })
-        break
-      case IntroPage.Page2:
-        this.setState({ currentPage: IntroPage.Page3 })
-        break
-      case IntroPage.Page3:
-        this.closeIntroDialog()
+    const closeIntroDialog = async () => {
+      const { saveSettings } = props.store!.session
+      await saveSettings()
+      setState({ ...state, introDialogOpen: false })
     }
-  }
 
-  toFirstPage = () => {
-    this.setState({ currentPage: IntroPage.Page1 })
-  }
+    const nextPage = () => {
+      switch (state.currentPage) {
+        case IntroPage.Page1:
+          setState({ ...state, currentPage: IntroPage.Page2 })
+          break
+        case IntroPage.Page2:
+          setState({ ...state, currentPage: IntroPage.Page3 })
+          break
+        case IntroPage.Page3:
+          closeIntroDialog()
+      }
+    }
 
-  toSecondPage = () => {
-    this.setState({ currentPage: IntroPage.Page2 })
-  }
+    const toFirstPage = () => {
+      setState({ ...state, currentPage: IntroPage.Page1 })
+    }
 
-  toThirdPage = () => {
-    this.setState({ currentPage: IntroPage.Page3 })
-  }
+    const toSecondPage = () => {
+      setState({ ...state, currentPage: IntroPage.Page2 })
+    }
 
-  render() {
+    const toThirdPage = () => {
+      setState({ ...state, currentPage: IntroPage.Page3 })
+    }
+
     // render nothing if user has already acknowledged the intro dialog
-    if (this.state.initialAcknowledgedStatus) {
+    if (state.initialAcknowledgedStatus) {
       return null
     }
 
-    const { introDialog } = this.props.store!.session.settings
+    const { introDialog } = props.store!.session.settings
 
     return (
-      <StyledModal isOpen={this.state.introDialogOpen}>
+      <StyledModal isOpen={state.introDialogOpen}>
         <IntroModalContainer>
           <IntroPageContainer>
-            <IntroPageContent page={this.state.currentPage} />
+            <IntroPageContent page={state.currentPage} />
           </IntroPageContainer>
-          <NextIntroPageButton onClick={this.nextPage}>
-            {this.state.currentPage === IntroPage.Page3 ? (
+          <NextIntroPageButton onClick={nextPage}>
+            {state.currentPage === IntroPage.Page3 ? (
               <FormattedMessage
                 id="introDialog.valmisButtonLabel"
                 defaultMessage="Valmis"
@@ -368,16 +355,16 @@ export class IntroModalDialog extends React.Component<
           </NextIntroPageButton>
           <NavigationContainer>
             <NavigationCircle
-              active={this.state.currentPage === IntroPage.Page1}
-              onClick={this.toFirstPage}
+              active={state.currentPage === IntroPage.Page1}
+              onClick={toFirstPage}
             />
             <NavigationCircle
-              active={this.state.currentPage === IntroPage.Page2}
-              onClick={this.toSecondPage}
+              active={state.currentPage === IntroPage.Page2}
+              onClick={toSecondPage}
             />
             <NavigationCircle
-              active={this.state.currentPage === IntroPage.Page3}
-              onClick={this.toThirdPage}
+              active={state.currentPage === IntroPage.Page3}
+              onClick={toThirdPage}
             />
           </NavigationContainer>
           <Checkbox
@@ -393,5 +380,5 @@ export class IntroModalDialog extends React.Component<
         </IntroModalContainer>
       </StyledModal>
     )
-  }
-}
+  })
+)

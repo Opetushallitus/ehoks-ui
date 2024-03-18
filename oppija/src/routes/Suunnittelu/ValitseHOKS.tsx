@@ -1,4 +1,3 @@
-import { RouteComponentProps } from "@reach/router"
 import { Container, PaddedContent } from "components/Container"
 import { Heading } from "components/Heading"
 import { NavigationContainer } from "components/NavigationContainer"
@@ -13,49 +12,44 @@ interface ValitseHOKSProps {
   suunnitelmat: IRootStore["hoks"]["suunnitelmat"]
 }
 
-@observer
-export class ValitseHOKS extends React.Component<
-  ValitseHOKSProps & RouteComponentProps
-> {
-  render() {
-    const { suunnitelmat } = this.props
+export const ValitseHOKS = observer((props: ValitseHOKSProps) => {
+  const { suunnitelmat } = props
 
-    return (
-      <React.Fragment>
-        <NavigationContainer>
-          <Container>
-            <PaddedContent>
-              <Heading>
-                <FormattedMessage
-                  id="valinta.title"
-                  defaultMessage="Ammattillisten opintojen henkilökohtaistaminen"
-                />
-              </Heading>
-            </PaddedContent>
-          </Container>
-        </NavigationContainer>
+  return (
+    <React.Fragment>
+      <NavigationContainer>
+        <Container>
+          <PaddedContent>
+            <Heading>
+              <FormattedMessage
+                id="valinta.title"
+                defaultMessage="Ammattillisten opintojen henkilökohtaistaminen"
+              />
+            </Heading>
+          </PaddedContent>
+        </Container>
+      </NavigationContainer>
 
-        <BackgroundContainer>
-          <Container>
-            <PaddedContent>
-              <Heading>
-                <FormattedMessage
-                  id="valinta.voimassaOlevatSuunnitelmasiTitle"
-                  defaultMessage="Voimassa olevat suunnitelmasi"
-                />
-              </Heading>
+      <BackgroundContainer>
+        <Container>
+          <PaddedContent>
+            <Heading>
+              <FormattedMessage
+                id="valinta.voimassaOlevatSuunnitelmasiTitle"
+                defaultMessage="Voimassa olevat suunnitelmasi"
+              />
+            </Heading>
 
-              {suunnitelmat.map((suunnitelma, i) => (
-                <Suunnitelma
-                  hoksPath="/ehoks/suunnittelu/"
-                  suunnitelma={suunnitelma}
-                  key={i}
-                />
-              ))}
-            </PaddedContent>
-          </Container>
-        </BackgroundContainer>
-      </React.Fragment>
-    )
-  }
-}
+            {suunnitelmat.map((suunnitelma, i) => (
+              <Suunnitelma
+                hoksPath="/ehoks/suunnittelu/"
+                suunnitelma={suunnitelma}
+                key={i}
+              />
+            ))}
+          </PaddedContent>
+        </Container>
+      </BackgroundContainer>
+    </React.Fragment>
+  )
+})

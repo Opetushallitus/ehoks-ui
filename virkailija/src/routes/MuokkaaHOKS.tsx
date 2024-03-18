@@ -1,11 +1,10 @@
-import { RouteComponentProps } from "@reach/router"
 import { Button } from "components/Button"
 import { LoadingSpinner } from "components/LoadingSpinner"
 import { JSONSchema6 } from "json-schema"
 import { inject, observer } from "mobx-react"
-import React from "react"
+import React, { useState, useEffect } from "react"
 import "react-bootstrap-typeahead/css/Typeahead.css"
-import { FormattedMessage, intlShape } from "react-intl"
+import { useIntl, FormattedMessage } from "react-intl"
 import { AjvError, FieldProps, IChangeEvent } from "react-jsonschema-form"
 import { IRootStore } from "stores/RootStore"
 import { ArrayFieldTemplate } from "./HOKSLomake/ArrayFieldTemplate"
@@ -80,7 +79,7 @@ function trimPrimitive(key: string, result: any, formData: any) {
   }
 }
 
-interface MuokkaaHOKSProps extends RouteComponentProps {
+interface MuokkaaHOKSProps {
   store?: IRootStore
   /* From router path */
   hoksId?: string
@@ -104,226 +103,176 @@ interface MuokkaaHOKSState {
   clearModalOpen: boolean
 }
 
-@inject("store")
-@observer
-export class MuokkaaHOKS extends React.Component<
-  MuokkaaHOKSProps,
-  MuokkaaHOKSState
-> {
-  static contextTypes = {
-    intl: intlShape
-  }
-
-  state: MuokkaaHOKSState = {
-    schema: {},
-    formData: {},
-    uiSchema: undefined,
-    errors: [],
-    isLoading: true,
-    success: undefined,
-    userEnteredText: false,
-    currentStep: 0,
-    rawSchema: {},
-    koodiUris: buildKoodiUris(),
-    errorsByStep: {},
-    message: undefined,
-    clearModalOpen: false
-  }
-
-  async componentDidMount() {
-    const json: any = await this.props.store!.environment.fetchSwaggerJSON()
-    const hoks = await this.fetchHOKS()
-    const rawSchema = {
-      definitions: stripUnsupportedFormats(json.definitions),
-      ...json.definitions.HOKSKorvaus
-    }
-    const koodiUris = await fetchKoodiUris()
-    const schema = schemaByStep(
-      rawSchema,
-      propertiesByStep,
-      this.state.currentStep
-    )
-    this.setState({
-      formData: hoks,
-      errors: [],
-      errorsByStep: {},
-      rawSchema,
-      schema,
-      koodiUris,
-      uiSchema: uiSchemaByStep(koodiUris, this.state.currentStep),
-      isLoading: false
-    })
-  }
-
-  async fetchHOKS() {
-    const { oppijaOid, hoksId } = this.props
-    const request = await window.fetch(
-      `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksId}`,
-      {
-        credentials: "include",
-        headers: appendCommonHeaders(
-          new Headers({
-            Accept: "application/json; charset=utf-8",
-            "Content-Type": "application/json"
-          })
-        )
-      }
-    )
-    const json = await request.json()
-    return trimDisallowedKeysForPUTSchema(json.data)
-  }
-
-  nextStep = () => {
-    this.setState(state => {
-      const nextStep = state.currentStep + 1
-      return {
-        ...state,
-        schema: schemaByStep(state.rawSchema, propertiesByStep, nextStep),
-        uiSchema: uiSchemaByStep(state.koodiUris, nextStep),
-        currentStep: nextStep
-      }
-    })
-  }
-
-  previousStep = () => {
-    this.setState(state => {
-      const previousStep = state.currentStep - 1
-      return {
-        ...state,
-        schema: schemaByStep(state.rawSchema, propertiesByStep, previousStep),
-        uiSchema: uiSchemaByStep(state.koodiUris, previousStep),
-        currentStep: previousStep
-      }
-    })
-  }
-
-  setStep = (index: number) => {
-    this.setState(state => ({
-      ...state,
-      schema: schemaByStep(state.rawSchema, propertiesByStep, index),
-      uiSchema: uiSchemaByStep(state.koodiUris, index),
-      currentStep: index
-    }))
-  }
-
-  setErrors = (errors: AjvError[]) => {
-    this.setState({ errors })
-  }
-
-  onChange = (changes: any) => {
-    const { formData, errors } = changes
-    this.setState(state => ({
-      ...state,
-      formData,
-      errors,
-      errorsByStep: { ...state.errorsByStep, [state.currentStep]: errors }
-    }))
-  }
-
-  scrollToErrors = (event: React.MouseEvent) => {
-    event.preventDefault()
-    const element = document.querySelector("#form-errors")
-    if (element) {
-      element.scrollIntoView()
-    }
-  }
-
-  hideMessage = () => {
-    this.setState({ success: undefined })
-  }
-
-  userHasEnteredText = () => {
-    this.setState({ userEnteredText: true })
-  }
-
-  save = async (fieldProps: IChangeEvent<FieldProps>) => {
-    this.setState({ isLoading: true })
-    const { notifications } = this.props.store!
-    const { oppijaOid, hoksId } = this.props
-    notifications.markAllErrorsHandled()
-
-    const request = await window.fetch(
-      `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksId}`,
-      {
-        method: "PUT",
-        credentials: "include",
-        headers: appendCommonHeaders(
-          new Headers({
-            Accept: "application/json; charset=utf-8",
-            "Content-Type": "application/json"
-          })
-        ),
-        body: JSON.stringify(trimEmptyValues(fieldProps.formData))
-      }
-    )
-    if (request.status === 204) {
-      this.setState({ success: true, isLoading: false, message: undefined })
-    } else {
-      this.setState({ success: false, isLoading: false, message: undefined })
-      const { intl } = this.context
-      const json = await request.json()
-      reportHOKSErrors(json, intl, (errorId: string, message: string) => {
-        notifications.addError(errorId, message)
-        this.setState({ message })
-      })
-    }
-  }
-
-  completedSteps = () =>
-    Object.keys(this.state.errorsByStep).reduce<{
-      [index: string]: boolean
-    }>((steps, index) => {
-      steps[index] = this.state.errorsByStep[index].length === 0
-      return steps
-    }, {})
-
-  isValid = () => {
-    const completedSteps = this.completedSteps()
-    return Object.keys(completedSteps).every(
-      stepIndex => completedSteps[stepIndex]
-    )
-  }
-
-  formContext = () => {
-    const rootKeys = Object.keys(this.state.rawSchema.properties || {})
-    return {
-      isRoot: isRoot(rootKeys),
-      koodiUriSelected: koodiUriSelected(this)
-    }
-  }
-
-  openClearModal = () => {
-    this.setState({ clearModalOpen: true })
-  }
-
-  closeClearModal = () => {
-    this.setState({ clearModalOpen: false })
-  }
-
-  resetForm = () => {
-    this.setState({
+export const MuokkaaHOKS = inject("store")(
+  observer((props: MuokkaaHOKSProps) => {
+    const [state, setState] = useState<MuokkaaHOKSState>({
+      schema: {},
       formData: {},
+      uiSchema: undefined,
       errors: [],
+      isLoading: true,
       success: undefined,
       userEnteredText: false,
       currentStep: 0,
+      rawSchema: {},
+      koodiUris: buildKoodiUris(),
       errorsByStep: {},
       message: undefined,
       clearModalOpen: false
     })
-  }
+    const intl = useIntl()
 
-  render() {
+    useEffect(() => {
+      props.store!.environment.fetchSwaggerJSON().then(json =>
+        fetchHOKS().then(hoks => {
+          const rawSchema = {
+            definitions: stripUnsupportedFormats(json.definitions),
+            ...json.definitions.HOKSKorvaus
+          }
+          fetchKoodiUris().then(koodiUris => {
+            const schema = schemaByStep(
+              rawSchema,
+              propertiesByStep,
+              state.currentStep
+            )
+            setState({
+              ...state,
+              formData: hoks,
+              errors: [],
+              errorsByStep: {},
+              rawSchema,
+              schema,
+              koodiUris,
+              uiSchema: uiSchemaByStep(koodiUris, state.currentStep),
+              isLoading: false
+            })
+          })
+        })
+      )
+    }, [])
+
+    const fetchHOKS = async () => {
+      const { oppijaOid, hoksId } = props
+      const request = await window.fetch(
+        `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksId}`,
+        {
+          credentials: "include",
+          headers: appendCommonHeaders(
+            new Headers({
+              Accept: "application/json; charset=utf-8",
+              "Content-Type": "application/json"
+            })
+          )
+        }
+      )
+      const json = await request.json()
+      return trimDisallowedKeysForPUTSchema(json.data)
+    }
+
+    const setStep = (index: number) => {
+      setState({
+        ...state,
+        schema: schemaByStep(state.rawSchema, propertiesByStep, index),
+        uiSchema: uiSchemaByStep(state.koodiUris, index),
+        currentStep: index
+      })
+    }
+
+    const setErrors = (errors: AjvError[]) => {
+      setState({ ...state, errors })
+    }
+
+    const onChange = (changes: any) => {
+      const { formData, errors } = changes
+      setState({
+        ...state,
+        formData,
+        errors,
+        errorsByStep: { ...state.errorsByStep, [state.currentStep]: errors }
+      })
+    }
+
+    const hideMessage = () => {
+      setState({ ...state, success: undefined })
+    }
+
+    const userHasEnteredText = () => {
+      setState({ ...state, userEnteredText: true })
+    }
+
+    const save = async (fieldProps: IChangeEvent<FieldProps>) => {
+      setState({ ...state, isLoading: true })
+      const { notifications } = props.store!
+      const { oppijaOid, hoksId } = props
+      notifications.markAllErrorsHandled()
+
+      const request = await window.fetch(
+        `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksId}`,
+        {
+          method: "PUT",
+          credentials: "include",
+          headers: appendCommonHeaders(
+            new Headers({
+              Accept: "application/json; charset=utf-8",
+              "Content-Type": "application/json"
+            })
+          ),
+          body: JSON.stringify(trimEmptyValues(fieldProps.formData))
+        }
+      )
+      if (request.status === 204) {
+        setState({
+          ...state,
+          success: true,
+          isLoading: false,
+          message: undefined
+        })
+      } else {
+        setState({
+          ...state,
+          success: false,
+          isLoading: false,
+          message: undefined
+        })
+        const json = await request.json()
+        reportHOKSErrors(json, intl, (errorId: string, message: string) => {
+          notifications.addError(errorId, message)
+          setState({ ...state, message })
+        })
+      }
+    }
+
+    const completedSteps = () =>
+      Object.keys(state.errorsByStep).reduce<{
+        [index: string]: boolean
+      }>((steps, index) => {
+        steps[index] = state.errorsByStep[index].length === 0
+        return steps
+      }, {})
+
+    const isValid = () => {
+      const cSteps = completedSteps()
+      return Object.keys(cSteps).every(stepIndex => cSteps[stepIndex])
+    }
+
+    const formContext = () => {
+      const rootKeys = Object.keys(state.rawSchema.properties || {})
+      return {
+        isRoot: isRoot(rootKeys),
+        koodiUriSelected: koodiUriSelected(this)
+      }
+    }
+
     return (
-      <HOKSFormContainer onKeyUp={this.userHasEnteredText}>
+      <HOKSFormContainer onKeyUp={userHasEnteredText}>
         <EditHOKSStyles />
         <TopToolbar id="topToolbar">
           <Header>Muokkaa HOKSia</Header>
           <Stepper
-            currentStep={this.state.currentStep}
-            updateStep={this.setStep}
-            completed={this.completedSteps}
-            disabled={this.state.isLoading}
+            currentStep={state.currentStep}
+            updateStep={setStep}
+            completed={completedSteps}
+            disabled={state.isLoading}
           >
             <Step>Perustiedot</Step>
             <Step>Aiemmin hankitut ammatilliset tutkinnon osat</Step>
@@ -340,13 +289,13 @@ export class MuokkaaHOKS extends React.Component<
           <ReactJSONSchemaForm
             fields={fields}
             widgets={widgets}
-            schema={this.state.schema}
-            uiSchema={this.state.uiSchema}
-            formData={this.state.formData as any}
-            formContext={this.formContext()}
-            onChange={this.onChange}
-            onSubmit={this.save}
-            onError={this.setErrors}
+            schema={state.schema}
+            uiSchema={state.uiSchema}
+            formData={state.formData as any}
+            formContext={formContext()}
+            onChange={onChange}
+            onSubmit={save}
+            onError={setErrors}
             ErrorList={ErrorList}
             transformErrors={transformErrors}
             ArrayFieldTemplate={ArrayFieldTemplate}
@@ -356,42 +305,39 @@ export class MuokkaaHOKS extends React.Component<
           >
             <BottomToolbar>
               <ButtonsContainer>
-                <Button type="submit" disabled={!this.isValid()}>
+                <Button type="submit" disabled={!isValid()}>
                   Tallenna HOKS
                 </Button>
-                {this.state.isLoading && (
+                {state.isLoading && (
                   <SpinnerContainer>
                     <LoadingSpinner />
                   </SpinnerContainer>
                 )}
-                {this.state.success && (
-                  <SuccessMessage onClick={this.hideMessage}>
+                {state.success && (
+                  <SuccessMessage onClick={hideMessage}>
                     <FormattedMessage
                       id="muokkaaHoks.tallennusOnnistui"
                       defaultMessage="HOKS tallennettiin onnistuneesti"
                     />
                   </SuccessMessage>
                 )}
-                {this.state.success === false && (
-                  <FailureMessage onClick={this.hideMessage}>
+                {state.success === false && (
+                  <FailureMessage onClick={hideMessage}>
                     <FormattedMessage
                       id="muokkaaHoks.tallennusEpaonnistui"
                       defaultMessage={
-                        this.state.message
-                          ? this.state.message
+                        state.message
+                          ? state.message
                           : "HOKSin tallennus epäonnistui"
                       }
                     />
                   </FailureMessage>
                 )}
-
-                {/* <Button onClick={this.previousStep}>Edellinen</Button>
-                <Button onClick={this.nextStep}>Seuraava</Button> */}
               </ButtonsContainer>
             </BottomToolbar>
           </ReactJSONSchemaForm>
         </FormContainer>
       </HOKSFormContainer>
     )
-  }
-}
+  })
+)

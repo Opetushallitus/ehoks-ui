@@ -1,4 +1,5 @@
-import { Link, navigate } from "@reach/router"
+import { useNavigate } from "react-router"
+import { Link } from "react-router-dom"
 import { OrganisationDropdown } from "components/OrganisationDropdown"
 import { inject, observer } from "mobx-react"
 import React from "react"
@@ -59,26 +60,24 @@ interface HeaderProps {
   store?: IRootStore
 }
 
-@inject("store")
-@observer
-export class Header extends React.Component<HeaderProps> {
-  handleOnOrganisationChange = (oid: string) => {
-    const { session, koulutuksenJarjestaja } = this.props.store!
-    session.changeSelectedOrganisationOid(oid)
-    koulutuksenJarjestaja.search.resetActivePage()
-    koulutuksenJarjestaja.search.fetchOppijat()
-    localStorage.setItem("selectedOrganisationOid", oid)
-    navigate(`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oid}`)
-  }
-
-  render() {
-    const { session } = this.props.store!
+export const Header = inject("store")(
+  observer(({ store }: HeaderProps) => {
+    const navigate = useNavigate()
+    const handleOnOrganisationChange = (oid: string) => {
+      const { session, koulutuksenJarjestaja } = store!
+      session.changeSelectedOrganisationOid(oid)
+      koulutuksenJarjestaja.search.resetActivePage()
+      koulutuksenJarjestaja.search.fetchOppijat()
+      localStorage.setItem("selectedOrganisationOid", oid)
+      navigate(`/ehoks-virkailija-ui/koulutuksenjarjestaja/${oid}`)
+    }
+    const { session } = store!
     return (
       <HeaderContainer>
         {session.organisations && (
           <OrganisationDropdown
             organisations={session.organisations}
-            onChange={this.handleOnOrganisationChange}
+            onChange={handleOnOrganisationChange}
             value={session.selectedOrganisationOid}
             lang={Locale.FI}
           />
@@ -124,5 +123,5 @@ export class Header extends React.Component<HeaderProps> {
         )}
       </HeaderContainer>
     )
-  }
-}
+  })
+)

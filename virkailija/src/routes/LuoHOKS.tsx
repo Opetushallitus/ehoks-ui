@@ -1,12 +1,12 @@
-import { RouteComponentProps, navigate } from "@reach/router"
+import { useNavigate } from "react-router"
 import { Button } from "components/Button"
 import { LoadingSpinner } from "components/LoadingSpinner"
 import { ModalDialog } from "components/ModalDialogs/ModalDialog"
 import { JSONSchema6 } from "json-schema"
 import { inject, observer } from "mobx-react"
-import React from "react"
+import React, { useState, useEffect } from "react"
 import "react-bootstrap-typeahead/css/Typeahead.css"
-import { FormattedMessage, intlShape } from "react-intl"
+import { useIntl, FormattedMessage } from "react-intl"
 import { AjvError, FieldProps, IChangeEvent } from "react-jsonschema-form"
 import { IRootStore } from "stores/RootStore"
 import { ArrayFieldTemplate } from "./HOKSLomake/ArrayFieldTemplate"
@@ -41,7 +41,7 @@ import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./LuoHOKS/uiSchema"
 import { appendCommonHeaders } from "fetchUtils"
 
-interface LuoHOKSProps extends RouteComponentProps {
+interface LuoHOKSProps {
   store?: IRootStore
 }
 
@@ -62,280 +62,273 @@ interface LuoHOKSState {
   confirmCloseListenerExists: boolean
 }
 
-@inject("store")
-@observer
-export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
-  static contextTypes = {
-    intl: intlShape
-  }
-
-  state: LuoHOKSState = {
-    schema: {},
-    formData: {},
-    uiSchema: undefined,
-    errors: [],
-    isLoading: true,
-    success: undefined,
-    userEnteredText: false,
-    currentStep: 0,
-    rawSchema: {},
-    koodiUris: buildKoodiUris(),
-    errorsByStep: {},
-    message: undefined,
-    clearModalOpen: false,
-    confirmCloseListenerExists: false
-  }
-
-  confirmClose = (ev: BeforeUnloadEvent) => {
-    if (this.state?.success) {
-      this.removeBeforeUnloadListener()
-    } else {
-      ev.preventDefault()
-      const { intl } = this.context
-      ev.returnValue = intl.formatMessage({
-        id: "luoHoks.haluatkoPoistua"
-      })
-      return ev.returnValue
-    }
-  }
-
-  addBeforeUnloadListener = () => {
-    if (!this.state.confirmCloseListenerExists) {
-      // confirmation when closing the window/page
-      window.addEventListener("beforeunload", this.confirmClose)
-      this.setState({
-        confirmCloseListenerExists: true
-      })
-    }
-  }
-
-  removeBeforeUnloadListener = () => {
-    if (this.state.confirmCloseListenerExists) {
-      window.removeEventListener("beforeunload", this.confirmClose)
-      this.setState({
-        confirmCloseListenerExists: false
-      })
-    }
-  }
-
-  formDataExists = () => {
-    const { formData } = this.state
-    return typeof formData === "object" && Object.keys(formData).length > 0
-  }
-
-  async componentDidMount() {
-    const json: any = await this.props.store!.environment.fetchSwaggerJSON()
-    const rawSchema = {
-      definitions: stripUnsupportedFormats(json.definitions),
-      ...json.definitions.HOKSLuonti
-    }
-    const koodiUris = await fetchKoodiUris()
-    const schema = schemaByStep(
-      rawSchema,
-      propertiesByStep,
-      this.state.currentStep
-    )
-    const {
-      formData = {},
-      errors = [],
-      errorsByStep = {}
-    } = window.sessionStorage.getItem("hoks")
-      ? JSON.parse(window.sessionStorage.getItem("hoks") || "")
-      : {}
-    this.setState({
-      formData,
-      errors,
-      errorsByStep,
-      rawSchema,
-      schema,
-      koodiUris,
-      uiSchema: uiSchemaByStep(koodiUris, this.state.currentStep),
-      isLoading: false
+export const LuoHOKS = inject("store")(
+  observer((props: LuoHOKSProps) => {
+    const navigate = useNavigate()
+    const intl = useIntl()
+    const [state, setState] = useState<LuoHOKSState>({
+      schema: {},
+      formData: {},
+      uiSchema: undefined,
+      errors: [],
+      isLoading: true,
+      success: undefined,
+      userEnteredText: false,
+      currentStep: 0,
+      rawSchema: {},
+      koodiUris: buildKoodiUris(),
+      errorsByStep: {},
+      message: undefined,
+      clearModalOpen: false,
+      confirmCloseListenerExists: false
     })
-    if (this.formDataExists()) {
-      this.addBeforeUnloadListener()
-    }
-  }
 
-  async componentWillUnmount() {
-    const { intl } = this.context
-    const { success } = this.state
-    // confirmation when navigating to another ehoks page
-    if (
-      this.formDataExists() &&
-      !success &&
-      !confirm(
-        intl.formatMessage({
+    const confirmClose = (ev: BeforeUnloadEvent) => {
+      if (state?.success) {
+        removeBeforeUnloadListener()
+      } else {
+        ev.preventDefault()
+        ev.returnValue = intl.formatMessage({
           id: "luoHoks.haluatkoPoistua"
         })
-      )
-    ) {
-      // navigate "back" to hoks form
-      await navigate("/ehoks-virkailija-ui/luohoks")
-    } else {
-      this.removeBeforeUnloadListener()
+        return ev.returnValue
+      }
     }
-  }
 
-  nextStep = () => {
-    this.setState(state => {
-      const nextStep = state.currentStep + 1
-      return {
-        ...state,
-        schema: schemaByStep(state.rawSchema, propertiesByStep, nextStep),
-        uiSchema: uiSchemaByStep(state.koodiUris, nextStep),
-        currentStep: nextStep
+    const addBeforeUnloadListener = () => {
+      if (!state.confirmCloseListenerExists) {
+        // confirmation when closing the window/page
+        window.addEventListener("beforeunload", confirmClose)
+        setState({
+          ...state,
+          confirmCloseListenerExists: true
+        })
       }
-    })
-  }
+    }
 
-  previousStep = () => {
-    this.setState(state => {
-      const previousStep = state.currentStep - 1
-      return {
-        ...state,
-        schema: schemaByStep(state.rawSchema, propertiesByStep, previousStep),
-        uiSchema: uiSchemaByStep(state.koodiUris, previousStep),
-        currentStep: previousStep
+    const removeBeforeUnloadListener = () => {
+      if (state.confirmCloseListenerExists) {
+        window.removeEventListener("beforeunload", confirmClose)
+        setState({
+          ...state,
+          confirmCloseListenerExists: false
+        })
       }
-    })
-  }
+    }
 
-  setStep = (index: number) => {
-    this.setState(state => ({
-      ...state,
-      schema: schemaByStep(state.rawSchema, propertiesByStep, index),
-      uiSchema: uiSchemaByStep(state.koodiUris, index),
-      currentStep: index
-    }))
-  }
+    const formDataExists = () => {
+      const { formData } = state
+      return typeof formData === "object" && Object.keys(formData).length > 0
+    }
 
-  setErrors = (errors: AjvError[]) => {
-    this.setState({ errors })
-  }
+    useEffect(() => {
+      props.store!.environment.fetchSwaggerJSON().then(async json => {
+        const rawSchema = {
+          definitions: stripUnsupportedFormats(json.definitions),
+          ...json.definitions.HOKSLuonti
+        }
+        const koodiUris = await fetchKoodiUris()
+        const schema = schemaByStep(
+          rawSchema,
+          propertiesByStep,
+          state.currentStep
+        )
+        const {
+          formData = {},
+          errors = [],
+          errorsByStep = {}
+        } = window.sessionStorage.getItem("hoks")
+          ? JSON.parse(window.sessionStorage.getItem("hoks") || "")
+          : {}
+        setState({
+          ...state,
+          formData,
+          errors,
+          errorsByStep,
+          rawSchema,
+          schema,
+          koodiUris,
+          uiSchema: uiSchemaByStep(koodiUris, state.currentStep),
+          isLoading: false
+        })
+        if (formDataExists()) {
+          addBeforeUnloadListener()
+        }
+      })
 
-  onChange = (changes: any) => {
-    const { formData, errors } = changes
-    this.setState(
-      state => ({
+      return () => {
+        const { success } = state
+        // confirmation when navigating to another ehoks page
+        if (
+          formDataExists() &&
+          !success &&
+          !confirm(
+            intl.formatMessage({
+              id: "luoHoks.haluatkoPoistua"
+            })
+          )
+        ) {
+          // navigate "back" to hoks form
+          navigate("/ehoks-virkailija-ui/luohoks")
+        } else {
+          removeBeforeUnloadListener()
+        }
+      }
+    }, [])
+
+    /*
+    const nextStep = () => {
+      const nStep = state.currentStep + 1
+      setState({
+        ...state,
+        schema: schemaByStep(state.rawSchema, propertiesByStep, nStep),
+        uiSchema: uiSchemaByStep(state.koodiUris, nStep),
+        currentStep: nStep
+      })
+    }
+
+    const previousStep = () => {
+      const pStep = state.currentStep - 1
+      setState({
+        ...state,
+        schema: schemaByStep(state.rawSchema, propertiesByStep, pStep),
+        uiSchema: uiSchemaByStep(state.koodiUris, pStep),
+        currentStep: pStep
+      })
+    }
+    */
+
+    const setStep = (index: number) => {
+      setState({
+        ...state,
+        schema: schemaByStep(state.rawSchema, propertiesByStep, index),
+        uiSchema: uiSchemaByStep(state.koodiUris, index),
+        currentStep: index
+      })
+    }
+
+    const setErrors = (errors: AjvError[]) => {
+      setState({ ...state, errors })
+    }
+
+    const onChange = (changes: any) => {
+      const { formData, errors } = changes
+      setState({
         ...state,
         success: undefined,
         formData,
         errors,
         errorsByStep: { ...state.errorsByStep, [state.currentStep]: errors }
-      }),
-      () => {
-        const { errorsByStep } = this.state
-        window.sessionStorage.setItem(
-          "hoks",
-          JSON.stringify({ formData, errors, errorsByStep })
-        )
+      })
+      const { errorsByStep } = state
+      window.sessionStorage.setItem(
+        "hoks",
+        JSON.stringify({ formData, errors, errorsByStep })
+      )
+      if (formDataExists()) {
+        addBeforeUnloadListener()
       }
-    )
-    if (this.formDataExists()) {
-      this.addBeforeUnloadListener()
     }
-  }
 
-  scrollToErrors = (event: React.MouseEvent) => {
-    event.preventDefault()
-    const element = document.querySelector("#form-errors")
-    if (element) {
-      element.scrollIntoView()
-    }
-  }
-
-  hideMessage = () => {
-    this.setState({ success: undefined })
-  }
-
-  userHasEnteredText = () => {
-    this.setState({ userEnteredText: true })
-  }
-
-  create = async (fieldProps: IChangeEvent<FieldProps>) => {
-    this.setState({ isLoading: true })
-    const { notifications } = this.props.store!
-    notifications.markAllErrorsHandled()
-
-    const request = await window.fetch(
-      `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${fieldProps.formData["oppija-oid"]}/hoksit`,
-      {
-        method: "POST",
-        credentials: "include",
-        headers: appendCommonHeaders(
-          new Headers({
-            Accept: "application/json; charset=utf-8",
-            "Content-Type": "application/json"
-          })
-        ),
-        body: JSON.stringify(trimEmptyValues(fieldProps.formData))
+    /*
+    const scrollToErrors = (event: React.MouseEvent) => {
+      event.preventDefault()
+      const element = document.querySelector("#form-errors")
+      if (element) {
+        element.scrollIntoView()
       }
-    )
-    const json = await request.json()
-
-    if (request.status === 200) {
-      this.setState({
-        formData: {},
-        errors: [],
-        errorsByStep: {},
-        success: true,
-        message: undefined,
-        userEnteredText: false
-      })
-      window.sessionStorage.removeItem("hoks")
-      this.removeBeforeUnloadListener()
-    } else {
-      this.setState({ success: false, message: undefined })
-      const { intl } = this.context
-      reportHOKSErrors(json, intl, (errorId: string, message: string) => {
-        notifications.addError(errorId, message)
-        this.setState({ message })
-      })
     }
-    this.setState({ isLoading: false })
-  }
+    */
 
-  completedSteps = () =>
-    Object.keys(this.state.errorsByStep).reduce<{
-      [index: string]: boolean
-    }>((steps, index) => {
-      steps[index] = this.state.errorsByStep[index].length === 0
-      return steps
-    }, {})
-
-  isValid = () => {
-    const completedSteps = this.completedSteps()
-    return Object.keys(completedSteps).every(
-      stepIndex => completedSteps[stepIndex]
-    )
-  }
-
-  formContext = () => {
-    const rootKeys = Object.keys(this.state.rawSchema.properties || {})
-    return {
-      isRoot: isRoot(rootKeys),
-      koodiUriSelected: koodiUriSelected(this, () => {
-        const { formData, errors, errorsByStep } = this.state
-        window.sessionStorage.setItem(
-          "hoks",
-          JSON.stringify({ formData, errors, errorsByStep })
-        )
-      })
+    const hideMessage = () => {
+      setState({ ...state, success: undefined })
     }
-  }
 
-  openClearModal = () => {
-    this.setState({ clearModalOpen: true })
-  }
+    const userHasEnteredText = () => {
+      setState({ ...state, userEnteredText: true })
+    }
 
-  closeClearModal = () => {
-    this.setState({ clearModalOpen: false })
-  }
+    const create = async (fieldProps: IChangeEvent<FieldProps>) => {
+      setState({ ...state, isLoading: true })
+      const { notifications } = props.store!
+      notifications.markAllErrorsHandled()
 
-  resetForm = () => {
-    this.setState(
-      {
+      const request = await window.fetch(
+        `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${fieldProps.formData["oppija-oid"]}/hoksit`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: appendCommonHeaders(
+            new Headers({
+              Accept: "application/json; charset=utf-8",
+              "Content-Type": "application/json"
+            })
+          ),
+          body: JSON.stringify(trimEmptyValues(fieldProps.formData))
+        }
+      )
+      const json = await request.json()
+
+      if (request.status === 200) {
+        setState({
+          ...state,
+          formData: {},
+          errors: [],
+          errorsByStep: {},
+          success: true,
+          message: undefined,
+          userEnteredText: false
+        })
+        window.sessionStorage.removeItem("hoks")
+        removeBeforeUnloadListener()
+      } else {
+        setState({ ...state, success: false, message: undefined })
+        reportHOKSErrors(json, intl, (errorId: string, message: string) => {
+          notifications.addError(errorId, message)
+          setState({ ...state, message })
+        })
+      }
+      setState({ ...state, isLoading: false })
+    }
+
+    const completedSteps = () =>
+      Object.keys(state.errorsByStep).reduce<{
+        [index: string]: boolean
+      }>((steps, index) => {
+        steps[index] = state.errorsByStep[index].length === 0
+        return steps
+      }, {})
+
+    const isValid = () => {
+      const cSteps = completedSteps()
+      return Object.keys(cSteps).every(stepIndex => cSteps[stepIndex])
+    }
+
+    const formContext = () => {
+      const rootKeys = Object.keys(state.rawSchema.properties || {})
+      return {
+        isRoot: isRoot(rootKeys),
+        koodiUriSelected: koodiUriSelected(this, () => {
+          const { formData, errors, errorsByStep } = state
+          window.sessionStorage.setItem(
+            "hoks",
+            JSON.stringify({ formData, errors, errorsByStep })
+          )
+        })
+      }
+    }
+
+    const openClearModal = () => {
+      setState({ ...state, clearModalOpen: true })
+    }
+
+    const closeClearModal = () => {
+      setState({ ...state, clearModalOpen: false })
+    }
+
+    const resetForm = () => {
+      setState({
+        ...state,
         formData: {},
         errors: [],
         success: undefined,
@@ -344,28 +337,24 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
         errorsByStep: {},
         message: undefined,
         clearModalOpen: false
-      },
-      () => {
-        window.sessionStorage.setItem(
-          "hoks",
-          JSON.stringify({ formData: {}, errors: [], errorsByStep: {} })
-        )
-      }
-    )
-  }
+      })
+      window.sessionStorage.setItem(
+        "hoks",
+        JSON.stringify({ formData: {}, errors: [], errorsByStep: {} })
+      )
+    }
 
-  render() {
-    const { clearModalOpen } = this.state
+    const { clearModalOpen } = state
     return (
-      <HOKSFormContainer onKeyUp={this.userHasEnteredText}>
+      <HOKSFormContainer onKeyUp={userHasEnteredText}>
         <EditHOKSStyles />
         <TopToolbar id="topToolbar">
           <Header>Luo HOKS</Header>
           <Stepper
-            currentStep={this.state.currentStep}
-            updateStep={this.setStep}
-            completed={this.completedSteps}
-            disabled={this.state.isLoading}
+            currentStep={state.currentStep}
+            updateStep={setStep}
+            completed={completedSteps}
+            disabled={state.isLoading}
           >
             <Step>Perustiedot</Step>
             <Step>Aiemmin hankitut ammatilliset tutkinnon osat</Step>
@@ -382,13 +371,13 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
           <ReactJSONSchemaForm
             fields={fields}
             widgets={widgets}
-            schema={this.state.schema}
-            uiSchema={this.state.uiSchema}
-            formData={this.state.formData as any}
-            formContext={this.formContext()}
-            onChange={this.onChange}
-            onSubmit={this.create}
-            onError={this.setErrors}
+            schema={state.schema}
+            uiSchema={state.uiSchema}
+            formData={state.formData as any}
+            formContext={formContext()}
+            onChange={onChange}
+            onSubmit={create}
+            onError={setErrors}
             ErrorList={ErrorList}
             transformErrors={transformErrors}
             ArrayFieldTemplate={ArrayFieldTemplate}
@@ -398,56 +387,52 @@ export class LuoHOKS extends React.Component<LuoHOKSProps, LuoHOKSState> {
           >
             <BottomToolbar>
               <ButtonsContainer>
-                <Button type="submit" disabled={!this.isValid()}>
+                <Button type="submit" disabled={!isValid()}>
                   Luo HOKS
                 </Button>
-                <ClearButton onClick={this.openClearModal}>
-                  Tyhjennä
-                </ClearButton>
+                <ClearButton onClick={openClearModal}>Tyhjennä</ClearButton>
                 <ModalDialog
                   open={clearModalOpen}
-                  closeModal={this.closeClearModal}
+                  closeModal={closeClearModal}
                   label="Haluatko varmasti tyhjentää lomakkeen?"
                 >
                   <p>Haluatko varmasti tyhjentää lomakkeen?</p>
-                  <Button onClick={this.resetForm}>Tyhjennä</Button>
-                  <ClearButton onClick={this.closeClearModal}>
-                    Peruuta
-                  </ClearButton>
+                  <Button onClick={resetForm}>Tyhjennä</Button>
+                  <ClearButton onClick={closeClearModal}>Peruuta</ClearButton>
                 </ModalDialog>
-                {this.state.isLoading && (
+                {state.isLoading && (
                   <SpinnerContainer>
                     <LoadingSpinner />
                   </SpinnerContainer>
                 )}
-                {this.state.success && (
-                  <SuccessMessage onClick={this.hideMessage}>
+                {state.success && (
+                  <SuccessMessage onClick={hideMessage}>
                     <FormattedMessage
                       id="luoHoks.luontiOnnistui"
                       defaultMessage="HOKS luotiin onnistuneesti"
                     />
                   </SuccessMessage>
                 )}
-                {this.state.success === false && (
-                  <FailureMessage onClick={this.hideMessage}>
+                {state.success === false && (
+                  <FailureMessage onClick={hideMessage}>
                     <FormattedMessage
                       id="luoHoks.luontiEpaonnistui"
                       defaultMessage={
-                        this.state.message
-                          ? this.state.message
+                        state.message
+                          ? state.message
                           : "HOKSin luonti epäonnistui"
                       }
                     />
                   </FailureMessage>
                 )}
 
-                {/* <Button onClick={this.previousStep}>Edellinen</Button>
-                <Button onClick={this.nextStep}>Seuraava</Button> */}
+                {/* <Button onClick={previousStep}>Edellinen</Button>
+              <Button onClick={nextStep}>Seuraava</Button> */}
               </ButtonsContainer>
             </BottomToolbar>
           </ReactJSONSchemaForm>
         </FormContainer>
       </HOKSFormContainer>
     )
-  }
-}
+  })
+)

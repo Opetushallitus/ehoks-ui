@@ -1,10 +1,9 @@
-import { AppContext } from "components/AppContext"
 import { Container } from "components/Container"
 import { Notification, NotificationType } from "components/Notification"
 import { inject, observer } from "mobx-react"
 import React from "react"
 import { MdClose } from "react-icons/md"
-import { FormattedMessage, InjectedIntl, injectIntl } from "react-intl"
+import { FormattedMessage, useIntl } from "react-intl"
 import { IAppError } from "stores/ErrorStore"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
@@ -36,21 +35,15 @@ const IconContainer = styled("button")`
 
 export interface AppNotificationsProps {
   store?: IRootStore
-  intl: InjectedIntl
 }
 
-@inject("store")
-@observer
-export class AppNotifications extends React.Component<AppNotificationsProps> {
-  static contextType = AppContext
-  declare context: React.ContextType<typeof AppContext>
-
-  render(): React.ReactNode {
-    const { intl } = this.props
+export const AppNotifications = inject("store")(
+  observer((props: AppNotificationsProps) => {
+    const intl = useIntl()
     const {
       errors: { unhandled },
       notifications
-    } = this.props.store!
+    } = props.store!
 
     return (
       <Container>
@@ -109,7 +102,7 @@ export class AppNotifications extends React.Component<AppNotificationsProps> {
         })}
       </Container>
     )
-  }
-}
+  })
+)
 
-export default injectIntl(AppNotifications)
+export default AppNotifications

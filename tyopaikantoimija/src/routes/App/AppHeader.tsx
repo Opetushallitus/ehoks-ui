@@ -1,9 +1,9 @@
-import { Link } from "@reach/router"
+import { Link } from "react-router-dom"
 import { getActiveDomain } from "localeUtils"
 import { inject, observer } from "mobx-react"
-import React from "react"
+import React, { useState } from "react"
 import { MdMenu } from "react-icons/md"
-import { FormattedMessage, intlShape } from "react-intl"
+import { useIntl, FormattedMessage } from "react-intl"
 import { Locale } from "stores/TranslationStore"
 import styled from "styled"
 import ehoksLogo from "./ehoks_logo.png"
@@ -162,32 +162,28 @@ interface AppHeaderState {
   showMenu: boolean
 }
 
-@inject("store")
-@observer
-export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
-  static contextTypes = {
-    intl: intlShape
-  }
-  state = {
-    showMenu: false
-  }
-  logoutTyopaikantoimija = (event: React.MouseEvent) => {
-    event.preventDefault()
-    this.props.store!.session!.logoutTyopaikantoimija()
-  }
+export const AppHeader = inject("store")(
+  observer((props: AppHeaderProps) => {
+    const [state, setState] = useState<AppHeaderState>({
+      showMenu: false
+    })
 
-  changeLocale = (locale: Locale) => (event: React.MouseEvent) => {
-    event.preventDefault()
-    this.props.store!.translations.setActiveLocale(locale)
-  }
+    const logoutTyopaikantoimija = async (event: React.MouseEvent) => {
+      event.preventDefault()
+      return props.store!.session!.logoutTyopaikantoimija()
+    }
 
-  toggleMenu = () => {
-    this.setState(state => ({ ...state, showMenu: !state.showMenu }))
-  }
+    const changeLocale = (locale: Locale) => (event: React.MouseEvent) => {
+      event.preventDefault()
+      props.store!.translations.setActiveLocale(locale)
+    }
 
-  render() {
-    const { store } = this.props
-    const { intl } = this.context
+    const toggleMenu = () => {
+      setState({ ...state, showMenu: !state.showMenu })
+    }
+
+    const { store } = props
+    const intl = useIntl()
     const { session } = store!
     const { user, isLoggedIn } = session!
     const { activeLocale } = store!.translations
@@ -226,7 +222,7 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
           </TopLinks>
         </TopLinksContainer>
         <TitleContainer>
-          <MobileMenuToggle onClick={this.toggleMenu}>
+          <MobileMenuToggle onClick={toggleMenu}>
             <MdMenu size="40" />
             <h3>
               <FormattedMessage
@@ -246,14 +242,14 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
 
           <LanguageSelector loggedIn={isLoggedIn}>
             {activeLocale === Locale.FI ? (
-              <LinkButton onClick={this.changeLocale(Locale.SV)}>
+              <LinkButton onClick={changeLocale(Locale.SV)}>
                 <FormattedMessage
                   id="header.swedishLocaleLink"
                   defaultMessage="På svenska"
                 />
               </LinkButton>
             ) : (
-              <LinkButton onClick={this.changeLocale(Locale.FI)}>
+              <LinkButton onClick={changeLocale(Locale.FI)}>
                 <FormattedMessage
                   id="header.finnishLocaleLink"
                   defaultMessage="Suomeksi"
@@ -267,7 +263,7 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
               <User>
                 {user.firstName} {user.surname}
               </User>
-              <LogoutLink to="" onClick={this.logoutTyopaikantoimija}>
+              <LogoutLink to="" onClick={logoutTyopaikantoimija}>
                 <FormattedMessage
                   id="header.kirjauduUlosLink"
                   defaultMessage="Kirjaudu ulos"
@@ -278,5 +274,5 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
         </TitleContainer>
       </HeaderContainer>
     )
-  }
-}
+  })
+)

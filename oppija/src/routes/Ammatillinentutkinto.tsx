@@ -1,8 +1,7 @@
-import { RouteComponentProps } from "@reach/router"
 import { Container, PaddedContainer } from "components/Container"
 import { HomeLink } from "components/HomeLink"
 import { HomeOrb } from "components/HomeOrb"
-import React from "react"
+import React, { useEffect } from "react"
 import { MdHome } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import { AmmattitutkintoHaku } from "routes/Ammattitutkinto/AmmattitutkintoHaku"
@@ -17,18 +16,14 @@ const SectionContainer = styled("div")`
   }
 `
 
-export type AmmatillinentutkintoProps = RouteComponentProps
-
-export class Ammatillinentutkinto extends React.Component<
-  AmmatillinentutkintoProps
-> {
-  componentDidMount() {
+export const Ammatillinentutkinto = () => {
+  useEffect(() => {
     window.requestAnimationFrame(() => {
       window.scrollTo(0, 0)
     })
-  }
+  }, [])
 
-  render = () => (
+  return (
     <Container>
       <PaddedContainer>
         <HomeLink to="../">

@@ -1,4 +1,5 @@
-import { Link, navigate, RouteComponentProps, Router } from "@reach/router"
+import { useNavigate, Routes, Route, useLocation, Location } from "react-router"
+import { Link } from "react-router-dom"
 import { Container, PaddedContent } from "components/Container"
 import { HelpPopup } from "components/HelpPopup"
 import { HOKSInfo } from "./HOKSInfo"
@@ -12,10 +13,10 @@ import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
 import find from "lodash.find"
 import get from "lodash.get"
-import { IReactionDisposer, reaction } from "mobx"
+import { reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import { IHOKS } from "models/HOKS"
-import React from "react"
+import React, { useEffect } from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import { IOppija } from "stores/KoulutuksenJarjestajaStore"
@@ -49,16 +50,7 @@ const HelpButton = styled(HelpPopup)`
   margin: 0 0 0 20px;
 `
 
-export interface KoulutuksenJarjestajaHOKSProps
-  extends RouteComponentProps<{
-    location: {
-      state: {
-        fromRaportit: boolean
-        oppijaoid: string | null
-        hokseid: string | null
-      }
-    }
-  }> {
+export interface KoulutuksenJarjestajaHOKSProps {
   store?: IRootStore
   suunnitelmat: IHOKS[]
   oppija?: IOppija
@@ -67,69 +59,62 @@ export interface KoulutuksenJarjestajaHOKSProps
   laitosId?: string
 }
 
-@inject("store")
-@observer
-export class KoulutuksenJarjestajaHOKS extends React.Component<
-  KoulutuksenJarjestajaHOKSProps
-> {
-  disposeReaction: IReactionDisposer
-  componentDidMount() {
-    const { koulutuksenJarjestaja } = this.props.store!
-    const fromRaportit = get(
-      this.props,
-      "this.props.location.state.fromRaportit"
-    )
-    if (fromRaportit) {
-      koulutuksenJarjestaja.search.setFromListView(false)
-    }
-    this.disposeReaction = reaction(
-      () => this.props.suunnitelmat.length > 0,
-      async (hasSuunnitelmat: boolean) => {
-        if (hasSuunnitelmat || fromRaportit) {
-          const oppijaoid = get(
-            this.props,
-            "this.props.location.state.oppijaoid"
-          )
-          const hokseid = get(this.props, "this.props.location.state.hokseid")
-          let fromRaportitSuunnitelmat: IHOKS[] = []
-          if (fromRaportit && oppijaoid) {
-            const oppija = koulutuksenJarjestaja.search.oppija(oppijaoid)
-            if (!oppija) {
-              await koulutuksenJarjestaja.search.fetchOppija(oppijaoid)
+export const KoulutuksenJarjestajaHOKS = inject("store")(
+  observer((props: KoulutuksenJarjestajaHOKSProps) => {
+    const navigate = useNavigate()
+
+    useEffect(() => {
+      const { koulutuksenJarjestaja } = props.store!
+      const fromRaportit = get(props, "this.props.location.state.fromRaportit")
+      if (fromRaportit) {
+        koulutuksenJarjestaja.search.setFromListView(false)
+      }
+      return () => {
+        reaction(
+          () => props.suunnitelmat.length > 0,
+          async (hasSuunnitelmat: boolean) => {
+            if (hasSuunnitelmat || fromRaportit) {
+              const oppijaoid = get(
+                props,
+                "this.props.location.state.oppijaoid"
+              )
+              const hokseid = get(props, "this.props.location.state.hokseid")
+              let fromRaportitSuunnitelmat: IHOKS[] = []
+              if (fromRaportit && oppijaoid) {
+                const oppija = koulutuksenJarjestaja.search.oppija(oppijaoid)
+                if (!oppija) {
+                  await koulutuksenJarjestaja.search.fetchOppija(oppijaoid)
+                }
+                fromRaportitSuunnitelmat = oppija ? oppija.suunnitelmat : []
+              }
+              const suunnitelma =
+                fromRaportitSuunnitelmat.length > 0
+                  ? find(fromRaportitSuunnitelmat, h => h.eid === hokseid)
+                  : find(props.suunnitelmat, h => h.eid === props.hoksId)
+              if (suunnitelma) {
+                await suunnitelma.fetchDetails()
+                await suunnitelma.fetchOpiskelijapalauteTilat()
+                await suunnitelma.fetchOsaamispisteet()
+              }
             }
-            fromRaportitSuunnitelmat = oppija ? oppija.suunnitelmat : []
-          }
-          const suunnitelma =
-            fromRaportitSuunnitelmat.length > 0
-              ? find(fromRaportitSuunnitelmat, h => h.eid === hokseid)
-              : find(this.props.suunnitelmat, h => h.eid === this.props.hoksId)
-          if (suunnitelma) {
-            await suunnitelma.fetchDetails()
-            await suunnitelma.fetchOpiskelijapalauteTilat()
-            await suunnitelma.fetchOsaamispisteet()
-          }
-        }
-      },
-      { fireImmediately: true }
-    )
-  }
+          },
+          { fireImmediately: true }
+        )
+      }
+    }, [])
 
-  componentWillUnmount() {
-    this.disposeReaction()
-  }
+    // TODO: redirect to root after logout, check implementation in src/routes/OmienOpintojenSuunnittelu.tsx
+    const setActiveTab = (route: string) => () => navigate(route)
 
-  // TODO: redirect to root after logout, check implementation in src/routes/OmienOpintojenSuunnittelu.tsx
-  setActiveTab = (route: string) => () => {
-    navigate(route)
-  }
-
-  render() {
-    const { hoksId, location, suunnitelmat, oppija, laitosId } = this.props
+    const location: Location<{
+      fromRaportit: boolean
+      oppijaoid: string | null
+      hokseid: string | null
+    }> = useLocation()
+    const { hoksId, suunnitelmat, oppija, laitosId } = props
     const suunnitelmaHoksId =
-      this.props.location &&
-      this.props.location.state &&
-      this.props.location.state.fromRaportit
-        ? this.props.location.state.hokseid
+      location && location.state && location.state.fromRaportit
+        ? location.state.hokseid
         : hoksId
     const suunnitelma = find(suunnitelmat, h => h.eid === suunnitelmaHoksId)
     if (!oppija || !suunnitelma) {
@@ -160,7 +145,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                 <SectionItems>
                   <SectionItem
                     selected={location?.pathname === hoksPath}
-                    onClick={this.setActiveTab(hoksPath)}
+                    onClick={setActiveTab(hoksPath)}
                     title={
                       <FormattedMessage
                         id="koulutuksenJarjestaja.opiskelija.tavoiteTitle"
@@ -172,7 +157,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                   </SectionItem>
                   <SectionItem
                     selected={location?.pathname === osaamisPath}
-                    onClick={this.setActiveTab(osaamisPath)}
+                    onClick={setActiveTab(osaamisPath)}
                     title={
                       <FormattedMessage
                         id="koulutuksenJarjestaja.opiskelija.aiempiOsaaminenTitle"
@@ -184,7 +169,7 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
                   </SectionItem>
                   <SectionItem
                     selected={location?.pathname === opsPath}
-                    onClick={this.setActiveTab(opsPath)}
+                    onClick={setActiveTab(opsPath)}
                     title={
                       <FormattedMessage
                         id="koulutuksenJarjestaja.opiskelija.opiskelusuunnitelmaTitle"
@@ -203,100 +188,116 @@ export class KoulutuksenJarjestajaHOKS extends React.Component<
         <BackgroundContainer>
           <Container>
             <PaddedContent>
-              <Router basepath={hoksPath}>
-                <Tavoitteet
-                  path="/"
-                  student={oppija.henkilotiedot}
-                  hoks={suunnitelma}
-                  showOpiskelijapalaute={!suunnitelma.isTuvaHoks}
-                  titles={{
-                    heading: (
-                      <FormattedMessage
-                        id="koulutuksenJarjestaja.tavoite.title"
-                        defaultMessage="Opiskelijan tavoite ja perustiedot"
-                      />
-                    ),
-                    goals: (
-                      <FormattedMessage
-                        id="koulutuksenJarjestaja.tavoite.opiskelijanTavoitteetTitle"
-                        defaultMessage="Opiskelijan tavoitteet"
-                      />
-                    ),
-                    personalDetails: (
-                      <FormattedMessage
-                        id="koulutuksenJarjestaja.tavoite.henkilotiedotTitle"
-                        defaultMessage="Henkilötiedot"
-                      />
-                    )
-                  }}
-                />
-                <AiempiOsaaminen
-                  path="osaaminen"
-                  aiemminHankitutTutkinnonOsat={
-                    suunnitelma ? suunnitelma.aiemminHankitutTutkinnonOsat : []
-                  }
-                  heading={
-                    <FormattedMessage
-                      id="koulutuksenJarjestaja.aiempiOsaaminen.title"
-                      defaultMessage="Aiempi osaaminen"
+              <Routes>
+                <Route
+                  path={`${hoksPath}/`}
+                  element={
+                    <Tavoitteet
+                      student={oppija.henkilotiedot}
+                      hoks={suunnitelma}
+                      showOpiskelijapalaute={!suunnitelma.isTuvaHoks}
+                      titles={{
+                        heading: (
+                          <FormattedMessage
+                            id="koulutuksenJarjestaja.tavoite.title"
+                            defaultMessage="Opiskelijan tavoite ja perustiedot"
+                          />
+                        ),
+                        goals: (
+                          <FormattedMessage
+                            id="koulutuksenJarjestaja.tavoite.opiskelijanTavoitteetTitle"
+                            defaultMessage="Opiskelijan tavoitteet"
+                          />
+                        ),
+                        personalDetails: (
+                          <FormattedMessage
+                            id="koulutuksenJarjestaja.tavoite.henkilotiedotTitle"
+                            defaultMessage="Henkilötiedot"
+                          />
+                        )
+                      }}
                     />
                   }
-                  essentialFactor={
-                    <EssentialFactorContainer>
-                      <FormattedMessage
-                        id="koulutuksenJarjestaja.opiskelusuunnitelma.aiemminHankittuOlennainenSeikkaVirkailijaDescription"
-                        defaultMessage="Tämän tutkinnon osan osaamisen tunnistamiseen ja tunnustamiseen liittyy olennaista tietoa. "
-                      />
-                      <HelpButton
-                        helpContent={
+                />
+
+                <Route
+                  path={`${hoksPath}/osaaminen`}
+                  element={
+                    <AiempiOsaaminen
+                      aiemminHankitutTutkinnonOsat={
+                        suunnitelma
+                          ? suunnitelma.aiemminHankitutTutkinnonOsat
+                          : []
+                      }
+                      heading={
+                        <FormattedMessage
+                          id="koulutuksenJarjestaja.aiempiOsaaminen.title"
+                          defaultMessage="Aiempi osaaminen"
+                        />
+                      }
+                      essentialFactor={
+                        <EssentialFactorContainer>
                           <FormattedMessage
-                            id="koulutuksenJarjestaja.opiskelusuunnitelma.aiemminHankittuOlennainenSeikkaVirkailijaHelpLabel"
-                            defaultMessage="Olennainen seikka aputeksti virkailija"
+                            id="koulutuksenJarjestaja.opiskelusuunnitelma.aiemminHankittuOlennainenSeikkaVirkailijaDescription"
+                            defaultMessage="Tämän tutkinnon osan osaamisen tunnistamiseen ja tunnustamiseen liittyy olennaista tietoa. "
                           />
-                        }
-                      />
-                    </EssentialFactorContainer>
+                          <HelpButton
+                            helpContent={
+                              <FormattedMessage
+                                id="koulutuksenJarjestaja.opiskelusuunnitelma.aiemminHankittuOlennainenSeikkaVirkailijaHelpLabel"
+                                defaultMessage="Olennainen seikka aputeksti virkailija"
+                              />
+                            }
+                          />
+                        </EssentialFactorContainer>
+                      }
+                    />
                   }
                 />
-                <Opiskelusuunnitelma
-                  path="opiskelusuunnitelma"
-                  plan={suunnitelma}
-                  elements={{
-                    heading: (
-                      <FormattedMessage
-                        id="koulutuksenJarjestaja.opiskelusuunnitelma.title"
-                        defaultMessage="Opiskelusuunnitelma"
-                      />
-                    ),
-                    goals: (
-                      <FormattedMessage
-                        id="koulutuksenJarjestaja.opiskelusuunnitelma.tavoitteetTitle"
-                        defaultMessage="Opintojen eteneminen"
-                      />
-                    ),
-                    essentialFactor: (
-                      <EssentialFactorContainer>
-                        <FormattedMessage
-                          id="koulutuksenJarjestaja.opiskelusuunnitelma.olennainenSeikkaDescription"
-                          defaultMessage="Tämän tutkinnon osan toteutukseen liittyy olennaista tietoa."
-                        />
-                        <HelpButton
-                          helpContent={
+
+                <Route
+                  path={`${hoksPath}/opiskelusuunnitelma`}
+                  element={
+                    <Opiskelusuunnitelma
+                      plan={suunnitelma}
+                      elements={{
+                        heading: (
+                          <FormattedMessage
+                            id="koulutuksenJarjestaja.opiskelusuunnitelma.title"
+                            defaultMessage="Opiskelusuunnitelma"
+                          />
+                        ),
+                        goals: (
+                          <FormattedMessage
+                            id="koulutuksenJarjestaja.opiskelusuunnitelma.tavoitteetTitle"
+                            defaultMessage="Opintojen eteneminen"
+                          />
+                        ),
+                        essentialFactor: (
+                          <EssentialFactorContainer>
                             <FormattedMessage
-                              id="koulutuksenJarjestaja.opiskelusuunnitelma.olennainenSeikkaHelpLabel"
-                              defaultMessage="Olennainen seikka aputeksti virkailija"
+                              id="koulutuksenJarjestaja.opiskelusuunnitelma.olennainenSeikkaDescription"
+                              defaultMessage="Tämän tutkinnon osan toteutukseen liittyy olennaista tietoa."
                             />
-                          }
-                        />
-                      </EssentialFactorContainer>
-                    )
-                  }}
+                            <HelpButton
+                              helpContent={
+                                <FormattedMessage
+                                  id="koulutuksenJarjestaja.opiskelusuunnitelma.olennainenSeikkaHelpLabel"
+                                  defaultMessage="Olennainen seikka aputeksti virkailija"
+                                />
+                              }
+                            />
+                          </EssentialFactorContainer>
+                        )
+                      }}
+                    />
+                  }
                 />
-              </Router>
+              </Routes>
             </PaddedContent>
           </Container>
         </BackgroundContainer>
       </React.Fragment>
     )
-  }
-}
+  })
+)

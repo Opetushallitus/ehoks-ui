@@ -1,11 +1,11 @@
-import { Link } from "@reach/router"
+import { Link } from "react-router-dom"
 import { Accordion } from "components/Accordion"
 import { Button } from "components/Button"
 import { ModalDialog } from "components/ModalDialogs/ModalDialog"
 import { inject, observer } from "mobx-react"
 import { IHOKS } from "models/HOKS"
 import { ISessionUser } from "models/SessionUser"
-import React from "react"
+import React, { useState } from "react"
 import { FormattedMessage } from "react-intl"
 import styled from "../../styled"
 
@@ -18,7 +18,7 @@ const DeleteMessageContainer = styled("div")`
 
 const ButtonContainer = styled("div")`
   display: flex;
-  align-items: left;
+  align-items: start;
   justify-content: left;
   margin: 10px 0 10px 0;
 `
@@ -75,43 +75,32 @@ interface HoksPoistoProps {
   toggleHoksPoisto: (accordion: string) => () => void
 }
 
-@inject("store")
-@observer
-export class HoksPoisto extends React.Component<
-  HoksPoistoProps,
-  HoksPoistoState
-> {
-  state: HoksPoistoState = {
-    hoksPoistoModalOpen: false
-  }
-
-  closeHoksPoistoModal = () => {
-    this.setState({
+export const HoksPoisto = inject("store")(
+  observer((props: HoksPoistoProps) => {
+    const [state, setState] = useState<HoksPoistoState>({
       hoksPoistoModalOpen: false
     })
-  }
 
-  openHoksPoistoModal = () => {
-    this.setState({
-      hoksPoistoModalOpen: true
-    })
-  }
+    const closeHoksPoistoModal = () => {
+      setState({
+        hoksPoistoModalOpen: false
+      })
+    }
 
-  shallowDeleteHoks = async (hoks: IHOKS) => {
-    hoks.shallowDelete()
-    this.setState({
-      hoksPoistoModalOpen: false
-    })
-  }
+    const openHoksPoistoModal = () => {
+      setState({
+        hoksPoistoModalOpen: true
+      })
+    }
 
-  render() {
-    const {
-      hoks,
-      student,
-      title,
-      hoksPoistoOpen,
-      toggleHoksPoisto
-    } = this.props
+    const shallowDeleteHoks = async (hoks: IHOKS) => {
+      hoks.shallowDelete()
+      setState({
+        hoksPoistoModalOpen: false
+      })
+    }
+
+    const { hoks, student, title, hoksPoistoOpen, toggleHoksPoisto } = props
 
     return (
       <Accordion
@@ -128,7 +117,7 @@ export class HoksPoisto extends React.Component<
         </DeleteMessageContainer>
         <br />
         <ButtonContainer>
-          <DeleteHoksButton onClick={this.openHoksPoistoModal}>
+          <DeleteHoksButton onClick={openHoksPoistoModal}>
             <FormattedMessage
               id="tavoitteet.PoistaHoks"
               defaultMessage="placeholder"
@@ -137,8 +126,8 @@ export class HoksPoisto extends React.Component<
         </ButtonContainer>
 
         <ModalDialog
-          open={this.state.hoksPoistoModalOpen}
-          closeModal={this.closeHoksPoistoModal}
+          open={state.hoksPoistoModalOpen}
+          closeModal={closeHoksPoistoModal}
           label="Haluatko varmasti poistaa hoksin?"
         >
           <b>
@@ -197,7 +186,7 @@ export class HoksPoisto extends React.Component<
           <ButtonContainer>
             <DeleteLink
               to={`/ehoks-virkailija-ui/koulutuksenjarjestaja`}
-              onClick={() => this.shallowDeleteHoks(hoks)}
+              onClick={() => shallowDeleteHoks(hoks)}
             >
               <DeleteHoksButton>
                 <FormattedMessage
@@ -206,7 +195,7 @@ export class HoksPoisto extends React.Component<
                 />
               </DeleteHoksButton>
             </DeleteLink>
-            <CancelButton onClick={this.closeHoksPoistoModal}>
+            <CancelButton onClick={closeHoksPoistoModal}>
               <FormattedMessage
                 id="tavoitteet.DeleteModalPeruutaButton"
                 defaultMessage="Peruuta"
@@ -216,5 +205,5 @@ export class HoksPoisto extends React.Component<
         </ModalDialog>
       </Accordion>
     )
-  }
-}
+  })
+)

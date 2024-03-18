@@ -1,4 +1,4 @@
-import { Link, RouteComponentProps } from "@reach/router"
+import { Link } from "react-router-dom"
 import { Container, PaddedContent } from "components/Container"
 import { ContentArea } from "components/ContentArea"
 import { FormattedDate } from "components/FormattedDate"
@@ -11,11 +11,11 @@ import { TableCell } from "components/Table/TableCell"
 import { TableHead } from "components/Table/TableHead"
 import { TableRow } from "components/Table/TableRow"
 import debounce from "lodash.debounce"
-import { IReactionDisposer, reaction } from "mobx"
+import { reaction } from "mobx"
 import { inject, observer } from "mobx-react"
-import React from "react"
+import React, { useEffect } from "react"
 import { MdEdit } from "react-icons/md"
-import { FormattedMessage, intlShape } from "react-intl"
+import { useIntl, FormattedMessage } from "react-intl"
 import Paging from "routes/KoulutuksenJarjestaja/Paging"
 import { SearchSortKey } from "stores/KoulutuksenJarjestajaStore"
 import { IRootStore } from "stores/RootStore"
@@ -52,83 +52,69 @@ const Spinner = styled(LoadingSpinner)`
   right: 0px;
 `
 
-interface KoulutuksenJarjestajaProps extends RouteComponentProps {
+interface KoulutuksenJarjestajaProps {
   store?: IRootStore
   // from path parameters
   orgId?: string
 }
 
-@inject("store")
-@observer
-export class KoulutuksenJarjestaja extends React.Component<
-  KoulutuksenJarjestajaProps
-> {
-  static contextTypes = {
-    intl: intlShape
-  }
-  disposeLoginReaction: IReactionDisposer
+export const KoulutuksenJarjestaja = inject("store")(
+  observer((props: KoulutuksenJarjestajaProps) => {
+    const debouncedFetchResults = debounce(() => {
+      const { koulutuksenJarjestaja } = props.store!
+      koulutuksenJarjestaja.search.fetchOppijat()
+    }, 500)
 
-  debouncedFetchResults = debounce(() => {
-    const { koulutuksenJarjestaja } = this.props.store!
-    koulutuksenJarjestaja.search.fetchOppijat()
-  }, 500)
-
-  componentDidMount() {
-    const { koulutuksenJarjestaja, session } = this.props.store!
-    const orgId = this.props.orgId
-
-    this.disposeLoginReaction = reaction(
-      () => session.isLoggedIn && session.organisations.length > 0,
-      async hasLoggedIn => {
-        if (orgId && orgId !== session.selectedOrganisationOid) {
-          session.changeSelectedOrganisationOid(orgId)
-        }
-        if (hasLoggedIn) {
-          await koulutuksenJarjestaja.search.fetchOppijat()
-          window.requestAnimationFrame(() => {
-            window.scrollTo(0, 0)
-          })
-        }
+    useEffect(() => {
+      const { koulutuksenJarjestaja, session } = props.store!
+      const orgId = props.orgId
+      return () => {
+        reaction(
+          () => session.isLoggedIn && session.organisations.length > 0,
+          async hasLoggedIn => {
+            if (orgId && orgId !== session.selectedOrganisationOid) {
+              session.changeSelectedOrganisationOid(orgId)
+            }
+            if (hasLoggedIn) {
+              await koulutuksenJarjestaja.search.fetchOppijat()
+              window.requestAnimationFrame(() => {
+                window.scrollTo(0, 0)
+              })
+            }
+          }
+        )
       }
-    )
-  }
+    }, [])
 
-  componentWillUnmount() {
-    this.disposeLoginReaction()
-  }
+    const updateSearchText = (field: SearchSortKey) => (
+      event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+      const { koulutuksenJarjestaja } = props.store!
+      koulutuksenJarjestaja.search.changeSearchText(field, event.target.value)
+      debouncedFetchResults()
+    }
 
-  formSubmit = (event: React.FormEvent) => {
-    event.preventDefault()
-  }
+    const changeSort = (sortName: SearchSortKey) => {
+      const { koulutuksenJarjestaja } = props.store!
+      koulutuksenJarjestaja.search.changeSort(sortName)
+    }
 
-  updateSearchText = (field: SearchSortKey) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { koulutuksenJarjestaja } = this.props.store!
-    koulutuksenJarjestaja.search.changeSearchText(field, event.target.value)
-    this.debouncedFetchResults()
-  }
-
-  changeSort = (sortName: SearchSortKey) => {
-    const { koulutuksenJarjestaja } = this.props.store!
-    koulutuksenJarjestaja.search.changeSort(sortName)
-  }
-
-  goToPage = (index: number) => () => {
-    const { koulutuksenJarjestaja } = this.props.store!
-    koulutuksenJarjestaja.search.changeActivePage(index)
-  }
-
-  onPaginationResultEnter = (index: number) => (event: React.KeyboardEvent) => {
-    const { koulutuksenJarjestaja } = this.props.store!
-    if (event.key === "Enter" || event.key === " ") {
+    const goToPage = (index: number) => () => {
+      const { koulutuksenJarjestaja } = props.store!
       koulutuksenJarjestaja.search.changeActivePage(index)
     }
-  }
 
-  render() {
-    const { intl } = this.context
-    const { koulutuksenJarjestaja, session } = this.props.store!
+    const onPaginationResultEnter = (index: number) => (
+      event: React.KeyboardEvent
+    ) => {
+      const { koulutuksenJarjestaja } = props.store!
+      if (event.key === "Enter" || event.key === " ") {
+        koulutuksenJarjestaja.search.changeActivePage(index)
+      }
+    }
+
+    const intl = useIntl()
+    const { koulutuksenJarjestaja, session } = props.store!
     const {
       activePage,
       perPage,
@@ -139,7 +125,7 @@ export class KoulutuksenJarjestaja extends React.Component<
       isLoading,
       searchTexts
     } = koulutuksenJarjestaja.search
-    const selectedOrganisationOid = this.props.orgId
+    const selectedOrganisationOid = props.orgId
 
     return (
       <BackgroundContainer>
@@ -159,8 +145,8 @@ export class KoulutuksenJarjestaja extends React.Component<
                 sortBy={sortBy}
                 sortDirection={sortDirection}
                 searchTexts={searchTexts}
-                onSort={this.changeSort}
-                onUpdateSearchText={this.updateSearchText}
+                onSort={changeSort}
+                onUpdateSearchText={updateSearchText}
                 sortTitle={intl.formatMessage({
                   id: "koulutuksenJarjestaja.jarjestaTitle"
                 })}
@@ -281,8 +267,8 @@ export class KoulutuksenJarjestaja extends React.Component<
                   activePage={activePage}
                   totalResultsCount={totalResultsCount}
                   perPage={perPage}
-                  goToPage={this.goToPage}
-                  onPaginationResultEnter={this.onPaginationResultEnter}
+                  goToPage={goToPage}
+                  onPaginationResultEnter={onPaginationResultEnter}
                 />
               )}
             </ContentArea>
@@ -290,5 +276,5 @@ export class KoulutuksenJarjestaja extends React.Component<
         </Container>
       </BackgroundContainer>
     )
-  }
-}
+  })
+)

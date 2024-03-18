@@ -1,4 +1,3 @@
-import { RouteComponentProps } from "@reach/router"
 import { Accordion } from "components/Accordion"
 import { AccordionTitle } from "components/AccordionTitle"
 import { AppContext } from "components/AppContext"
@@ -10,7 +9,7 @@ import { LabeledColumn } from "components/LabeledColumn"
 import { inject, observer } from "mobx-react"
 import { IHOKS } from "models/HOKS"
 import { ISessionUser } from "models/SessionUser"
-import React from "react"
+import React, { useState, useContext } from "react"
 import { FormattedMessage } from "react-intl"
 import { Opiskelijapalaute } from "../../../virkailija/src/routes/KoulutuksenJarjestaja/Opiskelijapalaute"
 import { IKoodistoVastaus } from "../../models/KoodistoVastaus"
@@ -465,42 +464,36 @@ export interface TavoitteetState {
   activeAccordions: {
     [accordionName: string]: boolean
   }
+  hoksPoistoModalOpen: boolean
 }
 
-@inject("store")
-@observer
-export class Tavoitteet extends React.Component<
-  TavoitteetProps & RouteComponentProps,
-  TavoitteetState
-> {
-  static contextType = AppContext
-  declare context: React.ContextType<typeof AppContext>
-  state = {
-    activeAccordions: {
-      hoksDates: false,
-      degreeOrEducation: false,
-      personalDetails: false,
-      personalGoal: false,
-      opiskelijapalaute: false,
-      hoksPoisto: false
-    },
-    hoksPoistoModalOpen: false
-  }
-
-  toggleAccordion = (accordion: string) => () => {
-    this.setState(state => ({
-      ...state,
+export const Tavoitteet = inject("store")(
+  observer((props: TavoitteetProps) => {
+    const [state, setState] = useState<TavoitteetState>({
       activeAccordions: {
-        ...state.activeAccordions,
-        [accordion]: !state.activeAccordions[accordion]
-      }
-    }))
-  }
+        hoksDates: false,
+        degreeOrEducation: false,
+        personalDetails: false,
+        personalGoal: false,
+        opiskelijapalaute: false,
+        hoksPoisto: false
+      },
+      hoksPoistoModalOpen: false
+    })
 
-  render() {
-    const { student, hoks, titles: customTitles = {} } = this.props
-    const session = this.props.store!.session
-    const { app } = this.context
+    const toggleAccordion = (accordion: string) => () => {
+      setState({
+        ...state,
+        activeAccordions: {
+          ...state.activeAccordions,
+          [accordion]: !state.activeAccordions[accordion]
+        }
+      })
+    }
+
+    const { student, hoks, titles: customTitles = {} } = props
+    const session = props.store!.session
+    const { app } = useContext(AppContext)
 
     const titles = {
       heading: customTitles.heading || (
@@ -573,41 +566,39 @@ export class Tavoitteet extends React.Component<
 
         {app === "oppija" && (
           <HoksPaivamaarat
-            hoksPaivamaaratOpen={this.state.activeAccordions.hoksDates}
-            toggleHoksPaivamaarat={this.toggleAccordion("hoksDates")}
+            hoksPaivamaaratOpen={state.activeAccordions.hoksDates}
+            toggleHoksPaivamaarat={toggleAccordion("hoksDates")}
             hoks={hoks}
           />
         )}
 
         <Urasuunnitelma
           title={titles.goals}
-          urasuunnitelmaOpen={this.state.activeAccordions.personalGoal}
-          toggleUrasuunnitelma={this.toggleAccordion("personalGoal")}
+          urasuunnitelmaOpen={state.activeAccordions.personalGoal}
+          toggleUrasuunnitelma={toggleAccordion("personalGoal")}
           urasuunnitelma={hoks.urasuunnitelma}
         />
 
         <TutkintoTaiKoulutus
           title={titles.degreeOrEducation}
-          tutkintoTaiKoulutusOpen={
-            this.state.activeAccordions.degreeOrEducation
-          }
-          toggleTutkintoTaiKoulutus={this.toggleAccordion("degreeOrEducation")}
+          tutkintoTaiKoulutusOpen={state.activeAccordions.degreeOrEducation}
+          toggleTutkintoTaiKoulutus={toggleAccordion("degreeOrEducation")}
           plan={hoks}
         />
 
         <Henkilotiedot
           title={titles.personalDetails}
-          henkilotiedotOpen={this.state.activeAccordions.personalDetails}
-          toggleHenkilotiedot={this.toggleAccordion("personalDetails")}
+          henkilotiedotOpen={state.activeAccordions.personalDetails}
+          toggleHenkilotiedot={toggleAccordion("personalDetails")}
           hoks={hoks}
           student={student}
           app={app}
         />
 
-        {this.props.showOpiskelijapalaute && !hoks.isTuvaHoks && (
+        {props.showOpiskelijapalaute && !hoks.isTuvaHoks && (
           <Opiskelijapalaute
-            toggleAccordion={this.toggleAccordion}
-            open={this.state.activeAccordions.opiskelijapalaute}
+            toggleAccordion={toggleAccordion}
+            open={state.activeAccordions.opiskelijapalaute}
             title={titles.opiskelijapalaute}
             palauteTilat={hoks.opiskelijapalauteTilat}
             hoksID={hoks.id}
@@ -619,11 +610,11 @@ export class Tavoitteet extends React.Component<
             hoks={hoks}
             student={student}
             title={titles.hoksPoisto}
-            hoksPoistoOpen={this.state.activeAccordions.hoksPoisto}
-            toggleHoksPoisto={this.toggleAccordion}
+            hoksPoistoOpen={state.activeAccordions.hoksPoisto}
+            toggleHoksPoisto={toggleAccordion}
           />
         )}
       </React.Fragment>
     )
-  }
-}
+  })
+)

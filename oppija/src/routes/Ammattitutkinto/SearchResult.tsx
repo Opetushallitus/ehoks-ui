@@ -1,7 +1,7 @@
 import { IPeruste } from "models/Peruste"
 import React from "react"
 import { MdLaunch } from "react-icons/md"
-import { FormattedMessage, InjectedIntl } from "react-intl"
+import { FormattedMessage, IntlShape } from "react-intl"
 import styled from "styled"
 
 const Container = styled("div")`
@@ -40,7 +40,7 @@ const Values = styled("div")`
 
 export interface SearchResultProps {
   result: IPeruste
-  intl: InjectedIntl
+  intl: IntlShape
 }
 
 export class SearchResult extends React.Component<SearchResultProps> {

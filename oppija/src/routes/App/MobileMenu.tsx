@@ -1,4 +1,4 @@
-import { Link } from "@reach/router"
+import { Link } from "react-router-dom"
 import React from "react"
 import { MdClose } from "react-icons/md"
 import { FormattedMessage } from "react-intl"

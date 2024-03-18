@@ -1,4 +1,4 @@
-import { Link } from "@reach/router"
+import { Link } from "react-router-dom"
 import { Icon } from "components/Icon"
 import { TitleContainer } from "components/TitleContainer"
 import React from "react"
@@ -42,22 +42,20 @@ export interface LinkItemProps {
 /**
  * List item with link target, title, subtitle and icon
  */
-export class LinkItem extends React.Component<LinkItemProps> {
-  render() {
-    const { className, icon, title, subTitle, to } = this.props
-    return (
-      <StyledLink className={className} to={to}>
-        <LinkItemContainer>
-          <Icon>{icon}</Icon>
-          <TitleContainer>
-            <Title>{title}</Title>
-            <SubTitle>{subTitle}</SubTitle>
-          </TitleContainer>
-          <Icon>
-            <GoChevronRight size="24" color="#000" />
-          </Icon>
-        </LinkItemContainer>
-      </StyledLink>
-    )
-  }
+export const LinkItem = (props: LinkItemProps) => {
+  const { className, icon, title, subTitle, to } = props
+  return (
+    <StyledLink className={className} to={to}>
+      <LinkItemContainer>
+        <Icon>{icon}</Icon>
+        <TitleContainer>
+          <Title>{title}</Title>
+          <SubTitle>{subTitle}</SubTitle>
+        </TitleContainer>
+        <Icon>
+          <GoChevronRight size="24" color="#000" />
+        </Icon>
+      </LinkItemContainer>
+    </StyledLink>
+  )
 }

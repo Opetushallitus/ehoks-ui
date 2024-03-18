@@ -1,5 +1,5 @@
 import React from "react"
-import { FormattedMessage, InjectedIntl, intlShape } from "react-intl"
+import { useIntl, FormattedMessage } from "react-intl"
 import styled from "styled"
 import { Collapse } from "./Collapse"
 import { Expand } from "./Expand"
@@ -90,14 +90,13 @@ const ArvioijatTable = styled(Table)`
 
 const CollapseIcon = ({
   hasActiveShare,
-  toggle,
-  intl
+  toggle
 }: {
   hasActiveShare: boolean
   toggle: (name: ToggleableItems) => () => void
-  intl: InjectedIntl
-}) =>
-  !hasActiveShare ? (
+}) => {
+  const intl = useIntl()
+  return !hasActiveShare ? (
     <LocationsContainerExpanded>
       <IconContainer
         onClick={toggle("details")}
@@ -109,17 +108,17 @@ const CollapseIcon = ({
       </IconContainer>
     </LocationsContainerExpanded>
   ) : null
+}
 
 const ExpandIcon = ({
   showExpand,
-  toggle,
-  intl
+  toggle
 }: {
   showExpand: boolean
   toggle: (name: ToggleableItems) => () => void
-  intl: InjectedIntl
-}) =>
-  showExpand ? (
+}) => {
+  const intl = useIntl()
+  return showExpand ? (
     <IconContainer
       onClick={toggle("details")}
       aria-label={intl.formatMessage({
@@ -130,6 +129,7 @@ const ExpandIcon = ({
       <Expand size={40} />
     </IconContainer>
   ) : null
+}
 
 const OsaamisenHankkimistavatExpanded = ({
   fadedColor,
@@ -486,144 +486,133 @@ interface DetailsProps {
   hoksEid?: string
 }
 
-export class Details extends React.Component<DetailsProps> {
-  static contextTypes = {
-    intl: intlShape
-  }
+export const Details = (props: DetailsProps) => {
+  const {
+    osaamisenOsoittamiset = [],
+    olennainenSeikka,
+    expanded,
+    fadedColor = "",
+    koodiUri,
+    osaamisenHankkimistavat = [],
+    share,
+    hoksEid,
+    moduleId,
+    tutkinnonOsaTyyppi,
+    toggle,
+    todentamisenProsessi,
+    koulutuksenJarjestaja,
+    tarkentavatTiedotOsaamisenArvioija
+  } = props
 
-  render() {
-    const {
-      osaamisenOsoittamiset = [],
-      olennainenSeikka,
-      expanded,
-      fadedColor = "",
-      koodiUri,
-      osaamisenHankkimistavat = [],
-      share,
-      hoksEid,
-      moduleId,
-      tutkinnonOsaTyyppi,
-      toggle,
-      todentamisenProsessi,
-      koulutuksenJarjestaja,
-      tarkentavatTiedotOsaamisenArvioija
-    } = this.props
-    const { intl } = this.context
-
-    const todentamisenProsessiKoodi =
-      todentamisenProsessi && todentamisenProsessi.koodiUri
-    const showExpand =
-      !!osaamisenOsoittamiset.length ||
-      !!osaamisenHankkimistavat.length ||
-      todentamisenProsessiKoodi === TodentamisenProsessiKoodi.OHJAUS_NAYTTOON ||
-      !!tarkentavatTiedotOsaamisenArvioija
-    const isAiempiOsaaminen = !!todentamisenProsessiKoodi
-    // TODO hasActiveShare matches now for koodiUri and might show multiple share modals, should use module-id and check per module
-    const hasActiveShare = moduleId === share?.moduleId
-    const shareType = typeof share !== "undefined" ? share.type : undefined
-    const firstOsaamisenHankkimistapa =
-      shareType === ShareType.osaamisenhankkiminen && osaamisenHankkimistavat[0]
-        ? osaamisenHankkimistavat[0]
-        : undefined
-
-    const instructor = firstOsaamisenHankkimistapa
-      ? {
-          name: firstOsaamisenHankkimistapa.ohjaaja
-            ? firstOsaamisenHankkimistapa.ohjaaja.nimi || ""
-            : "",
-          email: firstOsaamisenHankkimistapa.ohjaaja
-            ? firstOsaamisenHankkimistapa.ohjaaja.sahkoposti || ""
-            : "",
-          organisation: firstOsaamisenHankkimistapa.selite
-        }
-      : undefined
-    const defaultPeriod = firstOsaamisenHankkimistapa
-      ? {
-          start: firstOsaamisenHankkimistapa.alku,
-          end: firstOsaamisenHankkimistapa.loppu
-        }
+  const todentamisenProsessiKoodi =
+    todentamisenProsessi && todentamisenProsessi.koodiUri
+  const showExpand =
+    !!osaamisenOsoittamiset.length ||
+    !!osaamisenHankkimistavat.length ||
+    todentamisenProsessiKoodi === TodentamisenProsessiKoodi.OHJAUS_NAYTTOON ||
+    !!tarkentavatTiedotOsaamisenArvioija
+  const isAiempiOsaaminen = !!todentamisenProsessiKoodi
+  // TODO hasActiveShare matches now for koodiUri and might show multiple share modals, should use module-id and check per module
+  const hasActiveShare = moduleId === share?.moduleId
+  const shareType = typeof share !== "undefined" ? share.type : undefined
+  const firstOsaamisenHankkimistapa =
+    shareType === ShareType.osaamisenhankkiminen && osaamisenHankkimistavat[0]
+      ? osaamisenHankkimistavat[0]
       : undefined
 
-    return expanded ? (
-      <DetailsExpanded
-        fadedColor={fadedColor}
-        data-testid="TutkinnonOsa.DetailsExpanded"
-      >
+  const instructor = firstOsaamisenHankkimistapa
+    ? {
+        name: firstOsaamisenHankkimistapa.ohjaaja
+          ? firstOsaamisenHankkimistapa.ohjaaja.nimi || ""
+          : "",
+        email: firstOsaamisenHankkimistapa.ohjaaja
+          ? firstOsaamisenHankkimistapa.ohjaaja.sahkoposti || ""
+          : "",
+        organisation: firstOsaamisenHankkimistapa.selite
+      }
+    : undefined
+  const defaultPeriod = firstOsaamisenHankkimistapa
+    ? {
+        start: firstOsaamisenHankkimistapa.alku,
+        end: firstOsaamisenHankkimistapa.loppu
+      }
+    : undefined
+
+  return expanded ? (
+    <DetailsExpanded
+      fadedColor={fadedColor}
+      data-testid="TutkinnonOsa.DetailsExpanded"
+    >
+      <DetailsContent>
+        <CollapseIcon hasActiveShare={hasActiveShare} toggle={toggle} />
+
+        <TodentamisenProsessiExpanded
+          todentamisenProsessiKoodi={todentamisenProsessiKoodi}
+          todentamisenProsessi={todentamisenProsessi}
+          tarkentavatTiedotOsaamisenArvioija={
+            tarkentavatTiedotOsaamisenArvioija
+          }
+        />
+
+        <OsaamisenHankkimistavatExpanded
+          fadedColor={fadedColor}
+          instructor={instructor}
+          defaultPeriod={defaultPeriod}
+          osaamisenHankkimistavat={osaamisenHankkimistavat}
+          tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
+          tutkinnonOsaModuleId={moduleId}
+          shareModuleId={share?.moduleId}
+          hoksEid={hoksEid}
+        />
+
+        <OsaamisenOsoittamisetExpanded
+          osaamisenOsoittamiset={osaamisenOsoittamiset}
+          fadedColor={fadedColor}
+          koodiUri={koodiUri}
+          shareModuleId={share?.moduleId}
+          hoksEid={hoksEid}
+          tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
+          tutkinnonOsaModuleId={moduleId}
+          todentamisenProsessi={todentamisenProsessi}
+        />
+
+        {olennainenSeikka}
+
+        <AiemmanOsaamisenTodentanutOrganisaatioExpanded
+          isAiempiOsaaminen={isAiempiOsaaminen}
+          koulutuksenJarjestaja={koulutuksenJarjestaja}
+        />
+      </DetailsContent>
+    </DetailsExpanded>
+  ) : (
+    <DetailsCollapsed
+      fadedColor={fadedColor}
+      data-testid="TutkinnonOsa.DetailsCollapsed"
+    >
+      <LocationsContainer>
         <DetailsContent>
-          <CollapseIcon
-            hasActiveShare={hasActiveShare}
-            toggle={toggle}
-            intl={intl}
-          />
-
-          <TodentamisenProsessiExpanded
+          <TodentamisenProsessiCollapsed
             todentamisenProsessiKoodi={todentamisenProsessiKoodi}
             todentamisenProsessi={todentamisenProsessi}
-            tarkentavatTiedotOsaamisenArvioija={
-              tarkentavatTiedotOsaamisenArvioija
-            }
           />
 
-          <OsaamisenHankkimistavatExpanded
-            fadedColor={fadedColor}
-            instructor={instructor}
-            defaultPeriod={defaultPeriod}
+          <OsaamisenHankkimistavatCollapsed
             osaamisenHankkimistavat={osaamisenHankkimistavat}
-            tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
-            tutkinnonOsaModuleId={moduleId}
-            shareModuleId={share?.moduleId}
-            hoksEid={hoksEid}
           />
 
-          <OsaamisenOsoittamisetExpanded
+          <OsaamisenOsoittamisetCollapsed
             osaamisenOsoittamiset={osaamisenOsoittamiset}
-            fadedColor={fadedColor}
-            koodiUri={koodiUri}
-            shareModuleId={share?.moduleId}
-            hoksEid={hoksEid}
-            tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
-            tutkinnonOsaModuleId={moduleId}
-            todentamisenProsessi={todentamisenProsessi}
+            todentamisenProsessiKoodi={todentamisenProsessiKoodi}
           />
 
-          {olennainenSeikka}
-
-          <AiemmanOsaamisenTodentanutOrganisaatioExpanded
+          <AiemmanOsaamisenTodentanutOrganisaatioCollapsed
             isAiempiOsaaminen={isAiempiOsaaminen}
             koulutuksenJarjestaja={koulutuksenJarjestaja}
           />
         </DetailsContent>
-      </DetailsExpanded>
-    ) : (
-      <DetailsCollapsed
-        fadedColor={fadedColor}
-        data-testid="TutkinnonOsa.DetailsCollapsed"
-      >
-        <LocationsContainer>
-          <DetailsContent>
-            <TodentamisenProsessiCollapsed
-              todentamisenProsessiKoodi={todentamisenProsessiKoodi}
-              todentamisenProsessi={todentamisenProsessi}
-            />
 
-            <OsaamisenHankkimistavatCollapsed
-              osaamisenHankkimistavat={osaamisenHankkimistavat}
-            />
-
-            <OsaamisenOsoittamisetCollapsed
-              osaamisenOsoittamiset={osaamisenOsoittamiset}
-              todentamisenProsessiKoodi={todentamisenProsessiKoodi}
-            />
-
-            <AiemmanOsaamisenTodentanutOrganisaatioCollapsed
-              isAiempiOsaaminen={isAiempiOsaaminen}
-              koulutuksenJarjestaja={koulutuksenJarjestaja}
-            />
-          </DetailsContent>
-
-          <ExpandIcon showExpand={showExpand} toggle={toggle} intl={intl} />
-        </LocationsContainer>
-      </DetailsCollapsed>
-    )
-  }
+        <ExpandIcon showExpand={showExpand} toggle={toggle} />
+      </LocationsContainer>
+    </DetailsCollapsed>
+  )
 }

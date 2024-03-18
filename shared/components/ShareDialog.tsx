@@ -5,8 +5,8 @@ import React, {
   useRef,
   useState
 } from "react"
-import { navigate } from "@reach/router"
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl"
+import { useNavigate } from "react-router"
+import { FormattedMessage, injectIntl, IntlShape } from "react-intl"
 import styled from "styled"
 import { HeroButton, LinkButton } from "components/Button"
 import { ModalWithBackground } from "components/ModalDialogs/Modal"
@@ -147,7 +147,7 @@ export interface ShareLinkValidityPeriod {
   end?: string
 }
 
-interface ShareDialogProps extends InjectedIntlProps {
+interface ShareDialogProps {
   active: boolean
   background: string
   /* Used version of react-intl cannot handle React.ReactNode here */
@@ -159,7 +159,7 @@ interface ShareDialogProps extends InjectedIntlProps {
   instructor?: Instructor
   tutkinnonOsaTyyppi?: TutkinnonOsaType
   tutkinnonOsaModuleId: string
-  intl: ReactIntl.InjectedIntl
+  intl: IntlShape
 }
 
 export function ShareDialog(props: ShareDialogProps) {
@@ -189,6 +189,7 @@ export function ShareDialog(props: ShareDialogProps) {
   const [linkCopied, setLinkCopied] = useState(false)
   const [instructorCopied, setInstructorCopied] = useState(false)
   const apiConfig = useContext(APIConfigContext)
+  const navigate = useNavigate()
 
   useLayoutEffect(() => {
     window.requestAnimationFrame(() => {
@@ -225,11 +226,10 @@ export function ShareDialog(props: ShareDialogProps) {
     }
   }
 
-  const close = () => {
+  const close = async () =>
     // as query params are the master data for sharing,
     // closing the dialog is achieved by clearing them
     navigate(window.location.pathname)
-  }
 
   const remove = async (event: React.MouseEvent, uuid: string) => {
     event.preventDefault()

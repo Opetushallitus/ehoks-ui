@@ -1,9 +1,9 @@
-import { Link } from "@reach/router"
+import { Link } from "react-router-dom"
 import { getActiveDomain } from "localeUtils"
 import { inject, observer } from "mobx-react"
-import React from "react"
+import React, { useState } from "react"
 import { MdMenu } from "react-icons/md"
-import { FormattedMessage, intlShape } from "react-intl"
+import { useIntl, FormattedMessage } from "react-intl"
 import { MobileMenu } from "routes/App/MobileMenu"
 import { IRootStore } from "stores/RootStore"
 import { Locale } from "stores/TranslationStore"
@@ -164,53 +164,48 @@ interface AppHeaderState {
   showMenu: boolean
 }
 
-@inject("store")
-@observer
-export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
-  static contextTypes = {
-    intl: intlShape
-  }
-  state = {
-    showMenu: false
-  }
+export const AppHeader = inject("store")(
+  observer((props: AppHeaderProps) => {
+    const [state, setState] = useState<AppHeaderState>({
+      showMenu: false
+    })
 
-  logoutOppija = async (event: React.MouseEvent) => {
-    event.preventDefault()
-    const rootStore = this.props.store
-    // featureflags.casOppija
-    const casOppijaFeatureFlag = true
-    if (casOppijaFeatureFlag) {
-      try {
-        // Ends ehoks session, doesn't end cas session
-        await rootStore!.session.logoutOppija()
-      } finally {
-        // Ends cas session
-        window.location.href =
-          rootStore!.translations.activeLocale === Locale.FI
-            ? rootStore!.environment.casOppijaLogoutUrlFi
-            : rootStore!.environment.casOppijaLogoutUrlSv
+    const logoutOppija = async (event: React.MouseEvent) => {
+      event.preventDefault()
+      const rootStore = props.store
+      // featureflags.casOppija
+      const casOppijaFeatureFlag = true
+      if (casOppijaFeatureFlag) {
+        try {
+          // Ends ehoks session, doesn't end cas session
+          await rootStore!.session.logoutOppija()
+        } finally {
+          // Ends cas session
+          window.location.href =
+            rootStore!.translations.activeLocale === Locale.FI
+              ? rootStore!.environment.casOppijaLogoutUrlFi
+              : rootStore!.environment.casOppijaLogoutUrlSv
+        }
+      } else {
+        rootStore!.session.logoutOppija()
       }
-    } else {
-      rootStore!.session.logoutOppija()
     }
-  }
 
-  changeLocale = (locale: Locale) => (event: React.MouseEvent) => {
-    event.preventDefault()
-    this.props.store!.translations.setActiveLocale(locale)
-  }
+    const changeLocale = (locale: Locale) => (event: React.MouseEvent) => {
+      event.preventDefault()
+      props.store!.translations.setActiveLocale(locale)
+    }
 
-  toggleMenu = () => {
-    this.setState(state => ({ ...state, showMenu: !state.showMenu }))
-  }
+    const toggleMenu = () => {
+      setState({ ...state, showMenu: !state.showMenu })
+    }
 
-  showFeedbackModal = () => {
-    this.props.store!.notifications.makeFeedbackModalVisible()
-  }
+    const showFeedbackModal = () => {
+      props.store!.notifications.makeFeedbackModalVisible()
+    }
 
-  render() {
-    const { store } = this.props
-    const { intl } = this.context
+    const { store } = props
+    const intl = useIntl()
     const { session } = store!
     const { user, isLoggedIn } = session!
     const { activeLocale } = store!.translations
@@ -251,7 +246,7 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
           </TopLinks>
         </TopLinksContainer>
         <TitleContainer>
-          <MobileMenuToggle onClick={this.toggleMenu}>
+          <MobileMenuToggle onClick={toggleMenu}>
             <MdMenu size="40" />
             <h3>
               <FormattedMessage
@@ -270,20 +265,20 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
 
           <FeedbackReminder
             hasFeedbackLinks={hasUnansweredFeedbackLinks}
-            onClick={this.showFeedbackModal}
+            onClick={showFeedbackModal}
           />
           <Flex />
 
           <LanguageSelector loggedIn={isLoggedIn}>
             {activeLocale === Locale.FI ? (
-              <LinkButton onClick={this.changeLocale(Locale.SV)}>
+              <LinkButton onClick={changeLocale(Locale.SV)}>
                 <FormattedMessage
                   id="header.swedishLocaleLink"
                   defaultMessage="På svenska"
                 />
               </LinkButton>
             ) : (
-              <LinkButton onClick={this.changeLocale(Locale.FI)}>
+              <LinkButton onClick={changeLocale(Locale.FI)}>
                 <FormattedMessage
                   id="header.finnishLocaleLink"
                   defaultMessage="Suomeksi"
@@ -303,7 +298,7 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
                 ) : null}
                 {user.firstName} {user.surname}
               </User>
-              <LogoutLink to="" onClick={this.logoutOppija}>
+              <LogoutLink to="" onClick={logoutOppija}>
                 <FormattedMessage
                   id="header.kirjauduUlosLink"
                   defaultMessage="Kirjaudu ulos"
@@ -312,16 +307,16 @@ export class AppHeader extends React.Component<AppHeaderProps, AppHeaderState> {
             </LogoutContainer>
           )}
         </TitleContainer>
-        {this.state.showMenu && (
+        {state.showMenu && (
           <MobileMenu
             activeLocale={activeLocale}
-            changeLocale={this.changeLocale}
-            toggleMenu={this.toggleMenu}
-            logout={this.logoutOppija}
+            changeLocale={changeLocale}
+            toggleMenu={toggleMenu}
+            logout={logoutOppija}
             session={session!}
           />
         )}
       </HeaderContainer>
     )
-  }
-}
+  })
+)

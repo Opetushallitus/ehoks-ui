@@ -6,7 +6,7 @@ import styled from "styled"
 import { Instance } from "mobx-state-tree"
 import { HOKS } from "models/HOKS"
 import { observer } from "mobx-react"
-import { Link } from "@reach/router"
+import { Link } from "react-router-dom"
 import { MdEdit } from "react-icons/md"
 
 const SuunnitelmaContainer = styled("div")`

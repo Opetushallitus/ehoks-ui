@@ -9,7 +9,7 @@ export default class StyleguidistWrapper extends React.Component<{
   render() {
     return (
       <ThemeWrapper>
-        <IntlProvider defaultLocale={Locale.FI}>
+        <IntlProvider defaultLocale={Locale.FI} locale={Locale.FI}>
           {this.props.children}
         </IntlProvider>
       </ThemeWrapper>

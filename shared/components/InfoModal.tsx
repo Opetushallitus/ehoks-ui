@@ -1,6 +1,6 @@
 import React from "react"
 import { MdInfo } from "react-icons/md"
-import { FormattedMessage, intlShape } from "react-intl"
+import { useIntl, FormattedMessage } from "react-intl"
 import { FormattedDate } from "components/FormattedDate"
 import { IKoodistoVastaus } from "../models/KoodistoVastaus"
 import { IKeskeytymisajanjakso } from "../models/Keskeytymisajanjakso"
@@ -76,233 +76,228 @@ interface InfoModalProps {
   ohjaajaPuhelinnumero?: string
 }
 
-export class InfoModal extends React.Component<InfoModalProps> {
-  static contextTypes = {
-    intl: intlShape
-  }
-  render() {
-    const { intl } = this.context
-    const {
-      className,
-      partTimeAmount,
-      osaamisenHankkimistapaKoodisto,
-      perusta,
-      startDate,
-      endDate,
-      nayttoymparistoDetails,
-      keskeytymisajanjaksot,
-      hoksId,
-      opiskeluoikeusOid,
-      oppijaOid,
-      hankkimistapaTyyppi,
-      oppisopimuksenPerusta,
-      ytunnus,
-      ohjaajaNimi,
-      ohjaajaEmail,
-      ohjaajaPuhelinnumero
-    } = this.props
-    return (
-      <Popup
-        trigger={
-          <InfoButton
-            aria-label={intl.formatMessage({
-              id: "infoModal.naytaLisatiedot"
-            })}
-            className={className}
-          >
-            <InfoToggle size="28" color="#3A7A10" />
-          </InfoButton>
-        }
-        modal
-      >
-        <div role="dialog">
-          <Modal>
-            <ModalHeader>
-              <StyledStrong>
-                <FormattedMessage
-                  id="infoModal.lisatietoja"
-                  defaultMessage="Lisätietoja työpaikkajaksosta"
-                />
-              </StyledStrong>
-              <br />
-              <span> {nayttoymparistoDetails}</span>
-              {startDate === endDate ? (
-                <span>
+export const InfoModal = (props: InfoModalProps) => {
+  const intl = useIntl()
+  const {
+    className,
+    partTimeAmount,
+    osaamisenHankkimistapaKoodisto,
+    perusta,
+    startDate,
+    endDate,
+    nayttoymparistoDetails,
+    keskeytymisajanjaksot,
+    hoksId,
+    opiskeluoikeusOid,
+    oppijaOid,
+    hankkimistapaTyyppi,
+    oppisopimuksenPerusta,
+    ytunnus,
+    ohjaajaNimi,
+    ohjaajaEmail,
+    ohjaajaPuhelinnumero
+  } = props
+  return (
+    <Popup
+      trigger={
+        <InfoButton
+          aria-label={intl.formatMessage({
+            id: "infoModal.naytaLisatiedot"
+          })}
+          className={className}
+        >
+          <InfoToggle size="28" color="#3A7A10" />
+        </InfoButton>
+      }
+      modal
+    >
+      <div role="dialog">
+        <Modal>
+          <ModalHeader>
+            <StyledStrong>
+              <FormattedMessage
+                id="infoModal.lisatietoja"
+                defaultMessage="Lisätietoja työpaikkajaksosta"
+              />
+            </StyledStrong>
+            <br />
+            <span> {nayttoymparistoDetails}</span>
+            {startDate === endDate ? (
+              <span>
+                {" "}
+                <FormattedDate date={startDate} dateNotSet="" />
+              </span>
+            ) : (
+              <span>
+                {" "}
+                <FormattedDate date={startDate} dateNotSet="" />
+                {" - "}
+                <FormattedDate date={endDate} dateNotSet="" />
+              </span>
+            )}
+          </ModalHeader>
+          <ModalContent>
+            {hoksId && (
+              <>
+                <StyledStrong>
+                  <FormattedMessage
+                    id="raportit.ehoksid"
+                    defaultMessage="eHOKS ID"
+                  />
+                  :
+                </StyledStrong>{" "}
+                {hoksId}
+                <br />
+              </>
+            )}
+            {opiskeluoikeusOid && (
+              <>
+                <StyledStrong>
+                  <FormattedMessage
+                    id="raportit.opiskeluoikeusoid"
+                    defaultMessage="Opiskeluoikeus Oid"
+                  />
+                  :
+                </StyledStrong>{" "}
+                {opiskeluoikeusOid}
+                <br />
+              </>
+            )}
+            {oppijaOid && (
+              <>
+                <StyledStrong>
+                  <FormattedMessage
+                    id="raportit.oppijanumeroTitle"
+                    defaultMessage="Oppija Oid"
+                  />
+                  :
+                </StyledStrong>{" "}
+                {oppijaOid}
+                <br />
+              </>
+            )}
+            {((osaamisenHankkimistapaKoodisto &&
+              osaamisenHankkimistapaKoodisto.nimi) ||
+              hankkimistapaTyyppi) && (
+              <>
+                <StyledStrong>
+                  <FormattedMessage
+                    id="infoModal.hankkimistapaTyyppi"
+                    defaultMessage="Osaamisen hankkimistapa"
+                  />
+                  :
+                </StyledStrong>{" "}
+                {osaamisenHankkimistapaKoodisto &&
+                osaamisenHankkimistapaKoodisto.nimi
+                  ? osaamisenHankkimistapaKoodisto.nimi
+                  : ""}
+                {hankkimistapaTyyppi ? hankkimistapaTyyppi : ""}
+                <br />
+              </>
+            )}
+            {((perusta && perusta.nimi) || oppisopimuksenPerusta) && (
+              <>
+                <StyledStrong>
+                  <FormattedMessage
+                    id="infoModal.perusta"
+                    defaultMessage="Oppisopimuksen perusta"
+                  />
+                  :
+                </StyledStrong>{" "}
+                {perusta && perusta.nimi ? perusta.nimi : ""}
+                {oppisopimuksenPerusta ? oppisopimuksenPerusta : ""}
+                <br />
+              </>
+            )}
+            {partTimeAmount && (
+              <>
+                <StyledStrong>
+                  <FormattedMessage
+                    id="infoModal.osaaikaisuus"
+                    defaultMessage="Osa-aikaisuus"
+                  />
+                  :
+                </StyledStrong>{" "}
+                {partTimeAmount} %
+                <br />
+              </>
+            )}
+            {ytunnus && (
+              <>
+                <StyledStrong>
+                  <FormattedMessage
+                    id="raportit.ytunnus"
+                    defaultMessage="Y-Tunnus"
+                  />
+                  :
+                </StyledStrong>{" "}
+                {ytunnus}
+                <br />
+              </>
+            )}
+            {ohjaajaNimi && (
+              <>
+                <StyledStrong>
+                  <FormattedMessage
+                    id="raportit.ohjaajannimi"
+                    defaultMessage="Ohjaajan nimi"
+                  />
+                  :
+                </StyledStrong>{" "}
+                {ohjaajaNimi}
+                <br />
+              </>
+            )}
+            {ohjaajaEmail && (
+              <>
+                <StyledStrong>
+                  <FormattedMessage
+                    id="raportit.email"
+                    defaultMessage="Ohjaajan Email"
+                  />
+                  :
+                </StyledStrong>{" "}
+                {ohjaajaEmail}
+                <br />
+              </>
+            )}
+            {ohjaajaPuhelinnumero && (
+              <>
+                <StyledStrong>
+                  <FormattedMessage
+                    id="raportit.puhelin"
+                    defaultMessage="Ohjaajan puhelinnumero"
+                  />
+                  :
+                </StyledStrong>{" "}
+                {ohjaajaPuhelinnumero}
+                <br />
+              </>
+            )}
+            {keskeytymisajanjaksot && (keskeytymisajanjaksot.length || null) && (
+              <>
+                <StyledStrong>
+                  <FormattedMessage
+                    id="infoModal.keskeytymisajanjaksot"
+                    defaultMessage="Keskeytymisajanjaksot"
+                  />
+                  :
+                </StyledStrong>
+                <div>
                   {" "}
-                  <FormattedDate date={startDate} dateNotSet="" />
-                </span>
-              ) : (
-                <span>
-                  {" "}
-                  <FormattedDate date={startDate} dateNotSet="" />
-                  {" - "}
-                  <FormattedDate date={endDate} dateNotSet="" />
-                </span>
-              )}
-            </ModalHeader>
-            <ModalContent>
-              {hoksId && (
-                <>
-                  <StyledStrong>
-                    <FormattedMessage
-                      id="raportit.ehoksid"
-                      defaultMessage="eHOKS ID"
-                    />
-                    :
-                  </StyledStrong>{" "}
-                  {hoksId}
-                  <br />
-                </>
-              )}
-              {opiskeluoikeusOid && (
-                <>
-                  <StyledStrong>
-                    <FormattedMessage
-                      id="raportit.opiskeluoikeusoid"
-                      defaultMessage="Opiskeluoikeus Oid"
-                    />
-                    :
-                  </StyledStrong>{" "}
-                  {opiskeluoikeusOid}
-                  <br />
-                </>
-              )}
-              {oppijaOid && (
-                <>
-                  <StyledStrong>
-                    <FormattedMessage
-                      id="raportit.oppijanumeroTitle"
-                      defaultMessage="Oppija Oid"
-                    />
-                    :
-                  </StyledStrong>{" "}
-                  {oppijaOid}
-                  <br />
-                </>
-              )}
-              {((osaamisenHankkimistapaKoodisto &&
-                osaamisenHankkimistapaKoodisto.nimi) ||
-                hankkimistapaTyyppi) && (
-                <>
-                  <StyledStrong>
-                    <FormattedMessage
-                      id="infoModal.hankkimistapaTyyppi"
-                      defaultMessage="Osaamisen hankkimistapa"
-                    />
-                    :
-                  </StyledStrong>{" "}
-                  {osaamisenHankkimistapaKoodisto &&
-                  osaamisenHankkimistapaKoodisto.nimi
-                    ? osaamisenHankkimistapaKoodisto.nimi
-                    : ""}
-                  {hankkimistapaTyyppi ? hankkimistapaTyyppi : ""}
-                  <br />
-                </>
-              )}
-              {((perusta && perusta.nimi) || oppisopimuksenPerusta) && (
-                <>
-                  <StyledStrong>
-                    <FormattedMessage
-                      id="infoModal.perusta"
-                      defaultMessage="Oppisopimuksen perusta"
-                    />
-                    :
-                  </StyledStrong>{" "}
-                  {perusta && perusta.nimi ? perusta.nimi : ""}
-                  {oppisopimuksenPerusta ? oppisopimuksenPerusta : ""}
-                  <br />
-                </>
-              )}
-              {partTimeAmount && (
-                <>
-                  <StyledStrong>
-                    <FormattedMessage
-                      id="infoModal.osaaikaisuus"
-                      defaultMessage="Osa-aikaisuus"
-                    />
-                    :
-                  </StyledStrong>{" "}
-                  {partTimeAmount} %
-                  <br />
-                </>
-              )}
-              {ytunnus && (
-                <>
-                  <StyledStrong>
-                    <FormattedMessage
-                      id="raportit.ytunnus"
-                      defaultMessage="Y-Tunnus"
-                    />
-                    :
-                  </StyledStrong>{" "}
-                  {ytunnus}
-                  <br />
-                </>
-              )}
-              {ohjaajaNimi && (
-                <>
-                  <StyledStrong>
-                    <FormattedMessage
-                      id="raportit.ohjaajannimi"
-                      defaultMessage="Ohjaajan nimi"
-                    />
-                    :
-                  </StyledStrong>{" "}
-                  {ohjaajaNimi}
-                  <br />
-                </>
-              )}
-              {ohjaajaEmail && (
-                <>
-                  <StyledStrong>
-                    <FormattedMessage
-                      id="raportit.email"
-                      defaultMessage="Ohjaajan Email"
-                    />
-                    :
-                  </StyledStrong>{" "}
-                  {ohjaajaEmail}
-                  <br />
-                </>
-              )}
-              {ohjaajaPuhelinnumero && (
-                <>
-                  <StyledStrong>
-                    <FormattedMessage
-                      id="raportit.puhelin"
-                      defaultMessage="Ohjaajan puhelinnumero"
-                    />
-                    :
-                  </StyledStrong>{" "}
-                  {ohjaajaPuhelinnumero}
-                  <br />
-                </>
-              )}
-              {keskeytymisajanjaksot && (keskeytymisajanjaksot.length || null) && (
-                <>
-                  <StyledStrong>
-                    <FormattedMessage
-                      id="infoModal.keskeytymisajanjaksot"
-                      defaultMessage="Keskeytymisajanjaksot"
-                    />
-                    :
-                  </StyledStrong>
-                  <div>
-                    {" "}
-                    {keskeytymisajanjaksot.map(k => (
-                      <div key={k.alku}>
-                        <FormattedDate date={k.alku} dateNotSet="" />
-                        {" - "}
-                        <FormattedDate date={k.loppu} dateNotSet="" />
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
-            </ModalContent>
-          </Modal>
-        </div>
-      </Popup>
-    )
-  }
+                  {keskeytymisajanjaksot.map(k => (
+                    <div key={k.alku}>
+                      <FormattedDate date={k.alku} dateNotSet="" />
+                      {" - "}
+                      <FormattedDate date={k.loppu} dateNotSet="" />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+      </div>
+    </Popup>
+  )
 }

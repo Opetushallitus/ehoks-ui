@@ -1,7 +1,8 @@
-import { Link, navigate, RouteComponentProps, Router } from "@reach/router"
-import { IReactionDisposer, reaction } from "mobx"
+import { Routes, Route } from "react-router"
+import { Link } from "react-router-dom"
+import { reaction } from "mobx"
 import { inject, observer } from "mobx-react"
-import React from "react"
+import React, { useEffect } from "react"
 import { FormattedMessage } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
@@ -43,57 +44,45 @@ export interface OpiskelijaProps {
   studentId?: string
 }
 
-@inject("store")
-@observer
-export class Opiskelija extends React.Component<
-  OpiskelijaProps & RouteComponentProps
-> {
-  disposeLoginReaction: IReactionDisposer
-  // TODO: redirect to root after logout, check implementation in src/routes/OmienOpintojenSuunnittelu.tsx
-  async componentDidMount() {
-    const { studentId, store } = this.props
-    const { koulutuksenJarjestaja, session } = store!
-    const { search } = koulutuksenJarjestaja
+export const Opiskelija = inject("store")(
+  observer((props: OpiskelijaProps) => {
+    useEffect(() => {
+      const { studentId, store } = props
+      const { koulutuksenJarjestaja, session } = store!
+      const { search } = koulutuksenJarjestaja
 
-    this.disposeLoginReaction = reaction(
-      () => session.isLoggedIn && session.organisations.length > 0,
-      async hasLoggedIn => {
-        const orgId = this.props.orgId
-        if (orgId && orgId !== session.selectedOrganisationOid) {
-          session.changeSelectedOrganisationOid(orgId)
-        }
-
-        if (hasLoggedIn) {
-          if (!search.results.length) {
-            await search.fetchOppijat()
-          }
-
-          if (studentId) {
-            const maybeOppija = search.oppija(studentId)
-            if (!maybeOppija) {
-              await search.fetchOppija(studentId)
+      return () => {
+        reaction(
+          () => session.isLoggedIn && session.organisations.length > 0,
+          async hasLoggedIn => {
+            const orgId = props.orgId
+            if (orgId && orgId !== session.selectedOrganisationOid) {
+              session.changeSelectedOrganisationOid(orgId)
             }
-            const oppija = search.oppija(studentId)
-            if (oppija) {
-              await oppija.fetchOpiskeluoikeudet()
+
+            if (hasLoggedIn) {
+              if (!search.results.length) {
+                await search.fetchOppijat()
+              }
+
+              if (studentId) {
+                const maybeOppija = search.oppija(studentId)
+                if (!maybeOppija) {
+                  await search.fetchOppija(studentId)
+                }
+                const oppija = search.oppija(studentId)
+                if (oppija) {
+                  await oppija.fetchOpiskeluoikeudet()
+                }
+              }
             }
-          }
-        }
-      },
-      { fireImmediately: true }
-    )
-  }
+          },
+          { fireImmediately: true }
+        )
+      }
+    }, [])
 
-  componentWillUnmount() {
-    this.disposeLoginReaction()
-  }
-
-  setActiveTab = (route: string) => () => {
-    navigate(route)
-  }
-
-  render() {
-    const { studentId, orgId, store } = this.props
+    const { studentId, orgId, store } = props
     if (!studentId) {
       return null
     }
@@ -139,23 +128,31 @@ export class Opiskelija extends React.Component<
             </RightLink>
           </TopContainer>
         )}
-        <Router basepath={selfPath}>
-          <ValitseHOKS
-            path="/"
-            oppijaId={studentId}
-            laitosId={orgId || "unknown"}
-            nimi={oppija?.nimi}
-            suunnitelmat={suunnitelmat}
-            session={session}
+        <Routes>
+          <Route
+            path={`${selfPath}/`}
+            element={
+              <ValitseHOKS
+                oppijaId={studentId}
+                laitosId={orgId || "unknown"}
+                nimi={oppija?.nimi}
+                suunnitelmat={suunnitelmat}
+                session={session}
+              />
+            }
           />
-          <KoulutuksenJarjestajaHOKS
-            path=":hoksId/*"
-            suunnitelmat={suunnitelmat}
-            oppija={oppija}
-            laitosId={orgId || "unknown"}
+          <Route
+            path={`${selfPath}/:hoksId/*`}
+            element={
+              <KoulutuksenJarjestajaHOKS
+                suunnitelmat={suunnitelmat}
+                oppija={oppija}
+                laitosId={orgId || "unknown"}
+              />
+            }
           />
-        </Router>
+        </Routes>
       </React.Fragment>
     )
-  }
-}
+  })
+)
