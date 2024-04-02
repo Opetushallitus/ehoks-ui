@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "../../styled"
-import { FormattedMessage, intlShape } from "react-intl"
+import { useIntl, FormattedMessage } from "react-intl"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
 import { Collapse } from "./Collapse"
@@ -86,97 +86,91 @@ const doesntHaveRequirementsAndDeviations = (
   deviations: string | undefined
 ) => !((requirements && requirements.length > 0) || deviations)
 
-export class RequirementsAndDeviations extends React.Component<
-  RequirementsAndDeviationsProps
-> {
-  static contextTypes = {
-    intl: intlShape
+export const RequirementsAndDeviations = (
+  props: RequirementsAndDeviationsProps
+) => {
+  const { expanded, toggle, requirements, deviations } = props
+  const intl = useIntl()
+
+  if (doesntHaveRequirementsAndDeviations(requirements, deviations)) {
+    return null
   }
 
-  render() {
-    const { expanded, toggle, requirements, deviations } = this.props
-    const { intl } = this.context
+  return (
+    <Container>
+      {expanded ? (
+        <RequirementsAndDeviationsContainer>
+          <CollapseContainer>
+            <CollapseTitle onClick={toggle}>
+              <FormattedMessage
+                id="opiskelusuunnitelma.poikkeamatJaArviointikriteerit"
+                defaultMessage="Poikkeaminen ammattitaitovaatimuksista ja yksilölliset arviointikriteerisi"
+              />
+            </CollapseTitle>
+            <IconContainer
+              onClick={toggle}
+              aria-label={intl.formatMessage({
+                id:
+                  "opiskelusuunnitelma.piilotaPoikkeamatJaArviointikriteeritAriaLabel"
+              })}
+            >
+              <Collapse size={40} />
+            </IconContainer>
+          </CollapseContainer>
+          <Line height="2px" backgroundColor="#000" />
 
-    if (doesntHaveRequirementsAndDeviations(requirements, deviations)) {
-      return null
-    }
-
-    return (
-      <Container>
-        {expanded ? (
-          <RequirementsAndDeviationsContainer>
-            <CollapseContainer>
-              <CollapseTitle onClick={toggle}>
+          {deviations && (
+            <>
+              <Prefix>
                 <FormattedMessage
-                  id="opiskelusuunnitelma.poikkeamatJaArviointikriteerit"
-                  defaultMessage="Poikkeaminen ammattitaitovaatimuksista ja yksilölliset arviointikriteerisi"
+                  id="opiskelusuunnitelma.poiketaanPrefix"
+                  defaultMessage="Poiketaan"
+                  tagName="i"
                 />
-              </CollapseTitle>
-              <IconContainer
-                onClick={toggle}
-                aria-label={intl.formatMessage({
-                  id:
-                    "opiskelusuunnitelma.piilotaPoikkeamatJaArviointikriteeritAriaLabel"
-                })}
-              >
-                <Collapse size={40} />
-              </IconContainer>
-            </CollapseContainer>
-            <Line height="2px" backgroundColor="#000" />
+              </Prefix>
+              <Deviations>{deviations}</Deviations>
+            </>
+          )}
 
-            {deviations && (
-              <>
-                <Prefix>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.poiketaanPrefix"
-                    defaultMessage="Poiketaan"
-                    tagName="i"
-                  />
-                </Prefix>
-                <Deviations>{deviations}</Deviations>
-              </>
-            )}
-
-            {requirements && requirements.length > 0 && (
-              <>
-                <Prefix>
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.yksilollisetArviointikriteeritPrefix"
-                    defaultMessage="Yksilölliset arviointikriteerisi"
-                    tagName="i"
-                  />
-                </Prefix>
-                <Requirements>
-                  {requirements &&
-                    requirements.map((requirement, i) => (
-                      <li key={i}>{requirement}</li>
-                    ))}
-                </Requirements>
-              </>
-            )}
-          </RequirementsAndDeviationsContainer>
-        ) : (
-          <RequirementsAndDeviationsContainer>
-            <ExpandContainer>
-              <ExpandTitle onClick={toggle}>
+          {requirements && requirements.length > 0 && (
+            <>
+              <Prefix>
                 <FormattedMessage
-                  id="opiskelusuunnitelma.poikkeamatJaArviointikriteerit"
-                  defaultMessage="Poikkeaminen ammattitaitovaatimuksista ja yksilölliset arviointikriteerisi"
+                  id="opiskelusuunnitelma.yksilollisetArviointikriteeritPrefix"
+                  defaultMessage="Yksilölliset arviointikriteerisi"
+                  tagName="i"
                 />
-              </ExpandTitle>
-              <IconContainer
-                onClick={toggle}
-                aria-label={intl.formatMessage({
-                  id:
-                    "opiskelusuunnitelma.naytaPoikkeamatJaArviointikriteeritAriaLabel"
-                })}
-              >
-                <Expand size={40} />
-              </IconContainer>
-            </ExpandContainer>
-          </RequirementsAndDeviationsContainer>
-        )}
-      </Container>
-    )
-  }
+              </Prefix>
+              <Requirements>
+                {requirements &&
+                  requirements.map((requirement, i) => (
+                    <li key={i}>{requirement}</li>
+                  ))}
+              </Requirements>
+            </>
+          )}
+        </RequirementsAndDeviationsContainer>
+      ) : (
+        <RequirementsAndDeviationsContainer>
+          <ExpandContainer>
+            <ExpandTitle onClick={toggle}>
+              <FormattedMessage
+                id="opiskelusuunnitelma.poikkeamatJaArviointikriteerit"
+                defaultMessage="Poikkeaminen ammattitaitovaatimuksista ja yksilölliset arviointikriteerisi"
+              />
+            </ExpandTitle>
+            <IconContainer
+              onClick={toggle}
+              aria-label={intl.formatMessage({
+                id:
+                  "opiskelusuunnitelma.naytaPoikkeamatJaArviointikriteeritAriaLabel"
+              })}
+            >
+              <Expand size={40} />
+            </IconContainer>
+          </ExpandContainer>
+        </RequirementsAndDeviationsContainer>
+      )}
+    </Container>
+  )
 }

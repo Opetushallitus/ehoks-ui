@@ -36,20 +36,17 @@ function strcmp(a: string, b: string) {
 /**
  * OrganisationDropdown
  */
-@observer
-export class OrganisationDropdown extends React.Component<
-  OrganisationDropdownProps
-> {
-  handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    this.props.onChange(e.target.value)
-  }
+export const OrganisationDropdown = observer(
+  (props: OrganisationDropdownProps) => {
+    const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      props.onChange(e.target.value)
+    }
 
-  render() {
-    const { organisations, value } = this.props
-    const lang = this.props.lang || Locale.FI
+    const { organisations, value } = props
+    const lang = props.lang || Locale.FI
     const langFallback = lang === "fi" ? Locale.SV : Locale.FI
     return (
-      <OppilaitosSelect value={value} onChange={this.handleOnChange}>
+      <OppilaitosSelect value={value} onChange={handleOnChange}>
         {organisations
           .slice()
           .sort((a: IOrganisation, b: IOrganisation) =>
@@ -66,4 +63,4 @@ export class OrganisationDropdown extends React.Component<
       </OppilaitosSelect>
     )
   }
-}
+)

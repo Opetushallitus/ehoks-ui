@@ -1,6 +1,6 @@
 import React from "react"
 import { MdSearch } from "react-icons/md"
-import { intlShape } from "react-intl"
+import { useIntl } from "react-intl"
 import styled from "styled"
 import { LoadingSpinner } from "./LoadingSpinner"
 import { SimpleInterpolation } from "styled-components"
@@ -56,42 +56,33 @@ interface SearchFieldProps {
   value: string
 }
 
-export class SearchField extends React.Component<SearchFieldProps> {
-  static contextTypes = {
-    intl: intlShape
-  }
-  render() {
-    const { intl } = this.context
-    const {
-      onSubmit,
-      onTextChange,
-      isLoading,
-      placeholder = intl.formatMessage({
-        id: "ammattitutkinto.hakuPlaceholder"
-      }),
-      ariaLabel = intl.formatMessage({
-        id: "ammattitutkinto.hakuAriaLabel"
-      }),
-      loadingSpinner = <Loading />,
-      headerStyles = {},
-      value
-    } = this.props
-    return (
-      <SearchHeader
-        role="search"
-        onSubmit={onSubmit}
-        headerStyles={headerStyles}
-      >
-        <SearchIcon size="24" />
-        <SearchInput
-          placeholder={placeholder}
-          aria-label={ariaLabel}
-          onChange={onTextChange}
-          required={true}
-          value={value}
-        />
-        {isLoading && loadingSpinner}
-      </SearchHeader>
-    )
-  }
+export const SearchField = (props: SearchFieldProps) => {
+  const intl = useIntl()
+  const {
+    onSubmit,
+    onTextChange,
+    isLoading,
+    placeholder = intl.formatMessage({
+      id: "ammattitutkinto.hakuPlaceholder"
+    }),
+    ariaLabel = intl.formatMessage({
+      id: "ammattitutkinto.hakuAriaLabel"
+    }),
+    loadingSpinner = <Loading />,
+    headerStyles = {},
+    value
+  } = props
+  return (
+    <SearchHeader role="search" onSubmit={onSubmit} headerStyles={headerStyles}>
+      <SearchIcon size="24" />
+      <SearchInput
+        placeholder={placeholder}
+        aria-label={ariaLabel}
+        onChange={onTextChange}
+        required={true}
+        value={value}
+      />
+      {isLoading && loadingSpinner}
+    </SearchHeader>
+  )
 }

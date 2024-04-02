@@ -2,10 +2,9 @@ import { Accordion } from "components/Accordion"
 import { InfoTable } from "components/InfoTable"
 import { LabeledColumn } from "components/LabeledColumn"
 import { inject, observer } from "mobx-react"
-import React from "react"
-import { FormattedMessage, intlShape } from "react-intl"
+import React, { useEffect } from "react"
+import { useIntl, FormattedMessage } from "react-intl"
 import { FormattedDate } from "components/FormattedDate"
-import { RouteComponentProps } from "@reach/router"
 import { IOpiskelijapalauteTila } from "models/OpiskelijapalauteTila"
 import { Button } from "components/Button"
 import { IRootStore } from "../../stores/RootStore"
@@ -25,69 +24,66 @@ interface ResendParameters {
   tyyppi: string
 }
 
-@inject("store")
-@observer
-export class Opiskelijapalaute extends React.Component<
-  OpiskelijapalauteProps & RouteComponentProps
-> {
-  static contextTypes = {
-    intl: intlShape
-  }
+export const Opiskelijapalaute = inject("store")(
+  observer((props: OpiskelijapalauteProps) => {
+    const resendPalaute = (data: ResendParameters) => async (): Promise<
+      void
+    > => {
+      const { hoksID, oppijaOid } = props
+      const { notifications } = props.store!
 
-  resendPalaute = (data: ResendParameters) => async (): Promise<void> => {
-    const { hoksID, oppijaOid } = this.props
-    const { notifications } = this.props.store!
+      const response: Response = await window.fetch(
+        `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksID}/resend-palaute`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: appendCommonHeaders(
+            new Headers({
+              Accept: "application/json; charset=utf-8",
+              "Content-Type": "application/json"
+            })
+          ),
+          body: JSON.stringify(data)
+        }
+      )
 
-    const response: Response = await window.fetch(
-      `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksID}/resend-palaute`,
-      {
-        method: "POST",
-        credentials: "include",
-        headers: appendCommonHeaders(
-          new Headers({
-            Accept: "application/json; charset=utf-8",
-            "Content-Type": "application/json"
-          })
-        ),
-        body: JSON.stringify(data)
+      if (response.ok) {
+        const json = await response.json()
+        notifications.addNotifications([
+          {
+            title: "Opiskelijapalaute.resendPalaute.success",
+            source: "Opiskelijapalaute",
+            sahkoposti: json.data.sahkoposti,
+            default:
+              "Sähköposti opiskelijapalautteesta lähetetään osoitteeseen {sahkoposti}.",
+            tyyppi: "success"
+          }
+        ])
+      } else {
+        notifications.addError(
+          "Opiskelijapalaute.resendPalaute",
+          response.statusText
+        )
       }
+    }
+
+    useEffect(
+      () => () => {
+        const { notifications } = props.store!
+        notifications.removeNotificationsBySource("Opiskelijapalaute")
+      },
+      []
     )
 
-    if (response.ok) {
-      const json = await response.json()
-      notifications.addNotifications([
-        {
-          title: "Opiskelijapalaute.resendPalaute.success",
-          source: "Opiskelijapalaute",
-          sahkoposti: json.data.sahkoposti,
-          default:
-            "Sähköposti opiskelijapalautteesta lähetetään osoitteeseen {sahkoposti}.",
-          tyyppi: "success"
-        }
-      ])
-    } else {
-      notifications.addError(
-        "Opiskelijapalaute.resendPalaute",
-        response.statusText
-      )
-    }
-  }
-
-  componentWillUnmount(): void {
-    const { notifications } = this.props.store!
-    notifications.removeNotificationsBySource("Opiskelijapalaute")
-  }
-
-  render(): React.ReactNode {
-    const { palauteTilat } = this.props
-    const { intl } = this.context
+    const { palauteTilat } = props
+    const intl = useIntl()
 
     return (
       <Accordion
         id="henkilotiedot"
-        open={this.props.open}
-        title={this.props.title}
-        onToggle={this.props.toggleAccordion("opiskelijapalaute")}
+        open={props.open}
+        title={props.title}
+        onToggle={props.toggleAccordion("opiskelijapalaute")}
         helpIcon={true}
         helpContent={
           <FormattedMessage
@@ -183,7 +179,7 @@ export class Opiskelijapalaute extends React.Component<
                   Date.now() > new Date(palauteTila.voimassaLoppupvm).getTime()
                 ) && (
                   <Button
-                    onClick={this.resendPalaute({
+                    onClick={resendPalaute({
                       tyyppi: palauteTila.tyyppi
                     })}
                   >
@@ -204,5 +200,5 @@ export class Opiskelijapalaute extends React.Component<
         )}
       </Accordion>
     )
-  }
-}
+  })
+)

@@ -6,22 +6,22 @@ exports[`App renders correctly 1`] = `
   margin: 0 auto;
 }
 
-.c39 {
+.c22 {
   height: 64px;
   margin: 0 0 40px 0;
 }
 
-.c40 {
+.c23 {
   height: 50px;
 }
 
-.c32 {
+.c15 {
   width: 100%;
   background-color: #fff;
   border-top: 1px solid #d5d8da;
 }
 
-.c33 {
+.c16 {
   max-width: 1440px;
   margin: 30px auto 0 auto;
   display: -webkit-box;
@@ -33,14 +33,14 @@ exports[`App renders correctly 1`] = `
   flex-direction: column;
 }
 
-.c34 {
+.c17 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
-.c35 {
+.c18 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -57,7 +57,7 @@ exports[`App renders correctly 1`] = `
   flex-direction: column;
 }
 
-.c36 {
+.c19 {
   -webkit-align-items: flex-end;
   -webkit-box-align: flex-end;
   -ms-flex-align: flex-end;
@@ -67,7 +67,7 @@ exports[`App renders correctly 1`] = `
   margin: 20px 0 20px 40px;
 }
 
-.c41 {
+.c24 {
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -77,14 +77,14 @@ exports[`App renders correctly 1`] = `
   margin: 20px 80px 20px 0;
 }
 
-.c37 {
+.c20 {
   width: 70%;
   padding: 12px 0;
   color: #6a6a6a;
   line-height: 1.4;
 }
 
-.c42 {
+.c25 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -95,11 +95,11 @@ exports[`App renders correctly 1`] = `
   padding: 12px 0;
 }
 
-.c42 a {
+.c25 a {
   color: #539d1d;
 }
 
-.c38 {
+.c21 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -110,7 +110,7 @@ exports[`App renders correctly 1`] = `
   padding: 0 70px 0 70px;
 }
 
-.c43 {
+.c26 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -149,18 +149,6 @@ exports[`App renders correctly 1`] = `
 .c12:not(:disabled) {
   cursor: pointer;
   opacity: unset;
-}
-
-.c22 {
-  padding: 15px 60px;
-  font-family: "Source Sans Pro",sans-serif;
-  line-height: 1.5;
-  font-style: normal;
-  text-rendering: optimizelegibility;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  font-size: 16px;
-  font-weight: 400;
 }
 
 .c13 {
@@ -283,181 +271,6 @@ exports[`App renders correctly 1`] = `
   cursor: pointer;
 }
 
-.c16 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin: 30px 50px 50px 40px;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.c20 {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  margin: 0;
-  padding: 0;
-  width: auto;
-  height: 28px;
-  font: inherit;
-  color: inherit;
-}
-
-.c20::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-
-.c26 {
-  background-color: #00AC3D;
-  border: 1px solid #979797;
-  margin: 0 0 20px 0;
-  min-height: 320px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-.c29 {
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 10px;
-  min-height: 90px;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
-
-.c31 {
-  background-image: url();
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.c30 {
-  font-size: 25px;
-  font-weight: 300;
-}
-
-.c25 {
-  display: block;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  color: #fff;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.c17 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-  -webkit-align-content: flex-start;
-  -ms-flex-line-pack: start;
-  align-content: flex-start;
-  margin-right: 30px;
-}
-
-.c15 {
-  margin: 30px 50px 30px 40px;
-  color: #4a4a4a;
-}
-
-.c24 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin: 0;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  margin-right: 20px;
-}
-
-.c18 {
-  margin: 0 20px 10px 0;
-  padding: 10px;
-  border: 1px solid #6e6e7e;
-  width: calc(50% - 20px);
-}
-
-.c18 p {
-  color: #6e6e7e;
-}
-
-.c23 {
-  width: 100%;
-  padding: 15px 0;
-}
-
-.c28 {
-  min-height: 400px;
-  margin-right: 20px;
-}
-
-.c19 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c19 h2 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  color: #000;
-  font-weight: 400;
-  margin: 0;
-  font-size: 34px;
-}
-
-.c21 {
-  margin-top: 7px;
-}
-
 .c0 {
   margin: 0;
   font-family: "Source Sans Pro",sans-serif;
@@ -471,7 +284,7 @@ exports[`App renders correctly 1`] = `
 }
 
 @media screen and (max-width:720px) {
-  .c39 {
+  .c22 {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -480,7 +293,7 @@ exports[`App renders correctly 1`] = `
 }
 
 @media screen and (max-width:720px) {
-  .c34 {
+  .c17 {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
@@ -488,26 +301,26 @@ exports[`App renders correctly 1`] = `
 }
 
 @media screen and (max-width:900px) {
-  .c36 {
+  .c19 {
     margin: 20px 0 20px 20px;
   }
 }
 
 @media screen and (max-width:720px) {
-  .c36 {
+  .c19 {
     margin: 0 50px 0 20px;
     border-top-width: 0px;
   }
 }
 
 @media screen and (max-width:900px) {
-  .c41 {
+  .c24 {
     margin: 20px 50px 20px 0;
   }
 }
 
 @media screen and (max-width:720px) {
-  .c41 {
+  .c24 {
     -webkit-align-items: flex-start;
     -webkit-box-align: flex-start;
     -ms-flex-align: flex-start;
@@ -518,19 +331,19 @@ exports[`App renders correctly 1`] = `
 }
 
 @media screen and (max-width:1160px) {
-  .c37 {
+  .c20 {
     width: 90%;
   }
 }
 
 @media screen and (max-width:900px) {
-  .c37 {
+  .c20 {
     width: 100%;
   }
 }
 
 @media screen and (max-width:720px) {
-  .c38 {
+  .c21 {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -547,20 +360,14 @@ exports[`App renders correctly 1`] = `
 }
 
 @media screen and (max-width:900px) {
-  .c43 {
+  .c26 {
     margin: 20px 50px 20px 20px;
   }
 }
 
 @media screen and (max-width:720px) {
-  .c43 {
+  .c26 {
     margin: 20px 50px 20px 20px;
-  }
-}
-
-@media screen and (max-width:720px) {
-  .c22 {
-    padding: 15px 0;
   }
 }
 
@@ -603,447 +410,173 @@ exports[`App renders correctly 1`] = `
   }
 }
 
-@media screen and (max-width:900px) {
-  .c16 {
-    display: block;
-    margin: 30px 50px 0 20px;
-  }
-}
-
-@media screen and (max-width:1160px) {
-  .c16 {
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-  }
-}
-
-@media screen and (max-width:1160px) {
-  .c31 {
-    background-position: top;
-  }
-}
-
-@media screen and (max-width:600px) {
-  .c25 {
-    -webkit-flex: auto;
-    -ms-flex: auto;
-    flex: auto;
-  }
-}
-
-@media screen and (max-width:1160px) {
-  .c17 {
-    margin-right: 0;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-  }
-}
-
-@media screen and (max-width:900px) {
-  .c15 {
-    margin: 30px 50px 0 20px;
-  }
-}
-
-@media screen and (max-width:1160px) {
-  .c24 {
-    margin-right: 0;
-  }
-}
-
-@media screen and (max-width:1160px) {
-  .c18 {
-    width: calc(100% - 20px);
-    margin: 0 0 10px 0;
-  }
-}
-
-@media screen and (max-width:900px) {
-  .c18 {
-    width: 100%;
-  }
-}
-
-@media screen and (max-width:600px) {
-  .c28 {
-    margin-right: 0;
-  }
-}
-
-@media screen and (max-width:900px) {
-  a:last-child .c27 {
-    margin-right: 0;
-  }
-}
-
 <div>
   <div
-    style="outline: none;"
-    tabindex="-1"
+    class="c0"
   >
-    <div
-      class="c0"
+    <header
+      class="c1"
     >
-      <header
-        class="c1"
-      >
-        <div
-          class="c2"
-        >
-          <nav
-            class="c3"
-          >
-            <a
-              class="c4"
-              href="#main"
-            >
-              Siirry pääsisältöön
-            </a>
-            <a
-              class="c5"
-              href="https://opintopolku.fi/"
-            >
-              Opintopolku.fi
-            </a>
-            <a
-              class="c5"
-              href="https://opintopolku.fi/oma-opintopolku/"
-            >
-              Oma Opintopolku
-            </a>
-            <a
-              class="c5"
-              href="https://eperusteet.opintopolku.fi/"
-            >
-              ePerusteet
-            </a>
-            <a
-              class="c6"
-              href="/"
-            >
-              eHOKS
-            </a>
-          </nav>
-        </div>
-        <div
-          class="c7"
-        >
-          <div
-            class="c8"
-          >
-            <svg
-              fill="currentColor"
-              height="40"
-              size="40"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 24 24"
-              width="40"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
-              />
-            </svg>
-            <h3>
-              Valikko
-            </h3>
-          </div>
-          <img
-            alt="eHOKS logo"
-            class="c9"
-            src=""
-          />
-          <div
-            class="c10"
-          />
-          <div
-            class="c11"
-          >
-            <button
-              class="c12 c13"
-              type="button"
-            >
-              På svenska
-            </button>
-          </div>
-        </div>
-      </header>
       <div
-        class="c14"
-      />
-      <main
-        class=""
-        id="main"
-        role="main"
+        class="c2"
+      >
+        <nav
+          class="c3"
+        >
+          <a
+            class="c4"
+            href="#main"
+          >
+            Siirry pääsisältöön
+          </a>
+          <a
+            class="c5"
+            href="https://opintopolku.fi/"
+          >
+            Opintopolku.fi
+          </a>
+          <a
+            class="c5"
+            href="https://opintopolku.fi/oma-opintopolku/"
+          >
+            Oma Opintopolku
+          </a>
+          <a
+            class="c5"
+            href="https://eperusteet.opintopolku.fi/"
+          >
+            ePerusteet
+          </a>
+          <a
+            class="c6"
+            href="/"
+          >
+            eHOKS
+          </a>
+        </nav>
+      </div>
+      <div
+        class="c7"
       >
         <div
-          style="outline: none;"
-          tabindex="-1"
+          class="c8"
         >
-          <div
-            class="c14"
+          <svg
+            fill="currentColor"
+            height="40"
+            size="40"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="40"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <h1
-              class="c15"
-            >
-              Opiskelun henkilökohtainen suunnittelu
-            </h1>
-            <div
-              class="c16"
-            >
-              <div
-                class="c17"
-              >
-                <div
-                  class="c18"
-                >
-                  <div
-                    class="c19"
-                  >
-                    <h2>
-                      Opiskelija
-                    </h2>
-                    <button
-                      aria-describedby="popup-1"
-                      aria-label="Näytä ohjeteksti"
-                      class="c20 c21"
-                    >
-                      <svg
-                        class=""
-                        color="#3A7A10"
-                        fill="currentColor"
-                        height="28"
-                        size="28"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        style="color: rgb(58, 122, 16);"
-                        viewBox="0 0 24 24"
-                        width="28"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <p>
-                    Kirjautumalla siirryt oman henkilö­kohtaiseen opintojen suunnitteluun.
-                  </p>
-                  <button
-                    class="c12 c22 c23"
-                    type="button"
-                  >
-                    Kirjaudu omaan suunnitelmaan
-                  </button>
-                </div>
-                <div
-                  class="c18"
-                >
-                  <div
-                    class="c19"
-                  >
-                    <h2>
-                      Ohjaaja
-                    </h2>
-                    <button
-                      aria-describedby="popup-2"
-                      aria-label="Näytä ohjeteksti"
-                      class="c20 c21"
-                    >
-                      <svg
-                        class=""
-                        color="#3A7A10"
-                        fill="currentColor"
-                        height="28"
-                        size="28"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        style="color: rgb(58, 122, 16);"
-                        viewBox="0 0 24 24"
-                        width="28"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <p>
-                    Kirjautumalla siirryt ohjattavien opiskelijoiden suunnitelmiin.
-                  </p>
-                  <button
-                    class="c12 c22 c23"
-                    type="button"
-                  >
-                    Kirjaudu oppilaitoksen edustajana
-                  </button>
-                </div>
-                <div
-                  class="c18"
-                >
-                  <div
-                    class="c19"
-                  >
-                    <h2>
-                      Työelämän toimija
-                    </h2>
-                    <button
-                      aria-describedby="popup-3"
-                      aria-label="Näytä ohjeteksti"
-                      class="c20 c21"
-                    >
-                      <svg
-                        class=""
-                        color="#3A7A10"
-                        fill="currentColor"
-                        height="28"
-                        size="28"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        style="color: rgb(58, 122, 16);"
-                        viewBox="0 0 24 24"
-                        width="28"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <p>
-                    Kirjaudu palveluun saamasi sähköpostilinkin kautta.
-                  </p>
-                </div>
-              </div>
-              <main
-                class="c24"
-              >
-                <a
-                  class="c25"
-                  href="/ehoks/henkilokohtaistaminen"
-                >
-                  <div
-                    class="c26 c27 c28"
-                  >
-                    <div
-                      class="c29"
-                    >
-                      <div
-                        class="c30"
-                      >
-                        Mitä henkilökohtaista­minen tarkoittaa?
-                      </div>
-                    </div>
-                    <div
-                      class="c31"
-                      role="img"
-                    />
-                  </div>
-                </a>
-                <a
-                  class="c25"
-                  href="/ehoks/ammatillinentutkinto"
-                >
-                  <div
-                    class="c26 c27 c28"
-                  >
-                    <div
-                      class="c29"
-                    >
-                      <div
-                        class="c30"
-                      >
-                        Mitä ammatilliset tutkinnot sisältävät?
-                      </div>
-                    </div>
-                    <div
-                      class="c31"
-                      role="img"
-                    />
-                  </div>
-                </a>
-              </main>
-            </div>
-          </div>
+            <path
+              d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+            />
+          </svg>
+          <h3>
+            Valikko
+          </h3>
         </div>
-      </main>
-      <footer
-        class="c32"
+        <img
+          alt="eHOKS logo"
+          class="c9"
+          src=""
+        />
+        <div
+          class="c10"
+        />
+        <div
+          class="c11"
+        >
+          <button
+            class="c12 c13"
+            type="button"
+          >
+            På svenska
+          </button>
+        </div>
+      </div>
+    </header>
+    <div
+      class="c14"
+    />
+    <main
+      class=""
+      id="main"
+      role="main"
+    />
+    <footer
+      class="c15"
+    >
+      <div
+        class="c16"
       >
         <div
-          class="c33"
+          class="c17"
         >
           <div
-            class="c34"
+            class="c18 c19"
           >
             <div
-              class="c35 c36"
+              class="c20"
             >
-              <div
-                class="c37"
-              >
-                
+              
               Henkilökohtainen osaamisen kehityssuunnitelma on käytännön
               työväline opiskelijalle, opettajille ja ohjaajille oppilaitoksessa
               ja työpaikoilla.
-              </div>
-            </div>
-            <div
-              class="c38"
-            >
-              <img
-                alt="eHOKS logo"
-                class="c39"
-                src=""
-              />
-              <img
-                alt="Opetushallitus logo"
-                class="c40"
-                src=""
-              />
-            </div>
-            <div
-              class="c35 c41"
-            >
-              <div
-                class="c42"
-              >
-                <a
-                  href="mailto:ehoks@opintopolku.fi"
-                >
-                  Ota yhteyttä: ehoks@opintopolku.fi
-                </a>
-                <a
-                  href="https://beta.opintopolku.fi/konfo/fi/sivu/ehoks-palvelun-tietosuojaseloste"
-                >
-                  Tietosuojaseloste
-                </a>
-                <a
-                  href="https://beta.opintopolku.fi/konfo/fi/sivu/ehoks-verkkopalvelun-saavutettavuusselosteet"
-                >
-                  Saavutettavuusseloste
-                </a>
-              </div>
             </div>
           </div>
           <div
-            class="c43"
+            class="c21"
           >
-            Koulutuksen järjestäjät ylläpitävät eHOKS-tietojasi. Tietojen oikeellisuuden voit tarkistaa kyseisestä oppilaitoksesta.
+            <img
+              alt="eHOKS logo"
+              class="c22"
+              src=""
+            />
+            <img
+              alt="Opetushallitus logo"
+              class="c23"
+              src=""
+            />
+          </div>
+          <div
+            class="c18 c24"
+          >
+            <div
+              class="c25"
+            >
+              <a
+                href="mailto:ehoks@opintopolku.fi"
+              >
+                Ota yhteyttä: ehoks@opintopolku.fi
+              </a>
+              <a
+                href="https://beta.opintopolku.fi/konfo/fi/sivu/ehoks-palvelun-tietosuojaseloste"
+              >
+                Tietosuojaseloste
+              </a>
+              <a
+                href="https://beta.opintopolku.fi/konfo/fi/sivu/ehoks-verkkopalvelun-saavutettavuusselosteet"
+              >
+                Saavutettavuusseloste
+              </a>
+            </div>
           </div>
         </div>
-      </footer>
-      <div
-        class=""
-        id="modal-root"
-      />
-    </div>
+        <div
+          class="c26"
+        >
+          Koulutuksen järjestäjät ylläpitävät eHOKS-tietojasi. Tietojen oikeellisuuden voit tarkistaa kyseisestä oppilaitoksesta.
+        </div>
+      </div>
+    </footer>
+    <div
+      class=""
+      id="modal-root"
+    />
   </div>
 </div>
 `;

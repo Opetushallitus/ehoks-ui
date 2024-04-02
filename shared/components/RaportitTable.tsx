@@ -49,8 +49,8 @@ const printResultInfo = (length: number, count: number, loading: boolean) => {
   }
 }
 
-export function RaportitTable(props: RaportitTableProps) {
-  const fetchData = props.fetchData
+export const RaportitTable = (props: RaportitTableProps) => {
+  const { fetchData } = props
   const data = useMemo(() => props.data, [props.data])!
 
   const columns = useMemo(() => props.columns, [props.columns])

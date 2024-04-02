@@ -5,6 +5,7 @@ import { render } from "@testing-library/react"
 import defaultMessages from "stores/TranslationStore/defaultMessages.json"
 import { ThemeProvider } from "styled"
 import { theme } from "theme"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 const messages = defaultMessages.reduce<{
   [key: string]: string
@@ -15,7 +16,13 @@ const messages = defaultMessages.reduce<{
 
 const Providers = ({ children }: { children: React.ReactElement }) => (
   <IntlProvider defaultLocale="fi" locale="fi" messages={messages}>
-    <ThemeWrapper>{children}</ThemeWrapper>
+    <ThemeWrapper>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/*" element={children} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeWrapper>
   </IntlProvider>
 )
 
@@ -30,7 +37,7 @@ export const ThemeProviderWrapper = ({
   children: React.ReactNode
 }) => <ThemeProvider theme={theme}>{children}</ThemeProvider>
 
-export const withTheme = <T extends Record<string, unknown>>(
+export const withTheme = <T extends Record<string, any>>(
   Component: React.ComponentType<T>
 ) => (props: T) => (
   <ThemeProvider theme={theme}>
