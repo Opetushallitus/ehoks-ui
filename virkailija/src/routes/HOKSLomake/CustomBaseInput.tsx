@@ -27,6 +27,8 @@ function CustomBaseInput(props: CustomBaseInputProps) {
     onBlur,
     onFocus,
     schema,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    uiSchema,
     ...inputProps
   } = props
 
