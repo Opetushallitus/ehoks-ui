@@ -26,11 +26,11 @@ interface ResendParameters {
 
 export const Opiskelijapalaute = inject("store")(
   observer((props: OpiskelijapalauteProps) => {
+    const { notifications } = props.store!
     const resendPalaute = (data: ResendParameters) => async (): Promise<
       void
     > => {
       const { hoksID, oppijaOid } = props
-      const { notifications } = props.store!
 
       const response: Response = await window.fetch(
         `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksID}/resend-palaute`,
@@ -69,10 +69,9 @@ export const Opiskelijapalaute = inject("store")(
 
     useEffect(
       () => () => {
-        const { notifications } = props.store!
         notifications.removeNotificationsBySource("Opiskelijapalaute")
       },
-      []
+      [notifications]
     )
 
     const { palauteTilat } = props

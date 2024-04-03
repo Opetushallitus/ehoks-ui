@@ -13,13 +13,12 @@ import find from "lodash.find"
 import { observer } from "mobx-react"
 import { IHOKS } from "models/HOKS"
 import { ISessionUser } from "models/SessionUser"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import { HMediaQuery } from "responsive"
 import styled from "styled"
 import { HelpPopup } from "components/HelpPopup"
-import { IReactionDisposer, reaction } from "mobx"
 import {
   Routes,
   useNavigate,
@@ -77,24 +76,20 @@ export const OmienOpintojenSuunnittelu = observer(
     const { id } = useParams()
     const navigate = useNavigate()
     const location = useLocation()
-    const disposeReaction: IReactionDisposer = reaction(
-      () => suunnitelmat && suunnitelmat.length > 0,
-      async (hasSuunnitelmat: boolean) => {
-        if (hasSuunnitelmat) {
-          const suunnitelma = find(suunnitelmat, h => h.eid === id)
-          if (suunnitelma) {
-            await suunnitelma.fetchOsaamispisteet()
-          }
-        }
-      },
-      { fireImmediately: true }
-    )
+    const [suunnitelma, setSuunnitelma] = useState<IHOKS | undefined>(undefined)
 
-    useEffect(() => () => disposeReaction(), [])
+    useEffect(() => {
+      if (suunnitelmat && suunnitelmat.length > 0) {
+        const s = find(suunnitelmat, h => h.eid === id)
+        if (s) {
+          s.fetchOsaamispisteet().then(() => {
+            setSuunnitelma(s)
+          })
+        }
+      }
+    }, [suunnitelmat, id])
 
     const setActiveTab = (route: string) => async () => navigate(route)
-
-    const suunnitelma = find(suunnitelmat, s => s.eid === id)
 
     if (!student || !suunnitelma) {
       return null
@@ -184,11 +179,11 @@ export const OmienOpintojenSuunnittelu = observer(
             <PaddedContent>
               <Routes>
                 <Route
-                  path={`/ehoks/suunnittelu/${id}/`}
+                  index
                   element={<Tavoitteet student={student} hoks={suunnitelma} />}
                 />
                 <Route
-                  path={`/ehoks/suunnittelu/${id}/osaamiseni`}
+                  path="osaamiseni"
                   element={
                     <AiempiOsaaminen
                       aiemminHankitutTutkinnonOsat={
@@ -216,7 +211,7 @@ export const OmienOpintojenSuunnittelu = observer(
                   }
                 />
                 <Route
-                  path={`/ehoks/suunnittelu/${id}/opiskelusuunnitelmani`}
+                  path="opiskelusuunnitelmani"
                   element={<Opiskelusuunnitelma plan={suunnitelma} />}
                 />
               </Routes>

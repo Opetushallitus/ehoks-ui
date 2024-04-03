@@ -4,7 +4,9 @@ import { useEffect } from "react"
 export const Redirect = ({ to }: { to: string }) => {
   const navigate = useNavigate()
   useEffect(() => {
-    navigate(to)
-  }, [to])
+    if (navigate) {
+      navigate(to)
+    }
+  }, [to, navigate])
   return null
 }

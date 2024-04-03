@@ -47,28 +47,27 @@ export interface AppProps {
 
 export const App = inject("store")(
   observer((props: AppProps) => {
+    const { translations } = props.store!
     useEffect(() => {
-      const { store } = props
       const localeParam = parseLocaleParam(window.location.search)
       if (localeParam) {
-        store!.translations.setActiveLocale(localeParam)
+        translations.setActiveLocale(localeParam)
         cleanLocaleParam()
       } else {
         const locale = isLocaleStored()
           ? readLocaleFromSessionStorage()
           : readLocaleFromDomain()
-        store!.translations.setActiveLocale(locale)
+        translations.setActiveLocale(locale)
       }
-    }, [])
+    }, [translations])
 
-    const { store } = props
-    const activeLocale = store!.translations.activeLocale
-    const translations = store!.translations.messages[activeLocale]
+    const activeLocale = translations.activeLocale
+    const localisedMessages = translations.messages[activeLocale]
     const messages =
       activeLocale === Locale.FI
-        ? translations
+        ? localisedMessages
         : // use finnish translations as fallback, merge provided translations
-          { ...store!.translations.messages.fi, ...translations }
+          { ...translations.messages.fi, ...localisedMessages }
     return (
       <ThemeWrapper>
         <IntlProvider

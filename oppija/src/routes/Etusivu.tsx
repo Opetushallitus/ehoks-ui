@@ -118,27 +118,28 @@ export interface EtusivuProps {
 
 export const Etusivu = inject("store")(
   observer(({ store }: EtusivuProps) => {
+    const navigate = useNavigate()
+    const { environment, session, translations } = store!
     useEffect(() => {
-      const navigate = useNavigate()
-      if (store!.session.isLoggedIn) {
+      if (session.isLoggedIn) {
         navigate("/ehoks/suunnittelu")
       }
-    }, [store])
+    }, [session, session.isLoggedIn, navigate])
 
     const loginStudent = (event: React.MouseEvent) => {
       event.preventDefault()
-      store!.session.resetUserDidLogout()
+      session.resetUserDidLogout()
 
-      if (!store!.session.isLoggedIn) {
+      if (!session.isLoggedIn) {
         window.location.href =
-          store!.translations.activeLocale === Locale.SV
-            ? store!.environment.casOppijaLoginUrlSv
-            : store!.environment.casOppijaLoginUrlFi
+          translations.activeLocale === Locale.SV
+            ? environment.casOppijaLoginUrlSv
+            : environment.casOppijaLoginUrlFi
       }
     }
     const loginVirkailija = (event: React.MouseEvent) => {
       event.preventDefault()
-      window.location.href = store!.environment.virkailijaLoginUrl
+      window.location.href = environment.virkailijaLoginUrl
     }
 
     return (

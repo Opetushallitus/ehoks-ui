@@ -1,7 +1,6 @@
 import { Button } from "components/Button"
 import { Checkbox } from "components/Checkbox"
 import Flag from "components/icons/Flag"
-import { reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React, { useState, useEffect } from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
@@ -278,26 +277,21 @@ export const IntroModalDialog = inject("store")(
       initialAcknowledgedStatus: true,
       currentPage: IntroPage.Page1
     })
+    const { session } = props.store!
 
     useEffect(() => {
-      const { store } = props
       Modal.setAppElement("#app")
-      reaction(
-        () => store!.session.settings.introDialog.userAcknowledgedIntroDialog,
-        (acknowledged, _, initialReaction) => {
-          setState({
-            ...state,
-            initialAcknowledgedStatus: acknowledged,
-            introDialogOpen: !acknowledged
-          })
-          initialReaction.dispose()
-        },
-        { fireImmediately: true }
-      )
-    }, [])
+      setState(s => ({
+        ...s,
+        initialAcknowledgedStatus:
+          session.settings.introDialog.userAcknowledgedIntroDialog,
+        introDialogOpen: !session.settings.introDialog
+          .userAcknowledgedIntroDialog
+      }))
+    }, [session, session.settings.introDialog.userAcknowledgedIntroDialog])
 
     const closeIntroDialog = async () => {
-      const { saveSettings } = props.store!.session
+      const { saveSettings } = session
       await saveSettings()
       setState({ ...state, introDialogOpen: false })
     }
@@ -332,7 +326,7 @@ export const IntroModalDialog = inject("store")(
       return null
     }
 
-    const { introDialog } = props.store!.session.settings
+    const { introDialog } = session.settings
 
     return (
       <StyledModal isOpen={state.introDialogOpen}>
