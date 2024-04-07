@@ -9,6 +9,7 @@ import { ShareLinkInfo } from "components/ShareLinkInfo"
 import { IRootStore } from "../stores/RootStore"
 import { LoadingSpinner } from "components/LoadingSpinner"
 import { NavigationContainer } from "components/NavigationContainer"
+import { useParams } from "react-router"
 
 const Header = styled("h1")`
   margin: 30px 50px 30px 40px;
@@ -27,7 +28,6 @@ const LoadingContainer = styled("div")`
 `
 
 export interface EtusivuProps {
-  uuid?: string
   store?: IRootStore
 }
 
@@ -40,10 +40,9 @@ export const Etusivu = inject("store")(
     const [state, setState] = useState<ShareState>({
       allLoaded: false
     })
+    const { share } = props.store!
+    const { uuid } = useParams()
     useEffect(() => {
-      const { store, uuid } = props
-      const { share } = store!
-
       if (uuid) {
         share.fetchShareData(uuid).then(() => {
           if (!share.isLoading) {
@@ -55,9 +54,8 @@ export const Etusivu = inject("store")(
           setState({ allLoaded: true })
         }
       }
-    }, [])
+    }, [share, uuid])
 
-    const { share } = props.store!
     if (!state.allLoaded) {
       return (
         <LoadingContainer>

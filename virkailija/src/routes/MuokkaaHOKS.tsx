@@ -37,6 +37,7 @@ import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
 import { appendCommonHeaders } from "fetchUtils"
+import { useParams } from "react-router"
 
 const disallowedKeys = ["eid", "manuaalisyotto", "module-id"]
 
@@ -81,10 +82,6 @@ function trimPrimitive(key: string, result: any, formData: any) {
 
 interface MuokkaaHOKSProps {
   store?: IRootStore
-  /* From router path */
-  hoksId?: string
-  /* From router path */
-  oppijaOid?: string
 }
 
 interface MuokkaaHOKSState {
@@ -121,9 +118,11 @@ export const MuokkaaHOKS = inject("store")(
       clearModalOpen: false
     })
     const intl = useIntl()
+    const { oppijaOid, hoksId } = useParams()
+    const { environment, notifications } = props.store!
 
     useEffect(() => {
-      props.store!.environment.fetchSwaggerJSON().then(json =>
+      environment.fetchSwaggerJSON().then(json =>
         fetchHOKS().then(hoks => {
           const rawSchema = {
             definitions: stripUnsupportedFormats(json.definitions),
@@ -135,8 +134,8 @@ export const MuokkaaHOKS = inject("store")(
               propertiesByStep,
               state.currentStep
             )
-            setState({
-              ...state,
+            setState(s => ({
+              ...s,
               formData: hoks,
               errors: [],
               errorsByStep: {},
@@ -145,14 +144,13 @@ export const MuokkaaHOKS = inject("store")(
               koodiUris,
               uiSchema: uiSchemaByStep(koodiUris, state.currentStep),
               isLoading: false
-            })
+            }))
           })
         })
       )
-    }, [])
+    }, [environment])
 
     const fetchHOKS = async () => {
-      const { oppijaOid, hoksId } = props
       const request = await window.fetch(
         `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksId}`,
         {
@@ -202,8 +200,6 @@ export const MuokkaaHOKS = inject("store")(
 
     const save = async (fieldProps: IChangeEvent<FieldProps>) => {
       setState({ ...state, isLoading: true })
-      const { notifications } = props.store!
-      const { oppijaOid, hoksId } = props
       notifications.markAllErrorsHandled()
 
       const request = await window.fetch(

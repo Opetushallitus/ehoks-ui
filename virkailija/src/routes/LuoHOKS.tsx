@@ -82,6 +82,7 @@ export const LuoHOKS = inject("store")(
       clearModalOpen: false,
       confirmCloseListenerExists: false
     })
+    const { environment, notifications } = props.store!
 
     const confirmClose = (ev: BeforeUnloadEvent) => {
       if (state?.success) {
@@ -122,7 +123,7 @@ export const LuoHOKS = inject("store")(
     }
 
     useEffect(() => {
-      props.store!.environment.fetchSwaggerJSON().then(async json => {
+      environment.fetchSwaggerJSON().then(async json => {
         const rawSchema = {
           definitions: stripUnsupportedFormats(json.definitions),
           ...json.definitions.HOKSLuonti
@@ -140,8 +141,8 @@ export const LuoHOKS = inject("store")(
         } = window.sessionStorage.getItem("hoks")
           ? JSON.parse(window.sessionStorage.getItem("hoks") || "")
           : {}
-        setState({
-          ...state,
+        setState(s => ({
+          ...s,
           formData,
           errors,
           errorsByStep,
@@ -150,7 +151,7 @@ export const LuoHOKS = inject("store")(
           koodiUris,
           uiSchema: uiSchemaByStep(koodiUris, state.currentStep),
           isLoading: false
-        })
+        }))
         if (formDataExists()) {
           addBeforeUnloadListener()
         }
@@ -174,7 +175,7 @@ export const LuoHOKS = inject("store")(
           removeBeforeUnloadListener()
         }
       }
-    }, [])
+    }, [environment])
 
     /*
     const nextStep = () => {
@@ -250,7 +251,6 @@ export const LuoHOKS = inject("store")(
 
     const create = async (fieldProps: IChangeEvent<FieldProps>) => {
       setState({ ...state, isLoading: true })
-      const { notifications } = props.store!
       notifications.markAllErrorsHandled()
 
       const request = await window.fetch(

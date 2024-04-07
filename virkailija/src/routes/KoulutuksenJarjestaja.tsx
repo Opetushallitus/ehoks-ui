@@ -11,7 +11,6 @@ import { TableCell } from "components/Table/TableCell"
 import { TableHead } from "components/Table/TableHead"
 import { TableRow } from "components/Table/TableRow"
 import debounce from "lodash.debounce"
-import { reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React, { useEffect } from "react"
 import { MdEdit } from "react-icons/md"
@@ -20,6 +19,7 @@ import Paging from "routes/KoulutuksenJarjestaja/Paging"
 import { SearchSortKey } from "stores/KoulutuksenJarjestajaStore"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
+import { useParams } from "react-router"
 
 export const BackgroundContainer = styled("div")`
   background: #f8f8f8;
@@ -49,72 +49,67 @@ const SearchableTable = styled(Table)<{ children: React.ReactNode }>`
 
 const Spinner = styled(LoadingSpinner)`
   position: absolute;
-  right: 0px;
+  right: 0;
 `
 
 interface KoulutuksenJarjestajaProps {
   store?: IRootStore
-  // from path parameters
-  orgId?: string
 }
 
 export const KoulutuksenJarjestaja = inject("store")(
   observer((props: KoulutuksenJarjestajaProps) => {
+    const {
+      koulutuksenJarjestaja: { search },
+      session
+    } = props.store!
     const debouncedFetchResults = debounce(() => {
-      const { koulutuksenJarjestaja } = props.store!
-      koulutuksenJarjestaja.search.fetchOppijat()
+      search.fetchOppijat()
     }, 500)
+    const { orgId } = useParams()
 
     useEffect(() => {
-      const { koulutuksenJarjestaja, session } = props.store!
-      const orgId = props.orgId
-      return () => {
-        reaction(
-          () => session.isLoggedIn && session.organisations.length > 0,
-          async hasLoggedIn => {
-            if (orgId && orgId !== session.selectedOrganisationOid) {
-              session.changeSelectedOrganisationOid(orgId)
-            }
-            if (hasLoggedIn) {
-              await koulutuksenJarjestaja.search.fetchOppijat()
-              window.requestAnimationFrame(() => {
-                window.scrollTo(0, 0)
-              })
-            }
-          }
-        )
+      if (orgId && orgId !== session.selectedOrganisationOid) {
+        session.changeSelectedOrganisationOid(orgId)
       }
-    }, [])
+      if (orgId && session.isLoggedIn && session.organisations.length > 0) {
+        search.fetchOppijat().then(() => {
+          window.requestAnimationFrame(() => {
+            window.scrollTo(0, 0)
+          })
+        })
+      }
+    }, [
+      search,
+      session,
+      session.isLoggedIn,
+      session.organisations.length,
+      orgId
+    ])
 
     const updateSearchText = (field: SearchSortKey) => (
       event: React.ChangeEvent<HTMLInputElement>
     ) => {
-      const { koulutuksenJarjestaja } = props.store!
-      koulutuksenJarjestaja.search.changeSearchText(field, event.target.value)
+      search.changeSearchText(field, event.target.value)
       debouncedFetchResults()
     }
 
     const changeSort = (sortName: SearchSortKey) => {
-      const { koulutuksenJarjestaja } = props.store!
-      koulutuksenJarjestaja.search.changeSort(sortName)
+      search.changeSort(sortName)
     }
 
     const goToPage = (index: number) => () => {
-      const { koulutuksenJarjestaja } = props.store!
-      koulutuksenJarjestaja.search.changeActivePage(index)
+      search.changeActivePage(index)
     }
 
     const onPaginationResultEnter = (index: number) => (
       event: React.KeyboardEvent
     ) => {
-      const { koulutuksenJarjestaja } = props.store!
       if (event.key === "Enter" || event.key === " ") {
-        koulutuksenJarjestaja.search.changeActivePage(index)
+        search.changeActivePage(index)
       }
     }
 
     const intl = useIntl()
-    const { koulutuksenJarjestaja, session } = props.store!
     const {
       activePage,
       perPage,
@@ -124,8 +119,7 @@ export const KoulutuksenJarjestaja = inject("store")(
       totalResultsCount,
       isLoading,
       searchTexts
-    } = koulutuksenJarjestaja.search
-    const selectedOrganisationOid = props.orgId
+    } = search
 
     return (
       <BackgroundContainer>
@@ -214,7 +208,7 @@ export const KoulutuksenJarjestaja = inject("store")(
                       <TableCell>
                         {student.lukumaara > 0 ? (
                           <Link
-                            to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${selectedOrganisationOid}/oppija/${student.oid}`}
+                            to={`/ehoks-virkailija-ui/koulutuksenjarjestaja/${orgId}/oppija/${student.oid}`}
                           >
                             {student.nimi}
                           </Link>

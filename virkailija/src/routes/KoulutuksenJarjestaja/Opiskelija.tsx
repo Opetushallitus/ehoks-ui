@@ -1,13 +1,14 @@
-import { Routes, Route } from "react-router"
+import { Routes, Route, useParams } from "react-router"
 import { Link } from "react-router-dom"
-import { reaction } from "mobx"
 import { inject, observer } from "mobx-react"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { FormattedMessage } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 import { KoulutuksenJarjestajaHOKS } from "./KoulutuksenJarjestajaHOKS"
 import { ValitseHOKS } from "./ValitseHOKS"
+import { IOppija } from "../../stores/KoulutuksenJarjestajaStore"
+import { LoadingSpinner } from "components/LoadingSpinner"
 
 const LinkContainer = styled("div")`
   flex: 1;
@@ -37,60 +38,66 @@ const TopContainer = styled("div")`
   padding: 20px 40px;
 `
 
+const Spinner = styled(LoadingSpinner)`
+  position: absolute;
+  right: 0;
+  top: 20px;
+`
+
 export interface OpiskelijaProps {
   store?: IRootStore
-  // From router path
-  orgId?: string
-  studentId?: string
 }
 
 export const Opiskelija = inject("store")(
   observer((props: OpiskelijaProps) => {
+    const { store } = props
+    const { orgId, studentId } = useParams()
+    const { koulutuksenJarjestaja, session } = store!
+    const { search } = koulutuksenJarjestaja
+    const [oppija, setOppija] = useState<IOppija | undefined>(undefined)
+    const [loading, setLoading] = useState(false)
+
     useEffect(() => {
-      const { studentId, store } = props
-      const { koulutuksenJarjestaja, session } = store!
-      const { search } = koulutuksenJarjestaja
-
-      return () => {
-        reaction(
-          () => session.isLoggedIn && session.organisations.length > 0,
-          async hasLoggedIn => {
-            const orgId = props.orgId
-            if (orgId && orgId !== session.selectedOrganisationOid) {
-              session.changeSelectedOrganisationOid(orgId)
-            }
-
-            if (hasLoggedIn) {
-              if (!search.results.length) {
-                await search.fetchOppijat()
-              }
-
-              if (studentId) {
-                const maybeOppija = search.oppija(studentId)
-                if (!maybeOppija) {
-                  await search.fetchOppija(studentId)
-                }
-                const oppija = search.oppija(studentId)
-                if (oppija) {
-                  await oppija.fetchOpiskeluoikeudet()
-                }
-              }
-            }
-          },
-          { fireImmediately: true }
-        )
+      if (orgId && orgId !== session.selectedOrganisationOid) {
+        session.changeSelectedOrganisationOid(orgId)
       }
-    }, [])
+      if (orgId && session.isLoggedIn && session.organisations.length > 0) {
+        const asyncEffect = async () => {
+          setLoading(true)
+          if (!search.results.length) {
+            await search.fetchOppijat()
+          }
 
-    const { studentId, orgId, store } = props
+          if (studentId) {
+            const maybeOppija = search.oppija(studentId)
+            if (!maybeOppija) {
+              await search.fetchOppija(studentId)
+            }
+            const o = search.oppija(studentId)
+            if (o) {
+              await o.fetchOpiskeluoikeudet()
+              setOppija(o)
+            }
+          }
+          setLoading(false)
+        }
+        asyncEffect()
+      }
+    }, [
+      search,
+      session,
+      session.selectedOrganisationOid,
+      session.isLoggedIn,
+      session.organisations.length,
+      studentId,
+      orgId
+    ])
+
     if (!studentId) {
       return null
     }
-    const { koulutuksenJarjestaja, session } = store!
-    const results = koulutuksenJarjestaja.search.results
-    const oppija = koulutuksenJarjestaja.search.oppija(studentId)
-    const fromListView = koulutuksenJarjestaja.search.fromListView
-    const suunnitelmat = oppija ? oppija.suunnitelmat : []
+    const results = search.results
+    const fromListView = search.fromListView
     const studentIndex = oppija ? results.indexOf(oppija) : -1
     const previous = studentIndex > 0 ? results[studentIndex - 1] : undefined
     const next =
@@ -98,7 +105,6 @@ export const Opiskelija = inject("store")(
         ? results[studentIndex + 1]
         : undefined
     const basePath = `/ehoks-virkailija-ui/koulutuksenjarjestaja/${orgId}/oppija`
-    const selfPath = `${basePath}/${studentId}`
 
     return (
       <React.Fragment>
@@ -128,24 +134,25 @@ export const Opiskelija = inject("store")(
             </RightLink>
           </TopContainer>
         )}
+        {loading && <Spinner />}
         <Routes>
           <Route
-            path={`${selfPath}/`}
+            index
             element={
               <ValitseHOKS
                 oppijaId={studentId}
                 laitosId={orgId || "unknown"}
                 nimi={oppija?.nimi}
-                suunnitelmat={suunnitelmat}
+                suunnitelmat={oppija?.suunnitelmat ?? []}
                 session={session}
               />
             }
           />
           <Route
-            path={`${selfPath}/:hoksId/*`}
+            path=":hoksId/*"
             element={
               <KoulutuksenJarjestajaHOKS
-                suunnitelmat={suunnitelmat}
+                suunnitelmat={oppija?.suunnitelmat ?? []}
                 oppija={oppija}
                 laitosId={orgId || "unknown"}
               />

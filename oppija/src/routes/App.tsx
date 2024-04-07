@@ -41,16 +41,13 @@ const MainApp = () => (
     <AppNotifications />
     <Main id="main" role="main">
       <Routes>
-        <Route path="/ehoks/" element={<Etusivu />} />
-        <Route path="/ehoks/suunnittelu/*" element={<Suunnittelu />} />
+        <Route index element={<Etusivu />} />
+        <Route path="suunnittelu/*" element={<Suunnittelu />} />
         <Route
-          path="/ehoks/henkilokohtaistaminen"
+          path="henkilokohtaistaminen"
           element={<Henkilokohtaistaminen />}
         />
-        <Route
-          path="/ehoks/ammatillinentutkinto"
-          element={<Ammatillinentutkinto />}
-        />
+        <Route path="ammatillinentutkinto" element={<Ammatillinentutkinto />} />
       </Routes>
     </Main>
     <AppFooter />
@@ -65,32 +62,31 @@ export interface AppProps {
 
 export const App = inject("store")(
   observer((props: AppProps) => {
+    const { session, translations } = props.store!
     useEffect(() => {
-      const { store } = props
       const localeParam = parseLocaleParam(window.location.search)
       if (localeParam) {
-        store!.translations.setActiveLocale(localeParam)
+        translations.setActiveLocale(localeParam)
         cleanLocaleParam()
       } else {
         const locale = isLocaleStored()
           ? readLocaleFromSessionStorage()
           : readLocaleFromDomain()
-        store!.translations.setActiveLocale(locale)
+        translations.setActiveLocale(locale)
       }
 
       // load user session info from backend
-      store!.session.checkSession()
-    }, [])
+      session.checkSession()
+    }, [session, translations])
 
-    const { store } = props
-    const activeLocale = store!.translations.activeLocale
+    const activeLocale = translations.activeLocale
     setDocumentLocale(activeLocale)
-    const translations = store!.translations.messages[activeLocale]
+    const localisedMessages = translations.messages[activeLocale]
     const messages =
       activeLocale === Locale.FI
-        ? translations
+        ? localisedMessages
         : // use finnish translations as fallback, merge provided translations
-          { ...store!.translations.messages.fi, ...translations }
+          { ...translations.messages.fi, ...localisedMessages }
     return (
       <ThemeWrapper>
         <IntlProvider

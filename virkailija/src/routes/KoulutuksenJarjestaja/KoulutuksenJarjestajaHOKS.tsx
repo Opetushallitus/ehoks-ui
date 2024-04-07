@@ -1,4 +1,11 @@
-import { useNavigate, Routes, Route, useLocation, Location } from "react-router"
+import {
+  Location,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams
+} from "react-router"
 import { Link } from "react-router-dom"
 import { Container, PaddedContent } from "components/Container"
 import { HelpPopup } from "components/HelpPopup"
@@ -12,16 +19,15 @@ import { ProgressPies } from "components/ProgressPies"
 import { BackgroundContainer } from "components/SectionContainer"
 import { SectionItem } from "components/SectionItem"
 import find from "lodash.find"
-import get from "lodash.get"
-import { reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import { IHOKS } from "models/HOKS"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { MdEventNote, MdExtension } from "react-icons/md"
 import { FormattedMessage } from "react-intl"
 import { IOppija } from "stores/KoulutuksenJarjestajaStore"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
+import { LoadingSpinner } from "components/LoadingSpinner"
 
 const NaviContainer = styled(ProgressPies)`
   justify-content: flex-start;
@@ -50,68 +56,70 @@ const HelpButton = styled(HelpPopup)`
   margin: 0 0 0 20px;
 `
 
+const Spinner = styled(LoadingSpinner)`
+  position: absolute;
+  right: 0;
+`
+
 export interface KoulutuksenJarjestajaHOKSProps {
   store?: IRootStore
   suunnitelmat: IHOKS[]
   oppija?: IOppija
-  /* From router path */
-  hoksId?: string
   laitosId?: string
 }
 
 export const KoulutuksenJarjestajaHOKS = inject("store")(
   observer((props: KoulutuksenJarjestajaHOKSProps) => {
     const navigate = useNavigate()
-
-    useEffect(() => {
-      const { koulutuksenJarjestaja } = props.store!
-      const fromRaportit = get(props, "this.props.location.state.fromRaportit")
-      if (fromRaportit) {
-        koulutuksenJarjestaja.search.setFromListView(false)
-      }
-      return () => {
-        reaction(
-          () => props.suunnitelmat.length > 0,
-          async (hasSuunnitelmat: boolean) => {
-            if (hasSuunnitelmat || fromRaportit) {
-              const oppijaoid = get(
-                props,
-                "this.props.location.state.oppijaoid"
-              )
-              const hokseid = get(props, "this.props.location.state.hokseid")
-              let fromRaportitSuunnitelmat: IHOKS[] = []
-              if (fromRaportit && oppijaoid) {
-                const oppija = koulutuksenJarjestaja.search.oppija(oppijaoid)
-                if (!oppija) {
-                  await koulutuksenJarjestaja.search.fetchOppija(oppijaoid)
-                }
-                fromRaportitSuunnitelmat = oppija ? oppija.suunnitelmat : []
-              }
-              const suunnitelma =
-                fromRaportitSuunnitelmat.length > 0
-                  ? find(fromRaportitSuunnitelmat, h => h.eid === hokseid)
-                  : find(props.suunnitelmat, h => h.eid === props.hoksId)
-              if (suunnitelma) {
-                await suunnitelma.fetchDetails()
-                await suunnitelma.fetchOpiskelijapalauteTilat()
-                await suunnitelma.fetchOsaamispisteet()
-              }
-            }
-          },
-          { fireImmediately: true }
-        )
-      }
-    }, [])
-
-    // TODO: redirect to root after logout, check implementation in src/routes/OmienOpintojenSuunnittelu.tsx
-    const setActiveTab = (route: string) => () => navigate(route)
-
     const location: Location<{
       fromRaportit: boolean
       oppijaoid: string | null
       hokseid: string | null
     }> = useLocation()
-    const { hoksId, suunnitelmat, oppija, laitosId } = props
+    const { hoksId } = useParams()
+    const { fromRaportit = false, oppijaoid, hokseid } = location?.state ?? {}
+    const { suunnitelmat, oppija, laitosId, store } = props
+    const {
+      koulutuksenJarjestaja: { search }
+    } = store!
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+      if (fromRaportit) {
+        search.setFromListView(false)
+      }
+      if (suunnitelmat.length > 0 || fromRaportit) {
+        const asyncEffect = async () => {
+          setLoading(true)
+          let fromRaportitSuunnitelmat: IHOKS[] = []
+          if (fromRaportit && oppijaoid) {
+            let maybeOppija = search.oppija(oppijaoid)
+            if (!maybeOppija) {
+              await search.fetchOppija(oppijaoid)
+            }
+            maybeOppija = search.oppija(oppijaoid)
+            fromRaportitSuunnitelmat = maybeOppija
+              ? maybeOppija.suunnitelmat
+              : []
+          }
+          const suunnitelma =
+            fromRaportitSuunnitelmat.length > 0
+              ? find(fromRaportitSuunnitelmat, h => h.eid === hokseid)
+              : find(suunnitelmat, h => h.eid === hoksId)
+          if (suunnitelma) {
+            await suunnitelma.fetchDetails()
+            await suunnitelma.fetchOpiskelijapalauteTilat()
+            await suunnitelma.fetchOsaamispisteet()
+          }
+          setLoading(false)
+        }
+        asyncEffect()
+      }
+    }, [search, hoksId, suunnitelmat, fromRaportit, oppijaoid, hokseid])
+
+    // TODO: redirect to root after logout, check implementation in src/routes/OmienOpintojenSuunnittelu.tsx
+    const setActiveTab = (route: string) => () => navigate(route)
+
     const suunnitelmaHoksId =
       location && location.state && location.state.fromRaportit
         ? location.state.hokseid
@@ -129,6 +137,7 @@ export const KoulutuksenJarjestajaHOKS = inject("store")(
       <React.Fragment>
         <NavigationContainer>
           <Container>
+            {loading && <Spinner />}
             <PaddedContent>
               {suunnitelmat.length > 1 && (
                 <Timestamp>
@@ -190,7 +199,7 @@ export const KoulutuksenJarjestajaHOKS = inject("store")(
             <PaddedContent>
               <Routes>
                 <Route
-                  path={`${hoksPath}/`}
+                  index
                   element={
                     <Tavoitteet
                       student={oppija.henkilotiedot}
@@ -221,7 +230,7 @@ export const KoulutuksenJarjestajaHOKS = inject("store")(
                 />
 
                 <Route
-                  path={`${hoksPath}/osaaminen`}
+                  path="osaaminen"
                   element={
                     <AiempiOsaaminen
                       aiemminHankitutTutkinnonOsat={
@@ -256,7 +265,7 @@ export const KoulutuksenJarjestajaHOKS = inject("store")(
                 />
 
                 <Route
-                  path={`${hoksPath}/opiskelusuunnitelma`}
+                  path="opiskelusuunnitelma"
                   element={
                     <Opiskelusuunnitelma
                       plan={suunnitelma}

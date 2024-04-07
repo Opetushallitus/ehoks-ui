@@ -113,8 +113,8 @@ export const Opiskelusuunnitelma = observer(
     useEffect(() => {
       const { share } = parseShareParams(location.search)
       if (share.type && share.tutkinnonOsaTyyppi) {
-        setState({
-          ...state,
+        setState(s => ({
+          ...s,
           share: {
             type: share.type,
             moduleId: share.moduleId,
@@ -122,7 +122,7 @@ export const Opiskelusuunnitelma = observer(
             tutkinnonOsaModuleId: share.tutkinnonOsaModuleId,
             hoksEid: share.hoksEid
           }
-        })
+        }))
         setInitialExpanded(share)
       }
     }, [])
@@ -132,8 +132,8 @@ export const Opiskelusuunnitelma = observer(
       // previous dialog should close and new dialog should open
       const { share } = parseShareParams(location.search)
       if (shareHasChanged(share)) {
-        setState({
-          ...state,
+        setState(s => ({
+          ...s,
           share: {
             type: share.type,
             moduleId: share.moduleId,
@@ -141,9 +141,9 @@ export const Opiskelusuunnitelma = observer(
             tutkinnonOsaModuleId: share.tutkinnonOsaModuleId,
             hoksEid: share.hoksEid
           }
-        })
+        }))
       }
-    }, [location])
+    }, [location.search])
 
     const shareHasChanged = (share: {
       type?: ShareType
