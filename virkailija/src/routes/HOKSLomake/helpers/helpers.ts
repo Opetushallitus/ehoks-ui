@@ -1,6 +1,5 @@
-import { JSONSchema6, JSONSchema6Definition } from "json-schema"
 import find from "lodash.find"
-import { AjvError } from "react-jsonschema-form"
+import { RJSFSchema, RJSFValidationError } from "@rjsf/utils"
 import { koodistoUrls } from "../formConfig"
 
 // Schema formats supported by react-jsonschema-form
@@ -15,25 +14,39 @@ export const SUPPORTED_SCHEMA_FORMATS = [
   "uri"
 ]
 
-export const stripUnsupportedFormat = (schema: any) => {
+const fields = ["oneOf", "allOf", "anyOf"]
+
+function convertFieldNames(property: any) {
+  fields.forEach(key => {
+    if (property[`x-${key}`]) {
+      property[key] = property[`x-${key}`]
+      delete property[`x-${key}`]
+    }
+  })
+}
+
+export const convertSchema = (schema: any) => {
+  // delete unsupported schemas
   if (schema.format && SUPPORTED_SCHEMA_FORMATS.indexOf(schema.format) === -1) {
     delete schema.format
   }
   if (schema.properties) {
-    Object.keys(schema.properties).forEach(property => {
-      stripUnsupportedFormat(schema.properties[property])
+    Object.keys(schema.properties).forEach(propertyName => {
+      const property = schema.properties[propertyName]
+      convertFieldNames(property)
+      convertSchema(property)
     })
   }
   return schema
 }
 
-export const stripUnsupportedFormats = (definitions: any) =>
+export const convertSchemaDefinitions = (definitions: any) =>
   Object.keys(definitions).reduce((defs: any, def) => {
-    defs[def] = stripUnsupportedFormat(definitions[def])
+    defs[def] = convertSchema(definitions[def])
     return defs
   }, {})
 
-export const transformErrors = (errors: AjvError[]) =>
+export const transformErrors = (errors: RJSFValidationError[]) =>
   errors.map(error => {
     if (error.name === "required") {
       error.message = "pakollinen kenttä"
@@ -124,10 +137,10 @@ export function mapKoodiUri({ koodiUri, versio, metadata }: any) {
 }
 
 export function schemaByStep(
-  schema: JSONSchema6,
+  schema: RJSFSchema,
   properties: { [index: number]: string[] },
   currentStep: number
-): JSONSchema6 {
+): RJSFSchema {
   const schemaProperties = schema.properties || {}
   return {
     type: "object",
@@ -135,7 +148,7 @@ export function schemaByStep(
     definitions: schema.definitions,
     required: currentStep === 0 ? schema.required : [],
     properties: Object.keys(schema.properties || []).reduce<{
-      [key: string]: JSONSchema6Definition
+      [key: string]: RJSFSchema | boolean
     }>((props, key) => {
       if (properties[currentStep].indexOf(key) > -1 && schemaProperties[key]) {
         props[key] = schemaProperties[key]

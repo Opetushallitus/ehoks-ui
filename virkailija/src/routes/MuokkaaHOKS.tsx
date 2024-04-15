@@ -1,26 +1,29 @@
 import { Button } from "components/Button"
 import { LoadingSpinner } from "components/LoadingSpinner"
-import { JSONSchema6 } from "json-schema"
 import { inject, observer } from "mobx-react"
 import React, { useState, useEffect } from "react"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 import { useIntl, FormattedMessage } from "react-intl"
-import { AjvError, FieldProps, IChangeEvent } from "react-jsonschema-form"
+import Form, { IChangeEvent } from "@rjsf/core"
+import { FieldProps, RJSFSchema, RJSFValidationError } from "@rjsf/utils"
 import { IRootStore } from "stores/RootStore"
-import { ArrayFieldTemplate } from "./HOKSLomake/ArrayFieldTemplate"
 import { BottomToolbar } from "./HOKSLomake/BottomToolbar"
 import { ButtonsContainer } from "./HOKSLomake/ButtonsContainer"
-import ErrorList from "./HOKSLomake/ErrorList"
 import { FailureMessage } from "./HOKSLomake/FailureMessage"
 import { fetchKoodiUris } from "./HOKSLomake/fetchKoodiUris"
-import { fields, koodistoUrls, widgets } from "./HOKSLomake/formConfig"
+import {
+  fields,
+  koodistoUrls,
+  widgets,
+  templates
+} from "./HOKSLomake/formConfig"
 import { FormContainer } from "./HOKSLomake/FormContainer"
 import "./HOKSLomake/glyphicons/glyphicons.css"
 import { Header } from "./HOKSLomake/Header"
 import {
   buildKoodiUris,
   schemaByStep,
-  stripUnsupportedFormats,
+  convertSchemaDefinitions,
   reportHOKSErrors,
   transformErrors
 } from "./HOKSLomake/helpers/helpers"
@@ -28,7 +31,6 @@ import { isRoot } from "./HOKSLomake/helpers/isRoot"
 import { koodiUriSelected } from "./HOKSLomake/helpers/koodiUriSelected"
 import { trimEmptyValues } from "./HOKSLomake/helpers/trimFormData"
 import { HOKSFormContainer } from "./HOKSLomake/HOKSContainer"
-import { ReactJSONSchemaForm } from "./HOKSLomake/ReactJSONSchemaForm"
 import { SpinnerContainer } from "./HOKSLomake/SpinnerContainer"
 import { Step } from "./HOKSLomake/Step"
 import { Stepper } from "./HOKSLomake/Stepper"
@@ -38,6 +40,7 @@ import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
 import { appendCommonHeaders } from "fetchUtils"
 import { useParams } from "react-router"
+import validator from "@rjsf/validator-ajv8"
 
 const disallowedKeys = ["eid", "manuaalisyotto", "module-id"]
 
@@ -85,16 +88,16 @@ interface MuokkaaHOKSProps {
 }
 
 interface MuokkaaHOKSState {
-  schema: JSONSchema6
+  schema: RJSFSchema
   formData: { [name: string]: any }
-  errors: AjvError[]
+  errors: RJSFValidationError[]
   isLoading: boolean
   success: boolean | undefined
   userEnteredText: boolean
   uiSchema?: ReturnType<typeof uiSchemaByStep>
-  rawSchema: JSONSchema6
+  rawSchema: RJSFSchema
   currentStep: number
-  errorsByStep: { [index: string]: AjvError[] }
+  errorsByStep: { [index: string]: RJSFValidationError[] }
   koodiUris: { [key in keyof typeof koodistoUrls]: any[] }
   message?: string
   clearModalOpen: boolean
@@ -125,7 +128,7 @@ export const MuokkaaHOKS = inject("store")(
       environment.fetchSwaggerJSON().then(json =>
         fetchHOKS().then(hoks => {
           const rawSchema = {
-            definitions: stripUnsupportedFormats(json.definitions),
+            definitions: convertSchemaDefinitions(json.definitions),
             ...json.definitions.HOKSKorvaus
           }
           fetchKoodiUris().then(koodiUris => {
@@ -176,7 +179,7 @@ export const MuokkaaHOKS = inject("store")(
       })
     }
 
-    const setErrors = (errors: AjvError[]) => {
+    const setErrors = (errors: RJSFValidationError[]) => {
       setState({ ...state, errors })
     }
 
@@ -282,7 +285,7 @@ export const MuokkaaHOKS = inject("store")(
           </Stepper>
         </TopToolbar>
         <FormContainer>
-          <ReactJSONSchemaForm
+          <Form
             fields={fields}
             widgets={widgets}
             schema={state.schema}
@@ -292,12 +295,11 @@ export const MuokkaaHOKS = inject("store")(
             onChange={onChange}
             onSubmit={save}
             onError={setErrors}
-            ErrorList={ErrorList}
+            templates={templates}
             transformErrors={transformErrors}
-            ArrayFieldTemplate={ArrayFieldTemplate}
-            safeRenderCompletion={true}
             liveValidate={true}
             noHtml5Validate={true}
+            validator={validator}
           >
             <BottomToolbar>
               <ButtonsContainer>
@@ -331,7 +333,7 @@ export const MuokkaaHOKS = inject("store")(
                 )}
               </ButtonsContainer>
             </BottomToolbar>
-          </ReactJSONSchemaForm>
+          </Form>
         </FormContainer>
       </HOKSFormContainer>
     )

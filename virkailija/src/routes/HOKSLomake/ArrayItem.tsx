@@ -1,6 +1,7 @@
 import React from "react"
-import IconButton from "react-jsonschema-form/lib/components/IconButton"
+import IconButton from "@rjsf/core/lib/components/templates/ButtonTemplates/IconButton"
 import styled from "styled"
+import { Registry } from "@rjsf/utils"
 
 interface ArrayItemProps {
   index: number
@@ -15,6 +16,7 @@ interface ArrayItemProps {
   hasRemove: boolean
   onDropIndexClick: any
   setActiveStep: React.Dispatch<React.SetStateAction<number>>
+  registry: Registry
 }
 
 const ArrayItemContainer = styled("div")`
@@ -36,7 +38,8 @@ export function ArrayItem(props: ArrayItemProps) {
     hasToolbar,
     index,
     onReorderClick,
-    readonly
+    readonly,
+    registry
   } = props
   const btnStyle: React.CSSProperties = {
     flex: 1,
@@ -66,6 +69,7 @@ export function ArrayItem(props: ArrayItemProps) {
                 style={btnStyle}
                 disabled={disabled || readonly || !hasMoveUp}
                 onClick={onReorderClick(index, index - 1)}
+                registry={registry}
               />
             )}
             {(hasMoveUp || hasMoveDown) && (
@@ -76,6 +80,7 @@ export function ArrayItem(props: ArrayItemProps) {
                 style={btnStyle}
                 disabled={disabled || readonly || !hasMoveDown}
                 onClick={onReorderClick(index, index + 1)}
+                registry={registry}
               />
             )}
           </div>
