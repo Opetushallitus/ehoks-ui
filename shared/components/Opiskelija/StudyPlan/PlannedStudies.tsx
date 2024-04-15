@@ -89,6 +89,9 @@ export class PlannedStudies extends React.Component<PlannedStudiesProps> {
                   title={study.opintoOtsikko(competencePointsTitle)}
                   objectives={study.tavoitteetJaSisallot}
                   koulutuksenJarjestaja={study.koulutuksenJarjestaja}
+                  vaatimuksistaTaiTavoitteistaPoikkeaminen={
+                    study.vaatimuksistaTaiTavoitteistaPoikkeaminen
+                  }
                 />
                 {renderExtraItem && <EmptyItem />}
               </React.Fragment>
