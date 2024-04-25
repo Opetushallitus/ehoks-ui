@@ -259,7 +259,7 @@ export const MuokkaaHOKS = inject("store")(
       const rootKeys = Object.keys(state.rawSchema.properties || {})
       return {
         isRoot: isRoot(rootKeys),
-        koodiUriSelected: koodiUriSelected(this)
+        koodiUriSelected: koodiUriSelected(setState)
       }
     }
 
