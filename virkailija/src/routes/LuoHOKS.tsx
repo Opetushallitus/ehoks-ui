@@ -43,7 +43,7 @@ import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./LuoHOKS/uiSchema"
 import { appendCommonHeaders } from "fetchUtils"
 import validator from "@rjsf/validator-ajv8"
-import ReactJSONSchemaForm from "./HOKSLomake/ReactJSONSchemForm"
+import ReactJSONSchemaForm from "./HOKSLomake/ReactJSONSchemaForm"
 
 interface LuoHOKSProps {
   store?: IRootStore

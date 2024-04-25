@@ -41,7 +41,7 @@ import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
 import { appendCommonHeaders } from "fetchUtils"
 import { useParams } from "react-router"
 import validator from "@rjsf/validator-ajv8"
-import ReactJSONSchemaForm from "./HOKSLomake/ReactJSONSchemForm"
+import ReactJSONSchemaForm from "./HOKSLomake/ReactJSONSchemaForm"
 
 const disallowedKeys = ["eid", "manuaalisyotto", "module-id"]
 
