@@ -4,7 +4,7 @@ import { inject, observer } from "mobx-react"
 import React, { useState, useEffect } from "react"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 import { useIntl, FormattedMessage } from "react-intl"
-import Form, { IChangeEvent } from "@rjsf/core"
+import { IChangeEvent } from "@rjsf/core"
 import { FieldProps, RJSFSchema, RJSFValidationError } from "@rjsf/utils"
 import { IRootStore } from "stores/RootStore"
 import { BottomToolbar } from "./HOKSLomake/BottomToolbar"
@@ -41,6 +41,7 @@ import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
 import { appendCommonHeaders } from "fetchUtils"
 import { useParams } from "react-router"
 import validator from "@rjsf/validator-ajv8"
+import ReactJSONSchemaForm from "./HOKSLomake/ReactJSONSchemaForm"
 
 const disallowedKeys = ["eid", "manuaalisyotto", "module-id"]
 
@@ -258,7 +259,7 @@ export const MuokkaaHOKS = inject("store")(
       const rootKeys = Object.keys(state.rawSchema.properties || {})
       return {
         isRoot: isRoot(rootKeys),
-        koodiUriSelected: koodiUriSelected(this)
+        koodiUriSelected: koodiUriSelected(setState)
       }
     }
 
@@ -285,7 +286,7 @@ export const MuokkaaHOKS = inject("store")(
           </Stepper>
         </TopToolbar>
         <FormContainer>
-          <Form
+          <ReactJSONSchemaForm
             fields={fields}
             widgets={widgets}
             schema={state.schema}
@@ -333,7 +334,7 @@ export const MuokkaaHOKS = inject("store")(
                 )}
               </ButtonsContainer>
             </BottomToolbar>
-          </Form>
+          </ReactJSONSchemaForm>
         </FormContainer>
       </HOKSFormContainer>
     )

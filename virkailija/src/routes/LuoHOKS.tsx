@@ -6,7 +6,7 @@ import { inject, observer } from "mobx-react"
 import React, { useState, useEffect } from "react"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 import { useIntl, FormattedMessage } from "react-intl"
-import Form, { IChangeEvent } from "@rjsf/core"
+import { IChangeEvent } from "@rjsf/core"
 import { FieldProps, RJSFSchema, RJSFValidationError } from "@rjsf/utils"
 import { IRootStore } from "stores/RootStore"
 import { BottomToolbar } from "./HOKSLomake/BottomToolbar"
@@ -43,6 +43,7 @@ import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./LuoHOKS/uiSchema"
 import { appendCommonHeaders } from "fetchUtils"
 import validator from "@rjsf/validator-ajv8"
+import ReactJSONSchemaForm from "./HOKSLomake/ReactJSONSchemaForm"
 
 interface LuoHOKSProps {
   store?: IRootStore
@@ -313,7 +314,7 @@ export const LuoHOKS = inject("store")(
       const rootKeys = Object.keys(state.rawSchema.properties || {})
       return {
         isRoot: isRoot(rootKeys),
-        koodiUriSelected: koodiUriSelected(this, () => {
+        koodiUriSelected: koodiUriSelected(setState, () => {
           const { formData, errors, errorsByStep } = state
           window.sessionStorage.setItem(
             "hoks",
@@ -373,7 +374,7 @@ export const LuoHOKS = inject("store")(
           </Stepper>
         </TopToolbar>
         <FormContainer>
-          <Form
+          <ReactJSONSchemaForm
             fields={fields}
             widgets={widgets}
             schema={state.schema}
@@ -434,7 +435,7 @@ export const LuoHOKS = inject("store")(
               <Button onClick={nextStep}>Seuraava</Button> */}
               </ButtonsContainer>
             </BottomToolbar>
-          </Form>
+          </ReactJSONSchemaForm>
         </FormContainer>
       </HOKSFormContainer>
     )
