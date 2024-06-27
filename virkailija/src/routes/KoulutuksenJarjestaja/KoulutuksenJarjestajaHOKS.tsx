@@ -56,9 +56,14 @@ const HelpButton = styled(HelpPopup)`
   margin: 0 0 0 20px;
 `
 
+const RelativePaddedContent = styled(PaddedContent)`
+  position: relative;
+`
+
 const Spinner = styled(LoadingSpinner)`
   position: absolute;
-  right: 0;
+  top: 20px;
+  right: 20px;
 `
 
 export interface KoulutuksenJarjestajaHOKSProps {
@@ -137,8 +142,8 @@ export const KoulutuksenJarjestajaHOKS = inject("store")(
       <React.Fragment>
         <NavigationContainer>
           <Container>
-            {loading && <Spinner />}
-            <PaddedContent>
+            <RelativePaddedContent>
+              {loading && <Spinner />}
               {suunnitelmat.length > 1 && (
                 <Timestamp>
                   <StudentLink to={oppijaPath}>
@@ -190,7 +195,7 @@ export const KoulutuksenJarjestajaHOKS = inject("store")(
                   </SectionItem>
                 </SectionItems>
               </NaviContainer>
-            </PaddedContent>
+            </RelativePaddedContent>
           </Container>
         </NavigationContainer>
 
