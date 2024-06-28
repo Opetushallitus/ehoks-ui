@@ -165,6 +165,7 @@ export interface TpjRow {
   hoksEid: string
   opiskeluoikeusOid: string
   oppijaOid: string
+  oppilaitosOid: string
   hankkimistapaTyyppi: string
   alkupvm: string
   loppupvm: string
@@ -374,7 +375,8 @@ class RaportitInner extends React.Component<RaportitProps> {
         break
     }
     return oppijaOid.length && hoksEid.length
-      ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${oppilaitosOid}/oppija/${oppijaOid}/${hoksEid}`
+      ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${row.oppilaitosOid ||
+          oppilaitosOid}/oppija/${oppijaOid}/${hoksEid}`
       : "/ehoks-virkailija-ui/raportit"
   }
 

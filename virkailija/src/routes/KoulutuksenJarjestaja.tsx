@@ -50,6 +50,7 @@ const SearchableTable = styled(Table)<{ children: React.ReactNode }>`
 const Spinner = styled(LoadingSpinner)`
   position: absolute;
   right: 0;
+  top: 20px;
 `
 
 interface KoulutuksenJarjestajaProps {

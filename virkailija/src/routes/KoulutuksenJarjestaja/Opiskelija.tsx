@@ -39,9 +39,7 @@ const TopContainer = styled("div")`
 `
 
 const Spinner = styled(LoadingSpinner)`
-  position: absolute;
-  right: 0;
-  top: 20px;
+  margin: 20px auto;
 `
 
 export interface OpiskelijaProps {
