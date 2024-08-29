@@ -39,7 +39,7 @@ import { SuccessMessage } from "./HOKSLomake/SuccessMessage"
 import { TopToolbar } from "./HOKSLomake/TopToolbar"
 import { propertiesByStep, uiSchemaByStep } from "./MuokkaaHOKS/uiSchema"
 import { appendCommonHeaders } from "fetchUtils"
-import { useParams } from "react-router"
+import { useParams, useNavigate } from "react-router"
 import validator from "@rjsf/validator-ajv8"
 import ReactJSONSchemaForm from "./HOKSLomake/ReactJSONSchemaForm"
 
@@ -106,6 +106,7 @@ interface MuokkaaHOKSState {
 
 export const MuokkaaHOKS = inject("store")(
   observer((props: MuokkaaHOKSProps) => {
+    const navigate = useNavigate()
     const [state, setState] = useState<MuokkaaHOKSState>({
       schema: {},
       formData: {},
@@ -168,6 +169,9 @@ export const MuokkaaHOKS = inject("store")(
         }
       )
       const json = await request.json()
+      if (request.status !== 200) {
+        throw new Error(json)
+      }
       return trimDisallowedKeysForPUTSchema(json.data)
     }
 
@@ -221,12 +225,19 @@ export const MuokkaaHOKS = inject("store")(
         }
       )
       if (request.status === 204) {
-        setState({
-          ...state,
-          success: true,
-          isLoading: false,
-          message: undefined
-        })
+        fetchHOKS()
+          .then(hoks => {
+            setState({
+              ...state,
+              formData: hoks,
+              success: true,
+              isLoading: false,
+              message: undefined
+            })
+          })
+          .catch(_ =>
+            navigate(`/ehoks-virkailija-ui/hoks/${oppijaOid}/${hoksId}`)
+          )
       } else {
         setState({
           ...state,
