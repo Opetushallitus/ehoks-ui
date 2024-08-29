@@ -169,7 +169,7 @@ export const MuokkaaHOKS = inject("store")(
         }
       )
       const json = await request.json()
-      if (request.status !== 200) {
+      if (!request.ok) {
         throw new Error(json)
       }
       return trimDisallowedKeysForPUTSchema(json.data)
