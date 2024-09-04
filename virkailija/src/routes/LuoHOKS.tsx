@@ -276,25 +276,25 @@ export const LuoHOKS = inject("store")(
       const json = await request.json()
 
       if (request.status === 200) {
-        setState({
-          ...state,
+        setState(s => ({
+          ...s,
           formData: {},
           errors: [],
           errorsByStep: {},
           success: true,
           message: undefined,
           userEnteredText: false
-        })
+        }))
         window.sessionStorage.removeItem("hoks")
         removeBeforeUnloadListener()
       } else {
-        setState({ ...state, success: false, message: undefined })
+        setState(s => ({ ...s, success: false, message: undefined }))
         reportHOKSErrors(json, intl, (errorId: string, message: string) => {
           notifications.addError(errorId, message)
-          setState({ ...state, message })
+          setState(s => ({ ...s, message }))
         })
       }
-      setState({ ...state, isLoading: false })
+      setState(s => ({ ...s, isLoading: false }))
     }
 
     const completedSteps = () =>

@@ -169,7 +169,7 @@ export const MuokkaaHOKS = inject("store")(
         }
       )
       const json = await request.json()
-      if (request.status !== 200) {
+      if (!request.ok) {
         throw new Error(json)
       }
       return trimDisallowedKeysForPUTSchema(json.data)
@@ -207,7 +207,12 @@ export const MuokkaaHOKS = inject("store")(
     }
 
     const save = async (fieldProps: IChangeEvent<FieldProps>) => {
-      setState({ ...state, isLoading: true })
+      setState(s => ({
+        ...s,
+        isLoading: true,
+        success: undefined,
+        message: undefined
+      }))
       notifications.markAllErrorsHandled()
 
       const request = await window.fetch(
@@ -227,28 +232,28 @@ export const MuokkaaHOKS = inject("store")(
       if (request.status === 204) {
         fetchHOKS()
           .then(hoks => {
-            setState({
-              ...state,
+            setState(s => ({
+              ...s,
               formData: hoks,
               success: true,
               isLoading: false,
               message: undefined
-            })
+            }))
           })
           .catch(_ =>
             navigate(`/ehoks-virkailija-ui/hoks/${oppijaOid}/${hoksId}`)
           )
       } else {
-        setState({
-          ...state,
+        setState(s => ({
+          ...s,
           success: false,
           isLoading: false,
           message: undefined
-        })
+        }))
         const json = await request.json()
         reportHOKSErrors(json, intl, (errorId: string, message: string) => {
           notifications.addError(errorId, message)
-          setState({ ...state, message })
+          setState(s => ({ ...s, message }))
         })
       }
     }
