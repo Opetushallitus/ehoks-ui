@@ -395,6 +395,7 @@ class RaportitInner extends React.Component<RaportitProps> {
             id: "raportit.ehoksid"
           }),
           accessor: "hoksId",
+          // eslint-disable-next-line react/prop-types
           Cell: ({ cell: { value } }: CustomColumn) => (
             <div style={{ textAlign: "center" }}>
               <Link
@@ -436,6 +437,7 @@ class RaportitInner extends React.Component<RaportitProps> {
             id: "raportit.ehoksid"
           }),
           accessor: "hoksId",
+          // eslint-disable-next-line react/prop-types
           Cell: ({ cell: { value } }: CustomColumn) => (
             <div style={{ textAlign: "center" }}>
               <Link
@@ -456,6 +458,7 @@ class RaportitInner extends React.Component<RaportitProps> {
             id: "raportit.opiskeluoikeusoid"
           }),
           accessor: "opiskeluoikeusOid",
+          // eslint-disable-next-line react/prop-types
           Cell: ({ cell: { value } }: CustomColumn) => (
             <div style={{ textAlign: "center" }}>{value}</div>
           )
@@ -465,6 +468,7 @@ class RaportitInner extends React.Component<RaportitProps> {
             id: "raportit.oppijanumeroTitle"
           }),
           accessor: "oppijaOid",
+          // eslint-disable-next-line react/prop-types
           Cell: ({ cell: { value } }: CustomColumn) => (
             <div style={{ textAlign: "center" }}>{value}</div>
           )
@@ -474,6 +478,7 @@ class RaportitInner extends React.Component<RaportitProps> {
             id: "raportit.tyopaikannimi"
           }),
           accessor: "tyopaikanNimi",
+          // eslint-disable-next-line react/prop-types
           Cell: ({ cell: { value } }: CustomColumn) => (
             <div style={{ textAlign: "center" }}>{value}</div>
           )
@@ -483,6 +488,7 @@ class RaportitInner extends React.Component<RaportitProps> {
             id: "raportit.ohjaajannimi"
           }),
           accessor: "ohjaajaNimi",
+          // eslint-disable-next-line react/prop-types
           Cell: ({ cell: { value } }: CustomColumn) => (
             <div style={{ textAlign: "center" }}>{value}</div>
           )
@@ -492,6 +498,7 @@ class RaportitInner extends React.Component<RaportitProps> {
             id: "raportit.alku"
           }),
           accessor: "alkupvm",
+          // eslint-disable-next-line react/prop-types
           Cell: ({ cell: { value } }: CustomColumn) => (
             <div style={{ textAlign: "center" }}>{value}</div>
           )
@@ -501,6 +508,7 @@ class RaportitInner extends React.Component<RaportitProps> {
             id: "raportit.loppu"
           }),
           accessor: "loppupvm",
+          // eslint-disable-next-line react/prop-types
           Cell: ({ cell: { value } }: CustomColumn) => (
             <div style={{ textAlign: "center" }}>{value}</div>
           )
@@ -510,7 +518,9 @@ class RaportitInner extends React.Component<RaportitProps> {
             id: "infoModal.naytaLisatiedot"
           }),
           accessor: "customColumn",
+          // eslint-disable-next-line react/prop-types
           Cell: ({ cell: { value, row } }: CustomColumn) => {
+            // eslint-disable-next-line react/prop-types
             const tpjRow = row.original as TpjRow
             return (
               <div style={{ display: "flex", justifyContent: "center" }}>

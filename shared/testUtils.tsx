@@ -39,8 +39,12 @@ export const ThemeProviderWrapper = ({
 
 export const withTheme = <T extends Record<string, any>>(
   Component: React.ComponentType<T>
-) => (props: T) => (
-  <ThemeProvider theme={theme}>
-    <Component {...props} />
-  </ThemeProvider>
-)
+) => {
+  const Theme = (props: T) => (
+    <ThemeProvider theme={theme}>
+      <Component {...props} />
+    </ThemeProvider>
+  )
+  Theme.displayName = "Theme"
+  return Theme
+}

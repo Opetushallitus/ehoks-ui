@@ -222,14 +222,11 @@ export class TutkinnonOsa extends React.Component<
     this.setState({ expandedCompetences: [] })
   }
 
-  private koulutuksenJarjestajaShouldBeShown() {
-    return (
-      this.state.expanded.details ||
-      this.state.expanded.competences ||
-      this.state.expanded.objectives ||
-      this.state.expanded.requirementsAndDeviations
-    )
-  }
+  private koulutuksenJarjestajaShouldBeShown = () =>
+    this.state.expanded.details ||
+    this.state.expanded.competences ||
+    this.state.expanded.objectives ||
+    this.state.expanded.requirementsAndDeviations
 
   render() {
     const {

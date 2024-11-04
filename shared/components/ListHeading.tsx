@@ -25,6 +25,7 @@ export interface ListHeadingProps {
   icon?: React.ReactNode
   titleSize?: "regular" | "large"
   onClose?: () => void
+  children?: React.ReactNode
 }
 
 export class ListHeading extends React.Component<ListHeadingProps> {

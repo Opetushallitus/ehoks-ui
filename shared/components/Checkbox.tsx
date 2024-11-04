@@ -39,6 +39,7 @@ export interface CheckboxProps {
   checked: boolean
   /** Function to call after user changes the checkbox state */
   onToggle?: () => void
+  children?: React.ReactNode
 }
 
 /**

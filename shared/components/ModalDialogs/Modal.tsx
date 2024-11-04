@@ -45,9 +45,7 @@ export class Modal extends React.Component<ModalProps> {
     }
   }
 
-  render() {
-    return ReactDOM.createPortal(this.props.children, this.el)
-  }
+  render = () => ReactDOM.createPortal(this.props.children, this.el)
 }
 
 export const ModalWithBackground = () => (

@@ -46,6 +46,7 @@ export interface ChartBoxProps {
   icon?: React.ReactNode
   /** Container CSS 'padding' property */
   padding?: string
+  children?: React.ReactNode
 }
 
 export class ChartBox extends React.Component<ChartBoxProps> {

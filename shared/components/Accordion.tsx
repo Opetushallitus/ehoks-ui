@@ -72,6 +72,7 @@ export interface AccordionProps {
    * Define initial open state, has no effect if onToggle and open props are used
    */
   initiallyOpen?: boolean
+  children?: React.ReactNode
 }
 
 export interface AccordionState {

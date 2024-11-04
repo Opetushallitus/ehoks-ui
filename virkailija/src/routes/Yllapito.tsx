@@ -332,7 +332,7 @@ export const Yllapito = inject("store")(
                   day: "numeric"
                 })
               }
-            )
+            ) as string
           )
         ) {
           const request = await window.fetch(
@@ -603,7 +603,7 @@ export const Yllapito = inject("store")(
                   oppilaitosNimi[props.store!.translations.activeLocale],
                 oppilaitosOid
               }
-            )
+            ) as string
           )
         ) {
           const deleteRequest = await window.fetch(
@@ -783,7 +783,7 @@ export const Yllapito = inject("store")(
               {
                 amount
               }
-            )
+            ) as string
           )
         ) {
           const updateRequest = await window.fetch(
@@ -1003,7 +1003,7 @@ export const Yllapito = inject("store")(
               defaultMessage: "Lähetettiin {count} herätettä"
             },
             { count }
-          ),
+          ) as string,
           isLoading: false,
           currentActionId: "sendHeratteetBetween"
         })
@@ -1052,7 +1052,7 @@ export const Yllapito = inject("store")(
               defaultMessage: "Lähetettiin {count} herätettä"
             },
             { count }
-          ),
+          ) as string,
           isLoading: false,
           currentActionId: "sendPaattoHeratteetBetween"
         })

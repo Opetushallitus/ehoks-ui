@@ -91,7 +91,5 @@ export class HMediaQuery extends React.Component<HMediaQueryProps> {
   static MinWidth = (props: WithBreakpointProps) => (
     <MediaQueryWithTheme {...props} breakpointType="min" />
   )
-  render() {
-    return this.props.children
-  }
+  render = () => this.props.children
 }

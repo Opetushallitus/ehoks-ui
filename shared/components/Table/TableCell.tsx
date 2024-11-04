@@ -16,6 +16,7 @@ const Container = styled("td")(
 
 interface TableCellProps {
   colSpan?: number
+  children: React.ReactNode
 }
 
 export class TableCell extends React.Component<TableCellProps> {
