@@ -235,7 +235,7 @@ export function ShareDialog(props: ShareDialogProps) {
     event.preventDefault()
     if (
       confirm(
-        // eslint-disable-next-line react/prop-types
+        // @ts-ignore props validation
         intl.formatMessage({
           id: "jakaminen.haluatkoPoistaaConfirm"
         })

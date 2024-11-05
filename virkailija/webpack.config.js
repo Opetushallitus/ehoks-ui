@@ -70,11 +70,7 @@ module.exports = {
         enforce: "pre",
         use: "source-map-loader",
         // these packages have problems with their sourcemaps
-        exclude: [
-          /node_modules\/@opetushallitus\/virkailija-ui-components/,
-          /node_modules\/react-responsive/,
-          /node_modules\/react-axe/
-        ]
+        exclude: [/node_modules\/react-responsive/, /node_modules\/react-axe/]
       },
       {
         test: /\.css$/,

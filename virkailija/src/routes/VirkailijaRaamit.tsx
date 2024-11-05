@@ -1,7 +1,7 @@
-import UiVirkailijaRaamit from "@opetushallitus/virkailija-ui-components/VirkailijaRaamit"
 import { inject, observer } from "mobx-react"
 import React, { useEffect } from "react"
 import { IRootStore } from "../stores/RootStore"
+import { UiVirkailijaRaamit } from "components/UiVirkailijaRaamit"
 
 interface RaamitProps {
   store?: IRootStore
