@@ -14,6 +14,7 @@ import { App } from "./routes/App"
 import { RootStore } from "./stores/RootStore"
 import { BrowserRouter } from "react-router-dom"
 import "core-js"
+import { createRoot } from "react-dom/client"
 
 // pass fetch utils to RootStore using MST's environment context, so we can easily mock it in tests
 const store = RootStore.create(
@@ -34,8 +35,9 @@ const appContext = {
 }
 
 // initial render to app container
-const appContainer = document.getElementById("app")
-ReactDOM.render(
+const container = document.getElementById("app")
+const root = createRoot(container!)
+root.render(
   <BrowserRouter>
     <APIConfigContext.Provider value={apiConfig}>
       <AppContext.Provider value={appContext}>
@@ -44,8 +46,7 @@ ReactDOM.render(
         </Provider>
       </AppContext.Provider>
     </APIConfigContext.Provider>
-  </BrowserRouter>,
-  appContainer
+  </BrowserRouter>
 )
 
 // setup webpack hot module replacement support
@@ -55,15 +56,14 @@ if (module.hot) {
   module.hot.accept("./routes/App", () => {
     // eslint-disable-next-line
     const NextApp = require("./routes/App").App
-    ReactDOM.render(
+    root.render(
       <APIConfigContext.Provider value={apiConfig}>
         <AppContext.Provider value={appContext}>
           <Provider store={store}>
             <NextApp />
           </Provider>
         </AppContext.Provider>
-      </APIConfigContext.Provider>,
-      appContainer
+      </APIConfigContext.Provider>
     )
   })
 }
@@ -72,6 +72,6 @@ if (module.hot) {
 // eslint-disable-next-line no-undef
 if (process.env.NODE_ENV !== "production") {
   // eslint-disable-next-line
-  const axe = require("react-axe")
+  const axe = require("@axe-core/react")
   axe(React, ReactDOM, 1000)
 }

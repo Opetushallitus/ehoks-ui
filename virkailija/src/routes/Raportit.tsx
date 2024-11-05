@@ -10,7 +10,6 @@ import { FormattedMessage, injectIntl, IntlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 import { appendCommonHeaders } from "fetchUtils"
-import { Column, Row } from "react-table"
 import { Button } from "components/Button"
 import { InfoModal } from "components/InfoModal"
 
@@ -200,13 +199,6 @@ interface RaportitState {
   initSearchDone: boolean
 }
 
-interface CustomColumn {
-  cell: {
-    value: number
-    row: Row
-  }
-}
-
 class RaportitInner extends React.Component<RaportitProps> {
   state: RaportitState = {
     hoksitCount: 0,
@@ -387,140 +379,141 @@ class RaportitInner extends React.Component<RaportitProps> {
     })
   }
 
-  getColumnsForTable = (selectedRaportti: number): Column[] => {
+  getColumnsForTable = (selectedRaportti: number) => {
+    const { intl } = this.props
     if (selectedRaportti === 1) {
       return [
         {
-          Header: this.props.intl.formatMessage({
+          accessorKey: "hoksId",
+          header: intl.formatMessage({
             id: "raportit.ehoksid"
           }),
-          accessor: "hoksId",
-          // eslint-disable-next-line react/prop-types
-          Cell: ({ cell: { value } }: CustomColumn) => (
+          // @ts-ignore
+          cell: ({ row }) => (
             <div style={{ textAlign: "center" }}>
               <Link
-                to={this.createLinkPath(value)}
+                to={this.createLinkPath(row.original.hoksId)}
                 state={{
                   fromRaportit: true,
-                  oppijaoid: this.getHoksiByHoksId(value)?.oppijaOid,
-                  hokseid: this.getHoksiByHoksId(value)?.hoksEid
+                  oppijaoid: this.getHoksiByHoksId(row.original.hoksId)?.oppijaOid,
+                  hokseid: this.getHoksiByHoksId(row.original.hoksId)?.hoksEid
                 }}
               >
-                {value}
+                {row.original.hoksId}
               </Link>
             </div>
           )
         },
         {
-          Header: this.props.intl.formatMessage({
+          accessorKey: "oppijaOid",
+          header: intl.formatMessage({
             id: "raportit.oppijanumeroTitle"
-          }),
-          accessor: "oppijaOid"
+          })
         },
         {
-          Header: this.props.intl.formatMessage({
+          accessorKey: "opiskeluoikeusOid",
+          header: intl.formatMessage({
             id: "raportit.opiskeluoikeusoid"
-          }),
-          accessor: "opiskeluoikeusOid"
+          })
         },
         {
-          Header: this.props.intl.formatMessage({
+          accessorKey: "oppilaitosOid",
+          header: intl.formatMessage({
             id: "raportit.oppilaitosoid"
-          }),
-          accessor: "oppilaitosOid"
+          })
         }
       ]
     } else if (selectedRaportti === 2) {
       return [
         {
-          Header: this.props.intl.formatMessage({
+          accessorKey: "hoksId",
+          header: intl.formatMessage({
             id: "raportit.ehoksid"
           }),
-          accessor: "hoksId",
-          // eslint-disable-next-line react/prop-types
-          Cell: ({ cell: { value } }: CustomColumn) => (
+          // @ts-ignore
+          cell: ({ row }) => (
             <div style={{ textAlign: "center" }}>
               <Link
-                to={this.createLinkPath(value)}
+                to={this.createLinkPath(row.original.hoksId)}
                 state={{
                   fromRaportit: true,
-                  oppijaoid: this.getTpjRowByHoksId(value)?.oppijaOid,
-                  hokseid: this.getTpjRowByHoksId(value)?.hoksEid
+                  oppijaoid: this.getTpjRowByHoksId(row.original.hoksId)?.oppijaOid,
+                  hokseid: this.getTpjRowByHoksId(row.original.hoksId)?.hoksEid
                 }}
               >
-                {value}
+                {row.original.hoksId}
               </Link>
             </div>
           )
         },
         {
-          Header: this.props.intl.formatMessage({
+          accessorKey: "opiskeluoikeusOid",
+          header: intl.formatMessage({
             id: "raportit.opiskeluoikeusoid"
           }),
-          accessor: "opiskeluoikeusOid",
-          // eslint-disable-next-line react/prop-types
-          Cell: ({ cell: { value } }: CustomColumn) => (
-            <div style={{ textAlign: "center" }}>{value}</div>
+          // @ts-ignore
+          cell: ({ row }) => (
+            <div style={{ textAlign: "center" }}>{row.original.opiskeluoikeusOid}</div>
           )
         },
         {
-          Header: this.props.intl.formatMessage({
+          accessorKey: "oppijaOid",
+          header: intl.formatMessage({
             id: "raportit.oppijanumeroTitle"
           }),
-          accessor: "oppijaOid",
-          // eslint-disable-next-line react/prop-types
-          Cell: ({ cell: { value } }: CustomColumn) => (
-            <div style={{ textAlign: "center" }}>{value}</div>
+          // @ts-ignore
+          cell: ({ row }) => (
+            <div style={{ textAlign: "center" }}>{row.original.oppijaOid}</div>
           )
         },
+        
         {
-          Header: this.props.intl.formatMessage({
+          accessorKey: "tyopaikanNimi",
+          header: intl.formatMessage({
             id: "raportit.tyopaikannimi"
           }),
-          accessor: "tyopaikanNimi",
-          // eslint-disable-next-line react/prop-types
-          Cell: ({ cell: { value } }: CustomColumn) => (
-            <div style={{ textAlign: "center" }}>{value}</div>
+          // @ts-ignore
+          cell: ({ row }) => (
+            <div style={{ textAlign: "center" }}>{row.original.tyopaikanNimi}</div>
           )
         },
         {
-          Header: this.props.intl.formatMessage({
+          accessorKey: "ohjaajaNimi",
+          header: intl.formatMessage({
             id: "raportit.ohjaajannimi"
           }),
-          accessor: "ohjaajaNimi",
-          // eslint-disable-next-line react/prop-types
-          Cell: ({ cell: { value } }: CustomColumn) => (
-            <div style={{ textAlign: "center" }}>{value}</div>
+          // @ts-ignore
+          cell: ({ row }) => (
+            <div style={{ textAlign: "center" }}>{row.original.ohjaajaNimi}</div>
           )
         },
         {
-          Header: this.props.intl.formatMessage({
+          accessorKey: "alkupvm",
+          header: intl.formatMessage({
             id: "raportit.alku"
           }),
-          accessor: "alkupvm",
-          // eslint-disable-next-line react/prop-types
-          Cell: ({ cell: { value } }: CustomColumn) => (
-            <div style={{ textAlign: "center" }}>{value}</div>
+          // @ts-ignore
+          cell: ({ row }) => (
+            <div style={{ textAlign: "center" }}>{row.original.alkupvm}</div>
           )
         },
         {
-          Header: this.props.intl.formatMessage({
+          accessorKey: "loppupvm",
+          header: intl.formatMessage({
             id: "raportit.loppu"
           }),
-          accessor: "loppupvm",
-          // eslint-disable-next-line react/prop-types
-          Cell: ({ cell: { value } }: CustomColumn) => (
-            <div style={{ textAlign: "center" }}>{value}</div>
+          // @ts-ignore
+          cell: ({ row }) => (
+            <div style={{ textAlign: "center" }}>{row.original.loppupvm}</div>
           )
         },
         {
-          Header: this.props.intl.formatMessage({
+          accessorKey: "customColumn",
+          header: intl.formatMessage({
             id: "infoModal.naytaLisatiedot"
           }),
-          accessor: "customColumn",
-          // eslint-disable-next-line react/prop-types
-          Cell: ({ cell: { value, row } }: CustomColumn) => {
-            // eslint-disable-next-line react/prop-types
+          // @ts-ignore
+          cell: ({ row }) => {
             const tpjRow = row.original as TpjRow
             return (
               <div style={{ display: "flex", justifyContent: "center" }}>
@@ -530,7 +523,7 @@ class RaportitInner extends React.Component<RaportitProps> {
                   endDate={tpjRow?.loppupvm}
                   partTimeAmount={tpjRow?.osaAikaisuus}
                   oppisopimuksenPerusta={tpjRow?.oppisopimuksenPerusta}
-                  hoksId={value}
+                  hoksId={tpjRow?.hoksId}
                   opiskeluoikeusOid={tpjRow?.opiskeluoikeusOid}
                   hankkimistapaTyyppi={tpjRow?.hankkimistapaTyyppi}
                   ytunnus={tpjRow?.ytunnus}

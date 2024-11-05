@@ -25,17 +25,30 @@ module.exports = {
     },
     host: "0.0.0.0",
     port: 4000,
-    proxy: {
-      "/auth-dev": "http://localhost:3000",
-      "/cas": "http://localhost:3000",
-      "/ehoks-backend": "http://localhost:3000",
-      "/ehoks-virkailija-backend": "http://localhost:3000",
-      "/virkailija-raamit": {
+    proxy: [
+      {
+        context: ["/auth-dev"],
+        target: "http://localhost:3000",
+      },
+      {
+        context: ["/cas-oppija"],
+        target: "http://localhost:3000"
+      },
+      {
+        context: ["/ehoks-backend"],
+        target: "http://localhost:3000"
+      },
+      {
+        context: ["/ehoks-virkailija-backend"],
+        target: "http://localhost:3000",
+      },
+      {
+        context: ["/virkailija-raamit"],
         target: "https://virkailija.testiopintopolku.fi",
         secure: false,
         changeOrigin: true
       }
-    }
+    ]
   },
   devtool: "inline-source-map",
   optimization: {},

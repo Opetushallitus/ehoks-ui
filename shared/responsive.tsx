@@ -14,7 +14,7 @@ interface MediaQueryProps extends ComponentWithTheme {
   children: React.ReactNode
 }
 
-const MediaQuery: React.SFC<MediaQueryProps> = (props: MediaQueryProps) => {
+const MediaQuery: React.FC<MediaQueryProps> = (props: MediaQueryProps) => {
   const {
     theme,
     maxWidth,

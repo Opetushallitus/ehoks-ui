@@ -6,6 +6,7 @@ import { Provider } from "mobx-react"
 import "promise-polyfill/src/polyfill" // polyfill Promise for IE 11
 import React from "react"
 import ReactDOM from "react-dom"
+import { createRoot } from 'react-dom/client'
 import "@formatjs/intl-relativetimeformat/polyfill"
 import "@formatjs/intl-relativetimeformat/locale-data/fi"
 import "@formatjs/intl-relativetimeformat/locale-data/sv"
@@ -30,14 +31,14 @@ const appContext = {
 }
 
 // initial render to app container
-const appContainer = document.getElementById("app")
-ReactDOM.render(
+const container = document.getElementById("app")
+const root = createRoot(container!)
+root.render(
   <AppContext.Provider value={appContext}>
     <Provider store={store}>
       <App />
     </Provider>
-  </AppContext.Provider>,
-  appContainer
+  </AppContext.Provider>
 )
 
 // setup webpack hot module replacement support
@@ -47,13 +48,12 @@ if (module.hot) {
   module.hot.accept("./routes/App", () => {
     // eslint-disable-next-line
     const NextApp = require("./routes/App").App
-    ReactDOM.render(
+    root.render(
       <AppContext.Provider value={appContext}>
         <Provider store={store}>
           <NextApp />
         </Provider>
-      </AppContext.Provider>,
-      appContainer
+      </AppContext.Provider>
     )
   })
 }
@@ -62,6 +62,6 @@ if (module.hot) {
 // eslint-disable-next-line no-undef
 if (process.env.NODE_ENV !== "production") {
   // eslint-disable-next-line
-  const axe = require("react-axe")
+  const axe = require("@axe-core/react")
   axe(React, ReactDOM, 1000)
 }

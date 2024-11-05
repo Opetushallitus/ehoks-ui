@@ -64,7 +64,6 @@ export class MobileCompetences extends React.Component<
     return (
       <SliderContainer>
         <MobileSlider
-          showCount={false}
           footer={
             <MobileSliderToggle>
               <ToggleLink onClick={this.toggleShowAssessment}>

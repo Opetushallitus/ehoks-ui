@@ -33,7 +33,7 @@ function schemaRequiresTrueValue(schema: any): boolean {
   return false
 }
 
-export function CustomCheckboxWidget(props: any) {
+export const CustomCheckboxWidget: React.FC<any> = (props: any) => {
   const {
     schema,
     id,
@@ -41,7 +41,7 @@ export function CustomCheckboxWidget(props: any) {
     disabled,
     readonly,
     label,
-    autofocus,
+    autofocus = false,
     onBlur,
     onFocus,
     onChange,
@@ -84,8 +84,4 @@ export function CustomCheckboxWidget(props: any) {
       </label>
     </div>
   )
-}
-
-CustomCheckboxWidget.defaultProps = {
-  autofocus: false
 }

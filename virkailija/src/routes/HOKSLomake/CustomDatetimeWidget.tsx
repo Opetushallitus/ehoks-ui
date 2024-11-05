@@ -38,22 +38,21 @@ function localDateToUTC(dateString: string) {
 /** Copied from react-jsonschema-form
  * and modified to TS and needs
  */
-export function CustomDatetimeWidget(props: WidgetProps) {
-  const {
-    value,
-    onChange,
-    readonly,
-    disabled,
-    autofocus,
-    onBlur,
-    onFocus,
-    schema,
-    uiSchema,
-    id,
-    label,
-    options,
-    multiple
-  } = props
+export const CustomDatetimeWidget: React.FC<WidgetProps> = ({
+                                                              value,
+                                                              onChange,
+                                                              readonly,
+                                                              disabled,
+                                                              autofocus = false,
+                                                              onBlur,
+                                                              onFocus,
+                                                              schema,
+                                                              uiSchema,
+                                                              id,
+                                                              label,
+                                                              options,
+                                                              multiple
+                                                            }) => {
   return (
     <CustomBaseInput
       readonly={readonly}
@@ -73,8 +72,4 @@ export function CustomDatetimeWidget(props: WidgetProps) {
       multiple={multiple}
     />
   )
-}
-
-CustomDatetimeWidget.defaultProps = {
-  autofocus: false
 }

@@ -19,8 +19,7 @@ const DEFAULT_OPTIONS = {
   required: false,
   labelKey: "name",
   minLength: 3,
-  placeholder: "Search...",
-  ref: "typeahead"
+  placeholder: "Search..."
 }
 
 const optionToString = (fields: any, separator: any) => (option: any) =>
