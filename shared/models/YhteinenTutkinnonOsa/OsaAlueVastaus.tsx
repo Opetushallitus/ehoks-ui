@@ -20,7 +20,7 @@ export const OsaAlueVastaus = types
     koodi: types.optional(EPerusteKoodi, {}),
     osaamistavoitteet: types.array(OsaamisTavoitteet)
   })
-  .views(self => {
+  .views((self) => {
     const root: IRootStore = getRoot(self)
     const activeLocale: Locale = root.translations.activeLocale
     return {
@@ -34,7 +34,7 @@ export const OsaAlueVastaus = types
       },
       get laajuus() {
         return self.osaamistavoitteet
-          .filter(osaamistavoite => osaamistavoite.pakollinen)
+          .filter((osaamistavoite) => osaamistavoite.pakollinen)
           .reduce((sum, osaamistavoite) => sum + osaamistavoite.laajuus, 0)
       }
     }

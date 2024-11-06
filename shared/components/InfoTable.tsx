@@ -29,7 +29,8 @@ export const InfoTable = styled("table")`
     }
   }
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Tablet}px) {
     width: 100%;
 
     tr {

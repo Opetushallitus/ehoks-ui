@@ -24,7 +24,8 @@ const Container = styled("div")`
     margin-right: 0;
   }
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Desktop}px) {
     flex: 1;
     word-break: break-word;
     padding: 10px;

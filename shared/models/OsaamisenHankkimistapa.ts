@@ -44,7 +44,7 @@ export const OsaamisenHankkimistapa = types
     }),
     Model
   )
-  .views(self => ({
+  .views((self) => ({
     get selite() {
       return self.tyyppi === OsaamisenHankkimistapaType.Workplace
         ? self.tyopaikallaJarjestettavaKoulutus?.tyopaikanNimi

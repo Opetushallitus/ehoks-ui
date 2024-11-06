@@ -367,8 +367,9 @@ class RaportitInner extends React.Component<RaportitProps> {
         break
     }
     return oppijaOid.length && hoksEid.length
-      ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${row.oppilaitosOid ||
-          oppilaitosOid}/oppija/${oppijaOid}/${hoksEid}`
+      ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${
+          row.oppilaitosOid || oppilaitosOid
+        }/oppija/${oppijaOid}/${hoksEid}`
       : "/ehoks-virkailija-ui/raportit"
   }
 
@@ -395,7 +396,8 @@ class RaportitInner extends React.Component<RaportitProps> {
                 to={this.createLinkPath(row.original.hoksId)}
                 state={{
                   fromRaportit: true,
-                  oppijaoid: this.getHoksiByHoksId(row.original.hoksId)?.oppijaOid,
+                  oppijaoid: this.getHoksiByHoksId(row.original.hoksId)
+                    ?.oppijaOid,
                   hokseid: this.getHoksiByHoksId(row.original.hoksId)?.hoksEid
                 }}
               >
@@ -437,7 +439,8 @@ class RaportitInner extends React.Component<RaportitProps> {
                 to={this.createLinkPath(row.original.hoksId)}
                 state={{
                   fromRaportit: true,
-                  oppijaoid: this.getTpjRowByHoksId(row.original.hoksId)?.oppijaOid,
+                  oppijaoid: this.getTpjRowByHoksId(row.original.hoksId)
+                    ?.oppijaOid,
                   hokseid: this.getTpjRowByHoksId(row.original.hoksId)?.hoksEid
                 }}
               >
@@ -453,7 +456,9 @@ class RaportitInner extends React.Component<RaportitProps> {
           }),
           // @ts-ignore
           cell: ({ row }) => (
-            <div style={{ textAlign: "center" }}>{row.original.opiskeluoikeusOid}</div>
+            <div style={{ textAlign: "center" }}>
+              {row.original.opiskeluoikeusOid}
+            </div>
           )
         },
         {
@@ -466,7 +471,7 @@ class RaportitInner extends React.Component<RaportitProps> {
             <div style={{ textAlign: "center" }}>{row.original.oppijaOid}</div>
           )
         },
-        
+
         {
           accessorKey: "tyopaikanNimi",
           header: intl.formatMessage({
@@ -474,7 +479,9 @@ class RaportitInner extends React.Component<RaportitProps> {
           }),
           // @ts-ignore
           cell: ({ row }) => (
-            <div style={{ textAlign: "center" }}>{row.original.tyopaikanNimi}</div>
+            <div style={{ textAlign: "center" }}>
+              {row.original.tyopaikanNimi}
+            </div>
           )
         },
         {
@@ -484,7 +491,9 @@ class RaportitInner extends React.Component<RaportitProps> {
           }),
           // @ts-ignore
           cell: ({ row }) => (
-            <div style={{ textAlign: "center" }}>{row.original.ohjaajaNimi}</div>
+            <div style={{ textAlign: "center" }}>
+              {row.original.ohjaajaNimi}
+            </div>
           )
         },
         {
@@ -613,8 +622,7 @@ class RaportitInner extends React.Component<RaportitProps> {
                           id: "raportit.tyopaikkajaksoihinTallennetutTiedot"
                         }),
                         intl.formatMessage({
-                          id:
-                            "raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
+                          id: "raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
                         }),
                         2
                       )
@@ -667,13 +675,17 @@ class RaportitInner extends React.Component<RaportitProps> {
                       <DateInput
                         type="date"
                         value={alku}
-                        onChange={e => this.setPvmDate("alku", e.target.value)}
+                        onChange={(e) =>
+                          this.setPvmDate("alku", e.target.value)
+                        }
                       />{" "}
                       -{" "}
                       <DateInput
                         type="date"
                         value={loppu}
-                        onChange={e => this.setPvmDate("loppu", e.target.value)}
+                        onChange={(e) =>
+                          this.setPvmDate("loppu", e.target.value)
+                        }
                       />
                       <SearchButton
                         onClick={this.tpjHaeOnClick}

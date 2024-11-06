@@ -15,10 +15,9 @@ export const EnrichTutkinnonOsaKoodiUri = types
   // we need this typing to avoid 'missing index signature' error
   // when assigning to self[dynamicKey]
   .volatile((): DynamicObject => ({}))
-  .actions(self => {
-    const { apiUrl, apiPrefix, errors, fetchSingle, appendCallerId } = getEnv<
-      StoreEnvironment
-    >(self)
+  .actions((self) => {
+    const { apiUrl, apiPrefix, errors, fetchSingle, appendCallerId } =
+      getEnv<StoreEnvironment>(self)
 
     const getFromEPerusteetService = (code: string) => {
       if (self.tyyppi === TutkinnonOsaType.HankittavaKoulutuksenOsa) {
@@ -35,7 +34,7 @@ export const EnrichTutkinnonOsaKoodiUri = types
       }
     }
 
-    const fetchEPerusteet = flow(function*(koodiUri: string): any {
+    const fetchEPerusteet = flow(function* (koodiUri: string): any {
       try {
         // check our global cache first
         cachedResponses[koodiUri] =

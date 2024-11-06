@@ -17,7 +17,7 @@ export const KoulutuksenJarjestajaOrganisaatio = types
     }),
     Model
   )
-  .views(self => {
+  .views((self) => {
     const root: LocaleRoot = getRoot(self)
     return {
       get oppilaitosNimi() {

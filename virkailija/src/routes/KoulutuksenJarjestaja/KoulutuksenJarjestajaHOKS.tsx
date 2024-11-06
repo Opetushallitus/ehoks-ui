@@ -33,7 +33,7 @@ const NaviContainer = styled(ProgressPies)`
   justify-content: flex-start;
 `
 const StudentLink = styled(Link)`
-  color: ${props => props.theme.colors.green700};
+  color: ${(props) => props.theme.colors.green700};
   font-size: 18px;
   font-weight: 400;
 `
@@ -109,8 +109,8 @@ export const KoulutuksenJarjestajaHOKS = inject("store")(
           }
           const suunnitelma =
             fromRaportitSuunnitelmat.length > 0
-              ? find(fromRaportitSuunnitelmat, h => h.eid === hokseid)
-              : find(suunnitelmat, h => h.eid === hoksId)
+              ? find(fromRaportitSuunnitelmat, (h) => h.eid === hokseid)
+              : find(suunnitelmat, (h) => h.eid === hoksId)
           if (suunnitelma) {
             await suunnitelma.fetchDetails()
             await suunnitelma.fetchOpiskelijapalauteTilat()
@@ -129,7 +129,7 @@ export const KoulutuksenJarjestajaHOKS = inject("store")(
       location && location.state && location.state.fromRaportit
         ? location.state.hokseid
         : hoksId
-    const suunnitelma = find(suunnitelmat, h => h.eid === suunnitelmaHoksId)
+    const suunnitelma = find(suunnitelmat, (h) => h.eid === suunnitelmaHoksId)
     if (!oppija || !suunnitelma) {
       return null
     }

@@ -32,7 +32,7 @@ export const HankittavaPaikallinenTutkinnonOsa = types
     Model,
     HankittavatTutkinnonOsatViews
   )
-  .views(self => ({
+  .views((self) => ({
     get otsikko(): JSX.Element | string {
       return self.nimi
     },

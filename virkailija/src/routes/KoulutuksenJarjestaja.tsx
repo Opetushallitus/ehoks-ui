@@ -37,7 +37,7 @@ const TopHeading = styled(Heading)`
 `
 
 const TableHeader = styled("th")`
-  border-bottom: 1px solid ${props => props.theme.colors.table.cellBorder};
+  border-bottom: 1px solid ${(props) => props.theme.colors.table.cellBorder};
   padding: 25px 0 15px 0;
   vertical-align: top;
   text-align: left;
@@ -87,12 +87,12 @@ export const KoulutuksenJarjestaja = inject("store")(
       orgId
     ])
 
-    const updateSearchText = (field: SearchSortKey) => (
-      event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-      search.changeSearchText(field, event.target.value)
-      debouncedFetchResults()
-    }
+    const updateSearchText =
+      (field: SearchSortKey) =>
+      (event: React.ChangeEvent<HTMLInputElement>) => {
+        search.changeSearchText(field, event.target.value)
+        debouncedFetchResults()
+      }
 
     const changeSort = (sortName: SearchSortKey) => {
       search.changeSort(sortName)
@@ -102,13 +102,12 @@ export const KoulutuksenJarjestaja = inject("store")(
       search.changeActivePage(index)
     }
 
-    const onPaginationResultEnter = (index: number) => (
-      event: React.KeyboardEvent
-    ) => {
-      if (event.key === "Enter" || event.key === " ") {
-        search.changeActivePage(index)
+    const onPaginationResultEnter =
+      (index: number) => (event: React.KeyboardEvent) => {
+        if (event.key === "Enter" || event.key === " ") {
+          search.changeActivePage(index)
+        }
       }
-    }
 
     const intl = useIntl()
     const {

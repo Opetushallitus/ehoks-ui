@@ -6,12 +6,12 @@ interface ButtonContainerProps {
 }
 const ButtonContainer = styled("button")<ButtonContainerProps>`
   padding: 10px;
-  background: ${props =>
+  background: ${(props) =>
     props.secondary
       ? props.theme.colors.battleshipGrey
       : props.theme.colors.green700};
   color: #fff;
-  ${props => props.theme.typography.body}
+  ${(props) => props.theme.typography.body}
   border: 0;
   border-radius: 2px;
   cursor: not-allowed;
@@ -65,9 +65,10 @@ export class Button extends React.Component<ButtonProps> {
 
 export const HeroButton = styled(Button)`
   padding: 15px 60px;
-  ${props => props.theme.typography.body}
+  ${(props) => props.theme.typography.body}
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+    props.theme.breakpoints.Tablet}px) {
     padding: 15px 0;
   }
 `

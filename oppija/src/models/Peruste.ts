@@ -14,7 +14,7 @@ export const Peruste = types
     osaamisalat: types.array(PerusteNimi),
     tutkintonimikkeet: types.array(PerusteNimi)
   })
-  .views(self => {
+  .views((self) => {
     const root = getRoot<IRootStore>(self)
     const activeLocale = () => getTranslations(root).activeLocale
     return {
@@ -22,10 +22,10 @@ export const Peruste = types
         return self.nimi[activeLocale()]
       },
       get qualificationTitles(): string[] {
-        return self.tutkintonimikkeet.map(tn => tn.nimi[activeLocale()])
+        return self.tutkintonimikkeet.map((tn) => tn.nimi[activeLocale()])
       },
       get competenceAreas(): string[] {
-        return self.osaamisalat.map(oa => oa.nimi[activeLocale()])
+        return self.osaamisalat.map((oa) => oa.nimi[activeLocale()])
       },
       get link(): string {
         const urlPrefix = getEnvironment(root).eperusteetPerusteUrl

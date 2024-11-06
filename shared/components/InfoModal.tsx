@@ -274,27 +274,28 @@ export const InfoModal = (props: InfoModalProps) => {
                 <br />
               </>
             )}
-            {keskeytymisajanjaksot && (keskeytymisajanjaksot.length || null) && (
-              <>
-                <StyledStrong>
-                  <FormattedMessage
-                    id="infoModal.keskeytymisajanjaksot"
-                    defaultMessage="Keskeytymisajanjaksot"
-                  />
-                  :
-                </StyledStrong>
-                <div>
-                  {" "}
-                  {keskeytymisajanjaksot.map(k => (
-                    <div key={k.alku}>
-                      <FormattedDate date={k.alku} dateNotSet="" />
-                      {" - "}
-                      <FormattedDate date={k.loppu} dateNotSet="" />
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
+            {keskeytymisajanjaksot &&
+              (keskeytymisajanjaksot.length || null) && (
+                <>
+                  <StyledStrong>
+                    <FormattedMessage
+                      id="infoModal.keskeytymisajanjaksot"
+                      defaultMessage="Keskeytymisajanjaksot"
+                    />
+                    :
+                  </StyledStrong>
+                  <div>
+                    {" "}
+                    {keskeytymisajanjaksot.map((k) => (
+                      <div key={k.alku}>
+                        <FormattedDate date={k.alku} dateNotSet="" />
+                        {" - "}
+                        <FormattedDate date={k.loppu} dateNotSet="" />
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
           </ModalContent>
         </Modal>
       </div>

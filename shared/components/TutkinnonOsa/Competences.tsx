@@ -29,7 +29,8 @@ const ToggleAllTitle = styled(ToggleLink)`
   padding-left: 10px;
   padding-right: 10px;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Tablet}px) {
     display: none;
   }
 `
@@ -43,7 +44,8 @@ const CollapseHeaderContainer = styled("div")`
   display: flex;
   flex: 1;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Tablet}px) {
     flex-direction: column;
   }
 `
@@ -51,9 +53,10 @@ const CollapseHeaderContainer = styled("div")`
 const CollapseHeader = styled("h2")`
   flex: 1;
   margin: 0;
-  ${props => props.theme.typography.heading3}
-  
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  ${(props) => props.theme.typography.heading3}
+
+  @media screen and (max-width: ${(props) =>
+    props.theme.breakpoints.Tablet}px) {
     flex: unset;
     font-size: 16px;
   }
@@ -64,7 +67,8 @@ const CollapseContainer = styled("div")`
   display: flex;
   padding: 20px 10px 10px 20px;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Tablet}px) {
     align-items: center;
     padding-bottom: 0;
   }
@@ -90,7 +94,8 @@ const Line = styled(HorizontalLine)`
   width: unset;
   margin: 0;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Tablet}px) {
     display: none;
   }
 `
@@ -162,8 +167,7 @@ export const Competences = (props: CompetencesProps) => {
             <IconContainer
               onClick={toggle("competences")}
               aria-label={intl.formatMessage({
-                id:
-                  "opiskelusuunnitelma.piilotaAmmattitaitovaatimuksetAriaLabel"
+                id: "opiskelusuunnitelma.piilotaAmmattitaitovaatimuksetAriaLabel"
               })}
               data-testid="TutkinnonOsa.Competences.CollapseCompetences"
             >

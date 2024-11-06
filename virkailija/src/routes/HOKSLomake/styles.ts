@@ -6,7 +6,7 @@ export const EditHOKSStyles = createGlobalStyle`
   }
 
   .form-group {
-    ${props => props.theme.typography.body}
+    ${(props) => props.theme.typography.body}
     margin-bottom: 15px;
   }
 

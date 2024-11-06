@@ -27,12 +27,12 @@ export const getOtsikko = (
     {model.otsikko
       ? model.otsikko
       : model.nimi
-      ? model.nimi
-      : model.tutkinnonOsaKoodiUri
-      ? fallbackMessage(model.tutkinnonOsaKoodiUri, errormessage)
-      : model.osaAlueKoodiUri
-      ? fallbackMessage(model.osaAlueKoodiUri, errormessage)
-      : fallbackMessage("moduleId: " + model.moduleId, errormessage)}
+        ? model.nimi
+        : model.tutkinnonOsaKoodiUri
+          ? fallbackMessage(model.tutkinnonOsaKoodiUri, errormessage)
+          : model.osaAlueKoodiUri
+            ? fallbackMessage(model.osaAlueKoodiUri, errormessage)
+            : fallbackMessage("moduleId: " + model.moduleId, errormessage)}
     {model.osaamispisteet ? ` ${model.osaamispisteet} ${ospLyhenne}` : ""}
   </span>
 )

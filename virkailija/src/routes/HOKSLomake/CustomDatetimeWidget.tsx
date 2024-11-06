@@ -39,20 +39,20 @@ function localDateToUTC(dateString: string) {
  * and modified to TS and needs
  */
 export const CustomDatetimeWidget: React.FC<WidgetProps> = ({
-                                                              value,
-                                                              onChange,
-                                                              readonly,
-                                                              disabled,
-                                                              autofocus = false,
-                                                              onBlur,
-                                                              onFocus,
-                                                              schema,
-                                                              uiSchema,
-                                                              id,
-                                                              label,
-                                                              options,
-                                                              multiple
-                                                            }) => {
+  value,
+  onChange,
+  readonly,
+  disabled,
+  autofocus = false,
+  onBlur,
+  onFocus,
+  schema,
+  uiSchema,
+  id,
+  label,
+  options,
+  multiple
+}) => {
   return (
     <CustomBaseInput
       readonly={readonly}

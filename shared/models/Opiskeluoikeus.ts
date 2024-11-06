@@ -6,7 +6,7 @@ const Suoritustapa = types
   .model("Suoritustapa", {
     koodiarvo: types.optional(types.string, "")
   })
-  .views(self => ({
+  .views((self) => ({
     get isAmmatillinenPerustutkinto() {
       return self.koodiarvo === "ops"
     }
@@ -16,7 +16,7 @@ const SuorituksenTyyppi = types
   .model("SuorituksenTyyppi", {
     koodiarvo: types.optional(types.string, "")
   })
-  .views(self => ({
+  .views((self) => ({
     get isOsittainenSuoritus() {
       return self.koodiarvo.indexOf("osittainen") !== -1
     }
@@ -37,7 +37,7 @@ const Koulutusmoduuli = types
     tunniste: types.optional(Tunniste, {}),
     perusteenDiaarinumero: types.optional(types.string, "")
   })
-  .views(self => {
+  .views((self) => {
     const root: LocaleRoot = getRoot(self)
 
     return {
@@ -87,7 +87,7 @@ const Oppilaitos = types
     oid: types.optional(types.string, ""),
     nimi: types.optional(Nimi, {})
   })
-  .views(self => {
+  .views((self) => {
     const root: LocaleRoot = getRoot(self)
 
     return {
@@ -101,7 +101,7 @@ const OpiskeluOikeusTyyppi = types
   .model("OpiskeluOikeusTyyppi", {
     koodiarvo: types.optional(types.string, "")
   })
-  .views(self => ({
+  .views((self) => ({
     get isTuvaOpiskeluoikeus() {
       return self.koodiarvo === "tuva"
     }
@@ -118,17 +118,17 @@ export const Opiskeluoikeus = types
     arvioituPaattymispaiva: types.optional(types.string, ""),
     tyyppi: types.optional(OpiskeluOikeusTyyppi, {})
   })
-  .views(self => ({
+  .views((self) => ({
     get perustutkinto() {
       return find(
         self.suoritukset,
-        suoritus => suoritus.suoritustapa.isAmmatillinenPerustutkinto
+        (suoritus) => suoritus.suoritustapa.isAmmatillinenPerustutkinto
       )
     },
     get oppilaitosNimi() {
       return self.oppilaitos.oppilaitosNimi
     },
     get isOsittainen() {
-      return self.suoritukset.some(s => s.tyyppi.isOsittainenSuoritus)
+      return self.suoritukset.some((s) => s.tyyppi.isOsittainenSuoritus)
     }
   }))

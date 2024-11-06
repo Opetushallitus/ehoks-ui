@@ -52,10 +52,10 @@ const CustomBaseInput: React.FC<CustomBaseInputProps> = (props) => {
           list={schema.examples ? `examples_${inputProps.id}` : undefined}
           onChange={onChange}
           onBlur={
-            onBlur && (event => onBlur(inputProps.id, event.target.value))
+            onBlur && ((event) => onBlur(inputProps.id, event.target.value))
           }
           onFocus={
-            onFocus && (event => onFocus(inputProps.id, event.target.value))
+            onFocus && ((event) => onFocus(inputProps.id, event.target.value))
           }
         />
       ]}

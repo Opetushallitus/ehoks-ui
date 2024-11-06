@@ -80,7 +80,7 @@ export const HOKS = types
   .volatile(() => ({
     osaamispisteet: 0
   }))
-  .actions(self => {
+  .actions((self) => {
     const root: IRootStore = getRoot(self)
     const {
       apiUrl,
@@ -93,19 +93,19 @@ export const HOKS = types
     } = getEnv<StoreEnvironment>(self)
 
     // fetches detailed HOKS, only needed in virkailija app
-    const fetchDetails = flow(function*(): any {
+    const fetchDetails = flow(function* (): any {
       const response: APIResponse = yield fetchSingle(
         apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}`),
         { headers: appendCallerId() }
       )
       const keys = Object.keys(response.data)
-      keys.forEach(key => {
+      keys.forEach((key) => {
         self[key] = response.data[key]
       })
     })
 
     // fetches opiskelijapalauteTilat for HOKS, only needed in virkailija app
-    const fetchOpiskelijapalauteTilat = flow(function*(): any {
+    const fetchOpiskelijapalauteTilat = flow(function* (): any {
       const response: APIResponse = yield fetchCollection(
         apiUrl(
           `${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}/opiskelijapalaute`
@@ -115,7 +115,7 @@ export const HOKS = types
       self.opiskelijapalauteTilat = response.data
     })
 
-    const fetchTutkinto = flow(function*(): any {
+    const fetchTutkinto = flow(function* (): any {
       if (!self.opiskeluOikeus.oid.length) return
 
       const diaarinumero =
@@ -144,7 +144,7 @@ export const HOKS = types
       return { id, suoritustapa }
     })
 
-    const fetchRakenne = flow(function*(
+    const fetchRakenne = flow(function* (
       id: string,
       suoritustapa = "reformi"
     ): any {
@@ -166,7 +166,7 @@ export const HOKS = types
       return null
     }
 
-    const fetchOsaamispisteet = flow(function*(): any {
+    const fetchOsaamispisteet = flow(function* (): any {
       try {
         if (!self.opiskeluOikeus.oid.length) return
 
@@ -180,7 +180,7 @@ export const HOKS = types
       }
     })
 
-    const fetchOpiskeluoikeudet = flow(function*(): any {
+    const fetchOpiskeluoikeudet = flow(function* (): any {
       if (!self.oppijaOid) {
         return
       }
@@ -225,7 +225,7 @@ export const HOKS = types
       }
     })
 
-    const shallowDelete = flow(function*(): any {
+    const shallowDelete = flow(function* (): any {
       if (!self.oppijaOid) {
         return
       }
@@ -272,7 +272,7 @@ export const HOKS = types
       shallowDelete
     }
   })
-  .views(self => {
+  .views((self) => {
     const root: LocaleRoot = getRoot(self)
     return {
       get hankittavatTutkinnonOsat(): IHankittavaTutkinnonOsa[] {
@@ -305,12 +305,12 @@ export const HOKS = types
       },
       get suunnitellutOpinnot() {
         return this.hankittavatTutkinnonOsat.filter(
-          to => to.tila === "suunniteltu"
+          (to) => to.tila === "suunniteltu"
         )
       },
       get aikataulutetutOpinnot() {
         return this.hankittavatTutkinnonOsat.filter(
-          to => to.tila === "aikataulutettu"
+          (to) => to.tila === "aikataulutettu"
         )
       },
       get aloitusPvm() {
@@ -363,7 +363,9 @@ export const HOKS = types
         return tutkinnonNimi + osittainenResult
       },
       get valmiitOpinnot() {
-        return this.hankittavatTutkinnonOsat.filter(to => to.tila === "valmis")
+        return this.hankittavatTutkinnonOsat.filter(
+          (to) => to.tila === "valmis"
+        )
       },
       get tutkintonimike() {
         return self.opiskeluOikeus.suoritukset &&

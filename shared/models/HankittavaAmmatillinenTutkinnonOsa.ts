@@ -38,7 +38,7 @@ export const HankittavaAmmatillinenTutkinnonOsa = types
     Model,
     HankittavatTutkinnonOsatViews
   )
-  .views(self => {
+  .views((self) => {
     const root: LocaleRoot = getRoot(self)
     return {
       get otsikko(): JSX.Element | string {

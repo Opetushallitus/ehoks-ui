@@ -87,24 +87,26 @@ function mapEvents(
   }
   if (!mapping || mapping === null) {
     if (type === "string") {
-      return events.map(item => (typeof item === "object" ? item.label : item))
+      return events.map((item) =>
+        typeof item === "object" ? item.label : item
+      )
     }
     return events
   } else if (typeof mapping === "string") {
-    return events.map(event =>
+    return events.map((event) =>
       typeof event === "string" ? event : selectn(mapping, event)
     )
   } else if (typeof mapping === "function") {
-    return events.map(event => mapping(event))
+    return events.map((event) => mapping(event))
   } else if (typeof mapping === "object") {
     const defVal = defaultValue(
       properties
         ? properties
         : items && items.properties
-        ? items.properties
-        : {}
+          ? items.properties
+          : {}
     )
-    const mappedEvents = events.map(event =>
+    const mappedEvents = events.map((event) =>
       mapToObject(event, mapping, defVal)
     )
 
@@ -162,25 +164,25 @@ export function toSelected(
   const normFormData = formData ? toArray(formData) : []
   if (isObjectSchema(schema)) {
     return normFormData
-      .map(selected => mapFromSchema(selected, mapping))
-      .filter(x => x !== undefined)
+      .map((selected) => mapFromSchema(selected, mapping))
+      .filter((x) => x !== undefined)
   } else if (
     options &&
     (isStringSchema(schema) || isNumberSchema(schema)) &&
     typeof mapping === "string"
   ) {
     return normFormData
-      .map(dataItem =>
+      .map((dataItem) =>
         options.find((option: any) => {
           if (option[mapping] === dataItem) {
             return option
           }
         })
       )
-      .filter(x => x !== undefined)
+      .filter((x) => x !== undefined)
   } else if (isArraySchema(schema)) {
     return normFormData
-      .map(dataItem => {
+      .map((dataItem) => {
         if (typeof mapping === "object") {
           return mapFromSchema(dataItem, mapping)
         }
@@ -194,7 +196,7 @@ export function toSelected(
           return dataItem
         }
       })
-      .filter(x => x !== undefined)
+      .filter((x) => x !== undefined)
   } else {
     return normFormData
   }
@@ -370,7 +372,7 @@ export class AsyncTypeaheadField extends BaseTypeaheadField {
       url,
       optionsPath,
       search = (searchUrl: string, searchQuery: string) =>
-        fetch(`${searchUrl}?query=${searchQuery}`).then(res => res.json())
+        fetch(`${searchUrl}?query=${searchQuery}`).then((res) => res.json())
     } = uiSchema?.asyncTypeahead
 
     this.setState({ isLoading: true })
@@ -388,7 +390,7 @@ export class AsyncTypeaheadField extends BaseTypeaheadField {
       queryOnFocus = "",
       minLength,
       search = (searchUrl: string, searchQuery: string) =>
-        fetch(`${searchUrl}?query=${searchQuery}`).then(res => res.json())
+        fetch(`${searchUrl}?query=${searchQuery}`).then((res) => res.json())
     } = uiSchema?.asyncTypeahead
 
     if (minLength === 0) {

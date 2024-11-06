@@ -113,7 +113,7 @@ export const Opiskelusuunnitelma = observer(
     useEffect(() => {
       const { share } = parseShareParams(location.search)
       if (share.type && share.tutkinnonOsaTyyppi) {
-        setState(s => ({
+        setState((s) => ({
           ...s,
           share: {
             type: share.type,
@@ -132,7 +132,7 @@ export const Opiskelusuunnitelma = observer(
       // previous dialog should close and new dialog should open
       const { share } = parseShareParams(location.search)
       if (shareHasChanged(share)) {
-        setState(s => ({
+        setState((s) => ({
           ...s,
           share: {
             type: share.type,
@@ -161,18 +161,15 @@ export const Opiskelusuunnitelma = observer(
     }
 
     const hasActiveShare = (type: StudyPartType) => {
-      const {
-        aikataulutetutOpinnot,
-        suunnitellutOpinnot,
-        valmiitOpinnot
-      } = props.plan
+      const { aikataulutetutOpinnot, suunnitellutOpinnot, valmiitOpinnot } =
+        props.plan
       const { share } = state
       const studies = {
         aikataulutetut: aikataulutetutOpinnot,
         suunnitellut: suunnitellutOpinnot,
         valmiit: valmiitOpinnot
       }
-      return !!find(studies[type], s =>
+      return !!find(studies[type], (s) =>
         s.hasNayttoOrHarjoittelujakso(share.type, share.moduleId)
       )
     }
@@ -195,40 +192,38 @@ export const Opiskelusuunnitelma = observer(
       })
     }
 
-    const showPlanSubAccordion = (
-      subAccordion: StudyPartSubAccordions
-    ) => () => {
-      setState({
-        ...state,
-        activeAccordions: {
-          ...state.activeAccordions,
-          suunnitelma: true,
-          suunnitelmat: {
-            ...state.activeAccordions.suunnitelmat,
-            [subAccordion]: true
+    const showPlanSubAccordion =
+      (subAccordion: StudyPartSubAccordions) => () => {
+        setState({
+          ...state,
+          activeAccordions: {
+            ...state.activeAccordions,
+            suunnitelma: true,
+            suunnitelmat: {
+              ...state.activeAccordions.suunnitelmat,
+              [subAccordion]: true
+            }
           }
-        }
-      })
-      window.location.hash = `suunnitelma.${subAccordion}`
-    }
+        })
+        window.location.hash = `suunnitelma.${subAccordion}`
+      }
 
-    const toggleAccordion = (
-      accordion: ActiveAccordions,
-      subAccordion?: StudyPartSubAccordions
-    ) => () => {
-      setState({
-        ...state,
-        activeAccordions: {
-          ...state.activeAccordions,
-          [accordion]: !subAccordion
-            ? !state.activeAccordions[accordion]
-            : toggleSubAccordion(
-                state.activeAccordions[accordion],
-                subAccordion
-              )
-        }
-      })
-    }
+    const toggleAccordion =
+      (accordion: ActiveAccordions, subAccordion?: StudyPartSubAccordions) =>
+      () => {
+        setState({
+          ...state,
+          activeAccordions: {
+            ...state.activeAccordions,
+            [accordion]: !subAccordion
+              ? !state.activeAccordions[accordion]
+              : toggleSubAccordion(
+                  state.activeAccordions[accordion],
+                  subAccordion
+                )
+          }
+        })
+      }
 
     const toggleSubAccordion = (
       accordionState: boolean | { [subAccordionName: string]: boolean },

@@ -50,7 +50,7 @@ export class MobileCompetences extends React.Component<
   }
 
   toggleShowAssessment = () => {
-    this.setState(state => ({
+    this.setState((state) => ({
       ...state,
       showAssessment: !state.showAssessment
     }))

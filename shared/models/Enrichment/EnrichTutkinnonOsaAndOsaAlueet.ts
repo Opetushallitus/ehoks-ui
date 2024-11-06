@@ -16,7 +16,7 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
   // we need this typing to avoid 'missing index signature' error
   // when assigning to self[dynamicKey]
   .volatile((): DynamicObject => ({}))
-  .actions(self => {
+  .actions((self) => {
     const {
       apiUrl,
       apiPrefix,
@@ -31,15 +31,14 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
         headers: appendCallerId()
       })
 
-    const fetchTutkinnonOsa = flow(function*(koodiUri: string): any {
+    const fetchTutkinnonOsa = flow(function* (koodiUri: string): any {
       try {
         // check our global cache first
         cachedTutkinnonOsaResponses[koodiUri] =
           cachedTutkinnonOsaResponses[koodiUri] ||
           getTutkinnonOsaFromEPerusteet(koodiUri)
-        const response: APIResponse = yield cachedTutkinnonOsaResponses[
-          koodiUri
-        ]
+        const response: APIResponse =
+          yield cachedTutkinnonOsaResponses[koodiUri]
         self.tutkinnonOsaId = response.data?.id
         if (!self.tutkinnonOsaId) {
           errors.logError(
@@ -78,25 +77,26 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
       return osaAlueVastaus || { koodiUri: osaAlueKoodiUri }
     }
 
-    const getEnrichedDataForOsaAlue = (ePerusteetReponse: any) => (osaAlue: {
-      osaAlueEnrichedData: IOsaAlueVastaus
-      osaAlueKoodiUri: string
-    }) => {
-      osaAlue.osaAlueEnrichedData = findMatchingOsaAlueFromEperusteetResponse(
-        ePerusteetReponse,
-        osaAlue.osaAlueKoodiUri
-      )
-    }
+    const getEnrichedDataForOsaAlue =
+      (ePerusteetReponse: any) =>
+      (osaAlue: {
+        osaAlueEnrichedData: IOsaAlueVastaus
+        osaAlueKoodiUri: string
+      }) => {
+        osaAlue.osaAlueEnrichedData = findMatchingOsaAlueFromEperusteetResponse(
+          ePerusteetReponse,
+          osaAlue.osaAlueKoodiUri
+        )
+      }
 
-    const fetchOsaAlue = flow(function*(tutkinnonOsaId: number): any {
+    const fetchOsaAlue = flow(function* (tutkinnonOsaId: number): any {
       try {
         cachedOsaAlueResponses[tutkinnonOsaId] =
           cachedOsaAlueResponses[tutkinnonOsaId] ||
           getOsaAlueetFromEPerusteet(tutkinnonOsaId)
 
-        const { data }: APIResponse = yield cachedOsaAlueResponses[
-          tutkinnonOsaId
-        ]
+        const { data }: APIResponse =
+          yield cachedOsaAlueResponses[tutkinnonOsaId]
 
         self.osaAlueet.forEach(getEnrichedDataForOsaAlue(data))
       } catch (error) {
@@ -104,7 +104,7 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
       }
     })
 
-    const fetchTutkinnonOsaAndOsaAlueet = flow(function*(
+    const fetchTutkinnonOsaAndOsaAlueet = flow(function* (
       tutkinnonOsaKoodiUri: string
     ): any {
       yield fetchTutkinnonOsa(tutkinnonOsaKoodiUri)

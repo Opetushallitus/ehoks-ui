@@ -13,7 +13,8 @@ const TitleRow = styled("div")`
   display: flex;
   flex: 1;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Tablet}px) {
     flex-direction: column;
   }
 `
@@ -72,9 +73,7 @@ interface CompetenceRequirementProps {
   expanded: boolean
   expand: () => void
 }
-export class CompetenceRequirement extends React.Component<
-  CompetenceRequirementProps
-> {
+export class CompetenceRequirement extends React.Component<CompetenceRequirementProps> {
   render() {
     const { competenceRequirement, expanded, expand } = this.props
     const kriteerit = competenceRequirement.kriteerit || []
@@ -98,7 +97,7 @@ export class CompetenceRequirement extends React.Component<
         </TitleRow>
         {expanded ? (
           <Assessment data-testid="Assessment">
-            {kriteerit.map(arviointikriteeri => (
+            {kriteerit.map((arviointikriteeri) => (
               <AssessmentItem key={arviointikriteeri.kuvaus}>
                 <AssessmentHeader>{arviointikriteeri.kuvaus}</AssessmentHeader>
                 {(arviointikriteeri.kriteerit || []).map((kriteeri, i) => (

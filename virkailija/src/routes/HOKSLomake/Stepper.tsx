@@ -17,13 +17,8 @@ interface StepperProps {
 
 export class Stepper extends React.Component<StepperProps> {
   render() {
-    const {
-      children,
-      completed,
-      currentStep,
-      disabled,
-      updateStep
-    } = this.props
+    const { children, completed, currentStep, disabled, updateStep } =
+      this.props
     return (
       <Container>
         {Children.map(

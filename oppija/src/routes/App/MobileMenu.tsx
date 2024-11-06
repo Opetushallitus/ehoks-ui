@@ -45,7 +45,7 @@ interface LanguageProps {
 }
 const Language = styled("a")<LanguageProps>`
   cursor: pointer;
-  color: ${props => (props.selected ? "#fff" : "#a5acb0")};
+  color: ${(props) => (props.selected ? "#fff" : "#a5acb0")};
   padding-right: 20px;
 `
 

@@ -26,14 +26,14 @@ export const OsaamisenOsoittaminen = types
     vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
     yksilollisetKriteerit: types.optional(types.array(types.string), [])
   })
-  .views(self => ({
+  .views((self) => ({
     get koulutuksenJarjestajaArvioijat() {
-      return self.koulutuksenJarjestajaOsaamisenArvioijat.map(a =>
+      return self.koulutuksenJarjestajaOsaamisenArvioijat.map((a) =>
         [a.nimi, a.organisaatio.oppilaitosNimi].filter(Boolean).join(", ")
       )
     },
     get tyoelamaArvioijat() {
-      return self.tyoelamaOsaamisenArvioijat.map(a =>
+      return self.tyoelamaOsaamisenArvioijat.map((a) =>
         [a.nimi, a.organisaatio.nimi, a.organisaatio.yTunnus]
           .filter(Boolean)
           .join(", ")

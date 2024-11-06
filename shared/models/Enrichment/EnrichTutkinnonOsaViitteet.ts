@@ -17,16 +17,11 @@ export const EnrichTutkinnonOsaViitteet = (
         disposeTutkinnonOsaFetcher: undefined as IReactionDisposer | undefined
       })
     )
-    .actions(self => {
-      const {
-        apiUrl,
-        apiPrefix,
-        errors,
-        fetchCollection,
-        appendCallerId
-      } = getEnv<StoreEnvironment>(self)
+    .actions((self) => {
+      const { apiUrl, apiPrefix, errors, fetchCollection, appendCallerId } =
+        getEnv<StoreEnvironment>(self)
 
-      const fetchTutkinnonOsaViitteet = flow(function*(id: number): any {
+      const fetchTutkinnonOsaViitteet = flow(function* (id: number): any {
         try {
           const response: APIResponse = yield fetchCollection(
             apiUrl(
@@ -51,7 +46,7 @@ export const EnrichTutkinnonOsaViitteet = (
         afterCreate() {
           self.disposeTutkinnonOsaFetcher = reaction(
             () => self.tutkinnonOsa.id,
-            id => {
+            (id) => {
               fetchTutkinnonOsaViitteet(id)
             }
           )

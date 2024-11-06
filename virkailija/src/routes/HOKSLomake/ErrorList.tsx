@@ -4,9 +4,9 @@ import { ErrorListProps, RJSFValidationError } from "@rjsf/utils"
 import styled from "styled"
 
 const ErrorMessage = styled("li")`
-  color: ${props => props.theme.colors.green700};
+  color: ${(props) => props.theme.colors.green700};
   &:hover {
-    color: ${props => props.theme.colors.green900};
+    color: ${(props) => props.theme.colors.green900};
     cursor: pointer;
   }
 `
@@ -18,27 +18,26 @@ const generateFieldId = (path: string) =>
     .join("_")
     .replace(/\[|'|\./g, "")}`
 
-const scrollToError = (error: RJSFValidationError) => (
-  event: React.MouseEvent
-) => {
-  event.preventDefault()
-  const element: any = document.querySelector(
-    `#${generateFieldId(error.property!)}`
-  )
-  const topToolbar: any = document.getElementById("topToolbar")
-  if (element) {
-    window.scroll(0, element.offsetTop - topToolbar ? topToolbar.height : 0)
+const scrollToError =
+  (error: RJSFValidationError) => (event: React.MouseEvent) => {
+    event.preventDefault()
+    const element: any = document.querySelector(
+      `#${generateFieldId(error.property!)}`
+    )
+    const topToolbar: any = document.getElementById("topToolbar")
+    if (element) {
+      window.scroll(0, element.offsetTop - topToolbar ? topToolbar.height : 0)
 
-    const focusElement =
-      element.tagName === "INPUT"
-        ? element
-        : document.querySelectorAll(
-            `#${generateFieldId(error.property!)} input:first-child`
-          )[0]
+      const focusElement =
+        element.tagName === "INPUT"
+          ? element
+          : document.querySelectorAll(
+              `#${generateFieldId(error.property!)} input:first-child`
+            )[0]
 
-    focusElement.focus()
+      focusElement.focus()
+    }
   }
-}
 
 export default function ErrorList(props: ErrorListProps) {
   const { errors } = props

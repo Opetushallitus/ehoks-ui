@@ -7,7 +7,7 @@ import { SessionStore } from "stores/SessionStore"
 const callerId = (headers?: Headers) => (headers ? headers : new Headers())
 
 describe("SessionStore", () => {
-  test("checkSession without login", done => {
+  test("checkSession without login", (done) => {
     const store = SessionStore.create(
       {},
       createEnvironment(mockFetch(apiUrl), apiUrl, "", callerId)
@@ -28,7 +28,7 @@ describe("SessionStore", () => {
     )
   })
 
-  test("checkSession with login", done => {
+  test("checkSession with login", (done) => {
     const store = SessionStore.create(
       {},
       createEnvironment(mockFetch(apiUrl, 1), apiUrl, "", callerId)
@@ -66,7 +66,7 @@ describe("SessionStore", () => {
     )
   })
 
-  test("logout", done => {
+  test("logout", (done) => {
     const store = SessionStore.create(
       {
         user: {

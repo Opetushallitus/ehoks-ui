@@ -5,7 +5,8 @@ export const Heading = styled("h1")`
 `
 
 export const MainHeading = styled(Heading)`
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Tablet}px) {
     display: none;
   }
 `

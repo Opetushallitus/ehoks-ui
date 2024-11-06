@@ -32,7 +32,7 @@ export const YhteisenTutkinnonOsanOsaAlue = types
     }),
     HankittavatTutkinnonOsatViews
   )
-  .views(self => {
+  .views((self) => {
     const root: LocaleRoot = getRoot(self)
     return {
       get otsikko(): JSX.Element | string {
@@ -43,7 +43,7 @@ export const YhteisenTutkinnonOsanOsaAlue = types
         if (!self.osaAlueEnrichedData) return []
 
         const osaamistavoite = self.osaAlueEnrichedData.osaamistavoitteet.find(
-          x => x.pakollinen
+          (x) => x.pakollinen
         )
         if (!osaamistavoite) return []
 

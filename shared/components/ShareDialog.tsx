@@ -73,7 +73,7 @@ const ButtonsContainer = styled(ShareColumn)`
   justify-content: flex-end;
   margin-bottom: 10px;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.Large}px) {
     flex-direction: column;
   }
 `
@@ -391,13 +391,13 @@ export function ShareDialog(props: ShareDialogProps) {
                       <DateInput
                         type="date"
                         value={startDate}
-                        onChange={e => setStartDate(e.target.value)}
+                        onChange={(e) => setStartDate(e.target.value)}
                       />{" "}
                       -{" "}
                       <DateInput
                         type="date"
                         value={endDate}
-                        onChange={e => setEndDate(e.target.value)}
+                        onChange={(e) => setEndDate(e.target.value)}
                       />
                     </ShareColumn>
                   </ShareColumns>

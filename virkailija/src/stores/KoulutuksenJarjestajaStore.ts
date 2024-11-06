@@ -18,7 +18,7 @@ import { StoreEnvironment } from "types/StoreEnvironment"
 
 const sortKeys = ["nimi", "tutkinto", "osaamisala", "hoks-id"] as const
 
-export type SearchSortKey = typeof sortKeys[number]
+export type SearchSortKey = (typeof sortKeys)[number]
 
 export const Translation = types.model("Translation", {
   fi: types.optional(types.string, ""),
@@ -37,15 +37,14 @@ export const Oppija = types
     suunnitelmaIndex: types.optional(types.integer, -1),
     henkilotiedot: types.optional(SessionUser, { surname: "" })
   })
-  .actions(self => {
-    const { fetchCollection, fetchSingle, apiUrl, appendCallerId } = getEnv<
-      StoreEnvironment
-    >(self)
+  .actions((self) => {
+    const { fetchCollection, fetchSingle, apiUrl, appendCallerId } =
+      getEnv<StoreEnvironment>(self)
 
     // fetches HOKSes with basic info (root level only)
     const rootStore: IRootStore = getRoot<IRootStore>(self)
     const oppilaitosOid: string = rootStore.session.selectedOrganisationOid
-    const fetchSuunnitelmat = flow(function*(): any {
+    const fetchSuunnitelmat = flow(function* (): any {
       const response: APIResponse = yield fetchCollection(
         apiUrl(
           `virkailija/oppijat/${self.oid}/hoksit/oppilaitos/${oppilaitosOid}`
@@ -61,12 +60,12 @@ export const Oppija = types
       if (isAlive(self)) {
         self.suunnitelmat = response.data
         self.suunnitelmaIndex = self.suunnitelmat.findIndex(
-          s => s.opiskeluoikeusOid === self.opiskeluoikeusOid
+          (s) => s.opiskeluoikeusOid === self.opiskeluoikeusOid
         )
       }
     })
 
-    const fetchHenkilotiedot = flow(function*(): any {
+    const fetchHenkilotiedot = flow(function* (): any {
       const response: APIResponse = yield fetchSingle(
         apiUrl(`virkailija/oppijat/${self.oid}`),
         { headers: appendCallerId() }
@@ -84,9 +83,9 @@ export const Oppija = types
     })
 
     // eslint-disable-next-line require-yield
-    const fetchOpiskeluoikeudet = flow(function*(): any {
+    const fetchOpiskeluoikeudet = flow(function* (): any {
       return Promise.all(
-        self.suunnitelmat.map(suunnitelma =>
+        self.suunnitelmat.map((suunnitelma) =>
           suunnitelma.fetchOpiskeluoikeudet()
         )
       )
@@ -94,7 +93,7 @@ export const Oppija = types
 
     return { fetchSuunnitelmat, fetchHenkilotiedot, fetchOpiskeluoikeudet }
   })
-  .views(self => ({
+  .views((self) => ({
     get hyvaksytty() {
       return self.suunnitelmaIndex > -1
         ? self.suunnitelmat[self.suunnitelmaIndex].ensikertainenHyvaksyminen
@@ -112,7 +111,7 @@ export const Oppija = types
       const rootStore: IRootStore = getRoot<IRootStore>(self)
       const oppilaitosOid: string = rootStore.session.selectedOrganisationOid
       const manualPlans = self.suunnitelmat.filter(
-        suunnitelma => suunnitelma.manuaalisyotto
+        (suunnitelma) => suunnitelma.manuaalisyotto
       )
       return manualPlans.length
         ? manualPlans.length > 1
@@ -121,7 +120,7 @@ export const Oppija = types
         : ""
     },
     get tutkinto(): string {
-      self.suunnitelmat.map(s => {
+      self.suunnitelmat.map((s) => {
         if (
           s.opiskeluOikeus.oid === "" &&
           s.opiskeluoikeusOid === self.opiskeluoikeusOid
@@ -131,13 +130,13 @@ export const Oppija = types
       })
       const x = find(
         self.suunnitelmat,
-        y => y.opiskeluoikeusOid === self.opiskeluoikeusOid
+        (y) => y.opiskeluoikeusOid === self.opiskeluoikeusOid
       )
       return get(x, "tutkinnonNimi", "")
     },
     get osaamisala(): string {
-      const activeLocale: Locale = getRoot<IRootStore>(self).translations
-        .activeLocale
+      const activeLocale: Locale =
+        getRoot<IRootStore>(self).translations.activeLocale
       switch (activeLocale) {
         case Locale.FI:
           return self.osaamisalaNimi.fi
@@ -172,20 +171,19 @@ const Search = types
       "hoks-id": ""
     }
   }))
-  .actions(self => {
-    const { fetchCollection, fetchSingle, apiUrl, appendCallerId } = getEnv<
-      StoreEnvironment
-    >(self)
+  .actions((self) => {
+    const { fetchCollection, fetchSingle, apiUrl, appendCallerId } =
+      getEnv<StoreEnvironment>(self)
 
-    const fetchOppijat = flow(function*(): any {
+    const fetchOppijat = flow(function* (): any {
       // TODO fix cross reference of stores?
       const rootStore: IRootStore = getRoot<IRootStore>(self)
       const oppilaitosOid: string = rootStore.session.selectedOrganisationOid
       if (oppilaitosOid === "") {
         return
       }
-      const activeLocale: Locale = getRoot<IRootStore>(self).translations
-        .activeLocale
+      const activeLocale: Locale =
+        getRoot<IRootStore>(self).translations.activeLocale
 
       self.isLoading = true
 
@@ -223,7 +221,7 @@ const Search = types
       // side effects, fetch plans & personal info for all students
       yield Promise.all(
         self.results.map(
-          flow(function*(oppija): any {
+          flow(function* (oppija): any {
             yield oppija.fetchSuunnitelmat()
             yield oppija.fetchHenkilotiedot()
           })
@@ -234,7 +232,7 @@ const Search = types
     })
 
     // Fetches oppija by id and adds it to results
-    const fetchOppija = flow(function*(oppijaOid): any {
+    const fetchOppija = flow(function* (oppijaOid): any {
       const response: APIResponse = yield fetchSingle(
         apiUrl(`virkailija/oppijat/${oppijaOid}/with-oo`),
         { headers: appendCallerId() }
@@ -243,7 +241,7 @@ const Search = types
       self.results.push(response.data)
       yield Promise.all(
         self.results.map(
-          flow(function*(oppija): any {
+          flow(function* (oppija): any {
             yield oppija.fetchSuunnitelmat()
             yield oppija.fetchHenkilotiedot()
           })
@@ -262,7 +260,7 @@ const Search = types
 
     return { fetchOppijat, fetchOppija, resetActivePage, setFromListView }
   })
-  .actions(self => {
+  .actions((self) => {
     const changeSearchText = (field: SearchSortKey, searchText = "") => {
       self.activePage = 0
       // create new object ref as volatile data is not mobx observable
@@ -293,8 +291,8 @@ const Search = types
       changeSearchText
     }
   })
-  .views(self => ({
-    oppija: (oid: string) => self.results.find(result => result.oid === oid)
+  .views((self) => ({
+    oppija: (oid: string) => self.results.find((result) => result.oid === oid)
   }))
 
 const KoulutuksenJarjestajaModel = {

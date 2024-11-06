@@ -1,9 +1,7 @@
 import queryString from "query-string"
 import { ShareType, TutkinnonOsaType } from "../models/helpers/ShareTypes"
 
-export function parseShareParams(
-  search: string | undefined
-): {
+export function parseShareParams(search: string | undefined): {
   share: {
     type?: ShareType
     moduleId: string | ""

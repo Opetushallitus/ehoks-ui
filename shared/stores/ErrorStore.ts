@@ -6,7 +6,7 @@ export const AppError = types
     errorText: types.optional(types.string, ""),
     handled: types.boolean
   })
-  .actions(self => {
+  .actions((self) => {
     const handle = () => {
       self.handled = true
     }
@@ -19,13 +19,13 @@ const ErrorStoreModel = {
 
 export const ErrorStore = types
   .model("ErrorStore", ErrorStoreModel)
-  .actions(self => {
+  .actions((self) => {
     // logError can accept either a plain string or a translation key as the errorText parameter,
     // see HOKSStore for an example of translation key usage.
     const logError = (id: string, errorText?: string, handled = false) => {
       const error = { errorText, id, handled }
       const index = self.errors
-        .filter(e => !e.handled)
+        .filter((e) => !e.handled)
         .findIndex(
           (err: { errorText: any }) => err.errorText === error.errorText
         )
@@ -37,13 +37,13 @@ export const ErrorStore = types
       }
     }
     const markAllErrorsHandled = () => {
-      self.errors.forEach(error => error.handle())
+      self.errors.forEach((error) => error.handle())
     }
     return { logError, markAllErrorsHandled }
   })
-  .views(self => ({
+  .views((self) => ({
     get unhandled(): IAppError[] {
-      return self.errors.filter(error => !error.handled)
+      return self.errors.filter((error) => !error.handled)
     }
   }))
 

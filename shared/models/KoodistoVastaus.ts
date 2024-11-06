@@ -19,7 +19,7 @@ export const KoodistoVastaus = types
     fi: types.optional(KoodistoMetadata, {}),
     sv: types.optional(KoodistoMetadata, {})
   })
-  .views(self => {
+  .views((self) => {
     const root: LocaleRoot = getRoot(self)
     return {
       get nimi() {

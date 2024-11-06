@@ -39,7 +39,7 @@ export const trimEmptyValues = (value: any) =>
   Array.isArray(value)
     ? trimArray(value)
     : typeof value === "object"
-    ? trimObject(value)
-    : typeof value === "string"
-    ? trimString(value)
-    : value
+      ? trimObject(value)
+      : typeof value === "string"
+        ? trimString(value)
+        : value

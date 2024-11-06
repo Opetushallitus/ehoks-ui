@@ -33,7 +33,7 @@ export const AiemminHankitunYTOOsaAlue = types
     AiemminHankitutTutkinnonOsatViews,
     Model
   )
-  .views(self => ({
+  .views((self) => ({
     get otsikko(): JSX.Element | string {
       return self.osaAlueEnrichedData.osaAlueNimi
     },

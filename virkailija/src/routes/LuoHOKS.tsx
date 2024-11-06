@@ -127,7 +127,7 @@ export const LuoHOKS = inject("store")(
     }
 
     useEffect(() => {
-      environment.fetchSwaggerJSON().then(async json => {
+      environment.fetchSwaggerJSON().then(async (json) => {
         const rawSchema = {
           definitions: convertSchemaDefinitions(json.definitions),
           ...json.definitions.HOKSLuonti
@@ -145,7 +145,7 @@ export const LuoHOKS = inject("store")(
         } = window.sessionStorage.getItem("hoks")
           ? JSON.parse(window.sessionStorage.getItem("hoks") || "")
           : {}
-        setState(s => ({
+        setState((s) => ({
           ...s,
           formData,
           errors,
@@ -276,7 +276,7 @@ export const LuoHOKS = inject("store")(
       const json = await request.json()
 
       if (request.status === 200) {
-        setState(s => ({
+        setState((s) => ({
           ...s,
           formData: {},
           errors: [],
@@ -288,13 +288,13 @@ export const LuoHOKS = inject("store")(
         window.sessionStorage.removeItem("hoks")
         removeBeforeUnloadListener()
       } else {
-        setState(s => ({ ...s, success: false, message: undefined }))
+        setState((s) => ({ ...s, success: false, message: undefined }))
         reportHOKSErrors(json, intl, (errorId: string, message: string) => {
           notifications.addError(errorId, message)
-          setState(s => ({ ...s, message }))
+          setState((s) => ({ ...s, message }))
         })
       }
-      setState(s => ({ ...s, isLoading: false }))
+      setState((s) => ({ ...s, isLoading: false }))
     }
 
     const completedSteps = () =>
@@ -307,7 +307,7 @@ export const LuoHOKS = inject("store")(
 
     const isValid = () => {
       const cSteps = completedSteps()
-      return Object.keys(cSteps).every(stepIndex => cSteps[stepIndex])
+      return Object.keys(cSteps).every((stepIndex) => cSteps[stepIndex])
     }
 
     const formContext = () => {

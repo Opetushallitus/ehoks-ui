@@ -27,7 +27,7 @@ export const HankittavaKoulutuksenOsa = types
     Model,
     HankittavatTutkinnonOsatViews
   )
-  .views(self => {
+  .views((self) => {
     const root: LocaleRoot = getRoot(self)
     return {
       get tyyppi(): TutkinnonOsaType {

@@ -16,7 +16,7 @@ export interface ShareLink {
   validTo: string
   type: string
 }
-export const fetchLinks = async function(
+export const fetchLinks = async function (
   moduleId: string,
   apiConfig: APIConfig
 ): Promise<ShareLink[]> {
@@ -32,7 +32,7 @@ export const fetchLinks = async function(
     throw new Error(response.statusText)
   }
   const json: { data: BackendShareLink[] } = await response.json()
-  return json.data.map(link => ({
+  return json.data.map((link) => ({
     jakoUuid: link["share-id"],
     validFrom: link["voimassaolo-alku"],
     validTo: link["voimassaolo-loppu"],
@@ -40,7 +40,7 @@ export const fetchLinks = async function(
   }))
 }
 
-export const createLink = async function({
+export const createLink = async function ({
   startDate,
   endDate,
   moduleId,
@@ -86,7 +86,7 @@ export const createLink = async function({
   return json.meta.uuid
 }
 
-export const removeLink = async function({
+export const removeLink = async function ({
   uuid,
   apiConfig
 }: {

@@ -7,7 +7,7 @@ export async function fetchKoodiUris() {
     Object.keys(koodistoUrls).map(async (key: keyof typeof koodistoUrls) => {
       const json = await window
         .fetch(koodistoUrls[key], { headers: appendCommonHeaders() })
-        .then(r => r.json())
+        .then((r) => r.json())
       return {
         key,
         value: json.data

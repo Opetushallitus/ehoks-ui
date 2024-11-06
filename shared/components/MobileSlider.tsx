@@ -19,14 +19,14 @@ const LeftArrow = styled(MdChevronLeft)`
   position: absolute;
   left: -4px;
   top: calc(50% - 16px);
-  fill: ${props => props.theme.colors.green700};
+  fill: ${(props) => props.theme.colors.green700};
 `
 
 const RightArrow = styled(MdChevronRight)`
   position: absolute;
   right: -4px;
   top: calc(50% - 16px);
-  fill: ${props => props.theme.colors.green700};
+  fill: ${(props) => props.theme.colors.green700};
 `
 
 interface MobileSliderProps {
@@ -40,7 +40,11 @@ interface MobileSliderProps {
   className?: string
 }
 
-export const MobileSlider: React.FC<MobileSliderProps> = ({ children = [], className, footer }) => {
+export const MobileSlider: React.FC<MobileSliderProps> = ({
+  children = [],
+  className,
+  footer
+}) => {
   if (!children.length) {
     return null
   }
@@ -54,13 +58,9 @@ export const MobileSlider: React.FC<MobileSliderProps> = ({ children = [], class
 
   return (
     <Container className={className}>
-      <SwipeableViews ref={swipeableViewsRef}>
-        {children}
-      </SwipeableViews>
+      <SwipeableViews ref={swipeableViewsRef}>{children}</SwipeableViews>
       {<LeftArrow size={32} onClick={handleSwipeBackward} />}
-      {(
-        <RightArrow size={32} onClick={handleSwipeForward} />
-      )}
+      {<RightArrow size={32} onClick={handleSwipeForward} />}
       {footer}
     </Container>
   )

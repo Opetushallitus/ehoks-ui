@@ -103,38 +103,40 @@ export function fetchUtils(
       fetchImplementation(url, {
         ...init,
         method: "PATCH"
-      }).then(r => r.json().then(data => ({ status: r.status, body: data })))
+      }).then((r) =>
+        r.json().then((data) => ({ status: r.status, body: data }))
+      )
   }
 }
 
 /** mocked fetch using local JSON files
  * stores/mocks/[path_with_underscores][version number or 0].json
  */
-export const mockFetch = (apiUrl: (path: string) => string, version = 0) => (
-  url: string
-): Promise<Response> => {
-  const path = url.replace(apiUrl(""), "")
-  const mockResponse = {
-    arrayBuffer: () => Promise.resolve(new ArrayBuffer(0)),
-    formData: () => Promise.resolve(new FormData()),
-    text: () => Promise.resolve(""),
-    blob: () => Promise.resolve(new Blob()),
-    headers: new Headers(),
-    redirected: false,
-    status: 200,
-    url: path,
-    trailer: Promise.resolve(new Headers()),
-    type: "basic" as ResponseType,
-    body: null,
-    bodyUsed: false,
-    clone: () => mockResponse,
-    json: () =>
-      import(`stores/mocks/${path.replace(/\/|-/g, "_")}${version}.json`),
-    ok: true,
-    statusText: "Error"
+export const mockFetch =
+  (apiUrl: (path: string) => string, version = 0) =>
+  (url: string): Promise<Response> => {
+    const path = url.replace(apiUrl(""), "")
+    const mockResponse = {
+      arrayBuffer: () => Promise.resolve(new ArrayBuffer(0)),
+      formData: () => Promise.resolve(new FormData()),
+      text: () => Promise.resolve(""),
+      blob: () => Promise.resolve(new Blob()),
+      headers: new Headers(),
+      redirected: false,
+      status: 200,
+      url: path,
+      trailer: Promise.resolve(new Headers()),
+      type: "basic" as ResponseType,
+      body: null,
+      bodyUsed: false,
+      clone: () => mockResponse,
+      json: () =>
+        import(`stores/mocks/${path.replace(/\/|-/g, "_")}${version}.json`),
+      ok: true,
+      statusText: "Error"
+    }
+    return Promise.resolve(mockResponse)
   }
-  return Promise.resolve(mockResponse)
-}
 
 // fetch that includes credentials
 export const fetch = (url: string | Request, init: RequestInit) =>

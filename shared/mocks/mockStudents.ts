@@ -48,7 +48,7 @@ const competenceAreas = [
 ]
 
 export const mockStudents: MockStudent[] = Array.from(Array(100).keys()).map(
-  key => ({
+  (key) => ({
     oid: key.toString(),
     nimi: `${lastNames[Math.floor(Math.random() * lastNames.length)]} ${
       firstNames[Math.floor(Math.random() * firstNames.length)]

@@ -31,7 +31,7 @@ export const NotificationModel = types.model("NotificationModel", {
 
 export const Notification = types
   .compose("Notification", EnrichTutkinnonOsaKoodiUri, NotificationModel)
-  .views(self => {
+  .views((self) => {
     const root: LocaleRoot = getRoot(self)
     return {
       get message() {
@@ -47,12 +47,12 @@ export const Notification = types
       }
     }
   })
-  .actions(self => {
+  .actions((self) => {
     const root: {
       session: { settings: ISettings; saveSettings: any }
     } = getRoot(self)
 
-    const ackNotification = function() {
+    const ackNotification = function () {
       root.session.settings.hiddenNotifications.hide(
         self.hoksId,
         self.tutkinnonOsaKoodiUri,
@@ -74,7 +74,7 @@ export const NotificationStore = types
   .volatile(() => ({
     showFeedbackModal: true
   }))
-  .actions(self => {
+  .actions((self) => {
     const addNotifications = (
       notifications: SnapshotOrInstance<typeof Notification>[]
     ) => {
@@ -86,10 +86,9 @@ export const NotificationStore = types
 
     return { addNotifications }
   })
-  .actions(self => {
-    const { apiUrl, fetchPrimitiveCollection, errors, appendCallerId } = getEnv<
-      StoreEnvironment
-    >(self)
+  .actions((self) => {
+    const { apiUrl, fetchPrimitiveCollection, errors, appendCallerId } =
+      getEnv<StoreEnvironment>(self)
 
     const hideFeedbackModal = () => {
       self.showFeedbackModal = false
@@ -99,7 +98,7 @@ export const NotificationStore = types
       self.showFeedbackModal = true
     }
 
-    const haeOpiskelijapalautelinkit = flow(function*(oid: string): any {
+    const haeOpiskelijapalautelinkit = flow(function* (oid: string): any {
       if (oid === "") {
         console.log(
           "Opiskelijapalautelinkkejä ei voida hakea, koska oppijaOid ei ole määritelty."
@@ -132,19 +131,19 @@ export const NotificationStore = types
       makeFeedbackModalVisible
     }
   })
-  .views(self => {
+  .views((self) => {
     const {
       session: { settings }
     }: { session: { settings: ISettings } } = getRoot(self)
     return {
       get retainedNotifications() {
         return self.notifications.filter(
-          notification =>
+          (notification) =>
             // NOTE: investigate why settings.hiddenNotifications.exists
             // is not reactive here (does not trigger re-render)
             !find(
               settings.hiddenNotifications.notifications,
-              hiddenNotification =>
+              (hiddenNotification) =>
                 hiddenNotification.hoksId === notification.hoksId &&
                 hiddenNotification.tutkinnonOsaKoodiUri ===
                   notification.tutkinnonOsaKoodiUri &&
@@ -154,13 +153,13 @@ export const NotificationStore = types
       }
     }
   })
-  .views(self => ({
+  .views((self) => ({
     get hasUnanswaredFeedbackLinks() {
       return Boolean(self.studentFeedbackLinks?.length)
     },
 
     get visible() {
-      return self.retainedNotifications.filter(notification => {
+      return self.retainedNotifications.filter((notification) => {
         const notificationInterval = {
           start: subMonths(parseISO(notification.alku), 1),
           end: parseISO(notification.loppu)

@@ -18,7 +18,7 @@ export const Notification = types
     source: types.optional(types.string, ""), // notifikaation lähde
     sahkoposti: types.optional(types.string, "")
   })
-  .views(self => ({
+  .views((self) => ({
     get message() {
       return {
         title: self.title,
@@ -28,7 +28,7 @@ export const Notification = types
       }
     }
   }))
-  .actions(self => {
+  .actions((self) => {
     const hide = () => {
       self.visible = false
     }
@@ -40,7 +40,7 @@ export const NotificationStore = types
   .model("NotificationStore", {
     notifications: types.array(Notification)
   })
-  .actions(self => {
+  .actions((self) => {
     const { errors } = getEnv<StoreEnvironment>(self)
 
     const addNotifications = (
@@ -57,7 +57,7 @@ export const NotificationStore = types
 
     const removeNotificationsBySource = (source: "Opiskelijapalaute") => {
       self.notifications.replace(
-        self.notifications.filter(n => n.source !== source)
+        self.notifications.filter((n) => n.source !== source)
       )
     }
 
@@ -68,9 +68,9 @@ export const NotificationStore = types
       markAllErrorsHandled: errors.markAllErrorsHandled
     }
   })
-  .views(self => ({
+  .views((self) => ({
     get visible() {
-      return self.notifications.filter(notification => notification.visible)
+      return self.notifications.filter((notification) => notification.visible)
     }
   }))
 

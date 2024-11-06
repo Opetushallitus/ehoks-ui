@@ -5,7 +5,7 @@ import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md"
 import styled from "styled"
 
 const Container = styled("th")`
-  border-bottom: 1px solid ${props => props.theme.colors.table.cellBorder};
+  border-bottom: 1px solid ${(props) => props.theme.colors.table.cellBorder};
   padding: 15px 15px 15px 0;
 `
 
@@ -28,7 +28,7 @@ interface ArrowProps {
 const ArrowUp = styled(({ disabled: _disabled, active: _active, ...rest }) => (
   <MdArrowDropUp {...rest} />
 ))<ArrowProps>`
-  color: ${props =>
+  color: ${(props) =>
     props.disabled ? "#F0F0F0" : props.active ? "#229FC9" : "#84898C"};
 `
 
@@ -37,7 +37,7 @@ const ArrowDown = styled(
     <MdArrowDropDown {...rest} />
   )
 )<ArrowProps>`
-  color: ${props =>
+  color: ${(props) =>
     props.disabled ? "#F0F0F0" : props.active ? "#229FC9" : "#84898C"};
   margin-top: -24px;
 `
@@ -56,7 +56,8 @@ const SearchInput = styled("input")`
   padding: 0 10px;
   width: 100%;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Tablet}px) {
     padding-left: 40px;
   }
 `
@@ -68,13 +69,12 @@ interface SearchableHeaderProps {
 }
 
 export const SearchableHeader = (props: SearchableHeaderProps) => {
-  const sortByKeypress = (onSort: () => void) => (
-    event: React.KeyboardEvent
-  ) => {
-    if (event.key === "Enter" || event.key === " ") {
-      onSort()
+  const sortByKeypress =
+    (onSort: () => void) => (event: React.KeyboardEvent) => {
+      if (event.key === "Enter" || event.key === " ") {
+        onSort()
+      }
     }
-  }
 
   const intl = useIntl()
   const { children, sortName, omitSortButtons } = props

@@ -12,7 +12,7 @@ export const Organisaatio = types
       {}
     )
   })
-  .views(self => {
+  .views((self) => {
     const root: LocaleRoot = getRoot(self)
     return {
       get organizationName() {

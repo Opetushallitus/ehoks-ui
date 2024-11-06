@@ -85,7 +85,7 @@ const ExpandedDetailsTitle = styled("strong")(
 )
 
 const ArvioijatTable = styled(Table)`
-  margin-left: ${props => props.theme.spacing.l};
+  margin-left: ${(props) => props.theme.spacing.l};
 `
 
 const CollapseIcon = ({

@@ -127,19 +127,19 @@ export const MuokkaaHOKS = inject("store")(
     const { environment, notifications } = props.store!
 
     useEffect(() => {
-      environment.fetchSwaggerJSON().then(json =>
-        fetchHOKS().then(hoks => {
+      environment.fetchSwaggerJSON().then((json) =>
+        fetchHOKS().then((hoks) => {
           const rawSchema = {
             definitions: convertSchemaDefinitions(json.definitions),
             ...json.definitions.HOKSKorvaus
           }
-          fetchKoodiUris().then(koodiUris => {
+          fetchKoodiUris().then((koodiUris) => {
             const schema = schemaByStep(
               rawSchema,
               propertiesByStep,
               state.currentStep
             )
-            setState(s => ({
+            setState((s) => ({
               ...s,
               formData: hoks,
               errors: [],
@@ -207,7 +207,7 @@ export const MuokkaaHOKS = inject("store")(
     }
 
     const save = async (fieldProps: IChangeEvent<FieldProps>) => {
-      setState(s => ({
+      setState((s) => ({
         ...s,
         isLoading: true,
         success: undefined,
@@ -231,8 +231,8 @@ export const MuokkaaHOKS = inject("store")(
       )
       if (request.status === 204) {
         fetchHOKS()
-          .then(hoks => {
-            setState(s => ({
+          .then((hoks) => {
+            setState((s) => ({
               ...s,
               formData: hoks,
               success: true,
@@ -240,11 +240,11 @@ export const MuokkaaHOKS = inject("store")(
               message: undefined
             }))
           })
-          .catch(_ =>
+          .catch((_) =>
             navigate(`/ehoks-virkailija-ui/hoks/${oppijaOid}/${hoksId}`)
           )
       } else {
-        setState(s => ({
+        setState((s) => ({
           ...s,
           success: false,
           isLoading: false,
@@ -253,7 +253,7 @@ export const MuokkaaHOKS = inject("store")(
         const json = await request.json()
         reportHOKSErrors(json, intl, (errorId: string, message: string) => {
           notifications.addError(errorId, message)
-          setState(s => ({ ...s, message }))
+          setState((s) => ({ ...s, message }))
         })
       }
     }
@@ -268,7 +268,7 @@ export const MuokkaaHOKS = inject("store")(
 
     const isValid = () => {
       const cSteps = completedSteps()
-      return Object.keys(cSteps).every(stepIndex => cSteps[stepIndex])
+      return Object.keys(cSteps).every((stepIndex) => cSteps[stepIndex])
     }
 
     const formContext = () => {

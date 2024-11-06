@@ -11,7 +11,8 @@ const Line = styled(HorizontalLine)`
   width: unset;
   margin: 0;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Tablet}px) {
     display: none;
   }
 `
@@ -34,7 +35,8 @@ const ExpandContainer = styled("div")`
   align-items: center;
   padding: 10px 10px 10px 20px;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Tablet}px) {
     padding: 10px 10px 10px 20px;
   }
 `
@@ -48,7 +50,8 @@ const CollapseContainer = styled("div")`
   display: flex;
   padding: 20px 10px 10px 20px;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Tablet}px) {
     align-items: center;
     padding-bottom: 0;
   }
@@ -58,9 +61,10 @@ const CollapseTitle = styled("h2")`
   margin: 0;
   flex: 1;
   cursor: pointer;
-  ${props => props.theme.typography.heading3}
+  ${(props) => props.theme.typography.heading3}
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+    props.theme.breakpoints.Tablet}px) {
     flex: unset;
     font-size: 16px;
   }
@@ -110,8 +114,7 @@ export const RequirementsAndDeviations = (
             <IconContainer
               onClick={toggle}
               aria-label={intl.formatMessage({
-                id:
-                  "opiskelusuunnitelma.piilotaPoikkeamatJaArviointikriteeritAriaLabel"
+                id: "opiskelusuunnitelma.piilotaPoikkeamatJaArviointikriteeritAriaLabel"
               })}
             >
               <Collapse size={40} />
@@ -162,8 +165,7 @@ export const RequirementsAndDeviations = (
             <IconContainer
               onClick={toggle}
               aria-label={intl.formatMessage({
-                id:
-                  "opiskelusuunnitelma.naytaPoikkeamatJaArviointikriteeritAriaLabel"
+                id: "opiskelusuunnitelma.naytaPoikkeamatJaArviointikriteeritAriaLabel"
               })}
             >
               <Expand size={40} />

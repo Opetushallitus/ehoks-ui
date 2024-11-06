@@ -6,7 +6,7 @@ import { Provider } from "mobx-react"
 import "promise-polyfill/src/polyfill" // polyfill Promise for IE 11
 import React from "react"
 import ReactDOM from "react-dom"
-import { createRoot } from 'react-dom/client'
+import { createRoot } from "react-dom/client"
 import "@formatjs/intl-relativetimeformat/polyfill"
 import "@formatjs/intl-relativetimeformat/locale-data/fi"
 import "@formatjs/intl-relativetimeformat/locale-data/sv"

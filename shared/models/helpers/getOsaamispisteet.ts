@@ -8,7 +8,7 @@ export function getOsaamispisteet(
 ) {
   const viite = find(
     tutkinnonOsaViitteet,
-    v => v.laajuus !== undefined && v.suoritustapa.suoritustapakoodi === "ops"
+    (v) => v.laajuus !== undefined && v.suoritustapa.suoritustapakoodi === "ops"
   )
 
   if (viite) {

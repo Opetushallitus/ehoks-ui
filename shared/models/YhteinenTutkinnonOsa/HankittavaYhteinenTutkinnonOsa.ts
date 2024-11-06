@@ -17,7 +17,7 @@ export const HankittavaYhteinenTutkinnonOsa = types
     EnrichTutkinnonOsaAndOsaAlueet,
     Model
   )
-  .views(self => ({
+  .views((self) => ({
     get tutkinnonOsaTyyppi(): TutkinnonOsaType {
       return TutkinnonOsaType.HankittavaYhteinen
     },

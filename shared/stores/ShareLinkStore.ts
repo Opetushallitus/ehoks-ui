@@ -14,7 +14,7 @@ export const ShareLinkStore = types.model("ShareLinkStore", {}).actions(() => {
   // const { fetchCollection, errors, callerId } = getEnv<StoreEnvironment>(self)
 
   //const fetchLinks = flow(koodiUri: string, type: string) {
-  const fetchLinks = function(koodiUri: string, type: string) {
+  const fetchLinks = function (koodiUri: string, type: string) {
     console.log("fetching share links for", koodiUri, type)
 
     // TODO: mock data, replace with real API call

@@ -1,8 +1,13 @@
 import React from "react"
 import { WidgetProps } from "@rjsf/utils"
 
-export const CustomBooleanRadioButtonWidget: React.FC<WidgetProps> =
-  ({ value, required, autofocus = false, onChange, id }) => {
+export const CustomBooleanRadioButtonWidget: React.FC<WidgetProps> = ({
+  value,
+  required,
+  autofocus = false,
+  onChange,
+  id
+}) => {
   // Generating a unique field name to identify this set of radio buttons
   const name = Math.random().toString()
   const enumOptions = [

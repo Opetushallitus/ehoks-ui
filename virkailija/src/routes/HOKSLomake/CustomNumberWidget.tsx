@@ -10,12 +10,12 @@ export const CustomNumberWidget = (props: WidgetProps) => {
       type="text"
       className="form-control"
       id={id}
-      onBlur={onBlur && (event => onBlur(id, event.target.value))}
-      onChange={event => {
+      onBlur={onBlur && ((event) => onBlur(id, event.target.value))}
+      onChange={(event) => {
         onChange(event.target.value.replace(",", "."))
         updateDisplayedValue(event.target.value)
       }}
-      onFocus={onFocus && (event => onFocus(id, event.target.value))}
+      onFocus={onFocus && ((event) => onFocus(id, event.target.value))}
       value={displayedValue}
     />
   )

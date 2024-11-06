@@ -42,7 +42,8 @@ const ChartArrow = styled("div")`
         : `${getBorderWidth(defaultSize, defaultBorderWidth)}px`};
   }
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Desktop}px) {
     &:after {
       border-width: 10px;
     }
@@ -78,7 +79,8 @@ export const ChartArrowLeft = styled(ChartArrow)`
         : `-${getBorderWidth(defaultSize, defaultBorderWidth)}px`};
   }
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Desktop}px) {
     &:after {
       margin-top: -10px;
     }
@@ -113,7 +115,8 @@ export const ChartArrowRight = styled(ChartArrow)`
         ? `-${getBorderWidth(size, borderWidth)}px`
         : `-${getBorderWidth(defaultSize, defaultBorderWidth)}px`};
   }
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Desktop}px) {
     &:after {
       margin-top: -10px;
     }
@@ -149,7 +152,8 @@ export const ChartArrowTop = styled(ChartArrow)`
         : `-${getBorderWidth(defaultSize, defaultBorderWidth)}px`};
   }
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Desktop}px) {
     &:after {
       margin-left: -10px;
     }
@@ -185,7 +189,8 @@ export const ChartArrowBottom = styled(ChartArrow)`
         : `-${getBorderWidth(defaultSize, defaultBorderWidth)}px`};
   }
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Desktop}px) {
     &:after {
       margin-left: -10px;
     }

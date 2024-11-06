@@ -19,7 +19,7 @@ export const GlobalStyles = css`
   }
 
   body {
-    ${props => props.theme.typography.body}
+    ${(props) => props.theme.typography.body}
   }
 
   :focus {
@@ -28,17 +28,17 @@ export const GlobalStyles = css`
   }
 
   h1 {
-    ${props => props.theme.typography.heading1}
+    ${(props) => props.theme.typography.heading1}
   }
   h2 {
-    ${props => props.theme.typography.heading2}
+    ${(props) => props.theme.typography.heading2}
   }
   h3 {
-    ${props => props.theme.typography.heading3}
+    ${(props) => props.theme.typography.heading3}
   }
   h4,
   th {
-    ${props => props.theme.typography.heading4}
+    ${(props) => props.theme.typography.heading4}
   }
 
   /*
@@ -47,7 +47,7 @@ export const GlobalStyles = css`
   * All of the styles in this file are optional and configurable!
   */
   .CircularProgressbar .CircularProgressbar-path {
-    stroke: ${props => props.theme.colors.green700};
+    stroke: ${(props) => props.theme.colors.green700};
     stroke-linecap: square;
   }
 
@@ -56,7 +56,7 @@ export const GlobalStyles = css`
   }
 
   .CircularProgressbar .CircularProgressbar-text {
-    fill: ${props => props.theme.colors.green300}
+    fill: ${(props) => props.theme.colors.green300}
     font-size: 48px;
     dominant-baseline: middle;
     text-anchor: middle;

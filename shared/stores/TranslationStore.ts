@@ -41,21 +41,16 @@ const TranslationStoreModel = {
 
 export const TranslationStore = types
   .model("TranslationStore", TranslationStoreModel)
-  .actions(self => {
-    const {
-      apiUrl,
-      apiPrefix,
-      fetchCollection,
-      errors,
-      appendCallerId
-    } = getEnv<StoreEnvironment>(self)
+  .actions((self) => {
+    const { apiUrl, apiPrefix, fetchCollection, errors, appendCallerId } =
+      getEnv<StoreEnvironment>(self)
 
     const setActiveLocale = (locale: Locale) => {
       const storedLocale = updateLocaleSessionStorage(locale)
       self.activeLocale = storedLocale ? storedLocale : locale
     }
 
-    const fetchLocales = flow(function*(): any {
+    const fetchLocales = flow(function* (): any {
       self.isLoading = true
       // insert defaultMessages for context.intl.formatMessage calls
       self.translations.replace(defaultMessages as ApiTranslation[])
@@ -77,7 +72,7 @@ export const TranslationStore = types
 
     return { fetchLocales, setActiveLocale }
   })
-  .views(self => ({
+  .views((self) => ({
     get messages() {
       return self.translations.reduce<Translations>((result, translation) => {
         result[translation.locale] = result[translation.locale] || {}

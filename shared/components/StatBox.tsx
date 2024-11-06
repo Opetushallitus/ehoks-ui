@@ -24,7 +24,8 @@ export const StatBox = styled("div")`
     margin-right: 0;
   }
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Tablet}px) {
     margin-right: 0;
   }
 `
@@ -50,7 +51,8 @@ export const StatBoxes = styled("div")`
   display: flex;
   margin: 10px 0;
   flex-direction: row;
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Tablet}px) {
     flex-direction: column;
   }
 `
