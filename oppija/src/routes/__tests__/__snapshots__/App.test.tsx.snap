@@ -1,27 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App renders correctly 1`] = `
-.c14 {
+.c17 {
   max-width: 1440px;
   margin: 0 auto;
 }
 
-.c39 {
+.c26 {
+  margin: 0 20px;
+}
+
+.c27 {
+  padding: 20px;
+}
+
+.c37 {
   height: 64px;
   margin: 0 0 40px 0;
 }
 
-.c40 {
+.c38 {
   height: 50px;
 }
 
-.c32 {
+.c30 {
   width: 100%;
   background-color: #fff;
   border-top: 1px solid #d5d8da;
 }
 
-.c33 {
+.c31 {
   max-width: 1440px;
   margin: 30px auto 0 auto;
   display: -webkit-box;
@@ -33,14 +41,14 @@ exports[`App renders correctly 1`] = `
   flex-direction: column;
 }
 
-.c34 {
+.c32 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
-.c35 {
+.c33 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -57,7 +65,7 @@ exports[`App renders correctly 1`] = `
   flex-direction: column;
 }
 
-.c36 {
+.c34 {
   -webkit-align-items: flex-end;
   -webkit-box-align: flex-end;
   -ms-flex-align: flex-end;
@@ -67,7 +75,7 @@ exports[`App renders correctly 1`] = `
   margin: 20px 0 20px 40px;
 }
 
-.c41 {
+.c39 {
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -77,14 +85,14 @@ exports[`App renders correctly 1`] = `
   margin: 20px 80px 20px 0;
 }
 
-.c37 {
+.c35 {
   width: 70%;
   padding: 12px 0;
   color: #6a6a6a;
   line-height: 1.4;
 }
 
-.c42 {
+.c40 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -95,11 +103,11 @@ exports[`App renders correctly 1`] = `
   padding: 12px 0;
 }
 
-.c42 a {
+.c40 a {
   color: #539d1d;
 }
 
-.c38 {
+.c36 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -110,7 +118,7 @@ exports[`App renders correctly 1`] = `
   padding: 0 70px 0 70px;
 }
 
-.c43 {
+.c41 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -149,18 +157,6 @@ exports[`App renders correctly 1`] = `
 .c12:not(:disabled) {
   cursor: pointer;
   opacity: unset;
-}
-
-.c22 {
-  padding: 15px 60px;
-  font-family: "Source Sans Pro",sans-serif;
-  line-height: 1.5;
-  font-style: normal;
-  text-rendering: optimizelegibility;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  font-size: 16px;
-  font-weight: 400;
 }
 
 .c13 {
@@ -267,6 +263,21 @@ exports[`App renders correctly 1`] = `
   margin: 4px 0 4px 40px;
 }
 
+.c14 {
+  display: block;
+  margin: 0 40px 0 0;
+  font-weight: 300;
+}
+
+.c15 {
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+.c16 {
+  color: #fff;
+}
+
 .c10 {
   -webkit-flex: 1;
   -ms-flex: 1;
@@ -274,7 +285,7 @@ exports[`App renders correctly 1`] = `
 }
 
 .c11 {
-  margin: 0 80px 0 0;
+  margin: 0 40px 0 0;
 }
 
 .c11 a {
@@ -283,93 +294,58 @@ exports[`App renders correctly 1`] = `
   cursor: pointer;
 }
 
-.c16 {
+.c18 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  margin: 30px 50px 50px 40px;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #c62828;
+  background: rgba(198,40,40,0.05);
+  min-height: 50px;
 }
 
 .c20 {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: #c62828;
+}
+
+.c21 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  padding-left: 20px;
+  font-size: 14px;
+  color: #313541;
+}
+
+.c19 {
   margin: 0;
-  padding: 0;
-  width: auto;
-  height: 28px;
-  font: inherit;
-  color: inherit;
 }
 
-.c20::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-
-.c26 {
-  background-color: #00AC3D;
-  border: 1px solid #979797;
-  margin: 0 0 20px 0;
-  min-height: 320px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-.c29 {
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 10px;
-  min-height: 90px;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
-
-.c31 {
-  background-image: url();
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.c30 {
-  font-size: 25px;
-  font-weight: 300;
-}
-
-.c25 {
-  display: block;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  color: #fff;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.c17 {
+.c22 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -377,25 +353,17 @@ exports[`App renders correctly 1`] = `
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-  -webkit-align-content: flex-start;
-  -ms-flex-line-pack: start;
-  align-content: flex-start;
-  margin-right: 30px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
-.c15 {
-  margin: 30px 50px 30px 40px;
-  color: #4a4a4a;
+.c23 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  font-size: 16px;
 }
 
 .c24 {
@@ -403,59 +371,27 @@ exports[`App renders correctly 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin: 0;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  margin-right: 20px;
-}
-
-.c18 {
-  margin: 0 20px 10px 0;
-  padding: 10px;
-  border: 1px solid #6e6e7e;
-  width: calc(50% - 20px);
-}
-
-.c18 p {
-  color: #6e6e7e;
-}
-
-.c23 {
-  width: 100%;
-  padding: 15px 0;
+  margin: 0 20px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 0;
+  border: none;
+  background: transparent;
 }
 
 .c28 {
-  min-height: 400px;
-  margin-right: 20px;
-}
-
-.c19 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c19 h2 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  color: #000;
-  font-weight: 400;
   margin: 0;
-  font-size: 34px;
 }
 
-.c21 {
-  margin-top: 7px;
+.c25 {
+  background: #f4fff4;
+  border-bottom: 1px solid #3a7a10;
+}
+
+.c29 {
+  background: #f8f8f8;
 }
 
 .c0 {
@@ -470,8 +406,14 @@ exports[`App renders correctly 1`] = `
   font-weight: 400;
 }
 
+@media screen and (max-width:900px) {
+  .c26 {
+    margin: 0;
+  }
+}
+
 @media screen and (max-width:720px) {
-  .c39 {
+  .c37 {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -480,7 +422,7 @@ exports[`App renders correctly 1`] = `
 }
 
 @media screen and (max-width:720px) {
-  .c34 {
+  .c32 {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
@@ -488,26 +430,26 @@ exports[`App renders correctly 1`] = `
 }
 
 @media screen and (max-width:900px) {
-  .c36 {
+  .c34 {
     margin: 20px 0 20px 20px;
   }
 }
 
 @media screen and (max-width:720px) {
-  .c36 {
+  .c34 {
     margin: 0 50px 0 20px;
     border-top-width: 0px;
   }
 }
 
 @media screen and (max-width:900px) {
-  .c41 {
+  .c39 {
     margin: 20px 50px 20px 0;
   }
 }
 
 @media screen and (max-width:720px) {
-  .c41 {
+  .c39 {
     -webkit-align-items: flex-start;
     -webkit-box-align: flex-start;
     -ms-flex-align: flex-start;
@@ -518,19 +460,19 @@ exports[`App renders correctly 1`] = `
 }
 
 @media screen and (max-width:1160px) {
-  .c37 {
+  .c35 {
     width: 90%;
   }
 }
 
 @media screen and (max-width:900px) {
-  .c37 {
+  .c35 {
     width: 100%;
   }
 }
 
 @media screen and (max-width:720px) {
-  .c38 {
+  .c36 {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -547,21 +489,19 @@ exports[`App renders correctly 1`] = `
 }
 
 @media screen and (max-width:900px) {
-  .c43 {
+  .c41 {
     margin: 20px 50px 20px 20px;
   }
 }
 
 @media screen and (max-width:720px) {
-  .c43 {
+  .c41 {
     margin: 20px 50px 20px 20px;
   }
 }
 
 @media screen and (max-width:720px) {
-  .c22 {
-    padding: 15px 0;
-  }
+
 }
 
 @media screen and (max-width:720px) {
@@ -598,87 +538,93 @@ exports[`App renders correctly 1`] = `
 }
 
 @media screen and (max-width:720px) {
+  .c14 {
+    display: none;
+  }
+}
+
+@media screen and (max-width:900px) {
+  .c14 {
+    margin-right: 20px;
+  }
+}
+
+@media screen and (max-width:720px) {
+
+}
+
+@media screen and (max-width:720px) {
   .c11 {
     display: none;
   }
 }
 
 @media screen and (max-width:900px) {
-  .c16 {
-    display: block;
-    margin: 30px 50px 0 20px;
-  }
+
 }
 
 @media screen and (max-width:1160px) {
-  .c16 {
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-  }
+
 }
 
 @media screen and (max-width:1160px) {
-  .c31 {
-    background-position: top;
-  }
+
 }
 
 @media screen and (max-width:600px) {
-  .c25 {
-    -webkit-flex: auto;
-    -ms-flex: auto;
-    flex: auto;
-  }
+
 }
 
 @media screen and (max-width:1160px) {
-  .c17 {
-    margin-right: 0;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-  }
+
 }
 
 @media screen and (max-width:900px) {
-  .c15 {
-    margin: 30px 50px 0 20px;
-  }
+
 }
 
 @media screen and (max-width:1160px) {
-  .c24 {
-    margin-right: 0;
-  }
+
 }
 
 @media screen and (max-width:1160px) {
-  .c18 {
-    width: calc(100% - 20px);
-    margin: 0 0 10px 0;
-  }
+
 }
 
 @media screen and (max-width:900px) {
-  .c18 {
-    width: 100%;
-  }
+
 }
 
 @media screen and (max-width:600px) {
-  .c28 {
-    margin-right: 0;
-  }
+
 }
 
 @media screen and (max-width:900px) {
-  a:last-child .c27 {
-    margin-right: 0;
+
+}
+
+@media screen and (max-width:720px) {
+  .c29 {
+    background: #fff;
   }
 }
 
-<div>
+@media screen and (min-width:720px) {
+
+}
+
+@media screen and (min-width:720px) {
+
+}
+
+@media screen and (min-width:720px) {
+
+}
+
+<div
+  aria-hidden="true"
+  id="app"
+>
   <div
     class="c0"
   >
@@ -732,13 +678,16 @@ exports[`App renders correctly 1`] = `
           <svg
             fill="currentColor"
             height="40"
-            size="40"
             stroke="currentColor"
             stroke-width="0"
             viewBox="0 0 24 24"
             width="40"
             xmlns="http://www.w3.org/2000/svg"
           >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
             <path
               d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
             />
@@ -765,219 +714,217 @@ exports[`App renders correctly 1`] = `
             På svenska
           </button>
         </div>
+        <div
+          class="c14"
+        >
+          <div
+            class="c15"
+          >
+             
+          </div>
+          <a
+            class="c16"
+            href="/ehoks"
+          >
+            Kirjaudu ulos
+          </a>
+        </div>
       </div>
     </header>
     <div
-      class="c14"
-    />
+      class="c17"
+    >
+      <div
+        class="c18 c19"
+        role="alert"
+        type="error"
+      >
+        <div
+          class="c20"
+          type="error"
+        >
+          <svg
+            color="#fff"
+            fill="currentColor"
+            height="18"
+            stroke="currentColor"
+            stroke-width="0"
+            style="color: rgb(255, 255, 255);"
+            viewBox="0 0 24 24"
+            width="18"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+            />
+          </svg>
+        </div>
+        <div
+          class="c21"
+        >
+          <div
+            class="c22"
+          >
+            <div
+              class="c23"
+            >
+              Käyttäjätietojen haku epäonnistui
+              :
+               
+              Cannot find module 'stores/mocks/oppija_session_user_info0.json' from '../shared/fetchUtils.ts'
+            </div>
+            <button
+              aria-label="Piilota virhe"
+              class="c24"
+            >
+              <svg
+                fill="currentColor"
+                height="20"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c18 c19"
+        role="alert"
+        type="error"
+      >
+        <div
+          class="c20"
+          type="error"
+        >
+          <svg
+            color="#fff"
+            fill="currentColor"
+            height="18"
+            stroke="currentColor"
+            stroke-width="0"
+            style="color: rgb(255, 255, 255);"
+            viewBox="0 0 24 24"
+            width="18"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+            />
+          </svg>
+        </div>
+        <div
+          class="c21"
+        >
+          <div
+            class="c22"
+          >
+            <div
+              class="c23"
+            >
+              Asetusten haku epäonnistui
+              :
+               
+              Cannot find module 'stores/mocks/oppija_session_settings0.json' from '../shared/fetchUtils.ts'
+            </div>
+            <button
+              aria-label="Piilota virhe"
+              class="c24"
+            >
+              <svg
+                fill="currentColor"
+                height="20"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <main
       class=""
       id="main"
       role="main"
     >
       <div
-        class="c14"
+        class="c25"
       >
-        <h1
-          class="c15"
-        >
-          Opiskelun henkilökohtainen suunnittelu
-        </h1>
         <div
-          class="c16"
+          class="c17"
         >
           <div
-            class="c17"
+            class="c26 c27"
           >
-            <div
-              class="c18"
+            <h1
+              class="c28"
             >
-              <div
-                class="c19"
-              >
-                <h2>
-                  Opiskelija
-                </h2>
-                <button
-                  aria-describedby="popup-1"
-                  aria-label="Näytä ohjeteksti"
-                  class="c20 c21"
-                >
-                  <svg
-                    class=""
-                    color="#3A7A10"
-                    fill="currentColor"
-                    height="28"
-                    size="28"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    style="color: rgb(58, 122, 16);"
-                    viewBox="0 0 24 24"
-                    width="28"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <p>
-                Kirjautumalla siirryt oman henkilö­kohtaiseen opintojen suunnitteluun.
-              </p>
-              <button
-                class="c12 c22 c23"
-                type="button"
-              >
-                Kirjaudu omaan suunnitelmaan
-              </button>
-            </div>
-            <div
-              class="c18"
-            >
-              <div
-                class="c19"
-              >
-                <h2>
-                  Ohjaaja
-                </h2>
-                <button
-                  aria-describedby="popup-2"
-                  aria-label="Näytä ohjeteksti"
-                  class="c20 c21"
-                >
-                  <svg
-                    class=""
-                    color="#3A7A10"
-                    fill="currentColor"
-                    height="28"
-                    size="28"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    style="color: rgb(58, 122, 16);"
-                    viewBox="0 0 24 24"
-                    width="28"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <p>
-                Kirjautumalla siirryt ohjattavien opiskelijoiden suunnitelmiin.
-              </p>
-              <button
-                class="c12 c22 c23"
-                type="button"
-              >
-                Kirjaudu oppilaitoksen edustajana
-              </button>
-            </div>
-            <div
-              class="c18"
-            >
-              <div
-                class="c19"
-              >
-                <h2>
-                  Työelämän toimija
-                </h2>
-                <button
-                  aria-describedby="popup-3"
-                  aria-label="Näytä ohjeteksti"
-                  class="c20 c21"
-                >
-                  <svg
-                    class=""
-                    color="#3A7A10"
-                    fill="currentColor"
-                    height="28"
-                    size="28"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    style="color: rgb(58, 122, 16);"
-                    viewBox="0 0 24 24"
-                    width="28"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <p>
-                Kirjaudu palveluun saamasi sähköpostilinkin kautta.
-              </p>
-            </div>
+              Ammattillisten opintojen henkilökohtaistaminen
+            </h1>
           </div>
-          <main
-            class="c24"
+        </div>
+      </div>
+      <div
+        class="c29"
+      >
+        <div
+          class="c17"
+        >
+          <div
+            class="c26 c27"
           >
-            <a
-              class="c25"
-              href="/ehoks/henkilokohtaistaminen"
+            <h1
+              class="c28"
             >
-              <div
-                class="c26 c27 c28"
-              >
-                <div
-                  class="c29"
-                >
-                  <div
-                    class="c30"
-                  >
-                    Mitä henkilökohtaista­minen tarkoittaa?
-                  </div>
-                </div>
-                <div
-                  class="c31"
-                  role="img"
-                />
-              </div>
-            </a>
-            <a
-              class="c25"
-              href="/ehoks/ammatillinentutkinto"
-            >
-              <div
-                class="c26 c27 c28"
-              >
-                <div
-                  class="c29"
-                >
-                  <div
-                    class="c30"
-                  >
-                    Mitä ammatilliset tutkinnot sisältävät?
-                  </div>
-                </div>
-                <div
-                  class="c31"
-                  role="img"
-                />
-              </div>
-            </a>
-          </main>
+              Voimassa olevat suunnitelmasi
+            </h1>
+          </div>
         </div>
       </div>
     </main>
     <footer
-      class="c32"
+      class="c30"
     >
       <div
-        class="c33"
+        class="c31"
       >
         <div
-          class="c34"
+          class="c32"
         >
           <div
-            class="c35 c36"
+            class="c33 c34"
           >
             <div
-              class="c37"
+              class="c35"
             >
               
               Henkilökohtainen osaamisen kehityssuunnitelma on käytännön
@@ -986,24 +933,24 @@ exports[`App renders correctly 1`] = `
             </div>
           </div>
           <div
-            class="c38"
+            class="c36"
           >
             <img
               alt="eHOKS logo"
-              class="c39"
+              class="c37"
               src=""
             />
             <img
               alt="Opetushallitus logo"
-              class="c40"
+              class="c38"
               src=""
             />
           </div>
           <div
-            class="c35 c41"
+            class="c33 c39"
           >
             <div
-              class="c42"
+              class="c40"
             >
               <a
                 href="mailto:ehoks@opintopolku.fi"
@@ -1024,7 +971,7 @@ exports[`App renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="c43"
+          class="c41"
         >
           Koulutuksen järjestäjät ylläpitävät eHOKS-tietojasi. Tietojen oikeellisuuden voit tarkistaa kyseisestä oppilaitoksesta.
         </div>

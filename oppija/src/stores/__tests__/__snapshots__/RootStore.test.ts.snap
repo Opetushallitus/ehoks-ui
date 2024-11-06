@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`RootStore constructor should produce valid tree even with empty input object 1`] = `
-Object {
-  "environment": Object {
+{
+  "environment": {
     "casOppijaLoginUrlFi": "",
     "casOppijaLoginUrlSv": "",
     "casOppijaLogoutUrlFi": "",
@@ -12,39 +12,39 @@ Object {
     "isLoading": false,
     "virkailijaLoginUrl": "",
   },
-  "hoks": Object {
+  "hoks": {
     "isLoading": false,
-    "suunnitelmat": Array [],
+    "suunnitelmat": [],
   },
   "isLoading": false,
-  "notifications": Object {
-    "notifications": Array [],
-    "studentFeedbackLinks": Array [],
+  "notifications": {
+    "notifications": [],
+    "studentFeedbackLinks": [],
   },
-  "oppilas": Object {
+  "oppilas": {
     "isLoading": false,
-    "perusteet": Array [],
+    "perusteet": [],
   },
-  "session": Object {
+  "session": {
     "error": "",
     "isLoading": false,
     "selectedOrganisationOid": "",
-    "settings": Object {
-      "hiddenNotifications": Object {
-        "notifications": Array [],
+    "settings": {
+      "hiddenNotifications": {
+        "notifications": [],
       },
-      "introDialog": Object {
+      "introDialog": {
         "userAcknowledgedIntroDialog": false,
       },
     },
     "user": undefined,
     "userDidLogout": false,
   },
-  "shareLinks": Object {},
-  "translations": Object {
+  "shareLinks": {},
+  "translations": {
     "activeLocale": "fi",
     "isLoading": false,
-    "translations": Array [],
+    "translations": [],
   },
 }
 `;
