@@ -373,7 +373,7 @@ export class AsyncTypeaheadField extends BaseTypeaheadField {
       optionsPath,
       search = (searchUrl: string, searchQuery: string) =>
         fetch(`${searchUrl}?query=${searchQuery}`).then((res) => res.json())
-    } = uiSchema?.asyncTypeahead
+    } = uiSchema?.asyncTypeahead ?? {}
 
     this.setState({ isLoading: true })
 
@@ -391,7 +391,7 @@ export class AsyncTypeaheadField extends BaseTypeaheadField {
       minLength,
       search = (searchUrl: string, searchQuery: string) =>
         fetch(`${searchUrl}?query=${searchQuery}`).then((res) => res.json())
-    } = uiSchema?.asyncTypeahead
+    } = uiSchema?.asyncTypeahead ?? {}
 
     if (minLength === 0) {
       this.setState({ isLoading: true })

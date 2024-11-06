@@ -12,6 +12,7 @@ import styled from "styled"
 import { appendCommonHeaders } from "fetchUtils"
 import { Button } from "components/Button"
 import { InfoModal } from "components/InfoModal"
+import { createColumnHelper, Column } from "@tanstack/react-table"
 
 const BackgroundContainer = styled("div")`
   background: #f8f8f8;
@@ -383,13 +384,12 @@ class RaportitInner extends React.Component<RaportitProps> {
   getColumnsForTable = (selectedRaportti: number) => {
     const { intl } = this.props
     if (selectedRaportti === 1) {
+      const columnHelper = createColumnHelper<HoksRow>()
       return [
-        {
-          accessorKey: "hoksId",
+        columnHelper.accessor("hoksId", {
           header: intl.formatMessage({
             id: "raportit.ehoksid"
           }),
-          // @ts-ignore
           cell: ({ row }) => (
             <div style={{ textAlign: "center" }}>
               <Link
@@ -405,34 +405,30 @@ class RaportitInner extends React.Component<RaportitProps> {
               </Link>
             </div>
           )
-        },
-        {
-          accessorKey: "oppijaOid",
+        }),
+        columnHelper.accessor("oppijaOid", {
           header: intl.formatMessage({
             id: "raportit.oppijanumeroTitle"
           })
-        },
-        {
-          accessorKey: "opiskeluoikeusOid",
+        }),
+        columnHelper.accessor("opiskeluoikeusOid", {
           header: intl.formatMessage({
             id: "raportit.opiskeluoikeusoid"
           })
-        },
-        {
-          accessorKey: "oppilaitosOid",
+        }),
+        columnHelper.accessor("oppilaitosOid", {
           header: intl.formatMessage({
             id: "raportit.oppilaitosoid"
           })
-        }
+        })
       ]
     } else if (selectedRaportti === 2) {
+      const columnHelper = createColumnHelper<TpjRow>()
       return [
-        {
-          accessorKey: "hoksId",
+        columnHelper.accessor("hoksId", {
           header: intl.formatMessage({
             id: "raportit.ehoksid"
           }),
-          // @ts-ignore
           cell: ({ row }) => (
             <div style={{ textAlign: "center" }}>
               <Link
@@ -448,82 +444,67 @@ class RaportitInner extends React.Component<RaportitProps> {
               </Link>
             </div>
           )
-        },
-        {
-          accessorKey: "opiskeluoikeusOid",
+        }),
+        columnHelper.accessor("opiskeluoikeusOid", {
           header: intl.formatMessage({
             id: "raportit.opiskeluoikeusoid"
           }),
-          // @ts-ignore
           cell: ({ row }) => (
             <div style={{ textAlign: "center" }}>
               {row.original.opiskeluoikeusOid}
             </div>
           )
-        },
-        {
-          accessorKey: "oppijaOid",
+        }),
+        columnHelper.accessor("oppijaOid", {
           header: intl.formatMessage({
             id: "raportit.oppijanumeroTitle"
           }),
-          // @ts-ignore
           cell: ({ row }) => (
             <div style={{ textAlign: "center" }}>{row.original.oppijaOid}</div>
           )
-        },
-
-        {
-          accessorKey: "tyopaikanNimi",
+        }),
+        columnHelper.accessor("tyopaikanNimi", {
           header: intl.formatMessage({
             id: "raportit.tyopaikannimi"
           }),
-          // @ts-ignore
           cell: ({ row }) => (
             <div style={{ textAlign: "center" }}>
               {row.original.tyopaikanNimi}
             </div>
           )
-        },
-        {
-          accessorKey: "ohjaajaNimi",
+        }),
+        columnHelper.accessor("ohjaajaNimi", {
           header: intl.formatMessage({
             id: "raportit.ohjaajannimi"
           }),
-          // @ts-ignore
           cell: ({ row }) => (
             <div style={{ textAlign: "center" }}>
               {row.original.ohjaajaNimi}
             </div>
           )
-        },
-        {
-          accessorKey: "alkupvm",
+        }),
+        columnHelper.accessor("alkupvm", {
           header: intl.formatMessage({
             id: "raportit.alku"
           }),
-          // @ts-ignore
           cell: ({ row }) => (
             <div style={{ textAlign: "center" }}>{row.original.alkupvm}</div>
           )
-        },
-        {
-          accessorKey: "loppupvm",
+        }),
+        columnHelper.accessor("loppupvm", {
           header: intl.formatMessage({
             id: "raportit.loppu"
           }),
-          // @ts-ignore
           cell: ({ row }) => (
             <div style={{ textAlign: "center" }}>{row.original.loppupvm}</div>
           )
-        },
-        {
-          accessorKey: "customColumn",
+        }),
+        columnHelper.accessor("customColumn", {
           header: intl.formatMessage({
             id: "infoModal.naytaLisatiedot"
           }),
-          // @ts-ignore
           cell: ({ row }) => {
-            const tpjRow = row.original as TpjRow
+            const tpjRow = row.original
             return (
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <InfoModal
@@ -544,7 +525,7 @@ class RaportitInner extends React.Component<RaportitProps> {
               </div>
             )
           }
-        }
+        })
       ]
     } else {
       return []
@@ -561,7 +542,10 @@ class RaportitInner extends React.Component<RaportitProps> {
   render() {
     const { data, selected, titleText, descText, alku, loppu } = this.state
     const { intl } = this.props
-    const columns = this.getColumnsForTable(selected)
+    const columns = this.getColumnsForTable(selected) as unknown as Column<
+      HoksRow | TpjRow,
+      any
+    >[]
 
     return (
       <BackgroundContainer>

@@ -45,10 +45,10 @@ export const MobileSlider: React.FC<MobileSliderProps> = ({
   className,
   footer
 }) => {
+  const swipeableViewsRef = useRef<SwipeableViewsRef>(null)
   if (!children.length) {
     return null
   }
-  const swipeableViewsRef = useRef<SwipeableViewsRef>(null)
   const handleSwipeForward = () => {
     swipeableViewsRef.current?.swipeForward()
   }

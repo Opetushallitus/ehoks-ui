@@ -52,24 +52,20 @@ export const CustomDatetimeWidget: React.FC<WidgetProps> = ({
   label,
   options,
   multiple
-}) => {
-  return (
-    <CustomBaseInput
-      readonly={readonly}
-      disabled={disabled}
-      autofocus={autofocus}
-      onBlur={onBlur}
-      onFocus={onFocus}
-      schema={schema}
-      uiSchema={uiSchema}
-      value={utcToLocalDate(value)}
-      id={id}
-      label={label}
-      options={options}
-      onChange={(changedValue: string) =>
-        onChange(localDateToUTC(changedValue))
-      }
-      multiple={multiple}
-    />
-  )
-}
+}) => (
+  <CustomBaseInput
+    readonly={readonly}
+    disabled={disabled}
+    autofocus={autofocus}
+    onBlur={onBlur}
+    onFocus={onFocus}
+    schema={schema}
+    uiSchema={uiSchema}
+    value={utcToLocalDate(value)}
+    id={id}
+    label={label}
+    options={options}
+    onChange={(changedValue: string) => onChange(localDateToUTC(changedValue))}
+    multiple={multiple}
+  />
+)

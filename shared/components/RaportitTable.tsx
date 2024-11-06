@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/no-onchange */
-// @ts-nocheck
 // Added nocheck because I cannot get react-table types to work correctly.
 import React, { useMemo, useEffect } from "react"
 import {
@@ -16,7 +15,7 @@ import styled from "../styled"
 
 interface RaportitTableProps {
   data: any
-  columns: Column[]
+  columns: Column<any, any>[]
   loading: boolean
   pageCount: number
   fetchData?: (pageSize: number, pageIndex: number) => void
@@ -34,28 +33,28 @@ const PaginationButtons = styled.div`
 const printResultInfo = (length: number, count: number, loading: boolean) => {
   if (loading) {
     return (
-      <td colSpan="10000">
+      <td colSpan={10000}>
         <FormattedMessage id="raportit.ladataan" defaultMessage="Ladataan" />
         ...
       </td>
     )
   } else if (count > 1) {
     return (
-      <td colSpan="10000">
+      <td colSpan={10000}>
         <FormattedMessage id="raportit.naytetaan" defaultMessage="Näytetään" />{" "}
         {length} / ~{count * 10}
       </td>
     )
   } else if (count === 1) {
     return (
-      <td colSpan="10000">
+      <td colSpan={10000}>
         <FormattedMessage id="raportit.loytyi" defaultMessage="Löytyi" />{" "}
         {length} <FormattedMessage id="raportit.kpl" defaultMessage="kpl" />
       </td>
     )
   } else {
     return (
-      <td colSpan="10000">
+      <td colSpan={10000}>
         <FormattedMessage
           id="raportit.eiTuloksia"
           defaultMessage="Ei hakutuloksia"
@@ -82,9 +81,9 @@ export const RaportitTable = (props: RaportitTableProps) => {
       pagination
     },
     onPaginationChange: (updater) => {
-      setPagination((old) => {
-        return updater instanceof Function ? updater(old) : updater
-      })
+      setPagination((old) =>
+        updater instanceof Function ? updater(old) : updater
+      )
     },
     getRowId: (originalRow) => originalRow.hoksId,
     manualPagination: true,
@@ -95,7 +94,7 @@ export const RaportitTable = (props: RaportitTableProps) => {
   })
 
   useEffect(() => {
-    fetchData(pagination.pageSize, pagination.pageIndex)
+    if (fetchData) fetchData(pagination.pageSize, pagination.pageIndex)
   }, [pagination, fetchData])
 
   /* eslint-disable react/jsx-key */

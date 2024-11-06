@@ -17,7 +17,7 @@ interface TopLinkProps {
 const HeaderContainer = styled("header")`
   width: 100%;
   color: #fff;
-  background-color: ${props => props.theme.colors.header.background};
+  background-color: ${(props) => props.theme.colors.header.background};
   line-height: 16px;
   font-size: 18px;
 `
@@ -29,18 +29,20 @@ const TopLinksContainer = styled("div")`
   font-weight: 600;
   padding-left: 20px;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Tablet}px) {
     display: none;
   }
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Desktop}px) {
     padding-left: 0;
   }
 `
 
 const TopLinks = styled("nav")`
   line-height: 20px;
-  max-width: ${props => props.theme.maxWidth}px;
+  max-width: ${(props) => props.theme.maxWidth}px;
   margin: 0 auto;
 `
 
@@ -71,16 +73,16 @@ const TopLink = styled("a")<TopLinkProps>`
   text-decoration: none;
   color: #fff;
   line-height: 20px;
-  background: ${props =>
+  background: ${(props) =>
     props.active ? props.theme.colors.header.background : "transparent"};
 
   &:focus {
-    outline: 2px solid ${props => props.theme.colors.green300};
+    outline: 2px solid ${(props) => props.theme.colors.green300};
   }
 `
 
 const TitleContainer = styled("div")`
-  max-width: ${props => props.theme.maxWidth}px;
+  max-width: ${(props) => props.theme.maxWidth}px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -88,7 +90,8 @@ const TitleContainer = styled("div")`
 
 const MobileMenuToggle = styled("div")`
   display: none;
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Desktop}px) {
     display: block;
     margin: 0 20px;
 
@@ -106,7 +109,8 @@ const Logo = styled("img")`
   height: 64px;
   margin: 4px 0 4px 40px;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Desktop}px) {
     margin: 4px 0 4px 20px;
   }
 `
@@ -116,11 +120,13 @@ const LogoutContainer = styled("div")`
   margin: 0 40px 0 0;
   font-weight: 300;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Tablet}px) {
     display: none;
   }
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Desktop}px) {
     margin-right: 20px;
   }
 `
@@ -142,14 +148,15 @@ interface LanguageSelectorProps {
   loggedIn: boolean
 }
 const LanguageSelector = styled("div")<LanguageSelectorProps>`
-  margin: ${props => (props.loggedIn ? "0 40px 0 0" : "0 80px 0 0")};
+  margin: ${(props) => (props.loggedIn ? "0 40px 0 0" : "0 80px 0 0")};
   a {
     margin-right: 10px;
     font-size: 15px;
     cursor: pointer;
   }
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${(props) =>
+      props.theme.breakpoints.Tablet}px) {
     display: none;
   }
 `
