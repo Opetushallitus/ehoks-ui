@@ -43,7 +43,6 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     "@typescript-eslint/adjacent-overload-signatures": "error",
     "@typescript-eslint/array-type": "error",
-    "@typescript-eslint/ban-types": "error",
     "@typescript-eslint/naming-convention": [
       "error",
       {
