@@ -8,8 +8,7 @@ const StyledAlarm = styled(MdAlarm)`
   height: 64px;
   margin: 4px 0 4px 30px;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     margin: 4px 0 4px 20px;
   }
 `

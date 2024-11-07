@@ -19,8 +19,7 @@ enum IntroPage {
 const IntroPageContainer = styled("div")`
   margin: 0 0 20px 0;
 
-  @media screen and (min-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.Tablet}px) {
     display: flex;
     flex-direction: column;
     min-height: 360px;
@@ -34,8 +33,7 @@ const IntroPageTextContainer = styled("p")`
   font-size: 17px;
   margin: 0 auto 20px auto;
 
-  @media screen and (min-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.Tablet}px) {
     width: 50%;
   }
 `
@@ -45,15 +43,15 @@ const Logo = styled("img")`
 `
 
 const NextIntroPageButton = styled(Button)`
-  background: ${(props) => props.theme.colors.buttons.background};
-  color: ${(props) => props.theme.colors.buttons.color};
+  background: ${props => props.theme.colors.buttons.background};
+  color: ${props => props.theme.colors.buttons.color};
   padding: 10px 70px;
   margin-bottom: 20px;
   font-size: 16px;
 `
 
 const StyledModal = styled(Modal)`
-  ${(props) => props.theme.typography.body}
+  ${props => props.theme.typography.body}
   box-sizing: inherit;
   color: rgb(255, 255, 255);
   text-align: center;
@@ -61,8 +59,7 @@ const StyledModal = styled(Modal)`
   outline: none;
   height: 100%;
 
-  @media screen and (min-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.Tablet}px) {
     position: absolute;
     left: 50%;
     right: auto;
@@ -76,7 +73,7 @@ const StyledModal = styled(Modal)`
 `
 
 const IntroModalContainer = styled("div")`
-  background: ${(props) => props.theme.colors.header.background};
+  background: ${props => props.theme.colors.header.background};
   max-width: 850px;
   padding: 15px 20px;
   height: 100%;
@@ -94,7 +91,7 @@ interface NavigationCircleProps {
 }
 const NavigationCircle = styled("button")<NavigationCircleProps>`
   cursor: pointer;
-  background: ${(props) =>
+  background: ${props =>
     props.active
       ? props.theme.colors.modalDialog.dotActive
       : props.theme.colors.modalDialog.dot};
@@ -118,8 +115,7 @@ const IconContainer = styled("div")`
   color: #000;
   margin-right: 20px;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     width: 58px;
     height: 58px;
   }
@@ -285,7 +281,7 @@ export const IntroModalDialog = inject("store")(
 
     useEffect(() => {
       Modal.setAppElement("#app")
-      setState((s) => ({
+      setState(s => ({
         ...s,
         initialAcknowledgedStatus:
           session.settings.introDialog.userAcknowledgedIntroDialog,

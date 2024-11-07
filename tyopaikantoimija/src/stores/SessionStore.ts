@@ -15,7 +15,7 @@ const SessionStoreModel = {
 
 export const SessionStore = types
   .model("SessionStore", SessionStoreModel)
-  .actions((self) => {
+  .actions(self => {
     const { apiUrl, fetchSingle, deleteResource, errors, appendCallerId } =
       getEnv<StoreEnvironment>(self)
 
@@ -112,7 +112,7 @@ export const SessionStore = types
       saveSettings
     }
   })
-  .views((self) => ({
+  .views(self => ({
     get isLoggedIn() {
       return !!self.user
     }

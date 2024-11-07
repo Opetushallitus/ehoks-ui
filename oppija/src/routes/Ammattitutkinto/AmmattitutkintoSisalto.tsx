@@ -6,7 +6,7 @@ import styled from "styled"
 
 const OpintopolkuLink = styled("a")`
   display: block;
-  color: ${(props) => props.theme.colors.green700};
+  color: ${props => props.theme.colors.green700};
 `
 
 export const AmmattitutkintoSisalto = () => (

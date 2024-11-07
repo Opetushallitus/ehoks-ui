@@ -13,8 +13,7 @@ const StudentFeedbackTextContainer = styled("p")`
   font-size: 17px;
   margin: 0 auto 20px auto;
 
-  @media screen and (min-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.Tablet}px) {
     width: 50%;
   }
 `
@@ -27,16 +26,16 @@ const ButtonContainer = styled("div")`
 `
 
 const CloseFeedbackModalButton = styled(Button)`
-  background: ${(props) => props.theme.colors.buttons.background};
-  color: ${(props) => props.theme.colors.buttons.color};
+  background: ${props => props.theme.colors.buttons.background};
+  color: ${props => props.theme.colors.buttons.color};
   padding: 10px 30px;
   margin-bottom: 20px;
   font-size: 16px;
 `
 
 const StartFeedbackLink = styled("a")`
-  background: ${(props) => props.theme.colors.buttons.cancelBackground};
-  color: ${(props) => props.theme.colors.buttons.color};
+  background: ${props => props.theme.colors.buttons.cancelBackground};
+  color: ${props => props.theme.colors.buttons.color};
   padding: 10px 30px;
   margin-bottom: 20px;
   margin-left: 40px;
@@ -45,7 +44,7 @@ const StartFeedbackLink = styled("a")`
 `
 
 const StyledStudentFeedbackModal = styled(Modal)`
-  ${(props) => props.theme.typography.body}
+  ${props => props.theme.typography.body}
   box-sizing: inherit;
   color: rgb(255, 255, 255);
   text-align: center;
@@ -53,8 +52,7 @@ const StyledStudentFeedbackModal = styled(Modal)`
   outline: none;
   height: 100%;
 
-  @media screen and (min-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.Tablet}px) {
     position: absolute;
     left: 50%;
     right: auto;
@@ -67,7 +65,7 @@ const StyledStudentFeedbackModal = styled(Modal)`
   }
 `
 const FeedbackModalContainer = styled("div")`
-  background: ${(props) => props.theme.colors.header.background};
+  background: ${props => props.theme.colors.header.background};
   max-width: 850px;
   padding: 15px 20px;
   height: 100%;

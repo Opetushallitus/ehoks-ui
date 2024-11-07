@@ -3,11 +3,11 @@ import { MdCheck, MdClose } from "react-icons/md"
 import styled from "styled"
 
 const MdReady = styled(MdCheck)`
-  color: ${(props) => props.theme.colors.ready};
+  color: ${props => props.theme.colors.ready};
 `
 
 const MdPlanned = styled(MdClose)`
-  color: ${(props) => props.theme.colors.planned};
+  color: ${props => props.theme.colors.planned};
 `
 
 interface CircleProps {
@@ -20,9 +20,9 @@ const Circle = styled("div")<CircleProps>`
   width: 30px;
   height: 30px;
   border-radius: 15px;
-  background: ${(props) => (props.active ? "#3A7A10" : "#fff")};
-  color: ${(props) => (props.active ? "#fff" : "#ddd")};
-  border: ${(props) => (props.active ? "none" : "1px solid #ddd")};
+  background: ${props => (props.active ? "#3A7A10" : "#fff")};
+  color: ${props => (props.active ? "#fff" : "#ddd")};
+  border: ${props => (props.active ? "none" : "1px solid #ddd")};
 `
 
 const StepContainer = styled("button")`

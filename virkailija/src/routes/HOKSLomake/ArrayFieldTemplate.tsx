@@ -21,7 +21,7 @@ const ItemButtonsContainer = styled("div")<ItemButtonsContainerProps>`
   display: flex;
   padding-bottom: 5px;
   margin-bottom: 10px;
-  border-bottom: ${(props) => (props.active ? "1px solid #ccc" : "unset")};
+  border-bottom: ${props => (props.active ? "1px solid #ccc" : "unset")};
 `
 
 const ItemButtons = styled("div")`
@@ -52,8 +52,8 @@ const AddButton = styled("button")`
 `
 
 const RemoveButton = styled(AddButton)`
-  background-color: ${(props) => props.theme.colors.battleshipGrey};
-  border-color: ${(props) => props.theme.colors.battleshipGrey};
+  background-color: ${props => props.theme.colors.battleshipGrey};
+  border-color: ${props => props.theme.colors.battleshipGrey};
 `
 
 interface ItemButtonProps {
@@ -69,9 +69,9 @@ const ItemButton = styled("button")<ItemButtonProps>`
   border-radius: 25px;
   font-size: 16px;
   font-weight: bold;
-  background: ${(props) => (props.active ? "#3A7A10" : "#fff")};
-  color: ${(props) => (props.active ? "#fff" : "#ccc")};
-  border: ${(props) => (props.active ? "none" : "1px solid #ccc")};
+  background: ${props => (props.active ? "#3A7A10" : "#fff")};
+  color: ${props => (props.active ? "#fff" : "#ccc")};
+  border: ${props => (props.active ? "none" : "1px solid #ccc")};
 `
 
 const ArrayHeader = styled("div")`
@@ -150,7 +150,7 @@ export function ArrayFieldTemplate(props: ArrayFieldTemplateProps) {
       >
         <ItemButtonsContainer active={items.length > 0}>
           <ItemButtons>
-            {range(items.length).map((index) => (
+            {range(items.length).map(index => (
               <ItemButton
                 key={index}
                 active={activeStep === index}

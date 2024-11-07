@@ -16,7 +16,7 @@ const HeaderContainer = styled("header")`
   display: flex;
   flex: 1;
   color: #fff;
-  background-color: ${(props) => props.theme.colors.green700};
+  background-color: ${props => props.theme.colors.green700};
   height: 48px;
   font-size: 14px;
   justify-content: center;
@@ -37,11 +37,11 @@ const TopLink = styled(Link)<TopLinkProps>`
   }
 
   &:focus {
-    outline: 2px solid ${(props) => props.theme.colors.green300};
+    outline: 2px solid ${props => props.theme.colors.green300};
   }
 
   &:not(:last-child) {
-    border-right: 2px solid ${(props) => props.theme.colors.green900};
+    border-right: 2px solid ${props => props.theme.colors.green900};
   }
 
   &[aria-current] span {
@@ -69,7 +69,7 @@ const LanguageChangeLink = styled("a")<TopLinkProps>`
   }
 
   &:focus {
-    outline: 2px solid ${(props) => props.theme.colors.green300};
+    outline: 2px solid ${props => props.theme.colors.green300};
   }
 
   &[aria-current] span {

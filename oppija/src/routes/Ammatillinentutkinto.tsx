@@ -11,8 +11,7 @@ import styled from "styled"
 const SectionContainer = styled("div")`
   display: flex;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     flex-direction: column-reverse;
   }
 `

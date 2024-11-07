@@ -37,7 +37,7 @@ export const Oppija = types
     suunnitelmaIndex: types.optional(types.integer, -1),
     henkilotiedot: types.optional(SessionUser, { surname: "" })
   })
-  .actions((self) => {
+  .actions(self => {
     const { fetchCollection, fetchSingle, apiUrl, appendCallerId } =
       getEnv<StoreEnvironment>(self)
 
@@ -60,7 +60,7 @@ export const Oppija = types
       if (isAlive(self)) {
         self.suunnitelmat = response.data
         self.suunnitelmaIndex = self.suunnitelmat.findIndex(
-          (s) => s.opiskeluoikeusOid === self.opiskeluoikeusOid
+          s => s.opiskeluoikeusOid === self.opiskeluoikeusOid
         )
       }
     })
@@ -85,7 +85,7 @@ export const Oppija = types
     // eslint-disable-next-line require-yield
     const fetchOpiskeluoikeudet = flow(function* (): any {
       return Promise.all(
-        self.suunnitelmat.map((suunnitelma) =>
+        self.suunnitelmat.map(suunnitelma =>
           suunnitelma.fetchOpiskeluoikeudet()
         )
       )
@@ -93,7 +93,7 @@ export const Oppija = types
 
     return { fetchSuunnitelmat, fetchHenkilotiedot, fetchOpiskeluoikeudet }
   })
-  .views((self) => ({
+  .views(self => ({
     get hyvaksytty() {
       return self.suunnitelmaIndex > -1
         ? self.suunnitelmat[self.suunnitelmaIndex].ensikertainenHyvaksyminen
@@ -111,7 +111,7 @@ export const Oppija = types
       const rootStore: IRootStore = getRoot<IRootStore>(self)
       const oppilaitosOid: string = rootStore.session.selectedOrganisationOid
       const manualPlans = self.suunnitelmat.filter(
-        (suunnitelma) => suunnitelma.manuaalisyotto
+        suunnitelma => suunnitelma.manuaalisyotto
       )
       return manualPlans.length
         ? manualPlans.length > 1
@@ -120,7 +120,7 @@ export const Oppija = types
         : ""
     },
     get tutkinto(): string {
-      self.suunnitelmat.map((s) => {
+      self.suunnitelmat.map(s => {
         if (
           s.opiskeluOikeus.oid === "" &&
           s.opiskeluoikeusOid === self.opiskeluoikeusOid
@@ -130,7 +130,7 @@ export const Oppija = types
       })
       const x = find(
         self.suunnitelmat,
-        (y) => y.opiskeluoikeusOid === self.opiskeluoikeusOid
+        y => y.opiskeluoikeusOid === self.opiskeluoikeusOid
       )
       return get(x, "tutkinnonNimi", "")
     },
@@ -171,7 +171,7 @@ const Search = types
       "hoks-id": ""
     }
   }))
-  .actions((self) => {
+  .actions(self => {
     const { fetchCollection, fetchSingle, apiUrl, appendCallerId } =
       getEnv<StoreEnvironment>(self)
 
@@ -272,7 +272,7 @@ const Search = types
 
     return { fetchOppijat, fetchOppija, resetActivePage, setFromListView }
   })
-  .actions((self) => {
+  .actions(self => {
     const changeSearchText = (field: SearchSortKey, searchText = "") => {
       self.activePage = 0
       // create new object ref as volatile data is not mobx observable
@@ -303,8 +303,8 @@ const Search = types
       changeSearchText
     }
   })
-  .views((self) => ({
-    oppija: (oid: string) => self.results.find((result) => result.oid === oid)
+  .views(self => ({
+    oppija: (oid: string) => self.results.find(result => result.oid === oid)
   }))
 
 const KoulutuksenJarjestajaModel = {

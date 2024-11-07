@@ -17,7 +17,7 @@ export const SUPPORTED_SCHEMA_FORMATS = [
 const fields = ["oneOf", "allOf", "anyOf"]
 
 function convertFieldNames(property: any) {
-  fields.forEach((key) => {
+  fields.forEach(key => {
     if (property[`x-${key}`]) {
       property[key] = property[`x-${key}`]
       delete property[`x-${key}`]
@@ -31,7 +31,7 @@ export const convertSchema = (schema: any) => {
     delete schema.format
   }
   if (schema.properties) {
-    Object.keys(schema.properties).forEach((propertyName) => {
+    Object.keys(schema.properties).forEach(propertyName => {
       const property = schema.properties[propertyName]
       convertFieldNames(property)
       convertSchema(property)
@@ -47,7 +47,7 @@ export const convertSchemaDefinitions = (definitions: any) =>
   }, {})
 
 export const transformErrors = (errors: RJSFValidationError[]) =>
-  errors.map((error) => {
+  errors.map(error => {
     if (error.name === "required") {
       error.message = "pakollinen kenttä"
     }
@@ -128,7 +128,7 @@ export const buildKoodiUris = () =>
   }, {} as any)
 
 export function mapKoodiUri({ koodiUri, versio, metadata }: any) {
-  const meta = find(metadata, (md) => md.kieli === "FI")
+  const meta = find(metadata, md => md.kieli === "FI")
   return {
     koodiUri,
     nimi: meta ? meta.nimi : "",

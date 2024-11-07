@@ -3,7 +3,7 @@ import { idToPathArray } from "./idToPathArray"
 
 export function idToTranslationKey(id = "") {
   const key = idToPathArray(id)
-    .map((part) => {
+    .map(part => {
       if (!isNaN(Number(part))) {
         return ""
       } else {

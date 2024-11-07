@@ -13,7 +13,7 @@ const EducationProviderModel = {
 
 export const EducationProviderStore = types
   .model("EducationProviderStore", EducationProviderModel)
-  .actions((self) => {
+  .actions(self => {
     const { fetchSingle, apiUrl, appendCallerId } =
       getEnv<StoreEnvironment>(self)
 

@@ -659,17 +659,13 @@ class RaportitInner extends React.Component<RaportitProps> {
                       <DateInput
                         type="date"
                         value={alku}
-                        onChange={(e) =>
-                          this.setPvmDate("alku", e.target.value)
-                        }
+                        onChange={e => this.setPvmDate("alku", e.target.value)}
                       />{" "}
                       -{" "}
                       <DateInput
                         type="date"
                         value={loppu}
-                        onChange={(e) =>
-                          this.setPvmDate("loppu", e.target.value)
-                        }
+                        onChange={e => this.setPvmDate("loppu", e.target.value)}
                       />
                       <SearchButton
                         onClick={this.tpjHaeOnClick}

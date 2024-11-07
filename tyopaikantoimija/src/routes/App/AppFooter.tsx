@@ -9,8 +9,7 @@ const EHOKSLogo = styled("img")`
   height: 64px;
   margin: 0 0 40px 0;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     flex-direction: row;
     margin: 0 20px 0 0;
   }
@@ -27,7 +26,7 @@ const FooterContainer = styled("footer")`
 `
 
 const Footer = styled("div")`
-  max-width: ${(props) => props.theme.maxWidth}px;
+  max-width: ${props => props.theme.maxWidth}px;
   margin: 30px auto 0 auto;
   display: flex;
   flex-direction: column;
@@ -35,8 +34,7 @@ const Footer = styled("div")`
 
 const TopContent = styled("div")`
   display: flex;
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     flex-direction: column;
   }
 `
@@ -54,13 +52,11 @@ const Description = styled(FooterColumn)`
   border-bottom: 1px solid #eaeaea;
   margin: 20px 0 20px 40px;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     margin: 20px 0 20px 20px;
   }
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     margin: 0 50px 0 20px;
     border-top-width: 0px;
   }
@@ -72,13 +68,11 @@ const Links = styled(FooterColumn)`
   border-bottom: 1px solid #eaeaea;
   margin: 20px 80px 20px 0;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     margin: 20px 50px 20px 0;
   }
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     align-items: flex-start;
     margin: 0 50px 0 20px;
     border-bottom-width: 0px;
@@ -91,12 +85,11 @@ const DescriptionText = styled("div")`
   color: #6a6a6a;
   line-height: 1.4;
 
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.Large}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
     width: 90%;
   }
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     width: 100%;
   }
 `
@@ -116,8 +109,7 @@ const LogosContainer = styled("div")`
   flex-direction: column;
   padding: 0 70px 0 70px;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     flex-direction: row;
     margin: 20px 0;
     align-items: center;
@@ -133,13 +125,11 @@ const Disclaimer = styled("div")`
   line-height: 1.4;
   margin: 20px 0 20px 0;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     margin: 20px 50px 20px 20px;
   }
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     margin: 20px 50px 20px 20px;
   }
 `

@@ -16,8 +16,7 @@ const SearchContainer = styled("div")`
   border: 1px solid #979797;
   padding: 10px;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     border-width: 0;
   }
 `
@@ -123,7 +122,7 @@ export const AmmattitutkintoHaku = inject("store")(
                   {take(
                     slice(oppilas.perusteet, state.activePage * state.perPage),
                     state.perPage
-                  ).map((peruste) => (
+                  ).map(peruste => (
                     <SearchResult
                       key={peruste.id}
                       result={peruste}
@@ -139,7 +138,7 @@ export const AmmattitutkintoHaku = inject("store")(
                     id: "ammattitutkinto.hakutuloksienSivutuksenNavigaatioAriaLabel"
                   })}
                 >
-                  {range(totalPages).map((index) => (
+                  {range(totalPages).map(index => (
                     <Page
                       key={index}
                       active={state.activePage === index}

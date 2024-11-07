@@ -41,7 +41,7 @@ export const ShareStoreModel = {
 
 export const ShareStore = types
   .model("ShareStore", ShareStoreModel)
-  .actions((self) => {
+  .actions(self => {
     const { apiUrl, apiPrefix, fetchSingle, errors, appendCallerId } =
       getEnv<StoreEnvironment>(self)
 

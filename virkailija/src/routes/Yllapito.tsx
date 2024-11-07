@@ -32,12 +32,12 @@ const Spinner = styled(LoadingSpinner)`
 
 const SuccessMessage = styled("div")`
   margin-left: 20px;
-  color: ${(props) => props.theme.colors.midGreen};
+  color: ${props => props.theme.colors.midGreen};
 `
 
 const FailureMessage = styled("div")`
   margin-left: 20px;
-  color: ${(props) => props.theme.colors.brick};
+  color: ${props => props.theme.colors.brick};
 `
 
 const ContentElement = styled("div")`
@@ -1244,7 +1244,7 @@ export const Yllapito = inject("store")(
                           type="text"
                           placeholder="1.2.345.678.98.76543212345"
                           value={state.opiskeluoikeusOid}
-                          onChange={(e) => handleOidChange(e.target.value)}
+                          onChange={e => handleOidChange(e.target.value)}
                         />
                       </form>
                     </ContentElement>
@@ -1286,7 +1286,7 @@ export const Yllapito = inject("store")(
                           type="text"
                           placeholder="12345"
                           value={state.hoksHakuId}
-                          onChange={(e) => handleHoksIdChange(e.target.value)}
+                          onChange={e => handleHoksIdChange(e.target.value)}
                         />
                       </form>
                     </ContentElement>
@@ -1501,7 +1501,7 @@ export const Yllapito = inject("store")(
                           type="text"
                           placeholder="12345"
                           value={state.hoksDeleteId}
-                          onChange={(e) => handleDeleteIdChange(e.target.value)}
+                          onChange={e => handleDeleteIdChange(e.target.value)}
                         />
                       </form>
                     </ContentElement>
@@ -1541,9 +1541,7 @@ export const Yllapito = inject("store")(
                           type="text"
                           placeholder="12345"
                           value={state.hoksPalautusId}
-                          onChange={(e) =>
-                            handlePalautaIdChange(e.target.value)
-                          }
+                          onChange={e => handlePalautaIdChange(e.target.value)}
                         />
                       </form>
                     </ContentElement>
@@ -1581,9 +1579,7 @@ export const Yllapito = inject("store")(
                           type="text"
                           placeholder="1.2.345.678.98.76543212345"
                           value={state.opiskeluoikeusUpdateOid}
-                          onChange={(e) =>
-                            handleUpdateOidChange(e.target.value)
-                          }
+                          onChange={e => handleUpdateOidChange(e.target.value)}
                         />
                       </form>
                     </ContentElement>
@@ -1624,7 +1620,7 @@ export const Yllapito = inject("store")(
                           type="text"
                           placeholder="1.2.345.678.98.76543212345"
                           value={state.koulutustoimijaOid}
-                          onChange={(e) =>
+                          onChange={e =>
                             handlekoulutustoimijaOidChange(e.target.value)
                           }
                         />
@@ -1676,7 +1672,7 @@ export const Yllapito = inject("store")(
                           type="text"
                           placeholder="1.2.345.678.98.76543212345"
                           value={state.updateOppijaOid}
-                          onChange={(e) =>
+                          onChange={e =>
                             handleUpdateOppijaOidChange(e.target.value)
                           }
                         />
@@ -1714,7 +1710,7 @@ export const Yllapito = inject("store")(
                           type="text"
                           placeholder="123456"
                           value={state.sendHerateId}
-                          onChange={(e) =>
+                          onChange={e =>
                             handleSendHerateIdChange(e.target.value)
                           }
                         />
@@ -1752,7 +1748,7 @@ export const Yllapito = inject("store")(
                           type="text"
                           placeholder="123456"
                           value={state.sendPaattoHerateId}
-                          onChange={(e) =>
+                          onChange={e =>
                             handleSendPaattoHerateIdChange(e.target.value)
                           }
                         />
@@ -1792,14 +1788,14 @@ export const Yllapito = inject("store")(
                         <HakuInput
                           type="date"
                           value={state.sendHerateDateFrom}
-                          onChange={(e) =>
+                          onChange={e =>
                             handleSendHerateDateFromChange(e.target.value)
                           }
                         />
                         <HakuInput
                           type="date"
                           value={state.sendHerateDateTo}
-                          onChange={(e) =>
+                          onChange={e =>
                             handleSendHerateDateToChange(e.target.value)
                           }
                         />
@@ -1842,14 +1838,14 @@ export const Yllapito = inject("store")(
                         <HakuInput
                           type="date"
                           value={state.sendPaattoHerateDateFrom}
-                          onChange={(e) =>
+                          onChange={e =>
                             handleSendPaattoHerateDateFromChange(e.target.value)
                           }
                         />
                         <HakuInput
                           type="date"
                           value={state.sendPaattoHerateDateTo}
-                          onChange={(e) =>
+                          onChange={e =>
                             handleSendPaattoHerateDateToChange(e.target.value)
                           }
                         />
@@ -1890,7 +1886,7 @@ export const Yllapito = inject("store")(
                         type="text"
                         placeholder="123456"
                         value={state.vastaajatunnusToDelete}
-                        onChange={(e) =>
+                        onChange={e =>
                           handleVastaajatunnusToDeleteChange(e.target.value)
                         }
                       />

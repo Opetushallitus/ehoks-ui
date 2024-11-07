@@ -22,7 +22,7 @@ const LoginBoxes = styled("div")`
   align-content: flex-start;
   margin-right: 30px;
 
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.Large}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
     margin-right: 0;
     flex-direction: column;
   }
@@ -32,8 +32,7 @@ const Header = styled("h1")`
   margin: 30px 50px 30px 40px;
   color: #4a4a4a;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     margin: 30px 50px 0 20px;
   }
 `
@@ -46,12 +45,12 @@ const Content = styled("main")`
   flex: 1;
   margin-right: 20px;
 
-  /* @media screen and (max-width: ${(props) =>
+  /* @media screen and (max-width: ${props =>
     props.theme.breakpoints.Desktop}px) {
     display: block;
   } */
 
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.Large}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
     margin-right: 0;
   }
 `
@@ -66,13 +65,12 @@ const LoginContainer = styled("div")`
     color: #6e6e7e;
   }
 
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.Large}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
     width: calc(100% - 20px);
     margin: 0 0 10px 0;
   }
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     width: 100%;
   }
 `
@@ -86,13 +84,12 @@ const StyledLinkPanel = styled(LinkPanel)`
   min-height: 400px;
   margin-right: 20px;
 
-  @media screen and (max-width: ${(props) =>
+  @media screen and (max-width: ${props =>
       props.theme.breakpoints.SmallTablet}px) {
     margin-right: 0;
   }
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     a:last-child & {
       margin-right: 0;
     }

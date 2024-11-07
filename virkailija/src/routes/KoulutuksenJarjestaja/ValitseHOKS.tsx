@@ -25,7 +25,7 @@ export const ValitseHOKS = observer((props: ValitseHOKSProps) => {
   const { app } = useContext(AppContext)
   const [paattyneet, voimassaOlevat] = partition<IHOKS>(
     suunnitelmat,
-    (suunnitelma) => !!suunnitelma.paattymispaiva
+    suunnitelma => !!suunnitelma.paattymispaiva
   )
 
   const isHoksEditIconVisible = (suunnitelma: Instance<typeof HOKS>) =>

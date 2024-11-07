@@ -7,7 +7,7 @@ import { IOppija } from "stores/KoulutuksenJarjestajaStore"
 
 const StudentName = styled("h2")`
   margin-top: 0;
-  ${(props) => props.theme.typography.heading1}
+  ${props => props.theme.typography.heading1}
 `
 
 const StudentDetails = styled("div")`
@@ -15,7 +15,7 @@ const StudentDetails = styled("div")`
 `
 
 const Timestamp = styled("div")`
-  ${(props) => props.theme.typography.lead}
+  ${props => props.theme.typography.lead}
   margin-bottom: 10px;
 `
 

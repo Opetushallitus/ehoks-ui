@@ -24,7 +24,7 @@ const RightLink = styled(LinkContainer)`
 `
 
 const BackLink = styled(Link)`
-  color: ${(props) => props.theme.colors.green700};
+  color: ${props => props.theme.colors.green700};
 `
 
 const StudentLink = styled(BackLink)`

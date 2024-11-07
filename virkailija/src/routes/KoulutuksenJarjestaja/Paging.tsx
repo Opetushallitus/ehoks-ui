@@ -74,7 +74,7 @@ export function Paging(props: PagingProps) {
           />
         </PageButton>
       )}
-      {firstPages.map((index) => (
+      {firstPages.map(index => (
         <Page
           key={index}
           active={activePage === index}
@@ -93,7 +93,7 @@ export function Paging(props: PagingProps) {
         </Page>
       ))}
       {longPagination && totalPages > 10 && <DotsContainer>…</DotsContainer>}
-      {middlePages.map((index) => {
+      {middlePages.map(index => {
         const offsetIndex = activePage - 2 + index
         return (
           <Page
@@ -117,7 +117,7 @@ export function Paging(props: PagingProps) {
       {longPagination && middlePages.length > 0 && (
         <DotsContainer>…</DotsContainer>
       )}
-      {lastPages.reverse().map((index) => {
+      {lastPages.reverse().map(index => {
         const offsetIndex = totalPages - 1 - index
         return (
           <Page

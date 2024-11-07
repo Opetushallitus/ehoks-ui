@@ -15,8 +15,7 @@ const Header = styled("h1")`
   margin: 30px 50px 30px 40px;
   color: #4a4a4a;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     margin: 30px 50px 0 20px;
   }
 `

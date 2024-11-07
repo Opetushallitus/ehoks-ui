@@ -30,7 +30,7 @@ import { Redirect } from "components/Redirect"
 const Container = styled("div")`
   margin: 0;
   height: 100%;
-  ${(props) =>
+  ${props =>
     props.theme.typography
       .body}/* Needed for fixing apply-raamit.css injection */
 `
@@ -62,7 +62,7 @@ export const App = inject("store")(
             store!.translations.setActiveLocale(readLocaleFromSessionStorage())
           } else {
             return getCasMeLocale()
-              .then((casMeLocale) => {
+              .then(casMeLocale => {
                 store!.translations.setActiveLocale(casMeLocale)
               })
               .catch(() => {

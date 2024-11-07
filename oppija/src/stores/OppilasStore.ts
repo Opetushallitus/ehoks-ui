@@ -10,7 +10,7 @@ const OppilasStoreModel = {
 
 export const OppilasStore = types
   .model("OppilasStore", OppilasStoreModel)
-  .actions((self) => {
+  .actions(self => {
     const { apiUrl, fetchCollection, errors, appendCallerId } =
       getEnv<StoreEnvironment>(self)
     // tracks the most recent fetch by user

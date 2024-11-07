@@ -13,15 +13,15 @@ const HOKSStoreModel = {
 
 export const HOKSStore = types
   .model("HOKSStore", HOKSStoreModel)
-  .views((self) => ({
+  .views(self => ({
     // shown as notification banners about current and upcoming OsaamisenOsoittamiset/OsaamisenHankkimistavat
     get notifications() {
       return flattenDeep<SnapshotIn<typeof Notification>>(
-        self.suunnitelmat.map((s) =>
+        self.suunnitelmat.map(s =>
           s.hankittavatTutkinnonOsat
-            .filter((t) => t.tutkinnonOsaKoodiUri)
-            .map((to) => [
-              ...(to.osaamisenOsoittaminen?.map((naytto) => ({
+            .filter(t => t.tutkinnonOsaKoodiUri)
+            .map(to => [
+              ...(to.osaamisenOsoittaminen?.map(naytto => ({
                 hoksId: s.eid,
                 tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
                 tyyppi: "naytto",
@@ -29,7 +29,7 @@ export const HOKSStore = types
                 loppu: naytto.loppu,
                 paikka: naytto.nayttoymparisto?.kuvaus
               })) || []),
-              ...(to.osaamisenHankkimistavat?.map((oh) => ({
+              ...(to.osaamisenHankkimistavat?.map(oh => ({
                 hoksId: s.eid,
                 tutkinnonOsaKoodiUri: to.tutkinnonOsaKoodiUri,
                 tyyppi: "tyossaoppiminen",
@@ -42,7 +42,7 @@ export const HOKSStore = types
       )
     }
   }))
-  .actions((self) => {
+  .actions(self => {
     const root: IRootStore = getRoot(self)
     const { apiUrl, fetchCollection, errors, appendCallerId } =
       getEnv<StoreEnvironment>(self)
@@ -61,7 +61,7 @@ export const HOKSStore = types
         self.suunnitelmat = response.data
 
         yield Promise.all(
-          self.suunnitelmat.map((suunnitelma) =>
+          self.suunnitelmat.map(suunnitelma =>
             suunnitelma.fetchOpiskeluoikeudet()
           )
         )

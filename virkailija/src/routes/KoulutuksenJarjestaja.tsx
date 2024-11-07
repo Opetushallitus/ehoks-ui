@@ -37,7 +37,7 @@ const TopHeading = styled(Heading)`
 `
 
 const TableHeader = styled("th")`
-  border-bottom: 1px solid ${(props) => props.theme.colors.table.cellBorder};
+  border-bottom: 1px solid ${props => props.theme.colors.table.cellBorder};
   padding: 25px 0 15px 0;
   vertical-align: top;
   text-align: left;

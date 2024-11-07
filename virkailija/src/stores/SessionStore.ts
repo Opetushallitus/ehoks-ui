@@ -27,7 +27,7 @@ const SessionStoreModel = {
 
 export const SessionStore = types
   .model("SessionStore", SessionStoreModel)
-  .actions((self) => {
+  .actions(self => {
     const {
       apiUrl,
       fetchSingle,
@@ -70,7 +70,7 @@ export const SessionStore = types
           oid: o.oid
         }))
         if (self.user && self.organisations.length > 0) {
-          if (self.organisations.findIndex((p) => p.oid === storedOid) === -1) {
+          if (self.organisations.findIndex(p => p.oid === storedOid) === -1) {
             changeSelectedOrganisationOid(self.organisations[0].oid)
           }
         }
@@ -109,7 +109,7 @@ export const SessionStore = types
       changeSelectedOrganisationOid
     }
   })
-  .views((self) => ({
+  .views(self => ({
     get isLoggedIn() {
       return !!self.user
     },
@@ -118,7 +118,7 @@ export const SessionStore = types
         self.user &&
         self.user.organisationPrivileges &&
         self.user.organisationPrivileges.find(
-          (o) => o.oid === self.selectedOrganisationOid
+          o => o.oid === self.selectedOrganisationOid
         )
       )
     },
@@ -127,15 +127,15 @@ export const SessionStore = types
         self.user &&
         self.user.organisationPrivileges &&
         (self.user.organisationPrivileges.find(
-          (o) => o.oid === self.selectedOrganisationOid
+          o => o.oid === self.selectedOrganisationOid
         ) ||
-          self.user.organisationPrivileges.find((o) =>
+          self.user.organisationPrivileges.find(o =>
             o.childOrganisations.includes(self.selectedOrganisationOid)
           ))
       )
     }
   }))
-  .views((self) => ({
+  .views(self => ({
     get hasWritePrivilege() {
       return (
         self.selectedOrganisation &&
@@ -160,7 +160,7 @@ export const SessionStore = types
       )
     }
   }))
-  .views((self) => ({
+  .views(self => ({
     get hasEditPrivilege() {
       return self.hasWritePrivilege || self.hasSuperUserPrivilege
     }

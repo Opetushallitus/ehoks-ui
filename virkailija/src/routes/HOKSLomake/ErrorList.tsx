@@ -4,9 +4,9 @@ import { ErrorListProps, RJSFValidationError } from "@rjsf/utils"
 import styled from "styled"
 
 const ErrorMessage = styled("li")`
-  color: ${(props) => props.theme.colors.green700};
+  color: ${props => props.theme.colors.green700};
   &:hover {
-    color: ${(props) => props.theme.colors.green900};
+    color: ${props => props.theme.colors.green900};
     cursor: pointer;
   }
 `

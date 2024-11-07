@@ -76,9 +76,9 @@ export const CustomCheckboxWidget: React.FC<any> = (props: any) => {
           // TODO The autoFocus prop should not be used, as it can reduce usability and accessibility for users
           // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus={autofocus}
-          onChange={(event) => onChange(event.target.checked)}
-          onBlur={onBlur && ((event) => onBlur(id, event.target.checked))}
-          onFocus={onFocus && ((event) => onFocus(id, event.target.checked))}
+          onChange={event => onChange(event.target.checked)}
+          onBlur={onBlur && (event => onBlur(id, event.target.checked))}
+          onFocus={onFocus && (event => onFocus(id, event.target.checked))}
         />
         <span>{label}</span>
       </label>

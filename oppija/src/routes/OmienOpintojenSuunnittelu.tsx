@@ -39,19 +39,18 @@ const SectionContainer = styled("div")`
   flex: 1;
   justify-content: flex-end;
   align-items: flex-end;
-  margin-left: ${(props) => props.theme.spacing.l};
-  margin-bottom: ${(props) => props.theme.spacing.l};
+  margin-left: ${props => props.theme.spacing.l};
+  margin-bottom: ${props => props.theme.spacing.l};
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
-    margin-top: ${(props) => props.theme.spacing.xl};
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
+    margin-top: ${props => props.theme.spacing.xl};
     margin-left: 0;
     justify-content: center;
   }
 `
 
 const SubHeading = styled("h2")`
-  ${(props) => props.theme.typography.subHeading}
+  ${props => props.theme.typography.subHeading}
   margin-top: 0px;
 `
 
@@ -81,7 +80,7 @@ export const OmienOpintojenSuunnittelu = observer(
 
     useEffect(() => {
       if (suunnitelmat && suunnitelmat.length > 0) {
-        const s = find(suunnitelmat, (h) => h.eid === id)
+        const s = find(suunnitelmat, h => h.eid === id)
         if (s) {
           s.fetchOsaamispisteet().then(() => {
             setSuunnitelma(s)
