@@ -30,7 +30,7 @@ export const SessionUser = types
     fullName: types.optional(types.string, ""),
     usingValtuudet: types.optional(types.boolean, false)
   })
-  .views((self) => ({
+  .views(self => ({
     get yhteystiedot(): Yhteystiedot {
       if (
         !self.contactValuesGroup.length ||

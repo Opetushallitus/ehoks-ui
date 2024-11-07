@@ -4,7 +4,7 @@ import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md"
 import styled from "styled"
 
 const Container = styled("th")`
-  border-bottom: 1px solid ${(props) => props.theme.colors.table.cellBorder};
+  border-bottom: 1px solid ${props => props.theme.colors.table.cellBorder};
   padding: 15px 0;
 `
 

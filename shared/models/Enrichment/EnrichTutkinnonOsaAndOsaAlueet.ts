@@ -16,7 +16,7 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
   // we need this typing to avoid 'missing index signature' error
   // when assigning to self[dynamicKey]
   .volatile((): DynamicObject => ({}))
-  .actions((self) => {
+  .actions(self => {
     const {
       apiUrl,
       apiPrefix,

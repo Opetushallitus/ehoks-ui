@@ -34,9 +34,8 @@ const Container = styled("div").attrs((props: InputProps) => ({
   /* border-radius: 4px; */
   border-width: 1px;
   border-style: solid;
-  border-color: ${(props) => props.theme.colors.notification[props.borderType]};
-  background: ${(props) =>
-    props.theme.colors.notification[props.backgroundType]};
+  border-color: ${props => props.theme.colors.notification[props.borderType]};
+  background: ${props => props.theme.colors.notification[props.backgroundType]};
   min-height: 50px;
 `
 
@@ -49,7 +48,7 @@ const IconContainer = styled("div").attrs((props: InputProps) => ({
   justify-content: center;
   width: 50px;
   height: 50px;
-  background: ${(props) => props.theme.colors.notification[props.borderType]};
+  background: ${props => props.theme.colors.notification[props.borderType]};
 `
 
 const Content = styled("div")`

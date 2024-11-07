@@ -80,12 +80,12 @@ export const RaportitTable = (props: RaportitTableProps) => {
     state: {
       pagination
     },
-    onPaginationChange: (updater) => {
-      setPagination((old) =>
+    onPaginationChange: updater => {
+      setPagination(old =>
         updater instanceof Function ? updater(old) : updater
       )
     },
-    getRowId: (originalRow) => originalRow.hoksId,
+    getRowId: originalRow => originalRow.hoksId,
     manualPagination: true,
     pageCount: props.pageCount,
     getCoreRowModel: getCoreRowModel(),
@@ -103,9 +103,9 @@ export const RaportitTable = (props: RaportitTableProps) => {
     <>
       <table>
         <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
+          {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
+              {headerGroup.headers.map(header => (
                 <th key={header.id} colSpan={header.colSpan}>
                   {flexRender(
                     header.column.columnDef.header,
@@ -117,9 +117,9 @@ export const RaportitTable = (props: RaportitTableProps) => {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => (
+          {table.getRowModel().rows.map(row => (
             <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
+              {row.getVisibleCells().map(cell => (
                 <td id={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>

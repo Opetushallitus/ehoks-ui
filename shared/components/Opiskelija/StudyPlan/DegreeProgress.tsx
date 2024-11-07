@@ -26,10 +26,10 @@ const DegreeBoxes = styled(StatBoxes)`
 
 const CategoryButton = styled(LinkButton)`
   flex: 1;
-  margin-right: ${(props) => props.theme.spacing.m};
+  margin-right: ${props => props.theme.spacing.m};
   margin-bottom: auto;
   background: transparent;
-  color: ${(props) => props.theme.colors.text};
+  color: ${props => props.theme.colors.text};
   text-align: left;
   text-decoration: none;
   &:last-child {
@@ -81,8 +81,7 @@ const StudiesListContainer = styled("ul")`
 `
 
 const StudiesItem = styled("li")`
-  padding: ${(props) => props.theme.spacing.xs}
-    ${(props) => props.theme.spacing.s};
+  padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.s};
   border: 1px solid #979797; /*//TODO from theme*/
   border-top: none;
   &:nth-child(odd) {

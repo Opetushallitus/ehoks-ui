@@ -11,7 +11,7 @@ const HiddenNotifications = types
   .model("HiddenNotifications", {
     notifications: types.array(Notification)
   })
-  .actions((self) => {
+  .actions(self => {
     const exists = (
       hoksId: string,
       tutkinnonOsaKoodiUri: string,
@@ -19,14 +19,14 @@ const HiddenNotifications = types
     ) =>
       find(
         self.notifications,
-        (hidden) =>
+        hidden =>
           hidden.hoksId === hoksId &&
           hidden.tutkinnonOsaKoodiUri === tutkinnonOsaKoodiUri &&
           hidden.tyyppi === tyyppi
       )
     return { exists }
   })
-  .actions((self) => {
+  .actions(self => {
     const { session }: { session: { saveSettings: () => Promise<void> } } =
       getRoot(self)
     const hide = flow(function* (
@@ -51,7 +51,7 @@ const IntroDialog = types
   .model("IntroDialog", {
     userAcknowledgedIntroDialog: types.optional(types.boolean, false)
   })
-  .actions((self) => ({
+  .actions(self => ({
     toggleUserAcknowledgementOfIntro() {
       self.userAcknowledgedIntroDialog = !self.userAcknowledgedIntroDialog
     }

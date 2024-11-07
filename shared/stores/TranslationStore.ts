@@ -41,7 +41,7 @@ const TranslationStoreModel = {
 
 export const TranslationStore = types
   .model("TranslationStore", TranslationStoreModel)
-  .actions((self) => {
+  .actions(self => {
     const { apiUrl, apiPrefix, fetchCollection, errors, appendCallerId } =
       getEnv<StoreEnvironment>(self)
 
@@ -72,7 +72,7 @@ export const TranslationStore = types
 
     return { fetchLocales, setActiveLocale }
   })
-  .views((self) => ({
+  .views(self => ({
     get messages() {
       return self.translations.reduce<Translations>((result, translation) => {
         result[translation.locale] = result[translation.locale] || {}

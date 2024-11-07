@@ -17,9 +17,9 @@ const Box = styled("div")<BoxProps>`
   align-items: center;
   justify-content: center;
   border-radius: 15px;
-  background: ${(props) => (props["aria-checked"] ? "#3A7210" : "#fff")};
+  background: ${props => (props["aria-checked"] ? "#3A7210" : "#fff")};
   margin-right: 10px;
-  border: ${(props) => (props["aria-checked"] ? "unset" : "1px solid #a5acb0")};
+  border: ${props => (props["aria-checked"] ? "unset" : "1px solid #a5acb0")};
   box-shadow:
     0 0 2px 0 rgba(0, 0, 0, 0),
     inset 0 1px 2px 0 rgba(0, 0, 0, 0.2);

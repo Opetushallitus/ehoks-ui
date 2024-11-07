@@ -27,7 +27,7 @@ const Image = styled("div")`
   background-repeat: no-repeat;
   flex: 1;
 
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.Large}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Large}px) {
     background-position: top;
   }
 `
@@ -47,7 +47,7 @@ const StyledLink = styled(Link)`
   color: #fff;
   flex: 1;
 
-  @media screen and (max-width: ${(props) =>
+  @media screen and (max-width: ${props =>
       props.theme.breakpoints.SmallTablet}px) {
     flex: auto;
   }

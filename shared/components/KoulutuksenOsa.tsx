@@ -22,11 +22,11 @@ interface ContainerProps {
 const Container = styled("div")<ContainerProps>`
   display: flex;
   flex: 1;
-  max-width: ${(props) => `calc(${props.width} - 15px)`};
+  max-width: ${props => `calc(${props.width} - 15px)`};
   width: unset;
   border-top-style: solid;
   border-top-width: 4px;
-  border-top-color: ${(props) =>
+  border-top-color: ${props =>
     !!props.accentColor ? props.theme.colors[props.accentColor] : "#979797"};
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.4);
   margin-left: 20px;
@@ -70,7 +70,7 @@ const Title = styled("h2")`
   color: #000;
   display: block;
   margin: 10px 20px;
-  ${(props) => props.theme.typography.heading3}
+  ${props => props.theme.typography.heading3}
 `
 const DetailsContainer = styled("div")`
   flex: 1;
@@ -179,7 +179,7 @@ export class KoulutuksenOsa extends React.Component<
   componentDidMount() {
     const { share, moduleId } = this.props
     if (typeof share !== "undefined" && moduleId === share.moduleId) {
-      this.setState((state) => ({
+      this.setState(state => ({
         ...state,
         expanded: {
           ...state.expanded,

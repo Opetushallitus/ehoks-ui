@@ -37,8 +37,7 @@ export const TH = styled("th")`
   vertical-align: top;
   padding: 5px 30px 5px 0;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     display: block;
   }
 `
@@ -46,8 +45,7 @@ export const TH = styled("th")`
 export const TD = styled("td")`
   padding: 5px 0;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     display: block;
   }
 `

@@ -41,7 +41,7 @@ export const TyopaikkajaksoRaporttiRivi = types
       koodiUriProperty: "oppisopimuksenPerustaKoodiUri"
     })
   )
-  .views((self) => {
+  .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {
       get tutkinnonOsanNimi() {

@@ -20,7 +20,7 @@ export const EnrichOrganisaatioOid = (
     // we need this typing to avoid 'missing index signature' error
     // when assigning to self[dynamicKey]
     .volatile((): DynamicObject => ({}))
-    .actions((self) => {
+    .actions(self => {
       const { apiUrl, apiPrefix, errors, fetchSingle, appendCallerId } =
         getEnv<StoreEnvironment>(self)
 
@@ -68,7 +68,7 @@ export const EnrichOrganisaatioOid = (
       })
 
       const afterCreate = () => {
-        propertiesToEnrich.forEach((prop) => {
+        propertiesToEnrich.forEach(prop => {
           const organizationOid = self[prop.organzationOidProperty]
           if (organizationOid) {
             fetchOrganisaatio(prop.enrichedProperty, organizationOid)

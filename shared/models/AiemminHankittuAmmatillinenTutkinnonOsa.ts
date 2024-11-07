@@ -41,7 +41,7 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
     AiemminHankitutTutkinnonOsatViews,
     Model
   )
-  .views((self) => {
+  .views(self => {
     const root: LocaleRoot = getRoot(self)
     return {
       get otsikko(): JSX.Element | string {

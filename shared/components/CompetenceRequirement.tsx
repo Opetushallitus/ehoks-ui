@@ -13,8 +13,7 @@ const TitleRow = styled("div")`
   display: flex;
   flex: 1;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     flex-direction: column;
   }
 `
@@ -97,7 +96,7 @@ export class CompetenceRequirement extends React.Component<CompetenceRequirement
         </TitleRow>
         {expanded ? (
           <Assessment data-testid="Assessment">
-            {kriteerit.map((arviointikriteeri) => (
+            {kriteerit.map(arviointikriteeri => (
               <AssessmentItem key={arviointikriteeri.kuvaus}>
                 <AssessmentHeader>{arviointikriteeri.kuvaus}</AssessmentHeader>
                 {(arviointikriteeri.kriteerit || []).map((kriteeri, i) => (

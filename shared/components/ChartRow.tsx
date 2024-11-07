@@ -11,8 +11,7 @@ export const ChartRow = styled("div")`
   margin-bottom: ${(props: ChartRowProps) =>
     props.marginBottom ? props.marginBottom : 0};
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Desktop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Desktop}px) {
     height: unset;
     margin-bottom: 5px;
   }

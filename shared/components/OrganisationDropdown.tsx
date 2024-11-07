@@ -55,7 +55,7 @@ export const OrganisationDropdown = observer(
               b.nimi.get(lang) || b.nimi.get(langFallback) || ""
             )
           )
-          .map((o) => (
+          .map(o => (
             <option key={o.oid} value={o.oid} aria-selected={o.oid === value}>
               {o.nimi.get(lang) || o.nimi.get(langFallback)}
             </option>

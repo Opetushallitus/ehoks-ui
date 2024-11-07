@@ -15,7 +15,7 @@ export const EnrichTutkinnonOsaKoodiUri = types
   // we need this typing to avoid 'missing index signature' error
   // when assigning to self[dynamicKey]
   .volatile((): DynamicObject => ({}))
-  .actions((self) => {
+  .actions(self => {
     const { apiUrl, apiPrefix, errors, fetchSingle, appendCallerId } =
       getEnv<StoreEnvironment>(self)
 

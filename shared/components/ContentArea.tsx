@@ -7,8 +7,7 @@ export const ChildContentArea = styled("div")`
   background: #fff;
   padding: 10px;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     margin: 0;
     padding: 0;
     border-width: 0;

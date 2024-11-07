@@ -16,7 +16,7 @@ const ProgressPieContainer = styled("div")`
   width: 90px;
   hyphens: manual;
   text-align: center;
-  margin-right: ${(props) => props.theme.spacing.xl};
+  margin-right: ${props => props.theme.spacing.xl};
 
   &:last-of-type {
     margin-right: 0;
@@ -36,7 +36,7 @@ const PercentageContainer = styled("div")<{
   left: 0;
   font-size: 14px;
   font-weight: bold;
-  color: ${(props) =>
+  color: ${props =>
     props.color ? props.theme.colors[props.color] : "#3A7A10"};
 `
 
@@ -48,8 +48,7 @@ const PercentageTitle = styled("div")`
 const Title = styled("span")`
   margin-top: 10px;
   text-align: center;
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     display: none;
   }
 `

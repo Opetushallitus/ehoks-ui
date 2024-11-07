@@ -25,17 +25,17 @@ interface ContainerProps {
   width: string
 }
 const Container = styled("div")<ContainerProps>`
-  display: ${(props) => (props.expanded ? "block" : "flex")};
-  flex: ${(props) => (props.expanded ? "unset" : 1)};
-  max-width: ${(props) =>
+  display: ${props => (props.expanded ? "block" : "flex")};
+  flex: ${props => (props.expanded ? "unset" : 1)};
+  max-width: ${props =>
     props.expanded ? "100%" : `calc(${props.width} - 15px)`};
-  width: ${(props) => (props.expanded ? "100%" : "unset")};
+  width: ${props => (props.expanded ? "100%" : "unset")};
   border-top-style: solid;
   border-top-width: 4px;
-  border-top-color: ${(props) =>
+  border-top-color: ${props =>
     !!props.accentColor ? props.theme.colors[props.accentColor] : "#979797"};
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.4);
-  margin-left: ${(props) => (props.expanded ? "0" : "20px")};
+  margin-left: ${props => (props.expanded ? "0" : "20px")};
   margin-bottom: 20px;
 
   &:first-of-type {
@@ -76,7 +76,7 @@ const Title = styled("h2")`
   color: #000;
   display: block;
   margin: 10px 20px;
-  ${(props) => props.theme.typography.heading3}
+  ${props => props.theme.typography.heading3}
 `
 export interface TutkinnonOsaProps {
   /** Color of top border */
@@ -166,7 +166,7 @@ export class TutkinnonOsa extends React.Component<
   componentDidMount() {
     const { share, moduleId } = this.props
     if (typeof share !== "undefined" && moduleId === share.moduleId) {
-      this.setState((state) => ({
+      this.setState(state => ({
         ...state,
         expanded: {
           ...state.expanded,
@@ -195,7 +195,7 @@ export class TutkinnonOsa extends React.Component<
   }
 
   toggle = (name: ToggleableItems) => () => {
-    this.setState((state) => ({
+    this.setState(state => ({
       ...state,
       expanded: { ...state.expanded, [name]: !state.expanded[name] }
     }))
@@ -205,7 +205,7 @@ export class TutkinnonOsa extends React.Component<
     this.setState((state: TutkinnonOsaState) => ({
       expandedCompetences:
         state.expandedCompetences.indexOf(index) > -1
-          ? state.expandedCompetences.filter((i) => i !== index)
+          ? state.expandedCompetences.filter(i => i !== index)
           : [...state.expandedCompetences, index]
     }))
   }

@@ -32,7 +32,7 @@ export const fetchLinks = async function (
     throw new Error(response.statusText)
   }
   const json: { data: BackendShareLink[] } = await response.json()
-  return json.data.map((link) => ({
+  return json.data.map(link => ({
     jakoUuid: link["share-id"],
     validFrom: link["voimassaolo-alku"],
     validTo: link["voimassaolo-loppu"],

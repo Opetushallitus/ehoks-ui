@@ -113,7 +113,7 @@ export const Opiskelusuunnitelma = observer(
     useEffect(() => {
       const { share } = parseShareParams(location.search)
       if (share.type && share.tutkinnonOsaTyyppi) {
-        setState((s) => ({
+        setState(s => ({
           ...s,
           share: {
             type: share.type,
@@ -132,7 +132,7 @@ export const Opiskelusuunnitelma = observer(
       // previous dialog should close and new dialog should open
       const { share } = parseShareParams(location.search)
       if (shareHasChanged(share)) {
-        setState((s) => ({
+        setState(s => ({
           ...s,
           share: {
             type: share.type,
@@ -169,7 +169,7 @@ export const Opiskelusuunnitelma = observer(
         suunnitellut: suunnitellutOpinnot,
         valmiit: valmiitOpinnot
       }
-      return !!find(studies[type], (s) =>
+      return !!find(studies[type], s =>
         s.hasNayttoOrHarjoittelujakso(share.type, share.moduleId)
       )
     }

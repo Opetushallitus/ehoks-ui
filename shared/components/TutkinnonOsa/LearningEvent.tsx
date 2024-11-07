@@ -26,8 +26,8 @@ interface IconProps {
 }
 const Icon = styled("div")<IconProps>`
   margin-right: 10px;
-  padding-top: ${(props) => (props.isOsaamisenOsoittaminen ? "7px" : "3px")};
-  color: ${(props) => (props.isOsaamisenOsoittaminen ? "#636769" : "#000")};
+  padding-top: ${props => (props.isOsaamisenOsoittaminen ? "7px" : "3px")};
+  color: ${props => (props.isOsaamisenOsoittaminen ? "#636769" : "#000")};
 `
 
 const DetailsContainer = styled("div")`
@@ -38,7 +38,7 @@ const DetailsContainer = styled("div")`
 const Detail = styled("div")<SizeProps>`
   font-weight: 600;
   color: #636769;
-  line-height: ${(props) => (props.size === "small" ? "inherit" : "1.6")};
+  line-height: ${props => (props.size === "small" ? "inherit" : "1.6")};
 `
 
 const Title = styled("strong")<SizeProps>`

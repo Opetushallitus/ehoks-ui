@@ -17,7 +17,7 @@ export const EnrichTutkinnonOsaViitteet = (
         disposeTutkinnonOsaFetcher: undefined as IReactionDisposer | undefined
       })
     )
-    .actions((self) => {
+    .actions(self => {
       const { apiUrl, apiPrefix, errors, fetchCollection, appendCallerId } =
         getEnv<StoreEnvironment>(self)
 
@@ -46,7 +46,7 @@ export const EnrichTutkinnonOsaViitteet = (
         afterCreate() {
           self.disposeTutkinnonOsaFetcher = reaction(
             () => self.tutkinnonOsa.id,
-            (id) => {
+            id => {
               fetchTutkinnonOsaViitteet(id)
             }
           )

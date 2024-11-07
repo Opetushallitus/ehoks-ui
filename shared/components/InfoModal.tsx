@@ -286,7 +286,7 @@ export const InfoModal = (props: InfoModalProps) => {
                   </StyledStrong>
                   <div>
                     {" "}
-                    {keskeytymisajanjaksot.map((k) => (
+                    {keskeytymisajanjaksot.map(k => (
                       <div key={k.alku}>
                         <FormattedDate date={k.alku} dateNotSet="" />
                         {" - "}

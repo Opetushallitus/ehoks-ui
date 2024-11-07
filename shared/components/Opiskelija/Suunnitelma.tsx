@@ -35,8 +35,7 @@ const Text = styled("div")`
 `
 
 const OpenHOKSButton = styled(HOKSButton)`
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     margin-top: 20px;
   }
 `

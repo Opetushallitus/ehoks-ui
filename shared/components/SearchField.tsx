@@ -6,8 +6,7 @@ import { LoadingSpinner } from "./LoadingSpinner"
 import { SimpleInterpolation } from "styled-components"
 
 const Loading = styled(LoadingSpinner)`
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     position: absolute;
     right: 20px;
   }
@@ -19,14 +18,13 @@ interface SearchHeaderProps {
 const SearchHeader = styled("form")<SearchHeaderProps>`
   display: flex;
   align-items: center;
-  ${(props) => props.headerStyles}
+  ${props => props.headerStyles}
 `
 
 const SearchIcon = styled(MdSearch)`
   margin: 0 20px 0 10px;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     position: absolute;
   }
 `
@@ -40,8 +38,7 @@ const SearchInput = styled("input")`
   padding: 0 10px;
   min-width: 330px;
 
-  @media screen and (max-width: ${(props) =>
-      props.theme.breakpoints.Tablet}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.Tablet}px) {
     min-width: unset;
     width: 100%;
     padding-left: 40px;

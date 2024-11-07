@@ -12,7 +12,7 @@ const OsaamistasonKriteeri = types
     osaamistaso: types.optional(types.string, ""),
     kriteerit: types.array(EPerusteetText)
   })
-  .preProcessSnapshot((sn) => ({
+  .preProcessSnapshot(sn => ({
     ...sn,
     osaamistaso:
       typeof sn.osaamistaso === "string"
@@ -31,7 +31,7 @@ const ArvioinninKohde = types
     arviointiAsteikko: types.optional(types.string, ""),
     osaamistasonKriteerit: types.array(OsaamistasonKriteeri)
   })
-  .preProcessSnapshot((sn) => ({
+  .preProcessSnapshot(sn => ({
     ...sn,
     arviointiAsteikko:
       typeof sn.arviointiAsteikko === "string"

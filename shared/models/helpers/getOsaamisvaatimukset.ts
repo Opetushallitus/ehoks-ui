@@ -22,15 +22,15 @@ export function getOsaamisvaatimukset(
   if (!arviointi || !arviointi.arvioinninKohdealueet) {
     return []
   }
-  return arviointi.arvioinninKohdealueet.map((kohdeAlue) => ({
+  return arviointi.arvioinninKohdealueet.map(kohdeAlue => ({
     kuvaus: kohdeAlue.otsikko[activeLocale],
-    kriteerit: kohdeAlue.arvioinninKohteet.map((arvioinninKohde) => ({
+    kriteerit: kohdeAlue.arvioinninKohteet.map(arvioinninKohde => ({
       kuvaus: arvioinninKohde.otsikko
         ? arvioinninKohde.otsikko[activeLocale]
         : "",
       kriteerit: flattenDeep<string>(
-        arvioinninKohde.osaamistasonKriteerit.map((tasoKriteeri) =>
-          tasoKriteeri.kriteerit.map((kriteeri) =>
+        arvioinninKohde.osaamistasonKriteerit.map(tasoKriteeri =>
+          tasoKriteeri.kriteerit.map(kriteeri =>
             arvioinninKohde.arviointiAsteikko === "1"
               ? `${kriteeri[activeLocale]}`
               : `${tasoKriteeri.osaamistaso}: ${kriteeri[activeLocale]}`

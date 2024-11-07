@@ -20,7 +20,7 @@ import { observer } from "mobx-react"
 import { ShareType, TutkinnonOsaType } from "../../models/helpers/ShareTypes"
 
 const OsaamisenOsoittaminenTitle = styled(Title)(
-  (props) => `
+  props => `
   display: flex;
   align-items: center;
   margin-left: ${props.theme.spacing.l};
@@ -33,7 +33,7 @@ const FlexLearningEvent = styled(LearningEvent)`
 `
 
 const OsaamisenOsoittaminenTable = styled(Table)`
-  margin-left: ${(props) => props.theme.spacing.l};
+  margin-left: ${props => props.theme.spacing.l};
 `
 
 const OsaamisenOsoittaminenTasks = styled(InfoContainer)(
@@ -49,7 +49,7 @@ const CustomSlider = styled(MobileSlider)(
 )
 
 const ButtonContainer = styled("div")`
-  margin-right: ${(props) => props.theme.spacing.xl};
+  margin-right: ${props => props.theme.spacing.xl};
 `
 
 const Button = styled(HeroButton)`
@@ -57,12 +57,12 @@ const Button = styled(HeroButton)`
 `
 
 const ShareIcon = styled(MdShare)`
-  margin-left: ${(props) => props.theme.spacing.xs};
+  margin-left: ${props => props.theme.spacing.xs};
 `
 
 const DemonstrationTasksTitle = styled("h3")`
-  margin-left: ${(props) => props.theme.spacing.l};
-  ${(props) => props.theme.typography.heading4}
+  margin-left: ${props => props.theme.spacing.l};
+  ${props => props.theme.typography.heading4}
 `
 
 interface OsaamisenOsoittaminenState {

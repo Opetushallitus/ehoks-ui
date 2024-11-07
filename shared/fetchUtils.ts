@@ -103,9 +103,7 @@ export function fetchUtils(
       fetchImplementation(url, {
         ...init,
         method: "PATCH"
-      }).then((r) =>
-        r.json().then((data) => ({ status: r.status, body: data }))
-      )
+      }).then(r => r.json().then(data => ({ status: r.status, body: data })))
   }
 }
 

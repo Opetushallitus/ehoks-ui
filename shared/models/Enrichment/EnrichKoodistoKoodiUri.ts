@@ -20,7 +20,7 @@ export const EnrichKoodistoKoodiUri = (
     // we need this typing to avoid 'missing index signature' error
     // when assigning to self[enrichedField]
     .volatile((): DynamicObject => ({}))
-    .actions((self) => {
+    .actions(self => {
       const { apiUrl, apiPrefix, errors, fetchSingle, appendCallerId } =
         getEnv<StoreEnvironment>(self)
 
@@ -70,7 +70,7 @@ export const EnrichKoodistoKoodiUri = (
       })
 
       const afterCreate = () => {
-        propertiesToEnrich.forEach((prop) => {
+        propertiesToEnrich.forEach(prop => {
           const koodiUriValue = self[prop.koodiUriProperty]
           if (koodiUriValue) {
             fetchKoodisto(prop.enrichedProperty, koodiUriValue)

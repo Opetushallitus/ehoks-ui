@@ -35,7 +35,7 @@ export const AiemminHankittuPaikallinenTutkinnonOsa = types
     AiemminHankitutTutkinnonOsatViews,
     model
   )
-  .views((self) => ({
+  .views(self => ({
     get otsikko(): JSX.Element | string {
       return self.nimi
     },

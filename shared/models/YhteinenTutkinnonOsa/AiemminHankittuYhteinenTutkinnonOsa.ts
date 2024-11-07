@@ -28,7 +28,7 @@ export const AiemminHankittuYhteinenTutkinnonOsa = types
     EnrichTutkinnonOsaAndOsaAlueet,
     Model
   )
-  .views((self) => ({
+  .views(self => ({
     get tutkinnonOsaTyyppi(): TutkinnonOsaType {
       return TutkinnonOsaType.AiemminHankittuYhteinen
     },

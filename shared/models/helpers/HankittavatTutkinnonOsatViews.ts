@@ -61,7 +61,7 @@ export const HankittavatTutkinnonOsatViews = types
             ? self.osaamisenOsoittaminen?.length > 0
             : !!find(
                 self.osaamisenHankkimistavat,
-                (oh) => oh.tyyppi === OsaamisenHankkimistapaType.Workplace
+                oh => oh.tyyppi === OsaamisenHankkimistapaType.Workplace
               )
         return moduleIdMatch && typeMatch
       }

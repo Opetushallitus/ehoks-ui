@@ -11,13 +11,13 @@ export function getTila(
   const combinedStartDates: Date[] = []
   const combinedEndDates: Date[] = []
 
-  osaamisenOsoittaminen.forEach((oo) => {
+  osaamisenOsoittaminen.forEach(oo => {
     osoittaminenStartDates.push(new Date(oo.alku))
     osoittaminenEndDates.push(new Date(oo.loppu))
     combinedStartDates.push(new Date(oo.alku))
     combinedEndDates.push(new Date(oo.loppu))
   })
-  osaamisenHankkimistavat.forEach((oht) => {
+  osaamisenHankkimistavat.forEach(oht => {
     combinedStartDates.push(new Date(oht.alku))
     combinedEndDates.push(new Date(oht.loppu))
   })
