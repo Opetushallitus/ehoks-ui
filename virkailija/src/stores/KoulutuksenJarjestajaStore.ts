@@ -223,6 +223,12 @@ const Search = types
         self.results.map(
           flow(function* (oppija): any {
             yield oppija.fetchSuunnitelmat()
+          })
+        )
+      )
+      yield Promise.all(
+        self.results.map(
+          flow(function* (oppija): any {
             yield oppija.fetchHenkilotiedot()
           })
         )
@@ -243,6 +249,12 @@ const Search = types
         self.results.map(
           flow(function* (oppija): any {
             yield oppija.fetchSuunnitelmat()
+          })
+        )
+      )
+      yield Promise.all(
+        self.results.map(
+          flow(function* (oppija): any {
             yield oppija.fetchHenkilotiedot()
           })
         )
