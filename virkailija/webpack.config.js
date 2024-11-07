@@ -28,7 +28,7 @@ module.exports = {
     proxy: [
       {
         context: ["/auth-dev"],
-        target: "http://localhost:3000",
+        target: "http://localhost:3000"
       },
       {
         context: ["/cas-oppija"],
@@ -40,7 +40,7 @@ module.exports = {
       },
       {
         context: ["/ehoks-virkailija-backend"],
-        target: "http://localhost:3000",
+        target: "http://localhost:3000"
       },
       {
         context: ["/virkailija-raamit"],
