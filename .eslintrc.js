@@ -90,7 +90,7 @@ module.exports = {
     "@typescript-eslint/triple-slash-reference": "error",
     "@typescript-eslint/type-annotation-spacing": "off",
     "@typescript-eslint/unified-signatures": "error",
-    "arrow-parens": ["error", "as-needed"],
+    "arrow-parens": ["off", "as-needed"],
     camelcase: "error",
     "comma-dangle": "off",
     complexity: "off",
