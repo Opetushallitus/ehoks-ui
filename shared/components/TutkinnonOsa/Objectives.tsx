@@ -3,7 +3,6 @@ import styled from "../../styled"
 import { useIntl, FormattedMessage } from "react-intl"
 import { Expand } from "./Expand"
 import { IconContainer } from "./IconContainer"
-import { ToggleableItems } from "./TutkinnonOsaHelpers"
 import { Collapse } from "./Collapse"
 import { HorizontalLine } from "../HorizontalLine"
 import { InfoTextContainer } from "./Shared"
@@ -65,7 +64,7 @@ const ObjectiveData = styled(InfoTextContainer)`
 
 interface ObjectiveProps {
   expanded: boolean
-  toggle: (name: ToggleableItems) => () => void
+  toggle: () => void
   objectives?: string
 }
 
@@ -85,7 +84,7 @@ export const Objectives = (props: ObjectiveProps) => {
               />
             </CollapseTitle>
             <IconContainer
-              onClick={toggle("objectives")}
+              onClick={toggle}
               aria-label={intl.formatMessage({
                 id: "opiskelusuunnitelma.piilotaTavoitteetjaSisallotAriaLabel"
               })}
@@ -99,14 +98,14 @@ export const Objectives = (props: ObjectiveProps) => {
       ) : (
         <>
           <ExpandContainer>
-            <ExpandTitle onClick={toggle("objectives")}>
+            <ExpandTitle onClick={toggle}>
               <FormattedMessage
                 id="opiskelusuunnitelma.tavoitteetJaSisallot"
                 defaultMessage="Tavoitteet ja sisällöt"
               />
             </ExpandTitle>
             <IconContainer
-              onClick={toggle("objectives")}
+              onClick={toggle}
               aria-label={intl.formatMessage({
                 id: "opiskelusuunnitelma.naytaTavoitteetjaSisallotAriaLabel"
               })}

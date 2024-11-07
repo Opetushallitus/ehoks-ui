@@ -207,20 +207,20 @@ export const OsaamisenHankkimistapa = observer(
         </OsaamisenHankkimistapaTable>
         {!!keskeisetTyotehtavat?.length && (
           <React.Fragment>
-            <HMediaQuery.MaxWidth breakpoint="Tablet">
+            <HMediaQuery breakpoint="Tablet">
               <CustomSlider>
                 {keskeisetTyotehtavat.map((tyotehtava, i) => (
                   <Slide key={i}>{tyotehtava}</Slide>
                 ))}
               </CustomSlider>
-            </HMediaQuery.MaxWidth>
-            <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
+            </HMediaQuery>
+            <HMediaQuery breakpoint="Tablet" notMatch>
               <OsaamisenHankkimistapaTasks>
                 {keskeisetTyotehtavat.map((tyotehtava, i) => (
                   <li key={i}>{tyotehtava}</li>
                 ))}
               </OsaamisenHankkimistapaTasks>
-            </HMediaQuery.MaxWidth>
+            </HMediaQuery>
           </React.Fragment>
         )}
         {muutOppimisymparistot.map((environment, i) => (

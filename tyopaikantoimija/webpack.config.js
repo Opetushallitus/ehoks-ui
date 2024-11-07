@@ -79,6 +79,10 @@ module.exports = {
         // these packages have problems with their sourcemaps
         exclude: [/node_modules\/react-responsive/, /node_modules\/react-axe/]
       },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
+      },
       // Load images with 'file-loader'.
       {
         test: /\.(png|jpg|gif|svg)$/,

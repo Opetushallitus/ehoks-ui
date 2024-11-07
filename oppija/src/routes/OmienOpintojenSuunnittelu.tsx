@@ -159,7 +159,7 @@ export const OmienOpintojenSuunnittelu = observer(
                     <MdEventNote />
                   </SectionItem>
                 </SectionItems>
-                <HMediaQuery.MinWidth breakpoint="Tablet">
+                <HMediaQuery match="min" breakpoint="Tablet">
                   <SectionContainer>
                     <HOKSButton to="/ehoks/suunnittelu">
                       <FormattedMessage
@@ -168,7 +168,7 @@ export const OmienOpintojenSuunnittelu = observer(
                       />
                     </HOKSButton>
                   </SectionContainer>
-                </HMediaQuery.MinWidth>
+                </HMediaQuery>
               </Section>
             </PaddedContent>
           </Container>
@@ -215,7 +215,7 @@ export const OmienOpintojenSuunnittelu = observer(
                   element={<Opiskelusuunnitelma plan={suunnitelma} />}
                 />
               </Routes>
-              <HMediaQuery.MinWidth breakpoint="Tablet" notMatch={true}>
+              <HMediaQuery match="min" breakpoint="Tablet" notMatch={true}>
                 <SectionContainer>
                   <HOKSButton to="/ehoks/suunnittelu">
                     <FormattedMessage
@@ -224,7 +224,7 @@ export const OmienOpintojenSuunnittelu = observer(
                     />
                   </HOKSButton>
                 </SectionContainer>
-              </HMediaQuery.MinWidth>
+              </HMediaQuery>
             </PaddedContent>
           </Container>
         </BackgroundContainer>

@@ -11,7 +11,6 @@ import { MobileCompetences } from "./MobileCompetences"
 import { ToggleLink } from "./ToggleLink"
 import { Osaamisvaatimus } from "models/Osaamisvaatimus"
 import { SnapshotOrInstance } from "mobx-state-tree"
-import { ToggleableItems } from "./TutkinnonOsaHelpers"
 import { TutkinnonOsaType } from "../../models/helpers/ShareTypes"
 
 const Container = styled("div")`
@@ -103,7 +102,7 @@ interface CompetencesProps {
   expanded?: boolean
   expandedCompetences: number[]
   tutkinnonOsaTyyppi?: TutkinnonOsaType
-  toggle: (name: ToggleableItems) => () => void
+  toggle: () => void
 }
 
 export const Competences = (props: CompetencesProps) => {
@@ -160,7 +159,7 @@ export const Competences = (props: CompetencesProps) => {
               </ToggleAllTitle>
             </CollapseHeaderContainer>
             <IconContainer
-              onClick={toggle("competences")}
+              onClick={toggle}
               aria-label={intl.formatMessage({
                 id: "opiskelusuunnitelma.piilotaAmmattitaitovaatimuksetAriaLabel"
               })}
@@ -173,7 +172,7 @@ export const Competences = (props: CompetencesProps) => {
         </React.Fragment>
       ) : (
         <ExpandContainer>
-          <ExpandTitle onClick={toggle("competences")}>
+          <ExpandTitle onClick={toggle}>
             {tutkinnonOsaTyyppi ===
             TutkinnonOsaType.HankittavanYhteisenTutkinnonOsanOsaAlue ? (
               <FormattedMessage
@@ -188,7 +187,7 @@ export const Competences = (props: CompetencesProps) => {
             )}
           </ExpandTitle>
           <IconContainer
-            onClick={toggle("competences")}
+            onClick={toggle}
             aria-label={intl.formatMessage({
               id: "opiskelusuunnitelma.naytaAmmattitaitovaatimuksetAriaLabel"
             })}
@@ -200,12 +199,12 @@ export const Competences = (props: CompetencesProps) => {
       )}
       {expanded && (
         <React.Fragment>
-          <HMediaQuery.SmallTablet>
+          <HMediaQuery breakpoint="SmallTablet">
             <MobileCompetences
               competenceRequirements={competenceRequirements}
             />
-          </HMediaQuery.SmallTablet>
-          <HMediaQuery.SmallTablet notMatch>
+          </HMediaQuery>
+          <HMediaQuery breakpoint="SmallTablet" notMatch>
             <InfoContainer data-testid="TutkinnonOsa.Competences.CompetenceRequirements">
               {competenceRequirements.map((competenceRequirement, i) => (
                 <CompetenceRequirement
@@ -216,7 +215,7 @@ export const Competences = (props: CompetencesProps) => {
                 />
               ))}
             </InfoContainer>
-          </HMediaQuery.SmallTablet>
+          </HMediaQuery>
         </React.Fragment>
       )}
     </Container>

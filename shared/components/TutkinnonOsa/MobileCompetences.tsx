@@ -1,5 +1,5 @@
 import { MobileSlider, Slide } from "components/MobileSlider"
-import React from "react"
+import React, { useState } from "react"
 import { FormattedMessage } from "react-intl"
 import styled from "styled"
 import { ToggleLink } from "./ToggleLink"
@@ -22,9 +22,7 @@ const AssessmentItem = styled("div")`
 `
 
 const MobileSliderToggle = styled("div")`
-  position: absolute;
-  bottom: 10px;
-  margin: 0 0 0 25px;
+  margin: 5px 0 5px 30px;
 `
 
 interface MobileCompetencesProps {
@@ -36,67 +34,62 @@ interface MobileCompetencesState {
   showAssessment: boolean
 }
 
-export class MobileCompetences extends React.Component<
-  MobileCompetencesProps,
-  MobileCompetencesState
-> {
-  state = {
+export const MobileCompetences: React.FC<MobileCompetencesProps> = ({
+  competenceRequirements
+}) => {
+  const [state, setState] = useState<MobileCompetencesState>({
     activeSlide: 0,
     showAssessment: false
+  })
+
+  const changeSlide = (index: number) => {
+    setState(s => ({ ...s, activeSlide: index }))
   }
 
-  changeSlide = (index: number) => {
-    this.setState({ activeSlide: index })
-  }
-
-  toggleShowAssessment = () => {
-    this.setState(state => ({
-      ...state,
-      showAssessment: !state.showAssessment
+  const toggleShowAssessment = () => {
+    setState(s => ({
+      ...s,
+      showAssessment: !s.showAssessment
     }))
   }
 
-  render() {
-    const { competenceRequirements } = this.props
-    const { showAssessment } = this.state
-    const kriteerit =
-      competenceRequirements[this.state.activeSlide].kriteerit || []
-    return (
-      <SliderContainer>
-        <MobileSlider
-          footer={
-            <MobileSliderToggle>
-              <ToggleLink onClick={this.toggleShowAssessment}>
-                {showAssessment ? (
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.piilotaKriteeritLink"
-                    defaultMessage="Piilota arviointikriteerit"
-                  />
-                ) : (
-                  <FormattedMessage
-                    id="opiskelusuunnitelma.naytaKriteeritLink"
-                    defaultMessage="Näytä arviointikriteerit"
-                  />
-                )}
-              </ToggleLink>
-            </MobileSliderToggle>
-          }
-          onSlideChange={this.changeSlide}
-        >
-          {competenceRequirements.map((competenceRequirement, i) => (
-            <Slide key={i}>{competenceRequirement.kuvaus}</Slide>
-          ))}
-        </MobileSlider>
-        {showAssessment &&
-          kriteerit.map((arviointikriteeri, ai) => (
-            <AssessmentItem key={ai}>
-              <h2>{arviointikriteeri.kuvaus}</h2>
-              {(arviointikriteeri.kriteerit || []).map((kriteeri, ki) => (
-                <p key={ki}>{kriteeri}</p>
-              ))}
-            </AssessmentItem>
-          ))}
-      </SliderContainer>
-    )
-  }
+  const kriteerit = competenceRequirements[state.activeSlide].kriteerit || []
+
+  return (
+    <SliderContainer>
+      <MobileSlider
+        onSlideChange={changeSlide}
+        footer={
+          <MobileSliderToggle>
+            <ToggleLink onClick={toggleShowAssessment}>
+              {state.showAssessment ? (
+                <FormattedMessage
+                  id="opiskelusuunnitelma.piilotaKriteeritLink"
+                  defaultMessage="Piilota arviointikriteerit"
+                />
+              ) : (
+                <FormattedMessage
+                  id="opiskelusuunnitelma.naytaKriteeritLink"
+                  defaultMessage="Näytä arviointikriteerit"
+                />
+              )}
+            </ToggleLink>
+          </MobileSliderToggle>
+        }
+      >
+        {competenceRequirements.map((competenceRequirement, i) => (
+          <Slide key={i}>{competenceRequirement.kuvaus}</Slide>
+        ))}
+      </MobileSlider>
+      {state.showAssessment &&
+        kriteerit.map((arviointikriteeri, ai) => (
+          <AssessmentItem key={ai}>
+            <h2>{arviointikriteeri.kuvaus}</h2>
+            {(arviointikriteeri.kriteerit || []).map((kriteeri, ki) => (
+              <p key={ki}>{kriteeri}</p>
+            ))}
+          </AssessmentItem>
+        ))}
+    </SliderContainer>
+  )
 }

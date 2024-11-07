@@ -230,20 +230,20 @@ export const OsaamisenOsoittaminen = observer(
             defaultMessage="Sisältö"
           />
         </DemonstrationTasksTitle>
-        <HMediaQuery.MaxWidth breakpoint="Tablet">
+        <HMediaQuery breakpoint="Tablet">
           <CustomSlider>
             {sisallonKuvaus.map((tyotehtava, i) => (
               <Slide key={i}>{tyotehtava}</Slide>
             ))}
           </CustomSlider>
-        </HMediaQuery.MaxWidth>
-        <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
+        </HMediaQuery>
+        <HMediaQuery breakpoint="Tablet" notMatch>
           <OsaamisenOsoittaminenTasks>
             {sisallonKuvaus.map((tyotehtava, i) => (
               <li key={i}>{tyotehtava}</li>
             ))}
           </OsaamisenOsoittaminenTasks>
-        </HMediaQuery.MaxWidth>
+        </HMediaQuery>
 
         <RequirementsAndDeviations
           toggle={toggleRequirementsAndDeviations}
