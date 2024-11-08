@@ -5,16 +5,15 @@ import {
   Column,
   useReactTable,
   getCoreRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  flexRender
+  flexRender,
+  PaginationState
 } from "@tanstack/react-table"
 // @ts-ignore Ignore type-checking for this library
 import { FormattedMessage } from "react-intl"
 import styled from "../styled"
 
 interface RaportitTableProps {
-  data: any
+  data: any[]
   columns: Column<any, any>[]
   loading: boolean
   pageCount: number
@@ -66,13 +65,16 @@ const printResultInfo = (length: number, count: number, loading: boolean) => {
 
 export const RaportitTable = (props: RaportitTableProps) => {
   const { fetchData } = props
-  const data = useMemo(() => props.data, [props.data])!
-
+  const data = useMemo(() => props.data, [props.data])
   const columns = useMemo(() => props.columns, [props.columns])
-  const [pagination, setPagination] = React.useState({
+  const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10
   })
+
+  useEffect(() => {
+    if (fetchData) fetchData(pagination.pageSize, pagination.pageIndex)
+  }, [pagination.pageSize, pagination.pageIndex, fetchData])
 
   const table = useReactTable({
     columns,
@@ -80,22 +82,12 @@ export const RaportitTable = (props: RaportitTableProps) => {
     state: {
       pagination
     },
-    onPaginationChange: updater => {
-      setPagination(old =>
-        updater instanceof Function ? updater(old) : updater
-      )
-    },
-    getRowId: originalRow => originalRow.hoksId,
-    manualPagination: true,
-    pageCount: props.pageCount,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel()
+    onPaginationChange: setPagination,
+    manualPagination: true,
+    manualSorting: true,
+    pageCount: props.pageCount
   })
-
-  useEffect(() => {
-    if (fetchData) fetchData(pagination.pageSize, pagination.pageIndex)
-  }, [pagination, fetchData])
 
   /* eslint-disable react/jsx-key */
   /* the jsx key is provided in the .get*Props() spreads. */

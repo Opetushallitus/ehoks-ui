@@ -189,7 +189,7 @@ interface TpjFetchResult {
 
 interface RaportitState {
   hoksitCount?: number
-  data?: (HoksRow | TpjRow)[]
+  data: (HoksRow | TpjRow)[]
   loading: boolean
   pageCount: number
   titleText: string
@@ -248,7 +248,7 @@ class RaportitInner extends React.Component<RaportitProps> {
       if (request.status === 200) {
         const json: hoksitFetchResult = await request.json()
         this.setState({
-          data: json.data.result,
+          data: json.data.result ?? [],
           loading: false,
           pageCount: json.data.pagecount
         })
@@ -299,7 +299,7 @@ class RaportitInner extends React.Component<RaportitProps> {
       if (request.status === 200) {
         const json: TpjFetchResult = await request.json()
         this.setState({
-          data: json.data.result,
+          data: json.data.result ?? [],
           loading: false,
           pageCount: json.data.pagecount
         })
