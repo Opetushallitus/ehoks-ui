@@ -38,43 +38,34 @@ function localDateToUTC(dateString: string) {
 /** Copied from react-jsonschema-form
  * and modified to TS and needs
  */
-export function CustomDatetimeWidget(props: WidgetProps) {
-  const {
-    value,
-    onChange,
-    readonly,
-    disabled,
-    autofocus,
-    onBlur,
-    onFocus,
-    schema,
-    uiSchema,
-    id,
-    label,
-    options,
-    multiple
-  } = props
-  return (
-    <CustomBaseInput
-      readonly={readonly}
-      disabled={disabled}
-      autofocus={autofocus}
-      onBlur={onBlur}
-      onFocus={onFocus}
-      schema={schema}
-      uiSchema={uiSchema}
-      value={utcToLocalDate(value)}
-      id={id}
-      label={label}
-      options={options}
-      onChange={(changedValue: string) =>
-        onChange(localDateToUTC(changedValue))
-      }
-      multiple={multiple}
-    />
-  )
-}
-
-CustomDatetimeWidget.defaultProps = {
-  autofocus: false
-}
+export const CustomDatetimeWidget: React.FC<WidgetProps> = ({
+  value,
+  onChange,
+  readonly,
+  disabled,
+  autofocus = false,
+  onBlur,
+  onFocus,
+  schema,
+  uiSchema,
+  id,
+  label,
+  options,
+  multiple
+}) => (
+  <CustomBaseInput
+    readonly={readonly}
+    disabled={disabled}
+    autofocus={autofocus}
+    onBlur={onBlur}
+    onFocus={onFocus}
+    schema={schema}
+    uiSchema={uiSchema}
+    value={utcToLocalDate(value)}
+    id={id}
+    label={label}
+    options={options}
+    onChange={(changedValue: string) => onChange(localDateToUTC(changedValue))}
+    multiple={multiple}
+  />
+)

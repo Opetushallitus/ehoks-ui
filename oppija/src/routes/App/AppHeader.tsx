@@ -209,8 +209,8 @@ export const AppHeader = inject("store")(
     const { session } = store!
     const { user, isLoggedIn } = session!
     const { activeLocale } = store!.translations
-    const hasUnansweredFeedbackLinks = store!.notifications
-      .hasUnanswaredFeedbackLinks
+    const hasUnansweredFeedbackLinks =
+      store!.notifications.hasUnanswaredFeedbackLinks
     const activeDomain = getActiveDomain()
     return (
       <HeaderContainer>

@@ -93,7 +93,7 @@ export const HOKS = types
     } = getEnv<StoreEnvironment>(self)
 
     // fetches detailed HOKS, only needed in virkailija app
-    const fetchDetails = flow(function*(): any {
+    const fetchDetails = flow(function* (): any {
       const response: APIResponse = yield fetchSingle(
         apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}`),
         { headers: appendCallerId() }
@@ -105,7 +105,7 @@ export const HOKS = types
     })
 
     // fetches opiskelijapalauteTilat for HOKS, only needed in virkailija app
-    const fetchOpiskelijapalauteTilat = flow(function*(): any {
+    const fetchOpiskelijapalauteTilat = flow(function* (): any {
       const response: APIResponse = yield fetchCollection(
         apiUrl(
           `${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}/opiskelijapalaute`
@@ -115,7 +115,7 @@ export const HOKS = types
       self.opiskelijapalauteTilat = response.data
     })
 
-    const fetchTutkinto = flow(function*(): any {
+    const fetchTutkinto = flow(function* (): any {
       if (!self.opiskeluOikeus.oid.length) return
 
       const diaarinumero =
@@ -144,7 +144,7 @@ export const HOKS = types
       return { id, suoritustapa }
     })
 
-    const fetchRakenne = flow(function*(
+    const fetchRakenne = flow(function* (
       id: string,
       suoritustapa = "reformi"
     ): any {
@@ -166,7 +166,7 @@ export const HOKS = types
       return null
     }
 
-    const fetchOsaamispisteet = flow(function*(): any {
+    const fetchOsaamispisteet = flow(function* (): any {
       try {
         if (!self.opiskeluOikeus.oid.length) return
 
@@ -180,7 +180,7 @@ export const HOKS = types
       }
     })
 
-    const fetchOpiskeluoikeudet = flow(function*(): any {
+    const fetchOpiskeluoikeudet = flow(function* (): any {
       if (!self.oppijaOid) {
         return
       }
@@ -225,7 +225,7 @@ export const HOKS = types
       }
     })
 
-    const shallowDelete = flow(function*(): any {
+    const shallowDelete = flow(function* (): any {
       if (!self.oppijaOid) {
         return
       }

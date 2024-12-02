@@ -89,17 +89,14 @@ export const OsaamisenOsoittaminen = observer(
 
     const toggleRequirementsAndDeviations = () => {
       setState({
-        requirementsAndDeviationsExpanded: !state.requirementsAndDeviationsExpanded
+        requirementsAndDeviationsExpanded:
+          !state.requirementsAndDeviationsExpanded
       })
     }
 
     const share = () => {
-      const {
-        moduleId,
-        hoksEid,
-        tutkinnonOsaTyyppi,
-        tutkinnonOsaModuleId
-      } = props
+      const { moduleId, hoksEid, tutkinnonOsaTyyppi, tutkinnonOsaModuleId } =
+        props
       if (moduleId && hoksEid && tutkinnonOsaTyyppi && tutkinnonOsaModuleId) {
         navigate(
           `${window.location.pathname}?${stringifyShareParams({
@@ -233,20 +230,20 @@ export const OsaamisenOsoittaminen = observer(
             defaultMessage="Sisältö"
           />
         </DemonstrationTasksTitle>
-        <HMediaQuery.MaxWidth breakpoint="Tablet">
+        <HMediaQuery breakpoint="Tablet">
           <CustomSlider>
             {sisallonKuvaus.map((tyotehtava, i) => (
               <Slide key={i}>{tyotehtava}</Slide>
             ))}
           </CustomSlider>
-        </HMediaQuery.MaxWidth>
-        <HMediaQuery.MaxWidth breakpoint="Tablet" notMatch>
+        </HMediaQuery>
+        <HMediaQuery breakpoint="Tablet" notMatch>
           <OsaamisenOsoittaminenTasks>
             {sisallonKuvaus.map((tyotehtava, i) => (
               <li key={i}>{tyotehtava}</li>
             ))}
           </OsaamisenOsoittaminenTasks>
-        </HMediaQuery.MaxWidth>
+        </HMediaQuery>
 
         <RequirementsAndDeviations
           toggle={toggleRequirementsAndDeviations}

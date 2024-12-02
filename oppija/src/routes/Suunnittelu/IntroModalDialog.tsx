@@ -285,8 +285,8 @@ export const IntroModalDialog = inject("store")(
         ...s,
         initialAcknowledgedStatus:
           session.settings.introDialog.userAcknowledgedIntroDialog,
-        introDialogOpen: !session.settings.introDialog
-          .userAcknowledgedIntroDialog
+        introDialogOpen:
+          !session.settings.introDialog.userAcknowledgedIntroDialog
       }))
     }, [session, session.settings.introDialog.userAcknowledgedIntroDialog])
 

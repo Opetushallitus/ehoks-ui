@@ -72,9 +72,7 @@ interface CompetenceRequirementProps {
   expanded: boolean
   expand: () => void
 }
-export class CompetenceRequirement extends React.Component<
-  CompetenceRequirementProps
-> {
+export class CompetenceRequirement extends React.Component<CompetenceRequirementProps> {
   render() {
     const { competenceRequirement, expanded, expand } = this.props
     const kriteerit = competenceRequirement.kriteerit || []

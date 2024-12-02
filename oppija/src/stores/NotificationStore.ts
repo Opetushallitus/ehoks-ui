@@ -52,7 +52,7 @@ export const Notification = types
       session: { settings: ISettings; saveSettings: any }
     } = getRoot(self)
 
-    const ackNotification = function() {
+    const ackNotification = function () {
       root.session.settings.hiddenNotifications.hide(
         self.hoksId,
         self.tutkinnonOsaKoodiUri,
@@ -87,9 +87,8 @@ export const NotificationStore = types
     return { addNotifications }
   })
   .actions(self => {
-    const { apiUrl, fetchPrimitiveCollection, errors, appendCallerId } = getEnv<
-      StoreEnvironment
-    >(self)
+    const { apiUrl, fetchPrimitiveCollection, errors, appendCallerId } =
+      getEnv<StoreEnvironment>(self)
 
     const hideFeedbackModal = () => {
       self.showFeedbackModal = false
@@ -99,7 +98,7 @@ export const NotificationStore = types
       self.showFeedbackModal = true
     }
 
-    const haeOpiskelijapalautelinkit = flow(function*(oid: string): any {
+    const haeOpiskelijapalautelinkit = flow(function* (oid: string): any {
       if (oid === "") {
         console.log(
           "Opiskelijapalautelinkkejä ei voida hakea, koska oppijaOid ei ole määritelty."

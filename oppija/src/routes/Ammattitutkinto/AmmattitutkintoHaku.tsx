@@ -75,13 +75,12 @@ export const AmmattitutkintoHaku = inject("store")(
       })
     }
 
-    const onPaginationResultEnter = (index: number) => (
-      event: React.KeyboardEvent
-    ) => {
-      if (event.key === "Enter" || event.key === " ") {
-        setState({ ...state, activePage: index })
+    const onPaginationResultEnter =
+      (index: number) => (event: React.KeyboardEvent) => {
+        if (event.key === "Enter" || event.key === " ") {
+          setState({ ...state, activePage: index })
+        }
       }
-    }
 
     const goToPage = (index: number) => () => {
       setState({ ...state, activePage: index })
@@ -136,8 +135,7 @@ export const AmmattitutkintoHaku = inject("store")(
               {totalPages > 1 && oppilas.perusteet.length > 0 && (
                 <PagingContainer
                   aria-label={intl.formatMessage({
-                    id:
-                      "ammattitutkinto.hakutuloksienSivutuksenNavigaatioAriaLabel"
+                    id: "ammattitutkinto.hakutuloksienSivutuksenNavigaatioAriaLabel"
                   })}
                 >
                   {range(totalPages).map(index => (
@@ -150,8 +148,7 @@ export const AmmattitutkintoHaku = inject("store")(
                       tabIndex={0}
                       aria-label={intl.formatMessage(
                         {
-                          id:
-                            "ammattitutkinto.meneHakutuloksienSivulleAriaLabel"
+                          id: "ammattitutkinto.meneHakutuloksienSivulleAriaLabel"
                         },
                         { page: index + 1 }
                       )}

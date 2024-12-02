@@ -161,6 +161,11 @@
   },
   {
     "locale": "fi",
+    "key": "errors.SessionStore.fetchSettings",
+    "value": "Asetusten haku epäonnistui"
+  },
+  {
+    "locale": "fi",
     "key": "errors.TranslationStore.fetchLocales",
     "value": "Käännösten haku epäonnistui"
   },

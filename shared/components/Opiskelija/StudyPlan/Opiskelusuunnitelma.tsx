@@ -161,11 +161,8 @@ export const Opiskelusuunnitelma = observer(
     }
 
     const hasActiveShare = (type: StudyPartType) => {
-      const {
-        aikataulutetutOpinnot,
-        suunnitellutOpinnot,
-        valmiitOpinnot
-      } = props.plan
+      const { aikataulutetutOpinnot, suunnitellutOpinnot, valmiitOpinnot } =
+        props.plan
       const { share } = state
       const studies = {
         aikataulutetut: aikataulutetutOpinnot,
@@ -195,40 +192,38 @@ export const Opiskelusuunnitelma = observer(
       })
     }
 
-    const showPlanSubAccordion = (
-      subAccordion: StudyPartSubAccordions
-    ) => () => {
-      setState({
-        ...state,
-        activeAccordions: {
-          ...state.activeAccordions,
-          suunnitelma: true,
-          suunnitelmat: {
-            ...state.activeAccordions.suunnitelmat,
-            [subAccordion]: true
+    const showPlanSubAccordion =
+      (subAccordion: StudyPartSubAccordions) => () => {
+        setState({
+          ...state,
+          activeAccordions: {
+            ...state.activeAccordions,
+            suunnitelma: true,
+            suunnitelmat: {
+              ...state.activeAccordions.suunnitelmat,
+              [subAccordion]: true
+            }
           }
-        }
-      })
-      window.location.hash = `suunnitelma.${subAccordion}`
-    }
+        })
+        window.location.hash = `suunnitelma.${subAccordion}`
+      }
 
-    const toggleAccordion = (
-      accordion: ActiveAccordions,
-      subAccordion?: StudyPartSubAccordions
-    ) => () => {
-      setState({
-        ...state,
-        activeAccordions: {
-          ...state.activeAccordions,
-          [accordion]: !subAccordion
-            ? !state.activeAccordions[accordion]
-            : toggleSubAccordion(
-                state.activeAccordions[accordion],
-                subAccordion
-              )
-        }
-      })
-    }
+    const toggleAccordion =
+      (accordion: ActiveAccordions, subAccordion?: StudyPartSubAccordions) =>
+      () => {
+        setState({
+          ...state,
+          activeAccordions: {
+            ...state.activeAccordions,
+            [accordion]: !subAccordion
+              ? !state.activeAccordions[accordion]
+              : toggleSubAccordion(
+                  state.activeAccordions[accordion],
+                  subAccordion
+                )
+          }
+        })
+      }
 
     const toggleSubAccordion = (
       accordionState: boolean | { [subAccordionName: string]: boolean },

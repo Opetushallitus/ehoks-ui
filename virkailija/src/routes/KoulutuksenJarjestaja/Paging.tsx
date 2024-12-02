@@ -50,8 +50,8 @@ export function Paging(props: PagingProps) {
         ? range(0)
         : range(1)
       : activePage > totalPages - 10
-      ? range(10)
-      : range(1)
+        ? range(10)
+        : range(1)
     : range(0)
 
   return (

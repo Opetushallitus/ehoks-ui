@@ -9,7 +9,7 @@ const {
   keyframes,
   ThemeProvider,
   withTheme
-} = (StyledComponents as any) as ThemedStyledComponentsModule<TypeOfTheme>
+} = StyledComponents as any as ThemedStyledComponentsModule<TypeOfTheme>
 export default baseStyled
 export { css, createGlobalStyle, keyframes, ThemeProvider, withTheme }
 

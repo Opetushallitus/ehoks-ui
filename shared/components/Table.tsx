@@ -34,6 +34,7 @@ export interface TableProps {
   onUpdateSearchText: (
     field: string
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void
+  children: React.ReactNode
 }
 
 export class Table extends React.PureComponent<TableProps> {

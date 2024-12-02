@@ -18,7 +18,7 @@ import { StoreEnvironment } from "types/StoreEnvironment"
 
 const sortKeys = ["nimi", "tutkinto", "osaamisala", "hoks-id"] as const
 
-export type SearchSortKey = typeof sortKeys[number]
+export type SearchSortKey = (typeof sortKeys)[number]
 
 export const Translation = types.model("Translation", {
   fi: types.optional(types.string, ""),
@@ -38,14 +38,13 @@ export const Oppija = types
     henkilotiedot: types.optional(SessionUser, { surname: "" })
   })
   .actions(self => {
-    const { fetchCollection, fetchSingle, apiUrl, appendCallerId } = getEnv<
-      StoreEnvironment
-    >(self)
+    const { fetchCollection, fetchSingle, apiUrl, appendCallerId } =
+      getEnv<StoreEnvironment>(self)
 
     // fetches HOKSes with basic info (root level only)
     const rootStore: IRootStore = getRoot<IRootStore>(self)
     const oppilaitosOid: string = rootStore.session.selectedOrganisationOid
-    const fetchSuunnitelmat = flow(function*(): any {
+    const fetchSuunnitelmat = flow(function* (): any {
       const response: APIResponse = yield fetchCollection(
         apiUrl(
           `virkailija/oppijat/${self.oid}/hoksit/oppilaitos/${oppilaitosOid}`
@@ -66,7 +65,7 @@ export const Oppija = types
       }
     })
 
-    const fetchHenkilotiedot = flow(function*(): any {
+    const fetchHenkilotiedot = flow(function* (): any {
       const response: APIResponse = yield fetchSingle(
         apiUrl(`virkailija/oppijat/${self.oid}`),
         { headers: appendCallerId() }
@@ -84,7 +83,7 @@ export const Oppija = types
     })
 
     // eslint-disable-next-line require-yield
-    const fetchOpiskeluoikeudet = flow(function*(): any {
+    const fetchOpiskeluoikeudet = flow(function* (): any {
       return Promise.all(
         self.suunnitelmat.map(suunnitelma =>
           suunnitelma.fetchOpiskeluoikeudet()
@@ -136,8 +135,8 @@ export const Oppija = types
       return get(x, "tutkinnonNimi", "")
     },
     get osaamisala(): string {
-      const activeLocale: Locale = getRoot<IRootStore>(self).translations
-        .activeLocale
+      const activeLocale: Locale =
+        getRoot<IRootStore>(self).translations.activeLocale
       switch (activeLocale) {
         case Locale.FI:
           return self.osaamisalaNimi.fi
@@ -173,19 +172,18 @@ const Search = types
     }
   }))
   .actions(self => {
-    const { fetchCollection, fetchSingle, apiUrl, appendCallerId } = getEnv<
-      StoreEnvironment
-    >(self)
+    const { fetchCollection, fetchSingle, apiUrl, appendCallerId } =
+      getEnv<StoreEnvironment>(self)
 
-    const fetchOppijat = flow(function*(): any {
+    const fetchOppijat = flow(function* (): any {
       // TODO fix cross reference of stores?
       const rootStore: IRootStore = getRoot<IRootStore>(self)
       const oppilaitosOid: string = rootStore.session.selectedOrganisationOid
       if (oppilaitosOid === "") {
         return
       }
-      const activeLocale: Locale = getRoot<IRootStore>(self).translations
-        .activeLocale
+      const activeLocale: Locale =
+        getRoot<IRootStore>(self).translations.activeLocale
 
       self.isLoading = true
 
@@ -223,8 +221,14 @@ const Search = types
       // side effects, fetch plans & personal info for all students
       yield Promise.all(
         self.results.map(
-          flow(function*(oppija): any {
+          flow(function* (oppija): any {
             yield oppija.fetchSuunnitelmat()
+          })
+        )
+      )
+      yield Promise.all(
+        self.results.map(
+          flow(function* (oppija): any {
             yield oppija.fetchHenkilotiedot()
           })
         )
@@ -234,7 +238,7 @@ const Search = types
     })
 
     // Fetches oppija by id and adds it to results
-    const fetchOppija = flow(function*(oppijaOid): any {
+    const fetchOppija = flow(function* (oppijaOid): any {
       const response: APIResponse = yield fetchSingle(
         apiUrl(`virkailija/oppijat/${oppijaOid}/with-oo`),
         { headers: appendCallerId() }
@@ -243,8 +247,14 @@ const Search = types
       self.results.push(response.data)
       yield Promise.all(
         self.results.map(
-          flow(function*(oppija): any {
+          flow(function* (oppija): any {
             yield oppija.fetchSuunnitelmat()
+          })
+        )
+      )
+      yield Promise.all(
+        self.results.map(
+          flow(function* (oppija): any {
             yield oppija.fetchHenkilotiedot()
           })
         )

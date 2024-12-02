@@ -11,13 +11,12 @@ const OppilasStoreModel = {
 export const OppilasStore = types
   .model("OppilasStore", OppilasStoreModel)
   .actions(self => {
-    const { apiUrl, fetchCollection, errors, appendCallerId } = getEnv<
-      StoreEnvironment
-    >(self)
+    const { apiUrl, fetchCollection, errors, appendCallerId } =
+      getEnv<StoreEnvironment>(self)
     // tracks the most recent fetch by user
     let newestPromise: Promise<APIResponse> | null = null
 
-    const haePerusteet = flow(function*(name: string): any {
+    const haePerusteet = flow(function* (name: string): any {
       self.isLoading = true
       try {
         const fetchPromise: Promise<APIResponse> = fetchCollection(

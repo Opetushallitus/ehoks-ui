@@ -42,11 +42,10 @@ export const ShareStoreModel = {
 export const ShareStore = types
   .model("ShareStore", ShareStoreModel)
   .actions(self => {
-    const { apiUrl, apiPrefix, fetchSingle, errors, appendCallerId } = getEnv<
-      StoreEnvironment
-    >(self)
+    const { apiUrl, apiPrefix, fetchSingle, errors, appendCallerId } =
+      getEnv<StoreEnvironment>(self)
 
-    const fetchShareData = flow(function*(shareUuid: string): any {
+    const fetchShareData = flow(function* (shareUuid: string): any {
       self.isLoading = true
       try {
         const response: APIResponse = yield fetchSingle(

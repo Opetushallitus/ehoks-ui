@@ -64,8 +64,8 @@ const humanReadablePrefix = (prefix: any[]) => {
         (typeof prefix[index + 1] === "number"
           ? " "
           : typeof prefix[index + 1] === "string"
-          ? ", "
-          : "")
+            ? ", "
+            : "")
     )
     .join("")
 }

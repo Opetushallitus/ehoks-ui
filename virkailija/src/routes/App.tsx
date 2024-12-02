@@ -32,7 +32,7 @@ const Container = styled("div")`
   height: 100%;
   ${props =>
     props.theme.typography
-      .body} /* Needed for fixing apply-raamit.css injection */
+      .body}/* Needed for fixing apply-raamit.css injection */
 `
 
 const StyledRoutes = styled(Routes)`

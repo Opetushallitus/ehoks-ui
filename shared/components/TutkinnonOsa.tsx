@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled"
 import { Competences } from "./TutkinnonOsa/Competences"
 import {
@@ -10,7 +10,6 @@ import {
   ITarkentavatTiedotOsaamisenArvioija
 } from "models/helpers/TutkinnonOsa"
 import { FormattedMessage, FormattedNumber } from "react-intl"
-import { AppContext } from "components/AppContext"
 import { ToggleableItems } from "./TutkinnonOsa/TutkinnonOsaHelpers"
 import { Objectives } from "./TutkinnonOsa/Objectives"
 import { Details } from "./TutkinnonOsa/Details"
@@ -146,14 +145,28 @@ export interface TutkinnonOsaState {
 /**
  * Shows information about single study
  */
-export class TutkinnonOsa extends React.Component<
-  TutkinnonOsaProps,
-  TutkinnonOsaState
-> {
-  static contextType = AppContext
-  declare context: React.ContextType<typeof AppContext>
-
-  state: TutkinnonOsaState = {
+export const TutkinnonOsa: React.FC<TutkinnonOsaProps> = ({
+  share,
+  moduleId,
+  accentColor,
+  competenceRequirements = [],
+  osaamisenOsoittamiset = [],
+  olennainenSeikka,
+  opetusJaOhjausMaara,
+  fadedColor,
+  osaamisenHankkimistavat = [],
+  koodiUri,
+  hoksEid,
+  tutkinnonOsaTyyppi,
+  title,
+  todentamisenProsessi,
+  width = "25%",
+  objectives,
+  koulutuksenJarjestaja,
+  tarkentavatTiedotOsaamisenArvioija,
+  vaatimuksistaTaiTavoitteistaPoikkeaminen
+}) => {
+  const [state, setState] = useState<TutkinnonOsaState>({
     expanded: {
       competences: false,
       details: false,
@@ -161,206 +174,160 @@ export class TutkinnonOsa extends React.Component<
       requirementsAndDeviations: false
     },
     expandedCompetences: []
-  }
-
-  componentDidMount() {
-    const { share, moduleId } = this.props
+  })
+  useEffect(() => {
     if (typeof share !== "undefined" && moduleId === share.moduleId) {
-      this.setState(state => ({
-        ...state,
+      setState(s => ({
+        ...s,
         expanded: {
-          ...state.expanded,
+          ...s.expanded,
           details: true
         }
       }))
     }
-  }
+  }, [share, moduleId])
 
-  static getDerivedStateFromProps(
-    nextProps: TutkinnonOsaProps,
-    prevState: TutkinnonOsaState
-  ) {
-    const { moduleId, share } = nextProps
-    if (typeof share !== "undefined" && moduleId === share.moduleId) {
-      return {
-        ...prevState,
-        expanded: {
-          ...prevState.expanded,
-          details: true
-        }
-      }
-    } else {
-      return null
+  const toggle = (name: ToggleableItems) => () => {
+    if (name) {
+      setState(s => ({
+        ...s,
+        expanded: { ...s.expanded, [name]: !s.expanded[name] }
+      }))
     }
   }
 
-  toggle = (name: ToggleableItems) => () => {
-    this.setState(state => ({
-      ...state,
-      expanded: { ...state.expanded, [name]: !state.expanded[name] }
-    }))
-  }
-
-  expandCompetence = (index: number) => () => {
-    this.setState((state: TutkinnonOsaState) => ({
+  const expandCompetence = (index: number) => () => {
+    setState(s => ({
+      ...s,
       expandedCompetences:
-        state.expandedCompetences.indexOf(index) > -1
-          ? state.expandedCompetences.filter(i => i !== index)
-          : [...state.expandedCompetences, index]
+        s.expandedCompetences.indexOf(index) > -1
+          ? s.expandedCompetences.filter(i => i !== index)
+          : [...s.expandedCompetences, index]
     }))
   }
 
-  expandAll = () => {
-    this.setState({
-      expandedCompetences: (this.props.competenceRequirements || []).map(
-        (_, i) => i
-      )
-    })
+  const expandAll = () => {
+    setState(s => ({
+      ...s,
+      expandedCompetences: (competenceRequirements || []).map((_, i) => i)
+    }))
   }
 
-  collapseAll = () => {
-    this.setState({ expandedCompetences: [] })
+  const collapseAll = () => {
+    setState(s => ({ ...s, expandedCompetences: [] }))
   }
 
-  private koulutuksenJarjestajaShouldBeShown() {
-    return (
-      this.state.expanded.details ||
-      this.state.expanded.competences ||
-      this.state.expanded.objectives ||
-      this.state.expanded.requirementsAndDeviations
-    )
-  }
+  const koulutuksenJarjestajaShouldBeShown = () =>
+    state.expanded.details ||
+    state.expanded.competences ||
+    state.expanded.objectives ||
+    state.expanded.requirementsAndDeviations
 
-  render() {
-    const {
-      accentColor,
-      competenceRequirements = [],
-      osaamisenOsoittamiset = [],
-      olennainenSeikka,
-      opetusJaOhjausMaara,
-      fadedColor,
-      osaamisenHankkimistavat = [],
-      koodiUri,
-      moduleId,
-      hoksEid,
-      tutkinnonOsaTyyppi,
-      share,
-      title,
-      todentamisenProsessi,
-      width = "25%",
-      objectives,
-      koulutuksenJarjestaja,
-      tarkentavatTiedotOsaamisenArvioija,
-      vaatimuksistaTaiTavoitteistaPoikkeaminen
-    } = this.props
-    const { expandedCompetences, expanded } = this.state
-    const hasOsaamisenHakkimistavat =
-      osaamisenHankkimistavat && osaamisenHankkimistavat.length > 0
-    const hasDetails =
-      hasOsaamisenHakkimistavat ||
-      osaamisenOsoittamiset.length > 0 ||
-      todentamisenProsessi ||
-      vaatimuksistaTaiTavoitteistaPoikkeaminen
-    const hasActiveShare =
-      typeof share !== "undefined" && moduleId === share.tutkinnonOsaModuleId
-    const detailsExpanded = expanded.details || hasActiveShare
-
-    return (
-      <Container
-        accentColor={accentColor}
-        expanded={expanded.competences || detailsExpanded}
-        width={width}
-      >
-        <InnerContainer>
-          <TitleContainer>
-            <Title data-testid="Title">{title}</Title>
-          </TitleContainer>
-          {this.koulutuksenJarjestajaShouldBeShown() && (
-            <SubTitleContainer>
+  const hasOsaamisenHakkimistavat =
+    osaamisenHankkimistavat && osaamisenHankkimistavat.length > 0
+  const hasDetails =
+    hasOsaamisenHakkimistavat ||
+    osaamisenOsoittamiset.length > 0 ||
+    todentamisenProsessi ||
+    vaatimuksistaTaiTavoitteistaPoikkeaminen
+  const hasActiveShare =
+    typeof share !== "undefined" && moduleId === share.tutkinnonOsaModuleId
+  const detailsExpanded = state.expanded.details || hasActiveShare
+  return (
+    <Container
+      accentColor={accentColor}
+      expanded={state.expanded.competences || detailsExpanded}
+      width={width}
+    >
+      <InnerContainer>
+        <TitleContainer>
+          <Title data-testid="Title">{title}</Title>
+        </TitleContainer>
+        {koulutuksenJarjestajaShouldBeShown() && (
+          <SubTitleContainer>
+            <OneRowTable
+              th={
+                <FormattedMessage
+                  id="tutkinnonOsa.toteuttavaKoulutuksenJarjestajaTitle"
+                  defaultMessage="Toteuttava koulutuksenjärjestäjä"
+                />
+              }
+            >
+              {koulutuksenJarjestaja?.organizationName}
+            </OneRowTable>
+            {(!!opetusJaOhjausMaara || opetusJaOhjausMaara === 0) && (
               <OneRowTable
                 th={
                   <FormattedMessage
-                    id="tutkinnonOsa.toteuttavaKoulutuksenJarjestajaTitle"
-                    defaultMessage="Toteuttava koulutuksenjärjestäjä"
+                    id="tutkinnonOsa.opetusJaOhjausMaaraTitle"
+                    defaultMessage="Opetus ja ohjaus"
                   />
                 }
               >
-                {koulutuksenJarjestaja?.organizationName}
+                {opetusJaOhjausMaara !== 1 ? (
+                  <FormattedMessage
+                    id="tutkinnonOsa.opetusJaOhjausMaaraHours"
+                    defaultMessage="{hours} tuntia"
+                    values={{
+                      hours: <FormattedNumber value={opetusJaOhjausMaara} />
+                    }}
+                  />
+                ) : (
+                  <FormattedMessage
+                    id="tutkinnonOsa.opetusJaOhjausMaaraOneHour"
+                    defaultMessage="1 tunti"
+                  />
+                )}
               </OneRowTable>
-              {(!!opetusJaOhjausMaara || opetusJaOhjausMaara === 0) && (
-                <OneRowTable
-                  th={
-                    <FormattedMessage
-                      id="tutkinnonOsa.opetusJaOhjausMaaraTitle"
-                      defaultMessage="Opetus ja ohjaus"
-                    />
-                  }
-                >
-                  {opetusJaOhjausMaara !== 1 ? (
-                    <FormattedMessage
-                      id="tutkinnonOsa.opetusJaOhjausMaaraHours"
-                      defaultMessage="{hours} tuntia"
-                      values={{
-                        hours: <FormattedNumber value={opetusJaOhjausMaara} />
-                      }}
-                    />
-                  ) : (
-                    <FormattedMessage
-                      id="tutkinnonOsa.opetusJaOhjausMaaraOneHour"
-                      defaultMessage="1 tunti"
-                    />
-                  )}
-                </OneRowTable>
-              )}
-            </SubTitleContainer>
-          )}
-          {hasDetails && (
-            <Details
-              fadedColor={fadedColor}
-              osaamisenOsoittamiset={osaamisenOsoittamiset}
-              olennainenSeikka={olennainenSeikka}
-              expanded={detailsExpanded}
-              osaamisenHankkimistavat={osaamisenHankkimistavat}
-              todentamisenProsessi={todentamisenProsessi}
-              koodiUri={koodiUri}
-              share={share}
-              hoksEid={hoksEid}
-              moduleId={moduleId}
-              tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
-              toggle={this.toggle}
-              koulutuksenJarjestaja={koulutuksenJarjestaja}
-              tarkentavatTiedotOsaamisenArvioija={
-                tarkentavatTiedotOsaamisenArvioija
-              }
-            />
-          )}
-          <Competences
-            collapseAll={this.collapseAll}
-            competenceRequirements={competenceRequirements}
-            expandAll={this.expandAll}
-            expandCompetence={this.expandCompetence}
-            expanded={expanded.competences}
-            expandedCompetences={expandedCompetences}
+            )}
+          </SubTitleContainer>
+        )}
+        {hasDetails && (
+          <Details
+            fadedColor={fadedColor}
+            osaamisenOsoittamiset={osaamisenOsoittamiset}
+            olennainenSeikka={olennainenSeikka}
+            expanded={detailsExpanded}
+            osaamisenHankkimistavat={osaamisenHankkimistavat}
+            todentamisenProsessi={todentamisenProsessi}
+            koodiUri={koodiUri}
+            share={share}
+            hoksEid={hoksEid}
+            moduleId={moduleId}
             tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
-            toggle={this.toggle}
+            toggle={toggle("details")}
+            koulutuksenJarjestaja={koulutuksenJarjestaja}
+            tarkentavatTiedotOsaamisenArvioija={
+              tarkentavatTiedotOsaamisenArvioija
+            }
           />
-          {!!vaatimuksistaTaiTavoitteistaPoikkeaminen && (
-            <RequirementsAndDeviations
-              toggle={this.toggle("requirementsAndDeviations")}
-              expanded={expanded.requirementsAndDeviations}
-              requirements={[]}
-              deviations={vaatimuksistaTaiTavoitteistaPoikkeaminen}
-            />
-          )}
-          {objectives && (
-            <Objectives
-              expanded={expanded.objectives}
-              toggle={this.toggle}
-              objectives={objectives}
-            />
-          )}
-        </InnerContainer>
-      </Container>
-    )
-  }
+        )}
+        <Competences
+          collapseAll={collapseAll}
+          competenceRequirements={competenceRequirements}
+          expandAll={expandAll}
+          expandCompetence={expandCompetence}
+          expanded={state.expanded.competences}
+          expandedCompetences={state.expandedCompetences}
+          tutkinnonOsaTyyppi={tutkinnonOsaTyyppi}
+          toggle={toggle("competences")}
+        />
+        {!!vaatimuksistaTaiTavoitteistaPoikkeaminen && (
+          <RequirementsAndDeviations
+            toggle={toggle("requirementsAndDeviations")}
+            expanded={state.expanded.requirementsAndDeviations}
+            requirements={[]}
+            deviations={vaatimuksistaTaiTavoitteistaPoikkeaminen}
+          />
+        )}
+        {objectives && (
+          <Objectives
+            expanded={state.expanded.objectives}
+            toggle={toggle("objectives")}
+            objectives={objectives}
+          />
+        )}
+      </InnerContainer>
+    </Container>
+  )
 }

@@ -10,9 +10,9 @@ import { FormattedMessage, injectIntl, IntlShape } from "react-intl"
 import { IRootStore } from "stores/RootStore"
 import styled from "styled"
 import { appendCommonHeaders } from "fetchUtils"
-import { Column, Row } from "react-table"
 import { Button } from "components/Button"
 import { InfoModal } from "components/InfoModal"
+import { createColumnHelper, Column } from "@tanstack/react-table"
 
 const BackgroundContainer = styled("div")`
   background: #f8f8f8;
@@ -189,7 +189,7 @@ interface TpjFetchResult {
 
 interface RaportitState {
   hoksitCount?: number
-  data?: (HoksRow | TpjRow)[]
+  data: (HoksRow | TpjRow)[]
   loading: boolean
   pageCount: number
   titleText: string
@@ -198,13 +198,6 @@ interface RaportitState {
   alku: string
   loppu: string
   initSearchDone: boolean
-}
-
-interface CustomColumn {
-  cell: {
-    value: number
-    row: Row
-  }
 }
 
 class RaportitInner extends React.Component<RaportitProps> {
@@ -255,7 +248,7 @@ class RaportitInner extends React.Component<RaportitProps> {
       if (request.status === 200) {
         const json: hoksitFetchResult = await request.json()
         this.setState({
-          data: json.data.result,
+          data: json.data.result ?? [],
           loading: false,
           pageCount: json.data.pagecount
         })
@@ -306,7 +299,7 @@ class RaportitInner extends React.Component<RaportitProps> {
       if (request.status === 200) {
         const json: TpjFetchResult = await request.json()
         this.setState({
-          data: json.data.result,
+          data: json.data.result ?? [],
           loading: false,
           pageCount: json.data.pagecount
         })
@@ -375,8 +368,9 @@ class RaportitInner extends React.Component<RaportitProps> {
         break
     }
     return oppijaOid.length && hoksEid.length
-      ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${row.oppilaitosOid ||
-          oppilaitosOid}/oppija/${oppijaOid}/${hoksEid}`
+      ? `/ehoks-virkailija-ui/koulutuksenjarjestaja/${
+          row.oppilaitosOid || oppilaitosOid
+        }/oppija/${oppijaOid}/${hoksEid}`
       : "/ehoks-virkailija-ui/raportit"
   }
 
@@ -387,131 +381,130 @@ class RaportitInner extends React.Component<RaportitProps> {
     })
   }
 
-  getColumnsForTable = (selectedRaportti: number): Column[] => {
+  getColumnsForTable = (selectedRaportti: number) => {
+    const { intl } = this.props
     if (selectedRaportti === 1) {
+      const columnHelper = createColumnHelper<HoksRow>()
       return [
-        {
-          Header: this.props.intl.formatMessage({
+        columnHelper.accessor("hoksId", {
+          header: intl.formatMessage({
             id: "raportit.ehoksid"
           }),
-          accessor: "hoksId",
-          Cell: ({ cell: { value } }: CustomColumn) => (
+          cell: ({ row }) => (
             <div style={{ textAlign: "center" }}>
               <Link
-                to={this.createLinkPath(value)}
+                to={this.createLinkPath(row.original.hoksId)}
                 state={{
                   fromRaportit: true,
-                  oppijaoid: this.getHoksiByHoksId(value)?.oppijaOid,
-                  hokseid: this.getHoksiByHoksId(value)?.hoksEid
+                  oppijaoid: this.getHoksiByHoksId(row.original.hoksId)
+                    ?.oppijaOid,
+                  hokseid: this.getHoksiByHoksId(row.original.hoksId)?.hoksEid
                 }}
               >
-                {value}
+                {row.original.hoksId}
               </Link>
             </div>
           )
-        },
-        {
-          Header: this.props.intl.formatMessage({
+        }),
+        columnHelper.accessor("oppijaOid", {
+          header: intl.formatMessage({
             id: "raportit.oppijanumeroTitle"
-          }),
-          accessor: "oppijaOid"
-        },
-        {
-          Header: this.props.intl.formatMessage({
+          })
+        }),
+        columnHelper.accessor("opiskeluoikeusOid", {
+          header: intl.formatMessage({
             id: "raportit.opiskeluoikeusoid"
-          }),
-          accessor: "opiskeluoikeusOid"
-        },
-        {
-          Header: this.props.intl.formatMessage({
+          })
+        }),
+        columnHelper.accessor("oppilaitosOid", {
+          header: intl.formatMessage({
             id: "raportit.oppilaitosoid"
-          }),
-          accessor: "oppilaitosOid"
-        }
+          })
+        })
       ]
     } else if (selectedRaportti === 2) {
+      const columnHelper = createColumnHelper<TpjRow>()
       return [
-        {
-          Header: this.props.intl.formatMessage({
+        columnHelper.accessor("hoksId", {
+          header: intl.formatMessage({
             id: "raportit.ehoksid"
           }),
-          accessor: "hoksId",
-          Cell: ({ cell: { value } }: CustomColumn) => (
+          cell: ({ row }) => (
             <div style={{ textAlign: "center" }}>
               <Link
-                to={this.createLinkPath(value)}
+                to={this.createLinkPath(row.original.hoksId)}
                 state={{
                   fromRaportit: true,
-                  oppijaoid: this.getTpjRowByHoksId(value)?.oppijaOid,
-                  hokseid: this.getTpjRowByHoksId(value)?.hoksEid
+                  oppijaoid: this.getTpjRowByHoksId(row.original.hoksId)
+                    ?.oppijaOid,
+                  hokseid: this.getTpjRowByHoksId(row.original.hoksId)?.hoksEid
                 }}
               >
-                {value}
+                {row.original.hoksId}
               </Link>
             </div>
           )
-        },
-        {
-          Header: this.props.intl.formatMessage({
+        }),
+        columnHelper.accessor("opiskeluoikeusOid", {
+          header: intl.formatMessage({
             id: "raportit.opiskeluoikeusoid"
           }),
-          accessor: "opiskeluoikeusOid",
-          Cell: ({ cell: { value } }: CustomColumn) => (
-            <div style={{ textAlign: "center" }}>{value}</div>
+          cell: ({ row }) => (
+            <div style={{ textAlign: "center" }}>
+              {row.original.opiskeluoikeusOid}
+            </div>
           )
-        },
-        {
-          Header: this.props.intl.formatMessage({
+        }),
+        columnHelper.accessor("oppijaOid", {
+          header: intl.formatMessage({
             id: "raportit.oppijanumeroTitle"
           }),
-          accessor: "oppijaOid",
-          Cell: ({ cell: { value } }: CustomColumn) => (
-            <div style={{ textAlign: "center" }}>{value}</div>
+          cell: ({ row }) => (
+            <div style={{ textAlign: "center" }}>{row.original.oppijaOid}</div>
           )
-        },
-        {
-          Header: this.props.intl.formatMessage({
+        }),
+        columnHelper.accessor("tyopaikanNimi", {
+          header: intl.formatMessage({
             id: "raportit.tyopaikannimi"
           }),
-          accessor: "tyopaikanNimi",
-          Cell: ({ cell: { value } }: CustomColumn) => (
-            <div style={{ textAlign: "center" }}>{value}</div>
+          cell: ({ row }) => (
+            <div style={{ textAlign: "center" }}>
+              {row.original.tyopaikanNimi}
+            </div>
           )
-        },
-        {
-          Header: this.props.intl.formatMessage({
+        }),
+        columnHelper.accessor("ohjaajaNimi", {
+          header: intl.formatMessage({
             id: "raportit.ohjaajannimi"
           }),
-          accessor: "ohjaajaNimi",
-          Cell: ({ cell: { value } }: CustomColumn) => (
-            <div style={{ textAlign: "center" }}>{value}</div>
+          cell: ({ row }) => (
+            <div style={{ textAlign: "center" }}>
+              {row.original.ohjaajaNimi}
+            </div>
           )
-        },
-        {
-          Header: this.props.intl.formatMessage({
+        }),
+        columnHelper.accessor("alkupvm", {
+          header: intl.formatMessage({
             id: "raportit.alku"
           }),
-          accessor: "alkupvm",
-          Cell: ({ cell: { value } }: CustomColumn) => (
-            <div style={{ textAlign: "center" }}>{value}</div>
+          cell: ({ row }) => (
+            <div style={{ textAlign: "center" }}>{row.original.alkupvm}</div>
           )
-        },
-        {
-          Header: this.props.intl.formatMessage({
+        }),
+        columnHelper.accessor("loppupvm", {
+          header: intl.formatMessage({
             id: "raportit.loppu"
           }),
-          accessor: "loppupvm",
-          Cell: ({ cell: { value } }: CustomColumn) => (
-            <div style={{ textAlign: "center" }}>{value}</div>
+          cell: ({ row }) => (
+            <div style={{ textAlign: "center" }}>{row.original.loppupvm}</div>
           )
-        },
-        {
-          Header: this.props.intl.formatMessage({
+        }),
+        columnHelper.accessor("customColumn", {
+          header: intl.formatMessage({
             id: "infoModal.naytaLisatiedot"
           }),
-          accessor: "customColumn",
-          Cell: ({ cell: { value, row } }: CustomColumn) => {
-            const tpjRow = row.original as TpjRow
+          cell: ({ row }) => {
+            const tpjRow = row.original
             return (
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <InfoModal
@@ -520,7 +513,7 @@ class RaportitInner extends React.Component<RaportitProps> {
                   endDate={tpjRow?.loppupvm}
                   partTimeAmount={tpjRow?.osaAikaisuus}
                   oppisopimuksenPerusta={tpjRow?.oppisopimuksenPerusta}
-                  hoksId={value}
+                  hoksId={tpjRow?.hoksId}
                   opiskeluoikeusOid={tpjRow?.opiskeluoikeusOid}
                   hankkimistapaTyyppi={tpjRow?.hankkimistapaTyyppi}
                   ytunnus={tpjRow?.ytunnus}
@@ -532,7 +525,7 @@ class RaportitInner extends React.Component<RaportitProps> {
               </div>
             )
           }
-        }
+        })
       ]
     } else {
       return []
@@ -549,7 +542,10 @@ class RaportitInner extends React.Component<RaportitProps> {
   render() {
     const { data, selected, titleText, descText, alku, loppu } = this.state
     const { intl } = this.props
-    const columns = this.getColumnsForTable(selected)
+    const columns = this.getColumnsForTable(selected) as unknown as Column<
+      HoksRow | TpjRow,
+      any
+    >[]
 
     return (
       <BackgroundContainer>
@@ -610,8 +606,7 @@ class RaportitInner extends React.Component<RaportitProps> {
                           id: "raportit.tyopaikkajaksoihinTallennetutTiedot"
                         }),
                         intl.formatMessage({
-                          id:
-                            "raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
+                          id: "raportit.tyopaikkajaksoihinTallennetutTiedotInfoKuvaus"
                         }),
                         2
                       )

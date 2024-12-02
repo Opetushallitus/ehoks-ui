@@ -18,11 +18,11 @@ const OsaamistasonKriteeri = types
       typeof sn.osaamistaso === "string"
         ? sn.osaamistaso
         : typeof sn.osaamistaso === "object" && sn.osaamistaso
-        ? // the syntax is needed because of a bug in typescript
-          // https://github.com/microsoft/TypeScript/issues/42999
-          /* eslint dot-notation: "off" */
-          sn.osaamistaso["koodi"]["arvo"] || "" + sn.osaamistaso["id"]
-        : ""
+          ? // the syntax is needed because of a bug in typescript
+            // https://github.com/microsoft/TypeScript/issues/42999
+            /* eslint dot-notation: "off" */
+            sn.osaamistaso["koodi"]["arvo"] || "" + sn.osaamistaso["id"]
+          : ""
   }))
 
 const ArvioinninKohde = types
@@ -37,11 +37,11 @@ const ArvioinninKohde = types
       typeof sn.arviointiAsteikko === "string"
         ? sn.arviointiAsteikko
         : typeof sn.arviointiAsteikko === "object" && sn.arviointiAsteikko
-        ? // the syntax is needed because of a bug in typescript
-          // https://github.com/microsoft/TypeScript/issues/42999
-          /* eslint dot-notation: "off" */
-          "" + sn.arviointiAsteikko["id"]
-        : ""
+          ? // the syntax is needed because of a bug in typescript
+            // https://github.com/microsoft/TypeScript/issues/42999
+            /* eslint dot-notation: "off" */
+            "" + sn.arviointiAsteikko["id"]
+          : ""
   }))
 
 const ArvioinninKohdealue = types.model("ArvioinninKohdealue", {

@@ -62,6 +62,7 @@ export interface StepProps {
   disabled?: boolean
   index?: number
   onClick?: (index: number) => void
+  children?: React.ReactNode
 }
 
 export class Step extends React.Component<StepProps> {

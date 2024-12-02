@@ -110,8 +110,7 @@ export const RequirementsAndDeviations = (
             <IconContainer
               onClick={toggle}
               aria-label={intl.formatMessage({
-                id:
-                  "opiskelusuunnitelma.piilotaPoikkeamatJaArviointikriteeritAriaLabel"
+                id: "opiskelusuunnitelma.piilotaPoikkeamatJaArviointikriteeritAriaLabel"
               })}
             >
               <Collapse size={40} />
@@ -162,8 +161,7 @@ export const RequirementsAndDeviations = (
             <IconContainer
               onClick={toggle}
               aria-label={intl.formatMessage({
-                id:
-                  "opiskelusuunnitelma.naytaPoikkeamatJaArviointikriteeritAriaLabel"
+                id: "opiskelusuunnitelma.naytaPoikkeamatJaArviointikriteeritAriaLabel"
               })}
             >
               <Expand size={40} />

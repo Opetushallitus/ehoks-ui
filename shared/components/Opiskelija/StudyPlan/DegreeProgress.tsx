@@ -8,17 +8,17 @@ import styled, { withTheme, ComponentWithTheme } from "styled"
 import { TypeOfTheme, ColorType } from "theme"
 import { LinkButton } from "components/Button"
 
-const colorFromTheme = (theme: TypeOfTheme) => (
-  color?: ColorType
-): string | undefined => {
-  if (color) {
-    const themeColor = theme.colors[color]
-    if (typeof themeColor === "string") {
-      return themeColor
+const colorFromTheme =
+  (theme: TypeOfTheme) =>
+  (color?: ColorType): string | undefined => {
+    if (color) {
+      const themeColor = theme.colors[color]
+      if (typeof themeColor === "string") {
+        return themeColor
+      }
     }
+    return undefined
   }
-  return undefined
-}
 
 const DegreeBoxes = styled(StatBoxes)`
   max-width: 900px;

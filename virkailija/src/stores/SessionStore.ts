@@ -37,7 +37,7 @@ export const SessionStore = types
       appendCallerId
     } = getEnv<StoreEnvironment>(self)
 
-    const checkSession = flow(function*(): any {
+    const checkSession = flow(function* (): any {
       self.isLoading = true
       const storedOid = localStorage.getItem("selectedOrganisationOid")
       if (storedOid) {
@@ -80,7 +80,7 @@ export const SessionStore = types
       self.isLoading = false
     })
 
-    const logoutVirkailija = flow(function*() {
+    const logoutVirkailija = flow(function* () {
       self.isLoading = true
       try {
         yield deleteResource(apiUrl("virkailija/session"), {

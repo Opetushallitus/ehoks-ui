@@ -25,10 +25,16 @@ module.exports = {
     allowedHosts: "all",
     historyApiFallback: true,
     host: "0.0.0.0",
-    proxy: {
-      "/auth-dev": "http://localhost:3000",
-      "/ehoks-oppija-backend": "http://localhost:3000"
-    }
+    proxy: [
+      {
+        context: ["/auth-dev"],
+        target: "http://localhost:3000"
+      },
+      {
+        context: ["/ehoks-oppija-backend"],
+        target: "http://localhost:3000"
+      }
+    ]
   },
 
   devtool: "inline-source-map",
@@ -43,7 +49,7 @@ module.exports = {
   },
 
   plugins: [
-    new ForkTsCheckerWebpackPlugin({ useTypescriptIncrementalApi: false }),
+    new ForkTsCheckerWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ],
 
@@ -73,6 +79,10 @@ module.exports = {
         // these packages have problems with their sourcemaps
         exclude: [/node_modules\/react-responsive/, /node_modules\/react-axe/]
       },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
+      },
       // Load images with 'file-loader'.
       {
         test: /\.(png|jpg|gif|svg)$/,
@@ -84,5 +94,6 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
+  ignoreWarnings: [/Failed to parse source map/]
 }

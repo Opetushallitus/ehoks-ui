@@ -23,7 +23,7 @@ const Container = styled("div")`
   margin: 0;
   ${props =>
     props.theme.typography
-      .body} /* Needed for fixing apply-raamit.css injection */
+      .body}/* Needed for fixing apply-raamit.css injection */
 `
 
 const Main = styled("main")``

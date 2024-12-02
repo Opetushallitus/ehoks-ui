@@ -12,7 +12,7 @@ interface CustomBaseInputProps
  * copied from react-jsonschema-form
  * and modified to TS and needs
  */
-function CustomBaseInput(props: CustomBaseInputProps) {
+const CustomBaseInput: React.FC<CustomBaseInputProps> = props => {
   // Note: since React 15.2.0 we can't forward unknown element attributes, so we
   // exclude the "options" and "schema" ones here.
   if (!props.id) {
@@ -21,9 +21,9 @@ function CustomBaseInput(props: CustomBaseInputProps) {
   }
   const {
     value,
-    readonly,
-    disabled,
-    autofocus,
+    readonly = false,
+    disabled = false,
+    autofocus = false,
     onBlur,
     onFocus,
     schema,
@@ -61,13 +61,6 @@ function CustomBaseInput(props: CustomBaseInputProps) {
       ]}
     </>
   )
-}
-
-CustomBaseInput.defaultProps = {
-  required: false,
-  disabled: false,
-  readonly: false,
-  autofocus: false
 }
 
 export default CustomBaseInput

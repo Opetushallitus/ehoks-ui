@@ -27,45 +27,44 @@ interface ResendParameters {
 export const Opiskelijapalaute = inject("store")(
   observer((props: OpiskelijapalauteProps) => {
     const { notifications } = props.store!
-    const resendPalaute = (data: ResendParameters) => async (): Promise<
-      void
-    > => {
-      const { hoksID, oppijaOid } = props
+    const resendPalaute =
+      (data: ResendParameters) => async (): Promise<void> => {
+        const { hoksID, oppijaOid } = props
 
-      const response: Response = await window.fetch(
-        `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksID}/resend-palaute`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: appendCommonHeaders(
-            new Headers({
-              Accept: "application/json; charset=utf-8",
-              "Content-Type": "application/json"
-            })
-          ),
-          body: JSON.stringify(data)
-        }
-      )
-
-      if (response.ok) {
-        const json = await response.json()
-        notifications.addNotifications([
+        const response: Response = await window.fetch(
+          `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksID}/resend-palaute`,
           {
-            title: "Opiskelijapalaute.resendPalaute.success",
-            source: "Opiskelijapalaute",
-            sahkoposti: json.data.sahkoposti,
-            default:
-              "Sähköposti opiskelijapalautteesta lähetetään osoitteeseen {sahkoposti}.",
-            tyyppi: "success"
+            method: "POST",
+            credentials: "include",
+            headers: appendCommonHeaders(
+              new Headers({
+                Accept: "application/json; charset=utf-8",
+                "Content-Type": "application/json"
+              })
+            ),
+            body: JSON.stringify(data)
           }
-        ])
-      } else {
-        notifications.addError(
-          "Opiskelijapalaute.resendPalaute",
-          response.statusText
         )
+
+        if (response.ok) {
+          const json = await response.json()
+          notifications.addNotifications([
+            {
+              title: "Opiskelijapalaute.resendPalaute.success",
+              source: "Opiskelijapalaute",
+              sahkoposti: json.data.sahkoposti,
+              default:
+                "Sähköposti opiskelijapalautteesta lähetetään osoitteeseen {sahkoposti}.",
+              tyyppi: "success"
+            }
+          ])
+        } else {
+          notifications.addError(
+            "Opiskelijapalaute.resendPalaute",
+            response.statusText
+          )
+        }
       }
-    }
 
     useEffect(
       () => () => {

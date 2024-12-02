@@ -1,45 +1,59 @@
 /* eslint-disable jsx-a11y/no-onchange */
-// @ts-nocheck
 // Added nocheck because I cannot get react-table types to work correctly.
 import React, { useMemo, useEffect } from "react"
-import { Column, useTable, usePagination } from "react-table"
+import {
+  Column,
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  PaginationState
+} from "@tanstack/react-table"
 // @ts-ignore Ignore type-checking for this library
-import TableScrollbar from "react-table-scrollbar"
 import { FormattedMessage } from "react-intl"
+import styled from "../styled"
 
 interface RaportitTableProps {
-  data: any
-  columns: Column[]
+  data: any[]
+  columns: Column<any, any>[]
   loading: boolean
   pageCount: number
   fetchData?: (pageSize: number, pageIndex: number) => void
 }
 
+const PaginationButtons = styled.div`
+  justify-content: start;
+  margin-top: 0.5rem;
+  & button {
+    margin-right: 0.25rem;
+    width: 3rem;
+  }
+`
+
 const printResultInfo = (length: number, count: number, loading: boolean) => {
   if (loading) {
     return (
-      <td colSpan="10000">
+      <td colSpan={10000}>
         <FormattedMessage id="raportit.ladataan" defaultMessage="Ladataan" />
         ...
       </td>
     )
   } else if (count > 1) {
     return (
-      <td colSpan="10000">
+      <td colSpan={10000}>
         <FormattedMessage id="raportit.naytetaan" defaultMessage="Näytetään" />{" "}
         {length} / ~{count * 10}
       </td>
     )
   } else if (count === 1) {
     return (
-      <td colSpan="10000">
+      <td colSpan={10000}>
         <FormattedMessage id="raportit.loytyi" defaultMessage="Löytyi" />{" "}
         {length} <FormattedMessage id="raportit.kpl" defaultMessage="kpl" />
       </td>
     )
   } else {
     return (
-      <td colSpan="10000">
+      <td colSpan={10000}>
         <FormattedMessage
           id="raportit.eiTuloksia"
           defaultMessage="Ei hakutuloksia"
@@ -51,83 +65,102 @@ const printResultInfo = (length: number, count: number, loading: boolean) => {
 
 export const RaportitTable = (props: RaportitTableProps) => {
   const { fetchData } = props
-  const data = useMemo(() => props.data, [props.data])!
-
+  const data = useMemo(() => props.data, [props.data])
   const columns = useMemo(() => props.columns, [props.columns])
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    state: { pageIndex }
-  } = useTable(
-    { columns, data, manualPagination: true, pageCount: props.pageCount },
-    usePagination
-  )
+  const [pagination, setPagination] = React.useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10
+  })
 
   useEffect(() => {
-    fetchData(10, pageIndex)
-  }, [pageIndex, fetchData])
+    if (fetchData) fetchData(pagination.pageSize, pagination.pageIndex)
+  }, [pagination.pageSize, pagination.pageIndex, fetchData])
+
+  const table = useReactTable({
+    columns,
+    data,
+    state: {
+      pagination
+    },
+    getCoreRowModel: getCoreRowModel(),
+    onPaginationChange: setPagination,
+    manualPagination: true,
+    manualSorting: true,
+    pageCount: props.pageCount
+  })
 
   /* eslint-disable react/jsx-key */
   /* the jsx key is provided in the .get*Props() spreads. */
   return (
-    <TableScrollbar rows={30}>
-      <table {...getTableProps()}>
+    <>
+      <table>
         <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <th key={header.id} colSpan={header.colSpan}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                </th>
               ))}
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map(row => {
-            prepareRow(row)
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
-                  <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                ))}
-              </tr>
-            )
-          })}
+        <tbody>
+          {table.getRowModel().rows.map(row => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map(cell => (
+                <td id={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
           <tr>
-            {printResultInfo(page.length, props.pageCount, props.loading)}
+            {printResultInfo(
+              table.getRowModel().rows.length,
+              props.pageCount,
+              props.loading
+            )}
           </tr>
         </tbody>
       </table>
-      <div className="pagination">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {"<<"}
-        </button>{" "}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {"<"}
-        </button>{" "}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {">"}
-        </button>{" "}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {">>"}
-        </button>{" "}
-        <span>
-          <FormattedMessage id="raportit.sivu" defaultMessage="Sivu" />{" "}
-          <strong>
-            {pageIndex + 1} / {pageOptions.length}
-          </strong>{" "}
-        </span>
-      </div>
-    </TableScrollbar>
+      {props.pageCount > 0 && (
+        <PaginationButtons className="pagination" style={{}}>
+          <button
+            onClick={() => table.firstPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            {"<<"}
+          </button>{" "}
+          <button
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            {"<"}
+          </button>{" "}
+          <button
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            {">"}
+          </button>{" "}
+          <button
+            onClick={() => table.lastPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            {">>"}
+          </button>{" "}
+          <span>
+            <FormattedMessage id="raportit.sivu" defaultMessage="Sivu" />{" "}
+            <strong>
+              {pagination.pageIndex + 1} / {props.pageCount}
+            </strong>{" "}
+          </span>
+        </PaginationButtons>
+      )}
+    </>
   )
 }

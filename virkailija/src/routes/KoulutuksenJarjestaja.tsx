@@ -87,12 +87,12 @@ export const KoulutuksenJarjestaja = inject("store")(
       orgId
     ])
 
-    const updateSearchText = (field: SearchSortKey) => (
-      event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-      search.changeSearchText(field, event.target.value)
-      debouncedFetchResults()
-    }
+    const updateSearchText =
+      (field: SearchSortKey) =>
+      (event: React.ChangeEvent<HTMLInputElement>) => {
+        search.changeSearchText(field, event.target.value)
+        debouncedFetchResults()
+      }
 
     const changeSort = (sortName: SearchSortKey) => {
       search.changeSort(sortName)
@@ -102,13 +102,12 @@ export const KoulutuksenJarjestaja = inject("store")(
       search.changeActivePage(index)
     }
 
-    const onPaginationResultEnter = (index: number) => (
-      event: React.KeyboardEvent
-    ) => {
-      if (event.key === "Enter" || event.key === " ") {
-        search.changeActivePage(index)
+    const onPaginationResultEnter =
+      (index: number) => (event: React.KeyboardEvent) => {
+        if (event.key === "Enter" || event.key === " ") {
+          search.changeActivePage(index)
+        }
       }
-    }
 
     const intl = useIntl()
     const {

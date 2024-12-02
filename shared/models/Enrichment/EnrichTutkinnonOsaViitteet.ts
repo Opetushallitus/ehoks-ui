@@ -18,15 +18,10 @@ export const EnrichTutkinnonOsaViitteet = (
       })
     )
     .actions(self => {
-      const {
-        apiUrl,
-        apiPrefix,
-        errors,
-        fetchCollection,
-        appendCallerId
-      } = getEnv<StoreEnvironment>(self)
+      const { apiUrl, apiPrefix, errors, fetchCollection, appendCallerId } =
+        getEnv<StoreEnvironment>(self)
 
-      const fetchTutkinnonOsaViitteet = flow(function*(id: number): any {
+      const fetchTutkinnonOsaViitteet = flow(function* (id: number): any {
         try {
           const response: APIResponse = yield fetchCollection(
             apiUrl(

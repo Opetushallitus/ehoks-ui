@@ -68,13 +68,12 @@ interface SearchableHeaderProps {
 }
 
 export const SearchableHeader = (props: SearchableHeaderProps) => {
-  const sortByKeypress = (onSort: () => void) => (
-    event: React.KeyboardEvent
-  ) => {
-    if (event.key === "Enter" || event.key === " ") {
-      onSort()
+  const sortByKeypress =
+    (onSort: () => void) => (event: React.KeyboardEvent) => {
+      if (event.key === "Enter" || event.key === " ") {
+        onSort()
+      }
     }
-  }
 
   const intl = useIntl()
   const { children, sortName, omitSortButtons } = props

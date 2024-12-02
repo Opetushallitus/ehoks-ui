@@ -44,11 +44,10 @@ export const HOKSStore = types
   }))
   .actions(self => {
     const root: IRootStore = getRoot(self)
-    const { apiUrl, fetchCollection, errors, appendCallerId } = getEnv<
-      StoreEnvironment
-    >(self)
+    const { apiUrl, fetchCollection, errors, appendCallerId } =
+      getEnv<StoreEnvironment>(self)
 
-    const haeSuunnitelmat = flow(function*(oid: string): any {
+    const haeSuunnitelmat = flow(function* (oid: string): any {
       if (oid === "") {
         console.log("HOKSeja ei voida hakea, koska oppijaOid ei ole tiedossa.")
         return

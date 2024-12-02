@@ -21,7 +21,7 @@
       "dom",
       "es2018" /* mobx - error TS2304: Cannot find name 'AsyncGenerator'*/
     ],
-    "types": ["jest", "webpack-env"],
+    "types": ["jest", "webpack-env", "@testing-library/jest-dom"],
     "baseUrl": "./src",
     "paths": {
       "*": ["*", "../../shared/*"]

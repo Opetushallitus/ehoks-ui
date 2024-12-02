@@ -27,10 +27,9 @@ const HiddenNotifications = types
     return { exists }
   })
   .actions(self => {
-    const {
-      session
-    }: { session: { saveSettings: () => Promise<void> } } = getRoot(self)
-    const hide = flow(function*(
+    const { session }: { session: { saveSettings: () => Promise<void> } } =
+      getRoot(self)
+    const hide = flow(function* (
       hoksId: string,
       tutkinnonOsaKoodiUri: string,
       tyyppi: string

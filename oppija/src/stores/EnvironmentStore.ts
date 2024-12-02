@@ -21,11 +21,10 @@ const EnvironmentStoreModel = {
 export const EnvironmentStore = types
   .model("EnvironmentStore", EnvironmentStoreModel)
   .actions(self => {
-    const { apiUrl, fetchSingle, fetch, errors, appendCallerId } = getEnv<
-      StoreEnvironment
-    >(self)
+    const { apiUrl, fetchSingle, fetch, errors, appendCallerId } =
+      getEnv<StoreEnvironment>(self)
 
-    const getEnvironment = flow(function*(): any {
+    const getEnvironment = flow(function* (): any {
       self.isLoading = true
       try {
         const response: APIResponse = yield fetchSingle(
@@ -52,7 +51,7 @@ export const EnvironmentStore = types
       self.isLoading = false
     })
 
-    const fetchSwaggerJSON = flow(function*() {
+    const fetchSwaggerJSON = flow(function* () {
       return yield fetch("/ehoks-oppija-backend/doc/swagger.json")
     })
 

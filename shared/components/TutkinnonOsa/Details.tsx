@@ -20,7 +20,6 @@ import ShareDialog, {
   Instructor,
   ShareLinkValidityPeriod
 } from "components/ShareDialog"
-import { ToggleableItems } from "./TutkinnonOsaHelpers"
 import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { CompetenceAquirementTitle } from "./CompetenceAquirementTitle"
 import { Table, TBody, TD, TH } from "./Shared"
@@ -93,13 +92,13 @@ const CollapseIcon = ({
   toggle
 }: {
   hasActiveShare: boolean
-  toggle: (name: ToggleableItems) => () => void
+  toggle: () => void
 }) => {
   const intl = useIntl()
   return !hasActiveShare ? (
     <LocationsContainerExpanded>
       <IconContainer
-        onClick={toggle("details")}
+        onClick={toggle}
         aria-label={intl.formatMessage({
           id: "opiskelusuunnitelma.piilotaTyossaOppiminenAriaLabel"
         })}
@@ -115,12 +114,12 @@ const ExpandIcon = ({
   toggle
 }: {
   showExpand: boolean
-  toggle: (name: ToggleableItems) => () => void
+  toggle: () => void
 }) => {
   const intl = useIntl()
   return showExpand ? (
     <IconContainer
-      onClick={toggle("details")}
+      onClick={toggle}
       aria-label={intl.formatMessage({
         id: "opiskelusuunnitelma.naytaTyossaOppiminenAriaLabel"
       })}
@@ -477,7 +476,7 @@ interface DetailsProps {
     tutkinnonOsaModuleId?: string
     hoksEid?: string
   }
-  toggle: (name: ToggleableItems) => () => void
+  toggle: () => void
   todentamisenProsessi?: TodentamisenProsessi
   koulutuksenJarjestaja?: IOrganisaatio
   tarkentavatTiedotOsaamisenArvioija?: ITarkentavatTiedotOsaamisenArvioija

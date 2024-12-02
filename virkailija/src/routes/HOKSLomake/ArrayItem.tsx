@@ -7,11 +7,11 @@ interface ArrayItemProps {
   index: number
   className: string
   hasToolbar: boolean
-  children: React.ReactNode
+  children?: React.ReactNode
   hasMoveUp: boolean
   hasMoveDown: boolean
-  disabled: boolean
-  readonly: boolean
+  disabled?: boolean
+  readonly?: boolean
   onReorderClick: any
   hasRemove: boolean
   onDropIndexClick: any

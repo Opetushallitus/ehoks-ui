@@ -6,9 +6,9 @@ interface ThemeWrapperProps {
   children?: React.ReactChild
 }
 export class ThemeWrapper extends React.Component<ThemeWrapperProps> {
-  render() {
-    return <ThemeProvider theme={theme}>{this.props.children}</ThemeProvider>
-  }
+  render = () => (
+    <ThemeProvider theme={theme}>{this.props.children}</ThemeProvider>
+  )
 }
 
 export default ThemeWrapper

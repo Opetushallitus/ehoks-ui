@@ -20,7 +20,9 @@ const Box = styled("div")<BoxProps>`
   background: ${props => (props["aria-checked"] ? "#3A7210" : "#fff")};
   margin-right: 10px;
   border: ${props => (props["aria-checked"] ? "unset" : "1px solid #a5acb0")};
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0), inset 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 0 2px 0 rgba(0, 0, 0, 0),
+    inset 0 1px 2px 0 rgba(0, 0, 0, 0.2);
   border-radius: 2px;
   width: 20px;
   height: 20px;
@@ -39,6 +41,7 @@ export interface CheckboxProps {
   checked: boolean
   /** Function to call after user changes the checkbox state */
   onToggle?: () => void
+  children?: React.ReactNode
 }
 
 /**

@@ -26,6 +26,7 @@ const EmptyIcon = styled("div")`
 
 interface TableHeaderProps {
   sortName: string
+  children: React.ReactNode
 }
 
 export class TableHeader extends React.Component<TableHeaderProps> {

@@ -21,9 +21,8 @@ export const EnrichKoodistoKoodiUri = (
     // when assigning to self[enrichedField]
     .volatile((): DynamicObject => ({}))
     .actions(self => {
-      const { apiUrl, apiPrefix, errors, fetchSingle, appendCallerId } = getEnv<
-        StoreEnvironment
-      >(self)
+      const { apiUrl, apiPrefix, errors, fetchSingle, appendCallerId } =
+        getEnv<StoreEnvironment>(self)
 
       const fieldDoesntExist = (enrichedField: string) =>
         Object.keys(self).indexOf(enrichedField) < 0
@@ -47,7 +46,7 @@ export const EnrichKoodistoKoodiUri = (
           return result
         }, {})
 
-      const fetchKoodisto = flow(function*(
+      const fetchKoodisto = flow(function* (
         enrichedField: string,
         koodiUri: string
       ): any {

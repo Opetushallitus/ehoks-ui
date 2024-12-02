@@ -16,15 +16,10 @@ const SessionStoreModel = {
 export const SessionStore = types
   .model("SessionStore", SessionStoreModel)
   .actions(self => {
-    const {
-      apiUrl,
-      fetchSingle,
-      deleteResource,
-      errors,
-      appendCallerId
-    } = getEnv<StoreEnvironment>(self)
+    const { apiUrl, fetchSingle, deleteResource, errors, appendCallerId } =
+      getEnv<StoreEnvironment>(self)
 
-    const checkSession = flow(function*(): any {
+    const checkSession = flow(function* (): any {
       self.isLoading = true
       try {
         const response: APIResponse = yield fetchSingle(
@@ -52,7 +47,7 @@ export const SessionStore = types
       self.isLoading = false
     })
 
-    const fetchUserInfo = flow(function*(): any {
+    const fetchUserInfo = flow(function* (): any {
       try {
         const response: APIResponse = yield fetchSingle(
           apiUrl("oppija/session/user-info"),
@@ -64,7 +59,7 @@ export const SessionStore = types
       }
     })
 
-    const fetchSettings = flow(function*(): any {
+    const fetchSettings = flow(function* (): any {
       try {
         const response: APIResponse = yield fetchSingle(
           apiUrl("oppija/session/settings"),
@@ -76,7 +71,7 @@ export const SessionStore = types
       }
     })
 
-    const saveSettings = flow(function*() {
+    const saveSettings = flow(function* () {
       try {
         yield fetchSingle(apiUrl("oppija/session/settings"), {
           method: "put",
@@ -90,7 +85,7 @@ export const SessionStore = types
       }
     })
 
-    const logoutTyopaikantoimija = flow(function*() {
+    const logoutTyopaikantoimija = flow(function* () {
       self.isLoading = true
       try {
         yield deleteResource(apiUrl("oppija/session"), {

@@ -37,6 +37,7 @@ export type IOsaamisenHankkimistapa = Instance<typeof OsaamisenHankkimistapa>
 
 export type IOsaamisenOsoittaminen = Instance<typeof OsaamisenOsoittaminen>
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const HankittavaTutkinnonOsa = types
   .compose(
     HankittavaAmmatillinenTutkinnonOsa,
@@ -54,6 +55,7 @@ export interface IHankittavaTutkinnonOsa
   hasNayttoOrHarjoittelujakso(type?: ShareType, moduleId?: string): boolean
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const AiemminHankittuTutkinnonOsa = types
   .compose(
     AiemminHankittuAmmatillinenTutkinnonOsa,

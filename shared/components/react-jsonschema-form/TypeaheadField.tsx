@@ -19,8 +19,7 @@ const DEFAULT_OPTIONS = {
   required: false,
   labelKey: "name",
   minLength: 3,
-  placeholder: "Search...",
-  ref: "typeahead"
+  placeholder: "Search..."
 }
 
 const optionToString = (fields: any, separator: any) => (option: any) =>
@@ -102,8 +101,8 @@ function mapEvents(
       properties
         ? properties
         : items && items.properties
-        ? items.properties
-        : {}
+          ? items.properties
+          : {}
     )
     const mappedEvents = events.map(event =>
       mapToObject(event, mapping, defVal)
@@ -372,7 +371,7 @@ export class AsyncTypeaheadField extends BaseTypeaheadField {
       optionsPath,
       search = (searchUrl: string, searchQuery: string) =>
         fetch(`${searchUrl}?query=${searchQuery}`).then(res => res.json())
-    } = uiSchema?.asyncTypeahead
+    } = uiSchema?.asyncTypeahead ?? {}
 
     this.setState({ isLoading: true })
 
@@ -390,7 +389,7 @@ export class AsyncTypeaheadField extends BaseTypeaheadField {
       minLength,
       search = (searchUrl: string, searchQuery: string) =>
         fetch(`${searchUrl}?query=${searchQuery}`).then(res => res.json())
-    } = uiSchema?.asyncTypeahead
+    } = uiSchema?.asyncTypeahead ?? {}
 
     if (minLength === 0) {
       this.setState({ isLoading: true })
