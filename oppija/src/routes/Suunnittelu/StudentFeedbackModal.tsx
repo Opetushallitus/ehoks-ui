@@ -118,7 +118,7 @@ export const StudentFeedbackModal = inject("store")(
               />
             </CloseFeedbackModalButton>
             <StartFeedbackLink
-              href={studentFeedbackLinks[0]}
+              href={`${studentFeedbackLinks[0]}?t=w`}
               onClick={removeFeedbackLink.bind(this, studentFeedbackLinks[0])}
               target="_blank"
             >
