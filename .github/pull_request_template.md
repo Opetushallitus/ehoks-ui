@@ -9,7 +9,7 @@ TODO: PR:iin liittyvä Jira-tiketti (tunniste ja linkki)
 ### Ennen asettamista katselmointiin
   - [ ] Build onnistuu ilman virheitä
   - [ ] Toiminnallisuuden kattavat yksikkötestit on tehty osana PR:ia
-  - [ ] PR:n sisältämät muutokset noudattavat [sovittuja koodikäytänteitä](../doc/code-guidelines.md)
+  - [ ] Toteutuksessa käytetyt komponentit on katsottu, voidaanko käyttää [ODS:n](https://github.com/Opetushallitus/oph-design-system) vastaavia
   - [ ] Koodi on riittävästi dokumentoitu tai se on muuten yksiselitteistä
   - [ ] Nimet (muuttujat, funktiot, ...) kuvaavat koodia hyvin
 
