@@ -138,7 +138,7 @@
     "react-intl": "^6.8.7",
     "react-modal": "^3.16.1",
     "react-responsive": "^10.0.0",
-    "react-router": "^6.27.0",
+    "react-router": "^6.29.0",
     "react-router-dom": "^6.27.0",
     "reactjs-popup": "^2.0.6",
     "styled-components": "^5.3.11",
