@@ -8,7 +8,6 @@ import { FormattedDate } from "components/FormattedDate"
 import { IOpiskelijapalauteTila } from "models/OpiskelijapalauteTila"
 import { Button } from "components/Button"
 import { IRootStore } from "../../stores/RootStore"
-import { appendCommonHeaders } from "fetchUtils"
 
 export interface OpiskelijapalauteProps {
   store?: IRootStore
@@ -20,51 +19,9 @@ export interface OpiskelijapalauteProps {
   palauteTilat: IOpiskelijapalauteTila[]
 }
 
-interface ResendParameters {
-  tyyppi: string
-}
-
 export const Opiskelijapalaute = inject("store")(
   observer((props: OpiskelijapalauteProps) => {
     const { notifications } = props.store!
-    const resendPalaute =
-      (data: ResendParameters) => async (): Promise<void> => {
-        const { hoksID, oppijaOid } = props
-
-        const response: Response = await window.fetch(
-          `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksID}/resend-palaute`,
-          {
-            method: "POST",
-            credentials: "include",
-            headers: appendCommonHeaders(
-              new Headers({
-                Accept: "application/json; charset=utf-8",
-                "Content-Type": "application/json"
-              })
-            ),
-            body: JSON.stringify(data)
-          }
-        )
-
-        if (response.ok) {
-          const json = await response.json()
-          notifications.addNotifications([
-            {
-              title: "Opiskelijapalaute.resendPalaute.success",
-              source: "Opiskelijapalaute",
-              sahkoposti: json.data.sahkoposti,
-              default:
-                "Sähköposti opiskelijapalautteesta lähetetään osoitteeseen {sahkoposti}.",
-              tyyppi: "success"
-            }
-          ])
-        } else {
-          notifications.addError(
-            "Opiskelijapalaute.resendPalaute",
-            response.statusText
-          )
-        }
-      }
 
     useEffect(
       () => () => {
@@ -173,20 +130,30 @@ export const Opiskelijapalaute = inject("store")(
                     </tr>
                   </tbody>
                 </InfoTable>
-                {!(
-                  Date.now() > new Date(palauteTila.voimassaLoppupvm).getTime()
-                ) && (
-                  <Button
-                    onClick={resendPalaute({
-                      tyyppi: palauteTila.tyyppi
-                    })}
-                  >
-                    <FormattedMessage
-                      id="tavoitteet.opiskelijapalauteResendButton"
-                      defaultMessage="Lähetä linkki opiskelijapalautekyselyyn uudestaan"
-                    />
-                  </Button>
-                )}
+                {
+                  // FIXME: resend button disabled until the resend functionality is
+                  // restored in palaute-backend.  (The functionality also needs to be
+                  // fixed: it should add a resend request to the palaute instead of
+                  // purging information about the already sent message.)
+                  !(
+                    Date.now() >
+                    new Date(palauteTila.voimassaLoppupvm).getTime()
+                  ) && (
+                    <Button disabled>
+                      <FormattedMessage
+                        id="tavoitteet.opiskelijapalauteResendButton"
+                        defaultMessage="Lähetä linkki opiskelijapalautekyselyyn uudestaan"
+                      />
+                    </Button>
+                  )
+                }
+                <FormattedMessage
+                  id="tavoitteet.opiskelijapalauteResendDisabled"
+                  defaultMessage={
+                    "Palautekyselyn uudelleenlähetys on väliaikaisesti " +
+                    "poistettu käytöstä järjestelmäkehityksen ajaksi."
+                  }
+                />
               </React.Fragment>
             )
           )
