@@ -249,6 +249,7 @@
     "tavoitteet.opiskelijapalauteEiPalautteita": "Ei aktiivisia vastauslinkkejä",
     "tavoitteet.opiskelijapalautePaattymispvmTitle": "Vastaamisajan päättymispäivä",
     "tavoitteet.opiskelijapalauteResendButton": "Lähetä linkki opiskelijapalautekyselyyn uudelleen",
+    "tavoitteet.opiskelijapalauteResendDisabled": "Palautekyselyn uudelleenlähetys on väliaikaisesti poistettu käytöstä järjestelmäkehityksen ajaksi.",
     "tavoitteet.opiskelijapalauteSahkopostiTitle": "Opiskelijan sähköpostiosoite",
     "tavoitteet.opiskelijapalauteTila.lahetetty": "Viesti lähetetty opiskelijalle {date}",
     "tavoitteet.opiskelijapalauteTila.lahetys_epaonnistunut": "Viestin lähetys opiskelijalle epäonnistunut {date}",
