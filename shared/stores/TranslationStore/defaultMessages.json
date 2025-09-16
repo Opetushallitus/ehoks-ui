@@ -696,11 +696,6 @@
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.opiskelijapalauteResendDisabled",
-    "value": "Palautekyselyn uudelleenlähetys on väliaikaisesti poistettu käytöstä järjestelmäkehityksen ajaksi."
-  },
-  {
-    "locale": "fi",
     "key": "tavoitteet.opiskelijapalauteSahkopostiTitle",
     "value": "Opiskelijan sähköpostiosoite"
   },
