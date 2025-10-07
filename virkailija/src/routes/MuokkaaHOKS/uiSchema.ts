@@ -88,6 +88,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       "ui:order": [
         "tutkinnon-osa-koodi-uri",
         "tutkinnon-osa-koodi-versio",
+        "tutkinnon-osan-perusteen-diaarinro",
         "valittu-todentamisen-prosessi-koodi-uri",
         "valittu-todentamisen-prosessi-koodi-versio",
         "koulutuksen-jarjestaja-oid",
@@ -541,6 +542,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       "ui:order": [
         "tutkinnon-osa-koodi-uri",
         "tutkinnon-osa-koodi-versio",
+        "tutkinnon-osan-perusteen-diaarinro",
         "vaatimuksista-tai-tavoitteista-poikkeaminen",
         "koulutuksen-jarjestaja-oid",
         "opetus-ja-ohjaus-maara",
