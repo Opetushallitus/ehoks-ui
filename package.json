@@ -145,6 +145,11 @@
     "use-onclickoutside": "^0.4.1",
     "whatwg-fetch": "^3.6.20"
   },
+  "overrides": {
+    "npm-run-all": {
+      "cross-spawn": "6.0.6"
+    }
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
