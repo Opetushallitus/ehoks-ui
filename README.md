@@ -8,8 +8,6 @@ Frontend repository for [eHOKS project](https://wiki.eduuni.fi/x/LYZcCw).
 
 `npm run start:oppija` or `npm run start:virkailija` will run the specified subdirectory's `start` -script
 
-`npm run styleguide` launches [react-styleguidist](https://react-styleguidist.js.org/) styleguide server in [localhost:6060](http://localhost:6060/)
-
 `npm lint` runs linter for the code
 
 `npm run lint:fix` will try to automatically fix linter errors
