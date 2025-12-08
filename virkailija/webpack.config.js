@@ -35,6 +35,10 @@ module.exports = {
         target: "http://localhost:3000"
       },
       {
+        context: ["/cas"],
+        target: "http://localhost:3000"
+      },
+      {
         context: ["/ehoks-backend"],
         target: "http://localhost:3000"
       },
