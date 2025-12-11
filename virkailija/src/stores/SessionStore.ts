@@ -1,7 +1,8 @@
 import { withQueryString } from "fetchUtils"
-import { flow, getEnv, Instance, types } from "mobx-state-tree"
+import { cast, flow, getEnv, Instance, types } from "mobx-state-tree"
 import { IOrganisation, OrganisationModel } from "types/Organisation"
 import { StoreEnvironment } from "types/StoreEnvironment"
+import flatMap from "lodash.flatmap"
 
 export const OrganisationPrivilege = types.model("OrganisationPrivilege", {
   oid: types.string,
@@ -10,11 +11,43 @@ export const OrganisationPrivilege = types.model("OrganisationPrivilege", {
   childOrganisations: types.array(types.string)
 })
 
-export const VirkailijaUser = types.model("VirkailijaUser", {
-  oidHenkilo: types.string,
-  isSuperuser: types.boolean,
-  organisationPrivileges: types.array(OrganisationPrivilege)
-})
+export const VirkailijaUser = types
+  .model("VirkailijaUser", {
+    oidHenkilo: types.string,
+    isSuperuser: types.boolean,
+    organisationPrivileges: types.array(OrganisationPrivilege)
+  })
+  .views(self => ({
+    get flatPrivileges() {
+      const allPrivs = flatMap(self.organisationPrivileges, org => [
+        {
+          oid: org.oid,
+          privileges: org.privileges,
+          roles: org.roles,
+          childOrganisations: []
+        },
+        ...org.childOrganisations.map(oid => ({
+          oid,
+          privileges: org.privileges,
+          roles: org.roles,
+          childOrganisations: []
+        }))
+      ])
+
+      const uniqueOids = [...new Set(allPrivs.map(org => org.oid))]
+
+      return uniqueOids.map(uOid =>
+        allPrivs
+          .filter(({ oid }) => oid === uOid)
+          .reduce((org1, org2) => ({
+            oid: org1.oid,
+            privileges: cast(org1.privileges.concat(org2.privileges)),
+            roles: cast(org1.roles.concat(org2.roles)),
+            childOrganisations: []
+          }))
+      )
+    }
+  }))
 
 const SessionStoreModel = {
   error: types.optional(types.string, ""),
@@ -116,22 +149,10 @@ export const SessionStore = types
     get selectedOrganisation() {
       return (
         self.user &&
-        self.user.organisationPrivileges &&
-        self.user.organisationPrivileges.find(
+        self.user.flatPrivileges &&
+        self.user.flatPrivileges.find(
           o => o.oid === self.selectedOrganisationOid
         )
-      )
-    },
-    get selectedOrganisationChildOrganisationsIncluded() {
-      return (
-        self.user &&
-        self.user.organisationPrivileges &&
-        (self.user.organisationPrivileges.find(
-          o => o.oid === self.selectedOrganisationOid
-        ) ||
-          self.user.organisationPrivileges.find(o =>
-            o.childOrganisations.includes(self.selectedOrganisationOid)
-          ))
       )
     }
   }))
@@ -139,7 +160,6 @@ export const SessionStore = types
     get hasWritePrivilege() {
       return (
         self.selectedOrganisation &&
-        self.selectedOrganisation.privileges &&
         self.selectedOrganisation.privileges.indexOf("write") > -1
       )
     },
@@ -152,11 +172,8 @@ export const SessionStore = types
     get hasShallowDeletePrivilege() {
       return (
         (self.user && self.user.isSuperuser) ||
-        (self.selectedOrganisationChildOrganisationsIncluded &&
-          self.selectedOrganisationChildOrganisationsIncluded.privileges &&
-          self.selectedOrganisationChildOrganisationsIncluded.privileges.indexOf(
-            "hoks_delete"
-          ) > -1)
+        (self.selectedOrganisation &&
+          self.selectedOrganisation.roles.indexOf("hoks_delete") > -1)
       )
     }
   }))
