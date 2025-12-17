@@ -46,8 +46,9 @@ const HankittavaTutkinnonOsa = types
     YhteisenTutkinnonOsanOsaAlue // added with flattenDeep
   )
   .named("HankittavaTutkinnonOsa")
-export interface IHankittavaTutkinnonOsa
-  extends Partial<Instance<typeof HankittavaTutkinnonOsa>> {
+export interface IHankittavaTutkinnonOsa extends Partial<
+  Instance<typeof HankittavaTutkinnonOsa>
+> {
   /** YhteisenTutkinnonOsanOsaAlue does not contain this but it is defined after flattenDeep */
   opintoOtsikko(ospLyhenne: string): JSX.Element | string
   /** YhteisenTutkinnonOsanOsaAlue does not contain this but it is defined after flattenDeep */
@@ -64,8 +65,9 @@ const AiemminHankittuTutkinnonOsa = types
   )
   .named("AiemminHankittuTutkinnonOsa")
 
-export interface IAiemminHankittuTutkinnonOsa
-  extends Partial<Instance<typeof AiemminHankittuTutkinnonOsa>> {
+export interface IAiemminHankittuTutkinnonOsa extends Partial<
+  Instance<typeof AiemminHankittuTutkinnonOsa>
+> {
   /** AiemminHankitunYTOOsaAlue does not contain this but it is defined after flattenDeep */
   opintoOtsikko(ospLyhenne: string): JSX.Element | string
 }
