@@ -2,8 +2,10 @@ import React from "react"
 import { WidgetProps } from "@rjsf/utils"
 
 /* eslint-disable react/prop-types */
-interface CustomBaseInputProps
-  extends Omit<WidgetProps, "rawErrors" | "formContext"> {
+interface CustomBaseInputProps extends Omit<
+  WidgetProps,
+  "rawErrors" | "formContext"
+> {
   placeholder?: string
 }
 
