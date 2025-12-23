@@ -110,6 +110,9 @@ importers:
       mobx:
         specifier: ^6.13.5
         version: 6.15.0
+      mobx-logger:
+        specifier: ^0.7.1
+        version: 0.7.1(mobx@6.15.0)
       mobx-react:
         specifier: ^9.1.1
         version: 9.2.1(mobx@6.15.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3158,6 +3161,11 @@ packages:
 
   minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
+
+  mobx-logger@0.7.1:
+    resolution: {integrity: sha512-kAcNjzDGjILjvNiVrQZfVY6Bxs5YKt35rtwNuU/uneLq+E9zF5grnGmr95EMqqYSVpE6RjJLID3y3j0yQ/cvRA==}
+    peerDependencies:
+      mobx: '>= 4.0.0'
 
   mobx-react-lite@4.1.1:
     resolution: {integrity: sha512-iUxiMpsvNraCKXU+yPotsOncNNmyeS2B5DKL+TL6Tar/xm+wwNJAubJmtRSeAoYawdZqwv8Z/+5nPRHeQxTiXg==}
@@ -8045,6 +8053,10 @@ snapshots:
       brace-expansion: 2.0.2
 
   minimist@1.2.8: {}
+
+  mobx-logger@0.7.1(mobx@6.15.0):
+    dependencies:
+      mobx: 6.15.0
 
   mobx-react-lite@4.1.1(mobx@6.15.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
