@@ -13,6 +13,9 @@ import "@formatjs/intl-relativetimeformat/locale-data/sv"
 import { App } from "./routes/App"
 import { RootStore } from "./stores/RootStore"
 import "core-js"
+import { enableLogging } from "mobx-logger"
+
+enableLogging()
 
 // pass fetch utils to RootStore using MST's environment context, so we can easily mock it in tests
 const store = RootStore.create(
