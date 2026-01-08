@@ -71,8 +71,10 @@ const FeedbackModalContainer = styled("div")`
   height: 100%;
 `
 
-interface StudentFeedbackProps
-  extends Pick<INotificationStore, "studentFeedbackLinks"> {
+interface StudentFeedbackProps extends Pick<
+  INotificationStore,
+  "studentFeedbackLinks"
+> {
   store?: IRootStore
 }
 

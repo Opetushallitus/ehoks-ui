@@ -117,6 +117,7 @@ export const mockFetch =
     const mockResponse = {
       arrayBuffer: () => Promise.resolve(new ArrayBuffer(0)),
       formData: () => Promise.resolve(new FormData()),
+      bytes: () => Promise.resolve(new Uint8Array()),
       text: () => Promise.resolve(""),
       blob: () => Promise.resolve(new Blob()),
       headers: new Headers(),
