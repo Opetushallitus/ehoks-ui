@@ -8,13 +8,19 @@
         "oid": "1.1.111.111.11.11111111112",
         "privileges": ["read", "update", "delete", "write"],
         "roles": [],
-        "child-organisations": []
+        "child-organisations": ["1.1.111.111.11.11111111115"]
       },
       {
         "oid": "1.1.111.111.11.11111111113",
         "privileges": ["read"],
         "roles": [],
         "child-organisations": []
+      },
+      {
+        "oid": "1.1.111.111.11.11111111114",
+        "privileges": ["hoks_delete"],
+        "roles": [],
+        "child-organisations": ["1.1.111.111.11.11111111113"]
       }
     ]
   }

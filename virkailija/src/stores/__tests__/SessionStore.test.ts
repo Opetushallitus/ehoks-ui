@@ -51,16 +51,51 @@ describe("SessionStore", () => {
               oid: "1.1.111.111.11.11111111112",
               privileges: ["read", "update", "delete", "write"],
               roles: [],
-              childOrganisations: []
+              childOrganisations: ["1.1.111.111.11.11111111115"]
             },
             {
               oid: "1.1.111.111.11.11111111113",
               privileges: ["read"],
               roles: [],
               childOrganisations: []
+            },
+            {
+              oid: "1.1.111.111.11.11111111114",
+              privileges: ["hoks_delete"],
+              roles: [],
+              childOrganisations: ["1.1.111.111.11.11111111113"]
             }
           ]
         })
+        expect(store.user?.flatPrivileges).toEqual([
+          {
+            oid: "1.1.111.111.11.11111111112",
+            privileges: ["read", "update", "delete", "write"],
+            roles: [],
+            childOrganisations: []
+          },
+          {
+            oid: "1.1.111.111.11.11111111115",
+            privileges: ["read", "update", "delete", "write"],
+            roles: [],
+            childOrganisations: []
+          },
+          {
+            oid: "1.1.111.111.11.11111111113",
+            privileges: ["read", "hoks_delete"],
+            roles: [],
+            childOrganisations: []
+          },
+          {
+            oid: "1.1.111.111.11.11111111114",
+            privileges: ["hoks_delete"],
+            roles: [],
+            childOrganisations: []
+          }
+        ])
+        store.changeSelectedOrganisationOid("1.1.111.111.11.11111111113")
+        expect(store.hasWritePrivilege).not.toBeTruthy()
+        expect(store.hasShallowDeletePrivilege).toBeTruthy()
         done()
       }
     )

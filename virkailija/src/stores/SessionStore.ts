@@ -173,7 +173,7 @@ export const SessionStore = types
       return (
         (self.user && self.user.isSuperuser) ||
         (self.selectedOrganisation &&
-          self.selectedOrganisation.roles.indexOf("hoks_delete") > -1)
+          self.selectedOrganisation.privileges.indexOf("hoks_delete") > -1)
       )
     }
   }))
