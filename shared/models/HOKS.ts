@@ -112,7 +112,9 @@ export const HOKS = types
         ),
         { headers: appendCallerId() }
       )
+      console.log("fetchOpiskelijapalauteTilat API response:", response)
       self.opiskelijapalauteTilat = response.data
+      console.log("fetchOpiskelijapalauteTilat:", self.opiskelijapalauteTilat)
     })
 
     const fetchTutkinto = flow(function* (): any {

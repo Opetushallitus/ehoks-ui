@@ -74,6 +74,7 @@ export const Opiskelijapalaute = inject("store")(
     )
 
     const { palauteTilat } = props
+    console.log("Opiskelijapalaute:", palauteTilat)
     const intl = useIntl()
 
     return (
