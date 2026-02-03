@@ -1,0 +1,15 @@
+{
+  "meta": {},
+  "data": [
+    {
+      "oid": "1.2.246.562.10.12424158690",
+      "nimi": {
+	"fi": "Testiorganisaatio 2"
+      },
+      "tyypit": [
+	"organisaatiotyyppi_02",
+	"organisaatiotyyppi_01"
+      ]
+    }
+  ]
+}
