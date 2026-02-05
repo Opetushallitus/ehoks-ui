@@ -1,4 +1,5 @@
 import { apiUrl } from "config"
+import { OrganisationModel } from "types/Organisation"
 import { createEnvironment } from "createEnvironment"
 import { mockFetch } from "fetchUtils"
 import { when } from "mobx"
@@ -96,6 +97,32 @@ describe("SessionStore", () => {
         store.changeSelectedOrganisationOid("1.1.111.111.11.11111111113")
         expect(store.hasWritePrivilege).not.toBeTruthy()
         expect(store.hasShallowDeletePrivilege).toBeTruthy()
+        expect(store.organisations.length).toEqual(2)
+        // the non-koulutustoimija orgs
+        done()
+      }
+    )
+  })
+
+  test("checkSession with only koulutustoimija orgs", done => {
+    const store = SessionStore.create(
+      {},
+      createEnvironment(mockFetch(apiUrl, 3), apiUrl, "", callerId)
+    )
+
+    store.checkSession()
+    expect(store.isLoading).toBe(true)
+
+    when(
+      () => !store.isLoading,
+      () => {
+        expect(store.organisations).toEqual([
+          OrganisationModel.create({
+            oid: "1.2.246.562.10.12424158690",
+            nimi: { fi: "Testiorganisaatio 2" },
+            tyypit: ["organisaatiotyyppi_02", "organisaatiotyyppi_01"]
+          })
+        ])
         done()
       }
     )

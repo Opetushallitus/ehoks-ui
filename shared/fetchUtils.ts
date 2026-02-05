@@ -113,7 +113,10 @@ export function fetchUtils(
 export const mockFetch =
   (apiUrl: (path: string) => string, version = 0) =>
   (url: string): Promise<Response> => {
-    const path = url.replace(apiUrl(""), "")
+    const path = url.replace(apiUrl(""), "").replace(/\?.*/, "")
+    const responseJson = import(
+      `stores/mocks/${path.replace(/\/|-/g, "_")}${version}.json`
+    )
     const mockResponse = {
       arrayBuffer: () => Promise.resolve(new ArrayBuffer(0)),
       formData: () => Promise.resolve(new FormData()),
@@ -129,8 +132,7 @@ export const mockFetch =
       body: null,
       bodyUsed: false,
       clone: () => mockResponse,
-      json: () =>
-        import(`stores/mocks/${path.replace(/\/|-/g, "_")}${version}.json`),
+      json: () => responseJson,
       ok: true,
       statusText: "Error"
     }

@@ -98,9 +98,20 @@ export const SessionStore = types
           }),
           { headers: appendCallerId() }
         )
-        self.organisations = organisationsData.data.map((o: IOrganisation) => ({
+        const orgsWithoutKoulutustoimija = organisationsData.data.filter(
+          (o: IOrganisation) =>
+            (o.tyypit || []).findIndex(t =>
+              /organisaatiotyyppi_01(#[0-9]*)?/.test(t)
+            ) === -1
+        )
+        const orgs =
+          orgsWithoutKoulutustoimija.length > 0
+            ? orgsWithoutKoulutustoimija
+            : organisationsData.data
+        self.organisations = orgs.map((o: IOrganisation) => ({
           nimi: o.nimi,
-          oid: o.oid
+          oid: o.oid,
+          tyypit: o.tyypit
         }))
         if (self.user && self.organisations.length > 0) {
           if (self.organisations.findIndex(p => p.oid === storedOid) === -1) {
