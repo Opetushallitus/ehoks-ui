@@ -16,13 +16,8 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
   // when assigning to self[dynamicKey]
   .volatile((): DynamicObject => ({}))
   .actions(self => {
-    const {
-      apiUrl,
-      apiPrefix,
-      errors,
-      fetchSingle,
-      appendCallerId
-    } = getEnv<StoreEnvironment>(self)
+    const { apiUrl, apiPrefix, errors, fetchSingle, appendCallerId } =
+      getEnv<StoreEnvironment>(self)
 
     const getTutkinnonOsaFromEPerusteet = (code: string) =>
       fetchSingle(apiUrl(`${apiPrefix}/external/eperusteet/${code}`), {
@@ -72,7 +67,9 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
             "Tutkinnon osaa ei saatu ladattua"
           )
         }
-	self.osaAlueet.forEach(getEnrichedDataForOsaAlue(response.data?.osaAlueet))
+        self.osaAlueet.forEach(
+          getEnrichedDataForOsaAlue(response.data?.osaAlueet)
+        )
       } catch (error) {
         errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
       }

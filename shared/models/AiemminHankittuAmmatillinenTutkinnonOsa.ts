@@ -48,7 +48,7 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
         )
       },
       get osaamispisteet() {
-	return self.tutkinnonOsa.laajuus || 0
+        return self.tutkinnonOsa.laajuus || 0
       },
       get tutkinnonOsaTyyppi(): TutkinnonOsaType {
         return TutkinnonOsaType.AiemminHankittuAmmatillinen

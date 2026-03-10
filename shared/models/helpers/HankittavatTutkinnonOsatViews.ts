@@ -32,7 +32,7 @@ export const HankittavatTutkinnonOsatViews = types
         )
       },
       get osaamispisteet() {
-	return self.tutkinnonOsa.laajuus || 0
+        return self.tutkinnonOsa.laajuus || 0
       },
       opintoOtsikko: (ospLyhenne: string): JSX.Element | string => {
         const translations = root.translations
