@@ -9,7 +9,6 @@ interface DynamicObject {
 
 // dumb cache for preventing multiple fetches for the same koodi-uri's
 const cachedTutkinnonOsaResponses: DynamicObject = {}
-const cachedOsaAlueResponses: DynamicObject = {}
 
 export const EnrichTutkinnonOsaAndOsaAlueet = types
   .model({})
@@ -17,19 +16,41 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
   // when assigning to self[dynamicKey]
   .volatile((): DynamicObject => ({}))
   .actions(self => {
-    const {
-      apiUrl,
-      apiPrefix,
-      errors,
-      fetchSingle,
-      fetchCollection,
-      appendCallerId
-    } = getEnv<StoreEnvironment>(self)
+    const { apiUrl, apiPrefix, errors, fetchSingle, appendCallerId } =
+      getEnv<StoreEnvironment>(self)
 
     const getTutkinnonOsaFromEPerusteet = (code: string) =>
       fetchSingle(apiUrl(`${apiPrefix}/external/eperusteet/${code}`), {
         headers: appendCallerId()
       })
+
+    const findMatchingOsaAlueFromEperusteetResponse = (
+      osaAlueetVastaus: any,
+      osaAlueKoodiUri: string
+    ) => {
+      const osaAlueVastaus = osaAlueetVastaus.find(
+        (osaAlueFromEperusteet: IOsaAlueVastaus) =>
+          osaAlueFromEperusteet.koodiUri === osaAlueKoodiUri ||
+          (osaAlueKoodiUri.startsWith("ammatillisenoppiaineet_vvai") &&
+            osaAlueFromEperusteet.koodiUri === "ammatillisenoppiaineet_vvai22")
+      )
+      if (!osaAlueVastaus) {
+        errors.logError("EnrichOsaAlue.fetchFromEPerusteet", osaAlueKoodiUri)
+      }
+      return osaAlueVastaus || { koodiUri: osaAlueKoodiUri }
+    }
+
+    const getEnrichedDataForOsaAlue =
+      (osaAlueet: any) =>
+      (osaAlue: {
+        osaAlueEnrichedData: IOsaAlueVastaus
+        osaAlueKoodiUri: string
+      }) => {
+        osaAlue.osaAlueEnrichedData = findMatchingOsaAlueFromEperusteetResponse(
+          osaAlueet,
+          osaAlue.osaAlueKoodiUri
+        )
+      }
 
     const fetchTutkinnonOsa = flow(function* (koodiUri: string): any {
       try {
@@ -46,75 +67,16 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
             "Tutkinnon osaa ei saatu ladattua"
           )
         }
+        self.osaAlueet.forEach(
+          getEnrichedDataForOsaAlue(response.data?.osaAlueet)
+        )
       } catch (error) {
         errors.logError("EnrichKoodiUri.fetchEPerusteet", error.message)
       }
     })
 
-    const getOsaAlueetFromEPerusteet = (tutkinnonOsaId: number) =>
-      fetchCollection(
-        apiUrl(
-          `${apiPrefix}/external/eperusteet/tutkinnonosat/${tutkinnonOsaId}/osaalueet`
-        ),
-        {
-          headers: appendCallerId()
-        }
-      )
-
-    const findMatchingOsaAlueFromEperusteetResponse = (
-      ePerusteetReponse: any,
-      osaAlueKoodiUri: string
-    ) => {
-      const osaAlueVastaus = ePerusteetReponse.find(
-        (osaAlueFromEperusteet: IOsaAlueVastaus) =>
-          osaAlueFromEperusteet.koodiUri === osaAlueKoodiUri ||
-          (osaAlueKoodiUri.startsWith("ammatillisenoppiaineet_vvai") &&
-            osaAlueFromEperusteet.koodiUri === "ammatillisenoppiaineet_vvai22")
-      )
-      if (!osaAlueVastaus) {
-        errors.logError("EnrichOsaAlue.fetchFromEPerusteet", osaAlueKoodiUri)
-      }
-      return osaAlueVastaus || { koodiUri: osaAlueKoodiUri }
-    }
-
-    const getEnrichedDataForOsaAlue =
-      (ePerusteetReponse: any) =>
-      (osaAlue: {
-        osaAlueEnrichedData: IOsaAlueVastaus
-        osaAlueKoodiUri: string
-      }) => {
-        osaAlue.osaAlueEnrichedData = findMatchingOsaAlueFromEperusteetResponse(
-          ePerusteetReponse,
-          osaAlue.osaAlueKoodiUri
-        )
-      }
-
-    const fetchOsaAlue = flow(function* (tutkinnonOsaId: number): any {
-      try {
-        cachedOsaAlueResponses[tutkinnonOsaId] =
-          cachedOsaAlueResponses[tutkinnonOsaId] ||
-          getOsaAlueetFromEPerusteet(tutkinnonOsaId)
-
-        const { data }: APIResponse =
-          yield cachedOsaAlueResponses[tutkinnonOsaId]
-
-        self.osaAlueet.forEach(getEnrichedDataForOsaAlue(data))
-      } catch (error) {
-        errors.logError("EnrichOsaAlue.fetchFromEPerusteet", error.message)
-      }
-    })
-
-    const fetchTutkinnonOsaAndOsaAlueet = flow(function* (
-      tutkinnonOsaKoodiUri: string
-    ): any {
-      yield fetchTutkinnonOsa(tutkinnonOsaKoodiUri)
-      if (self.tutkinnonOsaId) {
-        yield fetchOsaAlue(self.tutkinnonOsaId)
-      }
-    })
-
     const afterCreate = () => {
-      fetchTutkinnonOsaAndOsaAlueet(self.tutkinnonOsaKoodiUri)
+      fetchTutkinnonOsa(self.tutkinnonOsaKoodiUri)
     }
 
     return { afterCreate }

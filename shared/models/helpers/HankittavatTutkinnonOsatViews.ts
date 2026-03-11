@@ -3,7 +3,6 @@ import { getOtsikko } from "./getOtsikko"
 import { getTila } from "./getTila"
 import { types, getRoot } from "mobx-state-tree"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
-import { getOsaamispisteet } from "./getOsaamispisteet"
 import find from "lodash.find"
 import { OsaamisenHankkimistapaType } from "../OsaamisenHankkimistapa"
 import { ShareType, TutkinnonOsaType } from "./ShareTypes"
@@ -33,11 +32,7 @@ export const HankittavatTutkinnonOsatViews = types
         )
       },
       get osaamispisteet() {
-        if (self.tyyppi !== TutkinnonOsaType.HankittavaKoulutuksenOsa) {
-          return getOsaamispisteet(self.tutkinnonOsaViitteet)
-        } else {
-          return 0
-        }
+        return self.tutkinnonOsa.laajuus || 0
       },
       opintoOtsikko: (ospLyhenne: string): JSX.Element | string => {
         const translations = root.translations

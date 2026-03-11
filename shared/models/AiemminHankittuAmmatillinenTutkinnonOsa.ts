@@ -3,9 +3,6 @@ import { OsaamisenOsoittaminen } from "./OsaamisenOsoittaminen"
 import { TodennettuArviointiLisatiedot } from "./TodennettuArviointiLisatiedot"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
-import { getOsaamispisteet } from "models/helpers/getOsaamispisteet"
-import { EnrichTutkinnonOsaViitteet } from "models/Enrichment/EnrichTutkinnonOsaViitteet"
-import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
 import { AiemminHankitutTutkinnonOsatViews } from "./helpers/AiemminHankitutTutkinnonOsatViews"
 import { Organisaatio } from "./Organisaatio"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
@@ -17,7 +14,6 @@ const Model = types.model({
   moduleId: types.maybe(types.string),
   tutkinnonOsaKoodiUri: types.optional(types.string, ""),
   tutkinnonOsa: types.optional(EPerusteetVastaus, {}),
-  tutkinnonOsaViitteet: types.array(TutkinnonOsaViite),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
   koulutuksenJarjestaja: types.maybe(Organisaatio),
   valittuTodentamisenProsessiKoodiUri: types.optional(types.string, ""),
@@ -33,7 +29,6 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
   .compose(
     "AiemminHankittuAmmatillinenTutkinnonOsa",
     EnrichTutkinnonOsaKoodiUri,
-    EnrichTutkinnonOsaViitteet("tutkinnonOsaViitteet"),
     EnrichOrganisaatioOid({
       enrichedProperty: "koulutuksenJarjestaja",
       organzationOidProperty: "koulutuksenJarjestajaOid"
@@ -53,7 +48,7 @@ export const AiemminHankittuAmmatillinenTutkinnonOsa = types
         )
       },
       get osaamispisteet() {
-        return getOsaamispisteet(self.tutkinnonOsaViitteet)
+        return self.tutkinnonOsa.laajuus || 0
       },
       get tutkinnonOsaTyyppi(): TutkinnonOsaType {
         return TutkinnonOsaType.AiemminHankittuAmmatillinen
