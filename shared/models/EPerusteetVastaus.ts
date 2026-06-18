@@ -69,5 +69,6 @@ export const EPerusteetVastaus = types.model("EPerusteet", {
   nimi: types.optional(EPerusteetNimi, defaultText),
   koodi: types.optional(EPerusteKoodi, { nimi: defaultText }),
   koulutuksenOsaViiteId: types.optional(types.number, 0),
+  laajuus: types.maybeNull(types.number),
   muokattu: types.optional(types.number, 0)
 })

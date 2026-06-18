@@ -3,7 +3,6 @@ import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 import { EnrichTutkinnonOsaKoodiUri } from "./Enrichment/EnrichTutkinnonOsaKoodiUri"
 import { HankittavatTutkinnonOsatViews } from "./helpers/HankittavatTutkinnonOsatViews"
-import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
 
 export const Model = types.model({
@@ -13,7 +12,6 @@ export const Model = types.model({
   alku: types.optional(types.string, ""),
   loppu: types.optional(types.string, ""),
   laajuus: types.optional(types.number, 0),
-  tutkinnonOsaViitteet: types.array(TutkinnonOsaViite),
   vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
   koulutuksenJarjestajaOid: types.optional(types.string, ""),
   olennainenSeikka: types.optional(types.boolean, false),

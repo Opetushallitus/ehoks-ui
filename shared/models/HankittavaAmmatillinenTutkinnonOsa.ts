@@ -4,8 +4,6 @@ import { OsaamisenHankkimistapa } from "./OsaamisenHankkimistapa"
 import { HankittavatTutkinnonOsatViews } from "./helpers/HankittavatTutkinnonOsatViews"
 import { EPerusteetVastaus } from "models/EPerusteetVastaus"
 import { LocaleRoot } from "models/helpers/LocaleRoot"
-import { TutkinnonOsaViite } from "models/TutkinnonOsaViite"
-import { EnrichTutkinnonOsaViitteet } from "models/Enrichment/EnrichTutkinnonOsaViitteet"
 import { Organisaatio } from "./Organisaatio"
 import { TutkinnonOsaType } from "./helpers/ShareTypes"
 import { EnrichTutkinnonOsaKoodiUri } from "./Enrichment/EnrichTutkinnonOsaKoodiUri"
@@ -16,7 +14,6 @@ export const Model = types.model({
   moduleId: types.maybe(types.string),
   tutkinnonOsaKoodiUri: types.optional(types.string, ""),
   tutkinnonOsa: types.optional(EPerusteetVastaus, {}),
-  tutkinnonOsaViitteet: types.array(TutkinnonOsaViite),
   vaatimuksistaTaiTavoitteistaPoikkeaminen: types.optional(types.string, ""),
   osaamisenOsoittaminen: types.array(OsaamisenOsoittaminen),
   osaamisenHankkimistavat: types.array(OsaamisenHankkimistapa),
@@ -30,7 +27,6 @@ export const HankittavaAmmatillinenTutkinnonOsa = types
   .compose(
     "HankittavaAmmatillinenTutkinnonOsa",
     EnrichTutkinnonOsaKoodiUri,
-    EnrichTutkinnonOsaViitteet("tutkinnonOsaViitteet"),
     EnrichOrganisaatioOid({
       enrichedProperty: "koulutuksenJarjestaja",
       organzationOidProperty: "koulutuksenJarjestajaOid"
