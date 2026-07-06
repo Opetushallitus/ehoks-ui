@@ -42,7 +42,7 @@ export interface OpiskelusuunnitelmaProps {
   }
 }
 
-const OppimisenTuki = ({ plan }: { plan: IHOKS }) => (
+const OppimisenTuki = observer(({ plan }: { plan: IHOKS }) => (
   <InfoTable>
     <tbody>
       <tr>
@@ -68,8 +68,13 @@ const OppimisenTuki = ({ plan }: { plan: IHOKS }) => (
       {plan.oppimisenTuki.map((support, i) => (
         <tr key={`support_${i}`}>
           <td>
-            {support.oppimisenTuenTyyppiKoodiUri},
-            {support.tutkinnonOsanTyyppiKoodiUri}
+            {support.oppimisenTuenTyyppi && support.oppimisenTuenTyyppi.nimi
+              ? support.oppimisenTuenTyyppi.nimi +
+                (support.tutkinnonOsanTyyppi.nimi &&
+                  ", " + support.tutkinnonOsanTyyppi.nimi)
+              : support.oppimisenTuenTyyppiKoodiUri +
+                ", " +
+                support.tutkinnonOsanTyyppiKoodiUri}
           </td>
           <td>
             <FormattedDate date={support.alku} />
@@ -89,7 +94,7 @@ const OppimisenTuki = ({ plan }: { plan: IHOKS }) => (
       )}
     </tbody>
   </InfoTable>
-)
+))
 
 const OpiskeluvalmiuksiaTukevatOpinnot = ({ plan }: { plan: IHOKS }) => (
   <InfoTable>
