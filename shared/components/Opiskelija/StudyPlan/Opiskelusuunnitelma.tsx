@@ -77,10 +77,10 @@ const OppimisenTuki = observer(({ plan }: { plan: IHOKS }) => (
                 support.tutkinnonOsanTyyppiKoodiUri}
           </td>
           <td>
-            <FormattedDate date={support.alku} />
+            <FormattedDate date={support.alku || plan.aloitusPvm} />
           </td>
           <td>
-            <FormattedDate date={support.loppu} />
+            <FormattedDate date={support.loppu || plan.paattymispaiva} />
           </td>
         </tr>
       ))}
