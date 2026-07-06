@@ -42,6 +42,55 @@ export interface OpiskelusuunnitelmaProps {
   }
 }
 
+const OppimisenTuki = ({ plan }: { plan: IHOKS }) => (
+  <InfoTable>
+    <tbody>
+      <tr>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.oppimisenTukiTyyppiTitle"
+            defaultMessage="Oppimisen tuen tyyppi"
+          />
+        </th>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.aloituspaivaTitle"
+            defaultMessage="Aloituspäivä"
+          />
+        </th>
+        <th>
+          <FormattedMessage
+            id="opiskelusuunnitelma.lopetuspaivaTitle"
+            defaultMessage="Lopetuspäivä"
+          />
+        </th>
+      </tr>
+      {plan.oppimisenTuki.map((support, i) => (
+        <tr key={`support_${i}`}>
+          <td>
+            {support.oppimisenTuenTyyppiKoodiUri},
+            {support.tutkinnonOsanTyyppiKoodiUri}
+          </td>
+          <td>
+            <FormattedDate date={support.alku} />
+          </td>
+          <td>
+            <FormattedDate date={support.loppu} />
+          </td>
+        </tr>
+      ))}
+      {!plan.oppimisenTuki.length && (
+        <tr>
+          <FormattedMessage
+            id="opiskelusuunnitelma.eiOppimisenTukea"
+            defaultMessage="Ei oppimisen tukitoimia"
+          />
+        </tr>
+      )}
+    </tbody>
+  </InfoTable>
+)
+
 const OpiskeluvalmiuksiaTukevatOpinnot = ({ plan }: { plan: IHOKS }) => (
   <InfoTable>
     <tbody>
@@ -83,6 +132,14 @@ const OpiskeluvalmiuksiaTukevatOpinnot = ({ plan }: { plan: IHOKS }) => (
           </td>
         </tr>
       ))}
+      {!plan.opiskeluvalmiuksiaTukevatOpinnot.length && (
+        <tr>
+          <FormattedMessage
+            id="opiskelusuunnitelma.eiOpiskeluvalmiuksiaTukeviaOpintoja"
+            defaultMessage="Ei opiskeluvalmiuksia tukevia opintoja"
+          />
+        </tr>
+      )}
     </tbody>
   </InfoTable>
 )
@@ -98,6 +155,7 @@ export const Opiskelusuunnitelma = observer(
           valmiit: false
         },
         tavoitteet: false,
+        oppimisenTuki: false,
         tukevatOpinnot: false
       },
       share: {
@@ -367,6 +425,29 @@ export const Opiskelusuunnitelma = observer(
             elements={elements}
             competencePointsTitle={competencePointsTitle}
           />
+        </Accordion>
+
+        <Accordion
+          id="oppimisenTuki"
+          open={activeAccordions.oppimisenTuki}
+          title={
+            <AccordionTitle>
+              <FormattedMessage
+                id="opiskelusuunnitelma.oppimisenTukiTitle"
+                defaultMessage="Oppimisen tuki"
+              />
+            </AccordionTitle>
+          }
+          onToggle={toggleAccordion("oppimisenTuki")}
+          helpIcon={true}
+          helpContent={
+            <FormattedMessage
+              id="opiskelusuunnitelma.oppimisenTukiHelpLabel"
+              defaultMessage="Tietoa oppimisen tuesta"
+            />
+          }
+        >
+          <OppimisenTuki plan={plan} />
         </Accordion>
 
         <Accordion
