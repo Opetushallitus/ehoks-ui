@@ -24,7 +24,8 @@ export const propertiesByStep: { [index: number]: string[] } = {
   5: ["hankittavat-paikalliset-tutkinnon-osat"],
   6: ["hankittavat-yhteiset-tutkinnon-osat"],
   7: ["hankittavat-koulutuksen-osat"],
-  8: ["opiskeluvalmiuksia-tukevat-opinnot"]
+  8: ["oppimisen-tuki"],
+  9: ["opiskeluvalmiuksia-tukevat-opinnot"]
 }
 
 const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
@@ -49,6 +50,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
     "hankittavat-paikalliset-tutkinnon-osat",
     "hankittavat-yhteiset-tutkinnon-osat",
     "hankittavat-koulutuksen-osat",
+    "oppimisen-tuki",
     "opiskeluvalmiuksia-tukevat-opinnot",
     "*"
   ],
