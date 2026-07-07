@@ -1201,6 +1201,26 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       }
     }
   },
+  "oppimisen-tuki": {
+    "ui:options": {
+      orderable: false
+    },
+    items: {
+      id: {
+        "ui:widget": "hidden"
+      },
+      "oppimisen-tuen-tyyppi-koodi-uri": {
+        "ui:field": "typeahead",
+        typeahead: typeaheadProps(
+          options.ammatillinenkoulutusoppimisentuentyyppi
+        )
+      },
+      "tutkinnon-osan-tyyppi-koodi-uri": {
+        "ui:field": "typeahead",
+        typeahead: typeaheadProps(options.ammatillisentutkinnonosanryhma)
+      }
+    }
+  },
   "opiskeluvalmiuksia-tukevat-opinnot": {
     "ui:options": {
       orderable: false

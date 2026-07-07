@@ -28,6 +28,13 @@ export function updateCodeVersionAt(
     pathArray.length - 1
   ] as keyof typeof codeCategoriesForPaths
 
+  // some koodistot (e.g. oppimisen tuen tyyppi) have no versio field; don't
+  // inject a versio sibling for them, or schema validation rejects it as an
+  // additional property
+  if (!(lastPath in codeCategoriesForPaths)) {
+    return formData
+  }
+
   return updateValue(
     formData,
     pathArray,
