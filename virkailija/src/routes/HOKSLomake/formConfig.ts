@@ -50,7 +50,7 @@ export const codeCategoriesForPaths = {
   "osaamisen-hankkimistapa-koodi-versio": "osaamisenhankkimistapa",
   "oppimisymparisto-koodi-versio": "oppimisymparistot",
   "oppisopimuksen-perusta-koodi-versio": "oppisopimuksenperusta",
-  "koulutuksen-osa-koodi-versio": "koulutuksenosattuva"
+  "koulutuksen-osa-koodi-versio": "koulutuksenosat"
 }
 
 export type UiSchemaOptions = { [key in keyof typeof koodistoUrls]: any[] }
