@@ -56,15 +56,24 @@ const renderOppimisenTuenTyyppi = (
       {
         // what koodisto had was not good enough for PO so here are tweaked
         // renderings for the two codes that are actually used
-        tutkinnonOsanTyyppiKoodiUri === "ammatillisentutkinnonosanryhma_1"
-          ? ", ammatillinen tutkinnon osa"
-          : tutkinnonOsanTyyppiKoodiUri === "ammatillisentutkinnonosanryhma_2"
-            ? ", yhteinen tutkinnon osa"
-            : tutkinnonOsanTyyppi && tutkinnonOsanTyyppi.nimi
-              ? ", " + tutkinnonOsanTyyppi.nimi
-              : tutkinnonOsanTyyppiKoodiUri
-                ? ", " + tutkinnonOsanTyyppiKoodiUri
-                : ""
+        tutkinnonOsanTyyppiKoodiUri === "ammatillisentutkinnonosanryhma_1" ? (
+          <FormattedMessage
+            id="opiskelusuunnitelma.ammatillisentutkinnonosa"
+            defaultMessage=", ammatillinen tutkinnon osa"
+          />
+        ) : tutkinnonOsanTyyppiKoodiUri ===
+          "ammatillisentutkinnonosanryhma_2" ? (
+          <FormattedMessage
+            id="opiskelusuunnitelma.yhteinentutkinnonosa"
+            defaultMessage=", yhteinen tutkinnon osa"
+          />
+        ) : tutkinnonOsanTyyppi && tutkinnonOsanTyyppi.nimi ? (
+          ", " + tutkinnonOsanTyyppi.nimi
+        ) : tutkinnonOsanTyyppiKoodiUri ? (
+          ", " + tutkinnonOsanTyyppiKoodiUri
+        ) : (
+          ""
+        )
       }
     </span>
   ) : (
