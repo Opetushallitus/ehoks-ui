@@ -145,10 +145,12 @@ const OpiskeluvalmiuksiaTukevatOpinnot = ({ plan }: { plan: IHOKS }) => (
       ))}
       {!plan.opiskeluvalmiuksiaTukevatOpinnot.length && (
         <tr>
-          <FormattedMessage
-            id="opiskelusuunnitelma.eiOpiskeluvalmiuksiaTukeviaOpintoja"
-            defaultMessage="Ei opiskeluvalmiuksia tukevia opintoja"
-          />
+          <td>
+            <FormattedMessage
+              id="opiskelusuunnitelma.eiOpiskeluvalmiuksiaTukeviaOpintoja"
+              defaultMessage="Ei opiskeluvalmiuksia tukevia opintoja"
+            />
+          </td>
         </tr>
       )}
     </tbody>
