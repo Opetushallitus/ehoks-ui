@@ -1,3 +1,4 @@
+import sortBy from "lodash.sortby"
 import { Accordion } from "components/Accordion"
 import { AccordionTitle } from "components/AccordionTitle"
 import { Heading } from "components/Heading"
@@ -17,6 +18,7 @@ import {
   StudyPartSubAccordions,
   StudyPartType
 } from "./StudyPlanHelpers"
+import { IKoodistoVastaus } from "models/KoodistoVastaus"
 import { PlannedStudies } from "./PlannedStudies"
 import { ScheduledStudies } from "./ScheduledStudies"
 import { CompletedStudies } from "./CompletedStudies"
@@ -42,58 +44,62 @@ export interface OpiskelusuunnitelmaProps {
   }
 }
 
+const renderOppimisenTuenTyyppi = (
+  oppimisenTuenTyyppi: IKoodistoVastaus,
+  tutkinnonOsanTyyppi: IKoodistoVastaus,
+  oppimisenTuenTyyppiKoodiUri: string,
+  tutkinnonOsanTyyppiKoodiUri: string
+) =>
+  oppimisenTuenTyyppi && oppimisenTuenTyyppi.nimi ? (
+    <span>
+      <b>{oppimisenTuenTyyppi.nimi}</b>
+      {
+        // what koodisto had was not good enough for PO so here are tweaked
+        // renderings for the two codes that are actually used
+        tutkinnonOsanTyyppiKoodiUri === "ammatillisentutkinnonosanryhma_1"
+          ? ", ammatillinen tutkinnon osa"
+          : tutkinnonOsanTyyppiKoodiUri === "ammatillisentutkinnonosanryhma_2"
+            ? ", yhteinen tutkinnon osa"
+            : tutkinnonOsanTyyppi && tutkinnonOsanTyyppi.nimi
+              ? ", " + tutkinnonOsanTyyppi.nimi
+              : tutkinnonOsanTyyppiKoodiUri
+                ? ", " + tutkinnonOsanTyyppiKoodiUri
+                : ""
+      }
+    </span>
+  ) : (
+    <span>
+      {oppimisenTuenTyyppiKoodiUri + ", " + tutkinnonOsanTyyppiKoodiUri}
+    </span>
+  )
+
 const OppimisenTuki = observer(({ plan }: { plan: IHOKS }) => (
-  <InfoTable>
-    <tbody>
-      <tr>
-        <th>
-          <FormattedMessage
-            id="opiskelusuunnitelma.oppimisenTukiTyyppiTitle"
-            defaultMessage="Oppimisen tuen tyyppi"
-          />
-        </th>
-        <th>
-          <FormattedMessage
-            id="opiskelusuunnitelma.aloituspaivaTitle"
-            defaultMessage="Aloituspäivä"
-          />
-        </th>
-        <th>
-          <FormattedMessage
-            id="opiskelusuunnitelma.lopetuspaivaTitle"
-            defaultMessage="Lopetuspäivä"
-          />
-        </th>
-      </tr>
-      {plan.oppimisenTuki.map((support, i) => (
-        <tr key={`support_${i}`}>
-          <td>
-            {support.oppimisenTuenTyyppi && support.oppimisenTuenTyyppi.nimi
-              ? support.oppimisenTuenTyyppi.nimi +
-                (support.tutkinnonOsanTyyppi.nimi &&
-                  ", " + support.tutkinnonOsanTyyppi.nimi)
-              : support.oppimisenTuenTyyppiKoodiUri +
-                ", " +
-                support.tutkinnonOsanTyyppiKoodiUri}
-          </td>
-          <td>
-            <FormattedDate date={support.alku || plan.aloitusPvm} />
-          </td>
-          <td>
-            <FormattedDate date={support.loppu || plan.paattymispaiva} />
-          </td>
-        </tr>
-      ))}
-      {!plan.oppimisenTuki.length && (
-        <tr>
-          <FormattedMessage
-            id="opiskelusuunnitelma.eiOppimisenTukea"
-            defaultMessage="Ei oppimisen tukitoimia"
-          />
-        </tr>
-      )}
-    </tbody>
-  </InfoTable>
+  <ul>
+    {sortBy(plan.oppimisenTuki, ["oppimisenTuenTyyppiKoodiUri"]).map(
+      (support, i) => (
+        <li key={`support_${i}`}>
+          {renderOppimisenTuenTyyppi(
+            support.oppimisenTuenTyyppi,
+            support.tutkinnonOsanTyyppi,
+            support.oppimisenTuenTyyppiKoodiUri,
+            support.tutkinnonOsanTyyppiKoodiUri
+          )}
+          ,&nbsp;
+          <FormattedDate date={support.alku || plan.aloitusPvm} />
+          &ndash;
+          <FormattedDate date={support.loppu || plan.paattymispaiva} />
+        </li>
+      )
+    )}
+    {!plan.oppimisenTuki.length && (
+      <li>
+        <FormattedMessage
+          id="opiskelusuunnitelma.eiOppimisenTukea"
+          defaultMessage="Ei oppimisen tukitoimia"
+        />
+      </li>
+    )}
+  </ul>
 ))
 
 const OpiskeluvalmiuksiaTukevatOpinnot = ({ plan }: { plan: IHOKS }) => (
