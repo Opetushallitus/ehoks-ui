@@ -370,6 +370,7 @@ export const LuoHOKS = inject("store")(
             <Step>Hankittavat paikalliset tutkinnon osat</Step>
             <Step>Hankittavat yhteiset tutkinnon osat</Step>
             <Step>Hankittavat koulutuksen osat</Step>
+            <Step>Oppimisen tuki</Step>
             <Step>Opiskeluvalmiuksia tukevat opinnot</Step>
           </Stepper>
         </TopToolbar>

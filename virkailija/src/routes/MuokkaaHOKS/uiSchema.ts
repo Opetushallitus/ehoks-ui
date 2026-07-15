@@ -24,7 +24,8 @@ export const propertiesByStep: { [index: number]: string[] } = {
   5: ["hankittavat-paikalliset-tutkinnon-osat"],
   6: ["hankittavat-yhteiset-tutkinnon-osat"],
   7: ["hankittavat-koulutuksen-osat"],
-  8: ["opiskeluvalmiuksia-tukevat-opinnot"]
+  8: ["oppimisen-tuki"],
+  9: ["opiskeluvalmiuksia-tukevat-opinnot"]
 }
 
 const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
@@ -49,6 +50,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
     "hankittavat-paikalliset-tutkinnon-osat",
     "hankittavat-yhteiset-tutkinnon-osat",
     "hankittavat-koulutuksen-osat",
+    "oppimisen-tuki",
     "opiskeluvalmiuksia-tukevat-opinnot",
     "*"
   ],
@@ -439,6 +441,7 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
             "osa-alue-koodi-versio",
             "valittu-todentamisen-prosessi-koodi-uri",
             "valittu-todentamisen-prosessi-koodi-versio",
+            "tarkentavat-tiedot-osaamisen-arvioija",
             "vaatimuksista-tai-tavoitteista-poikkeaminen",
             "koulutuksen-jarjestaja-oid",
             "olennainen-seikka",
@@ -463,6 +466,19 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
           },
           "valittu-todentamisen-prosessi-koodi-versio": {
             "ui:widget": "hidden"
+          },
+          "tarkentavat-tiedot-osaamisen-arvioija": {
+            "aiemmin-hankitun-osaamisen-arvioijat": {
+              "ui:options": {
+                orderable: false
+              },
+              items: {
+                "ui:order": ["nimi", "*"],
+                id: {
+                  "ui:widget": "hidden"
+                }
+              }
+            }
           },
           "tarkentavat-tiedot-naytto": {
             "ui:options": {
@@ -1182,6 +1198,26 @@ const fullUiSchema = (options: UiSchemaOptions): { [key: string]: any } => ({
       },
       "koulutuksen-osa-koodi-versio": {
         "ui:widget": "hidden"
+      }
+    }
+  },
+  "oppimisen-tuki": {
+    "ui:options": {
+      orderable: false
+    },
+    items: {
+      id: {
+        "ui:widget": "hidden"
+      },
+      "oppimisen-tuen-tyyppi-koodi-uri": {
+        "ui:field": "typeahead",
+        typeahead: typeaheadProps(
+          options.ammatillinenkoulutusoppimisentuentyyppi
+        )
+      },
+      "tutkinnon-osan-tyyppi-koodi-uri": {
+        "ui:field": "typeahead",
+        typeahead: typeaheadProps(options.ammatillisentutkinnonosanryhma)
       }
     }
   },
