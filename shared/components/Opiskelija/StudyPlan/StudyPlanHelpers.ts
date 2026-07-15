@@ -9,6 +9,7 @@ export interface OpiskelusuunnitelmaState {
       valmiit: boolean
     }
     tavoitteet: boolean
+    oppimisenTuki: boolean
     tukevatOpinnot: boolean
   }
   share: {

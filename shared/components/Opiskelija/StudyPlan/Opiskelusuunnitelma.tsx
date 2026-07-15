@@ -1,3 +1,4 @@
+import sortBy from "lodash.sortby"
 import { Accordion } from "components/Accordion"
 import { AccordionTitle } from "components/AccordionTitle"
 import { Heading } from "components/Heading"
@@ -17,6 +18,7 @@ import {
   StudyPartSubAccordions,
   StudyPartType
 } from "./StudyPlanHelpers"
+import { IKoodistoVastaus } from "models/KoodistoVastaus"
 import { PlannedStudies } from "./PlannedStudies"
 import { ScheduledStudies } from "./ScheduledStudies"
 import { CompletedStudies } from "./CompletedStudies"
@@ -41,6 +43,73 @@ export interface OpiskelusuunnitelmaProps {
     essentialFactor?: React.ReactNode
   }
 }
+
+const renderOppimisenTuenTyyppi = (
+  oppimisenTuenTyyppi: IKoodistoVastaus,
+  tutkinnonOsanTyyppi: IKoodistoVastaus,
+  oppimisenTuenTyyppiKoodiUri: string,
+  tutkinnonOsanTyyppiKoodiUri: string
+) =>
+  oppimisenTuenTyyppi && oppimisenTuenTyyppi.nimi ? (
+    <span>
+      <b>{oppimisenTuenTyyppi.nimi}</b>
+      {
+        // what koodisto had was not good enough for PO so here are tweaked
+        // renderings for the two codes that are actually used
+        tutkinnonOsanTyyppiKoodiUri === "ammatillisentutkinnonosanryhma_1" ? (
+          <FormattedMessage
+            id="opiskelusuunnitelma.ammatillisentutkinnonosa"
+            defaultMessage=", ammatillinen tutkinnon osa"
+          />
+        ) : tutkinnonOsanTyyppiKoodiUri ===
+          "ammatillisentutkinnonosanryhma_2" ? (
+          <FormattedMessage
+            id="opiskelusuunnitelma.yhteinentutkinnonosa"
+            defaultMessage=", yhteinen tutkinnon osa"
+          />
+        ) : tutkinnonOsanTyyppi && tutkinnonOsanTyyppi.nimi ? (
+          ", " + tutkinnonOsanTyyppi.nimi
+        ) : tutkinnonOsanTyyppiKoodiUri ? (
+          ", " + tutkinnonOsanTyyppiKoodiUri
+        ) : (
+          ""
+        )
+      }
+    </span>
+  ) : (
+    <span>
+      {oppimisenTuenTyyppiKoodiUri + ", " + tutkinnonOsanTyyppiKoodiUri}
+    </span>
+  )
+
+const OppimisenTuki = observer(({ plan }: { plan: IHOKS }) => (
+  <ul>
+    {sortBy(plan.oppimisenTuki, ["oppimisenTuenTyyppiKoodiUri"]).map(
+      (support, i) => (
+        <li key={`support_${i}`}>
+          {renderOppimisenTuenTyyppi(
+            support.oppimisenTuenTyyppi,
+            support.tutkinnonOsanTyyppi,
+            support.oppimisenTuenTyyppiKoodiUri,
+            support.tutkinnonOsanTyyppiKoodiUri
+          )}
+          ,&nbsp;
+          <FormattedDate date={support.alku || plan.aloitusPvm} />
+          &ndash;
+          <FormattedDate date={support.loppu || plan.paattymispaiva} />
+        </li>
+      )
+    )}
+    {!plan.oppimisenTuki.length && (
+      <li>
+        <FormattedMessage
+          id="opiskelusuunnitelma.eiOppimisenTukea"
+          defaultMessage="Ei oppimisen tukitoimia"
+        />
+      </li>
+    )}
+  </ul>
+))
 
 const OpiskeluvalmiuksiaTukevatOpinnot = ({ plan }: { plan: IHOKS }) => (
   <InfoTable>
@@ -83,6 +152,16 @@ const OpiskeluvalmiuksiaTukevatOpinnot = ({ plan }: { plan: IHOKS }) => (
           </td>
         </tr>
       ))}
+      {!plan.opiskeluvalmiuksiaTukevatOpinnot.length && (
+        <tr>
+          <td>
+            <FormattedMessage
+              id="opiskelusuunnitelma.eiOpiskeluvalmiuksiaTukeviaOpintoja"
+              defaultMessage="Ei opiskeluvalmiuksia tukevia opintoja"
+            />
+          </td>
+        </tr>
+      )}
     </tbody>
   </InfoTable>
 )
@@ -98,6 +177,7 @@ export const Opiskelusuunnitelma = observer(
           valmiit: false
         },
         tavoitteet: false,
+        oppimisenTuki: false,
         tukevatOpinnot: false
       },
       share: {
@@ -367,6 +447,29 @@ export const Opiskelusuunnitelma = observer(
             elements={elements}
             competencePointsTitle={competencePointsTitle}
           />
+        </Accordion>
+
+        <Accordion
+          id="oppimisenTuki"
+          open={activeAccordions.oppimisenTuki}
+          title={
+            <AccordionTitle>
+              <FormattedMessage
+                id="opiskelusuunnitelma.oppimisenTukiTitle"
+                defaultMessage="Oppimisen tuki"
+              />
+            </AccordionTitle>
+          }
+          onToggle={toggleAccordion("oppimisenTuki")}
+          helpIcon={true}
+          helpContent={
+            <FormattedMessage
+              id="opiskelusuunnitelma.oppimisenTukiHelpLabel"
+              defaultMessage="Tietoa oppimisen tuesta"
+            />
+          }
+        >
+          <OppimisenTuki plan={plan} />
         </Accordion>
 
         <Accordion

@@ -20,6 +20,7 @@ import find from "lodash.find"
 import maxBy from "lodash.maxby"
 import { APIResponse } from "types/APIResponse"
 import { OpiskeluvalmiuksiaTukevatOpinnot } from "./OpiskeluvalmiuksiaTukevatOpinnot"
+import { OppimisenTuki } from "./OppimisenTuki"
 import { AiemminHankitunYTOOsaAlue } from "./YhteinenTutkinnonOsa/AiemminHankitunYTOOsaAlue"
 import { EnrichKoodistoKoodiUri } from "./Enrichment/EnrichKoodistoKoodiUri"
 import { OpiskelijapalauteTila } from "./OpiskelijapalauteTila"
@@ -56,6 +57,7 @@ const Model = types.model("HOKSModel", {
   ),
   hankittavatYhteisetTutkinnonOsat: types.array(HankittavaYhteinenTutkinnonOsa),
   hankittavatKoulutuksenOsat: types.array(HankittavaKoulutuksenOsa),
+  oppimisenTuki: types.array(OppimisenTuki),
   opiskeluvalmiuksiaTukevatOpinnot: types.array(
     OpiskeluvalmiuksiaTukevatOpinnot
   ),
