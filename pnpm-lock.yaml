@@ -156,11 +156,11 @@ importers:
         specifier: ^10.0.0
         version: 10.0.1(react@18.3.1)
       react-router:
-        specifier: ^6.27.0
-        version: 6.30.2(react@18.3.1)
+        specifier: ^6.30.3
+        version: 6.30.6(react@18.3.1)
       react-router-dom:
-        specifier: ^6.27.0
-        version: 6.30.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^6.30.3
+        version: 6.30.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       reactjs-popup:
         specifier: ^2.0.6
         version: 2.0.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -795,8 +795,8 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
 
-  '@remix-run/router@1.23.1':
-    resolution: {integrity: sha512-vDbaOzF7yT2Qs4vO6XV1MHcJv+3dgR1sT+l3B8xxOVhUC336prMvqrvsLL/9Dnw2xr6Qhz4J0dmS0llNAbnUmQ==}
+  '@remix-run/router@1.23.4':
+    resolution: {integrity: sha512-q7j5geK7xs3UJSdm9/iytUNclBnLmYx1EnSeCFXHPeutdqgIMeFeHtUZgS3EhlKxdBEAu8OwtJCwmLrEzpSs7Q==}
     engines: {node: '>=14.0.0'}
 
   '@restart/hooks@0.4.16':
@@ -3635,15 +3635,15 @@ packages:
     peerDependencies:
       react: '>=16.8.0'
 
-  react-router-dom@6.30.2:
-    resolution: {integrity: sha512-l2OwHn3UUnEVUqc6/1VMmR1cvZryZ3j3NzapC2eUXO1dB0sYp5mvwdjiXhpUbRb21eFow3qSxpP8Yv6oAU824Q==}
+  react-router-dom@6.30.6:
+    resolution: {integrity: sha512-0RHKZz7wwffvkU+2MFVT2NnjK44ssLEV+m0CAJaS2Ksmorrwj7WxH00jO0SOCW26/tINUnJHToXblDs33I38YQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
       react-dom: '>=16.8'
 
-  react-router@6.30.2:
-    resolution: {integrity: sha512-H2Bm38Zu1bm8KUE5NVWRMzuIyAV8p/JrOaBJAwVmp37AXG72+CZJlEBw6pdn9i5TBgLMhNDgijS4ZlblpHyWTA==}
+  react-router@6.30.6:
+    resolution: {integrity: sha512-5HfK7k5im7LTOB0EqCQmfvy4C13G92Ssj1VTmouTK3AJvyjKTnFuCV0vcMAD/JS+JC4DvDIBRrlAeJIFjh5VWg==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
@@ -5220,7 +5220,7 @@ snapshots:
       '@swc/helpers': 0.5.17
       react: 18.3.1
 
-  '@remix-run/router@1.23.1': {}
+  '@remix-run/router@1.23.4': {}
 
   '@restart/hooks@0.4.16(react@18.3.1)':
     dependencies:
@@ -8524,16 +8524,16 @@ snapshots:
       react: 18.3.1
       shallow-equal: 3.1.0
 
-  react-router-dom@6.30.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-router-dom@6.30.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@remix-run/router': 1.23.1
+      '@remix-run/router': 1.23.4
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      react-router: 6.30.2(react@18.3.1)
+      react-router: 6.30.6(react@18.3.1)
 
-  react-router@6.30.2(react@18.3.1):
+  react-router@6.30.6(react@18.3.1):
     dependencies:
-      '@remix-run/router': 1.23.1
+      '@remix-run/router': 1.23.4
       react: 18.3.1
 
   react-shallow-renderer@16.15.0(react@18.3.1):
