@@ -1,4 +1,4 @@
-import { flow, getEnv, getPropertyMembers, types } from "mobx-state-tree"
+import { flow, getEnv, getPropertyMembers, isAlive, types } from "mobx-state-tree"
 import { StoreEnvironment } from "../../types/StoreEnvironment"
 import { APIResponse } from "../../types/APIResponse"
 
@@ -60,7 +60,9 @@ export const EnrichKoodistoKoodiUri = (
           cachedResponses[koodiUri] =
             cachedResponses[koodiUri] || getFromKoodistoService(koodiUri)
           const { data }: APIResponse = yield cachedResponses[koodiUri]
-          self[enrichedField] = parseResponse(data)
+          if (isAlive(self)) {
+            self[enrichedField] = parseResponse(data)
+          }
         } catch (error) {
           errors.logError(
             "EnrichKoodiUri.fetchKoodisto",
