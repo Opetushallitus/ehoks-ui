@@ -1,4 +1,10 @@
-import { flow, getEnv, getPropertyMembers, isAlive, types } from "mobx-state-tree"
+import {
+  flow,
+  getEnv,
+  getPropertyMembers,
+  isAlive,
+  types
+} from "mobx-state-tree"
 import { StoreEnvironment } from "../../types/StoreEnvironment"
 import { APIResponse } from "../../types/APIResponse"
 
