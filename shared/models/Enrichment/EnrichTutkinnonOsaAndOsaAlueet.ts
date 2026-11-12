@@ -1,4 +1,4 @@
-import { flow, getEnv, types } from "mobx-state-tree"
+import { flow, getEnv, isAlive, types } from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { APIResponse } from "types/APIResponse"
 import { IOsaAlueVastaus } from "../YhteinenTutkinnonOsa/OsaAlueVastaus"
@@ -60,6 +60,9 @@ export const EnrichTutkinnonOsaAndOsaAlueet = types
           getTutkinnonOsaFromEPerusteet(koodiUri)
         const response: APIResponse =
           yield cachedTutkinnonOsaResponses[koodiUri]
+        if (!isAlive(self)) {
+          return
+        }
         self.tutkinnonOsaId = response.data?.id
         if (!self.tutkinnonOsaId) {
           errors.logError(
