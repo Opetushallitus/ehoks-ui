@@ -1,18 +1,5 @@
 module.exports = {
-  transform: {
-    "^.+\\.[tj]sx?$": [
-      "ts-jest",
-      {
-        tsconfig: {
-          allowJs: true
-        }
-      }
-    ]
-  },
-  transformIgnorePatterns: [
-    "<rootDir>/../node_modules/.pnpm/(?!(decode-uri-component)@)",
-    "<rootDir>/../node_modules/(?!decode-uri-component/)"
-  ],
+  preset: "ts-jest",
   setupFilesAfterEnv: ["<rootDir>/../shared/setupTests.ts"],
   modulePaths: ["<rootDir>/src", "<rootDir>/../shared"],
   roots: ["<rootDir>", "<rootDir>/../shared"],
