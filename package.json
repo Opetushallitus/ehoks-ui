@@ -158,6 +158,11 @@
       "cross-spawn": "6.0.6"
     }
   },
+  "pnpm": {
+    "overrides": {
+      "decode-uri-component": "0.5.1"
+    }
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
