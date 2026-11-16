@@ -724,6 +724,7 @@ exports[`App renders correctly 1`] = `
           </div>
           <a
             class="c16"
+            data-discover="true"
             href="/ehoks"
           >
             Kirjaudu ulos
