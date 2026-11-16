@@ -298,7 +298,7 @@ export const AppHeader = inject("store")(
                 ) : null}
                 {user.firstName} {user.surname}
               </User>
-              <LogoutLink to="" onClick={logoutOppija}>
+              <LogoutLink to="/ehoks" onClick={logoutOppija}>
                 <FormattedMessage
                   id="header.kirjauduUlosLink"
                   defaultMessage="Kirjaudu ulos"
