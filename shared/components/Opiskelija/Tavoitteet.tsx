@@ -76,54 +76,6 @@ const StudentPersonalInfo = ({ student }: { student: ISessionUser }) => (
   </>
 )
 
-const StudentAddressInfo = ({ student }: { student: ISessionUser }) => (
-  <>
-    <tr>
-      {student.yhteystiedot.katuosoite && (
-        <th>
-          <FormattedMessage
-            id="tavoitteet.osoiteTitle"
-            defaultMessage="Osoite"
-          />
-        </th>
-      )}
-      {(student.yhteystiedot.postinumero || student.yhteystiedot.kunta) && (
-        <th>
-          <FormattedMessage
-            id="tavoitteet.postiosoiteTitle"
-            defaultMessage="Postiosoite"
-          />
-        </th>
-      )}
-      {student.yhteystiedot.kunta && (
-        <th>
-          <FormattedMessage
-            id="tavoitteet.kotikuntaTitle"
-            defaultMessage="Kotikunta"
-          />
-        </th>
-      )}
-    </tr>
-    <tr>
-      {student.yhteystiedot.katuosoite && (
-        <LabeledColumn id="tavoitteet.osoiteTitle">
-          {student.yhteystiedot.katuosoite}
-        </LabeledColumn>
-      )}
-      {(student.yhteystiedot.postinumero || student.yhteystiedot.kunta) && (
-        <LabeledColumn id="tavoitteet.postiosoiteTitle">
-          {student.yhteystiedot.postinumero} {student.yhteystiedot.kunta}
-        </LabeledColumn>
-      )}
-      {student.yhteystiedot.kunta && (
-        <LabeledColumn id="tavoitteet.kotikuntaTitle">
-          {student.yhteystiedot.kunta}
-        </LabeledColumn>
-      )}
-    </tr>
-  </>
-)
-
 const StudentContactInfo = ({
   student,
   hoks
@@ -341,7 +293,6 @@ const Henkilotiedot = ({
     <InfoTable>
       <tbody>
         <StudentPersonalInfo student={student} />
-        <StudentAddressInfo student={student} />
         <StudentContactInfo student={student} hoks={hoks} />
         {app === "virkailija" && <StudentIdentifierInfo hoks={hoks} />}
       </tbody>
