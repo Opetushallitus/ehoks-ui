@@ -1,4 +1,10 @@
-import { types, getEnv, flow, getPropertyMembers } from "mobx-state-tree"
+import {
+  types,
+  getEnv,
+  flow,
+  getPropertyMembers,
+  isAlive
+} from "mobx-state-tree"
 import { StoreEnvironment } from "types/StoreEnvironment"
 import { APIResponse } from "types/APIResponse"
 
@@ -58,7 +64,9 @@ export const EnrichOrganisaatioOid = (
             cachedResponses[organisaatioOid] ||
             getFromOrganisaatioService(organisaatioOid)
           const response: APIResponse = yield cachedResponses[organisaatioOid]
-          self[enrichedProperty] = response.data
+          if (isAlive(self)) {
+            self[enrichedProperty] = response.data
+          }
         } catch (error) {
           errors.logError(
             "EnrichOrganisaatioOid.fetchOrganisaatio",
