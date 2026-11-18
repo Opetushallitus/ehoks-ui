@@ -22,7 +22,6 @@ import { IKoodistoVastaus } from "models/KoodistoVastaus"
 import { PlannedStudies } from "./PlannedStudies"
 import { ScheduledStudies } from "./ScheduledStudies"
 import { CompletedStudies } from "./CompletedStudies"
-import { ShareType, TutkinnonOsaType } from "../../../models/helpers/ShareTypes"
 import { DegreeProgress } from "./DegreeProgress"
 import { useLocation } from "react-router"
 
@@ -166,11 +165,23 @@ const OpiskeluvalmiuksiaTukevatOpinnot = ({ plan }: { plan: IHOKS }) => (
   </InfoTable>
 )
 
+const shareHasChanged = (
+  current: OpiskelusuunnitelmaState["share"],
+  next: OpiskelusuunnitelmaState["share"]
+) =>
+  next.type !== current.type ||
+  next.moduleId !== current.moduleId ||
+  next.tutkinnonOsaTyyppi !== current.tutkinnonOsaTyyppi ||
+  next.tutkinnonOsaModuleId !== current.tutkinnonOsaModuleId ||
+  next.hoksEid !== current.hoksEid
+
 export const Opiskelusuunnitelma = observer(
   (props: OpiskelusuunnitelmaProps) => {
+    const location = useLocation()
+    const { share: initialShare } = parseShareParams(location.search)
     const [state, setState] = useState<OpiskelusuunnitelmaState>({
       activeAccordions: {
-        suunnitelma: false,
+        suunnitelma: !!initialShare.type && !!initialShare.tutkinnonOsaTyyppi,
         suunnitelmat: {
           aikataulutetut: false,
           suunnitellut: false,
@@ -188,52 +199,11 @@ export const Opiskelusuunnitelma = observer(
         hoksEid: undefined
       }
     })
-    const location = useLocation()
 
     useEffect(() => {
       const { share } = parseShareParams(location.search)
-      if (share.type && share.tutkinnonOsaTyyppi) {
-        setState(s => ({
-          ...s,
-          share: {
-            type: share.type,
-            moduleId: share.moduleId,
-            tutkinnonOsaTyyppi: share.tutkinnonOsaTyyppi,
-            tutkinnonOsaModuleId: share.tutkinnonOsaModuleId,
-            hoksEid: share.hoksEid
-          }
-        }))
-        setInitialExpanded(share)
-      }
-    }, [])
-
-    useEffect(() => {
-      // TODO: set proper share state when opening another dialog
-      // previous dialog should close and new dialog should open
-      const { share } = parseShareParams(location.search)
-      if (shareHasChanged(share)) {
-        setState(s => ({
-          ...s,
-          share: {
-            type: share.type,
-            moduleId: share.moduleId,
-            tutkinnonOsaTyyppi: share.tutkinnonOsaTyyppi,
-            tutkinnonOsaModuleId: share.tutkinnonOsaModuleId,
-            hoksEid: share.hoksEid
-          }
-        }))
-      }
+      setState(s => (shareHasChanged(s.share, share) ? { ...s, share } : s))
     }, [location.search])
-
-    const shareHasChanged = (share: {
-      type?: ShareType
-      moduleId: string | ""
-      tutkinnonOsaTyyppi?: TutkinnonOsaType
-      tutkinnonOsaModuleId: string | ""
-      hoksEid: string | ""
-    }) =>
-      share.type !== state.share.type ||
-      share.tutkinnonOsaTyyppi !== state.share.tutkinnonOsaTyyppi
 
     const isShareActive = () => {
       const { share } = state
@@ -252,24 +222,6 @@ export const Opiskelusuunnitelma = observer(
       return !!find(studies[type], s =>
         s.hasNayttoOrHarjoittelujakso(share.type, share.moduleId)
       )
-    }
-
-    const setInitialExpanded = (share: {
-      type?: ShareType
-      moduleId: string | ""
-    }) => {
-      setState({
-        ...state,
-        activeAccordions: {
-          ...state.activeAccordions,
-          suunnitelma: Boolean(share),
-          suunnitelmat: {
-            aikataulutetut: hasActiveShare("aikataulutetut"),
-            suunnitellut: hasActiveShare("suunnitellut"),
-            valmiit: hasActiveShare("valmiit")
-          }
-        }
-      })
     }
 
     const showPlanSubAccordion =

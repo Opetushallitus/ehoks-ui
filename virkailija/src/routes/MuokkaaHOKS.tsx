@@ -84,6 +84,26 @@ function trimPrimitive(key: string, result: any, formData: any) {
   }
 }
 
+const fetchHOKS = async (oppijaOid?: string, hoksId?: string) => {
+  const request = await window.fetch(
+    `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksId}`,
+    {
+      credentials: "include",
+      headers: appendCommonHeaders(
+        new Headers({
+          Accept: "application/json; charset=utf-8",
+          "Content-Type": "application/json"
+        })
+      )
+    }
+  )
+  const json = await request.json()
+  if (!request.ok) {
+    throw new Error(json)
+  }
+  return trimDisallowedKeysForPUTSchema(json.data)
+}
+
 interface MuokkaaHOKSProps {
   store?: IRootStore
 }
@@ -104,7 +124,7 @@ interface MuokkaaHOKSState {
   clearModalOpen: boolean
 }
 
-export const MuokkaaHOKS = inject("store")(
+const MuokkaaHOKSLomake = inject("store")(
   observer((props: MuokkaaHOKSProps) => {
     const navigate = useNavigate()
     const [state, setState] = useState<MuokkaaHOKSState>({
@@ -128,52 +148,27 @@ export const MuokkaaHOKS = inject("store")(
 
     useEffect(() => {
       environment.fetchSwaggerJSON().then(json =>
-        fetchHOKS().then(hoks => {
+        fetchHOKS(oppijaOid, hoksId).then(hoks => {
           const rawSchema = {
             definitions: convertSchemaDefinitions(json.definitions),
             ...json.definitions.HOKSKorvaus
           }
           fetchKoodiUris().then(koodiUris => {
-            const schema = schemaByStep(
-              rawSchema,
-              propertiesByStep,
-              state.currentStep
-            )
             setState(s => ({
               ...s,
               formData: hoks,
               errors: [],
               errorsByStep: {},
               rawSchema,
-              schema,
+              schema: schemaByStep(rawSchema, propertiesByStep, s.currentStep),
               koodiUris,
-              uiSchema: uiSchemaByStep(koodiUris, state.currentStep),
+              uiSchema: uiSchemaByStep(koodiUris, s.currentStep),
               isLoading: false
             }))
           })
         })
       )
-    }, [environment])
-
-    const fetchHOKS = async () => {
-      const request = await window.fetch(
-        `/ehoks-virkailija-backend/api/v1/virkailija/oppijat/${oppijaOid}/hoksit/${hoksId}`,
-        {
-          credentials: "include",
-          headers: appendCommonHeaders(
-            new Headers({
-              Accept: "application/json; charset=utf-8",
-              "Content-Type": "application/json"
-            })
-          )
-        }
-      )
-      const json = await request.json()
-      if (!request.ok) {
-        throw new Error(json)
-      }
-      return trimDisallowedKeysForPUTSchema(json.data)
-    }
+    }, [environment, oppijaOid, hoksId])
 
     const setStep = (index: number) => {
       setState({
@@ -230,7 +225,7 @@ export const MuokkaaHOKS = inject("store")(
         }
       )
       if (request.status === 204) {
-        fetchHOKS()
+        fetchHOKS(oppijaOid, hoksId)
           .then(hoks => {
             setState(s => ({
               ...s,
@@ -357,3 +352,10 @@ export const MuokkaaHOKS = inject("store")(
     )
   })
 )
+
+// The key recreates the form when the route changes to another HOKS, so that
+// the previous HOKS's data or a late response can't be saved over the new one.
+export const MuokkaaHOKS = () => {
+  const { oppijaOid, hoksId } = useParams()
+  return <MuokkaaHOKSLomake key={`${oppijaOid}/${hoksId}`} />
+}
