@@ -671,11 +671,6 @@
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.kotikuntaTitle",
-    "value": "Kotikunta"
-  },
-  {
-    "locale": "fi",
     "key": "tavoitteet.kutsumanimiTitle",
     "value": "Kutsumanimi"
   },
@@ -776,18 +771,8 @@
   },
   {
     "locale": "fi",
-    "key": "tavoitteet.osoiteTitle",
-    "value": "Osoite"
-  },
-  {
-    "locale": "fi",
     "key": "tavoitteet.paivitettyTitle",
     "value": "Päivitetty"
-  },
-  {
-    "locale": "fi",
-    "key": "tavoitteet.postiosoiteTitle",
-    "value": "Postiosoite"
   },
   {
     "locale": "fi",
