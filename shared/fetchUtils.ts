@@ -132,7 +132,7 @@ export const mockFetch =
       body: null,
       bodyUsed: false,
       clone: () => mockResponse,
-      json: () => responseJson,
+      json: () => responseJson.then((module: any) => module.default ?? module),
       ok: true,
       statusText: "Error"
     }
