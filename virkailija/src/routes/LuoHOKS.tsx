@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router"
 import { Button } from "components/Button"
 import { LoadingSpinner } from "components/LoadingSpinner"
 import { ModalDialog } from "components/ModalDialogs/ModalDialog"
@@ -63,12 +62,10 @@ interface LuoHOKSState {
   koodiUris: { [key in keyof typeof koodistoUrls]: any[] }
   message?: string
   clearModalOpen: boolean
-  confirmCloseListenerExists: boolean
 }
 
 export const LuoHOKS = inject("store")(
   observer((props: LuoHOKSProps) => {
-    const navigate = useNavigate()
     const intl = useIntl()
     const [state, setState] = useState<LuoHOKSState>({
       schema: {},
@@ -83,48 +80,10 @@ export const LuoHOKS = inject("store")(
       koodiUris: buildKoodiUris(),
       errorsByStep: {},
       message: undefined,
-      clearModalOpen: false,
-      confirmCloseListenerExists: false
+      clearModalOpen: false
     })
     const { environment, notifications } = props.store!
-
-    const confirmClose = (ev: BeforeUnloadEvent) => {
-      if (state?.success) {
-        removeBeforeUnloadListener()
-      } else {
-        ev.preventDefault()
-        ev.returnValue = intl.formatMessage({
-          id: "luoHoks.haluatkoPoistua"
-        })
-        return ev.returnValue
-      }
-    }
-
-    const addBeforeUnloadListener = () => {
-      if (!state.confirmCloseListenerExists) {
-        // confirmation when closing the window/page
-        window.addEventListener("beforeunload", confirmClose)
-        setState({
-          ...state,
-          confirmCloseListenerExists: true
-        })
-      }
-    }
-
-    const removeBeforeUnloadListener = () => {
-      if (state.confirmCloseListenerExists) {
-        window.removeEventListener("beforeunload", confirmClose)
-        setState({
-          ...state,
-          confirmCloseListenerExists: false
-        })
-      }
-    }
-
-    const formDataExists = () => {
-      const { formData } = state
-      return typeof formData === "object" && Object.keys(formData).length > 0
-    }
+    const hasUnsavedData = Boolean(trimEmptyValues(state.formData))
 
     useEffect(() => {
       environment.fetchSwaggerJSON().then(async json => {
@@ -133,11 +92,6 @@ export const LuoHOKS = inject("store")(
           ...json.definitions.HOKSLuonti
         }
         const koodiUris = await fetchKoodiUris()
-        const schema = schemaByStep(
-          rawSchema,
-          propertiesByStep,
-          state.currentStep
-        )
         const {
           formData = {},
           errors = [],
@@ -151,35 +105,61 @@ export const LuoHOKS = inject("store")(
           errors,
           errorsByStep,
           rawSchema,
-          schema,
+          schema: schemaByStep(rawSchema, propertiesByStep, s.currentStep),
           koodiUris,
-          uiSchema: uiSchemaByStep(koodiUris, state.currentStep),
+          uiSchema: uiSchemaByStep(koodiUris, s.currentStep),
           isLoading: false
         }))
-        if (formDataExists()) {
-          addBeforeUnloadListener()
-        }
       })
+    }, [environment])
 
-      return () => {
-        const { success } = state
-        // confirmation when navigating to another ehoks page
+    // confirmation when closing the window/page
+    useEffect(() => {
+      if (!hasUnsavedData) {
+        return
+      }
+      const confirmClose = (ev: BeforeUnloadEvent) => {
+        ev.preventDefault()
+        ev.returnValue = intl.formatMessage({
+          id: "luoHoks.haluatkoPoistua"
+        })
+        return ev.returnValue
+      }
+      window.addEventListener("beforeunload", confirmClose)
+      return () => window.removeEventListener("beforeunload", confirmClose)
+    }, [hasUnsavedData, intl])
+
+    // TODO: decide whether to restore the prompt when navigating to another
+    // ehoks page. Seems like it has been broken for a while. Fixing it properly
+    // requires moving from BrowserRouter to createBrowserRouter, so that
+    // useBlocker can ask before the route changes. The code below asks only
+    // after the route has changed, so on cancel the opened page still loads
+    // and fetches its data, and stays in the browser history. Cancelling twice
+    // on Opiskelijat also causes mobx-state-tree errors in
+    // HOKS.fetchOpiskeluoikeudet, as the reload destroys the HOKS being fetched.
+    /*
+    const navigate = useNavigate()
+    const hasUnsavedDataRef = useRef(hasUnsavedData)
+    hasUnsavedDataRef.current = hasUnsavedData
+
+    useEffect(
+      () => () => {
         if (
-          formDataExists() &&
-          !success &&
+          hasUnsavedDataRef.current &&
           !confirm(
             intl.formatMessage({
               id: "luoHoks.haluatkoPoistua"
             })
           )
         ) {
-          // navigate "back" to hoks form
-          navigate("/ehoks-virkailija-ui/luohoks")
-        } else {
-          removeBeforeUnloadListener()
+          // navigate "back" to hoks form, deferred so that a Redirect on the
+          // page being opened can't navigate after this
+          setTimeout(() => navigate("/ehoks-virkailija-ui/luohoks"))
         }
-      }
-    }, [environment])
+      },
+      [intl, navigate]
+    )
+    */
 
     /*
     const nextStep = () => {
@@ -230,9 +210,6 @@ export const LuoHOKS = inject("store")(
         "hoks",
         JSON.stringify({ formData, errors, errorsByStep })
       )
-      if (formDataExists()) {
-        addBeforeUnloadListener()
-      }
     }
 
     /*
@@ -286,7 +263,6 @@ export const LuoHOKS = inject("store")(
           userEnteredText: false
         }))
         window.sessionStorage.removeItem("hoks")
-        removeBeforeUnloadListener()
       } else {
         setState(s => ({ ...s, success: false, message: undefined }))
         reportHOKSErrors(json, intl, (errorId: string, message: string) => {
