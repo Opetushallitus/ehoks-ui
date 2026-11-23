@@ -1,4 +1,11 @@
-import { types, Instance, getEnv, flow, getRoot } from "mobx-state-tree"
+import {
+  types,
+  Instance,
+  getEnv,
+  flow,
+  getRoot,
+  isAlive
+} from "mobx-state-tree"
 import { AiemminHankittuAmmatillinenTutkinnonOsa } from "models/AiemminHankittuAmmatillinenTutkinnonOsa"
 import { AiemminHankittuPaikallinenTutkinnonOsa } from "models/AiemminHankittuPaikallinenTutkinnonOsa"
 import { AiemminHankittuYhteinenTutkinnonOsa } from "models/YhteinenTutkinnonOsa/AiemminHankittuYhteinenTutkinnonOsa"
@@ -100,6 +107,7 @@ export const HOKS = types
         apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/hoksit/${self.id}`),
         { headers: appendCallerId() }
       )
+      if (!isAlive(self)) return
       const keys = Object.keys(response.data)
       keys.forEach(key => {
         self[key] = response.data[key]
@@ -114,6 +122,7 @@ export const HOKS = types
         ),
         { headers: appendCallerId() }
       )
+      if (!isAlive(self)) return
       self.opiskelijapalauteTilat = response.data
     })
 
@@ -175,6 +184,7 @@ export const HOKS = types
         const tutkinto = yield fetchTutkinto()
         if (tutkinto.id) {
           const rakenne = yield fetchRakenne(tutkinto.id, tutkinto.suoritustapa)
+          if (!isAlive(self)) return
           self.osaamispisteet = getOsaamispisteetFromRakenne(rakenne)
         }
       } catch (error) {
@@ -191,6 +201,7 @@ export const HOKS = types
           apiUrl(`${apiPrefix}/oppijat/${self.oppijaOid}/opiskeluoikeudet`),
           { headers: appendCallerId() }
         )
+        if (!isAlive(self)) return
         const opiskeluOikeudet: APIResponse = response.data || []
         const opiskeluOikeus = find(
           opiskeluOikeudet,
